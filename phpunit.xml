@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<phpunit
+	bootstrap="tests/bootstrap.php"
+	backupGlobals="false"
+	colors="true"
+	convertErrorsToExceptions="true"
+	convertNoticesToExceptions="true"
+	convertWarningsToExceptions="true"
+	>
+
+	<testsuites>
+		<testsuite name="unit">
+			<directory suffix=".php">./tests/php/unit/helpers/</directory>
+			<directory prefix="test-" suffix=".php">./tests/php/unit/</directory>
+		</testsuite>
+
+		<testsuite name="integration">
+			<directory suffix=".php">./tests/php/integration/helpers/</directory>
+			<directory prefix="test-" suffix=".php">./tests/php/integration/</directory>
+		</testsuite>
+	</testsuites>
+
+	<filter>
+		<whitelist processUncoveredFilesFromWhitelist="false">
+			<directory suffix=".php">./</directory>
+			<exclude>
+				<directory suffix=".php">./assets</directory>
+				<directory suffix=".php">./node_modules</directory>
+				<directory suffix=".php">./tests</directory>
+				<directory suffix=".php">./vendor</directory>
+				<directory suffix=".php">./package</directory>
+			</exclude>
+		</whitelist>
+	</filter>
+</phpunit>

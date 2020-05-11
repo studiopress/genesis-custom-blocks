@@ -1,0 +1,535 @@
+@import 'color';
+
+$input-padding: 8px;
+$input-width: 300px;
+$default-font-size: 13px;
+$break-small: 600px;
+$font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+
+@mixin break-small() {
+	@media (min-width: #{ ($break-small) }) {
+		@content;
+	}
+}
+
+/* Menu items. */
+@mixin menu-style__neutral() {
+  border: none;
+  box-shadow: none;
+}
+
+/* Block form in editor & sidebar */
+div[class^="wp-block-block-lab-"],
+.edit-post-settings-sidebar__panel-block .components-panel__body {
+
+  :required:invalid {
+    border-color: #C00000;
+  }
+
+  .text-control__error {
+    border-color: #d94f4f;
+    box-shadow: 0 0 0 1px #d94f4f;
+  }
+
+  /* Color Control Component */
+  .block-lab-color-control {
+
+    .components-base-control {
+      display: inline-block;
+      margin-bottom: 0 !important;
+
+      .components-base-control__field {
+        margin: 0 !important;
+        width: 100%;
+        height: 100%;
+      }
+
+      &.block-lab-color-popover {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        margin: 1px 1em !important;
+        background-image: linear-gradient(45deg, #ddd 25%, transparent 25%), linear-gradient(-45deg, #ddd 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ddd 75%), linear-gradient(-45deg, transparent 75%, #ddd 75%);
+        background-size: 10px 10px;
+        background-position: 0 0, 0 5px, 5px -5px, -5px 0;
+        display: inline-block;
+        vertical-align: top;
+        border: none;
+        box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+        transition: 100ms transform ease;
+        cursor: pointer;
+
+        &:hover {
+          transform: scale(1.2)
+        }
+
+        .component-color-indicator {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          border: none;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+
+  /* Media Upload Component */
+  .block-lab-media-controls {
+    .bl-image__img {
+      max-height: 200px;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .components-placeholder {
+      position: relative;
+    }
+
+    .bl-image__placeholder .components-button.is-button {
+      white-space: normal;
+    }
+
+    .components-form-file-upload,
+    .components-media-library-button,
+    .bl-image__remove {
+      margin: 0 4px 4px 0;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .components-base-control__field {
+      .components-base-control__help {
+        margin-bottom: 4px;
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+/* Block form in editor */
+div[class^="wp-block-block-lab-"] {
+  margin: 0;
+
+  .block-form {
+    border-left: none;
+    background: $dark-opacity-light-200;
+    padding: 22px 0 22px 22px;
+    font-size: 0.8125rem;
+    display: flex;
+    flex-wrap: wrap;
+
+    h3 {
+      color: #111;
+      font-size: 1rem;
+      margin: 0;
+      flex: 1 1 100%;
+
+      svg {
+        position: relative;
+        top: 6px;
+        margin-right: 4px;
+      }
+    }
+
+    p {
+      font-size: 1rem;
+      font-family: $font-family;
+    }
+
+    .block-lab-control {
+      flex-basis: 100%;
+      padding-right: 22px;
+
+      &.width-25 {
+        flex-basis: 25%;
+      }
+      &.width-50 {
+        flex-basis: 50%;
+      }
+      &.width-75 {
+        flex-basis: 75%;
+      }
+    }
+
+    @media screen and (max-width: 782px) {
+      .block-lab-control.width-25,
+      .block-lab-control.width-50,
+      .block-lab-control.width-75 {
+        flex-basis: 100%;
+      }
+    }
+
+    .components-base-control {
+      font-family: $font-family;
+    }
+
+    .components-base-control__field {
+      margin: 1em 0 0;
+
+      .components-base-control__label {
+        display: block;
+        font-weight: 600;
+      }
+    }
+
+    .components-base-control__help {
+      margin: 0 0 1em 0.5em;
+      font-size: 1em;
+      color: rgba(0, 0, 0, 0.8);
+    }
+
+    /* Override a max-width: 25rem style rule in Core that can prevent displaying at the selected with, like 75% */
+    .components-select-control__input {
+      max-width: unset;
+    }
+  }
+
+  /* Rich Text Control Component */
+  .block-lab-rich-text-control {
+    .components-base-control__field {
+      margin-top: 20px;
+    }
+
+    .input-control {
+      background: #fff;
+      min-height: 7em;
+      line-height: 1.4rem;
+      font-size: 13px;
+
+      p {
+        font-size: 13px;
+        margin-top: 0.67rem;
+        margin-bottom: 0.67rem;
+      }
+
+      p:first-child,
+      p:first-child > p {
+        margin-top: 0;
+      }
+    }
+
+    /* Override native styling that created a double border */
+    .editor-rich-text__inline-toolbar .components-toolbar > .components-toolbar {
+      border: none;
+      border-right: 1px solid $light-gray-500;
+    }
+  }
+
+  /* Classic Text Control Component */
+  .block-lab-classic-text-control {
+
+      .classic-text__toolbar {
+      position: relative;
+      z-index: 10;
+      top: 1px;
+
+      > .mce-container {
+        width: 100% !important;
+        border: 1px solid #c5c5c5;
+        box-shadow: none;
+        box-sizing: border-box;
+      }
+
+      .mce-container-body {
+        width: 100% !important;
+        > .mce-container {
+          width: 100% !important;
+        }
+      }
+    }
+
+    /* The editing area, not the toolbar. */
+    .classic-text__edit {
+
+      background: $white;
+      padding: 0.2rem 1rem;
+      border: 1px solid $dark-gray-150;
+      outline: none;
+      min-height: 6rem;
+
+      /* Clear the float in case an image is floated. */
+      &:after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+
+      p {
+        font-size: 13px;
+        margin-top: 0.67rem;
+        margin-bottom: 0.67rem;
+      }
+
+      ul, ol {
+        margin-left: 1rem;
+      }
+    }
+  }
+
+  .block-lab-repeater {
+
+    .block-lab-repeater__rows {
+      width: 100%;
+
+      .block-lab-repeater--row {
+        min-width: 100%;
+        border: 1px dashed $dark-gray-150;
+        border-top: 0;
+        margin-bottom: 0;
+        padding: 10px 14px 0;
+        position: relative;
+        transition: background 1s ease-in-out;
+
+        &:first-child {
+          border-top: 1px dashed $dark-gray-150;
+
+          .block-lab-repeater--row-actions .button-move-up {
+            display: none;
+          }
+        }
+
+        &:last-child {
+          .block-lab-repeater--row-actions .button-move-down {
+            display: none;
+          }
+        }
+
+        .components-base-control__field {
+          margin: 0 0 14px;
+        }
+
+        .block-lab-repeater--row-actions {
+          position: absolute;
+          display: none;
+          top: -1px;
+          left: -30px;
+
+          .components-icon-button {
+            width: 28px;
+            padding: 0;
+            background: $white;
+            border-color: $dark-gray-150;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-right: none;
+
+            svg {
+              width: 100%;
+            }
+          }
+        }
+
+        .block-lab-repeater--row-delete {
+          display: none;
+          position: absolute;
+          right: 2px;
+          top: 4px;
+
+          .components-icon-button {
+            width: 28px;
+            padding: 0;
+            border-color: transparent;
+            box-shadow: none;
+            background: transparent;
+            color: $dark-gray-150;
+
+            svg {
+              width: 100%;
+            }
+
+            &:hover:not(:disabled) {
+              color: $alert-red;
+            }
+
+            &:active:not(:disabled) {
+              color: $dark-gray-600;
+            }
+
+            &:disabled {
+              opacity: 0;
+            }
+          }
+        }
+
+        &.row-to {
+          transition: background 0.2s ease-in-out;
+          background: #fef8ee;
+        }
+
+        &.row-from {
+          transition: none;
+          background: transparent;
+        }
+
+        &:hover:not(.row-from),
+        &.row-to {
+          .block-lab-repeater--row-actions {
+            display: block;
+            background: #fff;
+            box-sizing: border-box;
+            border: 1px solid $dark-gray-150;
+            border-radius: 3px;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-right: none;
+
+            .components-icon-button {
+              border-color: transparent;
+              box-shadow: none;
+              background: transparent;
+
+              &:hover {
+                background-color: $dark-opacity-light-200;
+              }
+            }
+          }
+
+          .block-lab-repeater--row-delete {
+            display: block;
+          }
+        }
+
+        &:before {
+          content: '';
+          width: 29px;
+          height: 100%;
+          position: absolute;
+          left: -30px;
+          top: 0;
+        }
+      }
+    }
+
+    .block-lab-repeater--row-add {
+      margin-top: 4px;
+      display: flex;
+      justify-content: center;
+
+      .components-icon-button:hover:not(:disabled) {
+        border-color: transparent;
+        box-shadow: none;
+        background: transparent;
+        color: $blue-medium-focus;
+      }
+      .components-icon-button:active:disabled {
+        color: #555d66;
+      }
+    }
+  }
+}
+
+/* Block form in sidebar */
+.edit-post-settings-sidebar__panel-block .components-panel__body {
+  /* Media Upload Component */
+  .block-lab-media-controls {
+    .components-spinner {
+      float: none;
+    }
+  }
+
+  .block-lab-color-control .components-base-control__label {
+    display: block;
+  }
+
+  /* The FetchInput component */
+  .bl-fetch--input input[type="text"] {
+    width: 100%;
+  }
+}
+
+/* Miscellaneous global styles */
+.edit-post-layout {
+  .components-popover:not(.is-mobile):not(.bl-fetch__popover) .components-popover__content .components-color-picker {
+    min-width: 340px;
+  }
+}
+
+/*
+ * FetchInput styling forked from URLInput styling in Gutenberg, with different class names.
+ * This uses a Popover, which often appears outside of its container.
+ * So this doesn't work inside the "Block form in editor" section above.
+ * @see https://github.com/WordPress/gutenberg/blob/fd2468d6c486220f7f1fa5bfa2366c510b46af27/packages/editor/src/components/url-input/style.scss#L42
+ */
+.bl-fetch__input {
+  width: 100%;
+}
+
+.bl-fetch__popover.editor:not(.is-mobile) .components-popover__content {
+  width: $input-width;
+}
+
+.bl-fetch__popover.inspector:not(.is-mobile) .components-popover__content {
+  min-width: 247px;
+}
+
+.bl-fetch-input__suggestions {
+  max-height: 200px;
+  transition: all 0.15s ease-in-out;
+  padding: 4px 0;
+  overflow-y: auto;
+}
+
+// Hide suggestions on mobile until we @todo find a better way to show them.
+.bl-fetch-input__suggestions,
+.bl-fetch-input .components-spinner {
+  display: none;
+  @include break-small() {
+      display: inherit;
+  }
+}
+
+.bl-fetch-input {
+  > .components-base-control__field {
+    display: flex;
+    flex-wrap: wrap;
+
+    > .components-base-control__label {
+      flex: 3 3 100%;
+    }
+
+    > .bl-fetch__input {
+      flex: 1 1 0;
+    }
+    > .components-spinner {
+      flex: 0 0 auto;
+    }
+  }
+}
+
+.bl-fetch-input__suggestion {
+  padding: 4px $input-padding;
+  color: $dark-gray-300; // Lightest we can use for contrast.
+  display: block;
+  font-size: $default-font-size;
+  cursor: pointer;
+  background: $white;
+  width: 100%;
+  border: none;
+  text-align: left;
+  @include menu-style__neutral();
+
+  &:hover {
+    background: $light-gray-500;
+  }
+
+  &:focus,
+  &.is-selected {
+    background: rgb(0, 113, 158);
+    color: $white;
+    outline: none;
+  }
+}
+
+.bl-dot-tip.read-more {
+  float: left;
+  margin: 0;
+  padding-right: 1em;
+}
+
+// In the <ServerSideRender> display, correct an issue where <ul> and <ol> can appear outside (to the left) of their container.
+.editor-styles-wrapper .block-lab-editor__ssr {
+  ul, ol {
+    margin-left: 1rem;
+  }
+}
