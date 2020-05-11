@@ -79,8 +79,8 @@ class Test_Import extends Abstract_Template {
 		$this->instance->register_importer();
 		$this->assertEquals(
 			[
-				'Block Lab',
-				'Import custom blocks created with Block Lab.',
+				'Genesis Custom Blocks',
+				'Import custom blocks created with Genesis Custom Blocks.',
 				[ $this->instance, 'render_page' ],
 			],
 			$wp_importers[ $this->instance->slug ]
@@ -94,8 +94,8 @@ class Test_Import extends Abstract_Template {
 	 * @covers \Block_Lab\Admin\Import::render_page()
 	 */
 	public function test_render_page() {
-		$page_header_text = 'Import Block Lab Content Blocks';
-		$welcome_text     = 'Welcome! This importer processes Block Lab JSON files, adding custom blocks to this site.';
+		$page_header_text = 'Import Genesis Custom Blocks';
+		$welcome_text     = 'Welcome! This importer processes Genesis Custom Blocks JSON files, adding custom blocks to this site.';
 
 		Monkey\Functions\expect( 'filter_input' )
 			->once()
@@ -270,7 +270,7 @@ class Test_Import extends Abstract_Template {
 		ob_start();
 		$this->instance->render_page_header();
 
-		$this->assertContains( '<h2>Import Block Lab Content Blocks</h2>', ob_get_clean() );
+		$this->assertContains( '<h2>Import Genesis Custom Blocks</h2>', ob_get_clean() );
 	}
 
 	/**
@@ -283,7 +283,7 @@ class Test_Import extends Abstract_Template {
 		$this->instance->render_welcome();
 		$output = ob_get_clean();
 
-		$this->assertContains( '<p>Welcome! This importer processes Block Lab JSON files, adding custom blocks to this site.</p>', $output );
+		$this->assertContains( '<p>Welcome! This importer processes Genesis Custom Blocks JSON files, adding custom blocks to this site.</p>', $output );
 		$this->assertContains( '<label for="upload">Choose a file from your computer:</label>', $output );
 		$this->assertContains( 'This JSON file should come from the export link or bulk action in the', $output );
 	}

@@ -1,9 +1,9 @@
 <?php
 /**
- * Block Lab Importer.
+ * Genesis Custom Blocks Importer.
  *
  * @package   Block_Lab
- * @copyright Copyright(c) 2020, Block Lab
+ * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
@@ -36,8 +36,8 @@ class Import extends Component_Abstract {
 	public function register_importer() {
 		register_importer(
 			$this->slug,
-			__( 'Block Lab', 'block-lab' ),
-			__( 'Import custom blocks created with Block Lab.', 'block-lab' ),
+			__( 'Genesis Custom Blocks', 'block-lab' ),
+			__( 'Import custom blocks created with Genesis Custom Blocks.', 'block-lab' ),
 			[ $this, 'render_page' ]
 		);
 	}
@@ -117,7 +117,7 @@ class Import extends Component_Abstract {
 	 */
 	public function render_page_header() {
 		?>
-		<h2><?php esc_html_e( 'Import Block Lab Content Blocks', 'block-lab' ); ?></h2>
+		<h2><?php esc_html_e( 'Import Genesis Custom Blocks', 'block-lab' ); ?></h2>
 		<?php
 	}
 
@@ -126,7 +126,7 @@ class Import extends Component_Abstract {
 	 */
 	public function render_welcome() {
 		?>
-		<p><?php esc_html_e( 'Welcome! This importer processes Block Lab JSON files, adding custom blocks to this site.', 'block-lab' ); ?></p>
+		<p><?php esc_html_e( 'Welcome! This importer processes Genesis Custom Blocks JSON files, adding custom blocks to this site.', 'block-lab' ); ?></p>
 		<p><?php esc_html_e( 'Choose a JSON (.json) file to upload, then click Upload file and import.', 'block-lab' ); ?></p>
 		<p>
 			<?php
@@ -276,9 +276,9 @@ class Import extends Component_Abstract {
 	}
 
 	/**
-	 * Import data into new Block Lab posts.
+	 * Import data into new Genesis Custom Blocks posts.
 	 *
-	 * @param array $blocks An array of Block Lab content blocks.
+	 * @param array $blocks An array of Genesis Custom Blocks content blocks.
 	 */
 	public function import_blocks( $blocks ) {
 		foreach ( $blocks as $block_namespace => $block ) {

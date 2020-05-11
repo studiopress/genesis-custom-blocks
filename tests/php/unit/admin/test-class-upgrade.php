@@ -117,7 +117,7 @@ class Test_Upgrade extends \WP_UnitTestCase {
 		// Now that filter_input() returns the correct page, the conditional should be true, and this should enqueue the script.
 		$this->assertTrue( in_array( $this->instance->slug, $styles->queue, true ) );
 		$this->assertEquals( $this->instance->slug, $style->handle );
-		$this->assertContains( 'block-lab/css/admin.upgrade.css', $style->src );
+		$this->assertContains( 'css/admin.upgrade.css', $style->src );
 		$this->assertEquals( [], $style->deps );
 		$this->assertEquals( [], $style->extra );
 	}
@@ -134,7 +134,7 @@ class Test_Upgrade extends \WP_UnitTestCase {
 			'Go Pro',
 			'manage_options',
 			$this->instance->slug,
-			'Block Lab Pro',
+			'Genesis Custom Blocks Pro',
 		];
 
 		wp_set_current_user( $this->factory()->user->create( [ 'role' => 'subscriber' ] ) );

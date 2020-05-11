@@ -1,16 +1,16 @@
 <?php
 /**
- * Block Lab
+ * Genesis Custom Blocks
  *
  * @package   Block_Lab
- * @copyright Copyright(c) 2020, Block Lab
+ * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  *
- * Plugin Name: Block Lab
+ * Plugin Name: Genesis Custom Blocks
  * Plugin URI: https://getblocklab.com
  * Description: The easy way to build custom blocks for Gutenberg.
  * Version: 1.5.4
- * Author: Block Lab
+ * Author: Genesis Custom Blocks
  * Author URI: https://getblocklab.com
  * License: GPL2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -46,7 +46,7 @@ function block_lab_php_version_error() {
  * @return string
  */
 function block_lab_php_version_text() {
-	return __( 'Block Lab plugin error: Your version of PHP is too old to run this plugin. You must be running PHP 5.4 or higher.', 'block-lab' );
+	return __( 'Genesis Custom Blocks plugin error: Your version of PHP is too old to run this plugin. You must be running PHP 5.4 or higher.', 'block-lab' );
 }
 
 // If the PHP version is too low, show warning and return.
@@ -75,7 +75,7 @@ function block_lab_wp_version_error() {
  * @return string
  */
 function block_lab_wp_version_text() {
-	return __( 'Block Lab plugin error: Your version of WordPress is too old. You must be running WordPress 5.0 to use Block Lab.', 'block-lab' );
+	return __( 'Genesis Custom Blocks plugin error: Your version of WordPress is too old. You must be running WordPress 5.0 to use Genesis Custom Blocks.', 'block-lab' );
 }
 
 // If the WordPress version is too low, show warning and return.

@@ -3,7 +3,7 @@
  * User onboarding.
  *
  * @package   Block_Lab
- * @copyright Copyright(c) 2018, Block Lab
+ * @copyright Copyright(c) 2018, Genesis Custom Blocks
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
@@ -71,7 +71,7 @@ class Onboarding extends Component_Abstract {
 		}
 
 		/*
-		 * On the plugins screen, immediately after activating Block Lab.
+		 * On the plugins screen, immediately after activating Genesis Custom Blocks.
 		 */
 		if ( 'plugins' === $screen->id && 'true' === get_transient( 'block_lab_show_welcome' ) ) {
 			add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
@@ -140,7 +140,7 @@ class Onboarding extends Component_Abstract {
 		?>
 		<div class="block-lab-welcome block-lab-notice notice is-dismissible">
 			<h2>🖖 <?php esc_html_e( 'Welcome, traveller!', 'block-lab' ); ?></h2>
-			<p class="intro"><?php esc_html_e( 'Block Lab makes it super easy to build custom blocks for the WordPress editor.', 'block-lab' ); ?></p>
+			<p class="intro"><?php esc_html_e( 'Genesis Custom Blocks makes it super easy to build custom blocks for the WordPress editor.', 'block-lab' ); ?></p>
 			<p><strong><?php esc_html_e( 'Want to see how it\'s done?', 'block-lab' ); ?></strong> <?php esc_html_e( 'Here\'s one I prepared earlier.', 'block-lab' ); ?></p>
 			<?php
 			edit_post_link(
