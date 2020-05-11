@@ -1,9 +1,9 @@
 <?php
 /**
- * Block Lab Upgrade Page.
+ * Genesis Custom Blocks Upgrade Page.
  *
  * @package   Block_Lab
- * @copyright Copyright(c) 2020, Block Lab
+ * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
@@ -51,12 +51,12 @@ class Upgrade extends Component_Abstract {
 	}
 
 	/**
-	 * Add submenu pages to the Block Lab menu.
+	 * Add submenu pages to the Genesis Custom Blocks menu.
 	 */
 	public function add_submenu_pages() {
 		add_submenu_page(
 			'edit.php?post_type=block_lab',
-			__( 'Block Lab Pro', 'block-lab' ),
+			__( 'Genesis Custom Blocks Pro', 'block-lab' ),
 			__( 'Go Pro', 'block-lab' ),
 			'manage_options',
 			$this->slug,

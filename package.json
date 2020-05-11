@@ -1,9 +1,9 @@
 {
   "name": "block-lab",
-  "title": "Block Lab",
+  "title": "Genesis Custom Blocks",
   "version": "1.5.4",
   "description": "WordPress plugin with a simple templating system for building custom blocks.",
-  "author": "Block Lab",
+  "author": "Genesis Custom Blocks",
   "license": "GPL-2.0-or-later",
   "keywords": [
     "block-editor",
@@ -56,7 +56,7 @@
     "gulp": "^4.0.2",
     "gulp-run": "^1.7.1",
     "gulp-string-replace": "^1.1.2",
-    "husky": "^4.0.10",
+    "husky": "4.2.5",
     "jest-silent-reporter": "0.1.2",
     "merge-stream": "^2.0.0",
     "mini-css-extract-plugin": "0.8.2",
@@ -83,7 +83,11 @@
     "lint:pkg-json": "wp-scripts lint-pkg-json",
     "lint:php": "vendor/bin/phpcs",
     "lint:php:fix": "vendor/bin/phpcbf",
-    "precommit": "./bin/pre-commit.sh",
     "test:js": "wp-scripts test-unit-js --config=tests/js/jest.config.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "./bin/pre-commit.sh"
+    }
   }
 }

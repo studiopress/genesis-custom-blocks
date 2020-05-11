@@ -3,7 +3,7 @@
  * Block Post Type.
  *
  * @package   Block_Lab
- * @copyright Copyright(c) 2020, Block Lab
+ * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
@@ -186,7 +186,7 @@ class Block_Post extends Component_Abstract {
 		$labels = [
 			'name'               => _x( 'Content Blocks', 'post type general name', 'block-lab' ),
 			'singular_name'      => _x( 'Content Block', 'post type singular name', 'block-lab' ),
-			'menu_name'          => _x( 'Block Lab', 'admin menu', 'block-lab' ),
+			'menu_name'          => _x( 'Genesis Custom Blocks', 'admin menu', 'block-lab' ),
 			'name_admin_bar'     => _x( 'Block', 'add new on admin bar', 'block-lab' ),
 			'add_new'            => _x( 'Add New', 'block', 'block-lab' ),
 			'add_new_item'       => __( 'Add New Block', 'block-lab' ),
@@ -829,7 +829,7 @@ class Block_Post extends Component_Abstract {
 		<div class="template-notice">
 			<h3>✔️ <?php esc_html_e( 'Next step: Create a block template.', 'block-lab' ); ?></h3>
 			<p>
-				<?php esc_html_e( 'To display this block, Block Lab will look for this template file in your theme:', 'block-lab' ); ?>
+				<?php esc_html_e( 'To display this block, Genesis Custom Blocks will look for this template file in your theme:', 'block-lab' ); ?>
 			</p>
 			<?php
 			// Formatting to make the template paths easier to understand.

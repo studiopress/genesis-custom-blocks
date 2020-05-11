@@ -1,9 +1,9 @@
 <?php
 /**
- * Block Lab settings form for the License tab.
+ * Genesis Custom Blocks settings form for the License tab.
  *
  * @package   Block_Lab
- * @copyright Copyright(c) 2020, Block Lab
+ * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
@@ -77,7 +77,7 @@
 							__( 'No Pro license was found for this installation.', 'block-lab' ),
 							sprintf(
 								// translators: Opening and closing anchor and emphasis tags.
-								__( '%1$sGet Block Lab Pro!%2$s', 'block-lab' ),
+								__( '%1$sGet Genesis Custom Blocks Pro!%2$s', 'block-lab' ),
 								'<a href="' . add_query_arg( [ 'page' => 'block-lab-pro' ] ) . '"><em>',
 								'</em></a>'
 							)

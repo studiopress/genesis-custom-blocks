@@ -119,7 +119,7 @@ class Test_Settings extends \WP_UnitTestCase {
 		// Now that filter_input() returns the correct page, the conditional should be true, and this should enqueue the script.
 		$this->assertTrue( in_array( $this->instance->slug, $styles->queue, true ) );
 		$this->assertEquals( $this->instance->slug, $style->handle );
-		$this->assertContains( 'block-lab/css/admin.settings.css', $style->src );
+		$this->assertContains( 'css/admin.settings.css', $style->src );
 		$this->assertEquals( [], $style->deps );
 		$this->assertEquals( [], $style->extra );
 	}
@@ -136,7 +136,7 @@ class Test_Settings extends \WP_UnitTestCase {
 			'Settings',
 			'manage_options',
 			$this->instance->slug,
-			'Block Lab Settings',
+			'Genesis Custom Blocks Settings',
 		];
 
 		wp_set_current_user( $this->factory()->user->create( [ 'role' => 'author' ] ) );
@@ -209,7 +209,7 @@ class Test_Settings extends \WP_UnitTestCase {
 	 * @covers \Block_Lab\Admin\Settings::prepare_notice()
 	 */
 	public function test_prepare_notice() {
-		$notice = 'There was a problem activating your Block Lab license.';
+		$notice = 'There was a problem activating your Genesis Custom Blocks license.';
 		$this->instance->prepare_notice( $notice );
 
 		$this->assertEquals( [ $notice ], get_option( self::NOTICES_OPTION_NAME ) );

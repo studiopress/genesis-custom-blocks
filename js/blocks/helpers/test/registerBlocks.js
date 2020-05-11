@@ -21,7 +21,7 @@ const expectedArgs = {
 };
 
 describe( 'registerBlocks', () => {
-	it( 'should not register any block if there is no Block Lab block passed', () => {
+	it( 'should not register any block if there is no Genesis Custom Blocks block passed', () => {
 		registerBlocks( {}, {}, Edit );
 		expect( mockRegisterBlockType ).toHaveBeenCalledTimes( 0 );
 	} );

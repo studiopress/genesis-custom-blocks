@@ -12,8 +12,8 @@ import { getBlockLabAttributes } from './';
 /**
  * Loops through all of the blocks, but not guaranteed to be sequential.
  *
- * @param {Object} blockLab Block Lab properties, available via wp_localize_script().
- * @param {Object} blockLabBlocks The registered Block Lab blocks, available via wp_add_inline_script().
+ * @param {Object} blockLab Genesis Custom Blocks properties, available via wp_localize_script().
+ * @param {Object} blockLabBlocks The registered Genesis Custom Blocks blocks, available via wp_add_inline_script().
  * @param {Function} EditComponent The edit component to render the blocks.
  */
 const registerBlocks = ( blockLab, blockLabBlocks, EditComponent ) => {

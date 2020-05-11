@@ -3,7 +3,7 @@
  * Repeater control.
  *
  * @package   Block_Lab
- * @copyright Copyright(c) 2020, Block Lab
+ * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
@@ -82,7 +82,7 @@ class Repeater extends Control_Abstract {
 		if ( $echo && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			$value = sprintf(
 				// translators: Placeholders are the opening and closing anchor tags of a link.
-				__( '⚠️ Please use Block Lab\'s %1$srepeater functions%2$s to display repeater fields in your template.', 'block-lab' ),
+				__( '⚠️ Please use Genesis Custom Blocks\'s %1$srepeater functions%2$s to display repeater fields in your template.', 'block-lab' ),
 				'<a href="https://getblocklab.com/docs/fields/repeater/">',
 				'</a>'
 			);

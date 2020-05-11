@@ -38,7 +38,7 @@ This is a bugfix release, focused mostly on compatibility with WordPress 5.3.
 Ready for a big release? We're really happy to be introducing quite a number of highly requested features, including a PHP API for registering blocks with code, a new text field with lists and headings, and some neat workflow efficiencies when building your block. 
 
 * New: There's now a PHP API for registering blocks using code (instead of the WP Admin UI). Documentation is [here](https://github.com/getblocklab/block-lab/pull/434) for now, but more on its way soon
-* New: Classic Text control (for Block Lab Pro users)! This field is similar to Rich Text, but has a few extra options for things like lists and headings
+* New: Classic Text control (for Genesis Custom Blocks Pro users)! This field is similar to Rich Text, but has a few extra options for things like lists and headings
 * New: Duplicate fields – building your block is now so much easier, with the ability to duplicate rows
 * New: Repeater Row Count function – a helper function that returns the total amount of rows in a given repeater. Documentation [here](https://github.com/getblocklab/block-lab/pull/429)
 * New: Repeater Row Index function – a helper function that returns the current row, while looping through a repeater. Documentation [here](https://github.com/getblocklab/block-lab/pull/429)

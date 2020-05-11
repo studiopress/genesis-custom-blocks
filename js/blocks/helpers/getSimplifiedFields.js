@@ -42,7 +42,7 @@ const getSimplifiedFields = ( fields ) => {
 		);
 	}
 
-	fieldList.sort( compare ); // @todo: is this needed? Even then, it should only affect the Block Lab editor UI.
+	fieldList.sort( compare ); // @todo: is this needed? Even then, it should only affect the Genesis Custom Blocks editor UI.
 
 	return fieldList;
 };

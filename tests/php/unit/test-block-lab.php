@@ -28,7 +28,7 @@ class Test_Block_Lab extends \WP_UnitTestCase {
 	 * @covers \block_lab_php_version_text()
 	 */
 	public function test_block_lab_php_version_text() {
-		$this->assertContains( 'Block Lab plugin error:', block_lab_php_version_text() );
+		$this->assertContains( 'Genesis Custom Blocks plugin error:', block_lab_php_version_text() );
 	}
 
 	/**
@@ -41,7 +41,7 @@ class Test_Block_Lab extends \WP_UnitTestCase {
 		block_lab_wp_version_error();
 
 		$this->assertEquals(
-			'<div class="error"><p>Block Lab plugin error: Your version of WordPress is too old. You must be running WordPress 5.0 to use Block Lab.</p></div>',
+			'<div class="error"><p>Genesis Custom Blocks plugin error: Your version of WordPress is too old. You must be running WordPress 5.0 to use Genesis Custom Blocks.</p></div>',
 			ob_get_clean()
 		);
 	}
@@ -53,7 +53,7 @@ class Test_Block_Lab extends \WP_UnitTestCase {
 	 */
 	public function test_block_lab_wp_version_text() {
 		$this->assertEquals(
-			'Block Lab plugin error: Your version of WordPress is too old. You must be running WordPress 5.0 to use Block Lab.',
+			'Genesis Custom Blocks plugin error: Your version of WordPress is too old. You must be running WordPress 5.0 to use Genesis Custom Blocks.',
 			block_lab_wp_version_text()
 		);
 	}

@@ -3,7 +3,7 @@
  * Enable and validate Pro version licensing.
  *
  * @package   Block_Lab
- * @copyright Copyright(c) 2020, Block Lab
+ * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
@@ -16,14 +16,14 @@ use Block_Lab\Component_Abstract;
  */
 class License extends Component_Abstract {
 	/**
-	 * URL of the Block Lab store.
+	 * URL of the Genesis Custom Blocks store.
 	 *
 	 * @var string
 	 */
 	public $store_url;
 
 	/**
-	 * Product slug of the Pro version on the Block Lab store.
+	 * Product slug of the Pro version on the Genesis Custom Blocks store.
 	 *
 	 * @var string
 	 */
@@ -136,7 +136,7 @@ class License extends Component_Abstract {
 			'url'        => home_url(),
 		];
 
-		// Call the Block Lab store's API.
+		// Call the Genesis Custom Blocks store's API.
 		$response = wp_remote_post(
 			$this->store_url,
 			[
@@ -163,7 +163,7 @@ class License extends Component_Abstract {
 	 * @return string
 	 */
 	public function license_success_message() {
-		$message = __( 'Your Block Lab license was successfully activated!', 'block-lab' );
+		$message = __( 'Your Genesis Custom Blocks license was successfully activated!', 'block-lab' );
 		return sprintf( '<div class="notice notice-success"><p>%s</p></div>', esc_html( $message ) );
 	}
 
@@ -181,7 +181,7 @@ class License extends Component_Abstract {
 			__( 'There was a problem activating the license, but it may not be invalid. If the problem persists, please %s.', 'block-lab' ),
 			sprintf(
 				'<a href="%1$s">%2$s</a>',
-				'mailto:hi@getblocklab.com?subject=There was a problem activating my Block Lab Pro license',
+				'mailto:hi@getblocklab.com?subject=There was a problem activating my Genesis Custom Blocks Pro license',
 				esc_html__( 'contact support', 'block-lab' )
 			)
 		);
@@ -195,7 +195,7 @@ class License extends Component_Abstract {
 	 * @return string
 	 */
 	public function license_invalid_message() {
-		$message = __( 'There was a problem activating your Block Lab license.', 'block-lab' );
+		$message = __( 'There was a problem activating your Genesis Custom Blocks license.', 'block-lab' );
 		return sprintf( '<div class="notice notice-error"><p>%s</p></div>', esc_html( $message ) );
 	}
 }

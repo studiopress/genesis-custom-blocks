@@ -37,7 +37,7 @@ class Test_License extends \WP_UnitTestCase {
 	const NOTICES_OPTION_NAME = 'block_lab_notices';
 
 	/**
-	 * The option name of the Block Lab license key.
+	 * The option name of the Genesis Custom Blocks license key.
 	 *
 	 * @var string
 	 */
@@ -55,21 +55,21 @@ class Test_License extends \WP_UnitTestCase {
 	 *
 	 * @var string
 	 */
-	const EXPECTED_LICENSE_REQUEST_FAILED_NOTICE = '<div class="notice notice-error"><p>There was a problem activating the license, but it may not be invalid. If the problem persists, please <a href="mailto:hi@getblocklab.com?subject=There was a problem activating my Block Lab Pro license">contact support</a>.</p></div>';
+	const EXPECTED_LICENSE_REQUEST_FAILED_NOTICE = '<div class="notice notice-error"><p>There was a problem activating the license, but it may not be invalid. If the problem persists, please <a href="mailto:hi@getblocklab.com?subject=There was a problem activating my Genesis Custom Blocks Pro license">contact support</a>.</p></div>';
 
 	/**
 	 * The notice for when the license is invalid.
 	 *
 	 * @var string
 	 */
-	const EXPECTED_LICENSE_INVALID_NOTICE = '<div class="notice notice-error"><p>There was a problem activating your Block Lab license.</p></div>';
+	const EXPECTED_LICENSE_INVALID_NOTICE = '<div class="notice notice-error"><p>There was a problem activating your Genesis Custom Blocks license.</p></div>';
 
 	/**
 	 * The notice for when the license validation succeeds.
 	 *
 	 * @var string
 	 */
-	const EXPECTED_LICENSE_SUCCESS_NOTICE = '<div class="notice notice-success"><p>Your Block Lab license was successfully activated!</p></div>';
+	const EXPECTED_LICENSE_SUCCESS_NOTICE = '<div class="notice notice-success"><p>Your Genesis Custom Blocks license was successfully activated!</p></div>';
 
 	/**
 	 * Setup.

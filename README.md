@@ -1,4 +1,4 @@
-# Block Lab #
+# Genesis Custom Blocks #
 
 Contributors: lukecarbis, ryankienstra, Stino11, rheinardkorf
 Tags: gutenberg, blocks, block editor, fields, template
@@ -13,7 +13,7 @@ The easy way to build custom blocks for Gutenberg.
 
 ## Description ##
 
-Gutenberg, the new WordPress editor, opens up a whole new world for the way we build pages, posts, and websites with WordPress. Block Lab makes it easy to harness Gutenberg and build custom blocks the way you want them to be built. Whether you want to implement a custom design, deliver unique functionality, or even remove your dependence on other plugins, Block Lab equips you with the tools you need to hit “Publish” sooner.
+Gutenberg, the new WordPress editor, opens up a whole new world for the way we build pages, posts, and websites with WordPress. Genesis Custom Blocks makes it easy to harness Gutenberg and build custom blocks the way you want them to be built. Whether you want to implement a custom design, deliver unique functionality, or even remove your dependence on other plugins, Genesis Custom Blocks equips you with the tools you need to hit “Publish” sooner.
 
 ## Features ##
 
@@ -30,31 +30,31 @@ Let the plugin do the heavy lifting so you can use familiar WordPress developmen
 Simple to use functions, ready to render and work with the values stored through your custom block fields.
 
 ### Connect with Community ###
-Join The Lab, our free Block Lab Community on Slack. The Lab is our real-time home for sharing resources, learning, and making connections. [Learn more.](https://getblocklab.com/welcome-to-the-lab/)
+Join The Lab, our free Genesis Custom Blocks Community on Slack. The Lab is our real-time home for sharing resources, learning, and making connections. [Learn more.](https://getblocklab.com/welcome-to-the-lab/)
 
 ### Go Pro ###
-Block Lab Pro is here, with powerful features to take your block building to the next level. [Learn more.](https://getblocklab.com/block-lab-pro)
+Genesis Custom Blocks Pro is here, with powerful features to take your block building to the next level. [Learn more.](https://getblocklab.com/block-lab-pro)
 
 ## Links ##
 * [WordPress.org](https://wordpress.org/plugins/block-lab)
 * [Github](https://github.com/getblocklab/block-lab)
 * [Documentation](https://getblocklab.com/docs)
 * [Support](https://wordpress.org/support/plugin/block-lab)
-* [Block Lab Pro](https://getblocklab.com/block-lab-pro)
+* [Genesis Custom Blocks Pro](https://getblocklab.com/block-lab-pro)
 
 ## Installation ##
 ### From Within WordPress ###
 * Visit Plugins > Add New
-* Search for "Block Lab"
-* Install the Block Lab plugin
-* Activate Block Lab from your Plugins page.
+* Search for "Genesis Custom Blocks"
+* Install the Genesis Custom Blocks plugin
+* Activate Genesis Custom Blocks from your Plugins page.
 
 ### Manually ###
-* Clone Block Lab into a working directory with `https://github.com/getblocklab/block-lab.git`
+* Clone Genesis Custom Blocks into a working directory with `https://github.com/getblocklab/block-lab.git`
 * `cd` into the `block-lab` directory, and run `npm install && composer install`
 * Next, build the scripts and styles with `npm build`
 * Move the `block-lab` folder to your `/wp-content/plugins/` directory
-* Activate the Block Lab plugin through the Plugins menu in WordPress
+* Activate the Genesis Custom Blocks plugin through the Plugins menu in WordPress
 
 ## Frequently Asked Questions ###
 **Q: Do I need to write code to use this plugin?**
@@ -68,4 +68,4 @@ A: [Here](https://getblocklab.com/docs/)
 
 ## Contributing ##
 
-See [Contributing to Block Lab](https://github.com/getblocklab/block-lab/blob/develop/CONTRIBUTING.md).
+See [Contributing to Genesis Custom Blocks](https://github.com/getblocklab/block-lab/blob/develop/CONTRIBUTING.md).
