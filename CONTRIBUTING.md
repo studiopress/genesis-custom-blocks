@@ -1,8 +1,8 @@
-# Contributing to Block Lab
+# Contributing to Genesis Custom Blocks
 
 :+1::tada: First off, thanks for taking the time to contribute! :tada::+1:
 
-The following is a set of guidelines for contributing to Block Lab.  These are mostly guidelines, not rules.  Use your best judgment, and feel free to propose changes to this document in a pull request.
+The following is a set of guidelines for contributing to Genesis Custom Blocks.  These are mostly guidelines, not rules.  Use your best judgment, and feel free to propose changes to this document in a pull request.
 
 #### Table Of Contents
 
@@ -23,7 +23,7 @@ The following is a set of guidelines for contributing to Block Lab.  These are m
 
 ## Code of Conduct
 
-This project and everyone participating in it is governed by the [Block Lab Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.  Please report unacceptable behavior to [info@getblocklab.com](mailto:info@getblocklab.com).
+This project and everyone participating in it is governed by the [Genesis Custom Blocks Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.  Please report unacceptable behavior to [info@getblocklab.com](mailto:info@getblocklab.com).
 
 ## How Can I Contribute?
 
@@ -74,7 +74,7 @@ While the prerequisites above must be satisfied prior to having your pull reques
 
 ### Local Setup
 
-Block Lab development requires Node.js and follows the WordPress coding standards for PHP and JavaScript. In order to get your development environment setup quickly, simply run the following commands after cloning the plugin from Github:
+Genesis Custom Blocks development requires Node.js and follows the WordPress coding standards for PHP and JavaScript. In order to get your development environment setup quickly, simply run the following commands after cloning the plugin from Github:
 
 #### Node
 
@@ -102,4 +102,4 @@ composer install
 
 Thanks! :heart: :heart: :heart:
 
-Block Lab Team
+Genesis Custom Blocks Team
