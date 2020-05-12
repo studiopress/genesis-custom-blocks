@@ -21,7 +21,7 @@ class Import extends Component_Abstract {
 	 *
 	 * @var string
 	 */
-	public $slug = 'block-lab';
+	public $slug = 'genesis-custom-blocks';
 
 	/**
 	 * Register any hooks that this component needs.
