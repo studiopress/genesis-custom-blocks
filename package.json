@@ -16,7 +16,7 @@
     "url": "https://github.com/studiopress/genesis-custom-blocks"
   },
   "bugs": {
-    "url": "https://github.com/getblocklab/block-lab/issues"
+    "url": "https://github.com/studiopress/genesis-custom-blocks/issues"
   },
   "dependencies": {
     "classnames": "^2.2.6"
