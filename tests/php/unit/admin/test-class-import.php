@@ -423,7 +423,7 @@ class Test_Import extends Abstract_Template {
 		ob_start();
 		$this->instance->import_blocks( $blocks_to_import );
 		$output      = ob_get_clean();
-		$block_query = new \WP_Query( [ 'post_type' => 'block_lab' ] );
+		$block_query = new \WP_Query( [ 'post_type' => 'genesis_custom_block' ] );
 
 		// When the 'name' isn't passed to the method, it shouldn't import any block, but should still have the 'All Done!' message.
 		$this->assertEmpty( $block_query->found_posts );
@@ -445,7 +445,7 @@ class Test_Import extends Abstract_Template {
 		$this->assertContains( $success_message, $output );
 		$this->assertContains( $title, $output );
 
-		$block_query     = new \WP_Query( [ 'post_type' => 'block_lab' ] );
+		$block_query     = new \WP_Query( [ 'post_type' => 'genesis_custom_block' ] );
 		$block           = reset( $block_query->posts );
 		$decoded_block   = json_decode( $block->post_content );
 		$full_block_name = 'genesis-custom-blocks/' . $name;

@@ -32,7 +32,7 @@ class Test_Upgrade extends \WP_UnitTestCase {
 	 *
 	 * @var string
 	 */
-	const SUBMENU_PARENT_SLUG = 'edit.php?post_type=block_lab';
+	const SUBMENU_PARENT_SLUG = 'edit.php?post_type=genesis_custom_block';
 
 	/**
 	 * Setup.

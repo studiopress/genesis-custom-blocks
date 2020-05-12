@@ -170,7 +170,7 @@ class Test_Admin extends \WP_UnitTestCase {
 
 		$expected_url = add_query_arg(
 			[
-				'post_type' => 'block_lab',
+				'post_type' => 'genesis_custom_block',
 				'page'      => 'genesis-custom-blocks-settings',
 				'tab'       => 'license',
 			],

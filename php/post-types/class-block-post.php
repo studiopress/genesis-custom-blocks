@@ -641,7 +641,7 @@ class Block_Post extends Component_Abstract {
 								esc_url(
 									add_query_arg(
 										[
-											'post_type' => 'block_lab',
+											'post_type' => $this->slug,
 											'page'      => 'genesis-custom-blocks-pro',
 										],
 										admin_url( 'edit.php' )

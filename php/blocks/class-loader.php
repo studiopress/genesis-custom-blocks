@@ -153,7 +153,7 @@ class Loader extends Component_Abstract {
 		$author_blocks = get_posts(
 			[
 				'author'         => get_current_user_id(),
-				'post_type'      => 'block_lab',
+				'post_type'      => 'genesis_custom_block',
 				// We could use -1 here, but that could be dangerous. 99 is more than enough.
 				'posts_per_page' => 99,
 			]
