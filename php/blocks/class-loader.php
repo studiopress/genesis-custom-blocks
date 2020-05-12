@@ -2,12 +2,12 @@
 /**
  * Loader initiates the loading of new blocks.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-namespace Block_Lab\Blocks;
+namespace GenesisCustomBlocks\Blocks;
 
-use Block_Lab\Component_Abstract;
+use GenesisCustomBlocks\Component_Abstract;
 
 /**
  * Class Loader
@@ -518,7 +518,7 @@ class Loader extends Component_Abstract {
 				'<div class="notice notice-warning">%s</div>',
 				wp_kses_post(
 					// Translators: Placeholder is a file path.
-					sprintf( __( 'Template file %s not found.', 'block-lab' ), '<code>' . esc_html( $templates[0] ) . '</code>' )
+					sprintf( __( 'Template file %s not found.', 'genesis-custom-blocks' ), '<code>' . esc_html( $templates[0] ) . '</code>' )
 				)
 			);
 		}

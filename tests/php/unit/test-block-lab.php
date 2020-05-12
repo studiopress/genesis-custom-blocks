@@ -2,13 +2,13 @@
 /**
  * Test_Block_Lab
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
 /**
  * Class Test_Block_Lab
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 class Test_Block_Lab extends \WP_UnitTestCase {
 	/**
@@ -64,7 +64,7 @@ class Test_Block_Lab extends \WP_UnitTestCase {
 	 * @covers \block_lab()
 	 */
 	public function test_singleton() {
-		$this->assertEquals( 'Block_Lab\\Plugin', get_class( block_lab() ) );
+		$this->assertEquals( 'GenesisCustomBlocks\\Plugin', get_class( block_lab() ) );
 
 		// Calling block_lab() twice should return the same instance.
 		$this->assertEquals( block_lab(), block_lab() );

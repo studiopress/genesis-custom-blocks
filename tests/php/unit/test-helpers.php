@@ -2,10 +2,10 @@
 /**
  * Tests for helpers.php.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Blocks;
+use GenesisCustomBlocks\Blocks;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
 /**

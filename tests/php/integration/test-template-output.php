@@ -2,16 +2,16 @@
 /**
  * Test_Template_Output
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Blocks;
-use Block_Lab\Post_Types;
+use GenesisCustomBlocks\Blocks;
+use GenesisCustomBlocks\Post_Types;
 
 /**
  * Class Test_Template_Output
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 class Test_Template_Output extends Abstract_Attribute {
 

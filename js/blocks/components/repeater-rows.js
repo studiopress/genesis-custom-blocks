@@ -179,7 +179,7 @@ class RepeaterRows extends Component {
 											icon="no"
 											key={ `${ rowIndex }-menu` }
 											className="button-delete"
-											label={ __( 'Delete', 'block-lab' ) }
+											label={ __( 'Delete', 'genesis-custom-blocks' ) }
 											onClick={ this.removeRow( rowIndex ) }
 											disabled={ !! field.min && rows.length <= field.min }
 											isSmall
@@ -196,7 +196,7 @@ class RepeaterRows extends Component {
 											icon="arrow-up-alt2"
 											key={ `${ rowIndex }-move-up` }
 											className="button-move-up"
-											label={ __( 'Move up', 'block-lab' ) }
+											label={ __( 'Move up', 'genesis-custom-blocks' ) }
 											onClick={ this.move( rowIndex, rowIndex - 1 ) }
 											isSmall
 										/>
@@ -204,7 +204,7 @@ class RepeaterRows extends Component {
 											icon="arrow-down-alt2"
 											key={ `${ rowIndex }-move-down` }
 											className="button-move-down"
-											label={ __( 'Move down', 'block-lab' ) }
+											label={ __( 'Move down', 'genesis-custom-blocks' ) }
 											onClick={ this.move( rowIndex, rowIndex + 1 ) }
 											isSmall
 										/>

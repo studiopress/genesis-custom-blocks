@@ -2,12 +2,12 @@
 /**
  * Taxonomy control.
  *
- * @package   Block_Lab
+ * @package   GenesisCustomBlocks
  * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace Block_Lab\Blocks\Controls;
+namespace GenesisCustomBlocks\Blocks\Controls;
 
 /**
  * Class Taxonomy
@@ -33,7 +33,7 @@ class Taxonomy extends Control_Abstract {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->label = __( 'Taxonomy', 'block-lab' );
+		$this->label = __( 'Taxonomy', 'genesis-custom-blocks' );
 	}
 
 	/**
@@ -48,7 +48,7 @@ class Taxonomy extends Control_Abstract {
 		$this->settings[] = new Control_Setting(
 			[
 				'name'     => 'post_type_rest_slug',
-				'label'    => __( 'Taxonomy Type', 'block-lab' ),
+				'label'    => __( 'Taxonomy Type', 'genesis-custom-blocks' ),
 				'type'     => 'taxonomy_type_rest_slug',
 				'default'  => 'posts',
 				'sanitize' => [ $this, 'sanitize_taxonomy_type_rest_slug' ],

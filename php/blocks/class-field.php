@@ -2,12 +2,12 @@
 /**
  * Block Field.
  *
- * @package   Block_Lab
+ * @package   GenesisCustomBlocks
  * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace Block_Lab\Blocks;
+namespace GenesisCustomBlocks\Blocks;
 
 /**
  * Class Field
@@ -126,7 +126,7 @@ class Field {
 		}
 
 		if ( ! isset( $config['type'] ) ) {
-			$control_class_name  = 'Block_Lab\\Blocks\\Controls\\';
+			$control_class_name  = 'GenesisCustomBlocks\\Blocks\\Controls\\';
 			$control_class_name .= ucwords( $this->control, '_' );
 			if ( class_exists( $control_class_name ) ) {
 				/**
@@ -213,11 +213,11 @@ class Field {
 		}
 
 		if ( true === $value ) {
-			return __( 'Yes', 'block-lab' );
+			return __( 'Yes', 'genesis-custom-blocks' );
 		}
 
 		if ( false === $value ) {
-			return __( 'No', 'block-lab' );
+			return __( 'No', 'genesis-custom-blocks' );
 		}
 
 		return strval( $value );

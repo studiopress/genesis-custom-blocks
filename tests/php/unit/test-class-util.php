@@ -2,7 +2,7 @@
 /**
  * Tests for class Util.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
 /**
@@ -15,7 +15,7 @@ class Test_Util extends Abstract_Template {
 	/**
 	 * The instance to test.
 	 *
-	 * @var Block_Lab\Util
+	 * @var GenesisCustomBlocks\Util
 	 */
 	public $instance;
 
@@ -27,7 +27,7 @@ class Test_Util extends Abstract_Template {
 	public function setUp() {
 		parent::setUp();
 
-		$this->instance = new Block_Lab\Util();
+		$this->instance = new GenesisCustomBlocks\Util();
 		$this->instance->set_plugin( block_lab() );
 	}
 
@@ -49,14 +49,14 @@ class Test_Util extends Abstract_Template {
 	 * This method is normally accessed via a Plugin::__call(), as a magic method.
 	 * Like block_lab->is_pro().
 	 *
-	 * @covers \Block_Lab\Util::is_pro()
+	 * @covers \GenesisCustomBlocks\Util::is_pro()
 	 */
 	public function test_is_pro() {
-		$plugin_instance = new Block_Lab\Plugin();
+		$plugin_instance = new GenesisCustomBlocks\Plugin();
 		$plugin_instance->init();
 		$plugin_instance->plugin_loaded();
 
-		$plugin_instance->admin = new Block_Lab\Admin\Admin();
+		$plugin_instance->admin = new GenesisCustomBlocks\Admin\Admin();
 		$plugin_instance->admin->init();
 
 		$this->set_license_validity( true );
@@ -71,10 +71,10 @@ class Test_Util extends Abstract_Template {
 	/**
 	 * Test loop.
 	 *
-	 * @covers \Block_Lab\Util::loop()
+	 * @covers \GenesisCustomBlocks\Util::loop()
 	 */
 	public function test_loop() {
-		$this->assertEquals( 'Block_Lab\\Blocks\Loop', get_class( $this->instance->loop() ) );
+		$this->assertEquals( 'GenesisCustomBlocks\\Blocks\Loop', get_class( $this->instance->loop() ) );
 
 		// Calling this singleton function repeatedly should return the same instance of the Loop.
 		$this->assertEquals( $this->instance->loop(), $this->instance->loop() );
@@ -83,7 +83,7 @@ class Test_Util extends Abstract_Template {
 	/**
 	 * Test get_template_locations.
 	 *
-	 * @covers \Block_Lab\Util::get_template_locations()
+	 * @covers \GenesisCustomBlocks\Util::get_template_locations()
 	 */
 	public function test_get_template_locations() {
 		$name = 'foo-baz';
@@ -111,7 +111,7 @@ class Test_Util extends Abstract_Template {
 	/**
 	 * Test get_stylesheet_locations.
 	 *
-	 * @covers \Block_Lab\Util::get_stylesheet_locations()
+	 * @covers \GenesisCustomBlocks\Util::get_stylesheet_locations()
 	 */
 	public function test_get_stylesheet_locations() {
 		$name = 'foo-baz';
@@ -139,7 +139,7 @@ class Test_Util extends Abstract_Template {
 	/**
 	 * Test locate_template.
 	 *
-	 * @covers \Block_Lab\Util::locate_template()
+	 * @covers \GenesisCustomBlocks\Util::locate_template()
 	 */
 	public function test_locate_template() {
 		$templates                   = $this->instance->get_template_locations( $this->mock_block_name );
@@ -198,7 +198,7 @@ class Test_Util extends Abstract_Template {
 	/**
 	 * Test get_icons.
 	 *
-	 * @covers \Block_Lab\Util::get_icons()
+	 * @covers \GenesisCustomBlocks\Util::get_icons()
 	 */
 	public function test_get_icons() {
 		$icons = $this->instance->get_icons();
@@ -230,7 +230,7 @@ class Test_Util extends Abstract_Template {
 	/**
 	 * Test allowed_svg_tags.
 	 *
-	 * @covers \Block_Lab\Util::allowed_svg_tags()
+	 * @covers \GenesisCustomBlocks\Util::allowed_svg_tags()
 	 */
 	public function test_allowed_svg_tags() {
 		$this->assertEquals(
@@ -277,7 +277,7 @@ class Test_Util extends Abstract_Template {
 	/**
 	 * Test get_post_type_slug.
 	 *
-	 * @covers \Block_Lab\Util::get_post_type_slug()
+	 * @covers \GenesisCustomBlocks\Util::get_post_type_slug()
 	 */
 	public function test_get_post_type_slug() {
 		$this->assertEquals( 'block_lab', $this->instance->get_post_type_slug() );
@@ -289,7 +289,7 @@ class Test_Util extends Abstract_Template {
 	/**
 	 * Test get_url_from_path.
 	 *
-	 * @covers \Block_Lab\Util::get_url_from_path()
+	 * @covers \GenesisCustomBlocks\Util::get_url_from_path()
 	 */
 	public function test_get_url_from_path() {
 		$subdirectory_path = 'wp-content/theme/blocks/test-block-here.css';

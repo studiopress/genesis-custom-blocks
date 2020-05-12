@@ -2,10 +2,10 @@
 /**
  * Tests for class Number.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Blocks\Controls;
+use GenesisCustomBlocks\Blocks\Controls;
 
 /**
  * Tests for class Number.
@@ -42,7 +42,7 @@ class Test_Number extends \WP_UnitTestCase {
 	/**
 	 * Test __construct.
 	 *
-	 * @covers \Block_Lab\Blocks\Controls\Number::__construct()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\Number::__construct()
 	 */
 	public function test_construct() {
 		$this->assertEquals( 'Number', $this->instance->label );
@@ -54,7 +54,7 @@ class Test_Number extends \WP_UnitTestCase {
 	 *
 	 * The parent constructor calls register_settings(), so there's no need to call it again here.
 	 *
-	 * @covers \Block_Lab\Blocks\Controls\Number::register_settings()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\Number::register_settings()
 	 */
 	public function test_register_settings() {
 		$expected_settings = [

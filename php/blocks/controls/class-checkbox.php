@@ -2,12 +2,12 @@
 /**
  * Radio control.
  *
- * @package   Block_Lab
+ * @package   GenesisCustomBlocks
  * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace Block_Lab\Blocks\Controls;
+namespace GenesisCustomBlocks\Blocks\Controls;
 
 /**
  * Class Checkbox
@@ -35,7 +35,7 @@ class Checkbox extends Control_Abstract {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->label = __( 'Checkbox', 'block-lab' );
+		$this->label = __( 'Checkbox', 'genesis-custom-blocks' );
 	}
 
 	/**
@@ -50,7 +50,7 @@ class Checkbox extends Control_Abstract {
 		$this->settings[] = new Control_Setting(
 			[
 				'name'     => 'default',
-				'label'    => __( 'Default Value', 'block-lab' ),
+				'label'    => __( 'Default Value', 'genesis-custom-blocks' ),
 				'type'     => 'checkbox',
 				'default'  => '0',
 				'sanitize' => [ $this, 'sanitize_checkbox' ],

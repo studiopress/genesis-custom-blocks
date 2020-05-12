@@ -2,10 +2,10 @@
 /**
  * Tests for class Block.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Blocks;
+use GenesisCustomBlocks\Blocks;
 
 /**
  * Tests for class Block.
@@ -113,7 +113,7 @@ class Test_Block extends \WP_UnitTestCase {
 	/**
 	 * Test __construct.
 	 *
-	 * @covers \Block_Lab\Blocks\Block::__construct()
+	 * @covers \GenesisCustomBlocks\Blocks\Block::__construct()
 	 */
 	public function test_construct() {
 		$this->assertEquals( 'simple-test-block', $this->instance->name );
@@ -122,7 +122,7 @@ class Test_Block extends \WP_UnitTestCase {
 	/**
 	 * Test from_json.
 	 *
-	 * @covers \Block_Lab\Blocks\Block::from_json()
+	 * @covers \GenesisCustomBlocks\Blocks\Block::from_json()
 	 */
 	public function test_from_json() {
 		$this->instance->from_json( self::JSON );
@@ -159,7 +159,7 @@ class Test_Block extends \WP_UnitTestCase {
 	/**
 	 * Test to_json.
 	 *
-	 * @covers \Block_Lab\Blocks\Block::to_json()
+	 * @covers \GenesisCustomBlocks\Blocks\Block::to_json()
 	 */
 	public function test_to_json() {
 		$this->instance->from_json( self::JSON );

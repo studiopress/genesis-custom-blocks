@@ -142,7 +142,7 @@ class FetchInput extends Component {
 					} );
 				}
 			} else {
-				this.props.debouncedSpeak( __( 'No results.', 'block-lab' ), 'assertive' );
+				this.props.debouncedSpeak( __( 'No results.', 'genesis-custom-blocks' ), 'assertive' );
 			}
 		} ).catch( () => {
 			if ( this.suggestionsRequest === request ) {
@@ -169,7 +169,7 @@ class FetchInput extends Component {
 		}
 
 		if ( ! isValid ) {
-			this.inputRef.current.setCustomValidity( sprintf( __( 'Invalid %s', 'block-lab' ), this.props.field.control ) );
+			this.inputRef.current.setCustomValidity( sprintf( __( 'Invalid %s', 'genesis-custom-blocks' ), this.props.field.control ) );
 			this.inputRef.current.reportValidity();
 		} else {
 			this.inputRef.current.setCustomValidity( '' );

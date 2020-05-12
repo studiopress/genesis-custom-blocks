@@ -2,10 +2,10 @@
 /**
  * Abstract test class, used for testing functions that get templates.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Blocks;
+use GenesisCustomBlocks\Blocks;
 
 /**
  * Abstract test class.

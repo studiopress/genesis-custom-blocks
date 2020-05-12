@@ -2,7 +2,7 @@
 /**
  * Tests for class Plugin.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
 /**
@@ -26,7 +26,7 @@ class Test_Plugin extends \WP_UnitTestCase {
 	 */
 	public function setUp() {
 		parent::setUp();
-		$this->instance = new Block_Lab\Plugin();
+		$this->instance = new GenesisCustomBlocks\Plugin();
 		$this->instance->init();
 		$this->instance->plugin_loaded();
 	}
@@ -34,10 +34,10 @@ class Test_Plugin extends \WP_UnitTestCase {
 	/**
 	 * Test init.
 	 *
-	 * @covers \Block_Lab\Plugin::init()
+	 * @covers \GenesisCustomBlocks\Plugin::init()
 	 */
 	public function test_init() {
-		$plugin_instance = new Block_Lab\Plugin();
+		$plugin_instance = new GenesisCustomBlocks\Plugin();
 		$plugin_instance->init();
 		$plugin_instance->plugin_loaded();
 
@@ -47,17 +47,17 @@ class Test_Plugin extends \WP_UnitTestCase {
 		$util_property->setAccessible( true );
 		$util_class = $util_property->getValue( $this->instance );
 
-		$this->assertEquals( 'Block_Lab\Util', get_class( $util_class ) );
+		$this->assertEquals( 'GenesisCustomBlocks\Util', get_class( $util_class ) );
 	}
 
 	/**
 	 * Test plugin_loaded.
 	 *
-	 * @covers \Block_Lab\Plugin::plugin_loaded()
+	 * @covers \GenesisCustomBlocks\Plugin::plugin_loaded()
 	 */
 	public function test_plugin_loaded() {
 		$this->instance->plugin_loaded();
-		$this->assertEquals( 'Block_Lab\Admin\Admin', get_class( $this->instance->admin ) );
+		$this->assertEquals( 'GenesisCustomBlocks\Admin\Admin', get_class( $this->instance->admin ) );
 	}
 
 	/**
@@ -68,10 +68,10 @@ class Test_Plugin extends \WP_UnitTestCase {
 	 * This method, is_pro(), is called in the Plugin class.
 	 * So this ensures that the magic method refers the call to the Util class.
 	 *
-	 * @covers \Block_Lab\Util::is_pro()
+	 * @covers \GenesisCustomBlocks\Util::is_pro()
 	 */
 	public function test_is_pro() {
-		$this->instance->admin = new Block_Lab\Admin\Admin();
+		$this->instance->admin = new GenesisCustomBlocks\Admin\Admin();
 		$this->instance->admin->init();
 		$this->set_license_validity( true );
 		$this->assertTrue( $this->instance->is_pro() );
@@ -86,7 +86,7 @@ class Test_Plugin extends \WP_UnitTestCase {
 	 * This is also essentially the same test as in Test_Util.
 	 * But this also tests that the __call() magic method in Plugin works.
 	 *
-	 * @covers \Block_Lab\Util::get_template_locations()
+	 * @covers \GenesisCustomBlocks\Util::get_template_locations()
 	 */
 	public function test_get_template_locations() {
 		$name = 'foo-baz';

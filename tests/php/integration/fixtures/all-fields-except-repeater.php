@@ -2,7 +2,7 @@
 /**
  * A mock template for a block, testing all fields except the repeater.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
 // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaping could interfere with testing block_value().

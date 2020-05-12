@@ -2,14 +2,14 @@
 /**
  * Enable and validate Pro version licensing.
  *
- * @package   Block_Lab
+ * @package   GenesisCustomBlocks
  * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace Block_Lab\Admin;
+namespace GenesisCustomBlocks\Admin;
 
-use Block_Lab\Component_Abstract;
+use GenesisCustomBlocks\Component_Abstract;
 
 /**
  * Class License
@@ -163,7 +163,7 @@ class License extends Component_Abstract {
 	 * @return string
 	 */
 	public function license_success_message() {
-		$message = __( 'Your Genesis Custom Blocks license was successfully activated!', 'block-lab' );
+		$message = __( 'Your Genesis Custom Blocks license was successfully activated!', 'genesis-custom-blocks' );
 		return sprintf( '<div class="notice notice-success"><p>%s</p></div>', esc_html( $message ) );
 	}
 
@@ -178,11 +178,11 @@ class License extends Component_Abstract {
 	public function license_request_failed_message() {
 		$message = sprintf(
 			/* translators: %s is an HTML link to contact support */
-			__( 'There was a problem activating the license, but it may not be invalid. If the problem persists, please %s.', 'block-lab' ),
+			__( 'There was a problem activating the license, but it may not be invalid. If the problem persists, please %s.', 'genesis-custom-blocks' ),
 			sprintf(
 				'<a href="%1$s">%2$s</a>',
 				'mailto:hi@getblocklab.com?subject=There was a problem activating my Genesis Custom Blocks Pro license',
-				esc_html__( 'contact support', 'block-lab' )
+				esc_html__( 'contact support', 'genesis-custom-blocks' )
 			)
 		);
 
@@ -195,7 +195,7 @@ class License extends Component_Abstract {
 	 * @return string
 	 */
 	public function license_invalid_message() {
-		$message = __( 'There was a problem activating your Genesis Custom Blocks license.', 'block-lab' );
+		$message = __( 'There was a problem activating your Genesis Custom Blocks license.', 'genesis-custom-blocks' );
 		return sprintf( '<div class="notice notice-error"><p>%s</p></div>', esc_html( $message ) );
 	}
 }

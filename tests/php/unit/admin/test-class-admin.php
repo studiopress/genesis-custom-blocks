@@ -2,10 +2,10 @@
 /**
  * Tests for class Admin.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Admin;
+use GenesisCustomBlocks\Admin;
 use Brain\Monkey;
 
 /**
@@ -53,13 +53,13 @@ class Test_Admin extends \WP_UnitTestCase {
 	/**
 	 * Test init.
 	 *
-	 * @covers \Block_Lab\Admin\Admin::init()
+	 * @covers \GenesisCustomBlocks\Admin\Admin::init()
 	 */
 	public function test_init() {
 		$this->set_license_validity( false );
 		$this->instance->init();
-		$settings_class = 'Block_Lab\Admin\Settings';
-		$license_class  = 'Block_Lab\Admin\License';
+		$settings_class = 'GenesisCustomBlocks\Admin\Settings';
+		$license_class  = 'GenesisCustomBlocks\Admin\License';
 		$this->assertEquals( $settings_class, get_class( $this->instance->settings ) );
 		$this->assertEquals( $license_class, get_class( $this->instance->license ) );
 
@@ -74,7 +74,7 @@ class Test_Admin extends \WP_UnitTestCase {
 		$this->assertArrayHasKey( $license_class, $components_value );
 
 		// Because the Pro license isn't active, there should be an Upgrade class instantiated.
-		$upgrade_class = 'Block_Lab\Admin\Upgrade';
+		$upgrade_class = 'GenesisCustomBlocks\Admin\Upgrade';
 		$this->assertEquals( $upgrade_class, get_class( $this->instance->upgrade ) );
 		$this->assertArrayHasKey( $upgrade_class, $components_value );
 		$this->assertFalse( $this->did_settings_redirect_occur() );
@@ -95,7 +95,7 @@ class Test_Admin extends \WP_UnitTestCase {
 	/**
 	 * Test register_hooks.
 	 *
-	 * @covers \Block_Lab\Admin\Admin::register_hooks()
+	 * @covers \GenesisCustomBlocks\Admin\Admin::register_hooks()
 	 */
 	public function test_register_hooks() {
 		$this->instance->register_hooks();
@@ -105,7 +105,7 @@ class Test_Admin extends \WP_UnitTestCase {
 	/**
 	 * Test enqueue_scripts.
 	 *
-	 * @covers \Block_Lab\Admin\Admin::enqueue_scripts()
+	 * @covers \GenesisCustomBlocks\Admin\Admin::enqueue_scripts()
 	 */
 	public function test_enqueue_scripts() {
 		block_lab()->register_component( $this->instance );
@@ -125,7 +125,7 @@ class Test_Admin extends \WP_UnitTestCase {
 	/**
 	 * Test maybe_settings_redirect.
 	 *
-	 * @covers \Block_Lab\Admin\Admin::maybe_settings_redirect()
+	 * @covers \GenesisCustomBlocks\Admin\Admin::maybe_settings_redirect()
 	 */
 	public function test_maybe_settings_redirect() {
 		Monkey\Functions\expect( 'filter_input' )

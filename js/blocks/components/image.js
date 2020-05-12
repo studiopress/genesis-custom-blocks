@@ -29,9 +29,9 @@ const Image = withSelect( ( select, ownProps ) => {
 	if ( media && media.alt ) {
 		imageAlt = media.alt;
 	} else if ( media && media.source_url ) {
-		imageAlt = sprintf( __( 'This image has no alt attribute, but its src is %s', 'block-lab' ), media.source_url );
+		imageAlt = sprintf( __( 'This image has no alt attribute, but its src is %s', 'genesis-custom-blocks' ), media.source_url );
 	} else {
-		imageAlt = __( 'This image has no alt attribute', 'block-lab' );
+		imageAlt = __( 'This image has no alt attribute', 'genesis-custom-blocks' );
 	}
 
 	return {
@@ -85,7 +85,7 @@ const Image = withSelect( ( select, ownProps ) => {
 				<img className="bl-image__img" src={ imageSrc } alt={ imageAlt } />
 			) }
 			{ ! imageSrc && (
-				<Placeholder className="bl-image__placeholder" icon="format-image" label={ __( 'Image', 'block-lab' ) } instructions={ __( 'Drag an image, upload a new one or select a file from your library.', 'block-lab' ) }>
+				<Placeholder className="bl-image__placeholder" icon="format-image" label={ __( 'Image', 'genesis-custom-blocks' ) } instructions={ __( 'Drag an image, upload a new one or select a file from your library.', 'genesis-custom-blocks' ) }>
 					<MediaUploadCheck>
 						<DropZone
 							onFilesDrop={ ( files ) => {
@@ -111,7 +111,7 @@ const Image = withSelect( ( select, ownProps ) => {
 									accept="image/*"
 									multiple={ false }
 								>
-									{ __( 'Upload', 'block-lab' ) }
+									{ __( 'Upload', 'genesis-custom-blocks' ) }
 								</FormFileUpload>
 								<MediaUpload
 									gallery={ false }
@@ -127,7 +127,7 @@ const Image = withSelect( ( select, ownProps ) => {
 												className="editor-media-placeholder__button"
 												onClick={ open }
 											>
-												{ __( 'Media Library', 'block-lab' ) }
+												{ __( 'Media Library', 'genesis-custom-blocks' ) }
 											</Button>
 										</div>
 									) }
@@ -144,7 +144,7 @@ const Image = withSelect( ( select, ownProps ) => {
 					className="bl-image__remove"
 					onClick={ removeImage }
 				>
-					{ __( 'Remove', 'block-lab' ) }
+					{ __( 'Remove', 'genesis-custom-blocks' ) }
 				</Button>
 			) }
 		</BaseControl>

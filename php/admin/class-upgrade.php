@@ -2,14 +2,14 @@
 /**
  * Genesis Custom Blocks Upgrade Page.
  *
- * @package   Block_Lab
+ * @package   GenesisCustomBlocks
  * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace Block_Lab\Admin;
+namespace GenesisCustomBlocks\Admin;
 
-use Block_Lab\Component_Abstract;
+use GenesisCustomBlocks\Component_Abstract;
 
 /**
  * Class Upgrade

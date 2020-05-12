@@ -2,17 +2,17 @@
 /**
  * Test_Post_Capabilities
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Post_Types;
+use GenesisCustomBlocks\Post_Types;
 
 /**
  * Class Test_Post_Capabilities
  *
  * Tests the capabilities for the 'block_lab' post type.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 class Test_Post_Capabilities extends \WP_UnitTestCase {
 
@@ -105,7 +105,7 @@ class Test_Post_Capabilities extends \WP_UnitTestCase {
 	 * Tests that the capabilities are correct for the post type.
 	 *
 	 * @dataProvider get_users
-	 * @covers \Block_Lab\Post_Types\Block_post::register_post_type()
+	 * @covers \GenesisCustomBlocks\Post_Types\Block_post::register_post_type()
 	 *
 	 * @param string $user_role The user role, like 'editor'.
 	 * @param string $capability The capability to test for, like 'edit_post'.

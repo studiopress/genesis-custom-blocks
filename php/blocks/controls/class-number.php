@@ -2,12 +2,12 @@
 /**
  * Number control.
  *
- * @package   Block_Lab
+ * @package   GenesisCustomBlocks
  * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace Block_Lab\Blocks\Controls;
+namespace GenesisCustomBlocks\Blocks\Controls;
 
 /**
  * Class Text
@@ -35,7 +35,7 @@ class Number extends Control_Abstract {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->label = __( 'Number', 'block-lab' );
+		$this->label = __( 'Number', 'genesis-custom-blocks' );
 	}
 
 	/**
@@ -50,7 +50,7 @@ class Number extends Control_Abstract {
 		$this->settings[] = new Control_Setting(
 			[
 				'name'     => 'default',
-				'label'    => __( 'Default Value', 'block-lab' ),
+				'label'    => __( 'Default Value', 'genesis-custom-blocks' ),
 				'type'     => 'number',
 				'default'  => '',
 				'sanitize' => function ( $value ) {
