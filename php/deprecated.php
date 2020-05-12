@@ -42,8 +42,8 @@ function block_lab_deprecated_function( $function, $version, $replacement ) {
  * @return array
  */
 function block_lab_get_icons() {
-	block_lab_deprecated_function( 'block_lab_get_icons', '1.3.5', 'block_lab()->get_icons()' );
-	return block_lab()->get_icons();
+	block_lab_deprecated_function( 'block_lab_get_icons', '1.3.5', 'custom_blocks()->get_icons()' );
+	return custom_blocks()->get_icons();
 }
 
 /**
@@ -54,6 +54,6 @@ function block_lab_get_icons() {
  * @return array
  */
 function block_lab_allowed_svg_tags() {
-	block_lab_deprecated_function( 'block_lab_allowed_svg_tags', '1.3.5', 'block_lab()->allowed_svg_tags()' );
-	return block_lab()->allowed_svg_tags();
+	block_lab_deprecated_function( 'block_lab_allowed_svg_tags', '1.3.5', 'custom_blocks()->allowed_svg_tags()' );
+	return custom_blocks()->allowed_svg_tags();
 }

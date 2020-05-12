@@ -20,8 +20,8 @@
 			</th>
 			<td>
 				<?php
-				if ( block_lab()->is_pro() ) {
-					$license = block_lab()->admin->license->get_license();
+				if ( custom_blocks()->is_pro() ) {
+					$license = custom_blocks()->admin->license->get_license();
 
 					$limit = __( 'unlimited', 'genesis-custom-blocks' );
 					if ( isset( $license['license_limit'] ) && intval( $license['license_limit'] ) > 0 ) {

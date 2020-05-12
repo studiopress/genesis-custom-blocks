@@ -80,7 +80,7 @@ class Test_License extends \WP_UnitTestCase {
 		parent::setUp();
 		Monkey\setUp();
 		$this->instance = new Admin\License();
-		$this->instance->set_plugin( block_lab() );
+		$this->instance->set_plugin( custom_blocks() );
 	}
 
 	/**
