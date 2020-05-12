@@ -56,25 +56,25 @@ class Admin extends Component_Abstract {
 	 */
 	public function init() {
 		$this->settings = new Settings();
-		custom_blocks()->register_component( $this->settings );
+		genesis_custom_blocks()->register_component( $this->settings );
 
 		$this->license = new License();
-		custom_blocks()->register_component( $this->license );
+		genesis_custom_blocks()->register_component( $this->license );
 
 		$this->onboarding = new Onboarding();
-		custom_blocks()->register_component( $this->onboarding );
+		genesis_custom_blocks()->register_component( $this->onboarding );
 
 		$show_pro_nag = apply_filters( 'block_lab_show_pro_nag', true );
-		if ( $show_pro_nag && ! custom_blocks()->is_pro() ) {
+		if ( $show_pro_nag && ! genesis_custom_blocks()->is_pro() ) {
 			$this->upgrade = new Upgrade();
-			custom_blocks()->register_component( $this->upgrade );
+			genesis_custom_blocks()->register_component( $this->upgrade );
 		} else {
 			$this->maybe_settings_redirect();
 		}
 
 		if ( defined( 'WP_LOAD_IMPORTERS' ) && WP_LOAD_IMPORTERS ) {
 			$this->import = new Import();
-			custom_blocks()->register_component( $this->import );
+			genesis_custom_blocks()->register_component( $this->import );
 		}
 	}
 

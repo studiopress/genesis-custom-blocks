@@ -75,12 +75,12 @@ class License extends Component_Abstract {
 		if ( ! $this->is_valid() ) {
 			$key = '';
 			if ( isset( $license['license'] ) && self::REQUEST_FAILED === $license['license'] ) {
-				custom_blocks()->admin->settings->prepare_notice( $this->license_request_failed_message() );
+				genesis_custom_blocks()->admin->settings->prepare_notice( $this->license_request_failed_message() );
 			} else {
-				custom_blocks()->admin->settings->prepare_notice( $this->license_invalid_message() );
+				genesis_custom_blocks()->admin->settings->prepare_notice( $this->license_invalid_message() );
 			}
 		} else {
-			custom_blocks()->admin->settings->prepare_notice( $this->license_success_message() );
+			genesis_custom_blocks()->admin->settings->prepare_notice( $this->license_success_message() );
 		}
 
 		return $key;

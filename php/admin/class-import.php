@@ -139,7 +139,7 @@ class Import extends Component_Abstract {
 						esc_url(
 							admin_url(
 								add_query_arg(
-									[ 'post_type' => custom_blocks()->get_post_type_slug() ],
+									[ 'post_type' => genesis_custom_blocks()->get_post_type_slug() ],
 									'edit.php'
 								)
 							)
@@ -289,7 +289,7 @@ class Import extends Component_Abstract {
 			$post_id = false;
 
 			if ( $this->block_exists( $block_namespace ) ) {
-				$post = get_page_by_path( $block['name'], OBJECT, custom_blocks()->get_post_type_slug() );
+				$post = get_page_by_path( $block['name'], OBJECT, genesis_custom_blocks()->get_post_type_slug() );
 				if ( $post ) {
 					$post_id = $post->ID;
 				}
@@ -302,7 +302,7 @@ class Import extends Component_Abstract {
 				'post_name'    => $block['name'],
 				'post_content' => wp_slash( $json ),
 				'post_status'  => 'publish',
-				'post_type'    => custom_blocks()->get_post_type_slug(),
+				'post_type'    => genesis_custom_blocks()->get_post_type_slug(),
 			];
 
 			if ( $post_id ) {

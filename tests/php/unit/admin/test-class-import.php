@@ -45,7 +45,7 @@ class Test_Import extends Abstract_Template {
 		$this->instance                 = new Admin\Import();
 		$this->import_file_valid_json   = dirname( __DIR__ ) . '/fixtures/mock-import-valid-format.txt';
 		$this->import_file_invalid_json = dirname( __DIR__ ) . '/fixtures/mock-import-invalid-format.txt';
-		$this->instance->set_plugin( custom_blocks() );
+		$this->instance->set_plugin( genesis_custom_blocks() );
 	}
 
 	/**
