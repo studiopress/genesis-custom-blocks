@@ -8,7 +8,7 @@ var fs = require( 'fs' );
 var config = JSON.parse( fs.readFileSync( './package.json' ) );
 
 gulp.task( 'version', function () {
-	var pluginStream = gulp.src( [ 'block-lab.php' ] )
+	var pluginStream = gulp.src( [ 'genesis-custom-blocks.php' ] )
 		.pipe( replace( new RegExp( /Version:\s*(.*)/, 'g' ), "Version: " + config.version ) )
 		.pipe(gulp.dest('./package/trunk/'))
 		.pipe(gulp.dest('./'))
