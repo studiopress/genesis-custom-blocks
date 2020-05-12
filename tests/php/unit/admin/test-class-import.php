@@ -348,7 +348,7 @@ class Test_Import extends Abstract_Template {
 		$name   = 'block-name';
 		$title  = 'Example Block Title';
 		$blocks = [
-			"block-lab/$name" => [
+			"genesis-custom-blocks/$name" => [
 				'name'  => $name,
 				'title' => $title,
 			],
@@ -358,8 +358,8 @@ class Test_Import extends Abstract_Template {
 		$output = ob_get_clean();
 
 		$this->assertContains( '<p>Please select the blocks to import:</p>', $output );
-		$this->assertContains( 'name="block-lab/' . $name . '"', $output );
-		$this->assertContains( 'id="block-lab/' . $name . '"', $output );
+		$this->assertContains( 'name="genesis-custom-blocks/' . $name . '"', $output );
+		$this->assertContains( 'id="genesis-custom-blocks/' . $name . '"', $output );
 		$this->assertContains( '<strong>' . $title . '</strong>', $output );
 	}
 
@@ -415,7 +415,7 @@ class Test_Import extends Abstract_Template {
 		$title            = 'Example Block Title';
 		$success_message  = '<p>Successfully imported';
 		$blocks_to_import = [
-			"block-lab/$name" => [
+			"genesis-custom-blocks/$name" => [
 				'title' => $title,
 			],
 		];
@@ -431,7 +431,7 @@ class Test_Import extends Abstract_Template {
 		$this->assertNotContains( $success_message, $output );
 
 		$blocks_to_import = [
-			"block-lab/$name" => [
+			"genesis-custom-blocks/$name" => [
 				'name'  => $name,
 				'title' => $title,
 			],
@@ -448,7 +448,7 @@ class Test_Import extends Abstract_Template {
 		$block_query     = new \WP_Query( [ 'post_type' => 'block_lab' ] );
 		$block           = reset( $block_query->posts );
 		$decoded_block   = json_decode( $block->post_content );
-		$full_block_name = 'block-lab/' . $name;
+		$full_block_name = 'genesis-custom-blocks/' . $name;
 		$block_data      = $decoded_block->$full_block_name;
 
 		$this->assertEquals( $name, $block_data->name );
@@ -461,7 +461,7 @@ class Test_Import extends Abstract_Template {
 	 * @covers \GenesisCustomBlocks\Admin\Import::block_exists()
 	 */
 	public function test_block_exists() {
-		$block_namespace = 'block-lab/block-name';
+		$block_namespace = 'genesis-custom-blocks/block-name';
 
 		$this->assertFalse( $this->invoke_protected_method( 'block_exists', [ $block_namespace ] ) );
 

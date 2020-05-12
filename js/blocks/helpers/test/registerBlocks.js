@@ -27,7 +27,7 @@ describe( 'registerBlocks', () => {
 	} );
 
 	it( 'should register a single block', () => {
-		const blockName = 'block-lab/test-post';
+		const blockName = 'genesis-custom-blocks/test-post';
 		const blockLabBlocks = {};
 		blockLabBlocks[ blockName ] = {
 			title: 'Test Post',
@@ -46,12 +46,12 @@ describe( 'registerBlocks', () => {
 		registerBlocks(
 			{},
 			{
-				'block-lab/example-post': {
+				'genesis-custom-blocks/example-post': {
 					title: 'An Example Post',
 					category: 'widget',
 					keywords: [ 'foobaz', 'example' ],
 				},
-				'block-lab/example-email': {
+				'genesis-custom-blocks/example-email': {
 					title: 'Example Email',
 					category: 'widget',
 					keywords: [ 'example-keyword', 'another' ],

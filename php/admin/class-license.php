@@ -51,7 +51,7 @@ class License extends Component_Abstract {
 	 */
 	public function init() {
 		$this->store_url    = 'https://getblocklab.com';
-		$this->product_slug = 'block-lab-pro';
+		$this->product_slug = 'genesis-custom-blocks-pro';
 	}
 
 	/**

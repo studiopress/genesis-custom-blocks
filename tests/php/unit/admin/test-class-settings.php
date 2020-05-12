@@ -161,7 +161,7 @@ class Test_Settings extends \WP_UnitTestCase {
 		global $wp_registered_settings;
 
 		$this->instance->register_settings();
-		$expected_option_group = 'block-lab-license-key';
+		$expected_option_group = 'genesis-custom-blocks-license-key';
 		$expected_option_name  = 'block_lab_license_key';
 		$this->assertEquals(
 			[
@@ -185,7 +185,7 @@ class Test_Settings extends \WP_UnitTestCase {
 		$this->instance->render_page();
 		$output = ob_get_clean();
 
-		$this->assertContains( '<div class="wrap block-lab-settings">', $output );
+		$this->assertContains( '<div class="wrap genesis-custom-blocks-settings">', $output );
 		$this->assertContains( '<a href="?tab=license" title="License" class="nav-tab nav-tab-active dashicons-before dashicons-nametag">', $output );
 	}
 

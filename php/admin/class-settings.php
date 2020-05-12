@@ -21,7 +21,7 @@ class Settings extends Component_Abstract {
 	 *
 	 * @var string
 	 */
-	public $slug = 'block-lab-settings';
+	public $slug = 'genesis-custom-blocks-settings';
 
 	/**
 	 * Register any hooks that this component needs.
@@ -70,7 +70,7 @@ class Settings extends Component_Abstract {
 	 * Register Genesis Custom Blocks settings.
 	 */
 	public function register_settings() {
-		register_setting( 'block-lab-license-key', 'block_lab_license_key' );
+		register_setting( 'genesis-custom-blocks-license-key', 'block_lab_license_key' );
 	}
 
 	/**
@@ -78,7 +78,7 @@ class Settings extends Component_Abstract {
 	 */
 	public function render_page() {
 		?>
-		<div class="wrap block-lab-settings">
+		<div class="wrap genesis-custom-blocks-settings">
 			<?php
 			$this->render_page_header();
 			include genesis_custom_blocks()->get_path() . 'php/views/license.php';
@@ -100,7 +100,7 @@ class Settings extends Component_Abstract {
 			<a href="https://getblocklab.com/docs/" target="_blank" class="nav-tab dashicons-before dashicons-info">
 				<?php esc_html_e( 'Documentation', 'genesis-custom-blocks' ); ?>
 			</a>
-			<a href="https://wordpress.org/support/plugin/block-lab/" target="_blank" class="nav-tab dashicons-before dashicons-sos">
+			<a href="https://wordpress.org/support/plugin/genesis-custom-blocks/" target="_blank" class="nav-tab dashicons-before dashicons-sos">
 				<?php esc_html_e( 'Help', 'genesis-custom-blocks' ); ?>
 			</a>
 		</h2>

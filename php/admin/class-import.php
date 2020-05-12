@@ -69,7 +69,7 @@ class Import extends Component_Abstract {
 					);
 				}
 
-				$cache_dir = $upload_dir['basedir'] . '/block-lab';
+				$cache_dir = $upload_dir['basedir'] . '/genesis-custom-blocks';
 				$file      = wp_import_handle_upload();
 
 				if ( $this->validate_upload( $file ) ) {
@@ -87,7 +87,7 @@ class Import extends Component_Abstract {
 				}
 				break;
 			case 2:
-				$cache_dir = wp_get_upload_dir()['basedir'] . '/block-lab';
+				$cache_dir = wp_get_upload_dir()['basedir'] . '/genesis-custom-blocks';
 				$file      = [ 'file' => $cache_dir . '/import.json' ];
 
 				if ( $this->validate_upload( $file ) ) {
@@ -109,7 +109,7 @@ class Import extends Component_Abstract {
 		}
 
 		$html = ob_get_clean();
-		echo '<div class="wrap block-lab-import">' . $html . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<div class="wrap genesis-custom-blocks-import">' . $html . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -228,7 +228,7 @@ class Import extends Component_Abstract {
 			}
 			wp_nonce_field();
 			?>
-			<input type="hidden" name="import" value="block-lab">
+			<input type="hidden" name="import" value="genesis-custom-blocks">
 			<input type="hidden" name="step" value="2">
 			<p class="submit"><input type="submit" value="<?php esc_attr_e( 'Import Selected', 'genesis-custom-blocks' ); ?>" class="button button-primary"></p>
 		</form>
@@ -330,7 +330,7 @@ class Import extends Component_Abstract {
 	/**
 	 * Check if block already exists.
 	 *
-	 * @param string $block_namespace The JSON key for the block. e.g. block-lab/foo.
+	 * @param string $block_namespace The JSON key for the block. e.g. genesis-custom-blocks/foo.
 	 *
 	 * @return bool
 	 */

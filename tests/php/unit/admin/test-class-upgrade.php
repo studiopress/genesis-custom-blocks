@@ -160,7 +160,7 @@ class Test_Upgrade extends \WP_UnitTestCase {
 		$this->instance->render_page();
 		$output = ob_get_clean();
 
-		$this->assertContains( '<div class="wrap block-lab-pro">', $output );
+		$this->assertContains( '<div class="wrap genesis-custom-blocks-pro">', $output );
 		$this->assertContains( '<h2 class="screen-reader-text">', $output );
 	}
 }

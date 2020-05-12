@@ -642,7 +642,7 @@ class Block_Post extends Component_Abstract {
 									add_query_arg(
 										[
 											'post_type' => 'block_lab',
-											'page'      => 'block-lab-pro',
+											'page'      => 'genesis-custom-blocks-pro',
 										],
 										admin_url( 'edit.php' )
 									)
@@ -1239,7 +1239,7 @@ class Block_Post extends Component_Abstract {
 
 		$block = new Block( get_the_ID() );
 		?>
-		<div class="block-lab-pub-section hide-if-no-js">
+		<div class="genesis-custom-blocks-pub-section hide-if-no-js">
 			<?php esc_html_e( 'Post Types:', 'genesis-custom-blocks' ); ?> <span class="post-types-display"></span>
 			<a href="#post-types-select" class="edit-post-types" role="button">
 				<span aria-hidden="true"><?php esc_html_e( 'Edit', 'genesis-custom-blocks' ); ?></span>

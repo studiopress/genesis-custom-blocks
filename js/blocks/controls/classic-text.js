@@ -19,7 +19,7 @@ const BlockLabClassicTextControl = ( props ) => {
 		<BaseControl
 			label={ field.label }
 			id={ `bl-classic-text-${ instanceId }` }
-			className="block-lab-classic-text-control"
+			className="genesis-custom-blocks-classic-text-control"
 			help={ field.help }
 		>
 			<TinyMCE

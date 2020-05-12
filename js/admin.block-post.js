@@ -26,7 +26,7 @@
 
 			$( '.block-fields-rows' ).append( row );
 			$( '.block-no-fields' ).hide();
-			$( '.block-lab-add-fields' ).hide();
+			$( '.genesis-custom-blocks-add-fields' ).hide();
 
 			edit.trigger( 'click' );
 			label.data( 'defaultValue', label.val() );
@@ -69,7 +69,7 @@
 			label.select();
 		} );
 
-		$( '.block-lab-pub-section .edit-post-types' ).on( 'click', function() {
+		$( '.genesis-custom-blocks-pub-section .edit-post-types' ).on( 'click', function() {
 			const excludedPostTypes = $( '#block-excluded-post-types' ).val().split( ',' ).filter( Boolean );
 
 			$( '.post-types-select-items input' ).prop( 'checked', true );
@@ -78,11 +78,11 @@
 				$( '.post-types-select-items input[value="' + postType + '"]' ).prop( 'checked', false );
 			}
 
-			$( '.block-lab-pub-section .post-types-select' ).slideDown( 200 );
+			$( '.genesis-custom-blocks-pub-section .post-types-select' ).slideDown( 200 );
 			$( this ).hide();
 		} );
 
-		$( '.block-lab-pub-section .save-post-types' ).on( 'click', function() {
+		$( '.genesis-custom-blocks-pub-section .save-post-types' ).on( 'click', function() {
 			const checked = $( '.post-types-select-items input:not(:checked)' ),
 				postTypes = [];
 			for ( const input of checked ) {
@@ -93,13 +93,13 @@
 
 			blockPostTypesInit();
 
-			$( '.block-lab-pub-section .post-types-select' ).slideUp( 200 );
-			$( '.block-lab-pub-section .edit-post-types' ).show();
+			$( '.genesis-custom-blocks-pub-section .post-types-select' ).slideUp( 200 );
+			$( '.genesis-custom-blocks-pub-section .edit-post-types' ).show();
 		} );
 
-		$( '.block-lab-pub-section .button-cancel' ).on( 'click', function() {
-			$( '.block-lab-pub-section .post-types-select' ).slideUp( 200 );
-			$( '.block-lab-pub-section .edit-post-types' ).show();
+		$( '.genesis-custom-blocks-pub-section .button-cancel' ).on( 'click', function() {
+			$( '.genesis-custom-blocks-pub-section .post-types-select' ).slideUp( 200 );
+			$( '.genesis-custom-blocks-pub-section .edit-post-types' ).show();
 		} );
 
 		$( '#block_properties .block-properties-icon-select span' ).on( 'click', function() {
@@ -324,7 +324,7 @@
 	};
 
 	const blockPostTypesInit = function() {
-		if ( 0 === $( '.block-lab-pub-section' ).length ) {
+		if ( 0 === $( '.genesis-custom-blocks-pub-section' ).length ) {
 			return;
 		}
 

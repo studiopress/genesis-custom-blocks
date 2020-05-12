@@ -105,12 +105,12 @@ class Admin extends Component_Abstract {
 	public function maybe_settings_redirect() {
 		$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
 
-		if ( 'block-lab-pro' === $page ) {
+		if ( 'genesis-custom-blocks-pro' === $page ) {
 			wp_safe_redirect(
 				add_query_arg(
 					[
 						'post_type' => 'block_lab',
-						'page'      => 'block-lab-settings',
+						'page'      => 'genesis-custom-blocks-settings',
 						'tab'       => 'license',
 					],
 					admin_url( 'edit.php' )

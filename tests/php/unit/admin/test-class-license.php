@@ -121,7 +121,7 @@ class Test_License extends \WP_UnitTestCase {
 
 		// Now that init() was called, the properties should have values.
 		$this->assertEquals( 'https://getblocklab.com', $this->instance->store_url );
-		$this->assertEquals( 'block-lab-pro', $this->instance->product_slug );
+		$this->assertEquals( 'genesis-custom-blocks-pro', $this->instance->product_slug );
 	}
 
 	/**

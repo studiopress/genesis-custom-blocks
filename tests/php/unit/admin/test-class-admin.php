@@ -27,7 +27,7 @@ class Test_Admin extends \WP_UnitTestCase {
 	 *
 	 * @var string
 	 */
-	const BLOCK_LAB_PRO_PAGE = 'block-lab-pro';
+	const BLOCK_LAB_PRO_PAGE = 'genesis-custom-blocks-pro';
 
 	/**
 	 * Setup.
@@ -171,7 +171,7 @@ class Test_Admin extends \WP_UnitTestCase {
 		$expected_url = add_query_arg(
 			[
 				'post_type' => 'block_lab',
-				'page'      => 'block-lab-settings',
+				'page'      => 'genesis-custom-blocks-settings',
 				'tab'       => 'license',
 			],
 			admin_url( 'edit.php' )

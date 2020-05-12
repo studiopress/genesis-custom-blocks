@@ -17,8 +17,8 @@
 				<div class="cta_license_form_wrapper">
 					<form class="license_key_form" method="post" action="options.php">
 						<?php
-						register_setting( 'block-lab-license-key', 'block_lab_license_key' );
-						settings_fields( 'block-lab-license-key' );
+						register_setting( 'genesis-custom-blocks-license-key', 'block_lab_license_key' );
+						settings_fields( 'genesis-custom-blocks-license-key' );
 						?>
 						<input class="input_text" placeholder="Enter license key" name="block_lab_license_key" type="text" />
 						<input class="button" type="submit" value="<?php esc_html_e( 'Activate', 'genesis-custom-blocks' ); ?>" />
@@ -64,7 +64,7 @@
 	<div class="tile_body">
 			<h4><?php esc_html_e( '★★ Loving Genesis Custom Blocks? ★★', 'genesis-custom-blocks' ); ?></h4>
 			<p><?php esc_html_e( 'If Genesis Custom Blocks has helped you build amazing custom blocks for your site, leave us a review on WordPress.org.', 'genesis-custom-blocks' ); ?></p>
-			<a class="button" target="_blank" href="https://wordpress.org/plugins/block-lab/#reviews"><?php esc_html_e( '★ Leave Review ★', 'genesis-custom-blocks' ); ?></a>
+			<a class="button" target="_blank" href="https://wordpress.org/plugins/genesis-custom-blocks/#reviews"><?php esc_html_e( '★ Leave Review ★', 'genesis-custom-blocks' ); ?></a>
 		</div>
 	</div>
 	<!-- Dashboard Tile -->

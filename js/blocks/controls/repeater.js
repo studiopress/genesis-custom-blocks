@@ -36,7 +36,7 @@ const BlockLabRepeaterControl = ( props ) => {
 	}
 
 	return (
-		<BaseControl className="block-lab-repeater" label={ field.label } id={ `bl-repeater-${ instanceId }` } help={ field.help }>
+		<BaseControl className="genesis-custom-blocks-repeater" label={ field.label } id={ `bl-repeater-${ instanceId }` } help={ field.help }>
 			<RepeaterRows
 				rows={ rows }
 				field={ field }
@@ -44,7 +44,7 @@ const BlockLabRepeaterControl = ( props ) => {
 				parentBlockProps={ parentBlockProps }
 				parentBlock={ parentBlock }
 			/>
-			<div className="block-lab-repeater--row-add">
+			<div className="genesis-custom-blocks-repeater--row-add">
 				<IconButton
 					key={ `${ field.name }-repeater-insert` }
 					icon="insert"
