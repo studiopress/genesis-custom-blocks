@@ -1,8 +1,8 @@
 {
-    "name": "getblocklab/block-lab",
+    "name": "studiopress/genesis-custom-blocks",
     "type": "wordpress-plugin",
     "description": "The easy way to build custom blocks for Gutenberg.",
-    "homepage": "https://github.com/getblocklab/block-lab",
+    "homepage": "https://github.com/studiopress/genesis-custom-blocks",
     "license": "GPL-2.0",
     "require": {
         "php": "^5.6 || ^7"

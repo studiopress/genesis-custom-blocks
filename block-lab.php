@@ -14,7 +14,7 @@
  * Author URI: https://getblocklab.com
  * License: GPL2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: block-lab
+ * Text Domain: genesis-custom-blocks
  * Domain Path: languages
  */
 
@@ -46,7 +46,7 @@ function block_lab_php_version_error() {
  * @return string
  */
 function block_lab_php_version_text() {
-	return __( 'Genesis Custom Blocks plugin error: Your version of PHP is too old to run this plugin. You must be running PHP 5.4 or higher.', 'block-lab' );
+	return __( 'Genesis Custom Blocks plugin error: Your version of PHP is too old to run this plugin. You must be running PHP 5.4 or higher.', 'genesis-custom-blocks' );
 }
 
 // If the PHP version is too low, show warning and return.
@@ -75,7 +75,7 @@ function block_lab_wp_version_error() {
  * @return string
  */
 function block_lab_wp_version_text() {
-	return __( 'Genesis Custom Blocks plugin error: Your version of WordPress is too old. You must be running WordPress 5.0 to use Genesis Custom Blocks.', 'block-lab' );
+	return __( 'Genesis Custom Blocks plugin error: Your version of WordPress is too old. You must be running WordPress 5.0 to use Genesis Custom Blocks.', 'genesis-custom-blocks' );
 }
 
 // If the WordPress version is too low, show warning and return.
@@ -115,7 +115,7 @@ block_lab()
 	->set_basename( plugin_basename( __FILE__ ) )
 	->set_directory( plugin_dir_path( __FILE__ ) )
 	->set_file( __FILE__ )
-	->set_slug( 'block-lab' )
+	->set_slug( 'genesis-custom-blocks' )
 	->set_url( plugin_dir_url( __FILE__ ) )
 	->set_version( __FILE__ )
 	->init();
