@@ -171,7 +171,7 @@ class Test_Helpers extends \WP_UnitTestCase {
 			'title'    => 'Example Block',
 		];
 
-		$loader                 = Mockery::mock( Blocks\Loader::class );
+		$loader                         = Mockery::mock( Blocks\Loader::class );
 		genesis_custom_blocks()->loader = $loader;
 		$loader->expects()->add_block( $expected_default_config );
 		block_lab_add_block( $block_name );
@@ -212,7 +212,7 @@ class Test_Helpers extends \WP_UnitTestCase {
 			'settings' => [],
 		];
 
-		$loader                 = Mockery::mock( Blocks\Loader::class );
+		$loader                         = Mockery::mock( Blocks\Loader::class );
 		genesis_custom_blocks()->loader = $loader;
 		$loader->expects()->add_field( $block_name, $expected_default_config )->once();
 		block_lab_add_field( $block_name, $field_name );
