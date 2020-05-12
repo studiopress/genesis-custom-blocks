@@ -2,14 +2,14 @@
 /**
  * Genesis Custom Blocks Importer.
  *
- * @package   Block_Lab
+ * @package   GenesisCustomBlocks
  * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace Block_Lab\Admin;
+namespace GenesisCustomBlocks\Admin;
 
-use Block_Lab\Component_Abstract;
+use GenesisCustomBlocks\Component_Abstract;
 
 /**
  * Class Import
@@ -36,8 +36,8 @@ class Import extends Component_Abstract {
 	public function register_importer() {
 		register_importer(
 			$this->slug,
-			__( 'Genesis Custom Blocks', 'block-lab' ),
-			__( 'Import custom blocks created with Genesis Custom Blocks.', 'block-lab' ),
+			__( 'Genesis Custom Blocks', 'genesis-custom-blocks' ),
+			__( 'Import custom blocks created with Genesis Custom Blocks.', 'genesis-custom-blocks' ),
 			[ $this, 'render_page' ]
 		);
 	}
@@ -64,8 +64,8 @@ class Import extends Component_Abstract {
 
 				if ( ! isset( $upload_dir['basedir'] ) ) {
 					$this->render_import_error(
-						__( 'Sorry, there was an error uploading the file.', 'block-lab' ),
-						__( 'Upload base directory not set.', 'block-lab' )
+						__( 'Sorry, there was an error uploading the file.', 'genesis-custom-blocks' ),
+						__( 'Upload base directory not set.', 'genesis-custom-blocks' )
 					);
 				}
 
@@ -117,7 +117,7 @@ class Import extends Component_Abstract {
 	 */
 	public function render_page_header() {
 		?>
-		<h2><?php esc_html_e( 'Import Genesis Custom Blocks', 'block-lab' ); ?></h2>
+		<h2><?php esc_html_e( 'Import Genesis Custom Blocks', 'genesis-custom-blocks' ); ?></h2>
 		<?php
 	}
 
@@ -126,14 +126,14 @@ class Import extends Component_Abstract {
 	 */
 	public function render_welcome() {
 		?>
-		<p><?php esc_html_e( 'Welcome! This importer processes Genesis Custom Blocks JSON files, adding custom blocks to this site.', 'block-lab' ); ?></p>
-		<p><?php esc_html_e( 'Choose a JSON (.json) file to upload, then click Upload file and import.', 'block-lab' ); ?></p>
+		<p><?php esc_html_e( 'Welcome! This importer processes Genesis Custom Blocks JSON files, adding custom blocks to this site.', 'genesis-custom-blocks' ); ?></p>
+		<p><?php esc_html_e( 'Choose a JSON (.json) file to upload, then click Upload file and import.', 'genesis-custom-blocks' ); ?></p>
 		<p>
 			<?php
 			echo wp_kses(
 				sprintf(
 					/* translators: %1$s: an opening anchor tag, %2$s: a closing anchor tag */
-					__( 'This JSON file should come from the export link or bulk action in the %1$sContent Blocks screen%2$s, not from the main Export tool.', 'block-lab' ),
+					__( 'This JSON file should come from the export link or bulk action in the %1$sContent Blocks screen%2$s, not from the main Export tool.', 'genesis-custom-blocks' ),
 					sprintf(
 						'<a href="%1$s">',
 						esc_url(
@@ -174,7 +174,7 @@ class Import extends Component_Abstract {
 				'<p>%s</p>',
 				sprintf(
 					// translators: placeholder refers to title of custom block.
-					__( 'Successfully imported %1$s.', 'block-lab' ),
+					__( 'Successfully imported %1$s.', 'genesis-custom-blocks' ),
 					'<strong>' . esc_html( $title ) . '</strong>'
 				)
 			)
@@ -198,7 +198,7 @@ class Import extends Component_Abstract {
 	 */
 	public function render_done() {
 		?>
-		<p><?php esc_html_e( 'All done!', 'block-lab' ); ?></p>
+		<p><?php esc_html_e( 'All done!', 'genesis-custom-blocks' ); ?></p>
 		<?php
 	}
 
@@ -209,13 +209,13 @@ class Import extends Component_Abstract {
 	 */
 	public function render_choose_blocks( $blocks ) {
 		?>
-		<p><?php esc_html_e( 'Please select the blocks to import:', 'block-lab' ); ?></p>
+		<p><?php esc_html_e( 'Please select the blocks to import:', 'genesis-custom-blocks' ); ?></p>
 		<form>
 			<?php
 			foreach ( $blocks as $block_namespace => $block ) {
-				$action = __( 'Import', 'block-lab' );
+				$action = __( 'Import', 'genesis-custom-blocks' );
 				if ( $this->block_exists( $block_namespace ) ) {
-					$action = __( 'Replace', 'block-lab' );
+					$action = __( 'Replace', 'genesis-custom-blocks' );
 				}
 				?>
 				<p>
@@ -230,7 +230,7 @@ class Import extends Component_Abstract {
 			?>
 			<input type="hidden" name="import" value="block-lab">
 			<input type="hidden" name="step" value="2">
-			<p class="submit"><input type="submit" value="<?php esc_attr_e( 'Import Selected', 'block-lab' ); ?>" class="button button-primary"></p>
+			<p class="submit"><input type="submit" value="<?php esc_attr_e( 'Import Selected', 'genesis-custom-blocks' ); ?>" class="button button-primary"></p>
 		</form>
 		<?php
 	}
@@ -244,16 +244,16 @@ class Import extends Component_Abstract {
 	public function validate_upload( $file ) {
 		if ( isset( $file['error'] ) ) {
 			$this->render_import_error(
-				__( 'Sorry, there was an error uploading the file.', 'block-lab' ),
+				__( 'Sorry, there was an error uploading the file.', 'genesis-custom-blocks' ),
 				$file['error']
 			);
 			return false;
 		} elseif ( ! file_exists( $file['file'] ) ) {
 			$this->render_import_error(
-				__( 'Sorry, there was an error uploading the file.', 'block-lab' ),
+				__( 'Sorry, there was an error uploading the file.', 'genesis-custom-blocks' ),
 				sprintf(
 					// translators: placeholder refers to a file directory.
-					__( 'The export file could not be found at %1$s. It is likely that this was caused by a permissions problem.', 'block-lab' ),
+					__( 'The export file could not be found at %1$s. It is likely that this was caused by a permissions problem.', 'genesis-custom-blocks' ),
 					'<code>' . esc_html( $file['file'] ) . '</code>'
 				)
 			);
@@ -266,8 +266,8 @@ class Import extends Component_Abstract {
 
 		if ( ! is_array( $data ) ) {
 			$this->render_import_error(
-				__( 'Sorry, there was an error processing the file.', 'block-lab' ),
-				__( 'Invalid JSON.', 'block-lab' )
+				__( 'Sorry, there was an error processing the file.', 'genesis-custom-blocks' ),
+				__( 'Invalid JSON.', 'genesis-custom-blocks' )
 			);
 			return false;
 		}
@@ -314,7 +314,7 @@ class Import extends Component_Abstract {
 				$this->render_import_error(
 					sprintf(
 						// translators: placeholder refers to title of custom block.
-						__( 'Error importing %s.', 'block-lab' ),
+						__( 'Error importing %s.', 'genesis-custom-blocks' ),
 						$block['title']
 					),
 					$post->get_error_message()

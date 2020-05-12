@@ -11,5 +11,5 @@ import { setLocaleData } from '@wordpress/i18n';
 import { registerBlocks } from './helpers';
 import { Edit } from './components';
 
-setLocaleData( { '': {} }, 'block-lab' );
+setLocaleData( { '': {} }, 'genesis-custom-blocks' );
 registerBlocks( blockLab, blockLabBlocks, Edit );

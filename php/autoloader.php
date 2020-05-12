@@ -2,7 +2,7 @@
 /**
  * Plugin Autoloader
  *
- * @package   Block_Lab
+ * @package   GenesisCustomBlocks
  * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
@@ -20,7 +20,7 @@ spl_autoload_register(
 		$class_trait = preg_match( '/Trait$/', $class ) ? 'trait-' : 'class-';
 
 		// If we're not in the plugin's namespace then just return.
-		if ( 'Block_Lab' !== $root ) {
+		if ( 'GenesisCustomBlocks' !== $root ) {
 			return;
 		}
 

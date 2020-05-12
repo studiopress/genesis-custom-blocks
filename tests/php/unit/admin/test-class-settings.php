@@ -2,10 +2,10 @@
 /**
  * Tests for class Settings.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Admin;
+use GenesisCustomBlocks\Admin;
 use Brain\Monkey;
 
 /**
@@ -64,7 +64,7 @@ class Test_Settings extends \WP_UnitTestCase {
 	/**
 	 * Test register_hooks.
 	 *
-	 * @covers \Block_Lab\Admin\Settings::register_hooks()
+	 * @covers \GenesisCustomBlocks\Admin\Settings::register_hooks()
 	 */
 	public function test_register_hooks() {
 		$this->instance->register_hooks();
@@ -77,7 +77,7 @@ class Test_Settings extends \WP_UnitTestCase {
 	/**
 	 * Test enqueue_scripts.
 	 *
-	 * @covers \Block_Lab\Admin\Settings::enqueue_scripts()
+	 * @covers \GenesisCustomBlocks\Admin\Settings::enqueue_scripts()
 	 */
 	public function test_enqueue_scripts() {
 		$this->instance->enqueue_scripts();
@@ -127,7 +127,7 @@ class Test_Settings extends \WP_UnitTestCase {
 	/**
 	 * Test add_submenu_pages.
 	 *
-	 * @covers \Block_Lab\Admin\Settings::add_submenu_pages()
+	 * @covers \GenesisCustomBlocks\Admin\Settings::add_submenu_pages()
 	 */
 	public function test_add_submenu_pages() {
 		global $submenu;
@@ -155,7 +155,7 @@ class Test_Settings extends \WP_UnitTestCase {
 	/**
 	 * Test register_settings.
 	 *
-	 * @covers \Block_Lab\Admin\Settings::register_settings()
+	 * @covers \GenesisCustomBlocks\Admin\Settings::register_settings()
 	 */
 	public function test_register_settings() {
 		global $wp_registered_settings;
@@ -178,7 +178,7 @@ class Test_Settings extends \WP_UnitTestCase {
 	/**
 	 * Test render_page.
 	 *
-	 * @covers \Block_Lab\Admin\Settings::render_page()
+	 * @covers \GenesisCustomBlocks\Admin\Settings::render_page()
 	 */
 	public function test_render_page() {
 		ob_start();
@@ -192,7 +192,7 @@ class Test_Settings extends \WP_UnitTestCase {
 	/**
 	 * Test render_page_header.
 	 *
-	 * @covers \Block_Lab\Admin\Settings::render_page_header()
+	 * @covers \GenesisCustomBlocks\Admin\Settings::render_page_header()
 	 */
 	public function test_render_page_header() {
 		ob_start();
@@ -206,7 +206,7 @@ class Test_Settings extends \WP_UnitTestCase {
 	/**
 	 * Test prepare_notice.
 	 *
-	 * @covers \Block_Lab\Admin\Settings::prepare_notice()
+	 * @covers \GenesisCustomBlocks\Admin\Settings::prepare_notice()
 	 */
 	public function test_prepare_notice() {
 		$notice = 'There was a problem activating your Genesis Custom Blocks license.';
@@ -233,7 +233,7 @@ class Test_Settings extends \WP_UnitTestCase {
 	/**
 	 * Test show_notices.
 	 *
-	 * @covers \Block_Lab\Admin\Settings::show_notices()
+	 * @covers \GenesisCustomBlocks\Admin\Settings::show_notices()
 	 */
 	public function test_show_notices() {
 		ob_start();

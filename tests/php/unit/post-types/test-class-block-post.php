@@ -2,11 +2,11 @@
 /**
  * Tests for class Block_Post.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Post_Types;
-use Block_Lab\Blocks\Controls;
+use GenesisCustomBlocks\Post_Types;
+use GenesisCustomBlocks\Blocks\Controls;
 
 /**
  * Tests for class Block_Post.
@@ -45,7 +45,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	/**
 	 * Test register_hooks.
 	 *
-	 * @covers \Block_Lab\Post_Types\Block_Post::register_hooks()
+	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::register_hooks()
 	 */
 	public function test_register_hooks() {
 		$this->instance->register_hooks();
@@ -75,12 +75,12 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	/**
 	 * Test register_controls.
 	 *
-	 * @covers \Block_Lab\Post_Types\Block_Post::register_controls()
+	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::register_controls()
 	 */
 	public function test_register_controls() {
 		$this->instance->register_controls();
 		foreach ( $this->instance->controls as $control_type => $instance ) {
-			$this->assertContains( 'Block_Lab\Blocks\Controls\\', get_class( $instance ) );
+			$this->assertContains( 'GenesisCustomBlocks\Blocks\Controls\\', get_class( $instance ) );
 		}
 
 		// Because the pro license isn't active, the 'user' control should not display.
@@ -91,18 +91,18 @@ class Test_Block_Post extends \WP_UnitTestCase {
 		$this->instance->register_controls();
 
 		// The pro license is active, so the 'user' and 'post' controls should be registered.
-		$this->assertEquals( 'Block_Lab\Blocks\Controls\Post', get_class( $this->instance->controls['post'] ) );
-		$this->assertEquals( 'Block_Lab\Blocks\Controls\Taxonomy', get_class( $this->instance->controls['taxonomy'] ) );
-		$this->assertEquals( 'Block_Lab\Blocks\Controls\User', get_class( $this->instance->controls['user'] ) );
+		$this->assertEquals( 'GenesisCustomBlocks\Blocks\Controls\Post', get_class( $this->instance->controls['post'] ) );
+		$this->assertEquals( 'GenesisCustomBlocks\Blocks\Controls\Taxonomy', get_class( $this->instance->controls['taxonomy'] ) );
+		$this->assertEquals( 'GenesisCustomBlocks\Blocks\Controls\User', get_class( $this->instance->controls['user'] ) );
 	}
 
 	/**
 	 * Test get_control.
 	 *
-	 * @covers \Block_Lab\Post_Types\Block_Post::get_control()
+	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::get_control()
 	 */
 	public function test_get_control() {
-		$namespace = 'Block_Lab\Blocks\Controls\\';
+		$namespace = 'GenesisCustomBlocks\Blocks\Controls\\';
 		$this->assertEquals( $namespace . 'Post', get_class( $this->instance->get_control( 'post' ) ) );
 		$this->assertEquals( $namespace . 'Taxonomy', get_class( $this->instance->get_control( 'taxonomy' ) ) );
 		$this->assertEquals( $namespace . 'User', get_class( $this->instance->get_control( 'user' ) ) );
@@ -114,7 +114,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	/**
 	 * Test get_field_value.
 	 *
-	 * @covers \Block_Lab\Post_Types\Block_Post::get_field_value()
+	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::get_field_value()
 	 */
 	public function test_get_field_value() {
 		$invalid_login    = 'asdfg';
@@ -159,7 +159,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	/**
 	 * Test get_capabilities.
 	 *
-	 * @covers \Block_Lab\Post_Types\Block_Post::get_capabilities()
+	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::get_capabilities()
 	 */
 	public function test_get_capabilities() {
 		$capabilities = $this->instance->get_capabilities();
@@ -169,7 +169,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	/**
 	 * Test add_meta_boxes.
 	 *
-	 * @covers \Block_Lab\Post_Types\Block_Post::add_meta_boxes()
+	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::add_meta_boxes()
 	 */
 	public function test_add_meta_boxes() {
 		global $wp_meta_boxes;
@@ -190,7 +190,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	/**
 	 * Test render_properties_meta_box.
 	 *
-	 * @covers \Block_Lab\Post_Types\Block_Post::render_properties_meta_box()
+	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::render_properties_meta_box()
 	 */
 	public function test_render_properties_meta_box() {
 		$this->load_dummy_block();
@@ -210,7 +210,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	/**
 	 * Test render_fields_meta_box.
 	 *
-	 * @covers \Block_Lab\Post_Types\Block_Post::render_fields_meta_box()
+	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::render_fields_meta_box()
 	 */
 	public function test_render_fields_meta_box() {
 		$this->load_dummy_block();
@@ -228,7 +228,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	/**
 	 * Test render_template_meta_box.
 	 *
-	 * @covers \Block_Lab\Post_Types\Block_Post::render_template_meta_box()
+	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::render_template_meta_box()
 	 */
 	public function test_render_template_meta_box() {
 		$this->load_dummy_block();

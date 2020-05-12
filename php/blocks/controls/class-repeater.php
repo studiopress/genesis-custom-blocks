@@ -2,12 +2,12 @@
 /**
  * Repeater control.
  *
- * @package   Block_Lab
+ * @package   GenesisCustomBlocks
  * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace Block_Lab\Blocks\Controls;
+namespace GenesisCustomBlocks\Blocks\Controls;
 
 /**
  * Class Repeater
@@ -36,7 +36,7 @@ class Repeater extends Control_Abstract {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->label = __( 'Repeater', 'block-lab' );
+		$this->label = __( 'Repeater', 'genesis-custom-blocks' );
 	}
 
 	/**
@@ -49,7 +49,7 @@ class Repeater extends Control_Abstract {
 		$this->settings[] = new Control_Setting(
 			[
 				'name'     => 'min',
-				'label'    => __( 'Minimum Rows', 'block-lab' ),
+				'label'    => __( 'Minimum Rows', 'genesis-custom-blocks' ),
 				'type'     => 'number_non_negative',
 				'sanitize' => [ $this, 'sanitize_number' ],
 			]
@@ -57,7 +57,7 @@ class Repeater extends Control_Abstract {
 		$this->settings[] = new Control_Setting(
 			[
 				'name'     => 'max',
-				'label'    => __( 'Maximum Rows', 'block-lab' ),
+				'label'    => __( 'Maximum Rows', 'genesis-custom-blocks' ),
 				'type'     => 'number_non_negative',
 				'sanitize' => [ $this, 'sanitize_number' ],
 			]
@@ -82,7 +82,7 @@ class Repeater extends Control_Abstract {
 		if ( $echo && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			$value = sprintf(
 				// translators: Placeholders are the opening and closing anchor tags of a link.
-				__( '⚠️ Please use Genesis Custom Blocks\'s %1$srepeater functions%2$s to display repeater fields in your template.', 'block-lab' ),
+				__( '⚠️ Please use Genesis Custom Blocks\'s %1$srepeater functions%2$s to display repeater fields in your template.', 'genesis-custom-blocks' ),
 				'<a href="https://getblocklab.com/docs/fields/repeater/">',
 				'</a>'
 			);

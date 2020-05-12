@@ -2,10 +2,10 @@
 /**
  * Tests for class License.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Admin;
+use GenesisCustomBlocks\Admin;
 use Brain\Monkey;
 
 /**
@@ -100,7 +100,7 @@ class Test_License extends \WP_UnitTestCase {
 	/**
 	 * Test register_hooks.
 	 *
-	 * @covers \Block_Lab\Admin\License::register_hooks()
+	 * @covers \GenesisCustomBlocks\Admin\License::register_hooks()
 	 */
 	public function test_register_hooks() {
 		$this->instance->register_hooks();
@@ -110,7 +110,7 @@ class Test_License extends \WP_UnitTestCase {
 	/**
 	 * Test init.
 	 *
-	 * @covers \Block_Lab\Admin\License::init()
+	 * @covers \GenesisCustomBlocks\Admin\License::init()
 	 */
 	public function test_init() {
 		// Before init() is called, these properties should not have values.
@@ -127,7 +127,7 @@ class Test_License extends \WP_UnitTestCase {
 	/**
 	 * Test save_license_key.
 	 *
-	 * @covers \Block_Lab\Admin\License::save_license_key()
+	 * @covers \GenesisCustomBlocks\Admin\License::save_license_key()
 	 */
 	public function test_save_license_key() {
 		$mock_invalid_license_key = '0000000';
@@ -184,7 +184,7 @@ class Test_License extends \WP_UnitTestCase {
 	/**
 	 * Test is_valid.
 	 *
-	 * @covers \Block_Lab\Admin\License::is_valid()
+	 * @covers \GenesisCustomBlocks\Admin\License::is_valid()
 	 */
 	public function test_is_valid() {
 		// The transient is not set at all, so this should be false.
@@ -224,7 +224,7 @@ class Test_License extends \WP_UnitTestCase {
 	/**
 	 * Test get_license.
 	 *
-	 * @covers \Block_Lab\Admin\License::get_license()
+	 * @covers \GenesisCustomBlocks\Admin\License::get_license()
 	 */
 	public function test_get_license() {
 		$this->instance->init();
@@ -272,7 +272,7 @@ class Test_License extends \WP_UnitTestCase {
 	/**
 	 * Test activate_license.
 	 *
-	 * @covers \Block_Lab\Admin\License::activate_license()
+	 * @covers \GenesisCustomBlocks\Admin\License::activate_license()
 	 */
 	public function test_activate_license() {
 		$this->instance->init();
@@ -312,7 +312,7 @@ class Test_License extends \WP_UnitTestCase {
 	/**
 	 * Test license_success_message.
 	 *
-	 * @covers \Block_Lab\Admin\License::license_success_message()
+	 * @covers \GenesisCustomBlocks\Admin\License::license_success_message()
 	 */
 	public function test_license_success_message() {
 		$this->assertEquals(
@@ -324,7 +324,7 @@ class Test_License extends \WP_UnitTestCase {
 	/**
 	 * Test license_request_failed_message.
 	 *
-	 * @covers \Block_Lab\Admin\License::license_request_failed_message()
+	 * @covers \GenesisCustomBlocks\Admin\License::license_request_failed_message()
 	 */
 	public function test_license_request_failed_message() {
 		$this->assertEquals(
@@ -336,7 +336,7 @@ class Test_License extends \WP_UnitTestCase {
 	/**
 	 * Test license_invalid_message.
 	 *
-	 * @covers \Block_Lab\Admin\License::license_invalid_message()
+	 * @covers \GenesisCustomBlocks\Admin\License::license_invalid_message()
 	 */
 	public function test_license_invalid_message() {
 		$this->assertEquals(

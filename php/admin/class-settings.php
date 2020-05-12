@@ -2,14 +2,14 @@
 /**
  * Genesis Custom Blocks Settings.
  *
- * @package   Block_Lab
+ * @package   GenesisCustomBlocks
  * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace Block_Lab\Admin;
+namespace GenesisCustomBlocks\Admin;
 
-use Block_Lab\Component_Abstract;
+use GenesisCustomBlocks\Component_Abstract;
 
 /**
  * Class Settings
@@ -58,8 +58,8 @@ class Settings extends Component_Abstract {
 	public function add_submenu_pages() {
 		add_submenu_page(
 			'edit.php?post_type=' . block_lab()->get_post_type_slug(),
-			__( 'Genesis Custom Blocks Settings', 'block-lab' ),
-			__( 'Settings', 'block-lab' ),
+			__( 'Genesis Custom Blocks Settings', 'genesis-custom-blocks' ),
+			__( 'Settings', 'genesis-custom-blocks' ),
 			'manage_options',
 			$this->slug,
 			[ $this, 'render_page' ]
@@ -94,14 +94,14 @@ class Settings extends Component_Abstract {
 		?>
 		<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 		<h2 class="nav-tab-wrapper">
-			<a href="<?php echo esc_url( add_query_arg( 'tab', 'license' ) ); ?>" title="<?php esc_attr_e( 'License', 'block-lab' ); ?>" class="nav-tab nav-tab-active dashicons-before dashicons-nametag">
-				<?php esc_html_e( 'License', 'block-lab' ); ?>
+			<a href="<?php echo esc_url( add_query_arg( 'tab', 'license' ) ); ?>" title="<?php esc_attr_e( 'License', 'genesis-custom-blocks' ); ?>" class="nav-tab nav-tab-active dashicons-before dashicons-nametag">
+				<?php esc_html_e( 'License', 'genesis-custom-blocks' ); ?>
 			</a>
 			<a href="https://getblocklab.com/docs/" target="_blank" class="nav-tab dashicons-before dashicons-info">
-				<?php esc_html_e( 'Documentation', 'block-lab' ); ?>
+				<?php esc_html_e( 'Documentation', 'genesis-custom-blocks' ); ?>
 			</a>
 			<a href="https://wordpress.org/support/plugin/block-lab/" target="_blank" class="nav-tab dashicons-before dashicons-sos">
-				<?php esc_html_e( 'Help', 'block-lab' ); ?>
+				<?php esc_html_e( 'Help', 'genesis-custom-blocks' ); ?>
 			</a>
 		</h2>
 		<?php

@@ -2,17 +2,17 @@
 /**
  * Block Post Type.
  *
- * @package   Block_Lab
+ * @package   GenesisCustomBlocks
  * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace Block_Lab\Post_Types;
+namespace GenesisCustomBlocks\Post_Types;
 
-use Block_Lab\Component_Abstract;
-use Block_Lab\Blocks\Block;
-use Block_Lab\Blocks\Field;
-use Block_Lab\Blocks\Controls;
+use GenesisCustomBlocks\Component_Abstract;
+use GenesisCustomBlocks\Blocks\Block;
+use GenesisCustomBlocks\Blocks\Field;
+use GenesisCustomBlocks\Blocks\Controls;
 
 /**
  * Class Block
@@ -145,7 +145,7 @@ class Block_Post extends Component_Abstract {
 		}
 
 		$class_name    = ucwords( $control_name, '_' );
-		$control_class = 'Block_Lab\\Blocks\\Controls\\' . $class_name;
+		$control_class = 'GenesisCustomBlocks\\Blocks\\Controls\\' . $class_name;
 		if ( class_exists( $control_class ) ) {
 			return new $control_class();
 		}
@@ -184,20 +184,20 @@ class Block_Post extends Component_Abstract {
 	 */
 	public function register_post_type() {
 		$labels = [
-			'name'               => _x( 'Content Blocks', 'post type general name', 'block-lab' ),
-			'singular_name'      => _x( 'Content Block', 'post type singular name', 'block-lab' ),
-			'menu_name'          => _x( 'Genesis Custom Blocks', 'admin menu', 'block-lab' ),
-			'name_admin_bar'     => _x( 'Block', 'add new on admin bar', 'block-lab' ),
-			'add_new'            => _x( 'Add New', 'block', 'block-lab' ),
-			'add_new_item'       => __( 'Add New Block', 'block-lab' ),
-			'new_item'           => __( 'New Block', 'block-lab' ),
-			'edit_item'          => __( 'Edit Block', 'block-lab' ),
-			'view_item'          => __( 'View Block', 'block-lab' ),
-			'all_items'          => __( 'All Blocks', 'block-lab' ),
-			'search_items'       => __( 'Search Blocks', 'block-lab' ),
-			'parent_item_colon'  => __( 'Parent Blocks:', 'block-lab' ),
-			'not_found'          => __( 'No blocks found.', 'block-lab' ),
-			'not_found_in_trash' => __( 'No blocks found in Trash.', 'block-lab' ),
+			'name'               => _x( 'Content Blocks', 'post type general name', 'genesis-custom-blocks' ),
+			'singular_name'      => _x( 'Content Block', 'post type singular name', 'genesis-custom-blocks' ),
+			'menu_name'          => _x( 'Genesis Custom Blocks', 'admin menu', 'genesis-custom-blocks' ),
+			'name_admin_bar'     => _x( 'Block', 'add new on admin bar', 'genesis-custom-blocks' ),
+			'add_new'            => _x( 'Add New', 'block', 'genesis-custom-blocks' ),
+			'add_new_item'       => __( 'Add New Block', 'genesis-custom-blocks' ),
+			'new_item'           => __( 'New Block', 'genesis-custom-blocks' ),
+			'edit_item'          => __( 'Edit Block', 'genesis-custom-blocks' ),
+			'view_item'          => __( 'View Block', 'genesis-custom-blocks' ),
+			'all_items'          => __( 'All Blocks', 'genesis-custom-blocks' ),
+			'search_items'       => __( 'Search Blocks', 'genesis-custom-blocks' ),
+			'parent_item_colon'  => __( 'Parent Blocks:', 'genesis-custom-blocks' ),
+			'not_found'          => __( 'No blocks found.', 'genesis-custom-blocks' ),
+			'not_found_in_trash' => __( 'No blocks found in Trash.', 'genesis-custom-blocks' ),
 		];
 
 		$args = [
@@ -293,13 +293,13 @@ class Block_Post extends Component_Abstract {
 				[
 					'fieldSettingsNonce' => wp_create_nonce( 'block_lab_field_settings_nonce' ),
 					'postTypes'          => [
-						'all'  => __( 'All', 'block-lab' ),
-						'none' => __( 'None', 'block-lab' ),
+						'all'  => __( 'All', 'genesis-custom-blocks' ),
+						'none' => __( 'None', 'genesis-custom-blocks' ),
 					],
-					'copySuccessMessage' => __( 'Copied to clipboard.', 'block-lab' ),
+					'copySuccessMessage' => __( 'Copied to clipboard.', 'genesis-custom-blocks' ),
 					'copyFailMessage'    => sprintf(
 						// translators: Placeholder is a shortcut key combination.
-						__( '%1$s to copy.', 'block-lab' ),
+						__( '%1$s to copy.', 'genesis-custom-blocks' ),
 						strpos( getenv( 'HTTP_USER_AGENT' ), 'Mac' ) ? 'Cmd+C' : 'Ctrl+C'
 					),
 				]
@@ -326,7 +326,7 @@ class Block_Post extends Component_Abstract {
 
 		add_meta_box(
 			'block_properties',
-			__( 'Block Properties', 'block-lab' ),
+			__( 'Block Properties', 'genesis-custom-blocks' ),
 			[ $this, 'render_properties_meta_box' ],
 			$this->slug,
 			'side',
@@ -335,7 +335,7 @@ class Block_Post extends Component_Abstract {
 
 		add_meta_box(
 			'block_fields',
-			__( 'Block Fields', 'block-lab' ),
+			__( 'Block Fields', 'genesis-custom-blocks' ),
 			[ $this, 'render_fields_meta_box' ],
 			$this->slug,
 			'normal',
@@ -349,7 +349,7 @@ class Block_Post extends Component_Abstract {
 			if ( ! $template ) {
 				add_meta_box(
 					'block_template',
-					__( 'Template', 'block-lab' ),
+					__( 'Template', 'genesis-custom-blocks' ),
 					[ $this, 'render_template_meta_box' ],
 					$this->slug,
 					'normal',
@@ -389,7 +389,7 @@ class Block_Post extends Component_Abstract {
 
 		if ( ! in_array( $post->post_status, [ 'publish', 'future', 'pending' ], true ) ) {
 			?>
-			<input type="submit" name="save" value="<?php esc_attr_e( 'Save Draft', 'block-lab' ); ?>" class="button" />
+			<input type="submit" name="save" value="<?php esc_attr_e( 'Save Draft', 'genesis-custom-blocks' ); ?>" class="button" />
 			<?php
 		}
 	}
@@ -410,7 +410,7 @@ class Block_Post extends Component_Abstract {
 		?>
 		<p>
 			<label for="block-properties-slug">
-				<?php esc_html_e( 'Slug:', 'block-lab' ); ?>
+				<?php esc_html_e( 'Slug:', 'genesis-custom-blocks' ); ?>
 			</label>
 			<input
 				name="post_name"
@@ -422,13 +422,13 @@ class Block_Post extends Component_Abstract {
 			<?php
 			esc_html_e(
 				'Used to determine the name of the template file.',
-				'block-lab'
+				'genesis-custom-blocks'
 			);
 			?>
 		</p>
 		<p>
 			<label for="block-properties-icon">
-				<?php esc_html_e( 'Icon:', 'block-lab' ); ?>
+				<?php esc_html_e( 'Icon:', 'genesis-custom-blocks' ); ?>
 			</label>
 			<input
 				name="block-properties-icon"
@@ -443,10 +443,10 @@ class Block_Post extends Component_Abstract {
 				?>
 			</span>
 			<a class="button block-properties-icon-button" id="block-properties-icon-choose" href="#block-properties-icon-choose">
-				<?php esc_attr_e( 'Choose', 'block-lab' ); ?>
+				<?php esc_attr_e( 'Choose', 'genesis-custom-blocks' ); ?>
 			</a>
 			<a class="button block-properties-icon-button" id="block-properties-icon-close" href="#">
-				<?php esc_attr_e( 'Close', 'block-lab' ); ?>
+				<?php esc_attr_e( 'Close', 'genesis-custom-blocks' ); ?>
 			</a>
 			<span class="block-properties-icon-select" id="block-properties-icon-select">
 				<?php
@@ -464,7 +464,7 @@ class Block_Post extends Component_Abstract {
 		</p>
 		<p>
 			<label for="block-properties-category">
-				<?php esc_html_e( 'Category:', 'block-lab' ); ?>
+				<?php esc_html_e( 'Category:', 'genesis-custom-blocks' ); ?>
 			</label>
 			<select name="block-properties-category" id="block-properties-category" class="block-properties-category">
 				<?php
@@ -478,11 +478,11 @@ class Block_Post extends Component_Abstract {
 				}
 				?>
 				<option disabled>────────</option>
-				<option value="__custom"><?php esc_html_e( 'Custom Category', 'block-lab' ); ?></option>
+				<option value="__custom"><?php esc_html_e( 'Custom Category', 'genesis-custom-blocks' ); ?></option>
 			</select>
 			<span class="block-properties-category-custom">
 				<label for="block-properties-category-name">
-					<?php esc_html_e( 'New Category Name:', 'block-lab' ); ?>
+					<?php esc_html_e( 'New Category Name:', 'genesis-custom-blocks' ); ?>
 				</label>
 				<input
 					name="block-properties-category-name"
@@ -493,7 +493,7 @@ class Block_Post extends Component_Abstract {
 		</p>
 		<p>
 			<label for="block-properties-keywords">
-				<?php esc_html_e( 'Keywords:', 'block-lab' ); ?>
+				<?php esc_html_e( 'Keywords:', 'genesis-custom-blocks' ); ?>
 			</label>
 			<input
 				name="block-properties-keywords"
@@ -505,7 +505,7 @@ class Block_Post extends Component_Abstract {
 			<?php
 			esc_html_e(
 				'A comma separated list of keywords, used when searching. Maximum of 3.',
-				'block-lab'
+				'genesis-custom-blocks'
 			);
 			?>
 		</p>
@@ -529,13 +529,13 @@ class Block_Post extends Component_Abstract {
 					<tr>
 						<th class="block-fields-sort"></th>
 						<th class="block-fields-label">
-							<?php esc_html_e( 'Field Label', 'block-lab' ); ?>
+							<?php esc_html_e( 'Field Label', 'genesis-custom-blocks' ); ?>
 						</th>
 						<th class="block-fields-name">
-							<?php esc_html_e( 'Field Name', 'block-lab' ); ?>
+							<?php esc_html_e( 'Field Name', 'genesis-custom-blocks' ); ?>
 						</th>
 						<th class="block-fields-control">
-							<?php esc_html_e( 'Field Type', 'block-lab' ); ?>
+							<?php esc_html_e( 'Field Type', 'genesis-custom-blocks' ); ?>
 						</th>
 					</tr>
 				</thead>
@@ -544,7 +544,7 @@ class Block_Post extends Component_Abstract {
 						<td colspan="4">
 							<div class="block-fields-rows">
 								<p class="block-no-fields">
-									<?php echo wp_kses_post( __( 'Click <strong>Add Field</strong> below to add your first field.', 'block-lab' ) ); ?>
+									<?php echo wp_kses_post( __( 'Click <strong>Add Field</strong> below to add your first field.', 'genesis-custom-blocks' ) ); ?>
 								</p>
 								<?php
 								if ( count( $block->fields ) > 0 ) {
@@ -562,13 +562,13 @@ class Block_Post extends Component_Abstract {
 		<div class="block-fields-actions-add-field">
 			<button type="button" aria-label="Add Field" class="block-fields-action" id="block-add-field">
 				<span class="dashicons dashicons-plus"></span>
-				<?php esc_attr_e( 'Add Field', 'block-lab' ); ?>
+				<?php esc_attr_e( 'Add Field', 'genesis-custom-blocks' ); ?>
 			</button>
 			<script type="text/html" id="tmpl-field-repeater">
 				<?php
 				$args = [
 					'name'  => 'new-field',
-					'label' => __( 'New Field', 'block-lab' ),
+					'label' => __( 'New Field', 'genesis-custom-blocks' ),
 				];
 				$this->render_fields_meta_box_row( new Field( $args ) );
 				?>
@@ -610,15 +610,15 @@ class Block_Post extends Component_Abstract {
 					</a>
 					<div class="block-fields-actions">
 						<a class="block-fields-actions-edit" href="javascript:">
-							<?php esc_html_e( 'Edit', 'block-lab' ); ?>
+							<?php esc_html_e( 'Edit', 'genesis-custom-blocks' ); ?>
 						</a>
 						&nbsp;|&nbsp;
 						<a class="block-fields-actions-duplicate" href="javascript:">
-							<?php esc_html_e( 'Duplicate', 'block-lab' ); ?>
+							<?php esc_html_e( 'Duplicate', 'genesis-custom-blocks' ); ?>
 						</a>
 						&nbsp;|&nbsp;
 						<a class="block-fields-actions-delete" href="javascript:">
-							<?php esc_html_e( 'Delete', 'block-lab' ); ?>
+							<?php esc_html_e( 'Delete', 'genesis-custom-blocks' ); ?>
 						</a>
 					</div>
 				</div>
@@ -636,7 +636,7 @@ class Block_Post extends Component_Abstract {
 							<?php
 							/* translators: %1$s is the field type, %2$s is the URL for the Pro license */
 							printf(
-								wp_kses_post( 'This <code>%1$s</code> field requires an active <a href="%2$s">pro license</a>.', 'block-lab' ),
+								wp_kses_post( 'This <code>%1$s</code> field requires an active <a href="%2$s">pro license</a>.', 'genesis-custom-blocks' ),
 								esc_html( $field->control ),
 								esc_url(
 									add_query_arg(
@@ -659,13 +659,13 @@ class Block_Post extends Component_Abstract {
 						<td class="spacer"></td>
 						<th scope="row">
 							<label for="block-fields-edit-label-input_<?php echo esc_attr( $uid ); ?>">
-								<?php esc_html_e( 'Field Label', 'block-lab' ); ?>
+								<?php esc_html_e( 'Field Label', 'genesis-custom-blocks' ); ?>
 							</label>
 							<p class="description">
 								<?php
 								esc_html_e(
 									'A label describing your block\'s custom field.',
-									'block-lab'
+									'genesis-custom-blocks'
 								);
 								?>
 							</p>
@@ -693,10 +693,10 @@ class Block_Post extends Component_Abstract {
 						<td class="spacer"></td>
 						<th scope="row">
 							<label for="block-fields-edit-name-input_<?php echo esc_attr( $uid ); ?>">
-								<?php esc_html_e( 'Field Name', 'block-lab' ); ?>
+								<?php esc_html_e( 'Field Name', 'genesis-custom-blocks' ); ?>
 							</label>
 							<p class="description">
-								<?php esc_html_e( 'Single word, no spaces.', 'block-lab' ); ?>
+								<?php esc_html_e( 'Single word, no spaces.', 'genesis-custom-blocks' ); ?>
 							</p>
 						</th>
 						<td>
@@ -715,7 +715,7 @@ class Block_Post extends Component_Abstract {
 						<td class="spacer"></td>
 						<th scope="row">
 							<label for="block-fields-edit-control-input_<?php echo esc_attr( $uid ); ?>">
-								<?php esc_html_e( 'Field Type', 'block-lab' ); ?>
+								<?php esc_html_e( 'Field Type', 'genesis-custom-blocks' ); ?>
 							</label>
 						</th>
 						<td>
@@ -754,8 +754,8 @@ class Block_Post extends Component_Abstract {
 						<th scope="row">
 						</th>
 						<td>
-							<a class="button" title="<?php esc_attr_e( 'Close Field', 'block-lab' ); ?>" href="javascript:">
-								<?php esc_html_e( 'Close Field', 'block-lab' ); ?>
+							<a class="button" title="<?php esc_attr_e( 'Close Field', 'genesis-custom-blocks' ); ?>" href="javascript:">
+								<?php esc_html_e( 'Close Field', 'genesis-custom-blocks' ); ?>
 							</a>
 						</td>
 					</tr>
@@ -805,13 +805,13 @@ class Block_Post extends Component_Abstract {
 			<p class="repeater-no-fields <?php echo esc_attr( empty( $fields ) ? '' : 'hidden' ); ?>">
 				<button type="button" aria-label="Add Sub-Field" id="block-add-sub-field">
 					<span class="dashicons dashicons-plus"></span>
-					<?php esc_attr_e( 'Add your first Sub-Field', 'block-lab' ); ?>
+					<?php esc_attr_e( 'Add your first Sub-Field', 'genesis-custom-blocks' ); ?>
 				</button>
 			</p>
 			<p class="repeater-has-fields <?php echo esc_attr( empty( $fields ) ? 'hidden' : '' ); ?>">
 				<button type="button" aria-label="Add Sub-Field" id="block-add-sub-field">
 					<span class="dashicons dashicons-plus"></span>
-					<?php esc_attr_e( 'Add Sub-Field', 'block-lab' ); ?>
+					<?php esc_attr_e( 'Add Sub-Field', 'genesis-custom-blocks' ); ?>
 				</button>
 			</p>
 		</div>
@@ -827,9 +827,9 @@ class Block_Post extends Component_Abstract {
 		$post = get_post();
 		?>
 		<div class="template-notice">
-			<h3>✔️ <?php esc_html_e( 'Next step: Create a block template.', 'block-lab' ); ?></h3>
+			<h3>✔️ <?php esc_html_e( 'Next step: Create a block template.', 'genesis-custom-blocks' ); ?></h3>
 			<p>
-				<?php esc_html_e( 'To display this block, Genesis Custom Blocks will look for this template file in your theme:', 'block-lab' ); ?>
+				<?php esc_html_e( 'To display this block, Genesis Custom Blocks will look for this template file in your theme:', 'genesis-custom-blocks' ); ?>
 			</p>
 			<?php
 			// Formatting to make the template paths easier to understand.
@@ -841,26 +841,26 @@ class Block_Post extends Component_Abstract {
 			?>
 			<p class="template-location">
 				<span class="path"><?php echo wp_kses( $template_breaks, [ 'wbr' => [] ] ); ?></span>
-				<a class="filename" data-tooltip="<?php esc_attr_e( 'Click to copy.', 'block-lab' ); ?>" href="#"><?php echo esc_html( $filename ); ?></a>
+				<a class="filename" data-tooltip="<?php esc_attr_e( 'Click to copy.', 'genesis-custom-blocks' ); ?>" href="#"><?php echo esc_html( $filename ); ?></a>
 				<span class="click-to-copy">
 					<input type="text" readonly="readonly" value="<?php echo esc_html( $filename ); ?>" />
 				</span>
 			</p>
 			<p>
-				<strong><?php esc_html_e( 'Learn more:', 'block-lab' ); ?></strong>
+				<strong><?php esc_html_e( 'Learn more:', 'genesis-custom-blocks' ); ?></strong>
 				<?php
 				echo wp_kses_post(
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a> | ',
 						'https://getblocklab.com/docs/get-started/add-a-block-lab-block-to-your-website-content/',
-						esc_html__( 'Block Templates', 'block-lab' )
+						esc_html__( 'Block Templates', 'genesis-custom-blocks' )
 					)
 				);
 				echo wp_kses_post(
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
 						'https://getblocklab.com/docs/functions/',
-						esc_html__( 'Template Functions', 'block-lab' )
+						esc_html__( 'Template Functions', 'genesis-custom-blocks' )
 					)
 				);
 				?>
@@ -900,7 +900,7 @@ class Block_Post extends Component_Abstract {
 		if ( $template ) {
 			?>
 			<div id="edit-slug-box">
-				<strong><?php esc_html_e( 'Template:', 'block-lab' ); ?></strong>
+				<strong><?php esc_html_e( 'Template:', 'genesis-custom-blocks' ); ?></strong>
 				<?php echo esc_html( $template_breaks ); ?><strong><?php echo esc_html( $filename ); ?></strong>
 			</div>
 			<?php
@@ -1201,7 +1201,7 @@ class Block_Post extends Component_Abstract {
 
 		// Enqueue scripts and styles on the edit screen of the Block post type.
 		if ( is_object( $screen ) && $this->slug === $screen->post_type ) {
-			$title = __( 'Enter block name here', 'block-lab' );
+			$title = __( 'Enter block name here', 'genesis-custom-blocks' );
 		}
 
 		return $title;
@@ -1240,9 +1240,9 @@ class Block_Post extends Component_Abstract {
 		$block = new Block( get_the_ID() );
 		?>
 		<div class="block-lab-pub-section hide-if-no-js">
-			<?php esc_html_e( 'Post Types:', 'block-lab' ); ?> <span class="post-types-display"></span>
+			<?php esc_html_e( 'Post Types:', 'genesis-custom-blocks' ); ?> <span class="post-types-display"></span>
 			<a href="#post-types-select" class="edit-post-types" role="button">
-				<span aria-hidden="true"><?php esc_html_e( 'Edit', 'block-lab' ); ?></span>
+				<span aria-hidden="true"><?php esc_html_e( 'Edit', 'genesis-custom-blocks' ); ?></span>
 			</a>
 			<input type="hidden" value="<?php echo esc_attr( implode( ',', $block->excluded ) ); ?>" name="block-excluded-post-types" id="block-excluded-post-types" />
 			<div class="post-types-select">
@@ -1257,8 +1257,8 @@ class Block_Post extends Component_Abstract {
 					}
 					?>
 				</div>
-				<a href="#post-types" class="save-post-types button"><?php esc_html_e( 'OK', 'block-lab' ); ?></a>
-				<a href="#post-types" class="button-cancel"><?php esc_html_e( 'Cancel', 'block-lab' ); ?></a>
+				<a href="#post-types" class="save-post-types button"><?php esc_html_e( 'OK', 'genesis-custom-blocks' ); ?></a>
+				<a href="#post-types" class="button-cancel"><?php esc_html_e( 'Cancel', 'genesis-custom-blocks' ); ?></a>
 			</div>
 		</div>
 		<?php
@@ -1275,10 +1275,10 @@ class Block_Post extends Component_Abstract {
 		$new_columns = [
 			'cb'       => $columns['cb'],
 			'title'    => $columns['title'],
-			'icon'     => __( 'Icon', 'block-lab' ),
-			'template' => __( 'Template', 'block-lab' ),
-			'category' => __( 'Category', 'block-lab' ),
-			'keywords' => __( 'Keywords', 'block-lab' ),
+			'icon'     => __( 'Icon', 'genesis-custom-blocks' ),
+			'template' => __( 'Template', 'genesis-custom-blocks' ),
+			'category' => __( 'Category', 'genesis-custom-blocks' ),
+			'keywords' => __( 'Keywords', 'genesis-custom-blocks' ),
 		];
 		return $new_columns;
 	}
@@ -1310,7 +1310,7 @@ class Block_Post extends Component_Abstract {
 			$template  = block_lab()->locate_template( $locations, '', true );
 
 			if ( ! $template ) {
-				esc_html_e( 'No template found.', 'block-lab' );
+				esc_html_e( 'No template found.', 'genesis-custom-blocks' );
 			} else {
 				// Formatting to make the template path easier to understand.
 				$template_short  = str_replace( WP_CONTENT_DIR . '/themes/', '', $template );
@@ -1363,10 +1363,10 @@ class Block_Post extends Component_Abstract {
 					add_query_arg( [ 'export' => $post->ID ] ),
 					sprintf(
 						// translators: Placeholder is a post title.
-						__( 'Export %1$s', 'block-lab' ),
+						__( 'Export %1$s', 'genesis-custom-blocks' ),
 						get_the_title( $post->ID )
 					),
-					__( 'Export', 'block-lab' )
+					__( 'Export', 'genesis-custom-blocks' )
 				),
 			];
 
@@ -1392,7 +1392,7 @@ class Block_Post extends Component_Abstract {
 		unset( $actions['edit'] );
 
 		if ( block_lab()->is_pro() ) {
-			$actions['export'] = __( 'Export', 'block-lab' );
+			$actions['export'] = __( 'Export', 'genesis-custom-blocks' );
 		}
 
 		return $actions;

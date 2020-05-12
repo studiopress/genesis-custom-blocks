@@ -48,7 +48,7 @@ const BlockLabRepeaterControl = ( props ) => {
 				<IconButton
 					key={ `${ field.name }-repeater-insert` }
 					icon="insert"
-					label={ __( 'Add new', 'block-lab' ) }
+					label={ __( 'Add new', 'genesis-custom-blocks' ) }
 					labelPosition="bottom"
 					onClick={ addEmptyRow }
 					disabled={ !! field.max && rows.length >= field.max }

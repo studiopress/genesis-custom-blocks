@@ -2,12 +2,12 @@
 /**
  * Textarea control.
  *
- * @package   Block_Lab
+ * @package   GenesisCustomBlocks
  * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace Block_Lab\Blocks\Controls;
+namespace GenesisCustomBlocks\Blocks\Controls;
 
 /**
  * Class Textarea
@@ -35,7 +35,7 @@ class Textarea extends Control_Abstract {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->label = __( 'Textarea', 'block-lab' );
+		$this->label = __( 'Textarea', 'genesis-custom-blocks' );
 	}
 
 	/**
@@ -51,7 +51,7 @@ class Textarea extends Control_Abstract {
 		$this->settings[] = new Control_Setting(
 			[
 				'name'     => 'default',
-				'label'    => __( 'Default Value', 'block-lab' ),
+				'label'    => __( 'Default Value', 'genesis-custom-blocks' ),
 				'type'     => 'textarea',
 				'default'  => '',
 				'sanitize' => 'sanitize_textarea_field',
@@ -61,7 +61,7 @@ class Textarea extends Control_Abstract {
 		$this->settings[] = new Control_Setting(
 			[
 				'name'     => 'maxlength',
-				'label'    => __( 'Character Limit', 'block-lab' ),
+				'label'    => __( 'Character Limit', 'genesis-custom-blocks' ),
 				'type'     => 'number_non_negative',
 				'default'  => '',
 				'sanitize' => [ $this, 'sanitize_number' ],
@@ -70,7 +70,7 @@ class Textarea extends Control_Abstract {
 		$this->settings[] = new Control_Setting(
 			[
 				'name'     => 'number_rows',
-				'label'    => __( 'Number of Rows', 'block-lab' ),
+				'label'    => __( 'Number of Rows', 'genesis-custom-blocks' ),
 				'type'     => 'number_non_negative',
 				'default'  => 4,
 				'sanitize' => [ $this, 'sanitize_number' ],
@@ -79,7 +79,7 @@ class Textarea extends Control_Abstract {
 		$this->settings[] = new Control_Setting(
 			[
 				'name'     => 'new_lines',
-				'label'    => __( 'New Lines', 'block-lab' ),
+				'label'    => __( 'New Lines', 'genesis-custom-blocks' ),
 				'type'     => 'new_line_format',
 				'default'  => 'autop',
 				'sanitize' => [ $this, 'sanitize_new_line_format' ],
@@ -113,9 +113,9 @@ class Textarea extends Control_Abstract {
 	 */
 	public function get_new_line_formats() {
 		$formats = [
-			'autop'  => __( 'Automatically add paragraphs', 'block-lab' ),
-			'autobr' => __( 'Automatically add line breaks', 'block-lab' ),
-			'none'   => __( 'No formatting', 'block-lab' ),
+			'autop'  => __( 'Automatically add paragraphs', 'genesis-custom-blocks' ),
+			'autobr' => __( 'Automatically add line breaks', 'genesis-custom-blocks' ),
+			'none'   => __( 'No formatting', 'genesis-custom-blocks' ),
 		];
 		return $formats;
 	}

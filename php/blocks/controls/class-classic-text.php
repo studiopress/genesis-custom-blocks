@@ -2,12 +2,12 @@
 /**
  * Classic Text control.
  *
- * @package   Block_Lab
+ * @package   GenesisCustomBlocks
  * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace Block_Lab\Blocks\Controls;
+namespace GenesisCustomBlocks\Blocks\Controls;
 
 /**
  * Class Classic_Text
@@ -28,7 +28,7 @@ class Classic_Text extends Control_Abstract {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->label = __( 'Classic Text', 'block-lab' );
+		$this->label = __( 'Classic Text', 'genesis-custom-blocks' );
 	}
 
 	/**

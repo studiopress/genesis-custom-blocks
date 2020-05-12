@@ -2,10 +2,10 @@
 /**
  * Tests for class Control_Setting.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Blocks\Controls;
+use GenesisCustomBlocks\Blocks\Controls;
 
 /**
  * Tests for class Control_Setting.
@@ -22,7 +22,7 @@ class Test_Control_Setting extends \WP_UnitTestCase {
 	/**
 	 * Test __construct.
 	 *
-	 * @covers \Block_Lab\Blocks\Controls\Control_Setting::__construct()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\Control_Setting::__construct()
 	 */
 	public function test_construct() {
 		$this->instance          = new Controls\Control_Setting( [] );
@@ -41,7 +41,7 @@ class Test_Control_Setting extends \WP_UnitTestCase {
 		foreach ( $initial_property_values as $initial_property_name => $initial_property_value ) {
 			$this->assertEquals( $initial_property_value, $this->instance->$initial_property_name );
 		}
-		$this->assertEquals( 'Block_Lab\Blocks\Controls\Control_Setting', get_class( $this->instance ) );
+		$this->assertEquals( 'GenesisCustomBlocks\Blocks\Controls\Control_Setting', get_class( $this->instance ) );
 
 		// Each of the properties below passed in the constructor should be added as properties.
 		$expected_properties = [
@@ -88,7 +88,7 @@ class Test_Control_Setting extends \WP_UnitTestCase {
 	/**
 	 * Test get_value.
 	 *
-	 * @covers \Block_Lab\Blocks\Controls\Control_Setting::get_value()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\Control_Setting::get_value()
 	 */
 	public function get_value() {
 		$default        = 'this is a default';

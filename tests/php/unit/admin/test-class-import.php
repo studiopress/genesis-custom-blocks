@@ -2,10 +2,10 @@
 /**
  * Tests for class Import.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Admin;
+use GenesisCustomBlocks\Admin;
 use Brain\Monkey;
 
 /**
@@ -61,7 +61,7 @@ class Test_Import extends Abstract_Template {
 	/**
 	 * Test register_hooks.
 	 *
-	 * @covers \Block_Lab\Admin\Import::register_hooks()
+	 * @covers \GenesisCustomBlocks\Admin\Import::register_hooks()
 	 */
 	public function test_register_hooks() {
 		$this->instance->register_hooks();
@@ -71,7 +71,7 @@ class Test_Import extends Abstract_Template {
 	/**
 	 * Test register_importer.
 	 *
-	 * @covers \Block_Lab\Admin\Import::register_importer()
+	 * @covers \GenesisCustomBlocks\Admin\Import::register_importer()
 	 */
 	public function test_register_importer() {
 		global $wp_importers;
@@ -91,7 +91,7 @@ class Test_Import extends Abstract_Template {
 	/**
 	 * Test render_page.
 	 *
-	 * @covers \Block_Lab\Admin\Import::render_page()
+	 * @covers \GenesisCustomBlocks\Admin\Import::render_page()
 	 */
 	public function test_render_page() {
 		$page_header_text = 'Import Genesis Custom Blocks';
@@ -264,7 +264,7 @@ class Test_Import extends Abstract_Template {
 	/**
 	 * Test render_page_header.
 	 *
-	 * @covers \Block_Lab\Admin\Import::render_page_header()
+	 * @covers \GenesisCustomBlocks\Admin\Import::render_page_header()
 	 */
 	public function test_render_page_header() {
 		ob_start();
@@ -276,7 +276,7 @@ class Test_Import extends Abstract_Template {
 	/**
 	 * Test render_welcome.
 	 *
-	 * @covers \Block_Lab\Admin\Import::render_welcome()
+	 * @covers \GenesisCustomBlocks\Admin\Import::render_welcome()
 	 */
 	public function test_render_welcome() {
 		ob_start();
@@ -291,7 +291,7 @@ class Test_Import extends Abstract_Template {
 	/**
 	 * Test render_import_success.
 	 *
-	 * @covers \Block_Lab\Admin\Import::render_import_success()
+	 * @covers \GenesisCustomBlocks\Admin\Import::render_import_success()
 	 */
 	public function test_render_import_success() {
 		$title = 'Example Title';
@@ -306,7 +306,7 @@ class Test_Import extends Abstract_Template {
 	/**
 	 * Test render_import_error.
 	 *
-	 * @covers \Block_Lab\Admin\Import::render_import_error()
+	 * @covers \GenesisCustomBlocks\Admin\Import::render_import_error()
 	 */
 	public function test_render_import_error() {
 		$title = 'Baz Title';
@@ -329,7 +329,7 @@ class Test_Import extends Abstract_Template {
 	/**
 	 * Test render_done.
 	 *
-	 * @covers \Block_Lab\Admin\Import::render_done()
+	 * @covers \GenesisCustomBlocks\Admin\Import::render_done()
 	 */
 	public function test_render_done() {
 		ob_start();
@@ -342,7 +342,7 @@ class Test_Import extends Abstract_Template {
 	/**
 	 * Test render_choose_blocks.
 	 *
-	 * @covers \Block_Lab\Admin\Import::render_choose_blocks()
+	 * @covers \GenesisCustomBlocks\Admin\Import::render_choose_blocks()
 	 */
 	public function test_render_choose_blocks() {
 		$name   = 'block-name';
@@ -366,7 +366,7 @@ class Test_Import extends Abstract_Template {
 	/**
 	 * Test validate_upload.
 	 *
-	 * @covers \Block_Lab\Admin\Import::validate_upload()
+	 * @covers \GenesisCustomBlocks\Admin\Import::validate_upload()
 	 */
 	public function test_validate_upload() {
 		$error           = 'This is an invalid file';
@@ -408,7 +408,7 @@ class Test_Import extends Abstract_Template {
 	/**
 	 * Test import_blocks.
 	 *
-	 * @covers \Block_Lab\Admin\Import::import_blocks()
+	 * @covers \GenesisCustomBlocks\Admin\Import::import_blocks()
 	 */
 	public function test_import_blocks() {
 		$name             = 'block-name';
@@ -458,7 +458,7 @@ class Test_Import extends Abstract_Template {
 	/**
 	 * Test block_exists.
 	 *
-	 * @covers \Block_Lab\Admin\Import::block_exists()
+	 * @covers \GenesisCustomBlocks\Admin\Import::block_exists()
 	 */
 	public function test_block_exists() {
 		$block_namespace = 'block-lab/block-name';

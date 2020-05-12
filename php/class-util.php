@@ -1,16 +1,16 @@
 <?php
 /**
- * Helper functions for the Block_Lab plugin.
+ * Helper functions for the GenesisCustomBlocks plugin.
  *
  * These are publicly accessible via a magic method, like block_lab()->get_template_locations().
  * So these methods should generally be 'getter' functions, and should not affect the global state.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-namespace Block_Lab;
+namespace GenesisCustomBlocks;
 
-use Block_Lab\Blocks;
+use GenesisCustomBlocks\Blocks;
 
 /**
  * Class Util

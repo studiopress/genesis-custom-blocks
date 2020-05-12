@@ -2,10 +2,10 @@
 /**
  * Tests for class Control_Abstract.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Blocks\Controls;
+use GenesisCustomBlocks\Blocks\Controls;
 
 /**
  * Tests for class Control_Abstract.
@@ -54,42 +54,42 @@ class Test_Control_Abstract extends \WP_UnitTestCase {
 	/**
 	 * Test create_settings_config.
 	 *
-	 * @covers \Block_Lab\Blocks\Controls\Control_Abstract::create_settings_config()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\Control_Abstract::create_settings_config()
 	 */
 	public function test_create_settings_config() {
 		$this->assertArraySubset(
 			[
 				'location'    => [
 					'name'     => 'location',
-					'label'    => __( 'Field Location', 'block-lab' ),
+					'label'    => __( 'Field Location', 'genesis-custom-blocks' ),
 					'type'     => 'location',
 					'default'  => 'editor',
 					'sanitize' => [ $this->instance, 'sanitize_location' ],
 				],
 				'width'       => [
 					'name'     => 'width',
-					'label'    => __( 'Field Width', 'block-lab' ),
+					'label'    => __( 'Field Width', 'genesis-custom-blocks' ),
 					'type'     => 'width',
 					'default'  => '100',
 					'sanitize' => 'sanitize_text_field',
 				],
 				'help'        => [
 					'name'     => 'help',
-					'label'    => __( 'Help Text', 'block-lab' ),
+					'label'    => __( 'Help Text', 'genesis-custom-blocks' ),
 					'type'     => 'text',
 					'default'  => '',
 					'sanitize' => 'sanitize_text_field',
 				],
 				'default'     => [
 					'name'     => 'default',
-					'label'    => __( 'Default Value', 'block-lab' ),
+					'label'    => __( 'Default Value', 'genesis-custom-blocks' ),
 					'type'     => 'text',
 					'default'  => '',
 					'sanitize' => 'sanitize_text_field',
 				],
 				'placeholder' => [
 					'name'     => 'placeholder',
-					'label'    => __( 'Placeholder Text', 'block-lab' ),
+					'label'    => __( 'Placeholder Text', 'genesis-custom-blocks' ),
 					'type'     => 'text',
 					'default'  => '',
 					'sanitize' => 'sanitize_text_field',
@@ -100,8 +100,8 @@ class Test_Control_Abstract extends \WP_UnitTestCase {
 
 		$this->assertArraySubset(
 			[
-				'editor'    => __( 'Editor', 'block-lab' ),
-				'inspector' => __( 'Inspector', 'block-lab' ),
+				'editor'    => __( 'Editor', 'genesis-custom-blocks' ),
+				'inspector' => __( 'Inspector', 'genesis-custom-blocks' ),
 			],
 			$this->instance->locations
 		);
@@ -110,7 +110,7 @@ class Test_Control_Abstract extends \WP_UnitTestCase {
 	/**
 	 * Test render_settings_number.
 	 *
-	 * @covers \Block_Lab\Blocks\Controls\Control_Abstract::render_settings_number()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\Control_Abstract::render_settings_number()
 	 */
 	public function test_render_settings_number() {
 		ob_start();
@@ -126,7 +126,7 @@ class Test_Control_Abstract extends \WP_UnitTestCase {
 	/**
 	 * Test render_settings_number_non_negative.
 	 *
-	 * @covers \Block_Lab\Blocks\Controls\Control_Abstract::render_settings_number_non_negative()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\Control_Abstract::render_settings_number_non_negative()
 	 */
 	public function test_render_settings_number_non_negative() {
 		ob_start();
@@ -142,7 +142,7 @@ class Test_Control_Abstract extends \WP_UnitTestCase {
 	/**
 	 * Test render_number.
 	 *
-	 * @covers \Block_Lab\Blocks\Controls\Control_Abstract::render_number()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\Control_Abstract::render_number()
 	 */
 	public function test_render_number() {
 		$min_attribute = 'min="0"';
@@ -164,7 +164,7 @@ class Test_Control_Abstract extends \WP_UnitTestCase {
 	/**
 	 * Test render_select.
 	 *
-	 * @covers \Block_Lab\Blocks\Controls\Control_Abstract::render_select()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\Control_Abstract::render_select()
 	 */
 	public function test_render_select() {
 		$options = [
@@ -187,7 +187,7 @@ class Test_Control_Abstract extends \WP_UnitTestCase {
 	/**
 	 * Test render_settings_location.
 	 *
-	 * @covers \Block_Lab\Blocks\Controls\Control_Abstract::render_settings_location()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\Control_Abstract::render_settings_location()
 	 */
 	public function test_render_settings_location() {
 		ob_start();
@@ -203,7 +203,7 @@ class Test_Control_Abstract extends \WP_UnitTestCase {
 	/**
 	 * Test sanitize_location.
 	 *
-	 * @covers \Block_Lab\Blocks\Controls\Control_Abstract::sanitize_location()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\Control_Abstract::sanitize_location()
 	 */
 	public function test_sanitize_location() {
 		$wrong_locations = [ 'incorrect', 'classic-editor', 'foo-baz', false, null ];

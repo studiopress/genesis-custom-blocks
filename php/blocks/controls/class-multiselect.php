@@ -2,12 +2,12 @@
 /**
  * Select control.
  *
- * @package   Block_Lab
+ * @package   GenesisCustomBlocks
  * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace Block_Lab\Blocks\Controls;
+namespace GenesisCustomBlocks\Blocks\Controls;
 
 /**
  * Class Select
@@ -35,7 +35,7 @@ class Multiselect extends Control_Abstract {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->label = __( 'Multi-Select', 'block-lab' );
+		$this->label = __( 'Multi-Select', 'genesis-custom-blocks' );
 	}
 
 	/**
@@ -50,15 +50,15 @@ class Multiselect extends Control_Abstract {
 		$this->settings[] = new Control_Setting(
 			[
 				'name'     => 'options',
-				'label'    => __( 'Choices', 'block-lab' ),
+				'label'    => __( 'Choices', 'genesis-custom-blocks' ),
 				'type'     => 'textarea_array',
 				'default'  => '',
 				'help'     => sprintf(
 					'%s %s<br />%s<br />%s',
-					__( 'Enter each choice on a new line.', 'block-lab' ),
-					__( 'To specify the value and label separately, use this format:', 'block-lab' ),
-					_x( 'foo : Foo', 'Format for the menu values. option_value : Option Name', 'block-lab' ),
-					_x( 'bar : Bar', 'Format for the menu values. option_value : Option Name', 'block-lab' )
+					__( 'Enter each choice on a new line.', 'genesis-custom-blocks' ),
+					__( 'To specify the value and label separately, use this format:', 'genesis-custom-blocks' ),
+					_x( 'foo : Foo', 'Format for the menu values. option_value : Option Name', 'genesis-custom-blocks' ),
+					_x( 'bar : Bar', 'Format for the menu values. option_value : Option Name', 'genesis-custom-blocks' )
 				),
 				'sanitize' => [ $this, 'sanitize_textarea_assoc_array' ],
 			]
@@ -66,10 +66,10 @@ class Multiselect extends Control_Abstract {
 		$this->settings[] = new Control_Setting(
 			[
 				'name'     => 'default',
-				'label'    => __( 'Default Value', 'block-lab' ),
+				'label'    => __( 'Default Value', 'genesis-custom-blocks' ),
 				'type'     => 'textarea_array',
 				'default'  => '',
-				'help'     => __( 'Enter each default value on a new line.', 'block-lab' ),
+				'help'     => __( 'Enter each default value on a new line.', 'genesis-custom-blocks' ),
 				'sanitize' => [ $this, 'sanitize_textarea_array' ],
 				'validate' => [ $this, 'validate_options' ],
 			]

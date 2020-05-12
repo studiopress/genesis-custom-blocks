@@ -2,7 +2,7 @@
 /**
  * Genesis Custom Blocks
  *
- * @package   Block_Lab
+ * @package   GenesisCustomBlocks
  * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  *
@@ -96,13 +96,13 @@ require_once __DIR__ . '/php/deprecated.php';
 /**
  * Get the plugin object.
  *
- * @return \Block_Lab\Plugin
+ * @return \GenesisCustomBlocks\Plugin
  */
 function block_lab() {
 	static $instance;
 
 	if ( null === $instance ) {
-		$instance = new \Block_Lab\Plugin();
+		$instance = new \GenesisCustomBlocks\Plugin();
 	}
 
 	return $instance;

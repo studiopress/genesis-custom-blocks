@@ -2,7 +2,7 @@
 /**
  * Trait with a helper method for testing controls.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
 /**
@@ -26,7 +26,7 @@ trait Testing_Helper {
 			foreach ( $setting as $setting_key => $setting_value ) {
 				unset( $setting_value );
 				$this->assertEquals( $expected_setting[ $setting_key ], $setting->$setting_key );
-				$this->assertEquals( 'Block_Lab\Blocks\Controls\Control_Setting', get_class( $setting ) );
+				$this->assertEquals( 'GenesisCustomBlocks\Blocks\Controls\Control_Setting', get_class( $setting ) );
 			}
 		}
 
