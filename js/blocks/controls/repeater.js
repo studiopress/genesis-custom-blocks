@@ -23,7 +23,7 @@ const BlockLabRepeaterControl = ( props ) => {
 	 * Simply using {} results in <ServerSideRender> not sending an empty row,
 	 * and the empty row isn't rendered in the editor.
 	 *
-	 * @see https://github.com/getblocklab/block-lab/issues/393
+	 * @see https://github.com/studiopress/genesis-custom-blocks/issues/393
 	 */
 	const addEmptyRow = () => {
 		const withAddedRow = rows.concat( { '': '' } );

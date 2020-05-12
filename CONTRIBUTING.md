@@ -106,11 +106,11 @@ composer install
 
 This section lists the labels we use to help us track and manage issues and pull requests.  Please open an issue if you have suggestions for new labels.
 
-[GitHub search](https://help.github.com/articles/searching-issues/) makes it easy to use labels for finding groups of issues or pull requests you're interested in.  For example, you might be interested in [open issues which are labeled as bugs and are good for new contributors](https://github.com/getblocklab/block-lab/issues?q=is%3Aopen+is%3Aissue+label%3Abug+label%3A%22good+first+issue%22) or perhaps [open pull requests which haven't been reviewed yet](https://github.com/getblocklab/block-lab/pulls?q=is%3Apr+is%3Aopen+review%3Anone).  To help you find issues and pull requests, each label is listed with search links for finding open items with that label.  We  encourage you to read about [other search filters](https://help.github.com/articles/searching-issues/) which will help you write more focused queries.
+[GitHub search](https://help.github.com/articles/searching-issues/) makes it easy to use labels for finding groups of issues or pull requests you're interested in.  For example, you might be interested in [open issues which are labeled as bugs and are good for new contributors](https://github.com/studiopress/genesis-custom-blocks/issues?q=is%3Aopen+is%3Aissue+label%3Abug+label%3A%22good+first+issue%22) or perhaps [open pull requests which haven't been reviewed yet](https://github.com/studiopress/genesis-custom-blocks/pulls?q=is%3Apr+is%3Aopen+review%3Anone).  To help you find issues and pull requests, each label is listed with search links for finding open items with that label.  We  encourage you to read about [other search filters](https://help.github.com/articles/searching-issues/) which will help you write more focused queries.
 
 #### Issue and Pull Request Labels
 
-| Label name | `getblocklab/block-lab` :mag_right: | Description |
+| Label name | `studiopress/genesis-custom-blocks` :mag_right: | Description |
 | --- | --- | --- |
 | `bug` | [search][search-block-lab-repo-label-bug] | Something isn't working. |
 | `control` | [search][search-block-lab-repo-label-control] |  |
