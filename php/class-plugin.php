@@ -41,7 +41,7 @@ class Plugin extends Plugin_Abstract {
 	 * @since 1.3.5
 	 * @var string
 	 */
-	public $post_type_slug = 'block_lab';
+	public $post_type_slug = 'genesis_custom_block';
 
 	/**
 	 * Execute this as early as possible.

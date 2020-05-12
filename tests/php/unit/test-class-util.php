@@ -280,10 +280,10 @@ class Test_Util extends Abstract_Template {
 	 * @covers \GenesisCustomBlocks\Util::get_post_type_slug()
 	 */
 	public function test_get_post_type_slug() {
-		$this->assertEquals( 'block_lab', $this->instance->get_post_type_slug() );
+		$this->assertEquals( 'genesis_custom_block', $this->instance->get_post_type_slug() );
 
 		// It should also be possible to call this via a magic method of the Plugin class.
-		$this->assertEquals( 'block_lab', genesis_custom_blocks()->get_post_type_slug() );
+		$this->assertEquals( 'genesis_custom_block', genesis_custom_blocks()->get_post_type_slug() );
 	}
 
 	/**

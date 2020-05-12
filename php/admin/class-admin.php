@@ -109,7 +109,7 @@ class Admin extends Component_Abstract {
 			wp_safe_redirect(
 				add_query_arg(
 					[
-						'post_type' => 'block_lab',
+						'post_type' => 'genesis_custom_block',
 						'page'      => 'genesis-custom-blocks-settings',
 						'tab'       => 'license',
 					],

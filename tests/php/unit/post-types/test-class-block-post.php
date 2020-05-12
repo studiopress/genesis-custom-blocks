@@ -27,7 +27,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	 *
 	 * @var string
 	 */
-	const EXPECTED_SLUG = 'block_lab';
+	const EXPECTED_SLUG = 'genesis_custom_block';
 
 	/**
 	 * Setup.
@@ -176,15 +176,15 @@ class Test_Block_Post extends \WP_UnitTestCase {
 
 		$this->instance->add_meta_boxes();
 
-		$this->assertTrue( isset( $wp_meta_boxes['block_lab']['side']['default']['block_properties'] ) );
-		$this->assertTrue( isset( $wp_meta_boxes['block_lab']['normal']['default']['block_fields'] ) );
-		$this->assertFalse( isset( $wp_meta_boxes['block_lab']['normal']['high']['block_template'] ) );
+		$this->assertTrue( isset( $wp_meta_boxes['genesis_custom_block']['side']['default']['block_properties'] ) );
+		$this->assertTrue( isset( $wp_meta_boxes['genesis_custom_block']['normal']['default']['block_fields'] ) );
+		$this->assertFalse( isset( $wp_meta_boxes['genesis_custom_block']['normal']['high']['block_template'] ) );
 
 		$this->load_dummy_block();
 
 		$this->instance->add_meta_boxes();
 
-		$this->assertTrue( isset( $wp_meta_boxes['block_lab']['normal']['high']['block_template'] ) );
+		$this->assertTrue( isset( $wp_meta_boxes['genesis_custom_block']['normal']['high']['block_template'] ) );
 	}
 
 	/**

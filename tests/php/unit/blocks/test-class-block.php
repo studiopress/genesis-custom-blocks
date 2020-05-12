@@ -103,7 +103,7 @@ class Test_Block extends \WP_UnitTestCase {
 			[
 				'post_title' => 'Simple Test Block',
 				'post_name'  => 'simple-test-block',
-				'post_type'  => 'block_lab',
+				'post_type'  => 'genesis_custom_block',
 			]
 		);
 
