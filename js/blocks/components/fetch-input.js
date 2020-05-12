@@ -133,7 +133,7 @@ class FetchInput extends Component {
 					'%d result found, use up and down arrow keys to navigate.',
 					'%d results found, use up and down arrow keys to navigate.',
 					results.length,
-					'block-lab'
+					'genesis-custom-blocks'
 				), results.length ), 'assertive' );
 
 				if ( null === this.state.selectedSuggestion && '' !== this.getInputValue() ) {

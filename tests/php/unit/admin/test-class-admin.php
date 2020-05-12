@@ -112,7 +112,7 @@ class Test_Admin extends \WP_UnitTestCase {
 		$this->instance->set_plugin( genesis_custom_blocks() );
 		$this->instance->enqueue_scripts();
 		$styles     = wp_styles();
-		$handle     = 'block-lab';
+		$handle     = 'genesis-custom-blocks';
 		$stylesheet = $styles->registered[ $handle ];
 
 		$this->assertEquals( $handle, $stylesheet->handle );

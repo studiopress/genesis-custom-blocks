@@ -92,7 +92,7 @@ class Admin extends Component_Abstract {
 	 */
 	public function enqueue_scripts() {
 		wp_enqueue_style(
-			'block-lab',
+			'genesis-custom-blocks',
 			$this->plugin->get_url( 'css/admin.css' ),
 			[],
 			$this->plugin->get_version()
