@@ -43,7 +43,7 @@ class Test_Upgrade extends \WP_UnitTestCase {
 		parent::setUp();
 		Monkey\setUp();
 		$this->instance = new Admin\Upgrade();
-		$this->instance->set_plugin( custom_blocks() );
+		$this->instance->set_plugin( genesis_custom_blocks() );
 
 	}
 

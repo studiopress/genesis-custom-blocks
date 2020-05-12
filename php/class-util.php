@@ -2,7 +2,7 @@
 /**
  * Helper functions for the GenesisCustomBlocks plugin.
  *
- * These are publicly accessible via a magic method, like custom_blocks()->get_template_locations().
+ * These are publicly accessible via a magic method, like genesis_custom_blocks()->get_template_locations().
  * So these methods should generally be 'getter' functions, and should not affect the global state.
  *
  * @package GenesisCustomBlocks
@@ -167,7 +167,7 @@ class Util extends Component_Abstract {
 	 */
 	public function get_icons() {
 		// This is on the local filesystem, so file_get_contents() is ok to use here.
-		$json_file = custom_blocks()->get_assets_path( 'icons.json' );
+		$json_file = genesis_custom_blocks()->get_assets_path( 'icons.json' );
 		$json      = file_get_contents( $json_file ); // @codingStandardsIgnoreLine
 		$icons     = json_decode( $json, true );
 

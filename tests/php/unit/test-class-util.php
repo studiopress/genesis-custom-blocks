@@ -28,7 +28,7 @@ class Test_Util extends Abstract_Template {
 		parent::setUp();
 
 		$this->instance = new GenesisCustomBlocks\Util();
-		$this->instance->set_plugin( custom_blocks() );
+		$this->instance->set_plugin( genesis_custom_blocks() );
 	}
 
 	/**
@@ -61,11 +61,11 @@ class Test_Util extends Abstract_Template {
 
 		$this->set_license_validity( true );
 		$this->assertTrue( $plugin_instance->is_pro() );
-		$this->assertTrue( custom_blocks()->is_pro() );
+		$this->assertTrue( genesis_custom_blocks()->is_pro() );
 
 		$this->set_license_validity( false );
 		$this->assertFalse( $plugin_instance->is_pro() );
-		$this->assertFalse( custom_blocks()->is_pro() );
+		$this->assertFalse( genesis_custom_blocks()->is_pro() );
 	}
 
 	/**
@@ -283,7 +283,7 @@ class Test_Util extends Abstract_Template {
 		$this->assertEquals( 'block_lab', $this->instance->get_post_type_slug() );
 
 		// It should also be possible to call this via a magic method of the Plugin class.
-		$this->assertEquals( 'block_lab', custom_blocks()->get_post_type_slug() );
+		$this->assertEquals( 'block_lab', genesis_custom_blocks()->get_post_type_slug() );
 	}
 
 	/**
