@@ -3,10 +3,10 @@
 #misc-publishing-actions .curtime {
 	display: none;
 }
-#misc-publishing-actions .block-lab-pub-section {
+#misc-publishing-actions .genesis-custom-blocks-pub-section {
 	padding: 6px 10px 14px;
 }
-#misc-publishing-actions .block-lab-pub-section:before {
+#misc-publishing-actions .genesis-custom-blocks-pub-section:before {
 	content: "\f537";
 	color: #82878c;
 	font: normal 20px/1 dashicons;
@@ -18,13 +18,13 @@
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
-#misc-publishing-actions .block-lab-pub-section .post-types-display {
+#misc-publishing-actions .genesis-custom-blocks-pub-section .post-types-display {
 	font-weight: bold;
 }
-#misc-publishing-actions .block-lab-pub-section .post-types-select {
+#misc-publishing-actions .genesis-custom-blocks-pub-section .post-types-select {
 	display: none;
 }
-#misc-publishing-actions .block-lab-pub-section .post-types-select .post-types-select-items {
+#misc-publishing-actions .genesis-custom-blocks-pub-section .post-types-select .post-types-select-items {
 	margin: 3px 0;
 	border: 1px solid #eeeeee;
 	padding: 6px 10px;

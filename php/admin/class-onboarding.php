@@ -121,7 +121,7 @@ class Onboarding extends Component_Abstract {
 	 */
 	public function enqueue_scripts() {
 		wp_enqueue_style(
-			'block-lab-onboarding-css',
+			'genesis-custom-blocks-onboarding-css',
 			$this->plugin->get_url( 'css/admin.onboarding.css' ),
 			[],
 			$this->plugin->get_version()
@@ -138,7 +138,7 @@ class Onboarding extends Component_Abstract {
 			return;
 		}
 		?>
-		<div class="block-lab-welcome block-lab-notice notice is-dismissible">
+		<div class="genesis-custom-blocks-welcome genesis-custom-blocks-notice notice is-dismissible">
 			<h2>🖖 <?php esc_html_e( 'Welcome, traveller!', 'genesis-custom-blocks' ); ?></h2>
 			<p class="intro"><?php esc_html_e( 'Genesis Custom Blocks makes it super easy to build custom blocks for the WordPress editor.', 'genesis-custom-blocks' ); ?></p>
 			<p><strong><?php esc_html_e( 'Want to see how it\'s done?', 'genesis-custom-blocks' ); ?></strong> <?php esc_html_e( 'Here\'s one I prepared earlier.', 'genesis-custom-blocks' ); ?></p>
@@ -166,7 +166,7 @@ class Onboarding extends Component_Abstract {
 			return;
 		}
 		?>
-		<div class="block-lab-edit-block block-lab-notice notice">
+		<div class="genesis-custom-blocks-edit-block genesis-custom-blocks-notice notice">
 			<h2>👩‍🔬 <?php echo esc_html_e( 'Ready to begin?', 'genesis-custom-blocks' ); ?></h2>
 			<p class="intro">
 				<?php
@@ -212,7 +212,7 @@ class Onboarding extends Component_Abstract {
 			return;
 		}
 		?>
-		<div class="block-lab-add-fields block-lab-notice">
+		<div class="genesis-custom-blocks-add-fields genesis-custom-blocks-notice">
 			<h2>🧐 <?php esc_html_e( 'Try adding a field.', 'genesis-custom-blocks' ); ?></h2>
 			<p><?php esc_html_e( 'Fields let you define the options you see when adding your block to a post.', 'genesis-custom-blocks' ); ?></p>
 		</div>
@@ -232,7 +232,7 @@ class Onboarding extends Component_Abstract {
 			return;
 		}
 		?>
-		<div class="block-lab-publish block-lab-notice">
+		<div class="genesis-custom-blocks-publish genesis-custom-blocks-notice">
 			<h2>🧪 <?php esc_html_e( 'Time to experiment!', 'genesis-custom-blocks' ); ?></h2>
 			<ol class="intro">
 				<li><?php esc_html_e( 'Choose an icon', 'genesis-custom-blocks' ); ?></li>
@@ -275,7 +275,7 @@ class Onboarding extends Component_Abstract {
 			return;
 		}
 		?>
-		<div class="block-lab-add-to-block block-lab-notice notice notice-large is-dismissible">
+		<div class="genesis-custom-blocks-add-to-block genesis-custom-blocks-notice notice notice-large is-dismissible">
 			<h2>🚀 <?php esc_html_e( 'Only one thing left to do!', 'genesis-custom-blocks' ); ?></h2>
 			<p class="intro"><?php esc_html_e( 'You\'ve created a new block, and added a block template. Well done!', 'genesis-custom-blocks' ); ?></p>
 			<p><?php esc_html_e( 'All that\'s left is to add your block to a post.', 'genesis-custom-blocks' ); ?></p>
@@ -322,7 +322,7 @@ class Onboarding extends Component_Abstract {
 				'post_type'    => genesis_custom_blocks()->get_post_type_slug(),
 				'post_content' => wp_json_encode(
 					[
-						'block-lab\/example-block' => [
+						'genesis-custom-blocks\/example-block' => [
 							'name'     => 'example-block',
 							'title'    => __( 'Example Block', 'genesis-custom-blocks' ),
 							'icon'     => 'block_lab',

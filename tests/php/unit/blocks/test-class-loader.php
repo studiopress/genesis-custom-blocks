@@ -136,8 +136,8 @@ class Test_Loader extends Abstract_Template {
 	 * @covers \GenesisCustomBlocks\Blocks\Loader::editor_assets()
 	 */
 	public function test_editor_assets() {
-		$script_handle = 'block-lab-blocks';
-		$style_handle  = 'block-lab-editor-css';
+		$script_handle = 'genesis-custom-blocks-blocks';
+		$style_handle  = 'genesis-custom-blocks-editor-css';
 
 		$this->instance->init();
 		$this->invoke_protected_method( 'editor_assets' );
@@ -213,7 +213,7 @@ class Test_Loader extends Abstract_Template {
 	 */
 	public function test_enqueue_block_styles() {
 		$wp_styles    = wp_styles();
-		$block_handle = "block-lab__block-{$this->mock_block_name}";
+		$block_handle = "genesis-custom-blocks__block-{$this->mock_block_name}";
 
 		// Check that the correct stylesheet is enqueued.
 		foreach ( $this->get_template_css_paths() as $key => $file ) {
@@ -339,7 +339,7 @@ class Test_Loader extends Abstract_Template {
 	 */
 	public function test_enqueue_global_styles() {
 		$wp_styles          = wp_styles();
-		$enqueue_handle     = 'block-lab__global-styles';
+		$enqueue_handle     = 'genesis-custom-blocks__global-styles';
 		$global_style_paths = [
 			"{$this->theme_directory}/blocks/blocks.css",
 			"{$this->theme_directory}/blocks/css/blocks.css",
@@ -434,7 +434,7 @@ class Test_Loader extends Abstract_Template {
 		$actual_blocks = $this->get_protected_property( 'blocks' );
 		$this->assertEquals(
 			$this->block_config_with_name,
-			$actual_blocks[ "block-lab/{$this->block_config_with_name['name']}" ]
+			$actual_blocks[ "genesis-custom-blocks/{$this->block_config_with_name['name']}" ]
 		);
 	}
 
@@ -445,7 +445,7 @@ class Test_Loader extends Abstract_Template {
 	 */
 	public function test_add_field() {
 		$block_name                = 'example-block';
-		$full_block_name           = "block-lab/{$block_name}";
+		$full_block_name           = "genesis-custom-blocks/{$block_name}";
 		$field_name                = 'baz-field';
 		$field_config_with_name    = [ 'name' => $field_name ];
 		$field_config_without_name = [ 'baz' => 'example' ];

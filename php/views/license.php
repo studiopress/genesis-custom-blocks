@@ -10,8 +10,8 @@
 ?>
 <form method="post" action="options.php">
 	<?php
-	settings_fields( 'block-lab-license-key' );
-	do_settings_sections( 'block-lab-license-key' );
+	settings_fields( 'genesis-custom-blocks-license-key' );
+	do_settings_sections( 'genesis-custom-blocks-license-key' );
 	?>
 	<table class="form-table">
 		<tr valign="top">
@@ -78,7 +78,7 @@
 							sprintf(
 								// translators: Opening and closing anchor and emphasis tags.
 								__( '%1$sGet Genesis Custom Blocks Pro!%2$s', 'genesis-custom-blocks' ),
-								'<a href="' . add_query_arg( [ 'page' => 'block-lab-pro' ] ) . '"><em>',
+								'<a href="' . add_query_arg( [ 'page' => 'genesis-custom-blocks-pro' ] ) . '"><em>',
 								'</em></a>'
 							)
 						)

@@ -1,1 +1,1 @@
-{"block-lab/block-foo" {"name":"foo","title":"Foo"}}
+{"genesis-custom-blocks/block-foo" {"name":"foo","title":"Foo"}}

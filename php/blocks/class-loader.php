@@ -135,7 +135,7 @@ class Loader extends Component_Abstract {
 		$asset_config = require $this->plugin->get_path( 'js/editor.blocks.asset.php' );
 
 		wp_enqueue_script(
-			'block-lab-blocks',
+			'genesis-custom-blocks-blocks',
 			$this->assets['url']['entry'],
 			$asset_config['dependencies'],
 			$asset_config['version'],
@@ -144,7 +144,7 @@ class Loader extends Component_Abstract {
 
 		// Add dynamic Gutenberg blocks.
 		wp_add_inline_script(
-			'block-lab-blocks',
+			'genesis-custom-blocks-blocks',
 			'const blockLabBlocks = ' . wp_json_encode( $this->blocks ),
 			'before'
 		);
@@ -161,7 +161,7 @@ class Loader extends Component_Abstract {
 
 		$author_block_slugs = wp_list_pluck( $author_blocks, 'post_name' );
 		wp_localize_script(
-			'block-lab-blocks',
+			'genesis-custom-blocks-blocks',
 			'blockLab',
 			[
 				'authorBlocks' => $author_block_slugs,
@@ -171,7 +171,7 @@ class Loader extends Component_Abstract {
 
 		// Enqueue optional editor only styles.
 		wp_enqueue_style(
-			'block-lab-editor-css',
+			'genesis-custom-blocks-editor-css',
 			$this->assets['url']['editor_style'],
 			[],
 			$this->plugin->get_version()
@@ -441,7 +441,7 @@ class Loader extends Component_Abstract {
 		 */
 		if ( ! empty( $stylesheet_url ) ) {
 			wp_enqueue_style(
-				"block-lab__block-{$name}",
+				"genesis-custom-blocks__block-{$name}",
 				$stylesheet_url,
 				[],
 				wp_get_theme()->get( 'Version' )
@@ -466,7 +466,7 @@ class Loader extends Component_Abstract {
 		 */
 		if ( ! empty( $stylesheet_url ) ) {
 			wp_enqueue_style(
-				'block-lab__global-styles',
+				'genesis-custom-blocks__global-styles',
 				$stylesheet_url,
 				[],
 				wp_get_theme()->get( 'Version' )
@@ -596,7 +596,7 @@ class Loader extends Component_Abstract {
 			return;
 		}
 
-		$this->blocks[ "block-lab/{$block_config['name']}" ] = $block_config;
+		$this->blocks[ "genesis-custom-blocks/{$block_config['name']}" ] = $block_config;
 	}
 
 	/**
@@ -609,13 +609,13 @@ class Loader extends Component_Abstract {
 	 * @param array  $field_config The config of the field to add.
 	 */
 	public function add_field( $block_name, $field_config ) {
-		if ( ! isset( $this->blocks[ "block-lab/{$block_name}" ] ) ) {
+		if ( ! isset( $this->blocks[ "genesis-custom-blocks/{$block_name}" ] ) ) {
 			return;
 		}
 		if ( ! isset( $field_config['name'] ) ) {
 			return;
 		}
 
-		$this->blocks[ "block-lab/{$block_name}" ]['fields'][ $field_config['name'] ] = $field_config;
+		$this->blocks[ "genesis-custom-blocks/{$block_name}" ]['fields'][ $field_config['name'] ] = $field_config;
 	}
 }

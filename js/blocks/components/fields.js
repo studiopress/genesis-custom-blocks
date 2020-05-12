@@ -28,7 +28,7 @@ const getControl = ( field ) => {
  * @return {string} The class name.
  */
 const getClassName = ( field ) => {
-	let className = 'block-lab-control';
+	let className = 'genesis-custom-blocks-control';
 
 	if ( field.width ) {
 		className += ' width-' + field.width;

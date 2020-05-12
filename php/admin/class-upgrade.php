@@ -21,7 +21,7 @@ class Upgrade extends Component_Abstract {
 	 *
 	 * @var string
 	 */
-	public $slug = 'block-lab-pro';
+	public $slug = 'genesis-custom-blocks-pro';
 
 	/**
 	 * Register any hooks that this component needs.
@@ -69,7 +69,7 @@ class Upgrade extends Component_Abstract {
 	 */
 	public function render_page() {
 		?>
-		<div class="wrap block-lab-pro">
+		<div class="wrap genesis-custom-blocks-pro">
 			<h2 class="screen-reader-text"><?php echo esc_html( get_admin_page_title() ); ?></h2>
 			<?php include genesis_custom_blocks()->get_path() . 'php/views/upgrade.php'; ?>
 		</div>

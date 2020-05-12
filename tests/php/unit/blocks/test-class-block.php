@@ -26,7 +26,7 @@ class Test_Block extends \WP_UnitTestCase {
 	 */
 	const JSON = '
 	{
-		"block-lab\\/simple-test-block": {
+		"genesis-custom-blocks\\/simple-test-block": {
 			"name": "simple-test-block",
 			"title": "Simple Test Block",
 			"icon": "block_lab",
@@ -166,10 +166,10 @@ class Test_Block extends \WP_UnitTestCase {
 		$json = $this->instance->to_json();
 
 		$decoded = json_decode( $json, true );
-		$this->assertArrayHasKey( 'block-lab/simple-test-block', $decoded );
+		$this->assertArrayHasKey( 'genesis-custom-blocks/simple-test-block', $decoded );
 
 		// Check all the base attributes.
-		$block = $decoded['block-lab/simple-test-block'];
+		$block = $decoded['genesis-custom-blocks/simple-test-block'];
 		$this->assertArrayHasKey( 'name', $block );
 		$this->assertArrayHasKey( 'title', $block );
 		$this->assertArrayHasKey( 'icon', $block );
