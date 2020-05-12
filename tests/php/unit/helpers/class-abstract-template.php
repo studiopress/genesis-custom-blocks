@@ -48,10 +48,10 @@ abstract class Abstract_Template extends \WP_UnitTestCase {
 	public function setUp() {
 		parent::setUp();
 		$this->instance = new Blocks\Loader();
-		$this->invoke_protected_method( 'set_plugin', [ block_lab() ] );
+		$this->invoke_protected_method( 'set_plugin', [ custom_blocks() ] );
 
 		$this->theme_directory    = get_template_directory();
-		$this->template_locations = block_lab()->get_template_locations( $this->mock_block_name );
+		$this->template_locations = custom_blocks()->get_template_locations( $this->mock_block_name );
 		$this->create_block_template_directories();
 	}
 

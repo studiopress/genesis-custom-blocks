@@ -428,12 +428,12 @@ class Loader extends Component_Abstract {
 		foreach ( $types as $type ) {
 			$locations = array_merge(
 				$locations,
-				block_lab()->get_stylesheet_locations( $name, $type )
+				custom_blocks()->get_stylesheet_locations( $name, $type )
 			);
 		}
 
-		$stylesheet_path = block_lab()->locate_template( $locations );
-		$stylesheet_url  = block_lab()->get_url_from_path( $stylesheet_path );
+		$stylesheet_path = custom_blocks()->locate_template( $locations );
+		$stylesheet_url  = custom_blocks()->get_url_from_path( $stylesheet_path );
 
 		/**
 		 * Enqueue the stylesheet, if it exists. The wp_enqueue_style function handles duplicates, so we don't need
@@ -458,8 +458,8 @@ class Loader extends Component_Abstract {
 			'blocks/blocks.css',
 		];
 
-		$stylesheet_path = block_lab()->locate_template( $locations );
-		$stylesheet_url  = block_lab()->get_url_from_path( $stylesheet_path );
+		$stylesheet_path = custom_blocks()->locate_template( $locations );
+		$stylesheet_url  = custom_blocks()->get_url_from_path( $stylesheet_path );
 
 		/**
 		 * Enqueue the stylesheet, if it exists.
@@ -493,8 +493,8 @@ class Loader extends Component_Abstract {
 		$located = '';
 
 		foreach ( $types as $type ) {
-			$templates = block_lab()->get_template_locations( $name, $type );
-			$located   = block_lab()->locate_template( $templates );
+			$templates = custom_blocks()->get_template_locations( $name, $type );
+			$located   = custom_blocks()->locate_template( $templates );
 
 			if ( ! empty( $located ) ) {
 				break;
@@ -532,7 +532,7 @@ class Loader extends Component_Abstract {
 		 * Retrieve blocks from blocks.json.
 		 * Reverse to preserve order of preference when using array_merge.
 		 */
-		$blocks_files = array_reverse( (array) block_lab()->locate_template( 'blocks/blocks.json', '', false ) );
+		$blocks_files = array_reverse( (array) custom_blocks()->locate_template( 'blocks/blocks.json', '', false ) );
 		foreach ( $blocks_files as $blocks_file ) {
 			// This is expected to be on the local filesystem, so file_get_contents() is ok to use here.
 			$json       = file_get_contents( $blocks_file ); // @codingStandardsIgnoreLine
@@ -549,7 +549,7 @@ class Loader extends Component_Abstract {
 		 */
 		$block_posts = new \WP_Query(
 			[
-				'post_type'      => block_lab()->get_post_type_slug(),
+				'post_type'      => custom_blocks()->get_post_type_slug(),
 				'post_status'    => 'publish',
 				'posts_per_page' => 100, // This has to have a limit for this plugin to be scalable.
 			]

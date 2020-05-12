@@ -98,7 +98,7 @@ require_once __DIR__ . '/php/deprecated.php';
  *
  * @return \GenesisCustomBlocks\Plugin
  */
-function block_lab() {
+function custom_blocks() {
 	static $instance;
 
 	if ( null === $instance ) {
@@ -111,7 +111,7 @@ function block_lab() {
 /**
  * Setup the plugin instance.
  */
-block_lab()
+custom_blocks()
 	->set_basename( plugin_basename( __FILE__ ) )
 	->set_directory( plugin_dir_path( __FILE__ ) )
 	->set_file( __FILE__ )
@@ -123,4 +123,4 @@ block_lab()
 /**
  * Sometimes we need to do some things after the plugin is loaded, so call the Plugin_Interface::plugin_loaded().
  */
-add_action( 'plugins_loaded', [ block_lab(), 'plugin_loaded' ] );
+add_action( 'plugins_loaded', [ custom_blocks(), 'plugin_loaded' ] );

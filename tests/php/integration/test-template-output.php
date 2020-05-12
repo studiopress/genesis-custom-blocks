@@ -147,7 +147,7 @@ class Test_Template_Output extends Abstract_Attribute {
 	public function test_block_template() {
 		$block = new Blocks\Block();
 		$block->from_array( $this->get_block_config() );
-		$rendered_template = $this->invoke_protected_method( block_lab()->loader, 'render_block_template', [ $block, $this->attributes ] );
+		$rendered_template = $this->invoke_protected_method( custom_blocks()->loader, 'render_block_template', [ $block, $this->attributes ] );
 		$actual_template   = str_replace( [ "\t", "\n" ], '', $rendered_template );
 
 		// The 'className' should be present.

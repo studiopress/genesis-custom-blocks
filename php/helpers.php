@@ -18,13 +18,13 @@ use GenesisCustomBlocks\Blocks;
  * @return mixed
  */
 function block_field( $name, $echo = true ) {
-	$attributes = block_lab()->loader->get_data( 'attributes' );
+	$attributes = custom_blocks()->loader->get_data( 'attributes' );
 
 	if ( ! $attributes ) {
 		return null;
 	}
 
-	$config = block_lab()->loader->get_data( 'config' );
+	$config = custom_blocks()->loader->get_data( 'config' );
 
 	if ( ! $config ) {
 		return null;
@@ -117,8 +117,8 @@ function block_value( $name ) {
  * @return int
  */
 function block_row( $name ) {
-	block_lab()->loop()->set_active( $name );
-	return block_lab()->loop()->increment( $name );
+	custom_blocks()->loop()->set_active( $name );
+	return custom_blocks()->loop()->increment( $name );
 }
 
 /**
@@ -129,13 +129,13 @@ function block_row( $name ) {
  * @return bool
  */
 function block_rows( $name ) {
-	$attributes = block_lab()->loader->get_data( 'attributes' );
+	$attributes = custom_blocks()->loader->get_data( 'attributes' );
 
 	if ( ! isset( $attributes[ $name ] ) ) {
 		return false;
 	}
 
-	$current_row = block_lab()->loop()->get_row( $name );
+	$current_row = custom_blocks()->loop()->get_row( $name );
 
 	if ( false === $current_row ) {
 		$next_row = 0;
@@ -165,7 +165,7 @@ function block_rows( $name ) {
  * @param string $name The name of the repeater field.
  */
 function reset_block_rows( $name ) {
-	block_lab()->loop()->reset( $name );
+	custom_blocks()->loop()->reset( $name );
 }
 
 /**
@@ -175,7 +175,7 @@ function reset_block_rows( $name ) {
  * @return int|bool The total amount of rows. False if the repeater isn't found.
  */
 function block_row_count( $name ) {
-	$attributes = block_lab()->loader->get_data( 'attributes' );
+	$attributes = custom_blocks()->loader->get_data( 'attributes' );
 
 	if ( ! isset( $attributes[ $name ]['rows'] ) ) {
 		return false;
@@ -195,14 +195,14 @@ function block_row_count( $name ) {
  */
 function block_row_index( $name = '' ) {
 	if ( '' === $name ) {
-		$name = block_lab()->loop()->active;
+		$name = custom_blocks()->loop()->active;
 	}
 
-	if ( ! isset( block_lab()->loop()->loops[ $name ] ) ) {
+	if ( ! isset( custom_blocks()->loop()->loops[ $name ] ) ) {
 		return false;
 	}
 
-	return block_lab()->loop()->loops[ $name ];
+	return custom_blocks()->loop()->loops[ $name ];
 }
 
 /**
@@ -214,20 +214,20 @@ function block_row_index( $name = '' ) {
  * @return mixed
  */
 function block_sub_field( $name, $echo = true ) {
-	$attributes = block_lab()->loader->get_data( 'attributes' );
+	$attributes = custom_blocks()->loader->get_data( 'attributes' );
 
 	if ( ! is_array( $attributes ) ) {
 		return null;
 	}
 
-	$config = block_lab()->loader->get_data( 'config' );
+	$config = custom_blocks()->loader->get_data( 'config' );
 
 	if ( ! $config ) {
 		return null;
 	}
 
-	$parent  = block_lab()->loop()->active;
-	$pointer = block_lab()->loop()->get_row( $parent );
+	$parent  = custom_blocks()->loop()->active;
+	$pointer = custom_blocks()->loop()->get_row( $parent );
 
 	if ( ! isset( $config->fields[ $parent ] ) ) {
 		return null;
@@ -295,7 +295,7 @@ function block_sub_value( $name ) {
  * @return array
  */
 function block_config() {
-	$config = block_lab()->loader->get_data( 'config' );
+	$config = custom_blocks()->loader->get_data( 'config' );
 
 	if ( ! $config ) {
 		return null;
@@ -312,7 +312,7 @@ function block_config() {
  * @return array|null
  */
 function block_field_config( $name ) {
-	$config = block_lab()->loader->get_data( 'config' );
+	$config = custom_blocks()->loader->get_data( 'config' );
 
 	if ( ! $config || ! isset( $config->fields[ $name ] ) ) {
 		return null;
@@ -355,7 +355,7 @@ function block_lab_add_block( $block_name, $block_config = [] ) {
 	];
 
 	$block_config = wp_parse_args( $block_config, $default_config );
-	block_lab()->loader->add_block( $block_config );
+	custom_blocks()->loader->add_block( $block_config );
 }
 
 /**
@@ -387,5 +387,5 @@ function block_lab_add_field( $block_name, $field_name, $field_config = [] ) {
 	];
 
 	$field_config = wp_parse_args( $field_config, $default_config );
-	block_lab()->loader->add_field( $block_name, $field_config );
+	custom_blocks()->loader->add_field( $block_name, $field_config );
 }

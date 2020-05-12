@@ -57,7 +57,7 @@ class Settings extends Component_Abstract {
 	 */
 	public function add_submenu_pages() {
 		add_submenu_page(
-			'edit.php?post_type=' . block_lab()->get_post_type_slug(),
+			'edit.php?post_type=' . custom_blocks()->get_post_type_slug(),
 			__( 'Genesis Custom Blocks Settings', 'genesis-custom-blocks' ),
 			__( 'Settings', 'genesis-custom-blocks' ),
 			'manage_options',
@@ -81,7 +81,7 @@ class Settings extends Component_Abstract {
 		<div class="wrap block-lab-settings">
 			<?php
 			$this->render_page_header();
-			include block_lab()->get_path() . 'php/views/license.php';
+			include custom_blocks()->get_path() . 'php/views/license.php';
 			?>
 		</div>
 		<?php

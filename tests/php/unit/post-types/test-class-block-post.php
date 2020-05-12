@@ -39,7 +39,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 		$this->instance = new Post_Types\Block_Post();
 		$this->instance->register_controls();
 		$this->instance->controls['user'] = new Controls\User();
-		$this->instance->set_plugin( block_lab() );
+		$this->instance->set_plugin( custom_blocks() );
 	}
 
 	/**
@@ -87,7 +87,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 		$this->assertFalse( isset( $this->instance->controls['user'] ) );
 
 		$this->set_license_validity( true );
-		block_lab()->admin->init();
+		custom_blocks()->admin->init();
 		$this->instance->register_controls();
 
 		// The pro license is active, so the 'user' and 'post' controls should be registered.
@@ -124,7 +124,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 
 		// Simulate the pro license being active.
 		$this->set_license_validity( true );
-		block_lab()->admin->init();
+		custom_blocks()->admin->init();
 		$this->instance->register_controls();
 
 		// The 'user' control.
@@ -135,7 +135,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 
 		// If the pro license is inactive, this should still render the pro field the same as if it's active.
 		$this->set_license_validity( false );
-		block_lab()->admin->init();
+		custom_blocks()->admin->init();
 		$this->instance->register_controls();
 
 		$this->assertEquals( false, $this->instance->get_field_value( $invalid_login, $control, false ) );

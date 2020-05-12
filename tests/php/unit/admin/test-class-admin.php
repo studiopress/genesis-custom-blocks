@@ -63,10 +63,10 @@ class Test_Admin extends \WP_UnitTestCase {
 		$this->assertEquals( $settings_class, get_class( $this->instance->settings ) );
 		$this->assertEquals( $license_class, get_class( $this->instance->license ) );
 
-		$block_lab_reflection = new ReflectionObject( block_lab() );
+		$block_lab_reflection = new ReflectionObject( custom_blocks() );
 		$components           = $block_lab_reflection->getProperty( 'components' );
 		$components->setAccessible( true );
-		$components_value = $components->getValue( block_lab() );
+		$components_value = $components->getValue( custom_blocks() );
 
 		// The settings should have been added to the plugin components.
 		$this->assertEquals( $this->instance->settings->slug, $components_value[ $settings_class ]->slug );
@@ -108,8 +108,8 @@ class Test_Admin extends \WP_UnitTestCase {
 	 * @covers \GenesisCustomBlocks\Admin\Admin::enqueue_scripts()
 	 */
 	public function test_enqueue_scripts() {
-		block_lab()->register_component( $this->instance );
-		$this->instance->set_plugin( block_lab() );
+		custom_blocks()->register_component( $this->instance );
+		$this->instance->set_plugin( custom_blocks() );
 		$this->instance->enqueue_scripts();
 		$styles     = wp_styles();
 		$handle     = 'block-lab';

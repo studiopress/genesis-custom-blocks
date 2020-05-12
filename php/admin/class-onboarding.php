@@ -50,7 +50,7 @@ class Onboarding extends Component_Abstract {
 		}
 
 		$screen = get_current_screen();
-		$slug   = block_lab()->get_post_type_slug();
+		$slug   = custom_blocks()->get_post_type_slug();
 
 		if ( ! is_object( $screen ) ) {
 			return;
@@ -269,7 +269,7 @@ class Onboarding extends Component_Abstract {
 			return;
 		}
 
-		$template = block_lab()->locate_template( "blocks/block-{$post->post_name}.php", '', true );
+		$template = custom_blocks()->locate_template( "blocks/block-{$post->post_name}.php", '', true );
 
 		if ( ! $template ) {
 			return;
@@ -301,7 +301,7 @@ class Onboarding extends Component_Abstract {
 		 */
 		$blocks = get_posts(
 			[
-				'post_type'   => block_lab()->get_post_type_slug(),
+				'post_type'   => custom_blocks()->get_post_type_slug(),
 				'numberposts' => '1',
 				'post_status' => 'any',
 				'fields'      => 'ids',
@@ -319,7 +319,7 @@ class Onboarding extends Component_Abstract {
 				'post_title'   => __( 'Example Block', 'genesis-custom-blocks' ),
 				'post_name'    => 'example-block',
 				'post_status'  => 'draft',
-				'post_type'    => block_lab()->get_post_type_slug(),
+				'post_type'    => custom_blocks()->get_post_type_slug(),
 				'post_content' => wp_json_encode(
 					[
 						'block-lab\/example-block' => [
