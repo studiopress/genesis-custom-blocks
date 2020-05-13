@@ -64,7 +64,7 @@ class Admin extends Component_Abstract {
 		$this->onboarding = new Onboarding();
 		genesis_custom_blocks()->register_component( $this->onboarding );
 
-		$show_pro_nag = apply_filters( 'block_lab_show_pro_nag', true );
+		$show_pro_nag = apply_filters( 'block_lab_show_pro_nag', false );
 		if ( $show_pro_nag && ! genesis_custom_blocks()->is_pro() ) {
 			$this->upgrade = new Upgrade();
 			genesis_custom_blocks()->register_component( $this->upgrade );
