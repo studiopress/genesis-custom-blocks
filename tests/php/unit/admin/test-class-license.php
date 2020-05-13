@@ -5,7 +5,8 @@
  * @package GenesisCustomBlocks
  */
 
-use GenesisCustomBlocks\Admin;
+use GenesisCustomBlocks\Admin\License;
+use GenesisCustomBlocks\Admin\Settings;
 use Brain\Monkey;
 
 /**
@@ -21,27 +22,6 @@ class Test_License extends \WP_UnitTestCase {
 	 * @var Admin\License
 	 */
 	public $instance;
-
-	/**
-	 * The transient name for the license.
-	 *
-	 * @var string
-	 */
-	const LICENSE_TRANSIENT_NAME = 'block_lab_license';
-
-	/**
-	 * The option name for the notices.
-	 *
-	 * @var string
-	 */
-	const NOTICES_OPTION_NAME = 'block_lab_notices';
-
-	/**
-	 * The option name of the Genesis Custom Blocks license key.
-	 *
-	 * @var string
-	 */
-	const LICENSE_KEY_OPTION_NAME = 'block_lab_license_key';
 
 	/**
 	 * The name of a HTTP filter.
@@ -79,7 +59,7 @@ class Test_License extends \WP_UnitTestCase {
 	public function setUp() {
 		parent::setUp();
 		Monkey\setUp();
-		$this->instance = new Admin\License();
+		$this->instance = new License();
 		$this->instance->set_plugin( genesis_custom_blocks() );
 	}
 
@@ -90,9 +70,9 @@ class Test_License extends \WP_UnitTestCase {
 	 */
 	public function tearDown() {
 		remove_all_filters( self::HTTP_FILTER_NAME );
-		delete_option( self::NOTICES_OPTION_NAME );
-		delete_option( self::LICENSE_KEY_OPTION_NAME );
-		delete_transient( self::LICENSE_TRANSIENT_NAME );
+		delete_option( Settings::NOTICES_OPTION_NAME );
+		delete_option( License::OPTION_NAME );
+		delete_transient( License::TRANSIENT_NAME );
 		Monkey\tearDown();
 		parent::tearDown();
 	}
@@ -104,7 +84,7 @@ class Test_License extends \WP_UnitTestCase {
 	 */
 	public function test_register_hooks() {
 		$this->instance->register_hooks();
-		$this->assertEquals( 10, has_filter( 'pre_update_option_block_lab_license_key', [ $this->instance, 'save_license_key' ] ) );
+		$this->assertEquals( 10, has_filter( 'pre_update_option_genesis_custom_blocks_license_key', [ $this->instance, 'save_license_key' ] ) );
 	}
 
 	/**
@@ -137,9 +117,9 @@ class Test_License extends \WP_UnitTestCase {
 		$this->assertEquals( '', $returned_key );
 		$this->assertEquals(
 			[ self::EXPECTED_LICENSE_REQUEST_FAILED_NOTICE ],
-			get_option( self::NOTICES_OPTION_NAME )
+			get_option( Settings::NOTICES_OPTION_NAME )
 		);
-		delete_option( self::NOTICES_OPTION_NAME );
+		delete_option( Settings::NOTICES_OPTION_NAME );
 
 		// Cause the validation request to return that the license is valid.
 		add_filter(
@@ -154,9 +134,9 @@ class Test_License extends \WP_UnitTestCase {
 		$this->assertEquals( '', $returned_key );
 		$this->assertEquals(
 			[ self::EXPECTED_LICENSE_INVALID_NOTICE ],
-			get_option( self::NOTICES_OPTION_NAME )
+			get_option( Settings::NOTICES_OPTION_NAME )
 		);
-		delete_option( self::NOTICES_OPTION_NAME );
+		delete_option( Settings::NOTICES_OPTION_NAME );
 		remove_all_filters( self::HTTP_FILTER_NAME );
 
 		$expected_license = [
@@ -177,7 +157,7 @@ class Test_License extends \WP_UnitTestCase {
 		$this->assertEquals( $mock_valid_license_key, $returned_key );
 		$this->assertEquals(
 			[ self::EXPECTED_LICENSE_SUCCESS_NOTICE ],
-			get_option( self::NOTICES_OPTION_NAME )
+			get_option( Settings::NOTICES_OPTION_NAME )
 		);
 	}
 
@@ -191,7 +171,7 @@ class Test_License extends \WP_UnitTestCase {
 		$this->assertFalse( $this->instance->is_valid() );
 
 		set_transient(
-			self::LICENSE_TRANSIENT_NAME,
+			License::TRANSIENT_NAME,
 			[ 'license' => 'valid' ]
 		);
 
@@ -199,7 +179,7 @@ class Test_License extends \WP_UnitTestCase {
 		$this->assertFalse( $this->instance->is_valid() );
 
 		set_transient(
-			self::LICENSE_TRANSIENT_NAME,
+			License::TRANSIENT_NAME,
 			[
 				'license' => 'valid',
 				'expires' => gmdate( 'Y-m-d', time() - DAY_IN_SECONDS ),
@@ -210,7 +190,7 @@ class Test_License extends \WP_UnitTestCase {
 		$this->assertFalse( $this->instance->is_valid() );
 
 		set_transient(
-			self::LICENSE_TRANSIENT_NAME,
+			License::TRANSIENT_NAME,
 			[
 				'license' => 'valid',
 				'expires' => gmdate( 'Y-m-d', time() + DAY_IN_SECONDS ),
@@ -237,14 +217,14 @@ class Test_License extends \WP_UnitTestCase {
 		];
 
 		// If the transient is set, get_license() should simply return it.
-		set_transient( self::LICENSE_TRANSIENT_NAME, $valid_license_transient_value );
+		set_transient( License::TRANSIENT_NAME, $valid_license_transient_value );
 		$this->assertEquals( $valid_license_transient_value, $this->instance->get_license() );
 
-		set_transient( self::LICENSE_TRANSIENT_NAME, $invalid_license_transient_value );
+		set_transient( License::TRANSIENT_NAME, $invalid_license_transient_value );
 		$this->assertEquals( $invalid_license_transient_value, $this->instance->get_license() );
 
 		// If there's no transient or option, this should return false.
-		delete_transient( self::LICENSE_TRANSIENT_NAME );
+		delete_transient( License::TRANSIENT_NAME );
 		$this->assertFalse( $this->instance->get_license() );
 
 		$expiration_date  = gmdate( 'Y-m-d', time() + DAY_IN_SECONDS );
@@ -261,9 +241,9 @@ class Test_License extends \WP_UnitTestCase {
 			}
 		);
 
-		delete_transient( self::LICENSE_TRANSIENT_NAME );
+		delete_transient( License::TRANSIENT_NAME );
 		$example_valid_license_key = '5134315';
-		add_option( self::LICENSE_KEY_OPTION_NAME, $example_valid_license_key );
+		add_option( License::OPTION_NAME, $example_valid_license_key );
 
 		// If the license transient is empty, this should look at the option value and make a request to validate that.
 		$this->assertEquals( $expected_license, $this->instance->get_license() );
@@ -288,7 +268,7 @@ class Test_License extends \WP_UnitTestCase {
 		// If the POST request returns a wp_error(), this should store 'request_failed' in the transient.
 		$this->assertEquals(
 			[ 'license' => 'request_failed' ],
-			get_transient( self::LICENSE_TRANSIENT_NAME )
+			get_transient( License::TRANSIENT_NAME )
 		);
 
 		remove_all_filters( self::HTTP_FILTER_NAME );
@@ -306,7 +286,7 @@ class Test_License extends \WP_UnitTestCase {
 		$this->instance->activate_license( $license_key );
 
 		// Having simulated a successful license validation with the filter above, this should activate the license.
-		$this->assertEquals( $expected_license, get_transient( self::LICENSE_TRANSIENT_NAME ) );
+		$this->assertEquals( $expected_license, get_transient( License::TRANSIENT_NAME ) );
 	}
 
 	/**

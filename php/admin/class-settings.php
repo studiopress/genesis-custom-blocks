@@ -17,6 +17,13 @@ use GenesisCustomBlocks\Component_Abstract;
 class Settings extends Component_Abstract {
 
 	/**
+	 * Option name for the notices.
+	 *
+	 * @var string
+	 */
+	const NOTICES_OPTION_NAME = 'genesis_custom_blocks_notices';
+
+	/**
 	 * Page slug.
 	 *
 	 * @var string
@@ -113,16 +120,16 @@ class Settings extends Component_Abstract {
 	 * @param string $notice The notice text to display.
 	 */
 	public function prepare_notice( $notice ) {
-		$notices   = get_option( 'block_lab_notices', [] );
+		$notices   = get_option( self::NOTICES_OPTION_NAME, [] );
 		$notices[] = $notice;
-		update_option( 'block_lab_notices', $notices );
+		update_option( self::NOTICES_OPTION_NAME, $notices );
 	}
 
 	/**
 	 * Show any admin notices after saving the settings.
 	 */
 	public function show_notices() {
-		$notices = get_option( 'block_lab_notices', [] );
+		$notices = get_option( self::NOTICES_OPTION_NAME, [] );
 
 		if ( empty( $notices ) || ! is_array( $notices ) ) {
 			return;
@@ -132,6 +139,6 @@ class Settings extends Component_Abstract {
 			echo wp_kses_post( $notice );
 		}
 
-		delete_option( 'block_lab_notices' );
+		delete_option( self::NOTICES_OPTION_NAME );
 	}
 }

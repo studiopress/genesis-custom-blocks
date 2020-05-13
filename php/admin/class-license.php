@@ -30,11 +30,18 @@ class License extends Component_Abstract {
 	public $product_slug;
 
 	/**
+	 * Option name of the license.
+	 *
+	 * @var string
+	 */
+	const OPTION_NAME = 'genesis_custom_blocks_license_key';
+
+	/**
 	 * The name of the license key transient.
 	 *
 	 * @var string
 	 */
-	const TRANSIENT_NAME = 'block_lab_license';
+	const TRANSIENT_NAME = 'genesis_custom_blocks_license';
 
 	/**
 	 * The transient 'license' value for when the request to validate the Pro license failed.
@@ -58,7 +65,7 @@ class License extends Component_Abstract {
 	 * Register any hooks that this component needs.
 	 */
 	public function register_hooks() {
-		add_filter( 'pre_update_option_block_lab_license_key', [ $this, 'save_license_key' ] );
+		add_filter( 'pre_update_option_' . self::OPTION_NAME, [ $this, 'save_license_key' ] );
 	}
 
 	/**
@@ -112,7 +119,7 @@ class License extends Component_Abstract {
 		$license = get_transient( self::TRANSIENT_NAME );
 
 		if ( ! $license ) {
-			$key = get_option( 'block_lab_license_key' );
+			$key = get_option( self::OPTION_NAME );
 			if ( ! empty( $key ) ) {
 				$this->activate_license( $key );
 				$license = get_transient( self::TRANSIENT_NAME );
