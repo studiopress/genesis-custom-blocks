@@ -95,8 +95,8 @@
     "test:js": "wp-scripts test-unit-js --config=tests/js/jest.config.js"
   },
   "wp-env": {
-    "plugin-dir": "block-lab",
-    "plugin-name": "Block Lab"
+    "plugin-dir": "genesis-custom-blocks",
+    "plugin-name": "Genesis Custom Blocks"
   },
   "husky": {
     "hooks": {
