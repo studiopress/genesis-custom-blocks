@@ -5,6 +5,8 @@
  * @package GenesisCustomBlocks
  */
 
+use GenesisCustomBlocks\Admin\License;
+
 /**
  * Trait with a helper method.
  */
@@ -50,6 +52,6 @@ trait Testing_Helper {
 			];
 		}
 
-		set_transient( 'block_lab_license', $transient_value );
+		set_transient( License::TRANSIENT_NAME, $transient_value );
 	}
 }

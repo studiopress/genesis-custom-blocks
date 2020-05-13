@@ -5,7 +5,7 @@
  * @package GenesisCustomBlocks
  */
 
-use GenesisCustomBlocks\Admin;
+use GenesisCustomBlocks\Admin\Settings;
 use Brain\Monkey;
 
 /**
@@ -19,13 +19,6 @@ class Test_Settings extends \WP_UnitTestCase {
 	 * @var Admin\Settings
 	 */
 	public $instance;
-
-	/**
-	 * The option name for the notices.
-	 *
-	 * @var string
-	 */
-	const NOTICES_OPTION_NAME = 'block_lab_notices';
 
 	/**
 	 * The slug of the parent of the submenu.
@@ -42,7 +35,7 @@ class Test_Settings extends \WP_UnitTestCase {
 	public function setUp() {
 		parent::setUp();
 		Monkey\setUp();
-		$this->instance = new Admin\Settings();
+		$this->instance = new Settings();
 		$this->instance->set_plugin( genesis_custom_blocks() );
 
 	}
@@ -56,7 +49,7 @@ class Test_Settings extends \WP_UnitTestCase {
 		global $submenu;
 
 		unset( $submenu[ self::SUBMENU_PARENT_SLUG ] );
-		delete_option( self::NOTICES_OPTION_NAME );
+		delete_option( Settings::NOTICES_OPTION_NAME );
 		Monkey\tearDown();
 		parent::tearDown();
 	}
@@ -212,21 +205,21 @@ class Test_Settings extends \WP_UnitTestCase {
 		$notice = 'There was a problem activating your Genesis Custom Blocks license.';
 		$this->instance->prepare_notice( $notice );
 
-		$this->assertEquals( [ $notice ], get_option( self::NOTICES_OPTION_NAME ) );
+		$this->assertEquals( [ $notice ], get_option( Settings::NOTICES_OPTION_NAME ) );
 
 		$existing_notices = [
 			'first notice',
 			'second notice',
 		];
 
-		update_option( self::NOTICES_OPTION_NAME, $existing_notices );
+		update_option( Settings::NOTICES_OPTION_NAME, $existing_notices );
 		$this->instance->prepare_notice( $notice );
 		$this->assertEquals(
 			array_merge(
 				$existing_notices,
 				[ $notice ]
 			),
-			get_option( self::NOTICES_OPTION_NAME )
+			get_option( Settings::NOTICES_OPTION_NAME )
 		);
 	}
 
@@ -243,7 +236,7 @@ class Test_Settings extends \WP_UnitTestCase {
 		$this->assertEmpty( ob_get_clean() );
 
 		$non_array_notice = 'This is a notice value';
-		update_option( self::NOTICES_OPTION_NAME, $non_array_notice );
+		update_option( Settings::NOTICES_OPTION_NAME, $non_array_notice );
 		ob_start();
 		$this->instance->show_notices();
 		$output = ob_get_clean();
@@ -252,13 +245,13 @@ class Test_Settings extends \WP_UnitTestCase {
 		$this->assertEmpty( $output );
 
 		// The option should not have been deleted, as this should have exited from the function.
-		$this->assertEquals( $non_array_notice, get_option( self::NOTICES_OPTION_NAME ) );
+		$this->assertEquals( $non_array_notice, get_option( Settings::NOTICES_OPTION_NAME ) );
 
 		$expected_notices = [
 			'Here is a notice',
 			'This is also a notice',
 		];
-		update_option( self::NOTICES_OPTION_NAME, $expected_notices );
+		update_option( Settings::NOTICES_OPTION_NAME, $expected_notices );
 		ob_start();
 		$this->instance->show_notices();
 		$output = ob_get_clean();
@@ -269,6 +262,6 @@ class Test_Settings extends \WP_UnitTestCase {
 		}
 
 		// The option should have been deleted.
-		$this->assertEmpty( get_option( self::NOTICES_OPTION_NAME ) );
+		$this->assertEmpty( get_option( Settings::NOTICES_OPTION_NAME ) );
 	}
 }
