@@ -163,7 +163,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	 */
 	public function test_get_capabilities() {
 		$capabilities = $this->instance->get_capabilities();
-		$this->assertEquals( 'block_lab_edit_block', $capabilities['edit_post'] );
+		$this->assertEquals( 'genesis_custom_block_edit_block', $capabilities['edit_post'] );
 	}
 
 	/**

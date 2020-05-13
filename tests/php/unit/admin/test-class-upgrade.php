@@ -21,13 +21,6 @@ class Test_Upgrade extends \WP_UnitTestCase {
 	public $instance;
 
 	/**
-	 * The option name for the notices.
-	 *
-	 * @var string
-	 */
-	const NOTICES_OPTION_NAME = 'block_lab_notices';
-
-	/**
 	 * The slug of the parent of the submenu.
 	 *
 	 * @var string
@@ -56,7 +49,6 @@ class Test_Upgrade extends \WP_UnitTestCase {
 		global $submenu;
 
 		unset( $submenu[ self::SUBMENU_PARENT_SLUG ] );
-		delete_option( self::NOTICES_OPTION_NAME );
 		Monkey\tearDown();
 		parent::tearDown();
 	}
