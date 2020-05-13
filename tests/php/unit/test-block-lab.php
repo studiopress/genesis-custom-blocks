@@ -12,33 +12,33 @@
  */
 class Test_Block_Lab extends \WP_UnitTestCase {
 	/**
-	 * Test block_lab_php_version_error().
+	 * Test genesis_custom_blocks_php_version_error().
 	 *
-	 * @covers \block_lab_php_version_error()
+	 * @covers \genesis_custom_blocks_php_version_error()
 	 */
-	public function test_block_lab_php_version_error() {
+	public function test_genesis_custom_blocks_php_version_error() {
 		ob_start();
-		block_lab_php_version_error();
+		genesis_custom_blocks_php_version_error();
 		$this->assertContains( '<div class="error">', ob_get_clean() );
 	}
 
 	/**
-	 * Test block_lab_php_version_text().
+	 * Test genesis_custom_blocks_php_version_text().
 	 *
-	 * @covers \block_lab_php_version_text()
+	 * @covers \genesis_custom_blocks_php_version_text()
 	 */
-	public function test_block_lab_php_version_text() {
-		$this->assertContains( 'Genesis Custom Blocks plugin error:', block_lab_php_version_text() );
+	public function test_genesis_custom_blocks_php_version_text() {
+		$this->assertContains( 'Genesis Custom Blocks plugin error:', genesis_custom_blocks_php_version_text() );
 	}
 
 	/**
-	 * Test block_lab_wp_version_error().
+	 * Test genesis_custom_blocks_wp_version_error().
 	 *
-	 * @covers \block_lab_wp_version_error()
+	 * @covers \genesis_custom_blocks_wp_version_error()
 	 */
-	public function test_block_lab_wp_version_error() {
+	public function test_genesis_custom_blocks_wp_version_error() {
 		ob_start();
-		block_lab_wp_version_error();
+		genesis_custom_blocks_wp_version_error();
 
 		$this->assertEquals(
 			'<div class="error"><p>Genesis Custom Blocks plugin error: Your version of WordPress is too old. You must be running WordPress 5.0 to use Genesis Custom Blocks.</p></div>',
@@ -47,14 +47,14 @@ class Test_Block_Lab extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Test block_lab_wp_version_text().
+	 * Test genesis_custom_blocks_wp_version_text().
 	 *
-	 * @covers \block_lab_wp_version_text()
+	 * @covers \genesis_custom_blocks_wp_version_text()
 	 */
-	public function test_block_lab_wp_version_text() {
+	public function test_genesis_custom_blocks_wp_version_text() {
 		$this->assertEquals(
 			'Genesis Custom Blocks plugin error: Your version of WordPress is too old. You must be running WordPress 5.0 to use Genesis Custom Blocks.',
-			block_lab_wp_version_text()
+			genesis_custom_blocks_wp_version_text()
 		);
 	}
 
