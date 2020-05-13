@@ -291,7 +291,7 @@ class Block_Post extends Component_Abstract {
 				'block-post',
 				'blockLab',
 				[
-					'fieldSettingsNonce' => wp_create_nonce( 'block_lab_field_settings_nonce' ),
+					'fieldSettingsNonce' => wp_create_nonce( "{$this->slug}_field_settings_nonce" ),
 					'postTypes'          => [
 						'all'  => __( 'All', 'genesis-custom-blocks' ),
 						'none' => __( 'None', 'genesis-custom-blocks' ),
@@ -510,7 +510,7 @@ class Block_Post extends Component_Abstract {
 			?>
 		</p>
 		<?php
-		wp_nonce_field( 'block_lab_save_properties', 'block_lab_properties_nonce' );
+		wp_nonce_field( "{$this->slug}_save_properties", "{$this->slug}_properties_nonce" );
 	}
 
 	/**
@@ -521,7 +521,7 @@ class Block_Post extends Component_Abstract {
 	public function render_fields_meta_box() {
 		$post  = get_post();
 		$block = new Block( $post->ID );
-		do_action( 'block_lab_before_fields_list' );
+		do_action( "{$this->slug}_before_fields_list" );
 		?>
 		<div class="block-fields-list">
 			<table class="widefat">
@@ -578,8 +578,8 @@ class Block_Post extends Component_Abstract {
 			</script>
 		</div>
 		<?php
-		do_action( 'block_lab_after_fields_list' );
-		wp_nonce_field( 'block_lab_save_fields', 'block_lab_fields_nonce' );
+		do_action( "{$this->slug}_after_fields_list" );
+		wp_nonce_field( "{$this->slug}_save_fields", "{$this->slug}_fields_nonce" );
 	}
 
 	/**
@@ -927,7 +927,7 @@ class Block_Post extends Component_Abstract {
 	 * @return void
 	 */
 	public function ajax_field_settings() {
-		wp_verify_nonce( 'block_lab_field_options_nonce' );
+		wp_verify_nonce( "{$this->slug}_field_options_nonce" );
 
 		if ( ! isset( $_POST['control'] ) || ! isset( $_POST['uid'] ) ) {
 			wp_send_json_error();
@@ -978,8 +978,8 @@ class Block_Post extends Component_Abstract {
 			return $data;
 		}
 
-		check_admin_referer( 'block_lab_save_fields', 'block_lab_fields_nonce' );
-		check_admin_referer( 'block_lab_save_properties', 'block_lab_properties_nonce' );
+		check_admin_referer( "{$this->slug}_save_fields", "{$this->slug}_fields_nonce" );
+		check_admin_referer( "{$this->slug}_save_properties", "{$this->slug}_properties_nonce" );
 
 		// Strip encoded special characters, like 🖖 (%f0%9f%96%96).
 		$data['post_name'] = preg_replace( '/%[a-f|0-9][a-f|0-9]/', '', $data['post_name'] );
@@ -1409,7 +1409,7 @@ class Block_Post extends Component_Abstract {
 		$post_id = filter_input( INPUT_GET, 'export', FILTER_SANITIZE_NUMBER_INT );
 
 		// Check if the export has been requested, and the user has permission.
-		if ( $post_id <= 0 || ! current_user_can( 'block_lab_read_block', $post_id ) ) {
+		if ( $post_id <= 0 || ! current_user_can( "{$this->slug}_read_block", $post_id ) ) {
 			return;
 		}
 
