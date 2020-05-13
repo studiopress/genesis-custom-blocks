@@ -6,6 +6,7 @@
  */
 
 use GenesisCustomBlocks\Admin\Settings;
+use GenesisCustomBlocks\Admin\License;
 use Brain\Monkey;
 
 /**
@@ -155,7 +156,6 @@ class Test_Settings extends \WP_UnitTestCase {
 
 		$this->instance->register_settings();
 		$expected_option_group = 'genesis-custom-blocks-license-key';
-		$expected_option_name  = 'block_lab_license_key';
 		$this->assertEquals(
 			[
 				'description'       => '',
@@ -164,7 +164,7 @@ class Test_Settings extends \WP_UnitTestCase {
 				'show_in_rest'      => false,
 				'type'              => 'string',
 			],
-			$wp_registered_settings[ $expected_option_name ]
+			$wp_registered_settings[ License::OPTION_NAME ]
 		);
 	}
 

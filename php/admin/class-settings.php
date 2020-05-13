@@ -10,6 +10,7 @@
 namespace GenesisCustomBlocks\Admin;
 
 use GenesisCustomBlocks\Component_Abstract;
+use GenesisCustomBlocks\Admin\License;
 
 /**
  * Class Settings
@@ -77,7 +78,7 @@ class Settings extends Component_Abstract {
 	 * Register Genesis Custom Blocks settings.
 	 */
 	public function register_settings() {
-		register_setting( 'genesis-custom-blocks-license-key', 'block_lab_license_key' );
+		register_setting( 'genesis-custom-blocks-license-key', License::OPTION_NAME );
 	}
 
 	/**
