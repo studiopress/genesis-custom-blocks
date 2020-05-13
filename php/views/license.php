@@ -7,6 +7,8 @@
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
+use GenesisCustomBlocks\Admin\License;
+
 ?>
 <form method="post" action="options.php">
 	<?php
@@ -89,10 +91,10 @@
 		</tr>
 		<tr valign="top">
 			<th scope="row">
-				<label for="block_lab_license_key"><?php esc_html_e( 'License key', 'genesis-custom-blocks' ); ?></label>
+				<label for="<?php echo esc_attr( License::OPTION_NAME ); ?>"><?php esc_html_e( 'License key', 'genesis-custom-blocks' ); ?></label>
 			</th>
 			<td>
-				<input type="password" name="block_lab_license_key" id="block_lab_license_key" class="regular-text" value="<?php echo esc_attr( get_option( 'block_lab_license_key' ) ); ?>" />
+				<input type="password" name="<?php echo esc_attr( License::OPTION_NAME ); ?>" id="<?php echo esc_attr( License::OPTION_NAME ); ?>" class="regular-text" value="<?php echo esc_attr( get_option( License::OPTION_NAME ) ); ?>" />
 			</td>
 		</tr>
 	</table>

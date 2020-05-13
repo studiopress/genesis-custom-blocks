@@ -7,6 +7,8 @@
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
+use GenesisCustomBlocks\Admin\License;
+
 ?>
 <section class="container">
 	<div class="dashboard_welcome tile">
@@ -17,10 +19,10 @@
 				<div class="cta_license_form_wrapper">
 					<form class="license_key_form" method="post" action="options.php">
 						<?php
-						register_setting( 'genesis-custom-blocks-license-key', 'block_lab_license_key' );
+						register_setting( 'genesis-custom-blocks-license-key', License::OPTION_NAME );
 						settings_fields( 'genesis-custom-blocks-license-key' );
 						?>
-						<input class="input_text" placeholder="Enter license key" name="block_lab_license_key" type="text" />
+						<input class="input_text" placeholder="Enter license key" name="<?php echo esc_attr( License::OPTION_NAME ); ?>" type="text" />
 						<input class="button" type="submit" value="<?php esc_html_e( 'Activate', 'genesis-custom-blocks' ); ?>" />
 					</form>
 					<p class="license_key_text">or</p>

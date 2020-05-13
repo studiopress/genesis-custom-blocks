@@ -18,11 +18,18 @@ use GenesisCustomBlocks\Blocks\Block;
 class Onboarding extends Component_Abstract {
 
 	/**
+	 * The transient for whether to show the welcome notice.
+	 *
+	 * @var string
+	 */
+	const SHOW_WELCOME_TRANSIENT = 'genesis_custom_blocks_show_welcome';
+
+	/**
 	 * Option name.
 	 *
 	 * @var string
 	 */
-	public $option = 'block_lab_example_post_id';
+	const OPTION_NAME = 'genesis_custom_blocks_example_post_id';
 
 	/**
 	 * Register any hooks that this component needs.
@@ -43,7 +50,7 @@ class Onboarding extends Component_Abstract {
 	 * Prepare onboarding notices.
 	 */
 	public function admin_notices() {
-		$example_post_id = get_option( $this->option );
+		$example_post_id = get_option( self::OPTION_NAME );
 
 		if ( ! $example_post_id ) {
 			return;
@@ -73,7 +80,7 @@ class Onboarding extends Component_Abstract {
 		/*
 		 * On the plugins screen, immediately after activating Genesis Custom Blocks.
 		 */
-		if ( 'plugins' === $screen->id && 'true' === get_transient( 'block_lab_show_welcome' ) ) {
+		if ( 'plugins' === $screen->id && 'true' === get_transient( self::SHOW_WELCOME_TRANSIENT ) ) {
 			add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 			add_action( 'admin_notices', [ $this, 'show_welcome_notice' ] );
 		}
@@ -81,7 +88,7 @@ class Onboarding extends Component_Abstract {
 		/*
 		 * On the All Blocks screen, when a draft Example Block exists.
 		 */
-		if ( "edit-$slug" === $screen->id ) {
+		if ( "edit-{$slug}" === $screen->id ) {
 			add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 			add_action( 'admin_notices', [ $this, 'show_edit_block_notice' ] );
 		}
@@ -111,7 +118,7 @@ class Onboarding extends Component_Abstract {
 	 * transient, and check that transient during the next page load.
 	 */
 	public function prepare_welcome_notice() {
-		set_transient( 'block_lab_show_welcome', 'true', 1 );
+		set_transient( self::SHOW_WELCOME_TRANSIENT, 'true', 1 );
 	}
 
 	/**
@@ -132,7 +139,7 @@ class Onboarding extends Component_Abstract {
 	 * Render the Welcome message.
 	 */
 	public function show_welcome_notice() {
-		$example_post_id = get_option( $this->option );
+		$example_post_id = get_option( self::OPTION_NAME );
 
 		if ( ! $example_post_id ) {
 			return;
@@ -160,7 +167,7 @@ class Onboarding extends Component_Abstract {
 	 * Render the Edit Your First Block message.
 	 */
 	public function show_edit_block_notice() {
-		$example_post_id = get_option( 'block_lab_example_post_id' );
+		$example_post_id = get_option( self::OPTION_NAME );
 
 		if ( ! $example_post_id ) {
 			return;
@@ -288,7 +295,7 @@ class Onboarding extends Component_Abstract {
 		 * After we've shown the Add to Post message once, we can delete the option. This will
 		 * ensure that no further onboarding messages are shown.
 		 */
-		delete_option( $this->option );
+		delete_option( self::OPTION_NAME );
 	}
 
 	/**
@@ -388,6 +395,6 @@ class Onboarding extends Component_Abstract {
 			]
 		);
 
-		update_option( $this->option, $example_post_id );
+		update_option( self::OPTION_NAME, $example_post_id );
 	}
 }
