@@ -204,7 +204,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 		$this->assertGreaterThan( 0, strpos( $properties_meta_box, 'block-properties-icon' ) );
 		$this->assertGreaterThan( 0, strpos( $properties_meta_box, 'block-properties-category' ) );
 		$this->assertGreaterThan( 0, strpos( $properties_meta_box, 'block-properties-keywords' ) );
-		$this->assertGreaterThan( 0, strpos( $properties_meta_box, 'block_lab_properties_nonce' ) );
+		$this->assertGreaterThan( 0, strpos( $properties_meta_box, 'genesis_custom_block_properties_nonce' ) );
 	}
 
 	/**
@@ -222,7 +222,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 		$this->assertNotEmpty( $fields_meta_box );
 		$this->assertGreaterThan( 0, strpos( $fields_meta_box, 'block-fields-list' ) );
 		$this->assertGreaterThan( 0, strpos( $fields_meta_box, 'block-fields-actions-add-field' ) );
-		$this->assertGreaterThan( 0, strpos( $fields_meta_box, 'block_lab_fields_nonce' ) );
+		$this->assertGreaterThan( 0, strpos( $fields_meta_box, 'genesis_custom_block_fields_nonce' ) );
 	}
 
 	/**
