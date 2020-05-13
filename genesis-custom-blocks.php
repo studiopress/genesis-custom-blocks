@@ -18,6 +18,8 @@
  * Domain Path: languages
  */
 
+use GenesisCustomBlocks\Plugin;
+
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -29,8 +31,8 @@ require_once 'php/autoloader.php';
 /**
  * Admin notice for incompatible versions of PHP.
  */
-function block_lab_php_version_error() {
-	printf( '<div class="error"><p>%s</p></div>', esc_html( block_lab_php_version_text() ) );
+function genesis_custom_blocks_php_version_error() {
+	printf( '<div class="error"><p>%s</p></div>', esc_html( genesis_custom_blocks_php_version_text() ) );
 }
 
 /**
@@ -45,16 +47,16 @@ function block_lab_php_version_error() {
  *
  * @return string
  */
-function block_lab_php_version_text() {
+function genesis_custom_blocks_php_version_text() {
 	return __( 'Genesis Custom Blocks plugin error: Your version of PHP is too old to run this plugin. You must be running PHP 5.4 or higher.', 'genesis-custom-blocks' );
 }
 
 // If the PHP version is too low, show warning and return.
 if ( version_compare( phpversion(), '5.4', '<' ) ) {
 	if ( defined( 'WP_CLI' ) ) {
-		WP_CLI::warning( block_lab_php_version_text() );
+		WP_CLI::warning( genesis_custom_blocks_php_version_text() );
 	} else {
-		add_action( 'admin_notices', 'block_lab_php_version_error' );
+		add_action( 'admin_notices', 'genesis_custom_blocks_php_version_error' );
 	}
 
 	return;
@@ -63,8 +65,8 @@ if ( version_compare( phpversion(), '5.4', '<' ) ) {
 /**
  * Admin notice for incompatible versions of WordPress or missing Gutenberg Plugin.
  */
-function block_lab_wp_version_error() {
-	printf( '<div class="error"><p>%s</p></div>', esc_html( block_lab_wp_version_text() ) );
+function genesis_custom_blocks_wp_version_error() {
+	printf( '<div class="error"><p>%s</p></div>', esc_html( genesis_custom_blocks_wp_version_text() ) );
 }
 
 /**
@@ -74,16 +76,16 @@ function block_lab_wp_version_error() {
  *
  * @return string
  */
-function block_lab_wp_version_text() {
+function genesis_custom_blocks_wp_version_text() {
 	return __( 'Genesis Custom Blocks plugin error: Your version of WordPress is too old. You must be running WordPress 5.0 to use Genesis Custom Blocks.', 'genesis-custom-blocks' );
 }
 
 // If the WordPress version is too low, show warning and return.
 if ( ! function_exists( 'register_block_type' ) ) {
 	if ( defined( 'WP_CLI' ) ) {
-		WP_CLI::warning( block_lab_wp_version_text() );
+		WP_CLI::warning( genesis_custom_blocks_wp_version_text() );
 	} else {
-		add_action( 'admin_notices', 'block_lab_wp_version_error' );
+		add_action( 'admin_notices', 'genesis_custom_blocks_wp_version_error' );
 	}
 }
 
@@ -102,7 +104,7 @@ function genesis_custom_blocks() {
 	static $instance;
 
 	if ( null === $instance ) {
-		$instance = new \GenesisCustomBlocks\Plugin();
+		$instance = new Plugin();
 	}
 
 	return $instance;
