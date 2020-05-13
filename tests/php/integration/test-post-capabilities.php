@@ -10,7 +10,7 @@ use GenesisCustomBlocks\Post_Types;
 /**
  * Class Test_Post_Capabilities
  *
- * Tests the capabilities for the 'block_lab' post type.
+ * Tests the capabilities for the 'genesis_custom_block' post type.
  *
  * @package GenesisCustomBlocks
  */
@@ -51,37 +51,37 @@ class Test_Post_Capabilities extends \WP_UnitTestCase {
 	 */
 	public function get_users() {
 		return [
-			[ 'subscriber', 'block_lab_edit_block', false ],
-			[ 'subscriber', 'block_lab_edit_blocks', false ],
-			[ 'subscriber', 'block_lab_edit_others_blocks', false ],
-			[ 'subscriber', 'block_lab_publish_blocks', false ],
-			[ 'subscriber', 'block_lab_read_block', true ],
-			[ 'subscriber', 'block_lab_read_private_blocks', false ],
-			[ 'subscriber', 'block_lab_delete_block', false ],
+			[ 'subscriber', 'genesis_custom_block_edit_block', false ],
+			[ 'subscriber', 'genesis_custom_block_edit_blocks', false ],
+			[ 'subscriber', 'genesis_custom_block_edit_others_blocks', false ],
+			[ 'subscriber', 'genesis_custom_block_publish_blocks', false ],
+			[ 'subscriber', 'genesis_custom_block_read_block', true ],
+			[ 'subscriber', 'genesis_custom_block_read_private_blocks', false ],
+			[ 'subscriber', 'genesis_custom_block_delete_block', false ],
 
-			[ 'contributor', 'block_lab_edit_block', false ],
-			[ 'contributor', 'block_lab_edit_blocks', false ],
-			[ 'contributor', 'block_lab_edit_others_blocks', false ],
-			[ 'contributor', 'block_lab_publish_blocks', false ],
-			[ 'contributor', 'block_lab_read_block', true ],
-			[ 'contributor', 'block_lab_read_private_blocks', false ],
-			[ 'contributor', 'block_lab_delete_block', false ],
+			[ 'contributor', 'genesis_custom_block_edit_block', false ],
+			[ 'contributor', 'genesis_custom_block_edit_blocks', false ],
+			[ 'contributor', 'genesis_custom_block_edit_others_blocks', false ],
+			[ 'contributor', 'genesis_custom_block_publish_blocks', false ],
+			[ 'contributor', 'genesis_custom_block_read_block', true ],
+			[ 'contributor', 'genesis_custom_block_read_private_blocks', false ],
+			[ 'contributor', 'genesis_custom_block_delete_block', false ],
 
-			[ 'author', 'block_lab_edit_block', false ],
-			[ 'author', 'block_lab_edit_blocks', false ],
-			[ 'author', 'block_lab_edit_others_blocks', false ],
-			[ 'author', 'block_lab_publish_blocks', false ],
-			[ 'author', 'block_lab_read_block', true ],
-			[ 'author', 'block_lab_read_private_blocks', false ],
-			[ 'author', 'block_lab_delete_block', false ],
+			[ 'author', 'genesis_custom_block_edit_block', false ],
+			[ 'author', 'genesis_custom_block_edit_blocks', false ],
+			[ 'author', 'genesis_custom_block_edit_others_blocks', false ],
+			[ 'author', 'genesis_custom_block_publish_blocks', false ],
+			[ 'author', 'genesis_custom_block_read_block', true ],
+			[ 'author', 'genesis_custom_block_read_private_blocks', false ],
+			[ 'author', 'genesis_custom_block_delete_block', false ],
 
-			[ 'editor', 'block_lab_edit_block', false ],
-			[ 'editor', 'block_lab_edit_blocks', false ],
-			[ 'editor', 'block_lab_edit_others_blocks', false ],
-			[ 'editor', 'block_lab_publish_blocks', false ],
-			[ 'editor', 'block_lab_read_block', true ],
-			[ 'editor', 'block_lab_read_private_blocks', false ],
-			[ 'editor', 'block_lab_delete_block', true ],
+			[ 'editor', 'genesis_custom_block_edit_block', false ],
+			[ 'editor', 'genesis_custom_block_edit_blocks', false ],
+			[ 'editor', 'genesis_custom_block_edit_others_blocks', false ],
+			[ 'editor', 'genesis_custom_block_publish_blocks', false ],
+			[ 'editor', 'genesis_custom_block_read_block', true ],
+			[ 'editor', 'genesis_custom_block_read_private_blocks', false ],
+			[ 'editor', 'genesis_custom_block_delete_block', true ],
 
 			[ 'administrator', 'edit_post', true ],
 			[ 'administrator', 'edit_posts', true ],
@@ -91,13 +91,13 @@ class Test_Post_Capabilities extends \WP_UnitTestCase {
 			[ 'administrator', 'read_private_posts', true ],
 			[ 'administrator', 'delete_post', true ],
 
-			[ 'administrator', 'block_lab_edit_block', true ],
-			[ 'administrator', 'block_lab_edit_blocks', true ],
-			[ 'administrator', 'block_lab_edit_others_blocks', true ],
-			[ 'administrator', 'block_lab_publish_blocks', true ],
-			[ 'administrator', 'block_lab_read_block', true ],
-			[ 'administrator', 'block_lab_read_private_blocks', true ],
-			[ 'administrator', 'block_lab_delete_block', true ],
+			[ 'administrator', 'genesis_custom_block_edit_block', true ],
+			[ 'administrator', 'genesis_custom_block_edit_blocks', true ],
+			[ 'administrator', 'genesis_custom_block_edit_others_blocks', true ],
+			[ 'administrator', 'genesis_custom_block_publish_blocks', true ],
+			[ 'administrator', 'genesis_custom_block_read_block', true ],
+			[ 'administrator', 'genesis_custom_block_read_private_blocks', true ],
+			[ 'administrator', 'genesis_custom_block_delete_block', true ],
 		];
 	}
 

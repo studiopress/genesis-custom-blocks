@@ -243,13 +243,13 @@ class Block_Post extends Component_Abstract {
 	 */
 	public function get_capabilities() {
 		return [
-			'edit_post'          => 'block_lab_edit_block',
-			'edit_posts'         => 'block_lab_edit_blocks',
-			'edit_others_posts'  => 'block_lab_edit_others_blocks',
-			'publish_posts'      => 'block_lab_publish_blocks',
-			'read_post'          => 'block_lab_read_block',
-			'read_private_posts' => 'block_lab_read_private_blocks',
-			'delete_post'        => 'block_lab_delete_block',
+			'edit_post'          => "{$this->slug}_edit_block",
+			'edit_posts'         => "{$this->slug}_edit_blocks",
+			'edit_others_posts'  => "{$this->slug}_edit_others_blocks",
+			'publish_posts'      => "{$this->slug}_publish_blocks",
+			'read_post'          => "{$this->slug}_read_block",
+			'read_private_posts' => "{$this->slug}_read_private_blocks",
+			'delete_post'        => "{$this->slug}_delete_block",
 		];
 	}
 
