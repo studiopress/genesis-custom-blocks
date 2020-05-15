@@ -21,6 +21,9 @@ jobs:
   build:
     steps:
       - checkout
+    executor:
+      name: php
+      php-version: 7.4.5
   php-tests:
     parameters:
       php-version:
@@ -61,6 +64,7 @@ workflows:
       - lint
   tests:
     jobs:
+      - build
       - php-tests:
           matrix:
             parameters:
