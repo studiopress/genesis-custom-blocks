@@ -6,7 +6,9 @@ executors:
       php-version:
         type: string
     docker:
-      - image: circleci/php:<< parameters.php-version >>-cli-node
+      - image: circleci/php:<< parameters.php-version >>
+        environment:
+          WP_TESTS_DIR: /root/project/wordpress-develop/tests/phpunit
   node-only:
     docker:
       - image: cimg/node:12.16
