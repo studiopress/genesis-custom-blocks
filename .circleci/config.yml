@@ -1,0 +1,70 @@
+version: 2.1
+
+executors:
+  php:
+    parameters:
+      php-version:
+        type: string
+    docker:
+      - image: circleci/php:<< parameters.php-version >>-cli-node
+  node-only:
+    docker:
+      - image: cimg/node:12.16
+
+commands:
+  set-up-packages:
+    description: "Installing packages and building"
+    steps:
+      - run: composer install && nvm install && npm ci && npm run build
+
+jobs:
+  build:
+    steps:
+      - checkout
+  php-tests:
+    parameters:
+      php-version:
+        type: string
+      wp-version:
+        type: string
+    executor:
+      name: php
+      php-version: << parameters.php-version >>
+    steps:
+      - checkout
+      - set-up-packages
+      - run: bash bin/install-wp-tests.sh wordpress_test root '' localhost << parameters.wp-version >> && phpunit
+  lint:
+    executor:
+      name: php
+      php-version: 7.4.5
+    steps:
+      - checkout
+      - set-up-packages
+      - run: composer global require wp-coding-standards/wpcs && npm run lint
+  js-tests:
+    executor: node-only
+    steps:
+      - checkout
+      - set-up-packages
+      - run: npm ci && npm run test:js
+  e2e-tests:
+    executor: node-only
+    steps:
+      - checkout
+      - set-up-packages
+      - run: npm run env start && npm run test:e2e
+
+workflows:
+  lint-all:
+    jobs:
+      - lint
+  tests:
+    jobs:
+      - php-tests:
+          matrix:
+            parameters:
+              php-version: [7.4.5, 7.3.9, 7.2.9, 7.1.9, 7.0.33, 5.6.40]
+              wp-version: [latest, 5.3.3]
+      - js-tests
+      - e2e-tests
