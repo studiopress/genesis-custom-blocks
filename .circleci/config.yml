@@ -21,7 +21,7 @@ commands:
   set-up-packages:
     description: "Installing packages and building"
     steps:
-      - run: composer install && npm ci && npm run build
+      - run: composer install && npm install && npm run build
 
 jobs:
   build:
