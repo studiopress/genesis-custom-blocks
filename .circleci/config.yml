@@ -41,8 +41,8 @@ jobs:
       - checkout
       - set-up-packages
       - run: export PATH=$PATH:/usr/local/mysql/bin/
-      - run: composer global require phpunit/phpunit=5.7.9
-      - run: sudo apt-get update && sudo apt install subversion mysql-server && bash bin/install-wp-tests.sh wordpress_test root wordpress localhost latest && phpunit
+      - run: composer global require phpunit/phpunit
+      - run: sudo apt-get update && sudo apt install subversion && bash bin/install-wp-tests.sh wordpress_test root wordpress localhost latest && phpunit
   lint:
     executor:
       name: php
