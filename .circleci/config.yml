@@ -40,6 +40,7 @@ jobs:
     steps:
       - checkout
       - set-up-packages
+      - run: export PATH=$PATH:/usr/local/mysql/bin/
       - run: sudo apt-get update && sudo apt install subversion mysql-server && bash bin/install-wp-tests.sh wordpress_test root '' localhost latest && phpunit
   lint:
     executor:
