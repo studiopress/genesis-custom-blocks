@@ -8,6 +8,11 @@ executors:
     docker:
       - image: circleci/php:<< parameters.php-version >>-cli-node
       - image: mysql:5.7
+        environment:
+          MYSQL_DATABASE: youremptytestdbnamehere
+          MYSQL_USER: yourusernamehere
+          MYSQL_PASSWORD: yourpasswordhere
+          MYSQL_ROOT_PASSWORD: wordpress
   node-only:
     docker:
       - image: cimg/node:12.16
