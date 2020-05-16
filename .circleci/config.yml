@@ -36,7 +36,7 @@ jobs:
     steps:
       - checkout
       - set-up-packages
-      - run: bash bin/install-wp-tests.sh wordpress_test root '' localhost << parameters.wp-version >> && phpunit
+      - run: apk add --no-cache svn && bash bin/install-wp-tests.sh wordpress_test root '' localhost << parameters.wp-version >> && phpunit
   lint:
     executor:
       name: php
