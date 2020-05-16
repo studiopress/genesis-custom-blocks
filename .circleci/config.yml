@@ -6,9 +6,7 @@ executors:
       php-version:
         type: string
     docker:
-      - image: circleci/php:<< parameters.php-version >>
-        environment:
-          WP_TESTS_DIR: /root/project/wordpress-develop/tests/phpunit
+      - image: circleci/php:<< parameters.php-version >>-cli-node
   node-only:
     docker:
       - image: cimg/node:12.16
@@ -46,19 +44,12 @@ jobs:
     steps:
       - checkout
       - set-up-packages
-      - run: composer global require wp-coding-standards/wpcs && npm run lint
+      - run: npm run lint
   js-tests:
     executor: node-only
     steps:
       - checkout
-      - set-up-packages
       - run: npm ci && npm run test:js
-  e2e-tests:
-    executor: node-only
-    steps:
-      - checkout
-      - set-up-packages
-      - run: npm run env start && npm run test:e2e
 
 workflows:
   lint-all:
@@ -73,4 +64,3 @@ workflows:
               php-version: [7.4.5, 7.3.9, 7.2.9, 7.1.9, 7.0.33, 5.6.40]
               wp-version: [latest, 5.3.3]
       - js-tests
-      - e2e-tests
