@@ -7,6 +7,7 @@ executors:
         type: string
     docker:
       - image: circleci/php:<< parameters.php-version >>-cli-node
+      - image: mysql:5.7
   node-only:
     docker:
       - image: cimg/node:12.16
