@@ -2,11 +2,11 @@
 /**
  * Tests for class Block_Post.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Post_Types;
-use Block_Lab\Blocks\Controls;
+use GenesisCustomBlocks\Post_Types;
+use GenesisCustomBlocks\Blocks\Controls;
 
 /**
  * Tests for class Block_Post.
@@ -27,7 +27,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	 *
 	 * @var string
 	 */
-	const EXPECTED_SLUG = 'block_lab';
+	const EXPECTED_SLUG = 'genesis_custom_block';
 
 	/**
 	 * Setup.
@@ -39,13 +39,13 @@ class Test_Block_Post extends \WP_UnitTestCase {
 		$this->instance = new Post_Types\Block_Post();
 		$this->instance->register_controls();
 		$this->instance->controls['user'] = new Controls\User();
-		$this->instance->set_plugin( block_lab() );
+		$this->instance->set_plugin( genesis_custom_blocks() );
 	}
 
 	/**
 	 * Test register_hooks.
 	 *
-	 * @covers \Block_Lab\Post_Types\Block_Post::register_hooks()
+	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::register_hooks()
 	 */
 	public function test_register_hooks() {
 		$this->instance->register_hooks();
@@ -75,34 +75,34 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	/**
 	 * Test register_controls.
 	 *
-	 * @covers \Block_Lab\Post_Types\Block_Post::register_controls()
+	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::register_controls()
 	 */
 	public function test_register_controls() {
 		$this->instance->register_controls();
 		foreach ( $this->instance->controls as $control_type => $instance ) {
-			$this->assertContains( 'Block_Lab\Blocks\Controls\\', get_class( $instance ) );
+			$this->assertContains( 'GenesisCustomBlocks\Blocks\Controls\\', get_class( $instance ) );
 		}
 
 		// Because the pro license isn't active, the 'user' control should not display.
 		$this->assertFalse( isset( $this->instance->controls['user'] ) );
 
 		$this->set_license_validity( true );
-		block_lab()->admin->init();
+		genesis_custom_blocks()->admin->init();
 		$this->instance->register_controls();
 
 		// The pro license is active, so the 'user' and 'post' controls should be registered.
-		$this->assertEquals( 'Block_Lab\Blocks\Controls\Post', get_class( $this->instance->controls['post'] ) );
-		$this->assertEquals( 'Block_Lab\Blocks\Controls\Taxonomy', get_class( $this->instance->controls['taxonomy'] ) );
-		$this->assertEquals( 'Block_Lab\Blocks\Controls\User', get_class( $this->instance->controls['user'] ) );
+		$this->assertEquals( 'GenesisCustomBlocks\Blocks\Controls\Post', get_class( $this->instance->controls['post'] ) );
+		$this->assertEquals( 'GenesisCustomBlocks\Blocks\Controls\Taxonomy', get_class( $this->instance->controls['taxonomy'] ) );
+		$this->assertEquals( 'GenesisCustomBlocks\Blocks\Controls\User', get_class( $this->instance->controls['user'] ) );
 	}
 
 	/**
 	 * Test get_control.
 	 *
-	 * @covers \Block_Lab\Post_Types\Block_Post::get_control()
+	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::get_control()
 	 */
 	public function test_get_control() {
-		$namespace = 'Block_Lab\Blocks\Controls\\';
+		$namespace = 'GenesisCustomBlocks\Blocks\Controls\\';
 		$this->assertEquals( $namespace . 'Post', get_class( $this->instance->get_control( 'post' ) ) );
 		$this->assertEquals( $namespace . 'Taxonomy', get_class( $this->instance->get_control( 'taxonomy' ) ) );
 		$this->assertEquals( $namespace . 'User', get_class( $this->instance->get_control( 'user' ) ) );
@@ -114,7 +114,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	/**
 	 * Test get_field_value.
 	 *
-	 * @covers \Block_Lab\Post_Types\Block_Post::get_field_value()
+	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::get_field_value()
 	 */
 	public function test_get_field_value() {
 		$invalid_login    = 'asdfg';
@@ -124,7 +124,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 
 		// Simulate the pro license being active.
 		$this->set_license_validity( true );
-		block_lab()->admin->init();
+		genesis_custom_blocks()->admin->init();
 		$this->instance->register_controls();
 
 		// The 'user' control.
@@ -135,7 +135,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 
 		// If the pro license is inactive, this should still render the pro field the same as if it's active.
 		$this->set_license_validity( false );
-		block_lab()->admin->init();
+		genesis_custom_blocks()->admin->init();
 		$this->instance->register_controls();
 
 		$this->assertEquals( false, $this->instance->get_field_value( $invalid_login, $control, false ) );
@@ -159,38 +159,38 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	/**
 	 * Test get_capabilities.
 	 *
-	 * @covers \Block_Lab\Post_Types\Block_Post::get_capabilities()
+	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::get_capabilities()
 	 */
 	public function test_get_capabilities() {
 		$capabilities = $this->instance->get_capabilities();
-		$this->assertEquals( 'block_lab_edit_block', $capabilities['edit_post'] );
+		$this->assertEquals( 'genesis_custom_block_edit_block', $capabilities['edit_post'] );
 	}
 
 	/**
 	 * Test add_meta_boxes.
 	 *
-	 * @covers \Block_Lab\Post_Types\Block_Post::add_meta_boxes()
+	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::add_meta_boxes()
 	 */
 	public function test_add_meta_boxes() {
 		global $wp_meta_boxes;
 
 		$this->instance->add_meta_boxes();
 
-		$this->assertTrue( isset( $wp_meta_boxes['block_lab']['side']['default']['block_properties'] ) );
-		$this->assertTrue( isset( $wp_meta_boxes['block_lab']['normal']['default']['block_fields'] ) );
-		$this->assertFalse( isset( $wp_meta_boxes['block_lab']['normal']['high']['block_template'] ) );
+		$this->assertTrue( isset( $wp_meta_boxes['genesis_custom_block']['side']['default']['block_properties'] ) );
+		$this->assertTrue( isset( $wp_meta_boxes['genesis_custom_block']['normal']['default']['block_fields'] ) );
+		$this->assertFalse( isset( $wp_meta_boxes['genesis_custom_block']['normal']['high']['block_template'] ) );
 
 		$this->load_dummy_block();
 
 		$this->instance->add_meta_boxes();
 
-		$this->assertTrue( isset( $wp_meta_boxes['block_lab']['normal']['high']['block_template'] ) );
+		$this->assertTrue( isset( $wp_meta_boxes['genesis_custom_block']['normal']['high']['block_template'] ) );
 	}
 
 	/**
 	 * Test render_properties_meta_box.
 	 *
-	 * @covers \Block_Lab\Post_Types\Block_Post::render_properties_meta_box()
+	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::render_properties_meta_box()
 	 */
 	public function test_render_properties_meta_box() {
 		$this->load_dummy_block();
@@ -204,13 +204,13 @@ class Test_Block_Post extends \WP_UnitTestCase {
 		$this->assertGreaterThan( 0, strpos( $properties_meta_box, 'block-properties-icon' ) );
 		$this->assertGreaterThan( 0, strpos( $properties_meta_box, 'block-properties-category' ) );
 		$this->assertGreaterThan( 0, strpos( $properties_meta_box, 'block-properties-keywords' ) );
-		$this->assertGreaterThan( 0, strpos( $properties_meta_box, 'block_lab_properties_nonce' ) );
+		$this->assertGreaterThan( 0, strpos( $properties_meta_box, 'genesis_custom_block_properties_nonce' ) );
 	}
 
 	/**
 	 * Test render_fields_meta_box.
 	 *
-	 * @covers \Block_Lab\Post_Types\Block_Post::render_fields_meta_box()
+	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::render_fields_meta_box()
 	 */
 	public function test_render_fields_meta_box() {
 		$this->load_dummy_block();
@@ -222,13 +222,13 @@ class Test_Block_Post extends \WP_UnitTestCase {
 		$this->assertNotEmpty( $fields_meta_box );
 		$this->assertGreaterThan( 0, strpos( $fields_meta_box, 'block-fields-list' ) );
 		$this->assertGreaterThan( 0, strpos( $fields_meta_box, 'block-fields-actions-add-field' ) );
-		$this->assertGreaterThan( 0, strpos( $fields_meta_box, 'block_lab_fields_nonce' ) );
+		$this->assertGreaterThan( 0, strpos( $fields_meta_box, 'genesis_custom_block_fields_nonce' ) );
 	}
 
 	/**
 	 * Test render_template_meta_box.
 	 *
-	 * @covers \Block_Lab\Post_Types\Block_Post::render_template_meta_box()
+	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::render_template_meta_box()
 	 */
 	public function test_render_template_meta_box() {
 		$this->load_dummy_block();

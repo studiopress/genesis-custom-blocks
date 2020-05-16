@@ -2,10 +2,10 @@
 /**
  * Tests for class Upgrade.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Admin;
+use GenesisCustomBlocks\Admin;
 use Brain\Monkey;
 
 /**
@@ -21,18 +21,11 @@ class Test_Upgrade extends \WP_UnitTestCase {
 	public $instance;
 
 	/**
-	 * The option name for the notices.
-	 *
-	 * @var string
-	 */
-	const NOTICES_OPTION_NAME = 'block_lab_notices';
-
-	/**
 	 * The slug of the parent of the submenu.
 	 *
 	 * @var string
 	 */
-	const SUBMENU_PARENT_SLUG = 'edit.php?post_type=block_lab';
+	const SUBMENU_PARENT_SLUG = 'edit.php?post_type=genesis_custom_block';
 
 	/**
 	 * Setup.
@@ -43,7 +36,7 @@ class Test_Upgrade extends \WP_UnitTestCase {
 		parent::setUp();
 		Monkey\setUp();
 		$this->instance = new Admin\Upgrade();
-		$this->instance->set_plugin( block_lab() );
+		$this->instance->set_plugin( genesis_custom_blocks() );
 
 	}
 
@@ -56,7 +49,6 @@ class Test_Upgrade extends \WP_UnitTestCase {
 		global $submenu;
 
 		unset( $submenu[ self::SUBMENU_PARENT_SLUG ] );
-		delete_option( self::NOTICES_OPTION_NAME );
 		Monkey\tearDown();
 		parent::tearDown();
 	}
@@ -64,7 +56,7 @@ class Test_Upgrade extends \WP_UnitTestCase {
 	/**
 	 * Test register_hooks.
 	 *
-	 * @covers \Block_Lab\Admin\Upgrade::register_hooks()
+	 * @covers \GenesisCustomBlocks\Admin\Upgrade::register_hooks()
 	 */
 	public function test_register_hooks() {
 		$this->instance->register_hooks();
@@ -75,7 +67,7 @@ class Test_Upgrade extends \WP_UnitTestCase {
 	/**
 	 * Test enqueue_scripts.
 	 *
-	 * @covers \Block_Lab\Admin\Upgrade::enqueue_scripts()
+	 * @covers \GenesisCustomBlocks\Admin\Upgrade::enqueue_scripts()
 	 */
 	public function test_enqueue_scripts() {
 		$this->instance->enqueue_scripts();
@@ -117,7 +109,7 @@ class Test_Upgrade extends \WP_UnitTestCase {
 		// Now that filter_input() returns the correct page, the conditional should be true, and this should enqueue the script.
 		$this->assertTrue( in_array( $this->instance->slug, $styles->queue, true ) );
 		$this->assertEquals( $this->instance->slug, $style->handle );
-		$this->assertContains( 'block-lab/css/admin.upgrade.css', $style->src );
+		$this->assertContains( 'css/admin.upgrade.css', $style->src );
 		$this->assertEquals( [], $style->deps );
 		$this->assertEquals( [], $style->extra );
 	}
@@ -125,7 +117,7 @@ class Test_Upgrade extends \WP_UnitTestCase {
 	/**
 	 * Test add_submenu_pages.
 	 *
-	 * @covers \Block_Lab\Admin\Upgrade::add_submenu_pages()
+	 * @covers \GenesisCustomBlocks\Admin\Upgrade::add_submenu_pages()
 	 */
 	public function test_add_submenu_pages() {
 		global $submenu;
@@ -134,7 +126,7 @@ class Test_Upgrade extends \WP_UnitTestCase {
 			'Go Pro',
 			'manage_options',
 			$this->instance->slug,
-			'Block Lab Pro',
+			'Genesis Custom Blocks Pro',
 		];
 
 		wp_set_current_user( $this->factory()->user->create( [ 'role' => 'subscriber' ] ) );
@@ -153,14 +145,14 @@ class Test_Upgrade extends \WP_UnitTestCase {
 	/**
 	 * Test render_page.
 	 *
-	 * @covers \Block_Lab\Admin\Upgrade::render_page()
+	 * @covers \GenesisCustomBlocks\Admin\Upgrade::render_page()
 	 */
 	public function test_render_page() {
 		ob_start();
 		$this->instance->render_page();
 		$output = ob_get_clean();
 
-		$this->assertContains( '<div class="wrap block-lab-pro">', $output );
+		$this->assertContains( '<div class="wrap genesis-custom-blocks-pro">', $output );
 		$this->assertContains( '<h2 class="screen-reader-text">', $output );
 	}
 }

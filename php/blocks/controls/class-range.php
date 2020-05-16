@@ -2,12 +2,12 @@
 /**
  * Range control.
  *
- * @package   Block_Lab
- * @copyright Copyright(c) 2020, Block Lab
+ * @package   GenesisCustomBlocks
+ * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace Block_Lab\Blocks\Controls;
+namespace GenesisCustomBlocks\Blocks\Controls;
 
 /**
  * Class Range
@@ -35,7 +35,7 @@ class Range extends Control_Abstract {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->label = __( 'Range', 'block-lab' );
+		$this->label = __( 'Range', 'genesis-custom-blocks' );
 	}
 
 	/**
@@ -50,7 +50,7 @@ class Range extends Control_Abstract {
 		$this->settings[] = new Control_Setting(
 			[
 				'name'     => 'min',
-				'label'    => __( 'Minimum Value', 'block-lab' ),
+				'label'    => __( 'Minimum Value', 'genesis-custom-blocks' ),
 				'type'     => 'number',
 				'default'  => '',
 				'sanitize' => [ $this, 'sanitize_number' ],
@@ -59,7 +59,7 @@ class Range extends Control_Abstract {
 		$this->settings[] = new Control_Setting(
 			[
 				'name'     => 'max',
-				'label'    => __( 'Maximum Value', 'block-lab' ),
+				'label'    => __( 'Maximum Value', 'genesis-custom-blocks' ),
 				'type'     => 'number',
 				'default'  => '',
 				'sanitize' => [ $this, 'sanitize_number' ],
@@ -68,7 +68,7 @@ class Range extends Control_Abstract {
 		$this->settings[] = new Control_Setting(
 			[
 				'name'     => 'step',
-				'label'    => __( 'Step Size', 'block-lab' ),
+				'label'    => __( 'Step Size', 'genesis-custom-blocks' ),
 				'type'     => 'number_non_negative',
 				'default'  => 1,
 				'sanitize' => [ $this, 'sanitize_number' ],
@@ -77,7 +77,7 @@ class Range extends Control_Abstract {
 		$this->settings[] = new Control_Setting(
 			[
 				'name'     => 'default',
-				'label'    => __( 'Default Value', 'block-lab' ),
+				'label'    => __( 'Default Value', 'genesis-custom-blocks' ),
 				'type'     => 'number',
 				'default'  => '',
 				'sanitize' => [ $this, 'sanitize_number' ],

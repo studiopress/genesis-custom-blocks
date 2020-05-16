@@ -2,10 +2,10 @@
 /**
  * Tests for class Import.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Admin;
+use GenesisCustomBlocks\Admin;
 use Brain\Monkey;
 
 /**
@@ -45,7 +45,7 @@ class Test_Import extends Abstract_Template {
 		$this->instance                 = new Admin\Import();
 		$this->import_file_valid_json   = dirname( __DIR__ ) . '/fixtures/mock-import-valid-format.txt';
 		$this->import_file_invalid_json = dirname( __DIR__ ) . '/fixtures/mock-import-invalid-format.txt';
-		$this->instance->set_plugin( block_lab() );
+		$this->instance->set_plugin( genesis_custom_blocks() );
 	}
 
 	/**
@@ -61,7 +61,7 @@ class Test_Import extends Abstract_Template {
 	/**
 	 * Test register_hooks.
 	 *
-	 * @covers \Block_Lab\Admin\Import::register_hooks()
+	 * @covers \GenesisCustomBlocks\Admin\Import::register_hooks()
 	 */
 	public function test_register_hooks() {
 		$this->instance->register_hooks();
@@ -71,7 +71,7 @@ class Test_Import extends Abstract_Template {
 	/**
 	 * Test register_importer.
 	 *
-	 * @covers \Block_Lab\Admin\Import::register_importer()
+	 * @covers \GenesisCustomBlocks\Admin\Import::register_importer()
 	 */
 	public function test_register_importer() {
 		global $wp_importers;
@@ -79,8 +79,8 @@ class Test_Import extends Abstract_Template {
 		$this->instance->register_importer();
 		$this->assertEquals(
 			[
-				'Block Lab',
-				'Import custom blocks created with Block Lab.',
+				'Genesis Custom Blocks',
+				'Import custom blocks created with Genesis Custom Blocks.',
 				[ $this->instance, 'render_page' ],
 			],
 			$wp_importers[ $this->instance->slug ]
@@ -91,11 +91,11 @@ class Test_Import extends Abstract_Template {
 	/**
 	 * Test render_page.
 	 *
-	 * @covers \Block_Lab\Admin\Import::render_page()
+	 * @covers \GenesisCustomBlocks\Admin\Import::render_page()
 	 */
 	public function test_render_page() {
-		$page_header_text = 'Import Block Lab Content Blocks';
-		$welcome_text     = 'Welcome! This importer processes Block Lab JSON files, adding custom blocks to this site.';
+		$page_header_text = 'Import Genesis Custom Blocks';
+		$welcome_text     = 'Welcome! This importer processes Genesis Custom Blocks JSON files, adding custom blocks to this site.';
 
 		Monkey\Functions\expect( 'filter_input' )
 			->once()
@@ -264,26 +264,26 @@ class Test_Import extends Abstract_Template {
 	/**
 	 * Test render_page_header.
 	 *
-	 * @covers \Block_Lab\Admin\Import::render_page_header()
+	 * @covers \GenesisCustomBlocks\Admin\Import::render_page_header()
 	 */
 	public function test_render_page_header() {
 		ob_start();
 		$this->instance->render_page_header();
 
-		$this->assertContains( '<h2>Import Block Lab Content Blocks</h2>', ob_get_clean() );
+		$this->assertContains( '<h2>Import Genesis Custom Blocks</h2>', ob_get_clean() );
 	}
 
 	/**
 	 * Test render_welcome.
 	 *
-	 * @covers \Block_Lab\Admin\Import::render_welcome()
+	 * @covers \GenesisCustomBlocks\Admin\Import::render_welcome()
 	 */
 	public function test_render_welcome() {
 		ob_start();
 		$this->instance->render_welcome();
 		$output = ob_get_clean();
 
-		$this->assertContains( '<p>Welcome! This importer processes Block Lab JSON files, adding custom blocks to this site.</p>', $output );
+		$this->assertContains( '<p>Welcome! This importer processes Genesis Custom Blocks JSON files, adding custom blocks to this site.</p>', $output );
 		$this->assertContains( '<label for="upload">Choose a file from your computer:</label>', $output );
 		$this->assertContains( 'This JSON file should come from the export link or bulk action in the', $output );
 	}
@@ -291,7 +291,7 @@ class Test_Import extends Abstract_Template {
 	/**
 	 * Test render_import_success.
 	 *
-	 * @covers \Block_Lab\Admin\Import::render_import_success()
+	 * @covers \GenesisCustomBlocks\Admin\Import::render_import_success()
 	 */
 	public function test_render_import_success() {
 		$title = 'Example Title';
@@ -306,7 +306,7 @@ class Test_Import extends Abstract_Template {
 	/**
 	 * Test render_import_error.
 	 *
-	 * @covers \Block_Lab\Admin\Import::render_import_error()
+	 * @covers \GenesisCustomBlocks\Admin\Import::render_import_error()
 	 */
 	public function test_render_import_error() {
 		$title = 'Baz Title';
@@ -329,7 +329,7 @@ class Test_Import extends Abstract_Template {
 	/**
 	 * Test render_done.
 	 *
-	 * @covers \Block_Lab\Admin\Import::render_done()
+	 * @covers \GenesisCustomBlocks\Admin\Import::render_done()
 	 */
 	public function test_render_done() {
 		ob_start();
@@ -342,13 +342,13 @@ class Test_Import extends Abstract_Template {
 	/**
 	 * Test render_choose_blocks.
 	 *
-	 * @covers \Block_Lab\Admin\Import::render_choose_blocks()
+	 * @covers \GenesisCustomBlocks\Admin\Import::render_choose_blocks()
 	 */
 	public function test_render_choose_blocks() {
 		$name   = 'block-name';
 		$title  = 'Example Block Title';
 		$blocks = [
-			"block-lab/$name" => [
+			"genesis-custom-blocks/$name" => [
 				'name'  => $name,
 				'title' => $title,
 			],
@@ -358,15 +358,15 @@ class Test_Import extends Abstract_Template {
 		$output = ob_get_clean();
 
 		$this->assertContains( '<p>Please select the blocks to import:</p>', $output );
-		$this->assertContains( 'name="block-lab/' . $name . '"', $output );
-		$this->assertContains( 'id="block-lab/' . $name . '"', $output );
+		$this->assertContains( 'name="genesis-custom-blocks/' . $name . '"', $output );
+		$this->assertContains( 'id="genesis-custom-blocks/' . $name . '"', $output );
 		$this->assertContains( '<strong>' . $title . '</strong>', $output );
 	}
 
 	/**
 	 * Test validate_upload.
 	 *
-	 * @covers \Block_Lab\Admin\Import::validate_upload()
+	 * @covers \GenesisCustomBlocks\Admin\Import::validate_upload()
 	 */
 	public function test_validate_upload() {
 		$error           = 'This is an invalid file';
@@ -408,14 +408,14 @@ class Test_Import extends Abstract_Template {
 	/**
 	 * Test import_blocks.
 	 *
-	 * @covers \Block_Lab\Admin\Import::import_blocks()
+	 * @covers \GenesisCustomBlocks\Admin\Import::import_blocks()
 	 */
 	public function test_import_blocks() {
 		$name             = 'block-name';
 		$title            = 'Example Block Title';
 		$success_message  = '<p>Successfully imported';
 		$blocks_to_import = [
-			"block-lab/$name" => [
+			"genesis-custom-blocks/$name" => [
 				'title' => $title,
 			],
 		];
@@ -423,7 +423,7 @@ class Test_Import extends Abstract_Template {
 		ob_start();
 		$this->instance->import_blocks( $blocks_to_import );
 		$output      = ob_get_clean();
-		$block_query = new \WP_Query( [ 'post_type' => 'block_lab' ] );
+		$block_query = new \WP_Query( [ 'post_type' => 'genesis_custom_block' ] );
 
 		// When the 'name' isn't passed to the method, it shouldn't import any block, but should still have the 'All Done!' message.
 		$this->assertEmpty( $block_query->found_posts );
@@ -431,7 +431,7 @@ class Test_Import extends Abstract_Template {
 		$this->assertNotContains( $success_message, $output );
 
 		$blocks_to_import = [
-			"block-lab/$name" => [
+			"genesis-custom-blocks/$name" => [
 				'name'  => $name,
 				'title' => $title,
 			],
@@ -445,10 +445,10 @@ class Test_Import extends Abstract_Template {
 		$this->assertContains( $success_message, $output );
 		$this->assertContains( $title, $output );
 
-		$block_query     = new \WP_Query( [ 'post_type' => 'block_lab' ] );
+		$block_query     = new \WP_Query( [ 'post_type' => 'genesis_custom_block' ] );
 		$block           = reset( $block_query->posts );
 		$decoded_block   = json_decode( $block->post_content );
-		$full_block_name = 'block-lab/' . $name;
+		$full_block_name = 'genesis-custom-blocks/' . $name;
 		$block_data      = $decoded_block->$full_block_name;
 
 		$this->assertEquals( $name, $block_data->name );
@@ -458,10 +458,10 @@ class Test_Import extends Abstract_Template {
 	/**
 	 * Test block_exists.
 	 *
-	 * @covers \Block_Lab\Admin\Import::block_exists()
+	 * @covers \GenesisCustomBlocks\Admin\Import::block_exists()
 	 */
 	public function test_block_exists() {
-		$block_namespace = 'block-lab/block-name';
+		$block_namespace = 'genesis-custom-blocks/block-name';
 
 		$this->assertFalse( $this->invoke_protected_method( 'block_exists', [ $block_namespace ] ) );
 

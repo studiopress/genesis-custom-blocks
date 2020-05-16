@@ -2,14 +2,14 @@
 /**
  * Control abstract.
  *
- * @package   Block_Lab
- * @copyright Copyright(c) 2020, Block Lab
+ * @package   GenesisCustomBlocks
+ * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace Block_Lab\Blocks\Controls;
+namespace GenesisCustomBlocks\Blocks\Controls;
 
-use Block_Lab\Blocks\Field;
+use GenesisCustomBlocks\Blocks\Field;
 
 /**
  * Class Control_Abstract
@@ -85,35 +85,35 @@ abstract class Control_Abstract {
 		$this->settings_config = [
 			'location'    => [
 				'name'     => 'location',
-				'label'    => __( 'Field Location', 'block-lab' ),
+				'label'    => __( 'Field Location', 'genesis-custom-blocks' ),
 				'type'     => 'location',
 				'default'  => 'editor',
 				'sanitize' => [ $this, 'sanitize_location' ],
 			],
 			'width'       => [
 				'name'     => 'width',
-				'label'    => __( 'Field Width', 'block-lab' ),
+				'label'    => __( 'Field Width', 'genesis-custom-blocks' ),
 				'type'     => 'width',
 				'default'  => '100',
 				'sanitize' => 'sanitize_text_field',
 			],
 			'help'        => [
 				'name'     => 'help',
-				'label'    => __( 'Help Text', 'block-lab' ),
+				'label'    => __( 'Help Text', 'genesis-custom-blocks' ),
 				'type'     => 'text',
 				'default'  => '',
 				'sanitize' => 'sanitize_text_field',
 			],
 			'default'     => [
 				'name'     => 'default',
-				'label'    => __( 'Default Value', 'block-lab' ),
+				'label'    => __( 'Default Value', 'genesis-custom-blocks' ),
 				'type'     => 'text',
 				'default'  => '',
 				'sanitize' => 'sanitize_text_field',
 			],
 			'placeholder' => [
 				'name'     => 'placeholder',
-				'label'    => __( 'Placeholder Text', 'block-lab' ),
+				'label'    => __( 'Placeholder Text', 'genesis-custom-blocks' ),
 				'type'     => 'text',
 				'default'  => '',
 				'sanitize' => 'sanitize_text_field',
@@ -121,8 +121,8 @@ abstract class Control_Abstract {
 		];
 
 		$this->locations = [
-			'editor'    => __( 'Editor', 'block-lab' ),
-			'inspector' => __( 'Inspector', 'block-lab' ),
+			'editor'    => __( 'Editor', 'genesis-custom-blocks' ),
+			'inspector' => __( 'Inspector', 'genesis-custom-blocks' ),
 		];
 	}
 

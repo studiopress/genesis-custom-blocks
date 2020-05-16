@@ -2,12 +2,12 @@
 /**
  * Text control.
  *
- * @package   Block_Lab
- * @copyright Copyright(c) 2020, Block Lab
+ * @package   GenesisCustomBlocks
+ * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace Block_Lab\Blocks\Controls;
+namespace GenesisCustomBlocks\Blocks\Controls;
 
 /**
  * Class Text
@@ -28,7 +28,7 @@ class Text extends Control_Abstract {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->label = __( 'Text', 'block-lab' );
+		$this->label = __( 'Text', 'genesis-custom-blocks' );
 	}
 
 	/**
@@ -44,7 +44,7 @@ class Text extends Control_Abstract {
 		$this->settings[] = new Control_Setting(
 			[
 				'name'     => 'maxlength',
-				'label'    => __( 'Character Limit', 'block-lab' ),
+				'label'    => __( 'Character Limit', 'genesis-custom-blocks' ),
 				'type'     => 'number_non_negative',
 				'default'  => '',
 				'sanitize' => [ $this, 'sanitize_number' ],

@@ -2,10 +2,10 @@
 /**
  * Tests for class Textarea.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Blocks\Controls;
+use GenesisCustomBlocks\Blocks\Controls;
 
 /**
  * Tests for class Textarea.
@@ -42,7 +42,7 @@ class Test_Textarea extends \WP_UnitTestCase {
 	/**
 	 * Test __construct.
 	 *
-	 * @covers \Block_Lab\Blocks\Controls\Textarea::__construct()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\Textarea::__construct()
 	 */
 	public function test_construct() {
 		$this->assertEquals( 'Textarea', $this->instance->label );
@@ -54,7 +54,7 @@ class Test_Textarea extends \WP_UnitTestCase {
 	 *
 	 * The parent constructor calls register_settings(), so there's no need to call it again here.
 	 *
-	 * @covers \Block_Lab\Blocks\Controls\Textarea::register_settings()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\Textarea::register_settings()
 	 */
 	public function test_register_settings() {
 		$expected_settings = [
@@ -146,8 +146,8 @@ class Test_Textarea extends \WP_UnitTestCase {
 	/**
 	 * Test render_settings_new_line_format.
 	 *
-	 * @covers \Block_Lab\Blocks\Controls\textarea::render_settings_new_line_format()
-	 * @covers \Block_Lab\Blocks\Controls\Control_Abstract::render_select()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\textarea::render_settings_new_line_format()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\Control_Abstract::render_select()
 	 */
 	public function test_render_settings_new_line_format() {
 		$name = 'textarea';
@@ -164,7 +164,7 @@ class Test_Textarea extends \WP_UnitTestCase {
 	/**
 	 * Test get_new_line_formats.
 	 *
-	 * @covers \Block_Lab\Blocks\Controls\textarea::get_new_line_formats()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\textarea::get_new_line_formats()
 	 */
 	public function test_get_new_line_formats() {
 		$formats = $this->instance->get_new_line_formats();
@@ -176,7 +176,7 @@ class Test_Textarea extends \WP_UnitTestCase {
 	/**
 	 * Test test_sanitize_new_line_format.
 	 *
-	 * @covers \Block_Lab\Blocks\Controls\Textarea::sanitize_new_line_format()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\Textarea::sanitize_new_line_format()
 	 */
 	public function test_sanitize_new_line_format() {
 		$this->assertEmpty( $this->instance->sanitize_new_line_format( 'foo' ) );

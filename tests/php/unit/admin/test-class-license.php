@@ -2,10 +2,11 @@
 /**
  * Tests for class License.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Admin;
+use GenesisCustomBlocks\Admin\License;
+use GenesisCustomBlocks\Admin\Settings;
 use Brain\Monkey;
 
 /**
@@ -23,27 +24,6 @@ class Test_License extends \WP_UnitTestCase {
 	public $instance;
 
 	/**
-	 * The transient name for the license.
-	 *
-	 * @var string
-	 */
-	const LICENSE_TRANSIENT_NAME = 'block_lab_license';
-
-	/**
-	 * The option name for the notices.
-	 *
-	 * @var string
-	 */
-	const NOTICES_OPTION_NAME = 'block_lab_notices';
-
-	/**
-	 * The option name of the Block Lab license key.
-	 *
-	 * @var string
-	 */
-	const LICENSE_KEY_OPTION_NAME = 'block_lab_license_key';
-
-	/**
 	 * The name of a HTTP filter.
 	 *
 	 * @var string
@@ -55,21 +35,21 @@ class Test_License extends \WP_UnitTestCase {
 	 *
 	 * @var string
 	 */
-	const EXPECTED_LICENSE_REQUEST_FAILED_NOTICE = '<div class="notice notice-error"><p>There was a problem activating the license, but it may not be invalid. If the problem persists, please <a href="mailto:hi@getblocklab.com?subject=There was a problem activating my Block Lab Pro license">contact support</a>.</p></div>';
+	const EXPECTED_LICENSE_REQUEST_FAILED_NOTICE = '<div class="notice notice-error"><p>There was a problem activating the license, but it may not be invalid. If the problem persists, please <a href="mailto:hi@getblocklab.com?subject=There was a problem activating my Genesis Custom Blocks Pro license">contact support</a>.</p></div>';
 
 	/**
 	 * The notice for when the license is invalid.
 	 *
 	 * @var string
 	 */
-	const EXPECTED_LICENSE_INVALID_NOTICE = '<div class="notice notice-error"><p>There was a problem activating your Block Lab license.</p></div>';
+	const EXPECTED_LICENSE_INVALID_NOTICE = '<div class="notice notice-error"><p>There was a problem activating your Genesis Custom Blocks license.</p></div>';
 
 	/**
 	 * The notice for when the license validation succeeds.
 	 *
 	 * @var string
 	 */
-	const EXPECTED_LICENSE_SUCCESS_NOTICE = '<div class="notice notice-success"><p>Your Block Lab license was successfully activated!</p></div>';
+	const EXPECTED_LICENSE_SUCCESS_NOTICE = '<div class="notice notice-success"><p>Your Genesis Custom Blocks license was successfully activated!</p></div>';
 
 	/**
 	 * Setup.
@@ -79,8 +59,8 @@ class Test_License extends \WP_UnitTestCase {
 	public function setUp() {
 		parent::setUp();
 		Monkey\setUp();
-		$this->instance = new Admin\License();
-		$this->instance->set_plugin( block_lab() );
+		$this->instance = new License();
+		$this->instance->set_plugin( genesis_custom_blocks() );
 	}
 
 	/**
@@ -90,9 +70,9 @@ class Test_License extends \WP_UnitTestCase {
 	 */
 	public function tearDown() {
 		remove_all_filters( self::HTTP_FILTER_NAME );
-		delete_option( self::NOTICES_OPTION_NAME );
-		delete_option( self::LICENSE_KEY_OPTION_NAME );
-		delete_transient( self::LICENSE_TRANSIENT_NAME );
+		delete_option( Settings::NOTICES_OPTION_NAME );
+		delete_option( License::OPTION_NAME );
+		delete_transient( License::TRANSIENT_NAME );
 		Monkey\tearDown();
 		parent::tearDown();
 	}
@@ -100,17 +80,17 @@ class Test_License extends \WP_UnitTestCase {
 	/**
 	 * Test register_hooks.
 	 *
-	 * @covers \Block_Lab\Admin\License::register_hooks()
+	 * @covers \GenesisCustomBlocks\Admin\License::register_hooks()
 	 */
 	public function test_register_hooks() {
 		$this->instance->register_hooks();
-		$this->assertEquals( 10, has_filter( 'pre_update_option_block_lab_license_key', [ $this->instance, 'save_license_key' ] ) );
+		$this->assertEquals( 10, has_filter( 'pre_update_option_genesis_custom_blocks_license_key', [ $this->instance, 'save_license_key' ] ) );
 	}
 
 	/**
 	 * Test init.
 	 *
-	 * @covers \Block_Lab\Admin\License::init()
+	 * @covers \GenesisCustomBlocks\Admin\License::init()
 	 */
 	public function test_init() {
 		// Before init() is called, these properties should not have values.
@@ -121,13 +101,13 @@ class Test_License extends \WP_UnitTestCase {
 
 		// Now that init() was called, the properties should have values.
 		$this->assertEquals( 'https://getblocklab.com', $this->instance->store_url );
-		$this->assertEquals( 'block-lab-pro', $this->instance->product_slug );
+		$this->assertEquals( 'genesis-custom-blocks-pro', $this->instance->product_slug );
 	}
 
 	/**
 	 * Test save_license_key.
 	 *
-	 * @covers \Block_Lab\Admin\License::save_license_key()
+	 * @covers \GenesisCustomBlocks\Admin\License::save_license_key()
 	 */
 	public function test_save_license_key() {
 		$mock_invalid_license_key = '0000000';
@@ -137,9 +117,9 @@ class Test_License extends \WP_UnitTestCase {
 		$this->assertEquals( '', $returned_key );
 		$this->assertEquals(
 			[ self::EXPECTED_LICENSE_REQUEST_FAILED_NOTICE ],
-			get_option( self::NOTICES_OPTION_NAME )
+			get_option( Settings::NOTICES_OPTION_NAME )
 		);
-		delete_option( self::NOTICES_OPTION_NAME );
+		delete_option( Settings::NOTICES_OPTION_NAME );
 
 		// Cause the validation request to return that the license is valid.
 		add_filter(
@@ -154,9 +134,9 @@ class Test_License extends \WP_UnitTestCase {
 		$this->assertEquals( '', $returned_key );
 		$this->assertEquals(
 			[ self::EXPECTED_LICENSE_INVALID_NOTICE ],
-			get_option( self::NOTICES_OPTION_NAME )
+			get_option( Settings::NOTICES_OPTION_NAME )
 		);
-		delete_option( self::NOTICES_OPTION_NAME );
+		delete_option( Settings::NOTICES_OPTION_NAME );
 		remove_all_filters( self::HTTP_FILTER_NAME );
 
 		$expected_license = [
@@ -177,21 +157,21 @@ class Test_License extends \WP_UnitTestCase {
 		$this->assertEquals( $mock_valid_license_key, $returned_key );
 		$this->assertEquals(
 			[ self::EXPECTED_LICENSE_SUCCESS_NOTICE ],
-			get_option( self::NOTICES_OPTION_NAME )
+			get_option( Settings::NOTICES_OPTION_NAME )
 		);
 	}
 
 	/**
 	 * Test is_valid.
 	 *
-	 * @covers \Block_Lab\Admin\License::is_valid()
+	 * @covers \GenesisCustomBlocks\Admin\License::is_valid()
 	 */
 	public function test_is_valid() {
 		// The transient is not set at all, so this should be false.
 		$this->assertFalse( $this->instance->is_valid() );
 
 		set_transient(
-			self::LICENSE_TRANSIENT_NAME,
+			License::TRANSIENT_NAME,
 			[ 'license' => 'valid' ]
 		);
 
@@ -199,7 +179,7 @@ class Test_License extends \WP_UnitTestCase {
 		$this->assertFalse( $this->instance->is_valid() );
 
 		set_transient(
-			self::LICENSE_TRANSIENT_NAME,
+			License::TRANSIENT_NAME,
 			[
 				'license' => 'valid',
 				'expires' => gmdate( 'Y-m-d', time() - DAY_IN_SECONDS ),
@@ -210,7 +190,7 @@ class Test_License extends \WP_UnitTestCase {
 		$this->assertFalse( $this->instance->is_valid() );
 
 		set_transient(
-			self::LICENSE_TRANSIENT_NAME,
+			License::TRANSIENT_NAME,
 			[
 				'license' => 'valid',
 				'expires' => gmdate( 'Y-m-d', time() + DAY_IN_SECONDS ),
@@ -224,7 +204,7 @@ class Test_License extends \WP_UnitTestCase {
 	/**
 	 * Test get_license.
 	 *
-	 * @covers \Block_Lab\Admin\License::get_license()
+	 * @covers \GenesisCustomBlocks\Admin\License::get_license()
 	 */
 	public function test_get_license() {
 		$this->instance->init();
@@ -237,14 +217,14 @@ class Test_License extends \WP_UnitTestCase {
 		];
 
 		// If the transient is set, get_license() should simply return it.
-		set_transient( self::LICENSE_TRANSIENT_NAME, $valid_license_transient_value );
+		set_transient( License::TRANSIENT_NAME, $valid_license_transient_value );
 		$this->assertEquals( $valid_license_transient_value, $this->instance->get_license() );
 
-		set_transient( self::LICENSE_TRANSIENT_NAME, $invalid_license_transient_value );
+		set_transient( License::TRANSIENT_NAME, $invalid_license_transient_value );
 		$this->assertEquals( $invalid_license_transient_value, $this->instance->get_license() );
 
 		// If there's no transient or option, this should return false.
-		delete_transient( self::LICENSE_TRANSIENT_NAME );
+		delete_transient( License::TRANSIENT_NAME );
 		$this->assertFalse( $this->instance->get_license() );
 
 		$expiration_date  = gmdate( 'Y-m-d', time() + DAY_IN_SECONDS );
@@ -261,9 +241,9 @@ class Test_License extends \WP_UnitTestCase {
 			}
 		);
 
-		delete_transient( self::LICENSE_TRANSIENT_NAME );
+		delete_transient( License::TRANSIENT_NAME );
 		$example_valid_license_key = '5134315';
-		add_option( self::LICENSE_KEY_OPTION_NAME, $example_valid_license_key );
+		add_option( License::OPTION_NAME, $example_valid_license_key );
 
 		// If the license transient is empty, this should look at the option value and make a request to validate that.
 		$this->assertEquals( $expected_license, $this->instance->get_license() );
@@ -272,7 +252,7 @@ class Test_License extends \WP_UnitTestCase {
 	/**
 	 * Test activate_license.
 	 *
-	 * @covers \Block_Lab\Admin\License::activate_license()
+	 * @covers \GenesisCustomBlocks\Admin\License::activate_license()
 	 */
 	public function test_activate_license() {
 		$this->instance->init();
@@ -288,7 +268,7 @@ class Test_License extends \WP_UnitTestCase {
 		// If the POST request returns a wp_error(), this should store 'request_failed' in the transient.
 		$this->assertEquals(
 			[ 'license' => 'request_failed' ],
-			get_transient( self::LICENSE_TRANSIENT_NAME )
+			get_transient( License::TRANSIENT_NAME )
 		);
 
 		remove_all_filters( self::HTTP_FILTER_NAME );
@@ -306,13 +286,13 @@ class Test_License extends \WP_UnitTestCase {
 		$this->instance->activate_license( $license_key );
 
 		// Having simulated a successful license validation with the filter above, this should activate the license.
-		$this->assertEquals( $expected_license, get_transient( self::LICENSE_TRANSIENT_NAME ) );
+		$this->assertEquals( $expected_license, get_transient( License::TRANSIENT_NAME ) );
 	}
 
 	/**
 	 * Test license_success_message.
 	 *
-	 * @covers \Block_Lab\Admin\License::license_success_message()
+	 * @covers \GenesisCustomBlocks\Admin\License::license_success_message()
 	 */
 	public function test_license_success_message() {
 		$this->assertEquals(
@@ -324,7 +304,7 @@ class Test_License extends \WP_UnitTestCase {
 	/**
 	 * Test license_request_failed_message.
 	 *
-	 * @covers \Block_Lab\Admin\License::license_request_failed_message()
+	 * @covers \GenesisCustomBlocks\Admin\License::license_request_failed_message()
 	 */
 	public function test_license_request_failed_message() {
 		$this->assertEquals(
@@ -336,7 +316,7 @@ class Test_License extends \WP_UnitTestCase {
 	/**
 	 * Test license_invalid_message.
 	 *
-	 * @covers \Block_Lab\Admin\License::license_invalid_message()
+	 * @covers \GenesisCustomBlocks\Admin\License::license_invalid_message()
 	 */
 	public function test_license_invalid_message() {
 		$this->assertEquals(

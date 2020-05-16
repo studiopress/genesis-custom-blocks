@@ -21,13 +21,13 @@ const expectedArgs = {
 };
 
 describe( 'registerBlocks', () => {
-	it( 'should not register any block if there is no Block Lab block passed', () => {
+	it( 'should not register any block if there is no Genesis Custom Blocks block passed', () => {
 		registerBlocks( {}, {}, Edit );
 		expect( mockRegisterBlockType ).toHaveBeenCalledTimes( 0 );
 	} );
 
 	it( 'should register a single block', () => {
-		const blockName = 'block-lab/test-post';
+		const blockName = 'genesis-custom-blocks/test-post';
 		const blockLabBlocks = {};
 		blockLabBlocks[ blockName ] = {
 			title: 'Test Post',
@@ -46,12 +46,12 @@ describe( 'registerBlocks', () => {
 		registerBlocks(
 			{},
 			{
-				'block-lab/example-post': {
+				'genesis-custom-blocks/example-post': {
 					title: 'An Example Post',
 					category: 'widget',
 					keywords: [ 'foobaz', 'example' ],
 				},
-				'block-lab/example-email': {
+				'genesis-custom-blocks/example-email': {
 					title: 'Example Email',
 					category: 'widget',
 					keywords: [ 'example-keyword', 'another' ],

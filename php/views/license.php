@@ -1,29 +1,31 @@
 <?php
 /**
- * Block Lab settings form for the License tab.
+ * Genesis Custom Blocks settings form for the License tab.
  *
- * @package   Block_Lab
- * @copyright Copyright(c) 2020, Block Lab
+ * @package   GenesisCustomBlocks
+ * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
+
+use GenesisCustomBlocks\Admin\License;
 
 ?>
 <form method="post" action="options.php">
 	<?php
-	settings_fields( 'block-lab-license-key' );
-	do_settings_sections( 'block-lab-license-key' );
+	settings_fields( 'genesis-custom-blocks-license-key' );
+	do_settings_sections( 'genesis-custom-blocks-license-key' );
 	?>
 	<table class="form-table">
 		<tr valign="top">
 			<th scope="row">
-				<label><?php esc_html_e( 'License', 'block-lab' ); ?></label>
+				<label><?php esc_html_e( 'License', 'genesis-custom-blocks' ); ?></label>
 			</th>
 			<td>
 				<?php
-				if ( block_lab()->is_pro() ) {
-					$license = block_lab()->admin->license->get_license();
+				if ( genesis_custom_blocks()->is_pro() ) {
+					$license = genesis_custom_blocks()->admin->license->get_license();
 
-					$limit = __( 'unlimited', 'block-lab' );
+					$limit = __( 'unlimited', 'genesis-custom-blocks' );
 					if ( isset( $license['license_limit'] ) && intval( $license['license_limit'] ) > 0 ) {
 						$limit = $license['license_limit'];
 					}
@@ -43,12 +45,12 @@
 							'<p>%1$s %2$s</p>',
 							sprintf(
 								// translators: A number, wrapped in <strong> tags.
-								__( 'Your license includes %1$s site installs.', 'block-lab' ),
+								__( 'Your license includes %1$s site installs.', 'genesis-custom-blocks' ),
 								'<strong>' . $limit . '</strong>'
 							),
 							sprintf(
 								// translators: A number, wrapped in <strong> tags.
-								__( '%1$s of them are in use.', 'block-lab' ),
+								__( '%1$s of them are in use.', 'genesis-custom-blocks' ),
 								'<strong>' . $count . '</strong>'
 							)
 						)
@@ -59,12 +61,12 @@
 							'<p>%1$s %2$s</p>',
 							sprintf(
 								// translators: A date.
-								__( 'Your license expires on %1$s.', 'block-lab' ),
+								__( 'Your license expires on %1$s.', 'genesis-custom-blocks' ),
 								'<strong>' . $expiry . '</strong>'
 							),
 							sprintf(
 								// translators: An opening and closing anchor tag.
-								__( '%1$sManage Licenses%2$s', 'block-lab' ),
+								__( '%1$sManage Licenses%2$s', 'genesis-custom-blocks' ),
 								'<a href="https://getblocklab.com/checkout/purchase-history/" target="_blank">',
 								'</a>'
 							)
@@ -74,11 +76,11 @@
 					echo wp_kses_post(
 						sprintf(
 							'<p>%1$s %2$s</p>',
-							__( 'No Pro license was found for this installation.', 'block-lab' ),
+							__( 'No Pro license was found for this installation.', 'genesis-custom-blocks' ),
 							sprintf(
 								// translators: Opening and closing anchor and emphasis tags.
-								__( '%1$sGet Block Lab Pro!%2$s', 'block-lab' ),
-								'<a href="' . add_query_arg( [ 'page' => 'block-lab-pro' ] ) . '"><em>',
+								__( '%1$sGet Genesis Custom Blocks Pro!%2$s', 'genesis-custom-blocks' ),
+								'<a href="' . add_query_arg( [ 'page' => 'genesis-custom-blocks-pro' ] ) . '"><em>',
 								'</em></a>'
 							)
 						)
@@ -89,10 +91,10 @@
 		</tr>
 		<tr valign="top">
 			<th scope="row">
-				<label for="block_lab_license_key"><?php esc_html_e( 'License key', 'block-lab' ); ?></label>
+				<label for="<?php echo esc_attr( License::OPTION_NAME ); ?>"><?php esc_html_e( 'License key', 'genesis-custom-blocks' ); ?></label>
 			</th>
 			<td>
-				<input type="password" name="block_lab_license_key" id="block_lab_license_key" class="regular-text" value="<?php echo esc_attr( get_option( 'block_lab_license_key' ) ); ?>" />
+				<input type="password" name="<?php echo esc_attr( License::OPTION_NAME ); ?>" id="<?php echo esc_attr( License::OPTION_NAME ); ?>" class="regular-text" value="<?php echo esc_attr( get_option( License::OPTION_NAME ) ); ?>" />
 			</td>
 		</tr>
 	</table>

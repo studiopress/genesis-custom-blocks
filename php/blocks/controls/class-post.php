@@ -2,12 +2,12 @@
 /**
  * Post control.
  *
- * @package   Block_Lab
- * @copyright Copyright(c) 2020, Block Lab
+ * @package   GenesisCustomBlocks
+ * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace Block_Lab\Blocks\Controls;
+namespace GenesisCustomBlocks\Blocks\Controls;
 
 /**
  * Class Post
@@ -33,7 +33,7 @@ class Post extends Control_Abstract {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->label = __( 'Post', 'block-lab' );
+		$this->label = __( 'Post', 'genesis-custom-blocks' );
 	}
 
 	/**
@@ -48,7 +48,7 @@ class Post extends Control_Abstract {
 		$this->settings[] = new Control_Setting(
 			[
 				'name'     => 'post_type_rest_slug',
-				'label'    => __( 'Post Type', 'block-lab' ),
+				'label'    => __( 'Post Type', 'genesis-custom-blocks' ),
 				'type'     => 'post_type_rest_slug',
 				'default'  => 'posts',
 				'sanitize' => [ $this, 'sanitize_post_type_rest_slug' ],

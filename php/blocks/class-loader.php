@@ -2,12 +2,12 @@
 /**
  * Loader initiates the loading of new blocks.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-namespace Block_Lab\Blocks;
+namespace GenesisCustomBlocks\Blocks;
 
-use Block_Lab\Component_Abstract;
+use GenesisCustomBlocks\Component_Abstract;
 
 /**
  * Class Loader
@@ -135,7 +135,7 @@ class Loader extends Component_Abstract {
 		$asset_config = require $this->plugin->get_path( 'js/editor.blocks.asset.php' );
 
 		wp_enqueue_script(
-			'block-lab-blocks',
+			'genesis-custom-blocks-blocks',
 			$this->assets['url']['entry'],
 			$asset_config['dependencies'],
 			$asset_config['version'],
@@ -144,7 +144,7 @@ class Loader extends Component_Abstract {
 
 		// Add dynamic Gutenberg blocks.
 		wp_add_inline_script(
-			'block-lab-blocks',
+			'genesis-custom-blocks-blocks',
 			'const blockLabBlocks = ' . wp_json_encode( $this->blocks ),
 			'before'
 		);
@@ -153,7 +153,7 @@ class Loader extends Component_Abstract {
 		$author_blocks = get_posts(
 			[
 				'author'         => get_current_user_id(),
-				'post_type'      => 'block_lab',
+				'post_type'      => 'genesis_custom_block',
 				// We could use -1 here, but that could be dangerous. 99 is more than enough.
 				'posts_per_page' => 99,
 			]
@@ -161,7 +161,7 @@ class Loader extends Component_Abstract {
 
 		$author_block_slugs = wp_list_pluck( $author_blocks, 'post_name' );
 		wp_localize_script(
-			'block-lab-blocks',
+			'genesis-custom-blocks-blocks',
 			'blockLab',
 			[
 				'authorBlocks' => $author_block_slugs,
@@ -171,7 +171,7 @@ class Loader extends Component_Abstract {
 
 		// Enqueue optional editor only styles.
 		wp_enqueue_style(
-			'block-lab-editor-css',
+			'genesis-custom-blocks-editor-css',
 			$this->assets['url']['editor_style'],
 			[],
 			$this->plugin->get_version()
@@ -428,12 +428,12 @@ class Loader extends Component_Abstract {
 		foreach ( $types as $type ) {
 			$locations = array_merge(
 				$locations,
-				block_lab()->get_stylesheet_locations( $name, $type )
+				genesis_custom_blocks()->get_stylesheet_locations( $name, $type )
 			);
 		}
 
-		$stylesheet_path = block_lab()->locate_template( $locations );
-		$stylesheet_url  = block_lab()->get_url_from_path( $stylesheet_path );
+		$stylesheet_path = genesis_custom_blocks()->locate_template( $locations );
+		$stylesheet_url  = genesis_custom_blocks()->get_url_from_path( $stylesheet_path );
 
 		/**
 		 * Enqueue the stylesheet, if it exists. The wp_enqueue_style function handles duplicates, so we don't need
@@ -441,7 +441,7 @@ class Loader extends Component_Abstract {
 		 */
 		if ( ! empty( $stylesheet_url ) ) {
 			wp_enqueue_style(
-				"block-lab__block-{$name}",
+				"genesis-custom-blocks__block-{$name}",
 				$stylesheet_url,
 				[],
 				wp_get_theme()->get( 'Version' )
@@ -458,15 +458,15 @@ class Loader extends Component_Abstract {
 			'blocks/blocks.css',
 		];
 
-		$stylesheet_path = block_lab()->locate_template( $locations );
-		$stylesheet_url  = block_lab()->get_url_from_path( $stylesheet_path );
+		$stylesheet_path = genesis_custom_blocks()->locate_template( $locations );
+		$stylesheet_url  = genesis_custom_blocks()->get_url_from_path( $stylesheet_path );
 
 		/**
 		 * Enqueue the stylesheet, if it exists.
 		 */
 		if ( ! empty( $stylesheet_url ) ) {
 			wp_enqueue_style(
-				'block-lab__global-styles',
+				'genesis-custom-blocks__global-styles',
 				$stylesheet_url,
 				[],
 				wp_get_theme()->get( 'Version' )
@@ -493,8 +493,8 @@ class Loader extends Component_Abstract {
 		$located = '';
 
 		foreach ( $types as $type ) {
-			$templates = block_lab()->get_template_locations( $name, $type );
-			$located   = block_lab()->locate_template( $templates );
+			$templates = genesis_custom_blocks()->get_template_locations( $name, $type );
+			$located   = genesis_custom_blocks()->locate_template( $templates );
 
 			if ( ! empty( $located ) ) {
 				break;
@@ -518,7 +518,7 @@ class Loader extends Component_Abstract {
 				'<div class="notice notice-warning">%s</div>',
 				wp_kses_post(
 					// Translators: Placeholder is a file path.
-					sprintf( __( 'Template file %s not found.', 'block-lab' ), '<code>' . esc_html( $templates[0] ) . '</code>' )
+					sprintf( __( 'Template file %s not found.', 'genesis-custom-blocks' ), '<code>' . esc_html( $templates[0] ) . '</code>' )
 				)
 			);
 		}
@@ -532,7 +532,7 @@ class Loader extends Component_Abstract {
 		 * Retrieve blocks from blocks.json.
 		 * Reverse to preserve order of preference when using array_merge.
 		 */
-		$blocks_files = array_reverse( (array) block_lab()->locate_template( 'blocks/blocks.json', '', false ) );
+		$blocks_files = array_reverse( (array) genesis_custom_blocks()->locate_template( 'blocks/blocks.json', '', false ) );
 		foreach ( $blocks_files as $blocks_file ) {
 			// This is expected to be on the local filesystem, so file_get_contents() is ok to use here.
 			$json       = file_get_contents( $blocks_file ); // @codingStandardsIgnoreLine
@@ -549,7 +549,7 @@ class Loader extends Component_Abstract {
 		 */
 		$block_posts = new \WP_Query(
 			[
-				'post_type'      => block_lab()->get_post_type_slug(),
+				'post_type'      => genesis_custom_blocks()->get_post_type_slug(),
 				'post_status'    => 'publish',
 				'posts_per_page' => 100, // This has to have a limit for this plugin to be scalable.
 			]
@@ -596,7 +596,7 @@ class Loader extends Component_Abstract {
 			return;
 		}
 
-		$this->blocks[ "block-lab/{$block_config['name']}" ] = $block_config;
+		$this->blocks[ "genesis-custom-blocks/{$block_config['name']}" ] = $block_config;
 	}
 
 	/**
@@ -609,13 +609,13 @@ class Loader extends Component_Abstract {
 	 * @param array  $field_config The config of the field to add.
 	 */
 	public function add_field( $block_name, $field_config ) {
-		if ( ! isset( $this->blocks[ "block-lab/{$block_name}" ] ) ) {
+		if ( ! isset( $this->blocks[ "genesis-custom-blocks/{$block_name}" ] ) ) {
 			return;
 		}
 		if ( ! isset( $field_config['name'] ) ) {
 			return;
 		}
 
-		$this->blocks[ "block-lab/{$block_name}" ]['fields'][ $field_config['name'] ] = $field_config;
+		$this->blocks[ "genesis-custom-blocks/{$block_name}" ]['fields'][ $field_config['name'] ] = $field_config;
 	}
 }

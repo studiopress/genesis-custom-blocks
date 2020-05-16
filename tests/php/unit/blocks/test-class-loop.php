@@ -2,10 +2,10 @@
 /**
  * Tests for class Loop.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Blocks;
+use GenesisCustomBlocks\Blocks;
 
 /**
  * Tests for class Loop.
@@ -33,7 +33,7 @@ class Test_Loop extends \WP_UnitTestCase {
 	/**
 	 * Test set_active.
 	 *
-	 * @covers \Block_Lab\Blocks\Loop::set_active()
+	 * @covers \GenesisCustomBlocks\Blocks\Loop::set_active()
 	 */
 	public function test_set_active() {
 		$this->assertEquals( null, $this->instance->active );
@@ -52,7 +52,7 @@ class Test_Loop extends \WP_UnitTestCase {
 	/**
 	 * Test get_row.
 	 *
-	 * @covers \Block_Lab\Blocks\Loop::get_row()
+	 * @covers \GenesisCustomBlocks\Blocks\Loop::get_row()
 	 */
 	public function test_get_row() {
 		// If there is no loop set, this should return false.
@@ -77,7 +77,7 @@ class Test_Loop extends \WP_UnitTestCase {
 	/**
 	 * Test increment.
 	 *
-	 * @covers \Block_Lab\Blocks\Loop::increment()
+	 * @covers \GenesisCustomBlocks\Blocks\Loop::increment()
 	 */
 	public function test_increment() {
 		// Calling increment() for the first time for a row should return 0.
@@ -96,7 +96,7 @@ class Test_Loop extends \WP_UnitTestCase {
 	/**
 	 * Test reset.
 	 *
-	 * @covers \Block_Lab\Blocks\Loop::reset()
+	 * @covers \GenesisCustomBlocks\Blocks\Loop::reset()
 	 */
 	public function test_reset() {
 		$row_name                           = 'example-row-name';

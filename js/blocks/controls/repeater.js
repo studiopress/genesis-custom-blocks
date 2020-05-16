@@ -23,7 +23,7 @@ const BlockLabRepeaterControl = ( props ) => {
 	 * Simply using {} results in <ServerSideRender> not sending an empty row,
 	 * and the empty row isn't rendered in the editor.
 	 *
-	 * @see https://github.com/getblocklab/block-lab/issues/393
+	 * @see https://github.com/studiopress/genesis-custom-blocks/issues/393
 	 */
 	const addEmptyRow = () => {
 		const withAddedRow = rows.concat( { '': '' } );
@@ -36,7 +36,7 @@ const BlockLabRepeaterControl = ( props ) => {
 	}
 
 	return (
-		<BaseControl className="block-lab-repeater" label={ field.label } id={ `bl-repeater-${ instanceId }` } help={ field.help }>
+		<BaseControl className="genesis-custom-blocks-repeater" label={ field.label } id={ `bl-repeater-${ instanceId }` } help={ field.help }>
 			<RepeaterRows
 				rows={ rows }
 				field={ field }
@@ -44,11 +44,11 @@ const BlockLabRepeaterControl = ( props ) => {
 				parentBlockProps={ parentBlockProps }
 				parentBlock={ parentBlock }
 			/>
-			<div className="block-lab-repeater--row-add">
+			<div className="genesis-custom-blocks-repeater--row-add">
 				<IconButton
 					key={ `${ field.name }-repeater-insert` }
 					icon="insert"
-					label={ __( 'Add new', 'block-lab' ) }
+					label={ __( 'Add new', 'genesis-custom-blocks' ) }
 					labelPosition="bottom"
 					onClick={ addEmptyRow }
 					disabled={ !! field.max && rows.length >= field.max }

@@ -2,10 +2,10 @@
 /**
  * Tests for class Classic_Text.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Blocks\Controls;
+use GenesisCustomBlocks\Blocks\Controls;
 
 /**
  * Tests for class Classic_Text.
@@ -34,7 +34,7 @@ class Test_Classic_Text extends \WP_UnitTestCase {
 	/**
 	 * Test __construct.
 	 *
-	 * @covers \Block_Lab\Blocks\Controls\Classic_Text::__construct()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\Classic_Text::__construct()
 	 */
 	public function test_construct() {
 		$this->assertEquals( 'Classic Text', $this->instance->label );
@@ -44,7 +44,7 @@ class Test_Classic_Text extends \WP_UnitTestCase {
 	/**
 	 * Test register_settings.
 	 *
-	 * @covers \Block_Lab\Blocks\Controls\Classic_Text::register_settings()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\Classic_Text::register_settings()
 	 */
 	public function test_register_settings() {
 		$expected_settings = [

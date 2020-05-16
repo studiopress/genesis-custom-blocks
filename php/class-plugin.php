@@ -2,12 +2,12 @@
 /**
  * Primary plugin file.
  *
- * @package   Block_Lab
- * @copyright Copyright(c) 2020, Block Lab
+ * @package   GenesisCustomBlocks
+ * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace Block_Lab;
+namespace GenesisCustomBlocks;
 
 /**
  * Class Plugin
@@ -41,7 +41,7 @@ class Plugin extends Plugin_Abstract {
 	 * @since 1.3.5
 	 * @var string
 	 */
-	public $post_type_slug = 'block_lab';
+	public $post_type_slug = 'genesis_custom_block';
 
 	/**
 	 * Execute this as early as possible.

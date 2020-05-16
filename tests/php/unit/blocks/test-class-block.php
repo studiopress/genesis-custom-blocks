@@ -2,10 +2,10 @@
 /**
  * Tests for class Block.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Blocks;
+use GenesisCustomBlocks\Blocks;
 
 /**
  * Tests for class Block.
@@ -26,7 +26,7 @@ class Test_Block extends \WP_UnitTestCase {
 	 */
 	const JSON = '
 	{
-		"block-lab\\/simple-test-block": {
+		"genesis-custom-blocks\\/simple-test-block": {
 			"name": "simple-test-block",
 			"title": "Simple Test Block",
 			"icon": "block_lab",
@@ -103,7 +103,7 @@ class Test_Block extends \WP_UnitTestCase {
 			[
 				'post_title' => 'Simple Test Block',
 				'post_name'  => 'simple-test-block',
-				'post_type'  => 'block_lab',
+				'post_type'  => 'genesis_custom_block',
 			]
 		);
 
@@ -113,7 +113,7 @@ class Test_Block extends \WP_UnitTestCase {
 	/**
 	 * Test __construct.
 	 *
-	 * @covers \Block_Lab\Blocks\Block::__construct()
+	 * @covers \GenesisCustomBlocks\Blocks\Block::__construct()
 	 */
 	public function test_construct() {
 		$this->assertEquals( 'simple-test-block', $this->instance->name );
@@ -122,7 +122,7 @@ class Test_Block extends \WP_UnitTestCase {
 	/**
 	 * Test from_json.
 	 *
-	 * @covers \Block_Lab\Blocks\Block::from_json()
+	 * @covers \GenesisCustomBlocks\Blocks\Block::from_json()
 	 */
 	public function test_from_json() {
 		$this->instance->from_json( self::JSON );
@@ -159,17 +159,17 @@ class Test_Block extends \WP_UnitTestCase {
 	/**
 	 * Test to_json.
 	 *
-	 * @covers \Block_Lab\Blocks\Block::to_json()
+	 * @covers \GenesisCustomBlocks\Blocks\Block::to_json()
 	 */
 	public function test_to_json() {
 		$this->instance->from_json( self::JSON );
 		$json = $this->instance->to_json();
 
 		$decoded = json_decode( $json, true );
-		$this->assertArrayHasKey( 'block-lab/simple-test-block', $decoded );
+		$this->assertArrayHasKey( 'genesis-custom-blocks/simple-test-block', $decoded );
 
 		// Check all the base attributes.
-		$block = $decoded['block-lab/simple-test-block'];
+		$block = $decoded['genesis-custom-blocks/simple-test-block'];
 		$this->assertArrayHasKey( 'name', $block );
 		$this->assertArrayHasKey( 'title', $block );
 		$this->assertArrayHasKey( 'icon', $block );

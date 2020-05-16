@@ -1,15 +1,15 @@
 <?php
 /**
- * Block Lab Upgrade Page.
+ * Genesis Custom Blocks Upgrade Page.
  *
- * @package   Block_Lab
- * @copyright Copyright(c) 2020, Block Lab
+ * @package   GenesisCustomBlocks
+ * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace Block_Lab\Admin;
+namespace GenesisCustomBlocks\Admin;
 
-use Block_Lab\Component_Abstract;
+use GenesisCustomBlocks\Component_Abstract;
 
 /**
  * Class Upgrade
@@ -21,7 +21,7 @@ class Upgrade extends Component_Abstract {
 	 *
 	 * @var string
 	 */
-	public $slug = 'block-lab-pro';
+	public $slug = 'genesis-custom-blocks-pro';
 
 	/**
 	 * Register any hooks that this component needs.
@@ -51,13 +51,13 @@ class Upgrade extends Component_Abstract {
 	}
 
 	/**
-	 * Add submenu pages to the Block Lab menu.
+	 * Add submenu pages to the Genesis Custom Blocks menu.
 	 */
 	public function add_submenu_pages() {
 		add_submenu_page(
-			'edit.php?post_type=block_lab',
-			__( 'Block Lab Pro', 'block-lab' ),
-			__( 'Go Pro', 'block-lab' ),
+			'edit.php?post_type=genesis_custom_block',
+			__( 'Genesis Custom Blocks Pro', 'genesis-custom-blocks' ),
+			__( 'Go Pro', 'genesis-custom-blocks' ),
 			'manage_options',
 			$this->slug,
 			[ $this, 'render_page' ]
@@ -69,9 +69,9 @@ class Upgrade extends Component_Abstract {
 	 */
 	public function render_page() {
 		?>
-		<div class="wrap block-lab-pro">
+		<div class="wrap genesis-custom-blocks-pro">
 			<h2 class="screen-reader-text"><?php echo esc_html( get_admin_page_title() ); ?></h2>
-			<?php include block_lab()->get_path() . 'php/views/upgrade.php'; ?>
+			<?php include genesis_custom_blocks()->get_path() . 'php/views/upgrade.php'; ?>
 		</div>
 		<?php
 	}

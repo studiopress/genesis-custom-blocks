@@ -2,39 +2,46 @@
 /**
  * Enable and validate Pro version licensing.
  *
- * @package   Block_Lab
- * @copyright Copyright(c) 2020, Block Lab
+ * @package   GenesisCustomBlocks
+ * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace Block_Lab\Admin;
+namespace GenesisCustomBlocks\Admin;
 
-use Block_Lab\Component_Abstract;
+use GenesisCustomBlocks\Component_Abstract;
 
 /**
  * Class License
  */
 class License extends Component_Abstract {
 	/**
-	 * URL of the Block Lab store.
+	 * URL of the Genesis Custom Blocks store.
 	 *
 	 * @var string
 	 */
 	public $store_url;
 
 	/**
-	 * Product slug of the Pro version on the Block Lab store.
+	 * Product slug of the Pro version on the Genesis Custom Blocks store.
 	 *
 	 * @var string
 	 */
 	public $product_slug;
 
 	/**
+	 * Option name of the license.
+	 *
+	 * @var string
+	 */
+	const OPTION_NAME = 'genesis_custom_blocks_license_key';
+
+	/**
 	 * The name of the license key transient.
 	 *
 	 * @var string
 	 */
-	const TRANSIENT_NAME = 'block_lab_license';
+	const TRANSIENT_NAME = 'genesis_custom_blocks_license';
 
 	/**
 	 * The transient 'license' value for when the request to validate the Pro license failed.
@@ -51,14 +58,14 @@ class License extends Component_Abstract {
 	 */
 	public function init() {
 		$this->store_url    = 'https://getblocklab.com';
-		$this->product_slug = 'block-lab-pro';
+		$this->product_slug = 'genesis-custom-blocks-pro';
 	}
 
 	/**
 	 * Register any hooks that this component needs.
 	 */
 	public function register_hooks() {
-		add_filter( 'pre_update_option_block_lab_license_key', [ $this, 'save_license_key' ] );
+		add_filter( 'pre_update_option_' . self::OPTION_NAME, [ $this, 'save_license_key' ] );
 	}
 
 	/**
@@ -75,12 +82,12 @@ class License extends Component_Abstract {
 		if ( ! $this->is_valid() ) {
 			$key = '';
 			if ( isset( $license['license'] ) && self::REQUEST_FAILED === $license['license'] ) {
-				block_lab()->admin->settings->prepare_notice( $this->license_request_failed_message() );
+				genesis_custom_blocks()->admin->settings->prepare_notice( $this->license_request_failed_message() );
 			} else {
-				block_lab()->admin->settings->prepare_notice( $this->license_invalid_message() );
+				genesis_custom_blocks()->admin->settings->prepare_notice( $this->license_invalid_message() );
 			}
 		} else {
-			block_lab()->admin->settings->prepare_notice( $this->license_success_message() );
+			genesis_custom_blocks()->admin->settings->prepare_notice( $this->license_success_message() );
 		}
 
 		return $key;
@@ -112,7 +119,7 @@ class License extends Component_Abstract {
 		$license = get_transient( self::TRANSIENT_NAME );
 
 		if ( ! $license ) {
-			$key = get_option( 'block_lab_license_key' );
+			$key = get_option( self::OPTION_NAME );
 			if ( ! empty( $key ) ) {
 				$this->activate_license( $key );
 				$license = get_transient( self::TRANSIENT_NAME );
@@ -136,7 +143,7 @@ class License extends Component_Abstract {
 			'url'        => home_url(),
 		];
 
-		// Call the Block Lab store's API.
+		// Call the Genesis Custom Blocks store's API.
 		$response = wp_remote_post(
 			$this->store_url,
 			[
@@ -163,7 +170,7 @@ class License extends Component_Abstract {
 	 * @return string
 	 */
 	public function license_success_message() {
-		$message = __( 'Your Block Lab license was successfully activated!', 'block-lab' );
+		$message = __( 'Your Genesis Custom Blocks license was successfully activated!', 'genesis-custom-blocks' );
 		return sprintf( '<div class="notice notice-success"><p>%s</p></div>', esc_html( $message ) );
 	}
 
@@ -178,11 +185,11 @@ class License extends Component_Abstract {
 	public function license_request_failed_message() {
 		$message = sprintf(
 			/* translators: %s is an HTML link to contact support */
-			__( 'There was a problem activating the license, but it may not be invalid. If the problem persists, please %s.', 'block-lab' ),
+			__( 'There was a problem activating the license, but it may not be invalid. If the problem persists, please %s.', 'genesis-custom-blocks' ),
 			sprintf(
 				'<a href="%1$s">%2$s</a>',
-				'mailto:hi@getblocklab.com?subject=There was a problem activating my Block Lab Pro license',
-				esc_html__( 'contact support', 'block-lab' )
+				'mailto:hi@getblocklab.com?subject=There was a problem activating my Genesis Custom Blocks Pro license',
+				esc_html__( 'contact support', 'genesis-custom-blocks' )
 			)
 		);
 
@@ -195,7 +202,7 @@ class License extends Component_Abstract {
 	 * @return string
 	 */
 	public function license_invalid_message() {
-		$message = __( 'There was a problem activating your Block Lab license.', 'block-lab' );
+		$message = __( 'There was a problem activating your Genesis Custom Blocks license.', 'genesis-custom-blocks' );
 		return sprintf( '<div class="notice notice-error"><p>%s</p></div>', esc_html( $message ) );
 	}
 }

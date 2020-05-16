@@ -19,7 +19,7 @@ const BlockLabColorPopover = withState( {
 	};
 
 	return (
-		<BaseControl className="block-lab-color-popover">
+		<BaseControl className="genesis-custom-blocks-color-popover">
 			<ColorIndicator
 				colorValue={ color }
 				onMouseDown={ ( event ) => {
@@ -60,7 +60,7 @@ const BlockLabColorControl = ( props ) => {
 	const value = 'undefined' !== typeof initialValue ? initialValue : field.default;
 
 	return (
-		<BaseControl label={ field.label } id={ `bl-color-${ instanceId }` } className="block-lab-color-control" help={ field.help }>
+		<BaseControl label={ field.label } id={ `bl-color-${ instanceId }` } className="genesis-custom-blocks-color-control" help={ field.help }>
 			<TextControl
 				value={ value }
 				onChange={ onChange }

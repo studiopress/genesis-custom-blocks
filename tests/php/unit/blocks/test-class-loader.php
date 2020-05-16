@@ -2,10 +2,10 @@
 /**
  * Tests for class Loader.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Blocks;
+use GenesisCustomBlocks\Blocks;
 
 /**
  * Tests for class Loader.
@@ -50,12 +50,12 @@ class Test_Loader extends Abstract_Template {
 	/**
 	 * Test init.
 	 *
-	 * @covers \Block_Lab\Blocks\Loader::init()
+	 * @covers \GenesisCustomBlocks\Blocks\Loader::init()
 	 */
 	public function test_init() {
 		$this->instance->init();
 		$assets = $this->get_protected_property( 'assets' );
-		$this->assertEquals( 'Block_Lab\\Blocks\\Loader', get_class( $this->instance->init() ) );
+		$this->assertEquals( 'GenesisCustomBlocks\\Blocks\\Loader', get_class( $this->instance->init() ) );
 		$this->assertContains( 'js/editor.blocks.js', $assets['path']['entry'] );
 		$this->assertContains( 'css/blocks.editor.css', $assets['path']['editor_style'] );
 		$this->assertContains( 'js/editor.blocks.js', $assets['url']['entry'] );
@@ -65,7 +65,7 @@ class Test_Loader extends Abstract_Template {
 	/**
 	 * Test register_hooks.
 	 *
-	 * @covers \Block_Lab\Blocks\Loader::register_hooks()
+	 * @covers \GenesisCustomBlocks\Blocks\Loader::register_hooks()
 	 */
 	public function test_register_hooks() {
 		global $wp_filter;
@@ -85,7 +85,7 @@ class Test_Loader extends Abstract_Template {
 	/**
 	 * Test get_data.
 	 *
-	 * @covers \Block_Lab\Blocks\Loader::get_data()
+	 * @covers \GenesisCustomBlocks\Blocks\Loader::get_data()
 	 */
 	public function test_get_data() {
 		$config_key     = 'config';
@@ -133,11 +133,11 @@ class Test_Loader extends Abstract_Template {
 	/**
 	 * Test editor_assets.
 	 *
-	 * @covers \Block_Lab\Blocks\Loader::editor_assets()
+	 * @covers \GenesisCustomBlocks\Blocks\Loader::editor_assets()
 	 */
 	public function test_editor_assets() {
-		$script_handle = 'block-lab-blocks';
-		$style_handle  = 'block-lab-editor-css';
+		$script_handle = 'genesis-custom-blocks-blocks';
+		$style_handle  = 'genesis-custom-blocks-editor-css';
 
 		$this->instance->init();
 		$this->invoke_protected_method( 'editor_assets' );
@@ -158,7 +158,7 @@ class Test_Loader extends Abstract_Template {
 	/**
 	 * Test render_block_template.
 	 *
-	 * @covers \Block_Lab\Blocks\Loader::render_block_template()
+	 * @covers \GenesisCustomBlocks\Blocks\Loader::render_block_template()
 	 */
 	public function test_render_block_template() {
 		$slug       = 'bl-testing-slug';
@@ -209,11 +209,11 @@ class Test_Loader extends Abstract_Template {
 	/**
 	 * Test enqueue_block_styles.
 	 *
-	 * @covers \Block_Lab\Blocks\Loader::enqueue_block_styles()
+	 * @covers \GenesisCustomBlocks\Blocks\Loader::enqueue_block_styles()
 	 */
 	public function test_enqueue_block_styles() {
 		$wp_styles    = wp_styles();
-		$block_handle = "block-lab__block-{$this->mock_block_name}";
+		$block_handle = "genesis-custom-blocks__block-{$this->mock_block_name}";
 
 		// Check that the correct stylesheet is enqueued.
 		foreach ( $this->get_template_css_paths() as $key => $file ) {
@@ -238,7 +238,7 @@ class Test_Loader extends Abstract_Template {
 	/**
 	 * Test get_block_attributes.
 	 *
-	 * @covers \Block_Lab\Blocks\Loader::get_block_attributes()
+	 * @covers \GenesisCustomBlocks\Blocks\Loader::get_block_attributes()
 	 */
 	public function test_get_block_attributes() {
 		$text_name         = 'example-text';
@@ -306,7 +306,7 @@ class Test_Loader extends Abstract_Template {
 	/**
 	 * Test get_attributes_from_field.
 	 *
-	 * @covers \Block_Lab\Blocks\Loader::get_attributes_from_field()
+	 * @covers \GenesisCustomBlocks\Blocks\Loader::get_attributes_from_field()
 	 */
 	public function test_get_attributes_from_field() {
 		$image_name    = 'testing-image';
@@ -335,11 +335,11 @@ class Test_Loader extends Abstract_Template {
 	/**
 	 * Test enqueue_global_styles.
 	 *
-	 * @covers \Block_Lab\Blocks\Loader::enqueue_global_styles()
+	 * @covers \GenesisCustomBlocks\Blocks\Loader::enqueue_global_styles()
 	 */
 	public function test_enqueue_global_styles() {
 		$wp_styles          = wp_styles();
-		$enqueue_handle     = 'block-lab__global-styles';
+		$enqueue_handle     = 'genesis-custom-blocks__global-styles';
 		$global_style_paths = [
 			"{$this->theme_directory}/blocks/blocks.css",
 			"{$this->theme_directory}/blocks/css/blocks.css",
@@ -365,7 +365,7 @@ class Test_Loader extends Abstract_Template {
 	/**
 	 * Test block_template.
 	 *
-	 * @covers \Block_Lab\Blocks\Loader::block_template()
+	 * @covers \GenesisCustomBlocks\Blocks\Loader::block_template()
 	 */
 	public function test_block_template() {
 		ob_start();
@@ -422,7 +422,7 @@ class Test_Loader extends Abstract_Template {
 	/**
 	 * Test add_block.
 	 *
-	 * @covers \Block_Lab\Blocks\Loader::add_block()
+	 * @covers \GenesisCustomBlocks\Blocks\Loader::add_block()
 	 */
 	public function test_add_block() {
 		// The block config does not have a name, so it should not be added to the $blocks property.
@@ -434,18 +434,18 @@ class Test_Loader extends Abstract_Template {
 		$actual_blocks = $this->get_protected_property( 'blocks' );
 		$this->assertEquals(
 			$this->block_config_with_name,
-			$actual_blocks[ "block-lab/{$this->block_config_with_name['name']}" ]
+			$actual_blocks[ "genesis-custom-blocks/{$this->block_config_with_name['name']}" ]
 		);
 	}
 
 	/**
 	 * Test add_field.
 	 *
-	 * @covers \Block_Lab\Blocks\Loader::add_field()
+	 * @covers \GenesisCustomBlocks\Blocks\Loader::add_field()
 	 */
 	public function test_add_field() {
 		$block_name                = 'example-block';
-		$full_block_name           = "block-lab/{$block_name}";
+		$full_block_name           = "genesis-custom-blocks/{$block_name}";
 		$field_name                = 'baz-field';
 		$field_config_with_name    = [ 'name' => $field_name ];
 		$field_config_without_name = [ 'baz' => 'example' ];

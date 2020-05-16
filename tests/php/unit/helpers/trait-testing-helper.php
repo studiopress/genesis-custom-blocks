@@ -2,8 +2,10 @@
 /**
  * Trait with a helper method for testing controls.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
+
+use GenesisCustomBlocks\Admin\License;
 
 /**
  * Trait with a helper method.
@@ -26,7 +28,7 @@ trait Testing_Helper {
 			foreach ( $setting as $setting_key => $setting_value ) {
 				unset( $setting_value );
 				$this->assertEquals( $expected_setting[ $setting_key ], $setting->$setting_key );
-				$this->assertEquals( 'Block_Lab\Blocks\Controls\Control_Setting', get_class( $setting ) );
+				$this->assertEquals( 'GenesisCustomBlocks\Blocks\Controls\Control_Setting', get_class( $setting ) );
 			}
 		}
 
@@ -50,6 +52,6 @@ trait Testing_Helper {
 			];
 		}
 
-		set_transient( 'block_lab_license', $transient_value );
+		set_transient( License::TRANSIENT_NAME, $transient_value );
 	}
 }

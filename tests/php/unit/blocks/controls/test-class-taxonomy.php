@@ -2,10 +2,10 @@
 /**
  * Tests for class Taxonomy.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Blocks\Controls;
+use GenesisCustomBlocks\Blocks\Controls;
 
 /**
  * Tests for class Taxonomy.
@@ -42,7 +42,7 @@ class Test_Taxonomy extends \WP_UnitTestCase {
 	/**
 	 * Test __construct.
 	 *
-	 * @covers \Block_Lab\Blocks\Controls\Taxonomy::__construct()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\Taxonomy::__construct()
 	 */
 	public function test_construct() {
 		$this->assertEquals( 'taxonomy', $this->instance->name );
@@ -52,7 +52,7 @@ class Test_Taxonomy extends \WP_UnitTestCase {
 	/**
 	 * Test register_settings.
 	 *
-	 * @covers \Block_Lab\Blocks\Controls\Taxonomy::register_settings()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\Taxonomy::register_settings()
 	 */
 	public function test_register_settings() {
 		$expected_settings = [
@@ -104,8 +104,8 @@ class Test_Taxonomy extends \WP_UnitTestCase {
 	/**
 	 * Test render_settings_taxonomy_type_rest_slug.
 	 *
-	 * @covers \Block_Lab\Blocks\Controls\Taxonomy::render_settings_taxonomy_type_rest_slug()
-	 * @covers \Block_Lab\Blocks\Controls\Control_Abstract::render_select()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\Taxonomy::render_settings_taxonomy_type_rest_slug()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\Control_Abstract::render_select()
 	 */
 	public function test_render_settings_taxonomy_type_rest_slug() {
 		$name = 'post_type';
@@ -127,7 +127,7 @@ class Test_Taxonomy extends \WP_UnitTestCase {
 	/**
 	 * Test get_taxonomy_type_rest_slugs.
 	 *
-	 * @covers \Block_Lab\Blocks\Controls\Taxonomy::get_taxonomy_type_rest_slugs()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\Taxonomy::get_taxonomy_type_rest_slugs()
 	 */
 	public function test_get_taxonomy_type_rest_slugs() {
 		$new_tax_slug  = 'foo-new-tax';
@@ -170,7 +170,7 @@ class Test_Taxonomy extends \WP_UnitTestCase {
 	/**
 	 * Test sanitize_taxonomy_type_rest_slug.
 	 *
-	 * @covers \Block_Lab\Blocks\Controls\Taxonomy::sanitize_taxonomy_type_rest_slug()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\Taxonomy::sanitize_taxonomy_type_rest_slug()
 	 */
 	public function test_sanitize_taxonomy_type_rest_slug() {
 		$invalid_taxonomy_type = 'baz_invalid_taxonomy';
@@ -197,7 +197,7 @@ class Test_Taxonomy extends \WP_UnitTestCase {
 	/**
 	 * Test validate.
 	 *
-	 * @covers \Block_Lab\Blocks\Controls\Taxonomy::validate()
+	 * @covers \GenesisCustomBlocks\Blocks\Controls\Taxonomy::validate()
 	 */
 	public function test_validate() {
 		$expected_term = $this->factory()->tag->create_and_get();

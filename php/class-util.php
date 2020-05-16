@@ -1,16 +1,16 @@
 <?php
 /**
- * Helper functions for the Block_Lab plugin.
+ * Helper functions for the GenesisCustomBlocks plugin.
  *
- * These are publicly accessible via a magic method, like block_lab()->get_template_locations().
+ * These are publicly accessible via a magic method, like genesis_custom_blocks()->get_template_locations().
  * So these methods should generally be 'getter' functions, and should not affect the global state.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-namespace Block_Lab;
+namespace GenesisCustomBlocks;
 
-use Block_Lab\Blocks;
+use GenesisCustomBlocks\Blocks;
 
 /**
  * Class Util
@@ -167,7 +167,7 @@ class Util extends Component_Abstract {
 	 */
 	public function get_icons() {
 		// This is on the local filesystem, so file_get_contents() is ok to use here.
-		$json_file = block_lab()->get_assets_path( 'icons.json' );
+		$json_file = genesis_custom_blocks()->get_assets_path( 'icons.json' );
 		$json      = file_get_contents( $json_file ); // @codingStandardsIgnoreLine
 		$icons     = json_decode( $json, true );
 

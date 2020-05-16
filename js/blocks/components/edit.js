@@ -35,9 +35,9 @@ const Edit = ( { blockProps, block } ) => {
 					</div>
 				) : (
 					<ServerSideRender
-						block={ `block-lab/${ block.name }` }
+						block={ `genesis-custom-blocks/${ block.name }` }
 						attributes={ attributes }
-						className="block-lab-editor__ssr"
+						className="genesis-custom-blocks-editor__ssr"
 					/>
 				) }
 			</div>

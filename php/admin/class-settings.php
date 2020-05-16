@@ -1,15 +1,16 @@
 <?php
 /**
- * Block Lab Settings.
+ * Genesis Custom Blocks Settings.
  *
- * @package   Block_Lab
- * @copyright Copyright(c) 2020, Block Lab
+ * @package   GenesisCustomBlocks
+ * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace Block_Lab\Admin;
+namespace GenesisCustomBlocks\Admin;
 
-use Block_Lab\Component_Abstract;
+use GenesisCustomBlocks\Component_Abstract;
+use GenesisCustomBlocks\Admin\License;
 
 /**
  * Class Settings
@@ -17,11 +18,18 @@ use Block_Lab\Component_Abstract;
 class Settings extends Component_Abstract {
 
 	/**
+	 * Option name for the notices.
+	 *
+	 * @var string
+	 */
+	const NOTICES_OPTION_NAME = 'genesis_custom_blocks_notices';
+
+	/**
 	 * Page slug.
 	 *
 	 * @var string
 	 */
-	public $slug = 'block-lab-settings';
+	public $slug = 'genesis-custom-blocks-settings';
 
 	/**
 	 * Register any hooks that this component needs.
@@ -53,13 +61,13 @@ class Settings extends Component_Abstract {
 	}
 
 	/**
-	 * Add submenu pages to the Block Lab menu.
+	 * Add submenu pages to the Genesis Custom Blocks menu.
 	 */
 	public function add_submenu_pages() {
 		add_submenu_page(
-			'edit.php?post_type=' . block_lab()->get_post_type_slug(),
-			__( 'Block Lab Settings', 'block-lab' ),
-			__( 'Settings', 'block-lab' ),
+			'edit.php?post_type=' . genesis_custom_blocks()->get_post_type_slug(),
+			__( 'Genesis Custom Blocks Settings', 'genesis-custom-blocks' ),
+			__( 'Settings', 'genesis-custom-blocks' ),
 			'manage_options',
 			$this->slug,
 			[ $this, 'render_page' ]
@@ -67,10 +75,10 @@ class Settings extends Component_Abstract {
 	}
 
 	/**
-	 * Register Block Lab settings.
+	 * Register Genesis Custom Blocks settings.
 	 */
 	public function register_settings() {
-		register_setting( 'block-lab-license-key', 'block_lab_license_key' );
+		register_setting( 'genesis-custom-blocks-license-key', License::OPTION_NAME );
 	}
 
 	/**
@@ -78,10 +86,10 @@ class Settings extends Component_Abstract {
 	 */
 	public function render_page() {
 		?>
-		<div class="wrap block-lab-settings">
+		<div class="wrap genesis-custom-blocks-settings">
 			<?php
 			$this->render_page_header();
-			include block_lab()->get_path() . 'php/views/license.php';
+			include genesis_custom_blocks()->get_path() . 'php/views/license.php';
 			?>
 		</div>
 		<?php
@@ -94,14 +102,14 @@ class Settings extends Component_Abstract {
 		?>
 		<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 		<h2 class="nav-tab-wrapper">
-			<a href="<?php echo esc_url( add_query_arg( 'tab', 'license' ) ); ?>" title="<?php esc_attr_e( 'License', 'block-lab' ); ?>" class="nav-tab nav-tab-active dashicons-before dashicons-nametag">
-				<?php esc_html_e( 'License', 'block-lab' ); ?>
+			<a href="<?php echo esc_url( add_query_arg( 'tab', 'license' ) ); ?>" title="<?php esc_attr_e( 'License', 'genesis-custom-blocks' ); ?>" class="nav-tab nav-tab-active dashicons-before dashicons-nametag">
+				<?php esc_html_e( 'License', 'genesis-custom-blocks' ); ?>
 			</a>
 			<a href="https://getblocklab.com/docs/" target="_blank" class="nav-tab dashicons-before dashicons-info">
-				<?php esc_html_e( 'Documentation', 'block-lab' ); ?>
+				<?php esc_html_e( 'Documentation', 'genesis-custom-blocks' ); ?>
 			</a>
-			<a href="https://wordpress.org/support/plugin/block-lab/" target="_blank" class="nav-tab dashicons-before dashicons-sos">
-				<?php esc_html_e( 'Help', 'block-lab' ); ?>
+			<a href="https://wordpress.org/support/plugin/genesis-custom-blocks/" target="_blank" class="nav-tab dashicons-before dashicons-sos">
+				<?php esc_html_e( 'Help', 'genesis-custom-blocks' ); ?>
 			</a>
 		</h2>
 		<?php
@@ -113,16 +121,16 @@ class Settings extends Component_Abstract {
 	 * @param string $notice The notice text to display.
 	 */
 	public function prepare_notice( $notice ) {
-		$notices   = get_option( 'block_lab_notices', [] );
+		$notices   = get_option( self::NOTICES_OPTION_NAME, [] );
 		$notices[] = $notice;
-		update_option( 'block_lab_notices', $notices );
+		update_option( self::NOTICES_OPTION_NAME, $notices );
 	}
 
 	/**
 	 * Show any admin notices after saving the settings.
 	 */
 	public function show_notices() {
-		$notices = get_option( 'block_lab_notices', [] );
+		$notices = get_option( self::NOTICES_OPTION_NAME, [] );
 
 		if ( empty( $notices ) || ! is_array( $notices ) ) {
 			return;
@@ -132,6 +140,6 @@ class Settings extends Component_Abstract {
 			echo wp_kses_post( $notice );
 		}
 
-		delete_option( 'block_lab_notices' );
+		delete_option( self::NOTICES_OPTION_NAME );
 	}
 }

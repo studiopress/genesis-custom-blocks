@@ -2,10 +2,11 @@
 /**
  * Tests for class Settings.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Admin;
+use GenesisCustomBlocks\Admin\Settings;
+use GenesisCustomBlocks\Admin\License;
 use Brain\Monkey;
 
 /**
@@ -21,18 +22,11 @@ class Test_Settings extends \WP_UnitTestCase {
 	public $instance;
 
 	/**
-	 * The option name for the notices.
-	 *
-	 * @var string
-	 */
-	const NOTICES_OPTION_NAME = 'block_lab_notices';
-
-	/**
 	 * The slug of the parent of the submenu.
 	 *
 	 * @var string
 	 */
-	const SUBMENU_PARENT_SLUG = 'edit.php?post_type=block_lab';
+	const SUBMENU_PARENT_SLUG = 'edit.php?post_type=genesis_custom_block';
 
 	/**
 	 * Setup.
@@ -42,8 +36,8 @@ class Test_Settings extends \WP_UnitTestCase {
 	public function setUp() {
 		parent::setUp();
 		Monkey\setUp();
-		$this->instance = new Admin\Settings();
-		$this->instance->set_plugin( block_lab() );
+		$this->instance = new Settings();
+		$this->instance->set_plugin( genesis_custom_blocks() );
 
 	}
 
@@ -56,7 +50,7 @@ class Test_Settings extends \WP_UnitTestCase {
 		global $submenu;
 
 		unset( $submenu[ self::SUBMENU_PARENT_SLUG ] );
-		delete_option( self::NOTICES_OPTION_NAME );
+		delete_option( Settings::NOTICES_OPTION_NAME );
 		Monkey\tearDown();
 		parent::tearDown();
 	}
@@ -64,7 +58,7 @@ class Test_Settings extends \WP_UnitTestCase {
 	/**
 	 * Test register_hooks.
 	 *
-	 * @covers \Block_Lab\Admin\Settings::register_hooks()
+	 * @covers \GenesisCustomBlocks\Admin\Settings::register_hooks()
 	 */
 	public function test_register_hooks() {
 		$this->instance->register_hooks();
@@ -77,7 +71,7 @@ class Test_Settings extends \WP_UnitTestCase {
 	/**
 	 * Test enqueue_scripts.
 	 *
-	 * @covers \Block_Lab\Admin\Settings::enqueue_scripts()
+	 * @covers \GenesisCustomBlocks\Admin\Settings::enqueue_scripts()
 	 */
 	public function test_enqueue_scripts() {
 		$this->instance->enqueue_scripts();
@@ -119,7 +113,7 @@ class Test_Settings extends \WP_UnitTestCase {
 		// Now that filter_input() returns the correct page, the conditional should be true, and this should enqueue the script.
 		$this->assertTrue( in_array( $this->instance->slug, $styles->queue, true ) );
 		$this->assertEquals( $this->instance->slug, $style->handle );
-		$this->assertContains( 'block-lab/css/admin.settings.css', $style->src );
+		$this->assertContains( 'css/admin.settings.css', $style->src );
 		$this->assertEquals( [], $style->deps );
 		$this->assertEquals( [], $style->extra );
 	}
@@ -127,7 +121,7 @@ class Test_Settings extends \WP_UnitTestCase {
 	/**
 	 * Test add_submenu_pages.
 	 *
-	 * @covers \Block_Lab\Admin\Settings::add_submenu_pages()
+	 * @covers \GenesisCustomBlocks\Admin\Settings::add_submenu_pages()
 	 */
 	public function test_add_submenu_pages() {
 		global $submenu;
@@ -136,7 +130,7 @@ class Test_Settings extends \WP_UnitTestCase {
 			'Settings',
 			'manage_options',
 			$this->instance->slug,
-			'Block Lab Settings',
+			'Genesis Custom Blocks Settings',
 		];
 
 		wp_set_current_user( $this->factory()->user->create( [ 'role' => 'author' ] ) );
@@ -155,14 +149,13 @@ class Test_Settings extends \WP_UnitTestCase {
 	/**
 	 * Test register_settings.
 	 *
-	 * @covers \Block_Lab\Admin\Settings::register_settings()
+	 * @covers \GenesisCustomBlocks\Admin\Settings::register_settings()
 	 */
 	public function test_register_settings() {
 		global $wp_registered_settings;
 
 		$this->instance->register_settings();
-		$expected_option_group = 'block-lab-license-key';
-		$expected_option_name  = 'block_lab_license_key';
+		$expected_option_group = 'genesis-custom-blocks-license-key';
 		$this->assertEquals(
 			[
 				'description'       => '',
@@ -171,28 +164,28 @@ class Test_Settings extends \WP_UnitTestCase {
 				'show_in_rest'      => false,
 				'type'              => 'string',
 			],
-			$wp_registered_settings[ $expected_option_name ]
+			$wp_registered_settings[ License::OPTION_NAME ]
 		);
 	}
 
 	/**
 	 * Test render_page.
 	 *
-	 * @covers \Block_Lab\Admin\Settings::render_page()
+	 * @covers \GenesisCustomBlocks\Admin\Settings::render_page()
 	 */
 	public function test_render_page() {
 		ob_start();
 		$this->instance->render_page();
 		$output = ob_get_clean();
 
-		$this->assertContains( '<div class="wrap block-lab-settings">', $output );
+		$this->assertContains( '<div class="wrap genesis-custom-blocks-settings">', $output );
 		$this->assertContains( '<a href="?tab=license" title="License" class="nav-tab nav-tab-active dashicons-before dashicons-nametag">', $output );
 	}
 
 	/**
 	 * Test render_page_header.
 	 *
-	 * @covers \Block_Lab\Admin\Settings::render_page_header()
+	 * @covers \GenesisCustomBlocks\Admin\Settings::render_page_header()
 	 */
 	public function test_render_page_header() {
 		ob_start();
@@ -206,34 +199,34 @@ class Test_Settings extends \WP_UnitTestCase {
 	/**
 	 * Test prepare_notice.
 	 *
-	 * @covers \Block_Lab\Admin\Settings::prepare_notice()
+	 * @covers \GenesisCustomBlocks\Admin\Settings::prepare_notice()
 	 */
 	public function test_prepare_notice() {
-		$notice = 'There was a problem activating your Block Lab license.';
+		$notice = 'There was a problem activating your Genesis Custom Blocks license.';
 		$this->instance->prepare_notice( $notice );
 
-		$this->assertEquals( [ $notice ], get_option( self::NOTICES_OPTION_NAME ) );
+		$this->assertEquals( [ $notice ], get_option( Settings::NOTICES_OPTION_NAME ) );
 
 		$existing_notices = [
 			'first notice',
 			'second notice',
 		];
 
-		update_option( self::NOTICES_OPTION_NAME, $existing_notices );
+		update_option( Settings::NOTICES_OPTION_NAME, $existing_notices );
 		$this->instance->prepare_notice( $notice );
 		$this->assertEquals(
 			array_merge(
 				$existing_notices,
 				[ $notice ]
 			),
-			get_option( self::NOTICES_OPTION_NAME )
+			get_option( Settings::NOTICES_OPTION_NAME )
 		);
 	}
 
 	/**
 	 * Test show_notices.
 	 *
-	 * @covers \Block_Lab\Admin\Settings::show_notices()
+	 * @covers \GenesisCustomBlocks\Admin\Settings::show_notices()
 	 */
 	public function test_show_notices() {
 		ob_start();
@@ -243,7 +236,7 @@ class Test_Settings extends \WP_UnitTestCase {
 		$this->assertEmpty( ob_get_clean() );
 
 		$non_array_notice = 'This is a notice value';
-		update_option( self::NOTICES_OPTION_NAME, $non_array_notice );
+		update_option( Settings::NOTICES_OPTION_NAME, $non_array_notice );
 		ob_start();
 		$this->instance->show_notices();
 		$output = ob_get_clean();
@@ -252,13 +245,13 @@ class Test_Settings extends \WP_UnitTestCase {
 		$this->assertEmpty( $output );
 
 		// The option should not have been deleted, as this should have exited from the function.
-		$this->assertEquals( $non_array_notice, get_option( self::NOTICES_OPTION_NAME ) );
+		$this->assertEquals( $non_array_notice, get_option( Settings::NOTICES_OPTION_NAME ) );
 
 		$expected_notices = [
 			'Here is a notice',
 			'This is also a notice',
 		];
-		update_option( self::NOTICES_OPTION_NAME, $expected_notices );
+		update_option( Settings::NOTICES_OPTION_NAME, $expected_notices );
 		ob_start();
 		$this->instance->show_notices();
 		$output = ob_get_clean();
@@ -269,6 +262,6 @@ class Test_Settings extends \WP_UnitTestCase {
 		}
 
 		// The option should have been deleted.
-		$this->assertEmpty( get_option( self::NOTICES_OPTION_NAME ) );
+		$this->assertEmpty( get_option( Settings::NOTICES_OPTION_NAME ) );
 	}
 }

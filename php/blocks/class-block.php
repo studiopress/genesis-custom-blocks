@@ -2,12 +2,12 @@
 /**
  * Block.
  *
- * @package   Block_Lab
- * @copyright Copyright(c) 2020, Block Lab
+ * @package   GenesisCustomBlocks
+ * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace Block_Lab\Blocks;
+namespace GenesisCustomBlocks\Blocks;
 
 /**
  * Class Block
@@ -99,11 +99,11 @@ class Block {
 	public function from_json( $json ) {
 		$json = json_decode( $json, true );
 
-		if ( ! isset( $json[ 'block-lab/' . $this->name ] ) ) {
+		if ( ! isset( $json[ 'genesis-custom-blocks/' . $this->name ] ) ) {
 			return;
 		}
 
-		$config = $json[ 'block-lab/' . $this->name ];
+		$config = $json[ 'genesis-custom-blocks/' . $this->name ];
 
 		$this->from_array( $config );
 	}
@@ -168,7 +168,7 @@ class Block {
 			$config['fields'][ $key ] = $field->to_array();
 		}
 
-		return wp_json_encode( [ 'block-lab/' . $this->name => $config ], JSON_UNESCAPED_UNICODE );
+		return wp_json_encode( [ 'genesis-custom-blocks/' . $this->name => $config ], JSON_UNESCAPED_UNICODE );
 	}
 
 	/**

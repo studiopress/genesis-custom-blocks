@@ -2,10 +2,10 @@
 /**
  * Tests for class Admin.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Admin;
+use GenesisCustomBlocks\Admin;
 use Brain\Monkey;
 
 /**
@@ -27,7 +27,7 @@ class Test_Admin extends \WP_UnitTestCase {
 	 *
 	 * @var string
 	 */
-	const BLOCK_LAB_PRO_PAGE = 'block-lab-pro';
+	const BLOCK_LAB_PRO_PAGE = 'genesis-custom-blocks-pro';
 
 	/**
 	 * Setup.
@@ -53,31 +53,25 @@ class Test_Admin extends \WP_UnitTestCase {
 	/**
 	 * Test init.
 	 *
-	 * @covers \Block_Lab\Admin\Admin::init()
+	 * @covers \GenesisCustomBlocks\Admin\Admin::init()
 	 */
 	public function test_init() {
 		$this->set_license_validity( false );
 		$this->instance->init();
-		$settings_class = 'Block_Lab\Admin\Settings';
-		$license_class  = 'Block_Lab\Admin\License';
+		$settings_class = 'GenesisCustomBlocks\Admin\Settings';
+		$license_class  = 'GenesisCustomBlocks\Admin\License';
 		$this->assertEquals( $settings_class, get_class( $this->instance->settings ) );
 		$this->assertEquals( $license_class, get_class( $this->instance->license ) );
 
-		$block_lab_reflection = new ReflectionObject( block_lab() );
+		$block_lab_reflection = new ReflectionObject( genesis_custom_blocks() );
 		$components           = $block_lab_reflection->getProperty( 'components' );
 		$components->setAccessible( true );
-		$components_value = $components->getValue( block_lab() );
+		$components_value = $components->getValue( genesis_custom_blocks() );
 
 		// The settings should have been added to the plugin components.
 		$this->assertEquals( $this->instance->settings->slug, $components_value[ $settings_class ]->slug );
 		$this->assertArrayHasKey( $settings_class, $components_value );
 		$this->assertArrayHasKey( $license_class, $components_value );
-
-		// Because the Pro license isn't active, there should be an Upgrade class instantiated.
-		$upgrade_class = 'Block_Lab\Admin\Upgrade';
-		$this->assertEquals( $upgrade_class, get_class( $this->instance->upgrade ) );
-		$this->assertArrayHasKey( $upgrade_class, $components_value );
-		$this->assertFalse( $this->did_settings_redirect_occur() );
 
 		// With an active Pro license, this should redirect from the Pro page to the settings page.
 		$this->set_license_validity( true );
@@ -95,7 +89,7 @@ class Test_Admin extends \WP_UnitTestCase {
 	/**
 	 * Test register_hooks.
 	 *
-	 * @covers \Block_Lab\Admin\Admin::register_hooks()
+	 * @covers \GenesisCustomBlocks\Admin\Admin::register_hooks()
 	 */
 	public function test_register_hooks() {
 		$this->instance->register_hooks();
@@ -105,14 +99,14 @@ class Test_Admin extends \WP_UnitTestCase {
 	/**
 	 * Test enqueue_scripts.
 	 *
-	 * @covers \Block_Lab\Admin\Admin::enqueue_scripts()
+	 * @covers \GenesisCustomBlocks\Admin\Admin::enqueue_scripts()
 	 */
 	public function test_enqueue_scripts() {
-		block_lab()->register_component( $this->instance );
-		$this->instance->set_plugin( block_lab() );
+		genesis_custom_blocks()->register_component( $this->instance );
+		$this->instance->set_plugin( genesis_custom_blocks() );
 		$this->instance->enqueue_scripts();
 		$styles     = wp_styles();
-		$handle     = 'block-lab';
+		$handle     = 'genesis-custom-blocks';
 		$stylesheet = $styles->registered[ $handle ];
 
 		$this->assertEquals( $handle, $stylesheet->handle );
@@ -125,7 +119,7 @@ class Test_Admin extends \WP_UnitTestCase {
 	/**
 	 * Test maybe_settings_redirect.
 	 *
-	 * @covers \Block_Lab\Admin\Admin::maybe_settings_redirect()
+	 * @covers \GenesisCustomBlocks\Admin\Admin::maybe_settings_redirect()
 	 */
 	public function test_maybe_settings_redirect() {
 		Monkey\Functions\expect( 'filter_input' )
@@ -170,8 +164,8 @@ class Test_Admin extends \WP_UnitTestCase {
 
 		$expected_url = add_query_arg(
 			[
-				'post_type' => 'block_lab',
-				'page'      => 'block-lab-settings',
+				'post_type' => 'genesis_custom_block',
+				'page'      => 'genesis-custom-blocks-settings',
 				'tab'       => 'license',
 			],
 			admin_url( 'edit.php' )

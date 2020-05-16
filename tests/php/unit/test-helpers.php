@@ -2,10 +2,10 @@
 /**
  * Tests for helpers.php.
  *
- * @package Block_Lab
+ * @package GenesisCustomBlocks
  */
 
-use Block_Lab\Blocks;
+use GenesisCustomBlocks\Blocks;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
 /**
@@ -22,7 +22,7 @@ class Test_Helpers extends \WP_UnitTestCase {
 	 * @inheritdoc
 	 */
 	public function tearDown() {
-		block_lab()->loader = new Blocks\Loader();
+		genesis_custom_blocks()->loader = new Blocks\Loader();
 		remove_all_filters( 'block_lab_default_fields' );
 		remove_all_filters( 'block_lab_data_attributes' );
 		remove_all_filters( 'block_lab_data_config' );
@@ -113,7 +113,7 @@ class Test_Helpers extends \WP_UnitTestCase {
 		$return_value = block_field( $additional_field_name, true );
 		$echoed_value = ob_get_clean();
 
-		// When a field isn't in the block_lab()->loader->data['config'], it should not be echoed or returned.
+		// When a field isn't in the genesis_custom_blocks()->loader->data['config'], it should not be echoed or returned.
 		$this->assertEmpty( $return_value );
 		$this->assertEmpty( $echoed_value );
 
@@ -148,7 +148,7 @@ class Test_Helpers extends \WP_UnitTestCase {
 		$return_value = block_field( $additional_field_name, true );
 		$echoed_value = ob_get_clean();
 
-		// Now that the filter includes the additional field, the field should be echoed, even though it's not in block_lab()->data['config'].
+		// Now that the filter includes the additional field, the field should be echoed, even though it's not in genesis_custom_blocks()->data['config'].
 		$this->assertEquals( null, $return_value );
 		$this->assertEquals( $additional_field_value, $echoed_value );
 	}
@@ -171,8 +171,8 @@ class Test_Helpers extends \WP_UnitTestCase {
 			'title'    => 'Example Block',
 		];
 
-		$loader             = Mockery::mock( Blocks\Loader::class );
-		block_lab()->loader = $loader;
+		$loader                         = Mockery::mock( Blocks\Loader::class );
+		genesis_custom_blocks()->loader = $loader;
 		$loader->expects()->add_block( $expected_default_config );
 		block_lab_add_block( $block_name );
 
@@ -212,8 +212,8 @@ class Test_Helpers extends \WP_UnitTestCase {
 			'settings' => [],
 		];
 
-		$loader             = Mockery::mock( Blocks\Loader::class );
-		block_lab()->loader = $loader;
+		$loader                         = Mockery::mock( Blocks\Loader::class );
+		genesis_custom_blocks()->loader = $loader;
 		$loader->expects()->add_field( $block_name, $expected_default_config )->once();
 		block_lab_add_field( $block_name, $field_name );
 

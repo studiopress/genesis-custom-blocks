@@ -2,14 +2,14 @@
 /**
  * WP Admin resources.
  *
- * @package   Block_Lab
- * @copyright Copyright(c) 2020, Block Lab
+ * @package   GenesisCustomBlocks
+ * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace Block_Lab\Admin;
+namespace GenesisCustomBlocks\Admin;
 
-use Block_Lab\Component_Abstract;
+use GenesisCustomBlocks\Component_Abstract;
 
 /**
  * Class Admin
@@ -56,25 +56,25 @@ class Admin extends Component_Abstract {
 	 */
 	public function init() {
 		$this->settings = new Settings();
-		block_lab()->register_component( $this->settings );
+		genesis_custom_blocks()->register_component( $this->settings );
 
 		$this->license = new License();
-		block_lab()->register_component( $this->license );
+		genesis_custom_blocks()->register_component( $this->license );
 
 		$this->onboarding = new Onboarding();
-		block_lab()->register_component( $this->onboarding );
+		genesis_custom_blocks()->register_component( $this->onboarding );
 
-		$show_pro_nag = apply_filters( 'block_lab_show_pro_nag', true );
-		if ( $show_pro_nag && ! block_lab()->is_pro() ) {
+		$show_pro_nag = apply_filters( 'block_lab_show_pro_nag', false );
+		if ( $show_pro_nag && ! genesis_custom_blocks()->is_pro() ) {
 			$this->upgrade = new Upgrade();
-			block_lab()->register_component( $this->upgrade );
+			genesis_custom_blocks()->register_component( $this->upgrade );
 		} else {
 			$this->maybe_settings_redirect();
 		}
 
 		if ( defined( 'WP_LOAD_IMPORTERS' ) && WP_LOAD_IMPORTERS ) {
 			$this->import = new Import();
-			block_lab()->register_component( $this->import );
+			genesis_custom_blocks()->register_component( $this->import );
 		}
 	}
 
@@ -92,7 +92,7 @@ class Admin extends Component_Abstract {
 	 */
 	public function enqueue_scripts() {
 		wp_enqueue_style(
-			'block-lab',
+			'genesis-custom-blocks',
 			$this->plugin->get_url( 'css/admin.css' ),
 			[],
 			$this->plugin->get_version()
@@ -105,12 +105,12 @@ class Admin extends Component_Abstract {
 	public function maybe_settings_redirect() {
 		$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
 
-		if ( 'block-lab-pro' === $page ) {
+		if ( 'genesis-custom-blocks-pro' === $page ) {
 			wp_safe_redirect(
 				add_query_arg(
 					[
-						'post_type' => 'block_lab',
-						'page'      => 'block-lab-settings',
+						'post_type' => 'genesis_custom_block',
+						'page'      => 'genesis-custom-blocks-settings',
 						'tab'       => 'license',
 					],
 					admin_url( 'edit.php' )
