@@ -51,13 +51,6 @@ commands:
           command: composer install && npm install && npm run build
 
 jobs:
-  build:
-    steps:
-      - checkout
-    executor:
-      name: php
-      php-version: 7.4.5
-
   php-71:
     docker:
       - image: wordpress:php7.1-fpm-alpine
@@ -124,14 +117,29 @@ jobs:
       - checkout
       - run: npm ci && npm run test:js
 
+  e2e-tests:
+    machine:
+      image: ubuntu-1604:202004-01
+    steps:
+      - checkout
+      - run:
+          name: Update Node version
+          command: |
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+            export NVM_DIR="/opt/circleci/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # Loads nvm.
+            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # Loads nvm bash_completion.
+            nvm install --lts
+      - run: npm install && npm run build-assets && npm run env start && npm run test:e2e
+
 workflows:
   lint-all:
     jobs:
       - lint
   tests:
     jobs:
-      - build
-      - js-tests
       - php-71
       - php-72
       - php-73
+      - js-tests
+      - e2e-tests
