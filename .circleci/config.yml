@@ -6,7 +6,9 @@ executors:
       php-version:
         type: string
     docker:
-      - image: circleci/php:<< parameters.php-version >>-cli-node
+      - image: wordpress:php<< parameters.php-version >>-fpm-alpine
+        environment:
+          WP_TESTS_DIR: /root/project/wordpress-develop/tests/phpunit
       - image: mysql:5.7
         environment:
           MYSQL_DATABASE: youremptytestdbnamehere
@@ -51,54 +53,17 @@ commands:
           command: composer install && npm install && npm run build
 
 jobs:
-  php-71:
-    docker:
-      - image: wordpress:php7.1-fpm-alpine
-        environment:
-          WP_TESTS_DIR: /root/project/wordpress-develop/tests/phpunit
-      - image: mysql:5.7
-        environment:
-          MYSQL_DATABASE: youremptytestdbnamehere
-          MYSQL_USER: yourusernamehere
-          MYSQL_PASSWORD: yourpasswordhere
-          MYSQL_ROOT_PASSWORD: wordpress
-    parallelism: 4
+  php-tests:
+    parameters:
+      php-version:
+        type: string
+    executor:
+      name: php
+      php-version: << parameters.php-version >>
     steps:
       - prepare-environment
-      - run:
-          working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
-          command: composer require --dev phpunit/phpunit 5.7.9 && ls ./vendor/bin/ && ./vendor/bin/phpunit
-
-  php-72:
-    docker:
-      - image: wordpress:php7.2-fpm-alpine
-        environment:
-          WP_TESTS_DIR: /root/project/wordpress-develop/tests/phpunit
-      - image: mysql:5.7
-        environment:
-          MYSQL_DATABASE: youremptytestdbnamehere
-          MYSQL_USER: yourusernamehere
-          MYSQL_PASSWORD: yourpasswordhere
-          MYSQL_ROOT_PASSWORD: wordpress
-    steps:
-      - prepare-environment
-      - run:
-          working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
-          command: composer require --dev phpunit/phpunit 5.7.9 && ./vendor/bin/phpunit
-
-  php-73:
-    docker:
-      - image: wordpress:php7.3-fpm-alpine
-        environment:
-          WP_TESTS_DIR: /root/project/wordpress-develop/tests/phpunit
-      - image: mysql:5.7
-        environment:
-          MYSQL_DATABASE: youremptytestdbnamehere
-          MYSQL_USER: yourusernamehere
-          MYSQL_PASSWORD: yourpasswordhere
-          MYSQL_ROOT_PASSWORD: wordpress
-    steps:
-      - prepare-environment
+      - attach_workspace:
+          at: ~/project
       - run:
           working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
           command: composer require --dev phpunit/phpunit 5.7.9 && ./vendor/bin/phpunit
@@ -139,8 +104,9 @@ workflows:
       - lint
   tests:
     jobs:
-      - php-71
-      - php-72
-      - php-73
+      - php-tests:
+          matrix:
+            parameters:
+              php-version: ['7.4', '7.3', '7.2', '5.6']
       - js-tests
       - e2e-tests
