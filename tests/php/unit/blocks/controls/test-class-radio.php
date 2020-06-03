@@ -5,7 +5,7 @@
  * @package GenesisCustomBlocks
  */
 
-use GenesisCustomBlocks\Blocks\Controls;
+use Genesis\CustomBlocks\Blocks\Controls;
 
 /**
  * Tests for class Radio.
@@ -34,7 +34,7 @@ class Test_Radio extends \WP_UnitTestCase {
 	/**
 	 * Test __construct.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Radio::__construct()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Radio::__construct()
 	 */
 	public function test_construct() {
 		$this->assertEquals( 'Radio', $this->instance->label );

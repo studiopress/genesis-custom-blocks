@@ -7,10 +7,10 @@
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace GenesisCustomBlocks;
+namespace Genesis\CustomBlocks;
 
 /**
- * Class ComponentAbstract
+ * Class Component_Abstract
  */
 abstract class Component_Abstract implements Component_Interface {
 

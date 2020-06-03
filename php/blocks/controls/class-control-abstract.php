@@ -7,9 +7,9 @@
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace GenesisCustomBlocks\Blocks\Controls;
+namespace Genesis\CustomBlocks\Blocks\Controls;
 
-use GenesisCustomBlocks\Blocks\Field;
+use Genesis\CustomBlocks\Blocks\Field;
 
 /**
  * Class Control_Abstract

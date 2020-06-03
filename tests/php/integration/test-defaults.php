@@ -5,8 +5,8 @@
  * @package GenesisCustomBlocks
  */
 
-use GenesisCustomBlocks\Blocks;
-use GenesisCustomBlocks\Post_Types;
+use Genesis\CustomBlocks\Blocks;
+use Genesis\CustomBlocks\Post_Types;
 
 /**
  * Class Test_Defaults

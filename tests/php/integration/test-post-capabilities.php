@@ -5,7 +5,7 @@
  * @package GenesisCustomBlocks
  */
 
-use GenesisCustomBlocks\Post_Types;
+use Genesis\CustomBlocks\Post_Types;
 
 /**
  * Class Test_Post_Capabilities

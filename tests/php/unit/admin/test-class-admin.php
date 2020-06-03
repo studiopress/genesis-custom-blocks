@@ -5,7 +5,7 @@
  * @package GenesisCustomBlocks
  */
 
-use GenesisCustomBlocks\Admin;
+use Genesis\CustomBlocks\Admin;
 use Brain\Monkey;
 
 /**
@@ -58,8 +58,8 @@ class Test_Admin extends \WP_UnitTestCase {
 	public function test_init() {
 		$this->set_license_validity( false );
 		$this->instance->init();
-		$settings_class = 'GenesisCustomBlocks\Admin\Settings';
-		$license_class  = 'GenesisCustomBlocks\Admin\License';
+		$settings_class = 'Genesis\CustomBlocks\Admin\Settings';
+		$license_class  = 'Genesis\CustomBlocks\Admin\License';
 		$this->assertEquals( $settings_class, get_class( $this->instance->settings ) );
 		$this->assertEquals( $license_class, get_class( $this->instance->license ) );
 

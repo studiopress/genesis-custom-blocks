@@ -5,7 +5,7 @@
  * @package GenesisCustomBlocks
  */
 
-use GenesisCustomBlocks\Blocks\Controls;
+use Genesis\CustomBlocks\Blocks\Controls;
 
 /**
  * Tests for class Control_Abstract.
@@ -54,7 +54,7 @@ class Test_Control_Abstract extends \WP_UnitTestCase {
 	/**
 	 * Test create_settings_config.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Control_Abstract::create_settings_config()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Control_Abstract::create_settings_config()
 	 */
 	public function test_create_settings_config() {
 		$this->assertArraySubset(
@@ -110,7 +110,7 @@ class Test_Control_Abstract extends \WP_UnitTestCase {
 	/**
 	 * Test render_settings_number.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Control_Abstract::render_settings_number()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Control_Abstract::render_settings_number()
 	 */
 	public function test_render_settings_number() {
 		ob_start();
@@ -126,7 +126,7 @@ class Test_Control_Abstract extends \WP_UnitTestCase {
 	/**
 	 * Test render_settings_number_non_negative.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Control_Abstract::render_settings_number_non_negative()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Control_Abstract::render_settings_number_non_negative()
 	 */
 	public function test_render_settings_number_non_negative() {
 		ob_start();
@@ -142,7 +142,7 @@ class Test_Control_Abstract extends \WP_UnitTestCase {
 	/**
 	 * Test render_number.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Control_Abstract::render_number()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Control_Abstract::render_number()
 	 */
 	public function test_render_number() {
 		$min_attribute = 'min="0"';
@@ -164,7 +164,7 @@ class Test_Control_Abstract extends \WP_UnitTestCase {
 	/**
 	 * Test render_select.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Control_Abstract::render_select()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Control_Abstract::render_select()
 	 */
 	public function test_render_select() {
 		$options = [
@@ -187,7 +187,7 @@ class Test_Control_Abstract extends \WP_UnitTestCase {
 	/**
 	 * Test render_settings_location.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Control_Abstract::render_settings_location()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Control_Abstract::render_settings_location()
 	 */
 	public function test_render_settings_location() {
 		ob_start();
@@ -203,7 +203,7 @@ class Test_Control_Abstract extends \WP_UnitTestCase {
 	/**
 	 * Test sanitize_location.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Control_Abstract::sanitize_location()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Control_Abstract::sanitize_location()
 	 */
 	public function test_sanitize_location() {
 		$wrong_locations = [ 'incorrect', 'classic-editor', 'foo-baz', false, null ];

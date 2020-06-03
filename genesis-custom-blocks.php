@@ -18,7 +18,7 @@
  * Domain Path: languages
  */
 
-use GenesisCustomBlocks\Plugin;
+use Genesis\CustomBlocks\Plugin;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -98,7 +98,7 @@ require_once __DIR__ . '/php/deprecated.php';
 /**
  * Get the plugin object.
  *
- * @return \GenesisCustomBlocks\Plugin
+ * @return Plugin
  */
 function genesis_custom_blocks() {
 	static $instance;

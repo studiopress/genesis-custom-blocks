@@ -7,7 +7,7 @@
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-use GenesisCustomBlocks\Admin\License;
+use Genesis\CustomBlocks\Admin\License;
 
 ?>
 <form method="post" action="options.php">
