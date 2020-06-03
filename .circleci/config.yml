@@ -71,7 +71,7 @@ jobs:
   lint:
     executor:
       name: php
-      php-version: 7.4.5
+      php-version: 7.4
     steps:
       - checkout
       - set-up-packages
@@ -107,6 +107,6 @@ workflows:
       - php-tests:
           matrix:
             parameters:
-              php-version: ['7.4', '7.3', '7.2', '5.6']
+              php-version: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
       - js-tests
       - e2e-tests
