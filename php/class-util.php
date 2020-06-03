@@ -1,6 +1,6 @@
 <?php
 /**
- * Helper functions for the GenesisCustomBlocks plugin.
+ * Helper functions for the Genesis Custom Blocks plugin.
  *
  * These are publicly accessible via a magic method, like genesis_custom_blocks()->get_template_locations().
  * So these methods should generally be 'getter' functions, and should not affect the global state.
@@ -8,9 +8,9 @@
  * @package GenesisCustomBlocks
  */
 
-namespace GenesisCustomBlocks;
+namespace Genesis\CustomBlocks;
 
-use GenesisCustomBlocks\Blocks;
+use Genesis\CustomBlocks\Blocks;
 
 /**
  * Class Util

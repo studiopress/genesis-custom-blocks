@@ -5,7 +5,7 @@
  * @package GenesisCustomBlocks
  */
 
-use GenesisCustomBlocks\Admin\License;
+use Genesis\CustomBlocks\Admin\License;
 
 /**
  * Trait with a helper method.
@@ -28,7 +28,7 @@ trait Testing_Helper {
 			foreach ( $setting as $setting_key => $setting_value ) {
 				unset( $setting_value );
 				$this->assertEquals( $expected_setting[ $setting_key ], $setting->$setting_key );
-				$this->assertEquals( 'GenesisCustomBlocks\Blocks\Controls\Control_Setting', get_class( $setting ) );
+				$this->assertEquals( 'Genesis\CustomBlocks\Blocks\Controls\Control_Setting', get_class( $setting ) );
 			}
 		}
 

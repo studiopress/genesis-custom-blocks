@@ -5,7 +5,7 @@
  * @package GenesisCustomBlocks
  */
 
-use GenesisCustomBlocks\Blocks\Controls;
+use Genesis\CustomBlocks\Blocks\Controls;
 
 /**
  * Tests for class Image.
@@ -34,7 +34,7 @@ class Test_Image extends \WP_UnitTestCase {
 	/**
 	 * Test __construct.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Image::__construct()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Image::__construct()
 	 */
 	public function test_construct() {
 		$this->assertEquals( 'image', $this->instance->name );
@@ -44,7 +44,7 @@ class Test_Image extends \WP_UnitTestCase {
 	/**
 	 * Test register_settings.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Image::register_settings()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Image::register_settings()
 	 */
 	public function test_register_settings() {
 		$expected_settings = [
@@ -86,7 +86,7 @@ class Test_Image extends \WP_UnitTestCase {
 	/**
 	 * Test validate.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Image::validate()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Image::validate()
 	 */
 	public function test_validate() {
 		$image_file             = 'bar.jpeg';

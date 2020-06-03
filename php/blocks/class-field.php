@@ -7,7 +7,7 @@
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace GenesisCustomBlocks\Blocks;
+namespace Genesis\CustomBlocks\Blocks;
 
 /**
  * Class Field
@@ -126,7 +126,7 @@ class Field {
 		}
 
 		if ( ! isset( $config['type'] ) ) {
-			$control_class_name  = 'GenesisCustomBlocks\\Blocks\\Controls\\';
+			$control_class_name  = 'Genesis\\CustomBlocks\\Blocks\\Controls\\';
 			$control_class_name .= ucwords( $this->control, '_' );
 			if ( class_exists( $control_class_name ) ) {
 				/**

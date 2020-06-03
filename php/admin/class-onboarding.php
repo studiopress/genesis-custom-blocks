@@ -7,10 +7,10 @@
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace GenesisCustomBlocks\Admin;
+namespace Genesis\CustomBlocks\Admin;
 
-use GenesisCustomBlocks\Component_Abstract;
-use GenesisCustomBlocks\Blocks\Block;
+use Genesis\CustomBlocks\Component_Abstract;
+use Genesis\CustomBlocks\Blocks\Block;
 
 /**
  * Class Onboarding

@@ -15,12 +15,13 @@ spl_autoload_register(
 		// Assume we're using namespaces (because that's how the plugin is structured).
 		$namespace = explode( '\\', $class );
 		$root      = array_shift( $namespace );
+		$secondary = ! empty( $namespace ) ? array_shift( $namespace ) : '';
 
 		// If a class ends with "Trait" then prefix the filename with 'trait-', else use 'class-'.
 		$class_trait = preg_match( '/Trait$/', $class ) ? 'trait-' : 'class-';
 
 		// If we're not in the plugin's namespace then just return.
-		if ( 'GenesisCustomBlocks' !== $root ) {
+		if ( 'Genesis' !== $root || 'CustomBlocks' !== $secondary ) {
 			return;
 		}
 

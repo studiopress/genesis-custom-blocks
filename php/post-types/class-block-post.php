@@ -7,12 +7,12 @@
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace GenesisCustomBlocks\Post_Types;
+namespace Genesis\CustomBlocks\Post_Types;
 
-use GenesisCustomBlocks\Component_Abstract;
-use GenesisCustomBlocks\Blocks\Block;
-use GenesisCustomBlocks\Blocks\Field;
-use GenesisCustomBlocks\Blocks\Controls;
+use Genesis\CustomBlocks\Component_Abstract;
+use Genesis\CustomBlocks\Blocks\Block;
+use Genesis\CustomBlocks\Blocks\Field;
+use Genesis\CustomBlocks\Blocks\Controls;
 
 /**
  * Class Block
@@ -145,7 +145,7 @@ class Block_Post extends Component_Abstract {
 		}
 
 		$class_name    = ucwords( $control_name, '_' );
-		$control_class = 'GenesisCustomBlocks\\Blocks\\Controls\\' . $class_name;
+		$control_class = 'Genesis\\CustomBlocks\\Blocks\\Controls\\' . $class_name;
 		if ( class_exists( $control_class ) ) {
 			return new $control_class();
 		}
