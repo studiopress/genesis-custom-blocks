@@ -5,6 +5,8 @@
  * @package GenesisCustomBlocks
  */
 
+use Genesis\CustomBlocks\Plugin;
+
 /**
  * Tests for class Plugin.
  */
@@ -26,7 +28,7 @@ class Test_Plugin extends \WP_UnitTestCase {
 	 */
 	public function setUp() {
 		parent::setUp();
-		$this->instance = new GenesisCustomBlocks\Plugin();
+		$this->instance = new Plugin();
 		$this->instance->init();
 		$this->instance->plugin_loaded();
 	}
@@ -37,7 +39,7 @@ class Test_Plugin extends \WP_UnitTestCase {
 	 * @covers \GenesisCustomBlocks\Plugin::init()
 	 */
 	public function test_init() {
-		$plugin_instance = new GenesisCustomBlocks\Plugin();
+		$plugin_instance = new Plugin();
 		$plugin_instance->init();
 		$plugin_instance->plugin_loaded();
 
@@ -47,7 +49,7 @@ class Test_Plugin extends \WP_UnitTestCase {
 		$util_property->setAccessible( true );
 		$util_class = $util_property->getValue( $this->instance );
 
-		$this->assertEquals( 'GenesisCustomBlocks\Util', get_class( $util_class ) );
+		$this->assertEquals( 'Genesis\CustomBlocks\Util', get_class( $util_class ) );
 	}
 
 	/**
@@ -57,7 +59,7 @@ class Test_Plugin extends \WP_UnitTestCase {
 	 */
 	public function test_plugin_loaded() {
 		$this->instance->plugin_loaded();
-		$this->assertEquals( 'GenesisCustomBlocks\Admin\Admin', get_class( $this->instance->admin ) );
+		$this->assertEquals( 'Genesis\CustomBlocks\Admin\Admin', get_class( $this->instance->admin ) );
 	}
 
 	/**
@@ -71,7 +73,7 @@ class Test_Plugin extends \WP_UnitTestCase {
 	 * @covers \GenesisCustomBlocks\Util::is_pro()
 	 */
 	public function test_is_pro() {
-		$this->instance->admin = new GenesisCustomBlocks\Admin\Admin();
+		$this->instance->admin = new Genesis\CustomBlocks\Admin\Admin();
 		$this->instance->admin->init();
 		$this->set_license_validity( true );
 		$this->assertTrue( $this->instance->is_pro() );
@@ -86,7 +88,7 @@ class Test_Plugin extends \WP_UnitTestCase {
 	 * This is also essentially the same test as in Test_Util.
 	 * But this also tests that the __call() magic method in Plugin works.
 	 *
-	 * @covers \GenesisCustomBlocks\Util::get_template_locations()
+	 * @covers \Genesis\CustomBlocks\Util::get_template_locations()
 	 */
 	public function test_get_template_locations() {
 		$name = 'foo-baz';

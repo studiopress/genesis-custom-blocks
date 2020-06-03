@@ -27,7 +27,7 @@ class Test_Util extends Abstract_Template {
 	public function setUp() {
 		parent::setUp();
 
-		$this->instance = new GenesisCustomBlocks\Util();
+		$this->instance = new Genesis\CustomBlocks\Util();
 		$this->instance->set_plugin( genesis_custom_blocks() );
 	}
 
@@ -52,11 +52,11 @@ class Test_Util extends Abstract_Template {
 	 * @covers \GenesisCustomBlocks\Util::is_pro()
 	 */
 	public function test_is_pro() {
-		$plugin_instance = new GenesisCustomBlocks\Plugin();
+		$plugin_instance = new Genesis\CustomBlocks\Plugin();
 		$plugin_instance->init();
 		$plugin_instance->plugin_loaded();
 
-		$plugin_instance->admin = new GenesisCustomBlocks\Admin\Admin();
+		$plugin_instance->admin = new Genesis\CustomBlocks\Admin\Admin();
 		$plugin_instance->admin->init();
 
 		$this->set_license_validity( true );
@@ -74,7 +74,7 @@ class Test_Util extends Abstract_Template {
 	 * @covers \GenesisCustomBlocks\Util::loop()
 	 */
 	public function test_loop() {
-		$this->assertEquals( 'GenesisCustomBlocks\\Blocks\Loop', get_class( $this->instance->loop() ) );
+		$this->assertEquals( 'Genesis\CustomBlocks\\Blocks\Loop', get_class( $this->instance->loop() ) );
 
 		// Calling this singleton function repeatedly should return the same instance of the Loop.
 		$this->assertEquals( $this->instance->loop(), $this->instance->loop() );

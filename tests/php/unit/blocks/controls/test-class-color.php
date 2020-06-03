@@ -5,7 +5,7 @@
  * @package GenesisCustomBlocks
  */
 
-use GenesisCustomBlocks\Blocks\Controls;
+use Genesis\CustomBlocks\Blocks\Controls;
 
 /**
  * Tests for class Color.
@@ -34,7 +34,7 @@ class Test_Color extends \WP_UnitTestCase {
 	/**
 	 * Test __construct.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Color::__construct()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Color::__construct()
 	 */
 	public function test_construct() {
 		$this->assertEquals( 'Color', $this->instance->label );
@@ -46,7 +46,7 @@ class Test_Color extends \WP_UnitTestCase {
 	 *
 	 * The parent constructor calls register_settings(), so there's no need to call it again here.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Color::register_settings()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Color::register_settings()
 	 */
 	public function test_register_settings() {
 		$expected_settings = [

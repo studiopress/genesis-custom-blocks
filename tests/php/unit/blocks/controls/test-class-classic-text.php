@@ -5,7 +5,7 @@
  * @package GenesisCustomBlocks
  */
 
-use GenesisCustomBlocks\Blocks\Controls;
+use Genesis\CustomBlocks\Blocks\Controls;
 
 /**
  * Tests for class Classic_Text.
@@ -34,7 +34,7 @@ class Test_Classic_Text extends \WP_UnitTestCase {
 	/**
 	 * Test __construct.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Classic_Text::__construct()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Classic_Text::__construct()
 	 */
 	public function test_construct() {
 		$this->assertEquals( 'Classic Text', $this->instance->label );
@@ -44,7 +44,7 @@ class Test_Classic_Text extends \WP_UnitTestCase {
 	/**
 	 * Test register_settings.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Classic_Text::register_settings()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Classic_Text::register_settings()
 	 */
 	public function test_register_settings() {
 		$expected_settings = [

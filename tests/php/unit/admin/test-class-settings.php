@@ -5,8 +5,8 @@
  * @package GenesisCustomBlocks
  */
 
-use GenesisCustomBlocks\Admin\Settings;
-use GenesisCustomBlocks\Admin\License;
+use Genesis\CustomBlocks\Admin\Settings;
+use Genesis\CustomBlocks\Admin\License;
 use Brain\Monkey;
 
 /**

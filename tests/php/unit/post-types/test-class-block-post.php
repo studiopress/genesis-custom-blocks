@@ -5,8 +5,8 @@
  * @package GenesisCustomBlocks
  */
 
-use GenesisCustomBlocks\Post_Types;
-use GenesisCustomBlocks\Blocks\Controls;
+use Genesis\CustomBlocks\Post_Types;
+use Genesis\CustomBlocks\Blocks\Controls;
 
 /**
  * Tests for class Block_Post.
@@ -80,7 +80,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	public function test_register_controls() {
 		$this->instance->register_controls();
 		foreach ( $this->instance->controls as $control_type => $instance ) {
-			$this->assertContains( 'GenesisCustomBlocks\Blocks\Controls\\', get_class( $instance ) );
+			$this->assertContains( 'Genesis\CustomBlocks\Blocks\Controls\\', get_class( $instance ) );
 		}
 
 		// Because the pro license isn't active, the 'user' control should not display.
@@ -91,9 +91,9 @@ class Test_Block_Post extends \WP_UnitTestCase {
 		$this->instance->register_controls();
 
 		// The pro license is active, so the 'user' and 'post' controls should be registered.
-		$this->assertEquals( 'GenesisCustomBlocks\Blocks\Controls\Post', get_class( $this->instance->controls['post'] ) );
-		$this->assertEquals( 'GenesisCustomBlocks\Blocks\Controls\Taxonomy', get_class( $this->instance->controls['taxonomy'] ) );
-		$this->assertEquals( 'GenesisCustomBlocks\Blocks\Controls\User', get_class( $this->instance->controls['user'] ) );
+		$this->assertEquals( 'Genesis\CustomBlocks\Blocks\Controls\Post', get_class( $this->instance->controls['post'] ) );
+		$this->assertEquals( 'Genesis\CustomBlocks\Blocks\Controls\Taxonomy', get_class( $this->instance->controls['taxonomy'] ) );
+		$this->assertEquals( 'Genesis\CustomBlocks\Blocks\Controls\User', get_class( $this->instance->controls['user'] ) );
 	}
 
 	/**
@@ -102,7 +102,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::get_control()
 	 */
 	public function test_get_control() {
-		$namespace = 'GenesisCustomBlocks\Blocks\Controls\\';
+		$namespace = 'Genesis\CustomBlocks\Blocks\Controls\\';
 		$this->assertEquals( $namespace . 'Post', get_class( $this->instance->get_control( 'post' ) ) );
 		$this->assertEquals( $namespace . 'Taxonomy', get_class( $this->instance->get_control( 'taxonomy' ) ) );
 		$this->assertEquals( $namespace . 'User', get_class( $this->instance->get_control( 'user' ) ) );

@@ -5,7 +5,7 @@
  * @package GenesisCustomBlocks
  */
 
-use GenesisCustomBlocks\Blocks;
+use Genesis\CustomBlocks\Blocks;
 
 /**
  * Tests for class Field.

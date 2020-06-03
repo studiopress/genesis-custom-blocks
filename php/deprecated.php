@@ -4,7 +4,7 @@
  *
  * Deprecated methods can also appear as functions here, with the format namespace__class__method().
  *
- * @see GenesisCustomBlocks\Component_Abstract->_call()
+ * @see Genesis\CustomBlocks\Component_Abstract->_call()
  *
  * @package   GenesisCustomBlocks
  * @copyright Copyright(c) 2018, Genesis Custom Blocks
@@ -37,7 +37,7 @@ function block_lab_deprecated_function( $function, $version, $replacement ) {
 /**
  * Handle the deprecated block_lab_get_icons() function.
  *
- * @see \GenesisCustomBlocks\Util->get_icons()
+ * @see \Genesis\CustomBlocks\Util->get_icons()
  *
  * @return array
  */
@@ -49,7 +49,7 @@ function block_lab_get_icons() {
 /**
  * Handle the deprecated block_lab_allowed_svg_tags() function.
  *
- * @see \GenesisCustomBlocks\Util->allowed_svg_tags()
+ * @see \Genesis\CustomBlocks\Util->allowed_svg_tags()
  *
  * @return array
  */

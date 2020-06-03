@@ -5,7 +5,7 @@
  * @package GenesisCustomBlocks
  */
 
-use GenesisCustomBlocks\Blocks\Controls;
+use Genesis\CustomBlocks\Blocks\Controls;
 
 /**
  * Tests for class Control_Setting.
@@ -41,7 +41,7 @@ class Test_Control_Setting extends \WP_UnitTestCase {
 		foreach ( $initial_property_values as $initial_property_name => $initial_property_value ) {
 			$this->assertEquals( $initial_property_value, $this->instance->$initial_property_name );
 		}
-		$this->assertEquals( 'GenesisCustomBlocks\Blocks\Controls\Control_Setting', get_class( $this->instance ) );
+		$this->assertEquals( 'Genesis\CustomBlocks\Blocks\Controls\Control_Setting', get_class( $this->instance ) );
 
 		// Each of the properties below passed in the constructor should be added as properties.
 		$expected_properties = [

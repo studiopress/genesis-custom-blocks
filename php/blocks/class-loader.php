@@ -5,9 +5,9 @@
  * @package GenesisCustomBlocks
  */
 
-namespace GenesisCustomBlocks\Blocks;
+namespace Genesis\CustomBlocks\Blocks;
 
-use GenesisCustomBlocks\Component_Abstract;
+use Genesis\CustomBlocks\Component_Abstract;
 
 /**
  * Class Loader

@@ -64,7 +64,7 @@ class Test_Block_Lab extends \WP_UnitTestCase {
 	 * @covers \genesis_custom_blocks()
 	 */
 	public function test_singleton() {
-		$this->assertEquals( 'GenesisCustomBlocks\\Plugin', get_class( genesis_custom_blocks() ) );
+		$this->assertEquals( 'Genesis\CustomBlocks\\Plugin', get_class( genesis_custom_blocks() ) );
 
 		// Calling genesis_custom_blocks() twice should return the same instance.
 		$this->assertEquals( genesis_custom_blocks(), genesis_custom_blocks() );
