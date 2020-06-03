@@ -71,7 +71,7 @@ jobs:
   lint:
     executor:
       name: php
-      php-version: 7.4
+      php-version: '7.4'
     steps:
       - checkout
       - set-up-packages
