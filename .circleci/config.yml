@@ -77,7 +77,9 @@ jobs:
       - checkout
       - prepare-environment
       - set-up-packages
-      - run: npm run lint
+      - run:
+          working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
+          command: npm run lint
 
   js-tests:
     executor: node-only
