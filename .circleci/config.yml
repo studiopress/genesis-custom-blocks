@@ -73,21 +73,19 @@ jobs:
       name: php
       php-version: '7.4'
     steps:
-      - checkout
+      - prepare-environment
       - set-up-packages
       - run: npm run lint
 
   js-tests:
     executor: node-only
     steps:
-      - checkout
       - run: npm ci && npm run test:js
 
   e2e-tests:
     machine:
       image: ubuntu-1604:202004-01
     steps:
-      - checkout
       - run:
           name: Update Node version
           command: |
