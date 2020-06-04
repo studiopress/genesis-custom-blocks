@@ -50,7 +50,7 @@ commands:
           path: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks
       - run:
           working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
-          command: composer install && npm ci && npm run build
+          command: npm --version && composer install && npm ci && npm run build
 
 jobs:
   php-tests:
