@@ -24,6 +24,17 @@ commands:
     description: "Installing packages and building"
     steps:
       - run: composer install && npm install && npm run build
+  install-node:
+    description: "Installing the lts version of Node"
+    steps:
+      - run:
+          name: Update Node version
+          command: |
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+            export NVM_DIR="/opt/circleci/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # Loads nvm.
+            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # Loads nvm bash_completion.
+            nvm install --lts
   prepare-environment:
     description: "Preparing the environment..."
     parameters:
@@ -31,7 +42,7 @@ commands:
         type: boolean
         default: true
     steps:
-      - run: apk add --update --no-cache git nodejs npm
+      - run: apk add --update --no-cache git
       - run:
           command: |
             php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -48,6 +59,7 @@ commands:
       - run: mkdir -p wordpress-develop/src/wp-content/plugins/genesis-custom-blocks
       - checkout:
           path: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks
+      - install-node
       - run:
           working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
           command: npm install -g npm && npm --version && composer install && npm ci && npm run build
@@ -92,14 +104,7 @@ jobs:
       image: ubuntu-1604:202004-01
     steps:
       - checkout
-      - run:
-          name: Update Node version
-          command: |
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-            export NVM_DIR="/opt/circleci/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # Loads nvm.
-            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # Loads nvm bash_completion.
-            nvm install --lts
+      - install-node
       - run: npm install && npm run build && npm run env start && npm run test:e2e
 
 workflows:
