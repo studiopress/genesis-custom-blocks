@@ -45,7 +45,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	/**
 	 * Test register_hooks.
 	 *
-	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::register_hooks()
+	 * @covers \Genesis\CustomBlocks\Post_Types\Block_Post::register_hooks()
 	 */
 	public function test_register_hooks() {
 		$this->instance->register_hooks();
@@ -60,7 +60,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 		$this->assertEquals( 10, has_action( 'admin_enqueue_scripts', [ $this->instance, 'enqueue_scripts' ] ) );
 		$this->assertEquals( 10, has_action( 'wp_insert_post_data', [ $this->instance, 'save_block' ] ) );
 		$this->assertEquals( 10, has_action( 'init', [ $this->instance, 'register_controls' ] ) );
-		$this->assertEquals( 10, has_action( 'block_lab_field_value', [ $this->instance, 'get_field_value' ] ) );
+		$this->assertEquals( 10, has_action( 'genesis_custom_blocks_field_value', [ $this->instance, 'get_field_value' ] ) );
 
 		$this->assertEquals( 10, has_action( 'disable_months_dropdown', '__return_true' ) );
 		$this->assertEquals( 10, has_action( 'page_row_actions', [ $this->instance, 'page_row_actions' ] ) );
@@ -75,7 +75,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	/**
 	 * Test register_controls.
 	 *
-	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::register_controls()
+	 * @covers \Genesis\CustomBlocks\Post_Types\Block_Post::register_controls()
 	 */
 	public function test_register_controls() {
 		$this->instance->register_controls();
@@ -99,7 +99,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	/**
 	 * Test get_control.
 	 *
-	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::get_control()
+	 * @covers \Genesis\CustomBlocks\Post_Types\Block_Post::get_control()
 	 */
 	public function test_get_control() {
 		$namespace = 'Genesis\CustomBlocks\Blocks\Controls\\';
@@ -114,7 +114,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	/**
 	 * Test get_field_value.
 	 *
-	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::get_field_value()
+	 * @covers \Genesis\CustomBlocks\Post_Types\Block_Post::get_field_value()
 	 */
 	public function test_get_field_value() {
 		$invalid_login    = 'asdfg';
@@ -159,7 +159,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	/**
 	 * Test get_capabilities.
 	 *
-	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::get_capabilities()
+	 * @covers \Genesis\CustomBlocks\Post_Types\Block_Post::get_capabilities()
 	 */
 	public function test_get_capabilities() {
 		$capabilities = $this->instance->get_capabilities();
@@ -169,7 +169,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	/**
 	 * Test add_meta_boxes.
 	 *
-	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::add_meta_boxes()
+	 * @covers \Genesis\CustomBlocks\Post_Types\Block_Post::add_meta_boxes()
 	 */
 	public function test_add_meta_boxes() {
 		global $wp_meta_boxes;
@@ -190,7 +190,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	/**
 	 * Test render_properties_meta_box.
 	 *
-	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::render_properties_meta_box()
+	 * @covers \Genesis\CustomBlocks\Post_Types\Block_Post::render_properties_meta_box()
 	 */
 	public function test_render_properties_meta_box() {
 		$this->load_dummy_block();
@@ -210,7 +210,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	/**
 	 * Test render_fields_meta_box.
 	 *
-	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::render_fields_meta_box()
+	 * @covers \Genesis\CustomBlocks\Post_Types\Block_Post::render_fields_meta_box()
 	 */
 	public function test_render_fields_meta_box() {
 		$this->load_dummy_block();
@@ -228,7 +228,7 @@ class Test_Block_Post extends \WP_UnitTestCase {
 	/**
 	 * Test render_template_meta_box.
 	 *
-	 * @covers \GenesisCustomBlocks\Post_Types\Block_Post::render_template_meta_box()
+	 * @covers \Genesis\CustomBlocks\Post_Types\Block_Post::render_template_meta_box()
 	 */
 	public function test_render_template_meta_box() {
 		$this->load_dummy_block();

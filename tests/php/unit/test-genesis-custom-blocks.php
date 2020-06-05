@@ -1,16 +1,16 @@
 <?php
 /**
- * Test_Block_Lab
+ * Test_Genesis_Custom_Blocks
  *
  * @package GenesisCustomBlocks
  */
 
 /**
- * Class Test_Block_Lab
+ * Class Test_Genesis_Custom_Blocks
  *
  * @package GenesisCustomBlocks
  */
-class Test_Block_Lab extends \WP_UnitTestCase {
+class Test_Genesis_Custom_Blocks extends \WP_UnitTestCase {
 	/**
 	 * Test genesis_custom_blocks_php_version_error().
 	 *

@@ -458,7 +458,7 @@ class Test_Import extends Abstract_Template {
 	/**
 	 * Test block_exists.
 	 *
-	 * @covers \GenesisCustomBlocks\Admin\Import::block_exists()
+	 * @covers \Genesis\CustomBlocks\Admin\Import::block_exists()
 	 */
 	public function test_block_exists() {
 		$block_namespace = 'genesis-custom-blocks/block-name';

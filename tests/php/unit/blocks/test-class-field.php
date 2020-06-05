@@ -59,7 +59,7 @@ class Test_Field extends \WP_UnitTestCase {
 	/**
 	 * Test __construct.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Field::__construct()
+	 * @covers \Genesis\CustomBlocks\Blocks\Field::__construct()
 	 */
 	public function test_construct() {
 		$this->assertEquals( '', $this->instance->name );
@@ -73,7 +73,7 @@ class Test_Field extends \WP_UnitTestCase {
 	/**
 	 * Test from_array.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Field::from_array()
+	 * @covers \Genesis\CustomBlocks\Blocks\Field::from_array()
 	 */
 	public function test_from_array() {
 		$this->instance->from_array( $this->config );
@@ -96,7 +96,7 @@ class Test_Field extends \WP_UnitTestCase {
 	/**
 	 * Test from_array when there is no 'type' in the $config argument.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Field::from_array()
+	 * @covers \Genesis\CustomBlocks\Blocks\Field::from_array()
 	 */
 	public function test_from_array_without_type() {
 		$this->instance->from_array( [ 'control' => 'rich_text' ] );
@@ -115,7 +115,7 @@ class Test_Field extends \WP_UnitTestCase {
 	/**
 	 * Test to_array.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Field::to_array()
+	 * @covers \Genesis\CustomBlocks\Blocks\Field::to_array()
 	 */
 	public function test_to_array() {
 		$this->instance->from_array( $this->config );

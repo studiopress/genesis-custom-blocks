@@ -43,7 +43,7 @@ class Test_Loader extends Abstract_Template {
 	 * @inheritdoc
 	 */
 	public function tearDown() {
-		remove_all_filters( 'block_lab_data' );
+		remove_all_filters( 'genesis_custom_blocks_data' );
 		parent::tearDown();
 	}
 
@@ -112,17 +112,17 @@ class Test_Loader extends Abstract_Template {
 
 			return $data;
 		};
-		add_filter( 'block_lab_data', $data_callback, 10, 2 );
+		add_filter( 'genesis_custom_blocks_data', $data_callback, 10, 2 );
 
 		// The filter should change the return value.
 		$this->assertEquals( $attributes, $this->instance->get_data( $attributes_key ) );
-		remove_all_filters( 'block_lab_data' );
+		remove_all_filters( 'genesis_custom_blocks_data' );
 
 		$data_callback_for_key = static function( $data ) use ( $attributes ) {
 			unset( $data );
 			return $attributes;
 		};
-		$filter                = "block_lab_data_{$attributes_key}";
+		$filter                = "genesis_custom_blocks_data_{$attributes_key}";
 		add_filter( $filter, $data_callback_for_key );
 
 		// The filter specific to the key should also change the return value.
@@ -170,7 +170,7 @@ class Test_Loader extends Abstract_Template {
 
 		// Test that the do_action() call with this action runs, and that it allows enqueuing a script.
 		add_action(
-			'block_lab_render_template',
+			'genesis_custom_blocks_render_template',
 			function( $block ) use ( $block_name, $slug, $script_url ) {
 				if ( $block_name === $block->name ) {
 					wp_enqueue_script( $slug, $script_url, [], '0.1', true );
@@ -186,12 +186,12 @@ class Test_Loader extends Abstract_Template {
 		$this->assertEquals( $slug, $script->handle );
 		$this->assertEquals( $script_url, $script->src );
 
-		// Test that the do_action() call with the dynamic name runs, like 'block_lab_render_template_bl-dynamic-testing-slug'.
+		// Test that the do_action() call with the dynamic name runs, like 'bl-dynamic-testing-slug'.
 		$slug       = 'bl-dynamic-testing-slug';
 		$script_url = 'https://example.com/another-script.js';
 
 		add_action(
-			"block_lab_render_template_{$block_name}",
+			"genesis_custom_blocks_render_template_{$block_name}",
 			function() use ( $block_name, $slug, $script_url ) {
 				wp_enqueue_script( $slug, $script_url, [], '0.1', true );
 			}
@@ -407,7 +407,7 @@ class Test_Loader extends Abstract_Template {
 
 		// Test that this filter changes the template used.
 		add_filter(
-			'block_lab_override_theme_template',
+			'genesis_custom_blocks_override_theme_template',
 			function( $directory ) use ( $overridden_theme_template_path ) {
 				unset( $directory );
 				return $overridden_theme_template_path;
@@ -422,7 +422,7 @@ class Test_Loader extends Abstract_Template {
 	/**
 	 * Test add_block.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Loader::add_block()
+	 * @covers \Genesis\CustomBlocks\Blocks\Loader::add_block()
 	 */
 	public function test_add_block() {
 		// The block config does not have a name, so it should not be added to the $blocks property.
@@ -441,7 +441,7 @@ class Test_Loader extends Abstract_Template {
 	/**
 	 * Test add_field.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Loader::add_field()
+	 * @covers \Genesis\CustomBlocks\Blocks\Loader::add_field()
 	 */
 	public function test_add_field() {
 		$block_name                = 'example-block';

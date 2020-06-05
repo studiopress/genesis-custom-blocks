@@ -11,7 +11,7 @@
 
 // Make Block Lab look for templates in this plugin instead of a theme.
 add_filter(
-	'block_lab_template_path',
+	'genesis_custom_blocks_template_path',
 	static function( $path ) {
 		unset( $path );
 		return __DIR__;

@@ -70,7 +70,7 @@ class Onboarding extends Component_Abstract {
 		 */
 		if ( $slug === $screen->id && 'post' === $screen->base && $post_id === $example_post_id ) {
 			add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
-			add_action( 'block_lab_before_fields_list', [ $this, 'show_add_to_post_notice' ] );
+			add_action( 'genesis_custom_blocks_before_fields_list', [ $this, 'show_add_to_post_notice' ] );
 		}
 
 		if ( 'draft' !== get_post_status( $example_post_id ) ) {

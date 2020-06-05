@@ -36,7 +36,7 @@ class Test_Plugin extends \WP_UnitTestCase {
 	/**
 	 * Test init.
 	 *
-	 * @covers \GenesisCustomBlocks\Plugin::init()
+	 * @covers \Genesis\CustomBlocks\Plugin::init()
 	 */
 	public function test_init() {
 		$plugin_instance = new Plugin();
@@ -55,7 +55,7 @@ class Test_Plugin extends \WP_UnitTestCase {
 	/**
 	 * Test plugin_loaded.
 	 *
-	 * @covers \GenesisCustomBlocks\Plugin::plugin_loaded()
+	 * @covers \Genesis\CustomBlocks\Plugin::plugin_loaded()
 	 */
 	public function test_plugin_loaded() {
 		$this->instance->plugin_loaded();
@@ -70,7 +70,7 @@ class Test_Plugin extends \WP_UnitTestCase {
 	 * This method, is_pro(), is called in the Plugin class.
 	 * So this ensures that the magic method refers the call to the Util class.
 	 *
-	 * @covers \GenesisCustomBlocks\Util::is_pro()
+	 * @covers \Genesis\CustomBlocks\Util::is_pro()
 	 */
 	public function test_is_pro() {
 		$this->instance->admin = new Genesis\CustomBlocks\Admin\Admin();

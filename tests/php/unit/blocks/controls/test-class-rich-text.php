@@ -34,7 +34,7 @@ class Test_Rich_Text extends \WP_UnitTestCase {
 	/**
 	 * Test __construct.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Rich_Text::__construct()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Rich_Text::__construct()
 	 */
 	public function test_construct() {
 		$this->assertEquals( 'Rich Text', $this->instance->label );
@@ -44,7 +44,7 @@ class Test_Rich_Text extends \WP_UnitTestCase {
 	/**
 	 * Test register_settings.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Rich_Text::register_settings()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Rich_Text::register_settings()
 	 */
 	public function test_register_settings() {
 		$expected_settings = [
@@ -86,7 +86,7 @@ class Test_Rich_Text extends \WP_UnitTestCase {
 	/**
 	 * Test validate.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Rich_Text::validate()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Rich_Text::validate()
 	 */
 	public function test_validate() {
 		$markup_with_br_tags         = '<span>First line<br><br></span>';

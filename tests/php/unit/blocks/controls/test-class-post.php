@@ -42,7 +42,7 @@ class Test_Post extends \WP_UnitTestCase {
 	/**
 	 * Test __construct.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Post::__construct()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Post::__construct()
 	 */
 	public function test_construct() {
 		$this->assertEquals( 'post', $this->instance->name );
@@ -52,7 +52,7 @@ class Test_Post extends \WP_UnitTestCase {
 	/**
 	 * Test register_settings.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Post::register_settings()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Post::register_settings()
 	 */
 	public function test_register_settings() {
 		$expected_settings = [
@@ -104,8 +104,8 @@ class Test_Post extends \WP_UnitTestCase {
 	/**
 	 * Test render_settings_post_type_rest_slug.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Post::render_settings_post_type_rest_slug()
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Control_Abstract::render_select()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Post::render_settings_post_type_rest_slug()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Control_Abstract::render_select()
 	 */
 	public function test_render_settings_post_type_rest_slug() {
 		$name = 'post_type';
@@ -125,7 +125,7 @@ class Test_Post extends \WP_UnitTestCase {
 	/**
 	 * Test get_post_type_rest_slugs.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Post::get_post_type_rest_slugs()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Post::get_post_type_rest_slugs()
 	 */
 	public function test_get_post_type_rest_slugs() {
 		$this->assertEquals(
@@ -140,7 +140,7 @@ class Test_Post extends \WP_UnitTestCase {
 	/**
 	 * Test sanitize_post_type_rest_slug.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Post::sanitize_post_type_rest_slug()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Post::sanitize_post_type_rest_slug()
 	 */
 	public function test_sanitize_post_type_rest_slug() {
 		$invalid_post_type = 'foo_invalid_type';
@@ -170,7 +170,7 @@ class Test_Post extends \WP_UnitTestCase {
 	/**
 	 * Test validate.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Post::validate()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Post::validate()
 	 */
 	public function test_validate() {
 		$post_title       = 'Example Post';

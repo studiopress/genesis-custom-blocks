@@ -34,7 +34,7 @@ class Test_Select extends \WP_UnitTestCase {
 	/**
 	 * Test __construct.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Select::__construct()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Select::__construct()
 	 */
 	public function test_construct() {
 		$this->assertEquals( 'Select', $this->instance->label );
@@ -46,7 +46,7 @@ class Test_Select extends \WP_UnitTestCase {
 	 *
 	 * The parent constructor calls register_settings(), so there's no need to call it again here.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Select::register_settings()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Select::register_settings()
 	 */
 	public function test_register_settings() {
 		$expected_settings = [

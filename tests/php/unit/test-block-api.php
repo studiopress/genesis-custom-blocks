@@ -25,9 +25,9 @@ class Test_Block_API extends \WP_UnitTestCase {
 	 */
 	public function tearDown() {
 		genesis_custom_blocks()->loader = new Loader();
-		remove_all_filters( 'block_lab_default_fields' );
-		remove_all_filters( 'block_lab_data_attributes' );
-		remove_all_filters( 'block_lab_data_config' );
+		remove_all_filters( 'genesis_custom_blocks_default_fields' );
+		remove_all_filters( 'genesis_custom_blocks_data_attributes' );
+		remove_all_filters( 'genesis_custom_blocks_data_config' );
 
 		parent::tearDown();
 	}

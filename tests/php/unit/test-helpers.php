@@ -23,9 +23,9 @@ class Test_Helpers extends \WP_UnitTestCase {
 	 */
 	public function tearDown() {
 		genesis_custom_blocks()->loader = new Blocks\Loader();
-		remove_all_filters( 'block_lab_default_fields' );
-		remove_all_filters( 'block_lab_data_attributes' );
-		remove_all_filters( 'block_lab_data_config' );
+		remove_all_filters( 'genesis_custom_blocks_default_fields' );
+		remove_all_filters( 'genesis_custom_blocks_data_attributes' );
+		remove_all_filters( 'genesis_custom_blocks_data_config' );
 
 		parent::tearDown();
 	}
@@ -42,7 +42,7 @@ class Test_Helpers extends \WP_UnitTestCase {
 		$mock_text      = 'Example text';
 
 		add_filter(
-			'block_lab_data_attributes',
+			'genesis_custom_blocks_data_attributes',
 			function( $data ) use ( $field_name, $class_key, $mock_text, $expected_class ) {
 				$data[ $field_name ] = $mock_text;
 				$data[ $class_key ]  = $expected_class;
@@ -51,7 +51,7 @@ class Test_Helpers extends \WP_UnitTestCase {
 		);
 
 		add_filter(
-			'block_lab_data_config',
+			'genesis_custom_blocks_data_config',
 			function( $data ) use ( $field_name ) {
 				$field_config = [ 'control' => 'text' ];
 				$block_config = [
@@ -100,10 +100,10 @@ class Test_Helpers extends \WP_UnitTestCase {
 		$additional_field_name  = 'example_additional_field';
 		$additional_field_value = 'Here is some text';
 
-		remove_all_filters( 'block_lab_data_attributes' );
+		remove_all_filters( 'genesis_custom_blocks_data_attributes' );
 
 		add_filter(
-			'block_lab_data_attributes',
+			'genesis_custom_blocks_data_attributes',
 			function() use ( $additional_field_name, $additional_field_value ) {
 				return [ $additional_field_name => $additional_field_value ];
 			}
@@ -117,7 +117,7 @@ class Test_Helpers extends \WP_UnitTestCase {
 		$this->assertEmpty( $return_value );
 		$this->assertEmpty( $echoed_value );
 
-		$default_fields_filter = 'block_lab_default_fields';
+		$default_fields_filter = 'genesis_custom_blocks_default_fields';
 
 		// Don't return anything from the filter callback, to test the behavior.
 		add_filter(

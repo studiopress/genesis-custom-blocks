@@ -72,8 +72,8 @@ class Block_Post extends Component_Abstract {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 		add_action( 'wp_insert_post_data', [ $this, 'save_block' ], 10, 2 );
 		add_action( 'init', [ $this, 'register_controls' ] );
-		add_filter( 'block_lab_field_value', [ $this, 'get_field_value' ], 10, 3 );
-		add_filter( 'block_lab_sub_field_value', [ $this, 'get_field_value' ], 10, 3 );
+		add_filter( 'genesis_custom_blocks_field_value', [ $this, 'get_field_value' ], 10, 3 );
+		add_filter( 'genesis_custom_blocks_sub_field_value', [ $this, 'get_field_value' ], 10, 3 );
 
 		// Clean up the list table.
 		add_filter( 'disable_months_dropdown', '__return_true', 10, $this->slug );
@@ -113,6 +113,7 @@ class Block_Post extends Component_Abstract {
 			$control_names = array_merge( $control_names, $this->pro_controls );
 		}
 
+		$controls = [];
 		foreach ( $control_names as $control_name ) {
 			$control = $this->get_control( $control_name );
 			if ( $control ) {
@@ -127,10 +128,11 @@ class Block_Post extends Component_Abstract {
 		 *     An associative array of the available controls.
 		 *
 		 *     @type string $control_name The name of the control, like 'user'.
-		 *     @type object $control The control opbject, extending Controls\Control_Abstract.
+		 *     @type object $control The control object, extending Controls\Control_Abstract.
 		 * }
 		 */
-		$this->controls = apply_filters( 'block_lab_controls', $controls );
+		$controls       = apply_filters( 'genesis_custom_blocks_controls', $controls );
+		$this->controls = apply_filters_deprecated( 'block_lab_controls', [ $controls ], '1.0.0', 'genesis_custom_blocks_controls' );
 	}
 
 	/**
@@ -521,7 +523,9 @@ class Block_Post extends Component_Abstract {
 	public function render_fields_meta_box() {
 		$post  = get_post();
 		$block = new Block( $post->ID );
-		do_action( "{$this->slug}_before_fields_list" );
+		do_action( 'genesis_custom_blocks_before_fields_list' );
+		do_action_deprecated( 'block_lab_before_fields_list', [], '1.0.0', 'genesis_custom_blocks_before_fields_list' );
+
 		?>
 		<div class="block-fields-list">
 			<table class="widefat">

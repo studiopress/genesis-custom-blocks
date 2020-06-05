@@ -64,7 +64,14 @@ class Admin extends Component_Abstract {
 		$this->onboarding = new Onboarding();
 		genesis_custom_blocks()->register_component( $this->onboarding );
 
-		$show_pro_nag = apply_filters( 'block_lab_show_pro_nag', false );
+		/**
+		 * Whether to show the pro nag.
+		 *
+		 * @param bool Whether this should show the nag.
+		 */
+		$show_pro_nag = apply_filters( 'genesis_custom_blocks_show_pro_nag', false );
+		$show_pro_nag = apply_filters_deprecated( 'block_lab_show_pro_nag', [ $show_pro_nag ], '1.0.0', 'genesis_custom_blocks_show_pro_nag' );
+
 		if ( $show_pro_nag && ! genesis_custom_blocks()->is_pro() ) {
 			$this->upgrade = new Upgrade();
 			genesis_custom_blocks()->register_component( $this->upgrade );
