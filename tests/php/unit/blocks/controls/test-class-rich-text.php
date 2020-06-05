@@ -2,7 +2,7 @@
 /**
  * Tests for class Rich_Text.
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 use Genesis\CustomBlocks\Blocks\Controls;

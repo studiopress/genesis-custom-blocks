@@ -2,7 +2,7 @@
 /**
  * Tests for helpers.php.
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 use Genesis\CustomBlocks\Blocks;

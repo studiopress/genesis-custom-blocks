@@ -2,7 +2,7 @@
 /**
  * Tests for class Util.
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 /**

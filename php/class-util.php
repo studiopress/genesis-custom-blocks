@@ -5,7 +5,7 @@
  * These are publicly accessible via a magic method, like genesis_custom_blocks()->get_template_locations().
  * So these methods should generally be 'getter' functions, and should not affect the global state.
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 namespace Genesis\CustomBlocks;

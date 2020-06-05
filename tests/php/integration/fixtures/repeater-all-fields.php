@@ -2,7 +2,7 @@
 /**
  * A mock template for a block, testing a repeater with all field types as sub_fields.
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaping could interfere with testing block_sub_value().

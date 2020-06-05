@@ -2,7 +2,7 @@
 /**
  * Tests for class Loader.
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 use Genesis\CustomBlocks\Blocks;

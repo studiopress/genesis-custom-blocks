@@ -2,7 +2,7 @@
 /**
  * Range control.
  *
- * @package   GenesisCustomBlocks
+ * @package   Genesis\CustomBlocks
  * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */

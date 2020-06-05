@@ -2,7 +2,7 @@
 /**
  * Test_Defaults
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 use Genesis\CustomBlocks\Blocks;
@@ -11,7 +11,7 @@ use Genesis\CustomBlocks\Post_Types;
 /**
  * Class Test_Defaults
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 class Test_Defaults extends Abstract_Attribute {
 

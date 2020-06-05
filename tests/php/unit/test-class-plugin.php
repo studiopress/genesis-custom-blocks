@@ -2,7 +2,7 @@
 /**
  * Tests for class Plugin.
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 use Genesis\CustomBlocks\Plugin;

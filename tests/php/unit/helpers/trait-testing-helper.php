@@ -2,7 +2,7 @@
 /**
  * Trait with a helper method for testing controls.
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 use Genesis\CustomBlocks\Admin\License;

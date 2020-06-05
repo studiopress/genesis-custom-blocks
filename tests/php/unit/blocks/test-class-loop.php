@@ -2,7 +2,7 @@
 /**
  * Tests for class Loop.
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 use Genesis\CustomBlocks\Blocks;

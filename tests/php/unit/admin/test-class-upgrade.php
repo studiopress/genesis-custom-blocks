@@ -2,7 +2,7 @@
 /**
  * Tests for class Upgrade.
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 use Genesis\CustomBlocks\Admin;
