@@ -2,7 +2,7 @@
 /**
  * Abstract_Attribute
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 use org\bovigo\vfs\vfsStream;
@@ -10,7 +10,7 @@ use org\bovigo\vfs\vfsStream;
 /**
  * Class Abstract_Attribute
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 abstract class Abstract_Attribute extends \WP_UnitTestCase {
 

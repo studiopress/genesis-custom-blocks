@@ -2,7 +2,7 @@
 /**
  * Test_Post_Capabilities
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 use Genesis\CustomBlocks\Post_Types;
@@ -12,7 +12,7 @@ use Genesis\CustomBlocks\Post_Types;
  *
  * Tests the capabilities for the 'genesis_custom_block' post type.
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 class Test_Post_Capabilities extends \WP_UnitTestCase {
 

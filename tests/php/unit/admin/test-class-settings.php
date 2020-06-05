@@ -2,7 +2,7 @@
 /**
  * Tests for class Settings.
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 use Genesis\CustomBlocks\Admin\Settings;

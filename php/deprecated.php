@@ -6,7 +6,7 @@
  *
  * @see Genesis\CustomBlocks\Component_Abstract->_call()
  *
- * @package   GenesisCustomBlocks
+ * @package   Genesis\CustomBlocks
  * @copyright Copyright(c) 2018, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
@@ -77,7 +77,7 @@ function block_lab_allowed_svg_tags() {
  *         An associative array containing block fields. Each key in the array should be the field slug.
  *
  *         @type array {$slug} {
- *             An associative array describing a field. Refer to the $field_config parameter of block_lab_add_field().
+ *             An associative array describing a field. Refer to the $field_config parameter of add_field().
  *         }
  *     }
  * }

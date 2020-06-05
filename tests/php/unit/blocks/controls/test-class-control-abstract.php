@@ -2,7 +2,7 @@
 /**
  * Tests for class Control_Abstract.
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 use Genesis\CustomBlocks\Blocks\Controls;

@@ -2,7 +2,7 @@
 /**
  * Tests for class Block_Post.
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 use Genesis\CustomBlocks\Post_Types;

@@ -2,7 +2,7 @@
 /**
  * Tests for class Textarea.
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 use Genesis\CustomBlocks\Blocks\Controls;

@@ -2,7 +2,7 @@
 /**
  * Loader initiates the loading of new blocks.
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 namespace Genesis\CustomBlocks\Blocks;
@@ -410,7 +410,7 @@ class Loader extends Component_Abstract {
 			 * @param array $attributes The block attributes.
 			 */
 			do_action( "genesis_custom_blocks_render_template_{$block->name}", $block, $attributes );
-			do_action( "block_lab_render_template_{$block->name}", [ $block, $attributes ], '1.0.0', "genesis_custom_blocks_render_template_{$block->name}" );
+			do_action_deprecated( "block_lab_render_template_{$block->name}", [ $block, $attributes ], '1.0.0', "genesis_custom_blocks_render_template_{$block->name}" );
 		}
 
 		ob_start();
@@ -510,7 +510,7 @@ class Loader extends Component_Abstract {
 			/**
 			 * Allows overriding the theme template.
 			 *
-			 * @param string The located template.
+			 * @param string $located The located template.
 			 */
 			$theme_template = apply_filters( 'genesis_custom_blocks_override_theme_template', $located );
 			$theme_template = apply_filters_deprecated( 'block_lab_override_theme_template', [ $theme_template ], '1.0.0', 'genesis_custom_blocks_override_theme_template' );
@@ -579,7 +579,7 @@ class Loader extends Component_Abstract {
 		}
 
 		/**
-		 * Use this action to add new blocks and fields with the Genesis\CustomBlocks\add_block and block_lab_add_field helper functions.
+		 * Use this action to add new blocks and fields with the Genesis\CustomBlocks\add_block and Genesis\CustomBlocks\add_field helper functions.
 		 */
 		do_action( 'genesis_custom_blocks_add_blocks' );
 		do_action_deprecated( 'block_lab_add_blocks', [], '1.0.0', 'genesis_custom_blocks_add_blocks' );
@@ -587,7 +587,7 @@ class Loader extends Component_Abstract {
 		/**
 		 * Filter the available blocks.
 		 *
-		 * This is used internally by the Genesis\CustomBlocks\add_block and block_lab_add_field helper functions,
+		 * This is used internally by the Genesis\CustomBlocks\add_block and Genesis\CustomBlocks\add_field helper helper functions,
 		 * but it can also be used to hide certain blocks if desired.
 		 *
 		 * @param array $blocks An associative array of blocks.

@@ -2,7 +2,7 @@
 /**
  * Tests for block-api.php.
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 use Genesis\CustomBlocks\Blocks\Loader;

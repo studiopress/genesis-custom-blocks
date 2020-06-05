@@ -2,7 +2,7 @@
 /**
  * Tests for class Import.
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 use Genesis\CustomBlocks\Admin;

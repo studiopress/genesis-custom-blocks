@@ -2,7 +2,7 @@
 /**
  * Abstract test class, used for testing functions that get templates.
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 use Genesis\CustomBlocks\Blocks;

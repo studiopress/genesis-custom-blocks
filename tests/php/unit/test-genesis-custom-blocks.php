@@ -2,13 +2,13 @@
 /**
  * Test_Genesis_Custom_Blocks
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 /**
  * Class Test_Genesis_Custom_Blocks
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 class Test_Genesis_Custom_Blocks extends \WP_UnitTestCase {
 	/**

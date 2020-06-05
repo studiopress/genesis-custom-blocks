@@ -2,7 +2,7 @@
 /**
  * Template for testing-example block to test the output of the Text control.
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 $field_name = 'testing-text';

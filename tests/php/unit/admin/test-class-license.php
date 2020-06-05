@@ -2,7 +2,7 @@
 /**
  * Tests for class License.
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 use Genesis\CustomBlocks\Admin\License;

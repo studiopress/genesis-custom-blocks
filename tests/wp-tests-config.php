@@ -10,7 +10,7 @@
  * These tests will DROP ALL TABLES in the database with the prefix named below.
  * DO NOT use a production database or one that is shared with something else.
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 /* Path to the WordPress codebase you'd like to test. Add a backslash in the end. */

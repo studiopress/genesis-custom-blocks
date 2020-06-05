@@ -2,7 +2,7 @@
 /**
  * Test_Repeater_Template_Output
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 
 use Genesis\CustomBlocks\Blocks;
@@ -11,7 +11,7 @@ use Genesis\CustomBlocks\Post_Types;
 /**
  * Class Test_Repeater_Template_Output
  *
- * @package GenesisCustomBlocks
+ * @package Genesis\CustomBlocks
  */
 class Test_Repeater_Template_Output extends Abstract_Attribute {
 
