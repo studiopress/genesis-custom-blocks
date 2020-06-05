@@ -34,7 +34,7 @@ commands:
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # Loads nvm.
             [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # Loads nvm bash_completion.
-            nvm install lts/* --reinstall-packages-from=default --latest-npm
+            nvm install --reinstall-packages-from=default --latest-npm && node --version
   prepare-environment:
     description: "Preparing the environment..."
     parameters:
@@ -42,7 +42,7 @@ commands:
         type: boolean
         default: true
     steps:
-      - run: apk add --update --no-cache git
+      - run: apk add --update --no-cache git nodejs nodejs-npm
       - run:
           command: |
             php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
