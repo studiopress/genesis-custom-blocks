@@ -38,7 +38,7 @@ commands:
         type: boolean
         default: true
     steps:
-      - run: apk add --update --no-cache git nodejs=13.9.0 nodejs-npm=6.14.5
+      - run: apk add --update --no-cache git nodejs>12.4.0 nodejs-npm
       - run:
           command: |
             php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
