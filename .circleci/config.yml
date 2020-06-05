@@ -30,10 +30,7 @@ commands:
       - run:
           name: Install node and npm
           command: |
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # Loads nvm.
-            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # Loads nvm bash_completion.
-            nvm install --reinstall-packages-from=default --latest-npm && node --version
+            node --version && npm --version
   prepare-environment:
     description: "Preparing the environment..."
     parameters:
