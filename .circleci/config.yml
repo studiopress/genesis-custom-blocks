@@ -58,7 +58,7 @@ commands:
       - install-node
       - run:
           working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
-          command: node --version && npm --version && composer install && npm ci && npm run build
+          command: node --version && npm --version && composer install && npm install && npm run build
 
 jobs:
   php-tests:
@@ -104,11 +104,9 @@ jobs:
       - run: npm install && npm run build && npm run env start && npm run test:e2e
 
 workflows:
-  lint-all:
+  lint-test:
     jobs:
       - lint
-  tests:
-    jobs:
       - php-tests:
           matrix:
             parameters:
