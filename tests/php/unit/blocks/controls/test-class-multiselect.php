@@ -34,7 +34,7 @@ class Test_Multiselect extends \WP_UnitTestCase {
 	/**
 	 * Test __construct.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Multiselect::__construct()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Multiselect::__construct()
 	 */
 	public function test_construct() {
 		$this->assertEquals( 'Multi-Select', $this->instance->label );
@@ -46,7 +46,7 @@ class Test_Multiselect extends \WP_UnitTestCase {
 	 *
 	 * The parent constructor calls register_settings(), so there's no need to call it again here.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Multiselect::register_settings()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Multiselect::register_settings()
 	 */
 	public function test_register_settings() {
 		$expected_settings = [

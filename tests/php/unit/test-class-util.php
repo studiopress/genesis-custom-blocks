@@ -37,19 +37,19 @@ class Test_Util extends Abstract_Template {
 	 * @inheritdoc
 	 */
 	public function tearDown() {
-		remove_all_filters( 'block_lab_template_path' );
-		remove_all_filters( 'block_lab_icons' );
-		remove_all_filters( 'block_lab_allowed_svg_tags' );
+		remove_all_filters( 'genesis_custom_blocks_template_path' );
+		remove_all_filters( 'genesis_custom_blocks_icons' );
+		remove_all_filters( 'genesis_custom_blocks_allowed_svg_tags' );
 		parent::tearDown();
 	}
 
 	/**
 	 * Test is_pro.
 	 *
-	 * This method is normally accessed via a Plugin::__call(), as a magic method.
-	 * Like block_lab->is_pro().
+	 * This method is normally accessed via Plugin::__call(), as a magic method.
+	 * Like genesis_custom_blocks()->is_pro().
 	 *
-	 * @covers \GenesisCustomBlocks\Util::is_pro()
+	 * @covers \Genesis\CustomBlocks\Util::is_pro()
 	 */
 	public function test_is_pro() {
 		$plugin_instance = new Genesis\CustomBlocks\Plugin();
@@ -71,7 +71,7 @@ class Test_Util extends Abstract_Template {
 	/**
 	 * Test loop.
 	 *
-	 * @covers \GenesisCustomBlocks\Util::loop()
+	 * @covers \Genesis\CustomBlocks\Util::loop()
 	 */
 	public function test_loop() {
 		$this->assertEquals( 'Genesis\CustomBlocks\\Blocks\Loop', get_class( $this->instance->loop() ) );
@@ -83,7 +83,7 @@ class Test_Util extends Abstract_Template {
 	/**
 	 * Test get_template_locations.
 	 *
-	 * @covers \GenesisCustomBlocks\Util::get_template_locations()
+	 * @covers \Genesis\CustomBlocks\Util::get_template_locations()
 	 */
 	public function test_get_template_locations() {
 		$name = 'foo-baz';
@@ -111,7 +111,7 @@ class Test_Util extends Abstract_Template {
 	/**
 	 * Test get_stylesheet_locations.
 	 *
-	 * @covers \GenesisCustomBlocks\Util::get_stylesheet_locations()
+	 * @covers \Genesis\CustomBlocks\Util::get_stylesheet_locations()
 	 */
 	public function test_get_stylesheet_locations() {
 		$name = 'foo-baz';
@@ -139,7 +139,7 @@ class Test_Util extends Abstract_Template {
 	/**
 	 * Test locate_template.
 	 *
-	 * @covers \GenesisCustomBlocks\Util::locate_template()
+	 * @covers \Genesis\CustomBlocks\Util::locate_template()
 	 */
 	public function test_locate_template() {
 		$templates                   = $this->instance->get_template_locations( $this->mock_block_name );
@@ -181,7 +181,7 @@ class Test_Util extends Abstract_Template {
 		$this->assertTrue( in_array( $full_alternate_block_path, $this->instance->locate_template( $templates, $base_alternate_block_directory, false ), true ) );
 
 		add_filter(
-			'block_lab_template_path',
+			'genesis_custom_blocks_template_path',
 			function( $path ) use ( $base_alternate_block_directory ) {
 				unset( $path );
 				return $base_alternate_block_directory;
@@ -198,7 +198,7 @@ class Test_Util extends Abstract_Template {
 	/**
 	 * Test get_icons.
 	 *
-	 * @covers \GenesisCustomBlocks\Util::get_icons()
+	 * @covers \Genesis\CustomBlocks\Util::get_icons()
 	 */
 	public function test_get_icons() {
 		$icons = $this->instance->get_icons();
@@ -215,7 +215,7 @@ class Test_Util extends Abstract_Template {
 		$icon_name       = 'additional_icon';
 
 		add_filter(
-			'block_lab_icons',
+			'genesis_custom_blocks_icons',
 			function( $icons ) use ( $additional_icon, $icon_name ) {
 				$icons[ $icon_name ] = $additional_icon;
 				return $icons;
@@ -230,7 +230,7 @@ class Test_Util extends Abstract_Template {
 	/**
 	 * Test allowed_svg_tags.
 	 *
-	 * @covers \GenesisCustomBlocks\Util::allowed_svg_tags()
+	 * @covers \Genesis\CustomBlocks\Util::allowed_svg_tags()
 	 */
 	public function test_allowed_svg_tags() {
 		$this->assertEquals(
@@ -262,7 +262,7 @@ class Test_Util extends Abstract_Template {
 		$additional_tag_attributes = [ 'bax' => true ];
 
 		add_filter(
-			'block_lab_allowed_svg_tags',
+			'genesis_custom_blocks_allowed_svg_tags',
 			function( $allowed_tags ) use ( $additional_tag_name, $additional_tag_attributes ) {
 				$allowed_tags[ $additional_tag_name ] = $additional_tag_attributes;
 				return $allowed_tags;
@@ -277,7 +277,7 @@ class Test_Util extends Abstract_Template {
 	/**
 	 * Test get_post_type_slug.
 	 *
-	 * @covers \GenesisCustomBlocks\Util::get_post_type_slug()
+	 * @covers \Genesis\CustomBlocks\Util::get_post_type_slug()
 	 */
 	public function test_get_post_type_slug() {
 		$this->assertEquals( 'genesis_custom_block', $this->instance->get_post_type_slug() );
@@ -289,7 +289,7 @@ class Test_Util extends Abstract_Template {
 	/**
 	 * Test get_url_from_path.
 	 *
-	 * @covers \GenesisCustomBlocks\Util::get_url_from_path()
+	 * @covers \Genesis\CustomBlocks\Util::get_url_from_path()
 	 */
 	public function test_get_url_from_path() {
 		$subdirectory_path = 'wp-content/theme/blocks/test-block-here.css';

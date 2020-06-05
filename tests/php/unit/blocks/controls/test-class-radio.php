@@ -46,7 +46,7 @@ class Test_Radio extends \WP_UnitTestCase {
 	 *
 	 * The parent constructor calls register_settings(), so there's no need to call it again here.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Radio::register_settings()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Radio::register_settings()
 	 */
 	public function test_register_settings() {
 		$expected_settings = [

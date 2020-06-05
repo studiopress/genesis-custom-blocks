@@ -99,16 +99,18 @@ class Loader extends Component_Abstract {
 		 * Filters the data that gets returned.
 		 *
 		 * @param mixed  $data The data from the Loader's data store.
-		 * @param string $key  The key for the data being retreived.
+		 * @param string $key  The key for the data being retrieved.
 		 */
-		$data = apply_filters( 'block_lab_data', $data, $key );
+		$data = apply_filters( 'genesis_custom_blocks_data', $data, $key );
+		$data = apply_filters_deprecated( 'block_lab_data', [ $data, $key ], '1.0.0', 'genesis_custom_blocks_data' );
 
 		/**
 		 * Filters the data that gets returned, specifically for a single key.
 		 *
 		 * @param mixed  $data The data from the Loader's data store.
 		 */
-		$data = apply_filters( "block_lab_data_{$key}", $data );
+		$data = apply_filters( "genesis_custom_blocks_data_{$key}", $data );
+		$data = apply_filters_deprecated( "block_lab_data_{$key}", [ $data ], '1.0.0', "genesis_custom_blocks_data_{$key}" );
 
 		return $data;
 	}
@@ -287,7 +289,8 @@ class Loader extends Component_Abstract {
 		 * @param array[] $attributes The attributes for a block.
 		 * @param array   $block      Block data, including its name at $block['name'].
 		 */
-		return apply_filters( 'block_lab_get_block_attributes', $attributes, $block );
+		$attributes = apply_filters( 'genesis_custom_blocks_get_block_attributes', $attributes, $block );
+		return apply_filters_deprecated( 'block_lab_get_block_attributes', [ $attributes, $block ], '1.0.0', 'genesis_custom_blocks_get_block_attributes' );
 	}
 
 	/**
@@ -395,7 +398,8 @@ class Loader extends Component_Abstract {
 			 * @param Block $block The block that is rendered.
 			 * @param array $attributes The block attributes.
 			 */
-			do_action( 'block_lab_render_template', $block, $attributes );
+			do_action( 'genesis_custom_blocks_render_template', $block, $attributes );
+			do_action_deprecated( 'block_lab_render_template', [ $block, $attributes ], '1.0.0', 'genesis_custom_blocks_render_template' );
 
 			/**
 			 * Runs in a block's 'render_callback', and only on the front-end.
@@ -405,7 +409,8 @@ class Loader extends Component_Abstract {
 			 * @param Block $block The block that is rendered.
 			 * @param array $attributes The block attributes.
 			 */
-			do_action( "block_lab_render_template_{$block->name}", $block, $attributes );
+			do_action( "genesis_custom_blocks_render_template_{$block->name}", $block, $attributes );
+			do_action( "block_lab_render_template_{$block->name}", [ $block, $attributes ], '1.0.0', "genesis_custom_blocks_render_template_{$block->name}" );
 		}
 
 		ob_start();
@@ -502,7 +507,13 @@ class Loader extends Component_Abstract {
 		}
 
 		if ( ! empty( $located ) ) {
-			$theme_template = apply_filters( 'block_lab_override_theme_template', $located );
+			/**
+			 * Allows overriding the theme template.
+			 *
+			 * @param string The located template.
+			 */
+			$theme_template = apply_filters( 'genesis_custom_blocks_override_theme_template', $located );
+			$theme_template = apply_filters_deprecated( 'block_lab_override_theme_template', [ $theme_template ], '1.0.0', 'genesis_custom_blocks_override_theme_template' );
 
 			// This is not a load once template, so require_once is false.
 			load_template( $theme_template, false );
@@ -568,19 +579,21 @@ class Loader extends Component_Abstract {
 		}
 
 		/**
-		 * Use this action to add new blocks and fields with the block_lab_add_block and block_lab_add_field helper functions.
+		 * Use this action to add new blocks and fields with the Genesis\CustomBlocks\add_block and block_lab_add_field helper functions.
 		 */
-		do_action( 'block_lab_add_blocks' );
+		do_action( 'genesis_custom_blocks_add_blocks' );
+		do_action_deprecated( 'block_lab_add_blocks', [], '1.0.0', 'genesis_custom_blocks_add_blocks' );
 
 		/**
 		 * Filter the available blocks.
 		 *
-		 * This is used internally by the block_lab_add_block and block_lab_add_field helper functions,
+		 * This is used internally by the Genesis\CustomBlocks\add_block and block_lab_add_field helper functions,
 		 * but it can also be used to hide certain blocks if desired.
 		 *
 		 * @param array $blocks An associative array of blocks.
 		 */
-		$this->blocks = apply_filters( 'block_lab_blocks', $this->blocks );
+		$this->blocks = apply_filters( 'genesis_custom_blocks_available_blocks', $this->blocks );
+		$this->blocks = apply_filters_deprecated( 'block_lab_blocks', [ $this->blocks ], '1.0.0', 'genesis_custom_blocks_available_blocks' );
 	}
 
 	/**

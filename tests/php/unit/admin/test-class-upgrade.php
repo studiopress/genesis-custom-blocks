@@ -56,7 +56,7 @@ class Test_Upgrade extends \WP_UnitTestCase {
 	/**
 	 * Test register_hooks.
 	 *
-	 * @covers \GenesisCustomBlocks\Admin\Upgrade::register_hooks()
+	 * @covers \Genesis\CustomBlocks\Admin\Upgrade::register_hooks()
 	 */
 	public function test_register_hooks() {
 		$this->instance->register_hooks();
@@ -67,7 +67,7 @@ class Test_Upgrade extends \WP_UnitTestCase {
 	/**
 	 * Test enqueue_scripts.
 	 *
-	 * @covers \GenesisCustomBlocks\Admin\Upgrade::enqueue_scripts()
+	 * @covers \Genesis\CustomBlocks\Admin\Upgrade::enqueue_scripts()
 	 */
 	public function test_enqueue_scripts() {
 		$this->instance->enqueue_scripts();
@@ -117,7 +117,7 @@ class Test_Upgrade extends \WP_UnitTestCase {
 	/**
 	 * Test add_submenu_pages.
 	 *
-	 * @covers \GenesisCustomBlocks\Admin\Upgrade::add_submenu_pages()
+	 * @covers \Genesis\CustomBlocks\Admin\Upgrade::add_submenu_pages()
 	 */
 	public function test_add_submenu_pages() {
 		global $submenu;
@@ -145,7 +145,7 @@ class Test_Upgrade extends \WP_UnitTestCase {
 	/**
 	 * Test render_page.
 	 *
-	 * @covers \GenesisCustomBlocks\Admin\Upgrade::render_page()
+	 * @covers \Genesis\CustomBlocks\Admin\Upgrade::render_page()
 	 */
 	public function test_render_page() {
 		ob_start();

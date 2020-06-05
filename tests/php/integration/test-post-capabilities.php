@@ -105,7 +105,7 @@ class Test_Post_Capabilities extends \WP_UnitTestCase {
 	 * Tests that the capabilities are correct for the post type.
 	 *
 	 * @dataProvider get_users
-	 * @covers \GenesisCustomBlocks\Post_Types\Block_post::register_post_type()
+	 * @covers \Genesis\CustomBlocks\Post_Types\Block_post::register_post_type()
 	 *
 	 * @param string $user_role The user role, like 'editor'.
 	 * @param string $capability The capability to test for, like 'edit_post'.

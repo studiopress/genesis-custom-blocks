@@ -103,7 +103,8 @@ class Util extends Component_Abstract {
 		 * @param string       $path           The absolute path to the stylesheet directory.
 		 * @param string|array $template_names Templates to locate.
 		 */
-		$path = apply_filters( 'block_lab_template_path', $path, $template_names );
+		$path = apply_filters( 'genesis_custom_blocks_template_path', $path, $template_names );
+		$path = apply_filters_deprecated( 'block_lab_template_path', [ $path, $template_names ], '1.0.0', 'genesis_custom_blocks_template_path' );
 
 		$stylesheet_path = get_template_directory();
 		$template_path   = get_stylesheet_directory();
@@ -158,7 +159,7 @@ class Util extends Component_Abstract {
 	/**
 	 * Provides a list of all available block icons.
 	 *
-	 * To include additional icons in this list, use the block_lab_icons filter, and add a new svg string to the array,
+	 * To include additional icons in this list, use the genesis_custom_blocks_icons filter, and add a new svg string to the array,
 	 * using a unique key. For example:
 	 *
 	 * $icons['foo'] = '<svg>…</svg>';
@@ -176,7 +177,8 @@ class Util extends Component_Abstract {
 		 *
 		 * @param array $icons The available icons.
 		 */
-		return apply_filters( 'block_lab_icons', $icons );
+		$icons = apply_filters( 'genesis_custom_blocks_icons', $icons );
+		return apply_filters_deprecated( 'block_lab_icons', [ $icons ], '1.0.0', 'genesis_custom_blocks_icons' );
 	}
 
 	/**
@@ -212,7 +214,8 @@ class Util extends Component_Abstract {
 		 *
 		 * @param array $allowed_tags The allowed tags.
 		 */
-		return apply_filters( 'block_lab_allowed_svg_tags', $allowed_tags );
+		$allowed_tags = apply_filters( 'genesis_custom_blocks_allowed_svg_tags', $allowed_tags );
+		return apply_filters_deprecated( 'block_lab_allowed_svg_tags', [ $allowed_tags ], '1.0.0', 'genesis_custom_blocks_allowed_svg_tags' );
 	}
 
 	/**

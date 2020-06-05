@@ -26,7 +26,10 @@ const BlockLabInspector = ( { blockProps, block } ) => {
 			return null;
 		}
 
-		const loadedControls = applyFilters( 'block_lab_controls', controls );
+		let loadedControls = applyFilters( 'genesisCustomBlocks.controls', controls );
+
+		/** @deprecated 1.0.0 */
+		loadedControls = applyFilters( 'block_lab_controls', loadedControls );
 		const Control = loadedControls[ field.control ];
 		if ( ! Control ) {
 			return null;

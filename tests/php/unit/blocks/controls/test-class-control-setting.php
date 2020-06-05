@@ -22,7 +22,7 @@ class Test_Control_Setting extends \WP_UnitTestCase {
 	/**
 	 * Test __construct.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Control_Setting::__construct()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Control_Setting::__construct()
 	 */
 	public function test_construct() {
 		$this->instance          = new Controls\Control_Setting( [] );
@@ -88,7 +88,7 @@ class Test_Control_Setting extends \WP_UnitTestCase {
 	/**
 	 * Test get_value.
 	 *
-	 * @covers \GenesisCustomBlocks\Blocks\Controls\Control_Setting::get_value()
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Control_Setting::get_value()
 	 */
 	public function get_value() {
 		$default        = 'this is a default';

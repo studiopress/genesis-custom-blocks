@@ -27,7 +27,7 @@ class Test_Admin extends \WP_UnitTestCase {
 	 *
 	 * @var string
 	 */
-	const BLOCK_LAB_PRO_PAGE = 'genesis-custom-blocks-pro';
+	const PRO_PAGE = 'genesis-custom-blocks-pro';
 
 	/**
 	 * Setup.
@@ -53,7 +53,7 @@ class Test_Admin extends \WP_UnitTestCase {
 	/**
 	 * Test init.
 	 *
-	 * @covers \GenesisCustomBlocks\Admin\Admin::init()
+	 * @covers \Genesis\CustomBlocks\Admin\Admin::init()
 	 */
 	public function test_init() {
 		$this->set_license_validity( false );
@@ -63,8 +63,8 @@ class Test_Admin extends \WP_UnitTestCase {
 		$this->assertEquals( $settings_class, get_class( $this->instance->settings ) );
 		$this->assertEquals( $license_class, get_class( $this->instance->license ) );
 
-		$block_lab_reflection = new ReflectionObject( genesis_custom_blocks() );
-		$components           = $block_lab_reflection->getProperty( 'components' );
+		$reflection = new ReflectionObject( genesis_custom_blocks() );
+		$components = $reflection->getProperty( 'components' );
 		$components->setAccessible( true );
 		$components_value = $components->getValue( genesis_custom_blocks() );
 
@@ -82,14 +82,14 @@ class Test_Admin extends \WP_UnitTestCase {
 				'page',
 				FILTER_SANITIZE_STRING
 			)
-			->andReturn( self::BLOCK_LAB_PRO_PAGE );
+			->andReturn( self::PRO_PAGE );
 		$this->assertTrue( $this->did_settings_redirect_occur() );
 	}
 
 	/**
 	 * Test register_hooks.
 	 *
-	 * @covers \GenesisCustomBlocks\Admin\Admin::register_hooks()
+	 * @covers \Genesis\CustomBlocks\Admin\Admin::register_hooks()
 	 */
 	public function test_register_hooks() {
 		$this->instance->register_hooks();
@@ -99,7 +99,7 @@ class Test_Admin extends \WP_UnitTestCase {
 	/**
 	 * Test enqueue_scripts.
 	 *
-	 * @covers \GenesisCustomBlocks\Admin\Admin::enqueue_scripts()
+	 * @covers \Genesis\CustomBlocks\Admin\Admin::enqueue_scripts()
 	 */
 	public function test_enqueue_scripts() {
 		genesis_custom_blocks()->register_component( $this->instance );
@@ -119,7 +119,7 @@ class Test_Admin extends \WP_UnitTestCase {
 	/**
 	 * Test maybe_settings_redirect.
 	 *
-	 * @covers \GenesisCustomBlocks\Admin\Admin::maybe_settings_redirect()
+	 * @covers \Genesis\CustomBlocks\Admin\Admin::maybe_settings_redirect()
 	 */
 	public function test_maybe_settings_redirect() {
 		Monkey\Functions\expect( 'filter_input' )
@@ -141,7 +141,7 @@ class Test_Admin extends \WP_UnitTestCase {
 				'page',
 				FILTER_SANITIZE_STRING
 			)
-			->andReturn( self::BLOCK_LAB_PRO_PAGE );
+			->andReturn( self::PRO_PAGE );
 
 		// Now that this is on the correct page, the conditional should be true, and this should redirect.
 		$this->assertTrue( $this->did_settings_redirect_occur() );
