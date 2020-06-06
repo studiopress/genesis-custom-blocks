@@ -38,7 +38,7 @@ commands:
         type: boolean
         default: true
     steps:
-      - run: apk add --update --no-cache git nodejs>12.4.0 nodejs-npm
+      - run: apk add --update --no-cache git
       - run:
           command: |
             php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -101,7 +101,7 @@ jobs:
     steps:
       - checkout
       - install-node
-      - run: npm install && npm run build && npm run env start && npm run test:e2e
+      - run: apk add --update --no-cache git nodejs>12.4.0 nodejs-npm && node --version && npm --version && npm install && npm run build && npm run env start && npm run test:e2e
 
 workflows:
   lint-test:
