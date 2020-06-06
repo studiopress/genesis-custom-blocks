@@ -33,7 +33,7 @@ commands:
     steps:
       - run:
           command: |
-            sudo apt-get update && sudo apt-get install git
+            sudo apt-get update && sudo apt-get install git && git --version
             php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
             EXPECTED_SIGNATURE=$(curl -s https://composer.github.io/installer.sig)
             ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');")
