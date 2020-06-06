@@ -31,7 +31,6 @@ commands:
         type: boolean
         default: true
     steps:
-      - run: apk add --update --no-cache git
       - run:
           command: |
             php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -51,7 +50,6 @@ commands:
       - run:
           working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
           command: |
-            apk add -U curl bash ca-certificates openssl ncurses coreutils python2 make gcc g++ libgcc linux-headers grep util-linux binutils findutils
             touch ~/.profile
             curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
             export NVM_DIR="$HOME/.nvm"
