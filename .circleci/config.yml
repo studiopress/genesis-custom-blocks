@@ -33,7 +33,7 @@ commands:
     steps:
       - run:
           command: |
-            apt-get update
+            apt-get update --force
             apt-get install libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev asciidoc xmlto docbook2x
             git clone https://git.kernel.org/pub/scm/git/git.git
             make all doc info prefix=/usr
