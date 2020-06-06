@@ -6,7 +6,7 @@ executors:
       php-version:
         type: string
     docker:
-      - image: wordpress:php<< parameters.php-version >>-fpm-alpine
+      - image: wordpress:php<< parameters.php-version >>-fpm
         environment:
           WP_TESTS_DIR: /root/project/wordpress-develop/tests/phpunit
       - image: mysql:5.7
