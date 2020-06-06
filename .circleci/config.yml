@@ -52,6 +52,8 @@ commands:
           working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
           command: |
             apk add -U curl bash ca-certificates openssl ncurses coreutils python2 make gcc g++ libgcc linux-headers grep util-linux binutils findutils
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
             curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
             nvm install --lts && node --version && npm --version && composer install && npm install && npm run build
 
