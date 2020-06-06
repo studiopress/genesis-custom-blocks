@@ -24,13 +24,6 @@ commands:
     description: "Installing packages and building"
     steps:
       - run: composer install && npm install && npm run build
-  install-node:
-    description: "Installing the lts version of Node"
-    steps:
-      - run:
-          name: Install node and npm
-          command: |
-            node --version && npm --version
   prepare-environment:
     description: "Preparing the environment..."
     parameters:
@@ -55,7 +48,6 @@ commands:
       - run: mkdir -p wordpress-develop/src/wp-content/plugins/genesis-custom-blocks
       - checkout:
           path: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks
-      - install-node
       - run:
           working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
           command: node --version && npm --version && composer install && npm install && npm run build
@@ -100,7 +92,6 @@ jobs:
       image: ubuntu-1604:202004-01
     steps:
       - checkout
-      - install-node
       - run: apk add --update --no-cache git nodejs>12.4.0 nodejs-npm && node --version && npm --version && npm install && npm run build && npm run env start && npm run test:e2e
 
 workflows:
