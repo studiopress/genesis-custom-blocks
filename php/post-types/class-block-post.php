@@ -523,6 +523,10 @@ class Block_Post extends Component_Abstract {
 	public function render_fields_meta_box() {
 		$post  = get_post();
 		$block = new Block( $post->ID );
+
+		/**
+		 * Fires before the block fields meta box.
+		 */
 		do_action( 'genesis_custom_blocks_before_fields_list' );
 		do_action_deprecated( 'block_lab_before_fields_list', [], '1.0.0', 'genesis_custom_blocks_before_fields_list' );
 
