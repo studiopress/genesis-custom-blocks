@@ -53,7 +53,7 @@ commands:
             curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            nvm install node --reinstall-packages-from=default --latest-npm
+            nvm install node --latest-npm
             sudo apt-get update && sudo apt-get install subversion
 
 jobs:
@@ -87,7 +87,7 @@ jobs:
             sudo apt-get install default-mysql-client
       - run:
           working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
-          command: ls /tmp/wordpress/ && export PATH=$PATH:/usr/local/mysql/bin && bash bin/install-wp-tests.sh wordpress_test root wordpress localhost latest && composer require --dev phpunit/phpunit 5.7.9 && WP_TESTS_DIR=/tmp/wordpress/tests/phpunit ./vendor/bin/phpunit
+          command: export PATH=$PATH:/usr/local/mysql/bin && WP_CORE_DIR=wordpress-develop/ bash bin/install-wp-tests.sh wordpress_test root wordpress localhost latest && ls /tmp/wordpress/ && composer require --dev phpunit/phpunit 5.7.9 && WP_TESTS_DIR=/tmp/wordpress/tests/phpunit ./vendor/bin/phpunit
 
   lint:
     executor:
