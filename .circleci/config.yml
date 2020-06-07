@@ -66,6 +66,7 @@ jobs:
     steps:
       - checkout
       - prepare-environment
+      - set-up-packages
       - attach_workspace:
           at: ~/project
       - run:
