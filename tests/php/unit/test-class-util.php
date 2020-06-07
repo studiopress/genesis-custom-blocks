@@ -5,6 +5,8 @@
  * @package Genesis\CustomBlocks
  */
 
+use Genesis\CustomBlocks\Util;
+
 /**
  * Tests for class Util.
  */
@@ -15,7 +17,7 @@ class Test_Util extends Abstract_Template {
 	/**
 	 * The instance to test.
 	 *
-	 * @var GenesisCustomBlocks\Util
+	 * @var Util
 	 */
 	public $instance;
 
@@ -27,7 +29,7 @@ class Test_Util extends Abstract_Template {
 	public function setUp() {
 		parent::setUp();
 
-		$this->instance = new Genesis\CustomBlocks\Util();
+		$this->instance = new Util();
 		$this->instance->set_plugin( genesis_custom_blocks() );
 	}
 
