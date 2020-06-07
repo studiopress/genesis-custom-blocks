@@ -599,7 +599,7 @@ class Loader extends Component_Abstract {
 	/**
 	 * Add a new block.
 	 *
-	 * This method should be called during the block_lab_add_blocks action, to ensure
+	 * This method should be called during the genesis_custom_blocks_add_blocks action, to ensure
 	 * that the block isn't added too late.
 	 *
 	 * @param array $block_config The config of the block to add.
@@ -615,7 +615,7 @@ class Loader extends Component_Abstract {
 	/**
 	 * Add a new field to an existing block.
 	 *
-	 * This method should be called during the block_lab_add_blocks action, to ensure
+	 * This method should be called during the genesis_custom_blocks_add_blocks action, to ensure
 	 * that the block isn't added too late.
 	 *
 	 * @param string $block_name   The name of the block that the field is added to.
