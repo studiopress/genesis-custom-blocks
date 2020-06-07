@@ -51,6 +51,7 @@ commands:
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm install node --latest-npm
             sudo apt-get update && sudo apt-get install subversion
+            composer install && node --version && npm --version && npm install && npm run build
   set-up-packages:
     description: "Installing packages and building"
     steps:
@@ -67,7 +68,6 @@ jobs:
     steps:
       - checkout
       - prepare-environment
-      - set-up-packages
       - attach_workspace:
           at: ~/project
       - run:
