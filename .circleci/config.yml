@@ -7,8 +7,6 @@ executors:
         type: string
     docker:
       - image: circleci/php:<< parameters.php-version >>-cli-node
-        environment:
-          WP_TESTS_DIR: /root/project/wordpress-develop/tests/phpunit
       - image: mysql:5.7
         environment:
           MYSQL_DATABASE: youremptytestdbnamehere
