@@ -48,11 +48,11 @@ commands:
       - run:
           working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
           command: |
-            sudo apt-get update && sudo apt-get install subversion mysqladmin
             touch ~/.profile
             curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+            sudo apt-get update && sudo apt install subversion mysql-server
 
 jobs:
   php-tests:
