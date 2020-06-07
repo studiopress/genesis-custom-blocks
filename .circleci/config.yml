@@ -50,7 +50,7 @@ commands:
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm install node --latest-npm
-            sudo apt-get update && sudo apt-get install subversion
+            sudo apt-get update && sudo apt-get install subversion ubuntu-toolchain-r-test libstdc++-4.9-dev
             composer install && node --version && npm --version && npm install && npm run build
   set-up-packages:
     description: "Installing packages and building"
