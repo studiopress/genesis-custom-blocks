@@ -395,7 +395,6 @@ class Loader extends ComponentAbstract {
 			 * @param array $attributes The block attributes.
 			 */
 			do_action( 'genesis_custom_blocks_render_template', $block, $attributes );
-			do_action_deprecated( 'block_lab_render_template', [ $block, $attributes ], '1.0.0', 'genesis_custom_blocks_render_template' );
 
 			/**
 			 * Runs in a block's 'render_callback', and only on the front-end.
@@ -406,7 +405,6 @@ class Loader extends ComponentAbstract {
 			 * @param array $attributes The block attributes.
 			 */
 			do_action( "genesis_custom_blocks_render_template_{$block->name}", $block, $attributes );
-			do_action_deprecated( "block_lab_render_template_{$block->name}", [ $block, $attributes ], '1.0.0', "genesis_custom_blocks_render_template_{$block->name}" );
 		}
 
 		ob_start();
@@ -577,7 +575,6 @@ class Loader extends ComponentAbstract {
 		 * Use this action to add new blocks and fields with the Genesis\CustomBlocks\add_block and Genesis\CustomBlocks\add_field helper functions.
 		 */
 		do_action( 'genesis_custom_blocks_add_blocks' );
-		do_action_deprecated( 'block_lab_add_blocks', [], '1.0.0', 'genesis_custom_blocks_add_blocks' );
 
 		/**
 		 * Filter the available blocks.
