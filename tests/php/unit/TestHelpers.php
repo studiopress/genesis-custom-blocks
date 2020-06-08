@@ -1,6 +1,6 @@
 <?php
 /**
- * Tests for helpers.php.
+ * Tests for Helpers.php.
  *
  * @package Genesis\CustomBlocks
  */
@@ -10,7 +10,7 @@ use Genesis\CustomBlocks\Blocks\Loader;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
 /**
- * Tests for helpers.php.
+ * Tests for Helpers.php.
  */
 class TestHelpers extends \WP_UnitTestCase {
 
