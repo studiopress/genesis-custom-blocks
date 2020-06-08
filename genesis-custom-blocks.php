@@ -89,13 +89,13 @@ if ( ! function_exists( 'register_block_type' ) ) {
 }
 
 // Load some helpers.
-require_once __DIR__ . '/php/helpers.php';
+require_once __DIR__ . '/php/Helpers.php';
 
 // Load block API helpers.
-require_once __DIR__ . '/php/block-api.php';
+require_once __DIR__ . '/php/BlockApi.php';
 
 // Handle deprecated functions.
-require_once __DIR__ . '/php/deprecated.php';
+require_once __DIR__ . '/php/Deprecated.php';
 
 /**
  * Get the plugin object.

@@ -1,6 +1,6 @@
 <?php
 /**
- * Tests for block-api.php.
+ * Tests for BlockApi.php.
  *
  * @package Genesis\CustomBlocks
  */
@@ -11,7 +11,7 @@ use function Genesis\CustomBlocks\add_block;
 use function Genesis\CustomBlocks\add_field;
 
 /**
- * Tests for block-api.php.
+ * Tests for BlockApi.php.
  */
 class TestBlockApi extends \WP_UnitTestCase {
 
