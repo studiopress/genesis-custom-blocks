@@ -45,7 +45,6 @@ function block_field( $name, $echo = true ) {
 	 * @param string $name The name of value to get.
 	 */
 	$default_fields = apply_filters( 'genesis_custom_blocks_default_fields', $default_fields, $name );
-	$default_fields = apply_filters_deprecated( 'block_lab_default_fields', [ $default_fields, $name ], '1.0.0', 'genesis_custom_blocks_default_fields' );
 
 	if ( ! isset( $config->fields[ $name ] ) && ! isset( $default_fields[ $name ] ) ) {
 		return null;
@@ -78,7 +77,6 @@ function block_field( $name, $echo = true ) {
 	 * @param bool        $echo Whether or not this value will be echoed.
 	 */
 	$value = apply_filters( 'genesis_custom_blocks_field_value', $value, $control, $echo );
-	$value = apply_filters_deprecated( 'block_lab_field_value', [ $value, $control, $echo ], '1.0.0', 'genesis_custom_blocks_field_value' );
 
 	if ( $echo ) {
 		if ( $field ) {
@@ -263,7 +261,6 @@ function block_sub_field( $name, $echo = true ) {
 	 * @param bool        $echo Whether or not this value will be echoed.
 	 */
 	$value = apply_filters( 'genesis_custom_blocks_sub_field_value', $value, $control, $echo );
-	$value = apply_filters_deprecated( 'block_lab_sub_field_value', [ $value, $control, $echo ], '1.0.0', 'genesis_custom_blocks_sub_field_value' );
 
 	if ( $echo ) {
 		$value = $field->cast_value_to_string( $value );

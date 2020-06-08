@@ -104,7 +104,6 @@ class Util extends ComponentAbstract {
 		 * @param string|array $template_names Templates to locate.
 		 */
 		$path = apply_filters( 'genesis_custom_blocks_template_path', $path, $template_names );
-		$path = apply_filters_deprecated( 'block_lab_template_path', [ $path, $template_names ], '1.0.0', 'genesis_custom_blocks_template_path' );
 
 		$stylesheet_path = get_template_directory();
 		$template_path   = get_stylesheet_directory();
@@ -177,8 +176,7 @@ class Util extends ComponentAbstract {
 		 *
 		 * @param array $icons The available icons.
 		 */
-		$icons = apply_filters( 'genesis_custom_blocks_icons', $icons );
-		return apply_filters_deprecated( 'block_lab_icons', [ $icons ], '1.0.0', 'genesis_custom_blocks_icons' );
+		return apply_filters( 'genesis_custom_blocks_icons', $icons );
 	}
 
 	/**
@@ -214,8 +212,7 @@ class Util extends ComponentAbstract {
 		 *
 		 * @param array $allowed_tags The allowed tags.
 		 */
-		$allowed_tags = apply_filters( 'genesis_custom_blocks_allowed_svg_tags', $allowed_tags );
-		return apply_filters_deprecated( 'block_lab_allowed_svg_tags', [ $allowed_tags ], '1.0.0', 'genesis_custom_blocks_allowed_svg_tags' );
+		return apply_filters( 'genesis_custom_blocks_allowed_svg_tags', $allowed_tags );
 	}
 
 	/**
