@@ -10,26 +10,13 @@
 
 	<testsuites>
 		<testsuite name="unit">
-			<directory suffix=".php">./tests/php/unit/helpers/</directory>
-			<directory prefix="test-" suffix=".php">./tests/php/unit/</directory>
+			<directory suffix=".php">./tests/php/Unit/Helpers/</directory>
+			<directory prefix="Test" suffix=".php">./tests/php/Unit/</directory>
 		</testsuite>
 
 		<testsuite name="integration">
-			<directory suffix=".php">./tests/php/integration/helpers/</directory>
-			<directory prefix="test-" suffix=".php">./tests/php/integration/</directory>
+			<directory suffix=".php">./tests/php/Integration/Helpers/</directory>
+			<directory prefix="Test" suffix=".php">./tests/php/Integration/</directory>
 		</testsuite>
 	</testsuites>
-
-	<filter>
-		<whitelist processUncoveredFilesFromWhitelist="false">
-			<directory suffix=".php">./</directory>
-			<exclude>
-				<directory suffix=".php">./assets</directory>
-				<directory suffix=".php">./node_modules</directory>
-				<directory suffix=".php">./tests</directory>
-				<directory suffix=".php">./vendor</directory>
-				<directory suffix=".php">./package</directory>
-			</exclude>
-		</whitelist>
-	</filter>
 </phpunit>

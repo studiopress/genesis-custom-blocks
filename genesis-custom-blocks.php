@@ -25,8 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Setup the plugin auto loader.
-require_once 'php/autoloader.php';
+require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 
 /**
  * Admin notice for incompatible versions of PHP.
@@ -126,6 +125,6 @@ genesis_custom_blocks()
 	->init();
 
 /**
- * Sometimes we need to do some things after the plugin is loaded, so call the Plugin_Interface::plugin_loaded().
+ * Sometimes we need to do some things after the plugin is loaded, so call the PluginInterface::plugin_loaded().
  */
 add_action( 'plugins_loaded', [ genesis_custom_blocks(), 'plugin_loaded' ] );

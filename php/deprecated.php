@@ -4,7 +4,7 @@
  *
  * Deprecated methods can also appear as functions here, with the format namespace__class__method().
  *
- * @see Genesis\CustomBlocks\Component_Abstract->_call()
+ * @see Genesis\CustomBlocks\ComponentAbstract->_call()
  *
  * @package   Genesis\CustomBlocks
  * @copyright Copyright(c) 2018, Genesis Custom Blocks
