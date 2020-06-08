@@ -17,10 +17,7 @@ import controls from '../controls';
  * @return {Function} The control function.
  */
 const getControl = ( field ) => {
-	let loadedControls = applyFilters( 'genesisCustomBlocks.controls', controls );
-
-	/** @deprecated 1.0.0 */
-	loadedControls = applyFilters( 'block_lab_controls', loadedControls );
+	const loadedControls = applyFilters( 'genesisCustomBlocks.controls', controls );
 	return loadedControls[ field.control ];
 };
 
