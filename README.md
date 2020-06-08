@@ -29,9 +29,6 @@ Let the plugin do the heavy lifting so you can use familiar WordPress developmen
 ### Developer Friendly Functions ###
 Simple to use functions, ready to render and work with the values stored through your custom block fields.
 
-### Connect with Community ###
-Join The Lab, our free Genesis Custom Blocks Community on Slack. The Lab is our real-time home for sharing resources, learning, and making connections. [Learn more.](https://getblocklab.com/welcome-to-the-lab/)
-
 ## Links ##
 * [WordPress.org](https://wordpress.org/plugins/genesis-custom-blocks)
 * [Github](https://github.com/studiopress/genesis-custom-blocks)
