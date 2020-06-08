@@ -131,8 +131,7 @@ class BlockPost extends ComponentAbstract {
 		 *     @type object $control The control object, extending Controls\ControlAbstract.
 		 * }
 		 */
-		$controls       = apply_filters( 'genesis_custom_blocks_controls', $controls );
-		$this->controls = apply_filters_deprecated( 'block_lab_controls', [ $controls ], '1.0.0', 'genesis_custom_blocks_controls' );
+		$this->controls = apply_filters( 'genesis_custom_blocks_controls', $controls );
 	}
 
 	/**

@@ -103,17 +103,13 @@ class Loader extends ComponentAbstract {
 		 * @param string $key  The key for the data being retrieved.
 		 */
 		$data = apply_filters( 'genesis_custom_blocks_data', $data, $key );
-		$data = apply_filters_deprecated( 'block_lab_data', [ $data, $key ], '1.0.0', 'genesis_custom_blocks_data' );
 
 		/**
 		 * Filters the data that gets returned, specifically for a single key.
 		 *
 		 * @param mixed  $data The data from the Loader's data store.
 		 */
-		$data = apply_filters( "genesis_custom_blocks_data_{$key}", $data );
-		$data = apply_filters_deprecated( "block_lab_data_{$key}", [ $data ], '1.0.0', "genesis_custom_blocks_data_{$key}" );
-
-		return $data;
+		return apply_filters( "genesis_custom_blocks_data_{$key}", $data );
 	}
 
 	/**
@@ -290,8 +286,7 @@ class Loader extends ComponentAbstract {
 		 * @param array[] $attributes The attributes for a block.
 		 * @param array   $block      Block data, including its name at $block['name'].
 		 */
-		$attributes = apply_filters( 'genesis_custom_blocks_get_block_attributes', $attributes, $block );
-		return apply_filters_deprecated( 'block_lab_get_block_attributes', [ $attributes, $block ], '1.0.0', 'genesis_custom_blocks_get_block_attributes' );
+		return apply_filters( 'genesis_custom_blocks_get_block_attributes', $attributes, $block );
 	}
 
 	/**
@@ -514,7 +509,6 @@ class Loader extends ComponentAbstract {
 			 * @param string $located The located template.
 			 */
 			$theme_template = apply_filters( 'genesis_custom_blocks_override_theme_template', $located );
-			$theme_template = apply_filters_deprecated( 'block_lab_override_theme_template', [ $theme_template ], '1.0.0', 'genesis_custom_blocks_override_theme_template' );
 
 			// This is not a load once template, so require_once is false.
 			load_template( $theme_template, false );
@@ -594,7 +588,6 @@ class Loader extends ComponentAbstract {
 		 * @param array $blocks An associative array of blocks.
 		 */
 		$this->blocks = apply_filters( 'genesis_custom_blocks_available_blocks', $this->blocks );
-		$this->blocks = apply_filters_deprecated( 'block_lab_blocks', [ $this->blocks ], '1.0.0', 'genesis_custom_blocks_available_blocks' );
 	}
 
 	/**
