@@ -7,7 +7,7 @@
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-use Genesis\CustomBlocks\Blocks;
+use Genesis\CustomBlocks\Blocks\Field;
 
 /**
  * Return the value of a block field.
@@ -66,7 +66,7 @@ function block_field( $name, $echo = true ) {
 		$control = $field->control;
 	} elseif ( isset( $default_fields[ $name ] ) ) {
 		// Cast default Editor attributes and those added via a filter.
-		$field = new Blocks\Field( [ 'type' => $default_fields[ $name ] ] );
+		$field = new Field( [ 'type' => $default_fields[ $name ] ] );
 		$value = $field->cast_value( $value );
 	}
 
