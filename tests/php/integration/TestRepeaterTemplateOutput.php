@@ -166,7 +166,7 @@ class TestRepeaterTemplateOutput extends AbstractAttribute {
 			],
 			'excluded' => [],
 			'fields'   => $fields,
-			'icon'     => 'block_lab',
+			'icon'     => 'genesis_custom_blocks',
 			'keywords' => [ 'Repeater' ],
 			'name'     => $this->block_name,
 			'title'    => 'Repeater With All Fields',

@@ -407,7 +407,7 @@ class BlockPost extends ComponentAbstract {
 		$icons = genesis_custom_blocks()->get_icons();
 
 		if ( ! $block->icon ) {
-			$block->icon = 'block_lab';
+			$block->icon = 'genesis_custom_blocks';
 		}
 		?>
 		<p>

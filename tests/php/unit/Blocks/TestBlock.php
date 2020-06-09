@@ -29,7 +29,7 @@ class TestBlock extends \WP_UnitTestCase {
 		"genesis-custom-blocks\\/simple-test-block": {
 			"name": "simple-test-block",
 			"title": "Simple Test Block",
-			"icon": "block_lab",
+			"icon": "genesis_custom_blocks",
 			"category": "common",
 			"keywords": [
 				"keywords",
@@ -129,7 +129,7 @@ class TestBlock extends \WP_UnitTestCase {
 
 		// Check all the base attributes.
 		$this->assertEquals( 'Simple Test Block', $this->instance->title );
-		$this->assertEquals( 'block_lab', $this->instance->icon );
+		$this->assertEquals( 'genesis_custom_blocks', $this->instance->icon );
 		$this->assertEquals(
 			[
 				'icon'  => null,
