@@ -168,7 +168,7 @@ class Util extends ComponentAbstract {
 	public function get_icons() {
 		// This is on the local filesystem, so file_get_contents() is ok to use here.
 		$json_file = genesis_custom_blocks()->get_assets_path( 'icons.json' );
-		$json      = file_get_contents( $json_file ); // @codingStandardsIgnoreLine
+		$json      = file_get_contents( $json_file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		$icons     = json_decode( $json, true );
 
 		/**

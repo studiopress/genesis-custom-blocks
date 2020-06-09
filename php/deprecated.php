@@ -69,7 +69,7 @@ function block_lab_allowed_svg_tags() {
  *     An associative array containing the block configuration.
  *
  *     @type string   $title    The block title.
- *     @type string   $icon     The block icon. See assets/icons.json for a JSON array of all possible values. Default: 'block_lab'.
+ *     @type string   $icon     The block icon. See assets/icons.json for a JSON array of all possible values. Default: 'genesis_custom_blocks'.
  *     @type string   $category The slug of a registered category. Categories include: common, formatting, layout, widgets, embed. Default: 'common'.
  *     @type array    $excluded Exclude the block in these post types. Default: [].
  *     @type string[] $keywords An array of up to three keywords. Default: [].

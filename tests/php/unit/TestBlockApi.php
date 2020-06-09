@@ -44,7 +44,7 @@ class TestBlockApi extends \WP_UnitTestCase {
 			'category' => 'common',
 			'excluded' => [],
 			'fields'   => [],
-			'icon'     => 'block_lab',
+			'icon'     => 'genesis_custom_blocks',
 			'keywords' => [],
 			'name'     => $block_name,
 			'title'    => 'Example Block',

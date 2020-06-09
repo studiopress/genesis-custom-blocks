@@ -332,7 +332,7 @@ class Onboarding extends ComponentAbstract {
 						'genesis-custom-blocks\/example-block' => [
 							'name'     => 'example-block',
 							'title'    => __( 'Example Block', 'genesis-custom-blocks' ),
-							'icon'     => 'block_lab',
+							'icon'     => 'genesis_custom_blocks',
 							'category' => isset( $categories[0] ) ? $categories[0] : [],
 							'keywords' => [
 								__( 'sample', 'genesis-custom-blocks' ), // translators: A keyword, used for search.

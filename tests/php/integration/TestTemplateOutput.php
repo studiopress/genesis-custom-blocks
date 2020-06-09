@@ -126,7 +126,7 @@ class TestTemplateOutput extends AbstractAttribute {
 			],
 			'excluded' => [],
 			'fields'   => $fields,
-			'icon'     => 'block_lab',
+			'icon'     => 'genesis_custom_blocks',
 			'keywords' => [ '' ],
 			'name'     => $this->block_name,
 			'title'    => 'All Fields',

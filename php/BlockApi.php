@@ -1,6 +1,6 @@
 <?php
 /**
- * Helper functions.
+ * Block API helper functions.
  *
  * @package   Genesis\CustomBlocks
  * @copyright Copyright(c) 2020, Genesis Custom Blocks
@@ -17,7 +17,7 @@ namespace Genesis\CustomBlocks;
  *     An associative array containing the block configuration.
  *
  *     @type string   $title    The block title.
- *     @type string   $icon     The block icon. See assets/icons.json for a JSON array of all possible values. Default: 'block_lab'.
+ *     @type string   $icon     The block icon. See assets/icons.json for a JSON array of all possible values. Default: 'genesis_custom_blocks'.
  *     @type string   $category The slug of a registered category. Categories include: common, formatting, layout, widgets, embed. Default: 'common'.
  *     @type array    $excluded Exclude the block in these post types. Default: [].
  *     @type string[] $keywords An array of up to three keywords. Default: [].
@@ -35,7 +35,7 @@ function add_block( $block_name, $block_config = [] ) {
 
 	$default_config = [
 		'title'    => str_replace( '-', ' ', ucwords( $block_config['name'], '-' ) ),
-		'icon'     => 'block_lab',
+		'icon'     => 'genesis_custom_blocks',
 		'category' => 'common',
 		'excluded' => [],
 		'keywords' => [],
