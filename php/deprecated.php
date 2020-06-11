@@ -65,22 +65,7 @@ function block_lab_allowed_svg_tags() {
  * Handle deprecated block_lab_add_block function.
  *
  * @param string $block_name   The block name (slug), like 'example-block'.
- * @param array  $block_config {
- *     An associative array containing the block configuration.
- *
- *     @type string   $title    The block title.
- *     @type string   $icon     The block icon. See assets/icons.json for a JSON array of all possible values. Default: 'genesis_custom_blocks'.
- *     @type string   $category The slug of a registered category. Categories include: common, formatting, layout, widgets, embed. Default: 'common'.
- *     @type array    $excluded Exclude the block in these post types. Default: [].
- *     @type string[] $keywords An array of up to three keywords. Default: [].
- *     @type array    $fields {
- *         An associative array containing block fields. Each key in the array should be the field slug.
- *
- *         @type array {$slug} {
- *             An associative array describing a field. Refer to the $field_config parameter of add_field().
- *         }
- *     }
- * }
+ * @param array  $block_config An associative array containing the block configuration.
  */
 function block_lab_add_block( $block_name, $block_config = [] ) {
 	genesis_custom_blocks_deprecated_function( 'block_lab_add_block', '1.5.4', 'Genesis\\CustomBlocks\\add_block()' );
@@ -92,18 +77,7 @@ function block_lab_add_block( $block_name, $block_config = [] ) {
  *
  * @param string $block_name The block name (slug), like 'example-block'.
  * @param string $field_name The field name (slug), like 'first-name'.
- * @param array  $field_config {
- *     An associative array containing the field configuration.
- *
- *     @type string $name    The field name.
- *     @type string $label   The field label.
- *     @type string $control The field control type. Default: 'text'.
- *     @type int    $order   The order that the field appears in. Default: 0.
- *     @type array  $settings {
- *         An associative array of settings for the field. Each field has a different set of possible settings.
- *         Check the register_settings method for the field, found in php/blocks/controls/class-{field name}.php.
- *     }
- * }
+ * @param array  $field_config An associative array containing the field configuration.
  */
 function block_lab_add_field( $block_name, $field_name, $field_config = [] ) {
 	genesis_custom_blocks_deprecated_function( 'block_lab_add_field', '1.5.4', 'Genesis\\CustomBlocks\\add_field()' );

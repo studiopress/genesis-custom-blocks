@@ -24,7 +24,7 @@ class BlockPost extends ComponentAbstract {
 	 *
 	 * @var string
 	 */
-	public $slug;
+	private $slug;
 
 	/**
 	 * Registered controls.

@@ -10,7 +10,7 @@
 namespace Genesis\CustomBlocks\Blocks\Controls;
 
 /**
- * Class Select
+ * Class Multiselect
  */
 class Multiselect extends ControlAbstract {
 

@@ -41,14 +41,6 @@ class Plugin extends PluginAbstract {
 	public $loader;
 
 	/**
-	 * The slug of the post type that stores the blocks.
-	 *
-	 * @since 1.3.5
-	 * @var string
-	 */
-	public $post_type_slug = 'genesis_custom_block';
-
-	/**
 	 * Execute this as early as possible.
 	 */
 	public function init() {

@@ -18,6 +18,14 @@ use Genesis\CustomBlocks\Blocks;
 class Util extends ComponentAbstract {
 
 	/**
+	 * The slug of the post type that stores the blocks.
+	 *
+	 * @since 1.3.5
+	 * @var string
+	 */
+	private $post_type_slug = 'genesis_custom_block';
+
+	/**
 	 * Not implemented, as this class only has utility methods.
 	 */
 	public function register_hooks() {}
@@ -221,7 +229,7 @@ class Util extends ComponentAbstract {
 	 * @return string The slug.
 	 */
 	public function get_post_type_slug() {
-		return $this->plugin->post_type_slug;
+		return $this->post_type_slug;
 	}
 
 	/**

@@ -10,7 +10,7 @@
 namespace Genesis\CustomBlocks\Blocks\Controls;
 
 /**
- * Class Text
+ * Class Email
  */
 class Email extends ControlAbstract {
 
