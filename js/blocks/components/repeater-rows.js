@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { BaseControl, IconButton } from '@wordpress/components';
+import { BaseControl, Button } from '@wordpress/components';
 import { Component, createRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { getScrollContainer } from '@wordpress/dom';
@@ -175,7 +175,7 @@ class RepeaterRows extends Component {
 							return (
 								<BaseControl className={ `genesis-custom-blocks-repeater--row ${ activeClass }` } key={ `gcb-row-${ rowIndex }` }>
 									<div className="genesis-custom-blocks-repeater--row-delete">
-										<IconButton
+										<Button
 											icon="no"
 											key={ `${ rowIndex }-menu` }
 											className="button-delete"
@@ -192,7 +192,7 @@ class RepeaterRows extends Component {
 										rowIndex={ rowIndex }
 									/>
 									<div className="genesis-custom-blocks-repeater--row-actions">
-										<IconButton
+										<Button
 											icon="arrow-up-alt2"
 											key={ `${ rowIndex }-move-up` }
 											className="button-move-up"
@@ -200,7 +200,7 @@ class RepeaterRows extends Component {
 											onClick={ this.move( rowIndex, rowIndex - 1 ) }
 											isSmall
 										/>
-										<IconButton
+										<Button
 											icon="arrow-down-alt2"
 											key={ `${ rowIndex }-move-down` }
 											className="button-move-down"

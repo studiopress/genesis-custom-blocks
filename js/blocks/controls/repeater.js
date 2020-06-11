@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { BaseControl, IconButton } from '@wordpress/components';
+import { BaseControl, Button } from '@wordpress/components';
 /**
  * Internal dependencies
  */
@@ -45,11 +45,10 @@ const BlockLabRepeaterControl = ( props ) => {
 				parentBlock={ parentBlock }
 			/>
 			<div className="genesis-custom-blocks-repeater--row-add">
-				<IconButton
+				<Button
 					key={ `${ field.name }-repeater-insert` }
 					icon="insert"
 					label={ __( 'Add new', 'genesis-custom-blocks' ) }
-					labelPosition="bottom"
 					onClick={ addEmptyRow }
 					disabled={ !! field.max && rows.length >= field.max }
 				/>
