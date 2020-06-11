@@ -188,7 +188,7 @@ class BlockPost extends ComponentAbstract {
 		$labels = [
 			'name'               => _x( 'Content Blocks', 'post type general name', 'genesis-custom-blocks' ),
 			'singular_name'      => _x( 'Content Block', 'post type singular name', 'genesis-custom-blocks' ),
-			'menu_name'          => _x( 'Genesis Custom Blocks', 'admin menu', 'genesis-custom-blocks' ),
+			'menu_name'          => _x( 'Custom Blocks', 'admin menu', 'genesis-custom-blocks' ),
 			'name_admin_bar'     => _x( 'Block', 'add new on admin bar', 'genesis-custom-blocks' ),
 			'add_new'            => _x( 'Add New', 'block', 'genesis-custom-blocks' ),
 			'add_new_item'       => __( 'Add New Block', 'genesis-custom-blocks' ),

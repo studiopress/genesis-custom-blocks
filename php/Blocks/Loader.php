@@ -107,7 +107,7 @@ class Loader extends ComponentAbstract {
 		/**
 		 * Filters the data that gets returned, specifically for a single key.
 		 *
-		 * @param mixed  $data The data from the Loader's data store.
+		 * @param mixed $data The data from the Loader's data store.
 		 */
 		return apply_filters( "genesis_custom_blocks_data_{$key}", $data );
 	}
