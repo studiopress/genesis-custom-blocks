@@ -79,13 +79,13 @@ const Image = withSelect( ( select, ownProps ) => {
 	};
 
 	return (
-		<BaseControl className="genesis-custom-blocks-media-controls" label={ field.label } id={ `bl-image-${ instanceId }` }>
+		<BaseControl className="genesis-custom-blocks-media-controls" label={ field.label } id={ `gcb-image-${ instanceId }` }>
 			{ !! field.help && <p className="components-base-control__help">{ field.help }</p> }
 			{ ! isUploading && imageSrc && (
-				<img className="bl-image__img" src={ imageSrc } alt={ imageAlt } />
+				<img className="gcb-image__img" src={ imageSrc } alt={ imageAlt } />
 			) }
 			{ ! imageSrc && (
-				<Placeholder className="bl-image__placeholder" icon="format-image" label={ __( 'Image', 'genesis-custom-blocks' ) } instructions={ __( 'Drag an image, upload a new one or select a file from your library.', 'genesis-custom-blocks' ) }>
+				<Placeholder className="gcb-image__placeholder" icon="format-image" label={ __( 'Image', 'genesis-custom-blocks' ) } instructions={ __( 'Drag an image, upload a new one or select a file from your library.', 'genesis-custom-blocks' ) }>
 					<MediaUploadCheck>
 						<DropZone
 							onFilesDrop={ ( files ) => {
@@ -141,7 +141,7 @@ const Image = withSelect( ( select, ownProps ) => {
 				<Button
 					isLarge
 					disabled={ !! isUploading }
-					className="bl-image__remove"
+					className="gcb-image__remove"
 					onClick={ removeImage }
 				>
 					{ __( 'Remove', 'genesis-custom-blocks' ) }

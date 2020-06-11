@@ -60,7 +60,7 @@ const BlockLabColorControl = ( props ) => {
 	const value = 'undefined' !== typeof initialValue ? initialValue : field.default;
 
 	return (
-		<BaseControl label={ field.label } id={ `bl-color-${ instanceId }` } className="genesis-custom-blocks-color-control" help={ field.help }>
+		<BaseControl label={ field.label } id={ `gcb-color-${ instanceId }` } className="genesis-custom-blocks-color-control" help={ field.help }>
 			<TextControl
 				value={ value }
 				onChange={ onChange }

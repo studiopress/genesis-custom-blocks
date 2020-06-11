@@ -36,7 +36,7 @@ const BlockLabRepeaterControl = ( props ) => {
 	}
 
 	return (
-		<BaseControl className="genesis-custom-blocks-repeater" label={ field.label } id={ `bl-repeater-${ instanceId }` } help={ field.help }>
+		<BaseControl className="genesis-custom-blocks-repeater" label={ field.label } id={ `gcb-repeater-${ instanceId }` } help={ field.help }>
 			<RepeaterRows
 				rows={ rows }
 				field={ field }

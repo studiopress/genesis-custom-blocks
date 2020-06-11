@@ -75,8 +75,8 @@ function block_lab_add_block( $block_name, $block_config = [] ) {
 /**
  * Handle deprecated block_lab_add_field function.
  *
- * @param string $block_name The block name (slug), like 'example-block'.
- * @param string $field_name The field name (slug), like 'first-name'.
+ * @param string $block_name   The block name (slug), like 'example-block'.
+ * @param string $field_name   The field name (slug), like 'first-name'.
  * @param array  $field_config An associative array containing the field configuration.
  */
 function block_lab_add_field( $block_name, $field_name, $field_config = [] ) {
