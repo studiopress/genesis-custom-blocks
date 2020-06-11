@@ -173,7 +173,7 @@ class RepeaterRows extends Component {
 							const activeClass = this.state.activeRow === parseInt( rowIndex ) ? 'active' : ''; // @todo: Make this dynamic.
 
 							return (
-								<BaseControl className={ `genesis-custom-blocks-repeater--row ${ activeClass }` } key={ `bl-row-${ rowIndex }` }>
+								<BaseControl className={ `genesis-custom-blocks-repeater--row ${ activeClass }` } key={ `gcb-row-${ rowIndex }` }>
 									<div className="genesis-custom-blocks-repeater--row-delete">
 										<IconButton
 											icon="no"

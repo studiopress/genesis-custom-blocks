@@ -163,7 +163,7 @@ class TestLoader extends AbstractTemplate {
 	 * @covers \Genesis\CustomBlocks\Blocks\Loader::render_block_template()
 	 */
 	public function test_render_block_template() {
-		$slug       = 'bl-testing-slug';
+		$slug       = 'gcb-testing-slug';
 		$script_url = 'https://example.com/script.js';
 		$block_name = 'test-image';
 		$block      = new Block();

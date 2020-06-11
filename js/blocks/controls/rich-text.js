@@ -10,7 +10,7 @@ const BlockLabRichTextControl = ( props ) => {
 	return (
 		<BaseControl
 			label={ field.label }
-			id={ `bl-rich-text-${ instanceId }` }
+			id={ `gcb-rich-text-${ instanceId }` }
 			className="genesis-custom-blocks-rich-text-control"
 			help={ field.help }
 		>
