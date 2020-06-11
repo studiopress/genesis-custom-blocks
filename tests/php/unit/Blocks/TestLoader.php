@@ -188,8 +188,8 @@ class TestLoader extends AbstractTemplate {
 		$this->assertEquals( $slug, $script->handle );
 		$this->assertEquals( $script_url, $script->src );
 
-		// Test that the do_action() call with the dynamic name runs, like 'bl-dynamic-testing-slug'.
-		$slug       = 'bl-dynamic-testing-slug';
+		// Test that the do_action() call with the dynamic name runs with an example slug.
+		$slug       = 'foo-dynamic-testing-slug';
 		$script_url = 'https://example.com/another-script.js';
 
 		add_action(

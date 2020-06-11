@@ -31,6 +31,13 @@ class TestPostCapabilities extends \WP_UnitTestCase {
 	public $post_id;
 
 	/**
+	 * The slug of the CPT.
+	 *
+	 * @var string
+	 */
+	public $post_type_slug = 'genesis_custom_block';
+
+	/**
 	 * Setup.
 	 *
 	 * @inheritdoc
@@ -41,7 +48,7 @@ class TestPostCapabilities extends \WP_UnitTestCase {
 		$this->block_post->set_plugin( genesis_custom_blocks() );
 		$this->block_post->register_post_type();
 		$this->block_post->add_caps();
-		$this->post_id = $this->factory()->post->create( [ 'post_type' => $this->block_post->slug ] );
+		$this->post_id = $this->factory()->post->create( [ 'post_type' => $this->post_type_slug ] );
 	}
 
 	/**

@@ -579,7 +579,7 @@ class Loader extends ComponentAbstract {
 		/**
 		 * Filter the available blocks.
 		 *
-		 * This is used internally by the Genesis\CustomBlocks\add_block and Genesis\CustomBlocks\add_field helper helper functions,
+		 * This is used internally by the Genesis\CustomBlocks\add_block and Genesis\CustomBlocks\add_field helper functions,
 		 * but it can also be used to hide certain blocks if desired.
 		 *
 		 * @param array $blocks An associative array of blocks.
