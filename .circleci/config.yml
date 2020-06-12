@@ -89,7 +89,7 @@ jobs:
           working_directory: ~/project/wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
           command: |
             export PATH=$PATH:/usr/local/mysql/bin
-            WP_CORE_DIR=~/project/wordpress-develop/ bash bin/install-wp-tests.sh wordpress_test root '' localhost
+            WP_CORE_DIR=~/project/wordpress-develop/ bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1
             WP_TESTS_DIR=~/project/wordpress-develop/tests/phpunit composer test
 
   lint:
