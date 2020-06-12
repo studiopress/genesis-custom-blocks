@@ -45,7 +45,8 @@ commands:
       - run:
           working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
           command: |
-            sudo apt-get update && sudo apt-get install subversion ubuntu-toolchain-r-test libstdc++-4.9-dev
+            sudo add-apt-repository ppa:ubuntu-toolchain-r/ppa
+            sudo apt-get update && sudo apt-get install subversion libstdc++6
             touch ~/.profile
             curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
             export NVM_DIR="$HOME/.nvm"
