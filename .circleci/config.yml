@@ -22,10 +22,6 @@ executors:
 commands:
   prepare-environment:
     description: "Preparing the environment..."
-    parameters:
-      clone-wordpress-develop:
-        type: boolean
-        default: true
     steps:
       - run:
           command: |
@@ -34,17 +30,8 @@ commands:
             ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');")
             [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && sudo php composer-setup.php --install-dir=/bin --filename=composer || exit 1
             composer config -g github-protocols https && composer config -g repo.packagist composer https://packagist.org
-      - when:
-          condition: << parameters.clone-wordpress-develop >>
-          steps:
-            - run: cd ~/project/ && git clone git://develop.git.wordpress.org/ wordpress-develop
-            - run: cp wordpress-develop/wp-tests-config-sample.php wordpress-develop/wp-tests-config.php
-            - run: sed -i 's/localhost/127.0.0.1/g' wordpress-develop/wp-tests-config.php
-      - run: mkdir -p ~/project/wordpress-develop/src/wp-content/plugins/genesis-custom-blocks
-      - checkout:
-          path: ~/project/wordpress-develop/src/wp-content/plugins/genesis-custom-blocks
+      - checkout
       - run:
-          working_directory: ~/project/wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
           command: |
             sudo apt-get update
             sudo apt-get install gcc g++ make
@@ -86,11 +73,10 @@ jobs:
           command: |
             sudo apt-get install default-mysql-client
       - run:
-          working_directory: ~/project/wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
           command: |
             export PATH=$PATH:/usr/local/mysql/bin
-            WP_CORE_DIR=~/project/wordpress-develop/ bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1
-            WP_TESTS_DIR=~/project/wordpress-develop/tests/phpunit composer test
+            bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1
+            composer test
 
   lint:
     executor:
@@ -101,7 +87,6 @@ jobs:
       - prepare-environment
       - set-up-packages
       - run:
-          working_directory: ~/project/wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
           command: npm run lint
 
   js-tests:
