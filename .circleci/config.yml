@@ -46,7 +46,7 @@ commands:
           working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
           command: |
             sudo apt-get update
-            sudo apt-get install nodejs=13.9.0 npm=6.14.5
+            sudo apt-get install nodejs npm
             composer install && node --version && npm --version && npm install && npm run build
   set-up-packages:
     description: "Installing packages and building"
