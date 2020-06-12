@@ -46,8 +46,9 @@ commands:
           working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
           command: |
             sudo apt-get update
-            curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
+            curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
             sudo apt-get install -y nodejs
+            sudo apt-get install svn
             composer install && node --version && npm --version && npm install && npm run build
   set-up-packages:
     description: "Installing packages and building"
