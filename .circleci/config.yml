@@ -45,6 +45,7 @@ commands:
       - run:
           working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
           command: |
+            sudo apt-get install software-properties-common python-software-properties
             sudo add-apt-repository ppa:ubuntu-toolchain-r/ppa
             sudo apt-get update
             sudo apt-get install gcc-snapshot
