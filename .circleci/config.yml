@@ -49,7 +49,7 @@ commands:
             sudo apt-get update
             curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
             sudo apt-get install -y nodejs
-            sudo apt-get install subversion
+            sudo apt-get install npm subversion
             composer install && node --version && npm --version && npm install && npm run build
   set-up-packages:
     description: "Installing packages and building"
