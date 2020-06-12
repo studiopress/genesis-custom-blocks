@@ -4,7 +4,7 @@
  * @param {Object} fields The fields to get the attributes from.
  * @return {Object} attributes The attributes for the fields.
  */
-const getBlockLabAttributes = ( fields ) => {
+const getGcbBlockAttributes = ( fields ) => {
 	const attributes = {};
 
 	for ( const fieldName in fields ) {
@@ -27,4 +27,4 @@ const getBlockLabAttributes = ( fields ) => {
 	return attributes;
 };
 
-export default getBlockLabAttributes;
+export default getGcbBlockAttributes;

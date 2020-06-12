@@ -3,7 +3,7 @@
  */
 import { CheckboxControl } from '@wordpress/components';
 
-const BlockLabCheckboxControl = ( props ) => {
+const GcbCheckboxControl = ( props ) => {
 	const { field, getValue, onChange } = props;
 	let value = getValue( props );
 	if ( 'undefined' === typeof value ) {
@@ -21,4 +21,4 @@ const BlockLabCheckboxControl = ( props ) => {
 	);
 };
 
-export default BlockLabCheckboxControl;
+export default GcbCheckboxControl;

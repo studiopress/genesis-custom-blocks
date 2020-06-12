@@ -3,7 +3,7 @@
  */
 import { FetchInput } from '../components';
 
-const BlockLabUserControl = ( props ) => {
+const GcbUserControl = ( props ) => {
 	const { field, getValue, onChange } = props;
 	const DEFAULT_ID = 0;
 	const getIdFromAPI = ( apiResponse ) => ( apiResponse && apiResponse.id ) ? apiResponse.id : DEFAULT_ID;
@@ -37,4 +37,4 @@ const BlockLabUserControl = ( props ) => {
 	);
 };
 
-export default BlockLabUserControl;
+export default GcbUserControl;

@@ -4,7 +4,7 @@
 import { BaseControl } from '@wordpress/components';
 import { RichText } from '@wordpress/block-editor';
 
-const BlockLabRichTextControl = ( props ) => {
+const GcbRichTextControl = ( props ) => {
 	const { field, getValue, instanceId, onChange } = props;
 
 	return (
@@ -35,4 +35,4 @@ const BlockLabRichTextControl = ( props ) => {
 	);
 };
 
-export default BlockLabRichTextControl;
+export default GcbRichTextControl;

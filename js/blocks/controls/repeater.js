@@ -8,7 +8,7 @@ import { BaseControl, Button } from '@wordpress/components';
  */
 import { RepeaterRows } from '../components';
 
-const BlockLabRepeaterControl = ( props ) => {
+const GcbRepeaterControl = ( props ) => {
 	const { field, instanceId, onChange, parentBlock, parentBlockProps } = props;
 	const { attributes, setAttributes } = parentBlockProps;
 	const attr = { ...attributes };
@@ -57,4 +57,4 @@ const BlockLabRepeaterControl = ( props ) => {
 	);
 };
 
-export default BlockLabRepeaterControl;
+export default GcbRepeaterControl;

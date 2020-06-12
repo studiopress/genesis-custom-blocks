@@ -145,7 +145,7 @@ class Loader extends ComponentAbstract {
 		// Add dynamic Gutenberg blocks.
 		wp_add_inline_script(
 			'genesis-custom-blocks-blocks',
-			'const blockLabBlocks = ' . wp_json_encode( $this->blocks ),
+			'const gcbBlocks = ' . wp_json_encode( $this->blocks ),
 			'before'
 		);
 
@@ -162,7 +162,7 @@ class Loader extends ComponentAbstract {
 		$author_block_slugs = wp_list_pluck( $author_blocks, 'post_name' );
 		wp_localize_script(
 			'genesis-custom-blocks-blocks',
-			'blockLab',
+			'genesisCustomBlocks',
 			[
 				'authorBlocks' => $author_block_slugs,
 				'postType'     => get_post_type(), // To conditionally exclude blocks from certain post types.

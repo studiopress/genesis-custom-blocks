@@ -146,11 +146,11 @@ class TestLoader extends AbstractTemplate {
 
 		$this->assertTrue( wp_script_is( $script_handle ) );
 		$this->assertContains(
-			'var blockLab = {"authorBlocks"',
+			'var genesisCustomBlocks = {"authorBlocks"',
 			wp_scripts()->registered[ $script_handle ]->extra['data']
 		);
 		$this->assertContains(
-			'const blockLabBlocks =',
+			'const gcbBlocks =',
 			wp_scripts()->registered[ $script_handle ]->extra['before'][1]
 		);
 

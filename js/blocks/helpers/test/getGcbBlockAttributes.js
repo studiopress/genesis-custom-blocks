@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { getBlockLabAttributes } from '../';
+import { getGcbBlockAttributes } from '../';
 
 describe( 'getBlockFromContent', () => {
 	const fieldsWithOnlyType = {
@@ -14,15 +14,15 @@ describe( 'getBlockFromContent', () => {
 	};
 
 	it( 'should return an empty object if passed an empty object', () => {
-		expect( getBlockLabAttributes( {} ) ).toStrictEqual( {} );
+		expect( getGcbBlockAttributes( {} ) ).toStrictEqual( {} );
 	} );
 
 	it( 'should not throw an error if certain attributes are not present', () => {
-		expect( getBlockLabAttributes( fieldsWithOnlyType ) ).toStrictEqual( fieldsWithOnlyType );
+		expect( getGcbBlockAttributes( fieldsWithOnlyType ) ).toStrictEqual( fieldsWithOnlyType );
 	} );
 
 	it( 'should return only the attributes of the fields', () => {
-		expect( getBlockLabAttributes( {
+		expect( getGcbBlockAttributes( {
 			example_text: {
 				type: 'text',
 				default: 'Here is some text',
