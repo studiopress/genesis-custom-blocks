@@ -45,6 +45,7 @@ commands:
       - run:
           working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
           command: |
+            sudo apt install software-properties-common
             sudo add-apt-repository ppa:ubuntu-toolchain-r/ppa
             sudo apt-get update && sudo apt-get install subversion libstdc++6
             touch ~/.profile
