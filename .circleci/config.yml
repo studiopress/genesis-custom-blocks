@@ -45,12 +45,12 @@ commands:
       - run:
           working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
           command: |
+            sudo apt-get update && sudo apt-get install subversion ubuntu-toolchain-r-test libstdc++-4.9-dev
             touch ~/.profile
             curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm install node --latest-npm
-            sudo apt-get update && sudo apt-get install subversion ubuntu-toolchain-r-test libstdc++-4.9-dev
             composer install && node --version && npm --version && npm install && npm run build
   set-up-packages:
     description: "Installing packages and building"
