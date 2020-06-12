@@ -45,17 +45,8 @@ commands:
       - run:
           working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
           command: |
-            sudo apt-get install software-properties-common python-software-properties
-            sudo add-apt-repository ppa:ubuntu-toolchain-r/ppa
             sudo apt-get update
-            sudo apt-get install gcc-snapshot
-            sudo apt-get install gcc-6 g++-6
-            sudo apt-get install subversion libstdc++6
-            touch ~/.profile
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            nvm install node --latest-npm
+            sudo apt-get install nodejs=13.9.0 npm=6.14.5
             composer install && node --version && npm --version && npm install && npm run build
   set-up-packages:
     description: "Installing packages and building"
