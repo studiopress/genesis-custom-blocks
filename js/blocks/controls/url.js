@@ -8,7 +8,7 @@ import classNames from 'classnames';
  */
 import { TextControl } from '@wordpress/components';
 
-const BlockLabURLControl = ( props ) => {
+const GcbURLControl = ( props ) => {
 	const { field, getValue, onChange } = props;
 	const initialValue = getValue( props );
 	const value = 'undefined' !== typeof initialValue ? initialValue : field.default;
@@ -45,4 +45,4 @@ const BlockLabURLControl = ( props ) => {
 	);
 };
 
-export default BlockLabURLControl;
+export default GcbURLControl;

@@ -1,4 +1,4 @@
-export { default as BlockLabInspector } from './genesis-custom-blocks-inspector';
+export { default as GcbInspector } from './gcb-inspector';
 export { default as ContentControl } from './content-control';
 export { default as Edit } from './edit';
 export { default as FetchInput } from './fetch-input';

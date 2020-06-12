@@ -5,7 +5,7 @@
  * @license GPL-2.0-only
  */
 
-/* global blockLab, jQuery */
+/* global genesisCustomBlocks, jQuery */
 
 ( function( $ ) {
 	$( function() {
@@ -130,9 +130,9 @@
 			const copied = document.execCommand( 'copy' );
 
 			if ( copied ) {
-				copy.attr( 'data-tooltip', blockLab.copySuccessMessage );
+				copy.attr( 'data-tooltip', genesisCustomBlocks.copySuccessMessage );
 			} else {
-				copy.attr( 'data-tooltip', blockLab.copyFailMessage );
+				copy.attr( 'data-tooltip', genesisCustomBlocks.copyFailMessage );
 			}
 
 			$( this ).hide();
@@ -335,14 +335,14 @@
 			.filter( Boolean );
 
 		if ( 0 === excludedPostTypes.length ) {
-			display.text( blockLab.postTypes.all );
+			display.text( genesisCustomBlocks.postTypes.all );
 			return;
 		}
 
 		const inputs = $( '.post-types-select-items input' );
 
 		if ( excludedPostTypes.length === inputs.length ) {
-			display.text( blockLab.postTypes.none );
+			display.text( genesisCustomBlocks.postTypes.none );
 			return;
 		}
 
@@ -360,7 +360,7 @@
 	};
 
 	const fetchFieldSettings = function( fieldRow, fieldControl ) {
-		if ( ! blockLab.hasOwnProperty( 'fieldSettingsNonce' ) ) {
+		if ( ! genesisCustomBlocks.hasOwnProperty( 'fieldSettingsNonce' ) ) {
 			return;
 		}
 
@@ -377,7 +377,7 @@
 		const data = {
 			control: fieldControl,
 			uid: fieldRow.data( 'uid' ),
-			nonce: blockLab.fieldSettingsNonce,
+			nonce: genesisCustomBlocks.fieldSettingsNonce,
 		};
 
 		// If this is a sub-field, pass along the parent UID as well.

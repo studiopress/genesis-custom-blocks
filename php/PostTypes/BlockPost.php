@@ -291,7 +291,7 @@ class BlockPost extends ComponentAbstract {
 
 			wp_localize_script(
 				'block-post',
-				'blockLab',
+				'genesisCustomBlocks',
 				[
 					'fieldSettingsNonce' => wp_create_nonce( "{$this->slug}_field_settings_nonce" ),
 					'postTypes'          => [

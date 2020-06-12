@@ -3,7 +3,7 @@
  */
 import { RadioControl } from '@wordpress/components';
 
-const BlockLabRadioControl = ( props ) => {
+const GcbRadioControl = ( props ) => {
 	const { field, getValue, onChange } = props;
 
 	return (
@@ -17,4 +17,4 @@ const BlockLabRadioControl = ( props ) => {
 	);
 };
 
-export default BlockLabRadioControl;
+export default GcbRadioControl;

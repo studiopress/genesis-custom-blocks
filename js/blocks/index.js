@@ -1,4 +1,4 @@
-/* global blockLab, blockLabBlocks */
+/* global genesisCustomBlocks, gcbBlocks */
 
 /**
  * WordPress dependencies
@@ -12,4 +12,4 @@ import { registerBlocks } from './helpers';
 import { Edit } from './components';
 
 setLocaleData( { '': {} }, 'genesis-custom-blocks' );
-registerBlocks( blockLab, blockLabBlocks, Edit );
+registerBlocks( genesisCustomBlocks, gcbBlocks, Edit );

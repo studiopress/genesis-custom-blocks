@@ -28,14 +28,14 @@ describe( 'registerBlocks', () => {
 
 	it( 'should register a single block', () => {
 		const blockName = 'genesis-custom-blocks/test-post';
-		const blockLabBlocks = {};
-		blockLabBlocks[ blockName ] = {
+		const gcbBlocks = {};
+		gcbBlocks[ blockName ] = {
 			title: 'Test Post',
 			category: 'widget',
 			keywords: [ 'foobaz', 'example' ],
 		};
 
-		registerBlocks( {}, blockLabBlocks, Edit );
+		registerBlocks( {}, gcbBlocks, Edit );
 		expect( mockRegisterBlockType ).toHaveBeenCalledWith(
 			blockName,
 			expect.objectContaining( expectedArgs )

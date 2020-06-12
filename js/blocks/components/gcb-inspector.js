@@ -19,7 +19,7 @@ import controls from '../controls';
  * @param {Object} props.block The block.
  * @return {Function|null} The inspector controls.
  */
-const BlockLabInspector = ( { blockProps, block } ) => {
+const GcbInspector = ( { blockProps, block } ) => {
 	const fields = getSimplifiedFields( block.fields ).map( ( field ) => {
 		// If it's not meant for the inspector, continue (return null).
 		if ( ! field.location || ! field.location.includes( 'inspector' ) ) {
@@ -60,4 +60,4 @@ const BlockLabInspector = ( { blockProps, block } ) => {
 	);
 };
 
-export default BlockLabInspector;
+export default GcbInspector;

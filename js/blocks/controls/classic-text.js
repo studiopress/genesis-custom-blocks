@@ -8,9 +8,8 @@ import { BaseControl } from '@wordpress/components';
  */
 import { TinyMCE } from '../components';
 
-const BlockLabClassicTextControl = ( props ) => {
-	const { field, getValue, instanceId, onChange, parentBlockProps, rowIndex } = props;
-	const { clientId } = parentBlockProps;
+const GcbClassicTextControl = ( props ) => {
+	const { field, getValue, onChange, rowIndex, parentBlockProps: { clientId } } = props;
 	const editorId = 'number' === typeof rowIndex ? `gcb-${ clientId }-${ field.name }-rowIndex-${ rowIndex }` : `gcb-${ clientId }-${ field.name }`;
 	const initialValue = getValue( props );
 	const value = 'undefined' !== typeof initialValue ? initialValue : field.default;
@@ -18,7 +17,7 @@ const BlockLabClassicTextControl = ( props ) => {
 	return (
 		<BaseControl
 			label={ field.label }
-			id={ `gcb-classic-text-${ instanceId }` }
+			id={ `gcb-classic-text-${ clientId }` }
 			className="genesis-custom-blocks-classic-text-control"
 			help={ field.help }
 		>
@@ -31,4 +30,4 @@ const BlockLabClassicTextControl = ( props ) => {
 	);
 };
 
-export default BlockLabClassicTextControl;
+export default GcbClassicTextControl;
