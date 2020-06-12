@@ -47,12 +47,10 @@ commands:
           working_directory: ~/project/wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
           command: |
             sudo apt-get update
-            curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
             sudo apt-get install gcc g++ make
+            curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
             sudo apt-get install -y nodejs
-            sudo apt-get update
-            sudo apt-get upgrade
-            sudo apt-get install npm subversion
+            sudo apt-get install subversion
             composer install && node --version && npm --version && npm install && npm run build
   set-up-packages:
     description: "Installing packages and building"
