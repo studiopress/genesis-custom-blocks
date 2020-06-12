@@ -131,13 +131,14 @@ class Loader extends ComponentAbstract {
 	 * Launch the blocks inside Gutenberg.
 	 */
 	protected function editor_assets() {
-		$asset_config = require $this->plugin->get_path( 'js/editor.blocks.asset.php' );
+		$js_config  = require $this->plugin->get_path( 'js/editor.blocks.asset.php' );
+		$css_config = require $this->plugin->get_path( 'css/blocks.editor.asset.php' );
 
 		wp_enqueue_script(
 			'genesis-custom-blocks-blocks',
 			$this->assets['url']['entry'],
-			$asset_config['dependencies'],
-			$asset_config['version'],
+			$js_config['dependencies'],
+			$js_config['version'],
 			true
 		);
 
@@ -172,8 +173,8 @@ class Loader extends ComponentAbstract {
 		wp_enqueue_style(
 			'genesis-custom-blocks-editor-css',
 			$this->assets['url']['editor_style'],
-			[],
-			$this->plugin->get_version()
+			$css_config['dependencies'],
+			$css_config['version']
 		);
 
 		$block_names = wp_list_pluck( $this->blocks, 'name' );
