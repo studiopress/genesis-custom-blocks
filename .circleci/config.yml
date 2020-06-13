@@ -16,9 +16,7 @@ commands:
   set-up-packages:
     description: "Installing packages and building"
     steps:
-      - run:
-          working_directory: *PLUGIN_FULL_PATH
-          command: composer install && npm install && npm run build
+      - run: composer install && npm install && npm run build
   prepare-environment:
     description: "Preparing the environment..."
     steps:
@@ -40,6 +38,7 @@ commands:
       - run: mkdir -p *PLUGIN_FULL_PATH
       - checkout:
           path: *PLUGIN_FULL_PATH
+      - run: cd *PLUGIN_FULL_PATH
       - set-up-packages
 
 jobs:
