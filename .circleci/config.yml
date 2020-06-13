@@ -20,7 +20,7 @@ commands:
         type: boolean
         default: true
     steps:
-      - run: apk add --no-cache git nodejs npm
+      - run: apk update && apk add --update --no-cache git nodejs
       - run:
           command: |
             php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
