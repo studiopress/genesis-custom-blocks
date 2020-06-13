@@ -75,7 +75,7 @@ jobs:
       - run:
           command: |
             export PATH=$PATH:/usr/local/mysql/bin
-            SKIP_DB_CREATE=true bash bin/install-wp-tests.sh wordpress_test username wordpress 127.0.0.1
+            bash bin/install-wp-tests.sh wordpress_test username wordpress 127.0.0.1 latest true
             composer test
 
   lint:
