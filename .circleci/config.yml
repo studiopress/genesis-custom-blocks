@@ -96,7 +96,7 @@ workflows:
       - lint
   tests:
     jobs:
-      - php-tests
+      - php-tests:
           matrix:
             parameters:
               php-version: [ '7.1', '7.2', '7.3', '7.4' ]
