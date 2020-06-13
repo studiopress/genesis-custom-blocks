@@ -153,3 +153,4 @@ install_db() {
 install_wp
 install_test_suite
 install_db
+cat "$WP_TESTS_DIR"/wp-tests-config.php

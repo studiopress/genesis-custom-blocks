@@ -76,7 +76,6 @@ jobs:
           command: |
             export PATH=$PATH:/usr/local/mysql/bin
             bash bin/install-wp-tests.sh wordpress_test username wordpress 127.0.0.1 latest true
-            cat /tmp/wordpress-tests-lib/wp-tests-config.php
             composer test
 
   lint:
