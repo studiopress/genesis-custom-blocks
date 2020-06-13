@@ -58,7 +58,7 @@ jobs:
       - attach_workspace:
           at: ~/project
       - run:
-      # The primary container isn't MYSQL so run a sleep command until it's ready.
+          # The primary container isn't MYSQL so run a sleep command until it's ready.
           name: Waiting for MySQL to be ready
           command: |
             for i in `seq 1 10`;
@@ -75,7 +75,7 @@ jobs:
       - run:
           command: |
             export PATH=$PATH:/usr/local/mysql/bin
-            bash bin/install-wp-tests.sh wordpress_test yourusernamehere yourpasswordhere 127.0.0.1
+            bash bin/install-wp-tests.sh wordpress_test yourusernamehere wordpress 127.0.0.1
             composer test
 
   lint:
