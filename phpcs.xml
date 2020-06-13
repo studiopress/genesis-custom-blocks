@@ -3,14 +3,11 @@
 
 	<rule ref="WordPress-Core">
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax" />
+		<exclude name="WordPress.Files.FileName" />
 	</rule>
 
 	<rule ref="WordPress-Docs" />
 	<rule ref="WordPress-Extra" />
-
-	<rule ref="WordPress.Files.FileName.InvalidClassFileName">
-		<exclude-pattern>tests/*</exclude-pattern>
-	</rule>
 
 	<rule ref="Generic.Arrays.DisallowLongArraySyntax.Found" />
 
@@ -20,6 +17,11 @@
 				<element value="genesis-custom-blocks"/>
 			</property>
 		</properties>
+	</rule>
+
+	<!-- Ensure there are PascalCase file names. -->
+	<rule ref="Squiz.Classes.ClassFileName">
+		<include-pattern>php/*</include-pattern>
 	</rule>
 
 	<config name="testVersion" value="5.6-"/>

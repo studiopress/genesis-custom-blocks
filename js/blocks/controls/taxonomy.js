@@ -3,7 +3,7 @@
  */
 import { ContentControl } from '../components';
 
-const BlockLabTaxonomyControl = ( props ) => {
+const GcbTaxonomyControl = ( props ) => {
 	/**
 	 * Gets the taxonomy name from an API response.
 	 *
@@ -16,4 +16,4 @@ const BlockLabTaxonomyControl = ( props ) => {
 	return <ContentControl { ...contentProps } />;
 };
 
-export default BlockLabTaxonomyControl;
+export default GcbTaxonomyControl;

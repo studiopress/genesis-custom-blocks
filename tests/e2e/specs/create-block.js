@@ -32,7 +32,7 @@ describe( 'TextBlock', () => {
 		const blockName = 'Testing Example';
 		const fieldName = 'Testing Text';
 
-		// Create the custom block (a 'block_lab' post).
+		// Create the custom block (a 'genesis_custom_block' post).
 		await visitAdminPage( 'post-new.php', `?post_type=${ customPostType }` );
 		await page.click( '[name="post_title"]' );
 		await pressKeyWithModifier( 'primary', 'a' );

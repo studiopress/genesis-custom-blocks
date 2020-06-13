@@ -3,7 +3,7 @@
  */
 import { SelectControl } from '@wordpress/components';
 
-const BlockLabMultiselectControl = ( props ) => {
+const GcbMultiselectControl = ( props ) => {
 	const { field, getValue, onChange } = props;
 
 	return (
@@ -18,4 +18,4 @@ const BlockLabMultiselectControl = ( props ) => {
 	);
 };
 
-export default BlockLabMultiselectControl;
+export default GcbMultiselectControl;

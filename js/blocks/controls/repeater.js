@@ -2,13 +2,13 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { BaseControl, IconButton } from '@wordpress/components';
+import { BaseControl, Button } from '@wordpress/components';
 /**
  * Internal dependencies
  */
 import { RepeaterRows } from '../components';
 
-const BlockLabRepeaterControl = ( props ) => {
+const GcbRepeaterControl = ( props ) => {
 	const { field, instanceId, onChange, parentBlock, parentBlockProps } = props;
 	const { attributes, setAttributes } = parentBlockProps;
 	const attr = { ...attributes };
@@ -36,7 +36,7 @@ const BlockLabRepeaterControl = ( props ) => {
 	}
 
 	return (
-		<BaseControl className="genesis-custom-blocks-repeater" label={ field.label } id={ `bl-repeater-${ instanceId }` } help={ field.help }>
+		<BaseControl className="genesis-custom-blocks-repeater" label={ field.label } id={ `gcb-repeater-${ instanceId }` } help={ field.help }>
 			<RepeaterRows
 				rows={ rows }
 				field={ field }
@@ -45,11 +45,10 @@ const BlockLabRepeaterControl = ( props ) => {
 				parentBlock={ parentBlock }
 			/>
 			<div className="genesis-custom-blocks-repeater--row-add">
-				<IconButton
+				<Button
 					key={ `${ field.name }-repeater-insert` }
 					icon="insert"
 					label={ __( 'Add new', 'genesis-custom-blocks' ) }
-					labelPosition="bottom"
 					onClick={ addEmptyRow }
 					disabled={ !! field.max && rows.length >= field.max }
 				/>
@@ -58,4 +57,4 @@ const BlockLabRepeaterControl = ( props ) => {
 	);
 };
 
-export default BlockLabRepeaterControl;
+export default GcbRepeaterControl;

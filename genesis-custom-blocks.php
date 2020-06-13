@@ -2,14 +2,14 @@
 /**
  * Genesis Custom Blocks
  *
- * @package   GenesisCustomBlocks
+ * @package   Genesis\CustomBlocks
  * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  *
  * Plugin Name: Genesis Custom Blocks
  * Plugin URI: https://studiopress.com
  * Description: The easy way to build custom blocks for Gutenberg.
- * Version: 1.5.4
+ * Version: 1.0.0
  * Author: Genesis Custom Blocks
  * Author URI: https://studiopress.com
  * License: GPL2
@@ -25,8 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Setup the plugin auto loader.
-require_once 'php/autoloader.php';
+require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 
 /**
  * Admin notice for incompatible versions of PHP.
@@ -90,10 +89,13 @@ if ( ! function_exists( 'register_block_type' ) ) {
 }
 
 // Load some helpers.
-require_once __DIR__ . '/php/helpers.php';
+require_once __DIR__ . '/php/Helpers.php';
+
+// Load block API helpers.
+require_once __DIR__ . '/php/BlockApi.php';
 
 // Handle deprecated functions.
-require_once __DIR__ . '/php/deprecated.php';
+require_once __DIR__ . '/php/Deprecated.php';
 
 /**
  * Get the plugin object.
@@ -123,6 +125,6 @@ genesis_custom_blocks()
 	->init();
 
 /**
- * Sometimes we need to do some things after the plugin is loaded, so call the Plugin_Interface::plugin_loaded().
+ * Sometimes we need to do some things after the plugin is loaded, so call the PluginInterface::plugin_loaded().
  */
 add_action( 'plugins_loaded', [ genesis_custom_blocks(), 'plugin_loaded' ] );

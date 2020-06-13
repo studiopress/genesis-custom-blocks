@@ -8,7 +8,7 @@ import classNames from 'classnames';
  */
 import { TextControl } from '@wordpress/components';
 
-const BlockLabNumberControl = ( props ) => {
+const GcbNumberControl = ( props ) => {
 	const { field, getValue, onChange } = props;
 	const initialValue = getValue( props );
 	const value = 'undefined' !== typeof initialValue ? initialValue : field.default;
@@ -47,4 +47,4 @@ const BlockLabNumberControl = ( props ) => {
 	);
 };
 
-export default BlockLabNumberControl;
+export default GcbNumberControl;
