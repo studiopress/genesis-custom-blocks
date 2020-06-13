@@ -40,7 +40,7 @@ commands:
           path: *PLUGIN_FULL_PATH
       - run:
           working_directory: *PLUGIN_FULL_PATH
-          command: set-up-packages
+          command: composer install && npm install && npm run build
 jobs:
   php-tests:
     parameters:
