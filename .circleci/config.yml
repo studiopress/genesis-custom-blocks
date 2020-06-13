@@ -30,7 +30,7 @@ commands:
   prepare-environment:
     description: "Preparing the environment"
     steps:
-      - run: sudo apt-get update && sudo apt-get install git
+      - run: apk update && apk add --update --no-cache git nodejs npm
       - run:
           name: Install WordPress and set up tests
           command: |
@@ -49,7 +49,7 @@ jobs:
       php-version:
         type: string
     docker:
-      - image: laradock/php-fpm:latest-<< parameters.php-version >>
+      - image: wordpress:php<< parameters.php-version >>-fpm-alpine
         environment:
           WP_TESTS_DIR: /root/project/wordpress-develop/tests/phpunit
       - image: mysql:5.7
@@ -81,10 +81,9 @@ jobs:
 
   e2e-tests:
     machine:
-      image: circleci/php:7.4.5-cli-node
+      image: ubuntu-1604:202004-01
     steps:
       - checkout
-      - run: sudo apt-get update && sudo apt-get install php
       - install-composer
       - run:
           name: Update Node version
