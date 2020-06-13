@@ -11,8 +11,8 @@ executors:
       - image: circleci/mysql:latest
         environment:
           MYSQL_DATABASE: youremptytestdbnamehere
-          MYSQL_USER: yourusernamehere
-          MYSQL_PASSWORD: yourpasswordhere
+          MYSQL_USER: root
+          MYSQL_PASSWORD: wordpress
           MYSQL_ROOT_PASSWORD: wordpress
         command: mysqld --default-authentication-plugin=mysql_native_password --skip-mysqlx
   node-only:
