@@ -18,6 +18,6 @@
         "wp-coding-standards/wpcs": "2.2.0"
     },
     "scripts": {
-        "test": "phpunit"
+        "test": "phpunit --debug"
     }
 }
