@@ -62,7 +62,6 @@ jobs:
           MYSQL_USER: yourusernamehere
           MYSQL_PASSWORD: yourpasswordhere
           MYSQL_ROOT_PASSWORD: wordpress
-    parallelism: 4
     steps:
       - prepare-environment
       - run:
@@ -80,7 +79,6 @@ jobs:
           MYSQL_USER: yourusernamehere
           MYSQL_PASSWORD: yourpasswordhere
           MYSQL_ROOT_PASSWORD: wordpress
-    parallelism: 4
     steps:
       - prepare-environment
       - run:
