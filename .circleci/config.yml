@@ -84,6 +84,7 @@ jobs:
       image: ubuntu-1604:202004-01
     steps:
       - checkout
+      - run: sudo apt-get update && sudo apt-get install php
       - install-composer
       - run:
           name: Update Node version
