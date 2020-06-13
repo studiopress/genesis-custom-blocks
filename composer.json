@@ -18,6 +18,6 @@
         "wp-coding-standards/wpcs": "2.2.0"
     },
     "scripts": {
-        "test": "phpunit --debug"
+        "test": "phpunit --debug -d display_startup_errors=on -d error_reporting=22527"
     }
 }
