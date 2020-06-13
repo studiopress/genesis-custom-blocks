@@ -7,7 +7,7 @@ executors:
       php-version:
         type: string
     docker:
-      - image: circleci/php:<< parameters.php-version >>-cli-node
+      - image: circleci/php:<< parameters.php-version >>-cli-node-browsers
       - image: circleci/mysql:latest
         environment:
           MYSQL_DATABASE: youremptytestdbnamehere
