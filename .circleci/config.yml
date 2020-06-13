@@ -2,92 +2,115 @@ version: 2.1
 
 executors:
   php:
-    working_directory: ~/project
     parameters:
       php-version:
         type: string
     docker:
-      - image: circleci/php:<< parameters.php-version >>-cli-node-browsers
-      - image: circleci/mysql:latest
+      - image: circleci/php:<< parameters.php-version >>-cli-node
+      - image: mysql:5.7
         environment:
-          MYSQL_DATABASE: wordpress_test
-          MYSQL_USER: username
-          MYSQL_PASSWORD: wordpress
+          MYSQL_DATABASE: youremptytestdbnamehere
+          MYSQL_USER: yourusernamehere
+          MYSQL_PASSWORD: yourpasswordhere
           MYSQL_ROOT_PASSWORD: wordpress
-        command: mysqld --default-authentication-plugin=mysql_native_password --skip-mysqlx
   node-only:
     docker:
       - image: cimg/node:12.16
 
 commands:
+  set-up-packages:
+    description: "Installing packages and building"
+    steps:
+      - run: composer install && npm install && npm run build
   prepare-environment:
     description: "Preparing the environment..."
+    parameters:
+      clone-wordpress-develop:
+        type: boolean
+        default: true
     steps:
+      - run: apk add --no-cache git nodejs npm
       - run:
           command: |
             php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
             EXPECTED_SIGNATURE=$(curl -s https://composer.github.io/installer.sig)
             ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');")
-            [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && sudo php composer-setup.php --install-dir=/bin --filename=composer || exit 1
+            [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && php composer-setup.php --install-dir=/bin --filename=composer || exit 1
             composer config -g github-protocols https && composer config -g repo.packagist composer https://packagist.org
-      - checkout
+      - when:
+          condition: << parameters.clone-wordpress-develop >>
+          steps:
+            - run: git clone git://develop.git.wordpress.org/ wordpress-develop
+            - run: cp wordpress-develop/wp-tests-config-sample.php wordpress-develop/wp-tests-config.php
+            - run: sed -i 's/localhost/127.0.0.1/g' wordpress-develop/wp-tests-config.php
+      - run: mkdir -p wordpress-develop/src/wp-content/plugins/genesis-custom-blocks
+      - checkout:
+          path: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks
       - run:
-          command: |
-            sudo apt-get update
-            sudo apt-get install gcc g++ make
-            curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-            sudo apt-get install -y nodejs
-            sudo apt-get install subversion
-            composer install && node --version && npm --version && npm install && npm run build
-  set-up-packages:
-    description: "Installing packages and building"
-    steps:
-      - run: composer install && node --version && npm --version && npm install && npm run build
+          working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
+          command: composer install && npm install && npm run build
 
 jobs:
-  php-tests:
-    parameters:
-      php-version:
-        type: string
-    executor:
-      name: php
-      php-version: << parameters.php-version >>
+  php-71:
+    docker:
+      - image: wordpress:php7.1-fpm-alpine
+        environment:
+          WP_TESTS_DIR: /root/project/wordpress-develop/tests/phpunit
+      - image: mysql:5.7
+        environment:
+          MYSQL_DATABASE: youremptytestdbnamehere
+          MYSQL_USER: yourusernamehere
+          MYSQL_PASSWORD: yourpasswordhere
+          MYSQL_ROOT_PASSWORD: wordpress
+    parallelism: 4
     steps:
-      - checkout
       - prepare-environment
-      - attach_workspace:
-          at: ~/project
       - run:
-          # The primary container isn't MYSQL so run a sleep command until it's ready.
-          name: Waiting for MySQL to be ready
-          command: |
-            for i in `seq 1 10`;
-            do
-              nc -z 127.0.0.1 3306 && echo Success && exit 0
-              echo -n .
-              sleep 1
-            done
-            echo Failed waiting for MySQL && exit 1
+          working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
+          command: composer require --dev phpunit/phpunit 5.7.9 && ls ./vendor/bin/ && ./vendor/bin/phpunit
+
+  php-72:
+    docker:
+      - image: wordpress:php7.2-fpm-alpine
+        environment:
+          WP_TESTS_DIR: /root/project/wordpress-develop/tests/phpunit
+      - image: mysql:5.7
+        environment:
+          MYSQL_DATABASE: youremptytestdbnamehere
+          MYSQL_USER: yourusernamehere
+          MYSQL_PASSWORD: yourpasswordhere
+          MYSQL_ROOT_PASSWORD: wordpress
+    steps:
+      - prepare-environment
       - run:
-          name: Install MySQL CLI; Import dummy data; run an example query
-          command: |
-            sudo apt-get install default-mysql-client
+          working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
+          command: composer require --dev phpunit/phpunit 5.7.9 && ./vendor/bin/phpunit
+
+  php-73:
+    docker:
+      - image: wordpress:php7.3-fpm-alpine
+        environment:
+          WP_TESTS_DIR: /root/project/wordpress-develop/tests/phpunit
+      - image: mysql:5.7
+        environment:
+          MYSQL_DATABASE: youremptytestdbnamehere
+          MYSQL_USER: yourusernamehere
+          MYSQL_PASSWORD: yourpasswordhere
+          MYSQL_ROOT_PASSWORD: wordpress
+    steps:
+      - prepare-environment
       - run:
-          command: |
-            export PATH=$PATH:/usr/local/mysql/bin
-            bash bin/install-wp-tests.sh wordpress_test username wordpress 127.0.0.1 latest true
-            composer test
+          working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
+          command: composer require --dev phpunit/phpunit 5.7.9 && ./vendor/bin/phpunit
 
   lint:
     executor:
       name: php
-      php-version: '7.4'
+      php-version: 7.4.5
     steps:
       - checkout
-      - prepare-environment
       - set-up-packages
-      - run:
-          command: npm run lint
+      - run: npm run lint
 
   js-tests:
     executor: node-only
@@ -100,15 +123,24 @@ jobs:
       image: ubuntu-1604:202004-01
     steps:
       - checkout
-      - run: apk add --update --no-cache git nodejs>12.4.0 nodejs-npm && node --version && npm --version && npm install && npm run build && npm run env start && npm run test:e2e
+      - run:
+          name: Update Node version
+          command: |
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+            export NVM_DIR="/opt/circleci/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # Loads nvm.
+            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # Loads nvm bash_completion.
+            nvm install --lts
+      - run: npm install && npm run build && npm run env start && npm run test:e2e
 
 workflows:
-  lint-test:
+  lint-all:
     jobs:
       - lint
-      - php-tests:
-          matrix:
-            parameters:
-              php-version: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
+  tests:
+    jobs:
+      - php-71
+      - php-72
+      - php-73
       - js-tests
       - e2e-tests
