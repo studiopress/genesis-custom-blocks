@@ -15,13 +15,10 @@ commands:
       - run: composer install && npm install && npm run build
   prepare-environment:
     description: "Preparing the environment..."
-    parameters:
-      clone-wordpress-develop:
-        type: boolean
-        default: true
     steps:
       - run: apk update && apk add --update --no-cache git nodejs npm
       - run:
+          name: Install Composer
           command: |
             php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
             EXPECTED_SIGNATURE=$(curl -s https://composer.github.io/installer.sig)
@@ -29,6 +26,7 @@ commands:
             [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && php composer-setup.php --install-dir=/bin --filename=composer || exit 1
             composer config -g github-protocols https && composer config -g repo.packagist composer https://packagist.org
       - run:
+          name: Install WordPress and set up tests
           command: |
             git clone git://develop.git.wordpress.org/ wordpress-develop
             cp wordpress-develop/wp-tests-config-sample.php wordpress-develop/wp-tests-config.php
@@ -36,9 +34,7 @@ commands:
       - run: mkdir -p wordpress-develop/src/wp-content/plugins/genesis-custom-blocks
       - checkout:
           path: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks
-      - run:
-          working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
-          command: composer install && npm install && npm run build
+      - set-up-packages
 
 jobs:
   php-tests:
@@ -88,7 +84,8 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # Loads nvm.
             [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # Loads nvm bash_completion.
             nvm install --lts
-      - run: npm install && npm run build && npm run env start && npm run test:e2e
+      - set-up-packages
+      - run: npm run env start && npm run test:e2e
 
 workflows:
   lint-all:
@@ -99,6 +96,6 @@ workflows:
       - php-tests:
           matrix:
             parameters:
-              php-version: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
+              php-version: [ '7.1', '7.2', '7.3', '7.4' ]
       - js-tests
       - e2e-tests
