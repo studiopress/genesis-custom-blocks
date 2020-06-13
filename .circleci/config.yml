@@ -30,7 +30,7 @@ commands:
   prepare-environment:
     description: "Preparing the environment"
     steps:
-      - run: apk update && apk add --update --no-cache git nodejs npm
+      - run: sudo apt-get update && sudo apt-get install git
       - run:
           name: Install WordPress and set up tests
           command: |
