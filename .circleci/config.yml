@@ -38,9 +38,9 @@ commands:
       - run: mkdir -p *PLUGIN_FULL_PATH
       - checkout:
           path: *PLUGIN_FULL_PATH
-      - run: cd *PLUGIN_FULL_PATH
-      - set-up-packages
-
+      - run:
+          working_directory: *PLUGIN_FULL_PATH
+          command: set-up-packages
 jobs:
   php-tests:
     parameters:
