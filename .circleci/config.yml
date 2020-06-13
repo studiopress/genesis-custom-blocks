@@ -51,6 +51,23 @@ commands:
           command: composer install && npm install && npm run build
 
 jobs:
+  php-56:
+    docker:
+      - image: wordpress:php5.6-fpm-alpine
+        environment:
+          WP_TESTS_DIR: /root/project/wordpress-develop/tests/phpunit
+      - image: mysql:5.7
+        environment:
+          MYSQL_DATABASE: youremptytestdbnamehere
+          MYSQL_USER: yourusernamehere
+          MYSQL_PASSWORD: yourpasswordhere
+          MYSQL_ROOT_PASSWORD: wordpress
+    steps:
+      - prepare-environment
+      - run:
+          working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
+          command: composer require --dev phpunit/phpunit 5.7.9 && ls ./vendor/bin/ && ./vendor/bin/phpunit
+
   php-70:
     docker:
       - image: wordpress:php7.0-fpm-alpine
@@ -119,6 +136,23 @@ jobs:
           working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
           command: composer require --dev phpunit/phpunit 5.7.9 && ./vendor/bin/phpunit
 
+  php-74:
+    docker:
+      - image: wordpress:php7.3-fpm-alpine
+        environment:
+          WP_TESTS_DIR: /root/project/wordpress-develop/tests/phpunit
+      - image: mysql:5.7
+        environment:
+          MYSQL_DATABASE: youremptytestdbnamehere
+          MYSQL_USER: yourusernamehere
+          MYSQL_PASSWORD: yourpasswordhere
+          MYSQL_ROOT_PASSWORD: wordpress
+    steps:
+      - prepare-environment
+      - run:
+          working_directory: wordpress-develop/src/wp-content/plugins/genesis-custom-blocks/
+          command: composer require --dev phpunit/phpunit 5.7.9 && ./vendor/bin/phpunit
+
   lint:
     executor:
       name: php
@@ -155,9 +189,11 @@ workflows:
       - lint
   tests:
     jobs:
+      - php-56
       - php-70
       - php-71
       - php-72
       - php-73
+      - php-74
       - js-tests
       - e2e-tests
