@@ -19,13 +19,17 @@ commands:
       - run: composer install && npm install && npm run build
   install-composer:
     description: "Installing Composer"
+    parameters:
+      user:
+        type: string
+        default: ''
     steps:
       - run:
           command: |
             php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
             EXPECTED_SIGNATURE=$(curl -s https://composer.github.io/installer.sig)
             ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');")
-            [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && sudo php composer-setup.php --install-dir=/bin --filename=composer || exit 1
+            [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && << parameters.user >> php composer-setup.php --install-dir=/bin --filename=composer || exit 1
   prepare-environment:
     description: "Preparing the environment"
     steps:
@@ -58,13 +62,7 @@ jobs:
           MYSQL_PASSWORD: yourpasswordhere
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
-      - run:
-          name: Install Composer
-          command: |
-            php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-            EXPECTED_SIGNATURE=$(curl -s https://composer.github.io/installer.sig)
-            ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');")
-            [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && php composer-setup.php --install-dir=/bin --filename=composer || exit 1
+      - install-composer
       - prepare-environment
       - run:
           working_directory: *PLUGIN_FULL_PATH
@@ -90,13 +88,8 @@ jobs:
     steps:
       - checkout
       - run: sudo apt-get update && sudo apt-get install php php-xml
-      - run:
-          name: Install Composer
-          command: |
-            php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-            EXPECTED_SIGNATURE=$(curl -s https://composer.github.io/installer.sig)
-            ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');")
-            [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && sudo php composer-setup.php --install-dir=/bin --filename=composer || exit 1
+      - install-composer:
+          user: sudo
       - run:
           name: Update Node version
           command: |
