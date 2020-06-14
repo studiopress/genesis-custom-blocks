@@ -17,6 +17,7 @@ commands:
     description: "Installing packages and building"
     steps:
       - run: composer install && npm install && npm run build
+
   install-composer:
     description: "Installing Composer"
     parameters:
@@ -30,12 +31,13 @@ commands:
             EXPECTED_SIGNATURE=$(curl -s https://composer.github.io/installer.sig)
             ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');")
             [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && << parameters.user >> php composer-setup.php --install-dir=/bin --filename=composer || exit 1
+
   prepare-environment:
     description: "Preparing the environment"
     steps:
       - run: apk update && apk add --update --no-cache git nodejs npm
       - run:
-          name: Install WordPress and set up tests
+          name: Installing WordPress and setting up tests
           command: |
             git clone git://develop.git.wordpress.org/ wordpress-develop
             cp wordpress-develop/wp-tests-config-sample.php wordpress-develop/wp-tests-config.php
@@ -46,7 +48,16 @@ commands:
       - run:
           working_directory: *PLUGIN_FULL_PATH
           command: composer install && npm install && npm run build
+
 jobs:
+  lint:
+    executor:
+      name: php
+    steps:
+      - checkout
+      - set-up-packages
+      - run: npm run lint
+
   php-tests:
     parameters:
       php-version:
@@ -68,14 +79,6 @@ jobs:
           working_directory: *PLUGIN_FULL_PATH
           command: composer require --dev phpunit/phpunit 5.7.9 && ls ./vendor/bin/ && ./vendor/bin/phpunit
 
-  lint:
-    executor:
-      name: php
-    steps:
-      - checkout
-      - set-up-packages
-      - run: npm run lint
-
   js-tests:
     executor: node-only
     steps:
@@ -91,7 +94,7 @@ jobs:
       - install-composer:
           user: sudo
       - run:
-          name: Update Node version
+          name: Updating Node version
           command: |
             curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
             export NVM_DIR="/opt/circleci/.nvm"
