@@ -83,7 +83,7 @@ jobs:
       image: ubuntu-1604:202004-01
     steps:
       - checkout
-      - run: sudo apt-get update && sudo apt-get install php
+      - run: sudo apt-get update && sudo apt-get install php php-xml
       - install-composer
       - run:
           name: Update Node version
@@ -93,7 +93,6 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # Loads nvm.
             [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # Loads nvm bash_completion.
             nvm install --lts
-      - run: composer remove --dev squizlabs/php_codesniffer wp-coding-standards/wpcs
       - set-up-packages
       - run: npm run env start && npm run test:e2e
 
