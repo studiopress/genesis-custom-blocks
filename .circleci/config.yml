@@ -26,7 +26,6 @@ commands:
             EXPECTED_SIGNATURE=$(curl -s https://composer.github.io/installer.sig)
             ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');")
             [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && sudo php composer-setup.php --install-dir=/bin --filename=composer || exit 1
-            composer config -g github-protocols https && composer config -g repo.packagist composer https://packagist.org
   prepare-environment:
     description: "Preparing the environment"
     steps:
