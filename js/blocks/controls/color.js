@@ -4,7 +4,7 @@
 import { BaseControl, TextControl, Popover, ColorIndicator, ColorPicker } from '@wordpress/components';
 import { withState } from '@wordpress/compose';
 
-const BlockLabColorPopover = withState( {
+const GcbColorPopover = withState( {
 } )( ( { isVisible, color, onUpdate, setState } ) => {
 	const toggleVisible = () => {
 		setState( ( state ) => ( { isVisible: ! state.isVisible } ) );
@@ -19,7 +19,7 @@ const BlockLabColorPopover = withState( {
 	};
 
 	return (
-		<BaseControl className="block-lab-color-popover">
+		<BaseControl className="genesis-custom-blocks-color-popover">
 			<ColorIndicator
 				colorValue={ color }
 				onMouseDown={ ( event ) => {
@@ -54,18 +54,18 @@ const BlockLabColorPopover = withState( {
 	);
 } );
 
-const BlockLabColorControl = ( props ) => {
+const GcbColorControl = ( props ) => {
 	const { field, getValue, instanceId, onChange } = props;
 	const initialValue = getValue( props );
 	const value = 'undefined' !== typeof initialValue ? initialValue : field.default;
 
 	return (
-		<BaseControl label={ field.label } id={ `bl-color-${ instanceId }` } className="block-lab-color-control" help={ field.help }>
+		<BaseControl label={ field.label } id={ `gcb-color-${ instanceId }` } className="genesis-custom-blocks-color-control" help={ field.help }>
 			<TextControl
 				value={ value }
 				onChange={ onChange }
 			/>
-			<BlockLabColorPopover
+			<GcbColorPopover
 				isVisible={ false }
 				color={ value }
 				onUpdate={ onChange }
@@ -74,4 +74,4 @@ const BlockLabColorControl = ( props ) => {
 	);
 };
 
-export default BlockLabColorControl;
+export default GcbColorControl;

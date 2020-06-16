@@ -2,13 +2,13 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { BaseControl, IconButton } from '@wordpress/components';
+import { BaseControl, Button } from '@wordpress/components';
 /**
  * Internal dependencies
  */
 import { RepeaterRows } from '../components';
 
-const BlockLabRepeaterControl = ( props ) => {
+const GcbRepeaterControl = ( props ) => {
 	const { field, instanceId, onChange, parentBlock, parentBlockProps } = props;
 	const { attributes, setAttributes } = parentBlockProps;
 	const attr = { ...attributes };
@@ -23,7 +23,7 @@ const BlockLabRepeaterControl = ( props ) => {
 	 * Simply using {} results in <ServerSideRender> not sending an empty row,
 	 * and the empty row isn't rendered in the editor.
 	 *
-	 * @see https://github.com/getblocklab/block-lab/issues/393
+	 * @see https://github.com/studiopress/genesis-custom-blocks/issues/393
 	 */
 	const addEmptyRow = () => {
 		const withAddedRow = rows.concat( { '': '' } );
@@ -36,7 +36,7 @@ const BlockLabRepeaterControl = ( props ) => {
 	}
 
 	return (
-		<BaseControl className="block-lab-repeater" label={ field.label } id={ `bl-repeater-${ instanceId }` } help={ field.help }>
+		<BaseControl className="genesis-custom-blocks-repeater" label={ field.label } id={ `gcb-repeater-${ instanceId }` } help={ field.help }>
 			<RepeaterRows
 				rows={ rows }
 				field={ field }
@@ -44,12 +44,11 @@ const BlockLabRepeaterControl = ( props ) => {
 				parentBlockProps={ parentBlockProps }
 				parentBlock={ parentBlock }
 			/>
-			<div className="block-lab-repeater--row-add">
-				<IconButton
+			<div className="genesis-custom-blocks-repeater--row-add">
+				<Button
 					key={ `${ field.name }-repeater-insert` }
 					icon="insert"
-					label={ __( 'Add new', 'block-lab' ) }
-					labelPosition="bottom"
+					label={ __( 'Add new', 'genesis-custom-blocks' ) }
 					onClick={ addEmptyRow }
 					disabled={ !! field.max && rows.length >= field.max }
 				/>
@@ -58,4 +57,4 @@ const BlockLabRepeaterControl = ( props ) => {
 	);
 };
 
-export default BlockLabRepeaterControl;
+export default GcbRepeaterControl;

@@ -8,7 +8,7 @@ var fs = require( 'fs' );
 var config = JSON.parse( fs.readFileSync( './package.json' ) );
 
 gulp.task( 'version', function () {
-	var pluginStream = gulp.src( [ 'block-lab.php' ] )
+	var pluginStream = gulp.src( [ 'genesis-custom-blocks.php' ] )
 		.pipe( replace( new RegExp( /Version:\s*(.*)/, 'g' ), "Version: " + config.version ) )
 		.pipe(gulp.dest('./package/trunk/'))
 		.pipe(gulp.dest('./'))
@@ -25,7 +25,6 @@ gulp.task( 'bundle', function () {
 		'**/*',
 		'!bin/**/*',
 		'!node_modules/**/*',
-		'!vendor/**/*',
 		'!composer.*',
 		'!js/blocks/**/*',
 		'!js/src/**/*',
@@ -81,7 +80,6 @@ gulp.task( 'clean:bundle', function () {
 		'package/trunk/css/*.map',
 		'package/trunk/bin',
 		'package/trunk/node_modules',
-		'package/trunk/vendor',
 		'package/trunk/tests',
 		'package/trunk/trunk',
 		'package/trunk/gulpfile.js',

@@ -131,7 +131,7 @@ class TinyMCE extends Component {
 		} );
 
 		editor.addButton( 'wp_add_media', {
-			tooltip: __( 'Insert Media', 'block-lab' ),
+			tooltip: __( 'Insert Media', 'genesis-custom-blocks' ),
 			icon: 'dashicon dashicons-admin-media',
 			cmd: 'WP_Medialib',
 		} );
@@ -187,7 +187,7 @@ class TinyMCE extends Component {
 				id={ `toolbar-${ editorId }` }
 				className="classic-text__toolbar"
 				onClick={ this.focus }
-				data-placeholder={ __( 'Classic text', 'block-lab' ) }
+				data-placeholder={ __( 'Classic text', 'genesis-custom-blocks' ) }
 				onKeyDown={ this.onToolbarKeyDown }
 			/>,
 			<div

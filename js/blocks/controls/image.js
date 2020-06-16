@@ -3,10 +3,10 @@
  */
 import { Image } from '../components';
 
-const BlockLabImageControl = ( props ) => {
+const GcbImageControl = ( props ) => {
 	return (
 		<Image { ...props } />
 	);
 };
 
-export default BlockLabImageControl;
+export default GcbImageControl;

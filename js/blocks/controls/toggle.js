@@ -3,7 +3,7 @@
  */
 import { ToggleControl } from '@wordpress/components';
 
-const BlockLabToggleControl = ( props ) => {
+const GcbToggleControl = ( props ) => {
 	const { field, onChange, getValue } = props;
 	const attr = { ...props.attributes };
 	if ( 'undefined' === typeof attr[ field.name ] ) {
@@ -20,4 +20,4 @@ const BlockLabToggleControl = ( props ) => {
 	);
 };
 
-export default BlockLabToggleControl;
+export default GcbToggleControl;

@@ -19,7 +19,7 @@ $font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans
 }
 
 /* Block form in editor & sidebar */
-div[class^="wp-block-block-lab-"],
+div[class^="wp-block-genesis-custom-blocks-"],
 .edit-post-settings-sidebar__panel-block .components-panel__body {
 
   :required:invalid {
@@ -32,7 +32,7 @@ div[class^="wp-block-block-lab-"],
   }
 
   /* Color Control Component */
-  .block-lab-color-control {
+  .genesis-custom-blocks-color-control {
 
     .components-base-control {
       display: inline-block;
@@ -44,7 +44,7 @@ div[class^="wp-block-block-lab-"],
         height: 100%;
       }
 
-      &.block-lab-color-popover {
+      &.genesis-custom-blocks-color-popover {
         width: 28px;
         height: 28px;
         border-radius: 50%;
@@ -75,8 +75,8 @@ div[class^="wp-block-block-lab-"],
   }
 
   /* Media Upload Component */
-  .block-lab-media-controls {
-    .bl-image__img {
+  .genesis-custom-blocks-media-controls {
+    .gcb-image__img {
       max-height: 200px;
       display: block;
       margin-bottom: 8px;
@@ -86,13 +86,13 @@ div[class^="wp-block-block-lab-"],
       position: relative;
     }
 
-    .bl-image__placeholder .components-button.is-button {
+    .gcb-image__placeholder .components-button.is-button {
       white-space: normal;
     }
 
     .components-form-file-upload,
     .components-media-library-button,
-    .bl-image__remove {
+    .gcb-image__remove {
       margin: 0 4px 4px 0;
       display: inline-block;
       vertical-align: top;
@@ -108,7 +108,7 @@ div[class^="wp-block-block-lab-"],
 }
 
 /* Block form in editor */
-div[class^="wp-block-block-lab-"] {
+div[class^="wp-block-genesis-custom-blocks-"] {
   margin: 0;
 
   .block-form {
@@ -137,7 +137,7 @@ div[class^="wp-block-block-lab-"] {
       font-family: $font-family;
     }
 
-    .block-lab-control {
+    .genesis-custom-blocks-control {
       flex-basis: 100%;
       padding-right: 22px;
 
@@ -153,9 +153,9 @@ div[class^="wp-block-block-lab-"] {
     }
 
     @media screen and (max-width: 782px) {
-      .block-lab-control.width-25,
-      .block-lab-control.width-50,
-      .block-lab-control.width-75 {
+      .genesis-custom-blocks-control.width-25,
+      .genesis-custom-blocks-control.width-50,
+      .genesis-custom-blocks-control.width-75 {
         flex-basis: 100%;
       }
     }
@@ -186,7 +186,7 @@ div[class^="wp-block-block-lab-"] {
   }
 
   /* Rich Text Control Component */
-  .block-lab-rich-text-control {
+  .genesis-custom-blocks-rich-text-control {
     .components-base-control__field {
       margin-top: 20px;
     }
@@ -217,7 +217,7 @@ div[class^="wp-block-block-lab-"] {
   }
 
   /* Classic Text Control Component */
-  .block-lab-classic-text-control {
+  .genesis-custom-blocks-classic-text-control {
 
       .classic-text__toolbar {
       position: relative;
@@ -267,12 +267,12 @@ div[class^="wp-block-block-lab-"] {
     }
   }
 
-  .block-lab-repeater {
+  .genesis-custom-blocks-repeater {
 
-    .block-lab-repeater__rows {
+    .genesis-custom-blocks-repeater__rows {
       width: 100%;
 
-      .block-lab-repeater--row {
+      .genesis-custom-blocks-repeater--row {
         min-width: 100%;
         border: 1px dashed $dark-gray-150;
         border-top: 0;
@@ -284,13 +284,13 @@ div[class^="wp-block-block-lab-"] {
         &:first-child {
           border-top: 1px dashed $dark-gray-150;
 
-          .block-lab-repeater--row-actions .button-move-up {
+          .genesis-custom-blocks-repeater--row-actions .button-move-up {
             display: none;
           }
         }
 
         &:last-child {
-          .block-lab-repeater--row-actions .button-move-down {
+          .genesis-custom-blocks-repeater--row-actions .button-move-down {
             display: none;
           }
         }
@@ -299,7 +299,7 @@ div[class^="wp-block-block-lab-"] {
           margin: 0 0 14px;
         }
 
-        .block-lab-repeater--row-actions {
+        .genesis-custom-blocks-repeater--row-actions {
           position: absolute;
           display: none;
           top: -1px;
@@ -320,7 +320,7 @@ div[class^="wp-block-block-lab-"] {
           }
         }
 
-        .block-lab-repeater--row-delete {
+        .genesis-custom-blocks-repeater--row-delete {
           display: none;
           position: absolute;
           right: 2px;
@@ -364,7 +364,7 @@ div[class^="wp-block-block-lab-"] {
 
         &:hover:not(.row-from),
         &.row-to {
-          .block-lab-repeater--row-actions {
+          .genesis-custom-blocks-repeater--row-actions {
             display: block;
             background: #fff;
             box-sizing: border-box;
@@ -385,7 +385,7 @@ div[class^="wp-block-block-lab-"] {
             }
           }
 
-          .block-lab-repeater--row-delete {
+          .genesis-custom-blocks-repeater--row-delete {
             display: block;
           }
         }
@@ -401,7 +401,7 @@ div[class^="wp-block-block-lab-"] {
       }
     }
 
-    .block-lab-repeater--row-add {
+    .genesis-custom-blocks-repeater--row-add {
       margin-top: 4px;
       display: flex;
       justify-content: center;
@@ -422,25 +422,25 @@ div[class^="wp-block-block-lab-"] {
 /* Block form in sidebar */
 .edit-post-settings-sidebar__panel-block .components-panel__body {
   /* Media Upload Component */
-  .block-lab-media-controls {
+  .genesis-custom-blocks-media-controls {
     .components-spinner {
       float: none;
     }
   }
 
-  .block-lab-color-control .components-base-control__label {
+  .genesis-custom-blocks-color-control .components-base-control__label {
     display: block;
   }
 
   /* The FetchInput component */
-  .bl-fetch--input input[type="text"] {
+  .gcb-fetch--input input[type="text"] {
     width: 100%;
   }
 }
 
 /* Miscellaneous global styles */
 .edit-post-layout {
-  .components-popover:not(.is-mobile):not(.bl-fetch__popover) .components-popover__content .components-color-picker {
+  .components-popover:not(.is-mobile):not(.gcb-fetch__popover) .components-popover__content .components-color-picker {
     min-width: 340px;
   }
 }
@@ -451,19 +451,19 @@ div[class^="wp-block-block-lab-"] {
  * So this doesn't work inside the "Block form in editor" section above.
  * @see https://github.com/WordPress/gutenberg/blob/fd2468d6c486220f7f1fa5bfa2366c510b46af27/packages/editor/src/components/url-input/style.scss#L42
  */
-.bl-fetch__input {
+.gcb-fetch__input {
   width: 100%;
 }
 
-.bl-fetch__popover.editor:not(.is-mobile) .components-popover__content {
+.gcb-fetch__popover.editor:not(.is-mobile) .components-popover__content {
   width: $input-width;
 }
 
-.bl-fetch__popover.inspector:not(.is-mobile) .components-popover__content {
+.gcb-fetch__popover.inspector:not(.is-mobile) .components-popover__content {
   min-width: 247px;
 }
 
-.bl-fetch-input__suggestions {
+.gcb-fetch-input__suggestions {
   max-height: 200px;
   transition: all 0.15s ease-in-out;
   padding: 4px 0;
@@ -471,15 +471,15 @@ div[class^="wp-block-block-lab-"] {
 }
 
 // Hide suggestions on mobile until we @todo find a better way to show them.
-.bl-fetch-input__suggestions,
-.bl-fetch-input .components-spinner {
+.gcb-fetch-input__suggestions,
+.gcb-fetch-input .components-spinner {
   display: none;
   @include break-small() {
       display: inherit;
   }
 }
 
-.bl-fetch-input {
+.gcb-fetch-input {
   > .components-base-control__field {
     display: flex;
     flex-wrap: wrap;
@@ -488,7 +488,7 @@ div[class^="wp-block-block-lab-"] {
       flex: 3 3 100%;
     }
 
-    > .bl-fetch__input {
+    > .gcb-fetch__input {
       flex: 1 1 0;
     }
     > .components-spinner {
@@ -497,7 +497,7 @@ div[class^="wp-block-block-lab-"] {
   }
 }
 
-.bl-fetch-input__suggestion {
+.gcb-fetch-input__suggestion {
   padding: 4px $input-padding;
   color: $dark-gray-300; // Lightest we can use for contrast.
   display: block;
@@ -521,14 +521,14 @@ div[class^="wp-block-block-lab-"] {
   }
 }
 
-.bl-dot-tip.read-more {
+.gcb-dot-tip.read-more {
   float: left;
   margin: 0;
   padding-right: 1em;
 }
 
 // In the <ServerSideRender> display, correct an issue where <ul> and <ol> can appear outside (to the left) of their container.
-.editor-styles-wrapper .block-lab-editor__ssr {
+.editor-styles-wrapper .genesis-custom-blocks-editor__ssr {
   ul, ol {
     margin-left: 1rem;
   }

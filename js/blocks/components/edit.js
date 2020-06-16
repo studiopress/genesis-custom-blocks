@@ -6,7 +6,7 @@ import ServerSideRender from '@wordpress/server-side-render';
 /**
  * Internal dependencies
  */
-import { BlockLabInspector, FormControls } from './';
+import { GcbInspector, FormControls } from './';
 import icons from '../../../assets/icons.json';
 
 /**
@@ -26,7 +26,7 @@ const Edit = ( { blockProps, block } ) => {
 
 	return (
 		<>
-			<BlockLabInspector blockProps={ blockProps } block={ block } />
+			<GcbInspector blockProps={ blockProps } block={ block } />
 			<div className={ className } key={ `form-controls-${ block.name }` } >
 				{ isSelected ? (
 					<div className="block-form">
@@ -35,9 +35,9 @@ const Edit = ( { blockProps, block } ) => {
 					</div>
 				) : (
 					<ServerSideRender
-						block={ `block-lab/${ block.name }` }
+						block={ `genesis-custom-blocks/${ block.name }` }
 						attributes={ attributes }
-						className="block-lab-editor__ssr"
+						className="genesis-custom-blocks-editor__ssr"
 					/>
 				) }
 			</div>

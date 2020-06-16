@@ -3,7 +3,7 @@
  */
 import { TextareaControl } from '@wordpress/components';
 
-const BlockLabTextareaControl = ( props ) => {
+const GcbTextareaControl = ( props ) => {
 	const { getValue, field, onChange } = props;
 	const initialValue = getValue( props );
 	const value = 'undefined' !== typeof initialValue ? initialValue : field.default;
@@ -21,4 +21,4 @@ const BlockLabTextareaControl = ( props ) => {
 	);
 };
 
-export default BlockLabTextareaControl;
+export default GcbTextareaControl;

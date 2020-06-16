@@ -1,25 +1,27 @@
 <?xml version="1.0"?>
-<ruleset name="WordPress Coding Standards for Block Lab">
+<ruleset name="WordPress Coding Standards for Genesis Custom Blocks">
 
 	<rule ref="WordPress-Core">
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax" />
+		<exclude name="WordPress.Files.FileName" />
 	</rule>
 
 	<rule ref="WordPress-Docs" />
 	<rule ref="WordPress-Extra" />
-
-	<rule ref="WordPress.Files.FileName.InvalidClassFileName">
-		<exclude-pattern>tests/*</exclude-pattern>
-	</rule>
 
 	<rule ref="Generic.Arrays.DisallowLongArraySyntax.Found" />
 
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
-				<element value="block-lab"/>
+				<element value="genesis-custom-blocks"/>
 			</property>
 		</properties>
+	</rule>
+
+	<!-- Ensure there are PascalCase file names. -->
+	<rule ref="Squiz.Classes.ClassFileName">
+		<include-pattern>php/*</include-pattern>
 	</rule>
 
 	<config name="testVersion" value="5.6-"/>

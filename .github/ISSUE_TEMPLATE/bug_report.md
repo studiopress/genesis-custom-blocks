@@ -28,7 +28,7 @@ about: Report a problem
 ## Versions
 
  - WordPress version:
- - Block Lab version: <!-- Please ensure the latest version of Block Lab is running: https://github.com/getblocklab/block-lab/releases -->
+ - Genesis Custom Blocks version: <!-- Please ensure the latest version of Genesis Custom Blocks is running: https://github.com/studiopress/genesis-custom-blocks -->
  - Gutenberg plugin version (if active):
  - OS:
  - Browser:

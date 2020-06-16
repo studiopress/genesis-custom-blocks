@@ -1,12 +1,11 @@
 /**
  * Used for editing Blocks.
  *
- * @package   Block_Lab
- * @copyright Copyright(c) 2020, Block Lab
- * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
+ * @copyright Copyright(c) 2020, Genesis Custom Blocks
+ * @license GPL-2.0-only
  */
 
-/* global blockLab, jQuery */
+/* global genesisCustomBlocks, jQuery */
 
 ( function( $ ) {
 	$( function() {
@@ -26,7 +25,7 @@
 
 			$( '.block-fields-rows' ).append( row );
 			$( '.block-no-fields' ).hide();
-			$( '.block-lab-add-fields' ).hide();
+			$( '.genesis-custom-blocks-add-fields' ).hide();
 
 			edit.trigger( 'click' );
 			label.data( 'defaultValue', label.val() );
@@ -69,7 +68,7 @@
 			label.select();
 		} );
 
-		$( '.block-lab-pub-section .edit-post-types' ).on( 'click', function() {
+		$( '.genesis-custom-blocks-pub-section .edit-post-types' ).on( 'click', function() {
 			const excludedPostTypes = $( '#block-excluded-post-types' ).val().split( ',' ).filter( Boolean );
 
 			$( '.post-types-select-items input' ).prop( 'checked', true );
@@ -78,11 +77,11 @@
 				$( '.post-types-select-items input[value="' + postType + '"]' ).prop( 'checked', false );
 			}
 
-			$( '.block-lab-pub-section .post-types-select' ).slideDown( 200 );
+			$( '.genesis-custom-blocks-pub-section .post-types-select' ).slideDown( 200 );
 			$( this ).hide();
 		} );
 
-		$( '.block-lab-pub-section .save-post-types' ).on( 'click', function() {
+		$( '.genesis-custom-blocks-pub-section .save-post-types' ).on( 'click', function() {
 			const checked = $( '.post-types-select-items input:not(:checked)' ),
 				postTypes = [];
 			for ( const input of checked ) {
@@ -93,13 +92,13 @@
 
 			blockPostTypesInit();
 
-			$( '.block-lab-pub-section .post-types-select' ).slideUp( 200 );
-			$( '.block-lab-pub-section .edit-post-types' ).show();
+			$( '.genesis-custom-blocks-pub-section .post-types-select' ).slideUp( 200 );
+			$( '.genesis-custom-blocks-pub-section .edit-post-types' ).show();
 		} );
 
-		$( '.block-lab-pub-section .button-cancel' ).on( 'click', function() {
-			$( '.block-lab-pub-section .post-types-select' ).slideUp( 200 );
-			$( '.block-lab-pub-section .edit-post-types' ).show();
+		$( '.genesis-custom-blocks-pub-section .button-cancel' ).on( 'click', function() {
+			$( '.genesis-custom-blocks-pub-section .post-types-select' ).slideUp( 200 );
+			$( '.genesis-custom-blocks-pub-section .edit-post-types' ).show();
 		} );
 
 		$( '#block_properties .block-properties-icon-select span' ).on( 'click', function() {
@@ -131,9 +130,9 @@
 			const copied = document.execCommand( 'copy' );
 
 			if ( copied ) {
-				copy.attr( 'data-tooltip', blockLab.copySuccessMessage );
+				copy.attr( 'data-tooltip', genesisCustomBlocks.copySuccessMessage );
 			} else {
-				copy.attr( 'data-tooltip', blockLab.copyFailMessage );
+				copy.attr( 'data-tooltip', genesisCustomBlocks.copyFailMessage );
 			}
 
 			$( this ).hide();
@@ -324,7 +323,7 @@
 	};
 
 	const blockPostTypesInit = function() {
-		if ( 0 === $( '.block-lab-pub-section' ).length ) {
+		if ( 0 === $( '.genesis-custom-blocks-pub-section' ).length ) {
 			return;
 		}
 
@@ -336,14 +335,14 @@
 			.filter( Boolean );
 
 		if ( 0 === excludedPostTypes.length ) {
-			display.text( blockLab.postTypes.all );
+			display.text( genesisCustomBlocks.postTypes.all );
 			return;
 		}
 
 		const inputs = $( '.post-types-select-items input' );
 
 		if ( excludedPostTypes.length === inputs.length ) {
-			display.text( blockLab.postTypes.none );
+			display.text( genesisCustomBlocks.postTypes.none );
 			return;
 		}
 
@@ -361,7 +360,7 @@
 	};
 
 	const fetchFieldSettings = function( fieldRow, fieldControl ) {
-		if ( ! blockLab.hasOwnProperty( 'fieldSettingsNonce' ) ) {
+		if ( ! genesisCustomBlocks.hasOwnProperty( 'fieldSettingsNonce' ) ) {
 			return;
 		}
 
@@ -378,7 +377,7 @@
 		const data = {
 			control: fieldControl,
 			uid: fieldRow.data( 'uid' ),
-			nonce: blockLab.fieldSettingsNonce,
+			nonce: genesisCustomBlocks.fieldSettingsNonce,
 		};
 
 		// If this is a sub-field, pass along the parent UID as well.

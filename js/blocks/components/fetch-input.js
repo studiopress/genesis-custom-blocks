@@ -133,7 +133,7 @@ class FetchInput extends Component {
 					'%d result found, use up and down arrow keys to navigate.',
 					'%d results found, use up and down arrow keys to navigate.',
 					results.length,
-					'block-lab'
+					'genesis-custom-blocks'
 				), results.length ), 'assertive' );
 
 				if ( null === this.state.selectedSuggestion && '' !== this.getInputValue() ) {
@@ -142,7 +142,7 @@ class FetchInput extends Component {
 					} );
 				}
 			} else {
-				this.props.debouncedSpeak( __( 'No results.', 'block-lab' ), 'assertive' );
+				this.props.debouncedSpeak( __( 'No results.', 'genesis-custom-blocks' ), 'assertive' );
 			}
 		} ).catch( () => {
 			if ( this.suggestionsRequest === request ) {
@@ -169,13 +169,13 @@ class FetchInput extends Component {
 		}
 
 		if ( ! isValid ) {
-			this.inputRef.current.setCustomValidity( sprintf( __( 'Invalid %s', 'block-lab' ), this.props.field.control ) );
+			this.inputRef.current.setCustomValidity( sprintf( __( 'Invalid %s', 'genesis-custom-blocks' ), this.props.field.control ) );
 			this.inputRef.current.reportValidity();
 		} else {
 			this.inputRef.current.setCustomValidity( '' );
 		}
 
-		this.inputRef.current.className = classNames( 'bl-fetch__input', {
+		this.inputRef.current.className = classNames( 'gcb-fetch__input', {
 			'text-control__error': ! isValid,
 		} );
 	}
@@ -184,7 +184,7 @@ class FetchInput extends Component {
 	 * On clicking outside the <input>, hide the Popover.
 	 *
 	 * Mainly taken from the color control onBlur handler.
-	 * The only exception is when selecting an item by clicking a .bl-fetch-input__suggestion.
+	 * The only exception is when selecting an item by clicking a .gcb-fetch-input__suggestion.
 	 * That has its own handler, which will eventually hide the Popover.
 	 *
 	 * @param {Object} event The event.
@@ -193,7 +193,7 @@ class FetchInput extends Component {
 		if (
 			event.relatedTarget &&
 			! event.relatedTarget.classList.contains( 'components-popover__content' ) &&
-			! event.relatedTarget.classList.contains( 'bl-fetch-input__suggestion' )
+			! event.relatedTarget.classList.contains( 'gcb-fetch-input__suggestion' )
 		) {
 			this.setState( {
 				showSuggestions: false,
@@ -344,10 +344,10 @@ class FetchInput extends Component {
 
 		/* eslint-disable jsx-a11y/no-autofocus */
 		return (
-			<BaseControl label={ field.label } id={ `fetch-input-${ instanceId }` } className={ classNames( 'bl-fetch-input', className ) } help={ field.help }>
+			<BaseControl label={ field.label } id={ `fetch-input-${ instanceId }` } className={ classNames( 'gcb-fetch-input', className ) } help={ field.help }>
 				<input
 					autoFocus={ autoFocus }
-					className="bl-fetch__input"
+					className="gcb-fetch__input"
 					type="text"
 					aria-label={ field.label }
 					value={ inputValue }
@@ -359,8 +359,8 @@ class FetchInput extends Component {
 					role="combobox"
 					aria-expanded={ showSuggestions }
 					aria-autocomplete="list"
-					aria-controls={ `bl-fetch-input-suggestions-${ instanceId }` }
-					aria-owns={ `bl-fetch-input-suggestions-${ instanceId }` }
+					aria-controls={ `gcb-fetch-input-suggestions-${ instanceId }` }
+					aria-owns={ `gcb-fetch-input-suggestions-${ instanceId }` }
 					aria-activedescendant={ selectedSuggestion !== null ? `editor-url-input-suggestion-${ instanceId }-${ selectedSuggestion }` : undefined }
 					ref={ this.inputRef }
 					autoComplete="off"
@@ -376,11 +376,11 @@ class FetchInput extends Component {
 						position="bottom center"
 						noArrow
 						focusOnMount={ false }
-						className={ classNames( 'bl-fetch__popover', field.location ) }
+						className={ classNames( 'gcb-fetch__popover', field.location ) }
 					>
 						<div
-							className="bl-fetch-input__suggestions"
-							id={ `bl-fetch-input-suggestions-${ instanceId }` }
+							className="gcb-fetch-input__suggestions"
+							id={ `gcb-fetch-input-suggestions-${ instanceId }` }
 							ref={ this.autocompleteRef }
 							role="listbox"
 						>
@@ -389,12 +389,12 @@ class FetchInput extends Component {
 
 								return !! buttonValue && (
 									<button
-										key={ `bl-fetch-suggestion-${ index }` }
+										key={ `gcb-fetch-suggestion-${ index }` }
 										role="option"
 										tabIndex="-1"
-										id={ `bl-fetch-input-suggestion-${ instanceId }-${ index }` }
+										id={ `gcb-fetch-input-suggestion-${ instanceId }-${ index }` }
 										ref={ this.bindSuggestionNode( index ) }
-										className={ classNames( 'bl-fetch-input__suggestion', {
+										className={ classNames( 'gcb-fetch-input__suggestion', {
 											'is-selected': index === selectedSuggestion,
 										} ) }
 										onClick={ () => this.handlePopoverButton( result ) }

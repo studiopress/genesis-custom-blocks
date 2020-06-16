@@ -3,7 +3,7 @@
  */
 import { ContentControl } from '../components';
 
-const BlockLabPostControl = ( props ) => {
+const GcbPostControl = ( props ) => {
 	/**
 	 * Gets the post title from an API response.
 	 *
@@ -15,4 +15,4 @@ const BlockLabPostControl = ( props ) => {
 	return <ContentControl { ...contentProps } />;
 };
 
-export default BlockLabPostControl;
+export default GcbPostControl;

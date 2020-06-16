@@ -7,29 +7,29 @@ import { registerBlockType } from '@wordpress/blocks';
  * Internal dependencies
  */
 import icons from '../../../assets/icons.json';
-import { getBlockLabAttributes } from './';
+import { getGcbBlockAttributes } from './';
 
 /**
  * Loops through all of the blocks, but not guaranteed to be sequential.
  *
- * @param {Object} blockLab Block Lab properties, available via wp_localize_script().
- * @param {Object} blockLabBlocks The registered Block Lab blocks, available via wp_add_inline_script().
+ * @param {Object} genesisCustomBlocks Genesis Custom Blocks properties, available via wp_localize_script().
+ * @param {Object} gcbBlocks The registered Genesis Custom Blocks blocks, available via wp_add_inline_script().
  * @param {Function} EditComponent The edit component to render the blocks.
  */
-const registerBlocks = ( blockLab, blockLabBlocks, EditComponent ) => {
-	for ( const blockName in blockLabBlocks ) {
+const registerBlocks = ( genesisCustomBlocks, gcbBlocks, EditComponent ) => {
+	for ( const blockName in gcbBlocks ) {
 		// Avoid weird inheritance issues. Which should not happen because the backend is safe.
-		if ( ! blockLabBlocks.hasOwnProperty( blockName ) ) {
+		if ( ! gcbBlocks.hasOwnProperty( blockName ) ) {
 			continue;
 		}
 
 		// Get the block definition.
-		const block = blockLabBlocks[ blockName ];
+		const block = gcbBlocks[ blockName ];
 		block.block_slug = blockName;
 
 		// Don't register the block if it's excluded for this post type.
-		if ( blockLab.hasOwnProperty( 'postType' ) && block.hasOwnProperty( 'excluded' ) ) {
-			if ( -1 !== block.excluded.indexOf( blockLab.postType ) ) {
+		if ( genesisCustomBlocks.hasOwnProperty( 'postType' ) && block.hasOwnProperty( 'excluded' ) ) {
+			if ( -1 !== block.excluded.indexOf( genesisCustomBlocks.postType ) ) {
 				continue;
 			}
 		}
@@ -47,7 +47,7 @@ const registerBlocks = ( blockLab, blockLabBlocks, EditComponent ) => {
 			category: 'object' === typeof block.category ? block.category.slug : block.category,
 			icon,
 			keywords: block.keywords,
-			attributes: getBlockLabAttributes( block.fields ),
+			attributes: getGcbBlockAttributes( block.fields ),
 			edit( props ) {
 				return <EditComponent blockProps={ props } block={ block } />;
 			},

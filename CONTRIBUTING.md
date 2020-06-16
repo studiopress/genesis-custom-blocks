@@ -1,8 +1,8 @@
-# Contributing to Block Lab
+# Contributing to Genesis Custom Blocks
 
 :+1::tada: First off, thanks for taking the time to contribute! :tada::+1:
 
-The following is a set of guidelines for contributing to Block Lab.  These are mostly guidelines, not rules.  Use your best judgment, and feel free to propose changes to this document in a pull request.
+The following is a set of guidelines for contributing to Genesis Custom Blocks.  These are mostly guidelines, not rules.  Use your best judgment, and feel free to propose changes to this document in a pull request.
 
 #### Table Of Contents
 
@@ -23,7 +23,7 @@ The following is a set of guidelines for contributing to Block Lab.  These are m
 
 ## Code of Conduct
 
-This project and everyone participating in it is governed by the [Block Lab Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.  Please report unacceptable behavior to [info@getblocklab.com](mailto:info@getblocklab.com).
+This project and everyone participating in it is governed by the [Genesis Custom Blocks Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.  Please report unacceptable behavior to [info@getblocklab.com](mailto:info@getblocklab.com).
 
 ## How Can I Contribute?
 
@@ -74,7 +74,7 @@ While the prerequisites above must be satisfied prior to having your pull reques
 
 ### Local Setup
 
-Block Lab development requires Node.js and follows the WordPress coding standards for PHP and JavaScript. In order to get your development environment setup quickly, simply run the following commands after cloning the plugin from Github:
+Genesis Custom Blocks development requires Node.js and follows the WordPress coding standards for PHP and JavaScript. In order to get your development environment setup quickly, simply run the following commands after cloning the plugin from Github:
 
 #### Node
 
@@ -100,28 +100,6 @@ While developing, it is a best practice to watch for changes. This command will 
 composer install
 ```
 
-## Additional Notes
-
-### Issue and Pull Request Labels
-
-This section lists the labels we use to help us track and manage issues and pull requests.  Please open an issue if you have suggestions for new labels.
-
-[GitHub search](https://help.github.com/articles/searching-issues/) makes it easy to use labels for finding groups of issues or pull requests you're interested in.  For example, you might be interested in [open issues which are labeled as bugs and are good for new contributors](https://github.com/getblocklab/block-lab/issues?q=is%3Aopen+is%3Aissue+label%3Abug+label%3A%22good+first+issue%22) or perhaps [open pull requests which haven't been reviewed yet](https://github.com/getblocklab/block-lab/pulls?q=is%3Apr+is%3Aopen+review%3Anone).  To help you find issues and pull requests, each label is listed with search links for finding open items with that label.  We  encourage you to read about [other search filters](https://help.github.com/articles/searching-issues/) which will help you write more focused queries.
-
-#### Issue and Pull Request Labels
-
-| Label name | `getblocklab/block-lab` :mag_right: | Description |
-| --- | --- | --- |
-| `bug` | [search][search-block-lab-repo-label-bug] | Something isn't working. |
-| `control` | [search][search-block-lab-repo-label-control] |  |
-| `duplicate` | [search][search-block-lab-repo-label-duplicate] | This issue or pull request already exists. |
-| `enhancement` | [search][search-block-lab-repo-label-enhancement] | New feature or request. |
-| `good-first-issue` | [search][search-block-lab-repo-label-good-first-issue] | Good for newcomers. |
-| `help-wanted` | [search][search-block-lab-repo-label-help-wanted] | Extra attention is needed. |
-| `invalid` | [search][search-block-lab-repo-label-invalid] | This doesn't seem right. |
-| `question` | [search][search-block-lab-repo-label-question] | Further information is requested. |
-| `wontfix` | [search][search-block-lab-repo-label-wontfix] | This will not be worked on. |
-
 Thanks! :heart: :heart: :heart:
 
-Block Lab Team
+Genesis Custom Blocks Team
