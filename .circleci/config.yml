@@ -43,12 +43,12 @@ commands:
             echo "Installing Node binary"
             if [[ $EUID == 0 ]]; then export SUDO=""; else export SUDO="sudo"; fi
             $SUDO tar -xzf "node-v13.9.0-linux-x64.tar.gz" \
-              -C /usr/bin \
+              -C /usr/local/bin \
               --strip-components=1 --no-same-owner > /dev/null 2>&1
 
-            if [[ ! -e /usr/bin/nodejs ]]; then
+            if [[ ! -e /usr/local/bin/nodejs ]]; then
               echo "Adding a symlink"
-              $SUDO ln -s /usr/bin/node /usr/bin/nodejs
+              $SUDO ln -s /usr/local/bin/node /usr/local/bin/nodejs
             fi
 
   prepare-environment:
@@ -66,7 +66,7 @@ commands:
           path: *PLUGIN_FULL_PATH
       - run:
           working_directory: *PLUGIN_FULL_PATH
-          command: export PATH=$PATH:/usr/bin && node --version && npm --version && composer install && npm install && npm run build
+          command: export PATH=$PATH:/usr/local/bin && node --version && npm --version && composer install && npm install && npm run build
 
 jobs:
   lint:
