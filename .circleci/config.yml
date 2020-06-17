@@ -67,7 +67,7 @@ commands:
           path: *PLUGIN_FULL_PATH
       - run:
           working_directory: *PLUGIN_FULL_PATH
-          command: export PATH=$PATH:/usr/bin && npm --version && composer install && npm install && npm run build
+          command: export PATH=$PATH:/usr/bin && npm install -g npm@6.9.0 && npm --version && composer install && npm install && npm run build
 
 jobs:
   lint:
