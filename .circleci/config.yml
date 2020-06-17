@@ -38,7 +38,7 @@ commands:
       - run:
           command: |
             echo "Downloading Node binary"
-            curl -O --silent --show-error --location --fail --retry 3 https://nodejs.org/download/release/v12.18.0/node-v12.18.0-linux-x64.tar.gz
+            curl -O --silent --show-error --location --fail --retry 3 https://nodejs.org/download/release/v13.9.0/node-v13.9.0-linux-x64.tar.gz
 
             echo "Installing Node binary"
             if [[ $EUID == 0 ]]; then export SUDO=""; else export SUDO="sudo"; fi
