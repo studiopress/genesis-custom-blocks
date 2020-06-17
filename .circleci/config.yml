@@ -43,13 +43,13 @@ commands:
             echo "Installing Node binary"
             if [[ $EUID == 0 ]]; then export SUDO=""; else export SUDO="sudo"; fi
             $SUDO tar -xzf "node-v12.18.0-linux-x64.tar.gz" \
-              -C /usr/local/bin \
+              -C /usr/bin \
               --strip-components=1 --no-same-owner > /dev/null 2>&1
 
-            if [[ ! -e /usr/local/bin/nodejs ]]; then
+            if [[ ! -e /usr/bin/nodejs ]]; then
               echo "Adding a simlink"
               which whoami
-              $SUDO ln -s /usr/local/bin/node /usr/local/bin/nodejs
+              $SUDO ln -s /usr/bin/node /usr/bin/nodejs
             fi
 
   prepare-environment:
