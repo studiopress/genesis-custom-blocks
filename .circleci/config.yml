@@ -43,7 +43,7 @@ commands:
   prepare-environment:
     description: "Preparing the environment"
     steps:
-      - run: apk update && apk add --update --no-cache git nodejs npm
+      - run: apk update && apk add --update --no-cache git
       - run:
           name: Installing WordPress and setting up tests
           command: |
