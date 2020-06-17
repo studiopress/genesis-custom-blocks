@@ -32,12 +32,30 @@ commands:
             ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');")
             [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && << parameters.user >> php composer-setup.php --install-dir=/bin --filename=composer || exit 1
 
+  install-node:
+    description: "Installing Node"
+    steps:
+      - run:
+          command: |
+            echo "Downloading Node binary"
+            curl -O --silent --show-error --location --fail --retry 3 https://nodejs.org/download/release/v12.18.0/node-v12.18.0-linux-x64.tar.gz
+
+            echo "Installing Node binary"
+            if [[ $EUID == 0 ]]; then export SUDO=""; else export SUDO="sudo"; fi
+            $SUDO tar -xzf "node-v12.18.0-linux-x64.tar.gz" \
+              -C /usr/bin \
+              --strip-components=1 --no-same-owner > /dev/null 2>&1
+
+            if [[ ! -e /usr/bin/nodejs ]]; then
+              echo "Adding a simlink"
+              which whoami
+              $SUDO ln -s /usr/bin/node /usr/bin/nodejs
+            fi
+
   prepare-environment:
     description: "Preparing the environment"
     steps:
-      - run: apk update && apk add --update --no-cache git
-      - run: apk search --update 'npm*'
-      - run: apk search --update 'nodejs*'
+      - run: apk update && apk add --update --no-cache git nodejs npm
       - run:
           name: Installing WordPress and setting up tests
           command: |
@@ -49,14 +67,7 @@ commands:
           path: *PLUGIN_FULL_PATH
       - run:
           working_directory: *PLUGIN_FULL_PATH
-          command: |
-            cp common/stack-fix.c /lib/
-            set -ex \
-                && apk add --no-cache  --virtual .build-deps build-base \
-                && gcc  -shared -fPIC /lib/stack-fix.c -o /lib/stack-fix.so \
-                && apk del .build-deps
-            export LD_PRELOAD="/lib/stack-fix.so"
-            apk add npm --update
+          command: export PATH=$PATH:/usr/bin && npm --version && composer install && npm install && npm run build
 
 jobs:
   lint:
@@ -83,8 +94,9 @@ jobs:
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
       - install-composer
-      - prepare-environment
+      - install-node
       - run: node --version
+      - prepare-environment
       - run:
           working_directory: *PLUGIN_FULL_PATH
           command: composer require --dev phpunit/phpunit 5.7.9 && ./vendor/bin/phpunit
