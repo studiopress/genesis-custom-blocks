@@ -40,9 +40,7 @@ commands:
       - run:
           command: |
             echo "Downloading Node binary"
-            curl -O \
-              --silent --show-error --location --fail --retry 3 \
-              *NODE_BINARY_URL
+            curl -O --silent --show-error --location --fail --retry 3 *NODE_BINARY_URL
 
             echo "Installing Node binary"
             if [[ $EUID == 0 ]]; then export SUDO=""; else export SUDO="sudo"; fi
