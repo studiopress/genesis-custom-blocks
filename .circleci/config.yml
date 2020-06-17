@@ -3,8 +3,6 @@ version: 2.1
 references:
   PLUGIN_FULL_PATH: &PLUGIN_FULL_PATH
     wordpress-develop/src/wp-content/plugins/genesis-custom-blocks
-  NODE_BINARY_URL: &NODE_BINARY_URL
-    https://nodejs.org/download/release/v12.18.0/node-v12.18.0-linux-x64.tar.gz
 
 executors:
   php:
@@ -40,7 +38,7 @@ commands:
       - run:
           command: |
             echo "Downloading Node binary"
-            curl -O --silent --show-error --location --fail --retry 3 "*NODE_BINARY_URL"
+            curl -O --silent --show-error --location --fail --retry 3 https://nodejs.org/download/release/v12.18.0/node-v12.18.0-linux-x64.tar.gz
 
             echo "Installing Node binary"
             if [[ $EUID == 0 ]]; then export SUDO=""; else export SUDO="sudo"; fi
