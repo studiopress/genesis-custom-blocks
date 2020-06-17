@@ -36,7 +36,7 @@ commands:
     description: "Preparing the environment"
     steps:
       - run: apk update && apk add --update --no-cache git
-      - run: apk search --update 'node*'
+      - run: apk search --update 'npm*'
       - run: apk search --update 'nodejs-npm*'
       - run:
           name: Installing WordPress and setting up tests
@@ -49,7 +49,7 @@ commands:
           path: *PLUGIN_FULL_PATH
       - run:
           working_directory: *PLUGIN_FULL_PATH
-          command: apk add npm --update
+          command: apk add npm --update && npm install -g npm@6.9.0 && node --version && npm --version && composer install && npm install && npm run build
 
 jobs:
   lint:
