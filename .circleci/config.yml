@@ -47,8 +47,7 @@ commands:
               --strip-components=1 --no-same-owner > /dev/null 2>&1
 
             if [[ ! -e /usr/bin/nodejs ]]; then
-              echo "Adding a simlink"
-              which whoami
+              echo "Adding a symlink"
               $SUDO ln -s /usr/bin/node /usr/bin/nodejs
             fi
 
@@ -67,7 +66,7 @@ commands:
           path: *PLUGIN_FULL_PATH
       - run:
           working_directory: *PLUGIN_FULL_PATH
-          command: export PATH=$PATH:/usr/bin && npm install -g npm@6.9.0 && npm --version && composer install && npm install && npm run build
+          command: export PATH=$PATH:/usr/bin && node --version && npm --version && composer install && npm install && npm run build
 
 jobs:
   lint:
