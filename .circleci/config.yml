@@ -78,6 +78,8 @@ jobs:
     steps:
       - install-composer
       - prepare-environment
+      - node/install:
+          node-version: latest
       - run:
           working_directory: *PLUGIN_FULL_PATH
           command: composer require --dev phpunit/phpunit 5.7.9 && ./vendor/bin/phpunit
