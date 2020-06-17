@@ -37,6 +37,7 @@ commands:
     steps:
       - run: apk update && apk add --update --no-cache git
       - run: apk search --update 'node*'
+      - run: apk search --update 'nodejs-npm*'
       - run:
           name: Installing WordPress and setting up tests
           command: |
