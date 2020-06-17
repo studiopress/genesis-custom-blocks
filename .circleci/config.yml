@@ -95,7 +95,6 @@ jobs:
     steps:
       - install-composer
       - install-node
-      - run: node --version
       - prepare-environment
       - run:
           working_directory: *PLUGIN_FULL_PATH
