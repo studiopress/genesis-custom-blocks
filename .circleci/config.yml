@@ -32,25 +32,6 @@ commands:
             ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');")
             [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && << parameters.user >> php composer-setup.php --install-dir=/bin --filename=composer || exit 1
 
-  install-node:
-    description: "Installing Node"
-    steps:
-      - run:
-          command: |
-            echo "Downloading Node binary"
-            curl -O --silent --show-error --location --fail --retry 3 https://nodejs.org/download/release/v13.9.0/node-v13.9.0-linux-x64.tar.gz
-
-            echo "Installing Node binary"
-            if [[ $EUID == 0 ]]; then export SUDO=""; else export SUDO="sudo"; fi
-            $SUDO tar -xzf "node-v13.9.0-linux-x64.tar.gz" \
-              -C /usr/local/bin \
-              --strip-components=1 --no-same-owner > /dev/null 2>&1
-
-            if [[ ! -e /usr/local/bin/nodejs ]]; then
-              echo "Adding a symlink"
-              $SUDO ln -s /usr/local/bin/node /usr/local/bin/nodejs
-            fi
-
   prepare-environment:
     description: "Preparing the environment"
     steps:
@@ -66,7 +47,21 @@ commands:
           path: *PLUGIN_FULL_PATH
       - run:
           working_directory: *PLUGIN_FULL_PATH
-          command: export PATH=$PATH:/usr/local/bin/nodejs && ls /usr/local/bin/nodejs && npm --version && composer install && npm install && npm run build
+          command: |
+            echo "Downloading Node binary"
+            curl -O --silent --show-error --location --fail --retry 3 https://nodejs.org/download/release/v13.9.0/node-v13.9.0-linux-x64.tar.gz
+
+            echo "Installing Node binary"
+            if [[ $EUID == 0 ]]; then export SUDO=""; else export SUDO="sudo"; fi
+            $SUDO tar -xzf "node-v13.9.0-linux-x64.tar.gz" \
+              -C /usr/local/bin \
+              --strip-components=1 --no-same-owner > /dev/null 2>&1
+
+            if [[ ! -e /usr/local/bin/nodejs ]]; then
+              echo "Adding a symlink"
+              $SUDO ln -s /usr/local/bin/node /usr/local/bin/nodejs
+            fi
+            export PATH=$PATH:/usr/local/bin/nodejs && PATH=$PATH:/usr/local/bin/ && ls /usr/local/bin/nodejs && npm --version && composer install && npm install && npm run build
 
 jobs:
   lint:
@@ -93,7 +88,6 @@ jobs:
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
       - install-composer
-      - install-node
       - prepare-environment
       - run:
           working_directory: *PLUGIN_FULL_PATH
