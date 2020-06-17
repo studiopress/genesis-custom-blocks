@@ -37,8 +37,8 @@ commands:
     steps:
       - run:
           command: |
-            echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
-            apk add --update --no-cache nodejs-current --repository="http://dl-cdn.alpinelinux.org/alpine/edge/community"
+            apk add nodejs-lts --update
+            search --update 'node*'
 
   prepare-environment:
     description: "Preparing the environment"
