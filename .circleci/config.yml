@@ -78,7 +78,7 @@ jobs:
     steps:
       - install-composer
       - node/install:
-          node-version: latest
+          node-version: lts
       - run: node --version
       - prepare-environment
       - run:
