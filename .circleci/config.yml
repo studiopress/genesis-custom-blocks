@@ -75,8 +75,8 @@ jobs:
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
       - install-composer
-      - run: node --version
       - prepare-environment
+      - run: node --version
       - run:
           working_directory: *PLUGIN_FULL_PATH
           command: composer require --dev phpunit/phpunit 5.7.9 && ./vendor/bin/phpunit
