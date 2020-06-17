@@ -1,11 +1,10 @@
 version: 2.1
 
-orbs:
-  node: circleci/node@3.0.0
-
 references:
   PLUGIN_FULL_PATH: &PLUGIN_FULL_PATH
     wordpress-develop/src/wp-content/plugins/genesis-custom-blocks
+  NODE_BINARY_URL: &NODE_BINARY_URL
+    https://nodejs.org/download/release/v12.18.0/node-v12.18.0-linux-x64.tar.gz
 
 executors:
   php:
@@ -34,6 +33,26 @@ commands:
             EXPECTED_SIGNATURE=$(curl -s https://composer.github.io/installer.sig)
             ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');")
             [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && << parameters.user >> php composer-setup.php --install-dir=/bin --filename=composer || exit 1
+
+  install-node:
+    description: "Installing Node"
+    steps:
+      - run:
+          command: |
+            echo "Downloading Node binary"
+            curl -O \
+              --silent --show-error --location --fail --retry 3 \
+              *NODE_BINARY_URL
+
+            echo "Installing Node binary"
+            if [[ $EUID == 0 ]]; then export SUDO=""; else export SUDO="sudo"; fi
+            $SUDO tar -xzf "node-v12.18.0-linux-x64.tar.gz" \
+              -C /usr/local \
+              --strip-components=1 --no-same-owner > /dev/null 2>&1
+
+            if [[ ! -e /usr/local/bin/nodejs ]]; then
+              $SUDO ln -s /usr/local/bin/node /usr/local/bin/nodejs
+            fi
 
   prepare-environment:
     description: "Preparing the environment"
@@ -77,8 +96,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
       - install-composer
-      - node/install:
-          node-version: lts
+      - install-node
       - run: node --version
       - prepare-environment
       - run:
