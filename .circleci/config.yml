@@ -42,7 +42,7 @@ commands:
 
             echo "Installing Node binary"
             if [[ $EUID == 0 ]]; then export SUDO=""; else export SUDO="sudo"; fi
-            $SUDO tar -xzf "node-v12.18.0-linux-x64.tar.gz" \
+            $SUDO tar -xzf "node-v13.9.0-linux-x64.tar.gz" \
               -C /usr/bin \
               --strip-components=1 --no-same-owner > /dev/null 2>&1
 
