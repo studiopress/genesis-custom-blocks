@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  node: circleci/node@13.9.0
+
 references:
   PLUGIN_FULL_PATH: &PLUGIN_FULL_PATH
     wordpress-develop/src/wp-content/plugins/genesis-custom-blocks
@@ -113,6 +116,6 @@ workflows:
       - php-tests:
           matrix:
             parameters:
-              php-version: [ '7.1', '7.2', '7.3', '7.4' ]
+              php-version: [ '5.6', '7.1', '7.2', '7.3', '7.4' ]
       - js-tests
       - e2e-tests
