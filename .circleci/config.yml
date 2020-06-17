@@ -37,20 +37,8 @@ commands:
     steps:
       - run:
           command: |
-            echo "Downloading Node binary"
-            curl -O --silent --show-error --location --fail --retry 3 https://nodejs.org/download/release/v12.18.0/node-v12.18.0-linux-x64.tar.gz
-
-            echo "Installing Node binary"
-            if [[ $EUID == 0 ]]; then export SUDO=""; else export SUDO="sudo"; fi
-            $SUDO tar -xzf "node-v12.18.0-linux-x64.tar.gz" \
-              -C /usr/bin \
-              --strip-components=1 --no-same-owner > /dev/null 2>&1
-
-            if [[ ! -e /usr/bin/nodejs ]]; then
-              echo "Adding a simlink"
-              which whoami
-              $SUDO ln -s /usr/bin/node /usr/bin/nodejs
-            fi
+            echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
+            apk add --no-cache nodejs-current  --repository="http://dl-cdn.alpinelinux.org/alpine/edge/community"
 
   prepare-environment:
     description: "Preparing the environment"
