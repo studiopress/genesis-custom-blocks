@@ -61,7 +61,7 @@ commands:
               echo "Adding a symlink"
               $SUDO ln -s /usr/local/bin/node /usr/local/bin/nodejs
             fi
-            export PATH=$PATH:/usr/local/bin/nodejs && PATH=$PATH:/usr/local/bin/ && ls /usr/local/bin/nodejs && npm --version && composer install && npm install && npm run build
+            export PATH=$PATH:/usr/local/bin/nodejs && PATH=$PATH:/usr/local/bin/ && npm --version && composer install && npm install && npm run build
 
 jobs:
   lint:
