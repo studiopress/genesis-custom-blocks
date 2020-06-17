@@ -32,18 +32,11 @@ commands:
             ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');")
             [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && << parameters.user >> php composer-setup.php --install-dir=/bin --filename=composer || exit 1
 
-  install-node:
-    description: "Installing Node"
-    steps:
-      - run:
-          command: |
-            apk add nodejs-lts --update
-            search --update 'node*'
-
   prepare-environment:
     description: "Preparing the environment"
     steps:
       - run: apk update && apk add --update --no-cache git
+      - run: apk add nodejs-lts --update && apk search --update 'node*'
       - run:
           name: Installing WordPress and setting up tests
           command: |
@@ -82,7 +75,6 @@ jobs:
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
       - install-composer
-      - install-node
       - run: node --version
       - prepare-environment
       - run:
