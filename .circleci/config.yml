@@ -119,7 +119,7 @@ jobs:
             npm --version && node --version
             composer install && npm install && npm run build
             composer require --dev phpunit/phpunit 5.7.9
-            WP_TESTS_DIR=/root/project/wordpress-develop/tests/phpunit composer test
+            WP_TESTS_DIR=/home/circleci/project/wordpress-develop/tests/phpunit composer test
 
   js-tests:
     executor: node-only
