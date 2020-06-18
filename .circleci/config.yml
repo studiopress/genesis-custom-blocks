@@ -101,7 +101,7 @@ jobs:
           user: sudo
       - node/install:
           node-version: lts
-      - run: sudo apt-get update && sudo apt-get install php-mysqlnd
+      - run: sudo apt-get update && sudo apt-get install php5-mysqli
       - run:
           name: Installing WordPress and setting up tests
           command: |
