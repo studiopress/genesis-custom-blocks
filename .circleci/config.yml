@@ -86,7 +86,7 @@ jobs:
 
   php-56-test:
     docker:
-      - image: wordpress:php5.6-fpm
+      - image: wordpress:php5.6-apache
         environment:
           WP_TESTS_DIR: /home/circleci/project/wordpress-develop/tests/phpunit
       - image: mysql:5.7
