@@ -97,7 +97,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
       - install-composer
-      - run: apt-get install gpgv git-all -y
+      - run: apt-get update && apt-get install gpgv git -y
       - run:
           name: Installing WordPress and setting up tests
           command: |
