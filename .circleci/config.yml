@@ -74,6 +74,7 @@ jobs:
       - image: mysql:5.7
         environment:
           MYSQL_DATABASE: youremptytestdbnamehere
+          MYSQL_HOST: localhost
           MYSQL_USER: yourusernamehere
           MYSQL_PASSWORD: yourpasswordhere
           MYSQL_ROOT_PASSWORD: wordpress
