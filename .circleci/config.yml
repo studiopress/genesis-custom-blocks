@@ -86,7 +86,7 @@ jobs:
     docker:
       - image: circleci/php:5.6-cli-node
         environment:
-          WP_TESTS_DIR: /root/project/wordpress-develop/tests/phpunit
+          WP_TESTS_DIR: /home/circleci/project/wordpress-develop/tests/phpunit
       - image: mysql:5.7
         environment:
           MYSQL_DATABASE: youremptytestdbnamehere
@@ -114,7 +114,7 @@ jobs:
           command: |
             npm --version && node --version
             composer install && npm install && npm run build
-            composer require --dev phpunit/phpunit 5.7.9 && WP_TESTS_DIR=/root/project/wordpress-develop/tests/phpunit ./vendor/bin/phpunit
+            composer require --dev phpunit/phpunit 5.7.9 && ./vendor/bin/phpunit
 
   js-tests:
     executor: node-only
