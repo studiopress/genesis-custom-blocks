@@ -91,7 +91,7 @@ jobs:
           MYSQL_PASSWORD: yourpasswordhere
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
-      - install-composer
+      - install-composer:
           user: sudo
       - run:
           name: Preparing the environment
