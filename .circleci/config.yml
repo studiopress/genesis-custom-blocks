@@ -6,6 +6,8 @@ orbs:
 references:
   PLUGIN_FULL_PATH: &PLUGIN_FULL_PATH
     wordpress-develop/src/wp-content/plugins/genesis-custom-blocks
+  PLUGIN_PATH: &PLUGIN_PATH
+    /home/circleci/project/wordpress-develop/src/wp-content/plugins/genesis-custom-blocks
 
 executors:
   php:
@@ -105,12 +107,12 @@ jobs:
             git clone git://develop.git.wordpress.org/ wordpress-develop
             cp wordpress-develop/wp-tests-config-sample.php wordpress-develop/wp-tests-config.php
             sed -i 's/localhost/127.0.0.1/g' wordpress-develop/wp-tests-config.php
-      - run: mkdir -p *PLUGIN_FULL_PATH
+      - run: mkdir -p *PLUGIN_PATH
       - checkout:
-          path: *PLUGIN_FULL_PATH
+          path: *PLUGIN_PATH
       - run:
           name: Preparing the environment
-          working_directory: *PLUGIN_FULL_PATH
+          working_directory: *PLUGIN_PATH
           command: |
             npm --version && node --version
             composer install && npm install && npm run build
