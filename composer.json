@@ -20,5 +20,8 @@
         "psr-4": {
           "Genesis\\CustomBlocks\\": "php/"
         }
+    },
+    "scripts": {
+        "test": "phpunit"
     }
 }
