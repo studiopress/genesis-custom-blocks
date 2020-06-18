@@ -86,7 +86,7 @@ jobs:
 
   php-56-test:
     docker:
-      - image: circleci/php:5.6-cli-node
+      - image: circleci/php:5.6-cli-node-browser
         environment:
           WP_TESTS_DIR: /home/circleci/project/wordpress-develop/tests/phpunit
       - image: mysql:5.7
