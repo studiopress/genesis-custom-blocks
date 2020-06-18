@@ -96,12 +96,8 @@ jobs:
       - run:
           name: Preparing the environment
           command: |
+            npm install -g npm@6.9.0
             npm --version && node --version
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-            export NVM_DIR="/opt/circleci/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # Loads nvm.
-            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # Loads nvm bash_completion.
-            nvm install --lts
             composer install && npm install && npm run build
       - run:
           working_directory: *PLUGIN_FULL_PATH
