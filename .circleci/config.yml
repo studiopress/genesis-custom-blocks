@@ -97,11 +97,11 @@ jobs:
           MYSQL_PASSWORD: yourpasswordhere
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
+      - run: sudo apt-get update && sudo apt-get install php5.6-mysqli
       - install-composer:
           user: sudo
       - node/install:
           node-version: lts
-      - run: sudo apt-get update && sudo apt-get install php5-mysqli
       - run:
           name: Installing WordPress and setting up tests
           command: |
