@@ -118,8 +118,8 @@ jobs:
           command: |
             npm --version && node --version
             composer install && npm install && npm run build
-            composer global require phpunit/phpunit 5.7.9
-            WP_TESTS_DIR=/root/project/wordpress-develop/tests/phpunit phpunit
+            composer require --dev phpunit/phpunit 5.7.9
+            WP_TESTS_DIR=/root/project/wordpress-develop/tests/phpunit bash vendor/bin/phpunit
 
   js-tests:
     executor: node-only
