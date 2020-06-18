@@ -86,7 +86,7 @@ jobs:
 
   php-56-test:
     docker:
-      - image: wordpress:php5.6-apache
+      - image: wordpress:php5.6-fpm
         environment:
           WP_TESTS_DIR: /home/circleci/project/wordpress-develop/tests/phpunit
       - image: mysql:5.7
@@ -96,7 +96,7 @@ jobs:
           MYSQL_PASSWORD: yourpasswordhere
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
-      - install-composer:
+      - install-composer
       - node/install:
           node-version: lts
       - run:
