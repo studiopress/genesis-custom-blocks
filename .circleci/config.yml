@@ -86,7 +86,7 @@ jobs:
 
   php-56-test:
     docker:
-      - image: circleci/php:5.6-cli-node
+      - image: wordpress:php5.6-apache
         environment:
           WP_TESTS_DIR: /home/circleci/project/wordpress-develop/tests/phpunit
       - image: mysql:5.7
@@ -96,7 +96,7 @@ jobs:
           MYSQL_PASSWORD: yourpasswordhere
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
-      - run: sudo apt-get update && sudo apt-get install php-mysqlnd
+      - run: sudo apt-get update && sudo apt-get install mysql-server
       - run: sudo service mysql start --verbose
       - run: sudo apt-get update && sudo apt-get install mysql-workbench && mysqladmin extended-status
       - install-composer:
