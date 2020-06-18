@@ -86,7 +86,7 @@ jobs:
 
   php-56-test:
     docker:
-      - image: circleci/php:5.6-cli-node-browser
+      - image: circleci/php:5.6-cli-node
         environment:
           WP_TESTS_DIR: /home/circleci/project/wordpress-develop/tests/phpunit
       - image: mysql:5.7
@@ -97,7 +97,7 @@ jobs:
           MYSQL_PASSWORD: yourpasswordhere
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
-      - run: sudo apt-get update && sudo apt-get install dh-php && sudo apt-cache search php
+      - run: sudo apt-get update && sudo apt-get install php5-mysqlnd && sudo apt-cache search php
       - install-composer:
           user: sudo
       - node/install:
