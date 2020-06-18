@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  node: circleci/node@3.0.0
+
 references:
   PLUGIN_FULL_PATH: &PLUGIN_FULL_PATH
     wordpress-develop/src/wp-content/plugins/genesis-custom-blocks
@@ -93,10 +96,11 @@ jobs:
     steps:
       - install-composer:
           user: sudo
+      - node/install:
+          node-version: latest
       - run:
           name: Preparing the environment
           command: |
-            sudo npm install -g npm@6.9.0
             npm --version && node --version
             composer install && npm install && npm run build
       - run:
