@@ -34,6 +34,6 @@ tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
 // Start up the WP testing environment.
 tests_add_filter( 'wp_die_handler', '_default_wp_die_handler', PHP_INT_MAX );
-require $_tests_dir . '/includes/bootstrap.php';
 
 ( new wpdb() )->check_connection();
+require $_tests_dir . '/includes/bootstrap.php';
