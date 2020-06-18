@@ -96,7 +96,7 @@ jobs:
       - run:
           name: Preparing the environment
           command: |
-            npm install -g npm@6.9.0
+            sudo npm install -g npm@6.9.0
             npm --version && node --version
             composer install && npm install && npm run build
       - run:
