@@ -96,7 +96,8 @@ jobs:
           MYSQL_PASSWORD: yourpasswordhere
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
-      - install-composer:
+      run: sudo apt-get install mysql-workbench && mysqladmin extended-status
+        - install-composer:
           user: sudo
       - node/install:
           node-version: lts
@@ -116,7 +117,6 @@ jobs:
           command: |
             npm --version && node --version
             composer install && npm install && npm run build
-            mysqladmin extended-status
             composer require --dev phpunit/phpunit 5.7.9 && ./vendor/bin/phpunit
 
   js-tests:
