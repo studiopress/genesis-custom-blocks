@@ -89,12 +89,6 @@ jobs:
       - image: circleci/php:5.6-cli-node
         environment:
           WP_TESTS_DIR: /home/circleci/project/wordpress-develop/tests/phpunit
-      - image: mysql:5.7
-        environment:
-          MYSQL_DATABASE: youremptytestdbnamehere
-          MYSQL_USER: yourusernamehere
-          MYSQL_PASSWORD: yourpasswordhere
-          MYSQL_ROOT_PASSWORD: wordpress
     steps:
       - install-composer:
           user: sudo
