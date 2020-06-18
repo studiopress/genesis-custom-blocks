@@ -86,16 +86,23 @@ jobs:
 
   php-56-test:
     docker:
-      - image: wordpress:php5.6-apache
+      - image: circleci/php:5.6-cli-node
         environment:
           WP_TESTS_DIR: /home/circleci/project/wordpress-develop/tests/phpunit
+      - image: mysql:5.7
+        environment:
           MYSQL_DATABASE: youremptytestdbnamehere
           MYSQL_USER: yourusernamehere
           MYSQL_PASSWORD: yourpasswordhere
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
-      - install-composer
-      - run: apt-get update && apt-get install gpgv git nodejs -y
+      - run: sudo apt-get update && sudo apt-get install mysql-server
+      - run: sudo service mysql start
+      - run: sudo apt-get update && sudo apt-get install mysql-workbench && mysqladmin extended-status
+      - install-composer:
+          user: sudo
+      - node/install:
+          node-version: lts
       - run:
           name: Installing WordPress and setting up tests
           command: |
