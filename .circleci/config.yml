@@ -98,8 +98,6 @@ jobs:
     steps:
       - install-composer
       - run: apt-get install gpgv -y
-      - node/install:
-          node-version: lts
       - run:
           name: Installing WordPress and setting up tests
           command: |
