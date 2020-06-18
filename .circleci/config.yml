@@ -35,7 +35,7 @@ commands:
   prepare-environment:
     description: "Preparing the environment"
     steps:
-      - run: apk update && apk add --update --no-cache git
+      - run: apk update && apk add --update --no-cache git nodejs npm
       - run:
           name: Installing WordPress and setting up tests
           command: |
@@ -47,21 +47,7 @@ commands:
           path: *PLUGIN_FULL_PATH
       - run:
           working_directory: *PLUGIN_FULL_PATH
-          command: |
-            echo "Downloading Node binary"
-            curl -O --silent --show-error --location --fail --retry 3 https://nodejs.org/download/release/v13.9.0/node-v13.9.0-linux-x64.tar.gz
-
-            echo "Installing Node binary"
-            if [[ $EUID == 0 ]]; then export SUDO=""; else export SUDO="sudo"; fi
-            $SUDO tar -xzf "node-v13.9.0-linux-x64.tar.gz" \
-              -C /usr/local/bin \
-              --strip-components=1 --no-same-owner > /dev/null 2>&1
-
-            if [[ ! -e /usr/local/bin/nodejs ]]; then
-              echo "Adding a symlink"
-              $SUDO ln -s /usr/local/bin/nodejs /usr/local/bin/node
-            fi
-            export PATH=$PATH:/usr/local/bin/nodejs && PATH=$PATH:/usr/local/bin/ && node --version && composer install && npm install && npm run build
+          command: composer install && npm install && npm run build
 
 jobs:
   lint:
@@ -119,9 +105,14 @@ jobs:
       - run: npm run env start && npm run test:e2e
 
 workflows:
+  lint-all:
+    jobs:
+      - lint
   tests:
     jobs:
       - php-tests:
           matrix:
             parameters:
-              php-version: [ '5.6' ]
+              php-version: [ '7.1', '7.2', '7.3', '7.4' ]
+      - js-tests
+      - e2e-tests
