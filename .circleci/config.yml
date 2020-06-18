@@ -96,7 +96,7 @@ jobs:
           MYSQL_PASSWORD: yourpasswordhere
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
-      - run: sudo apt-get update && sudo apt-get install mysql-server
+      - run: sudo apt-get update && sudo apt-get install php-mysqlnd
       - run: sudo service mysql start --verbose
       - run: sudo apt-get update && sudo apt-get install mysql-workbench && mysqladmin extended-status
       - install-composer:
