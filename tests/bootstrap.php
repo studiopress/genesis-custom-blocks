@@ -32,12 +32,5 @@ function _manually_load_plugin() {
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
-$db_link = mysqli_connect( '127.0.0.1', 'yourusernamehere', 'yourpasswordhere' );
-if ( ! $db_link ) {
-	die( 'Could not connect: ' . mysqli_error() );
-}
-echo 'Connected fine';
-mysqli_close();
-
 // Start up the WP testing environment.
 require $_tests_dir . '/includes/bootstrap.php';
