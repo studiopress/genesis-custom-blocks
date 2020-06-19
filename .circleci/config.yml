@@ -85,8 +85,9 @@ jobs:
           command: composer test
 
   php-56-test:
-    docker:
-      - image: circleci/php:5.6-cli-node
+    machine:
+      php:
+        version: 5.6.14
         environment:
           WP_TESTS_DIR: /home/circleci/project/wordpress-develop/tests/phpunit
       - image: mysql:5.7
@@ -100,12 +101,6 @@ jobs:
       - run:
           name: Update PHP
           command: |
-            sudo apt-get update
-            sudo apt-get install software-properties-common
-            sudo add-apt-repository ppa:ondrej/php -y
-            sudo apt-get update
-            apt-cache search php
-            sudo apt-get install -y php5.6
             php -i
 
       - install-composer:
