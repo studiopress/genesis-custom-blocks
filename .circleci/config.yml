@@ -101,9 +101,8 @@ jobs:
           name: Update PHP
           command: |
             sudo apt-get update
-            apt-cache search php
-            php -i
-
+            sudo docker-php-ext-install mysqli
+            php -me
       - install-composer:
           user: sudo
       - node/install:
