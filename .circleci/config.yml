@@ -100,7 +100,7 @@ jobs:
       - run:
           name: Update PHP
           command: |
-            sudo apt-get update && sudo apt-get install libapache2-mod-php
+            sudo apt-get update
             apt-cache search php
             php -i
 
