@@ -4,8 +4,6 @@ orbs:
   node: circleci/node@3.0.0
 
 references:
-  PLUGIN_FULL_PATH: &PLUGIN_FULL_PATH
-    wordpress-develop/src/wp-content/plugins/genesis-custom-blocks
   PLUGIN_PATH: &PLUGIN_PATH
     /home/circleci/project/wordpress-develop/src/wp-content/plugins/genesis-custom-blocks
 
@@ -25,34 +23,13 @@ commands:
 
   install-composer:
     description: "Installing Composer"
-    parameters:
-      user:
-        type: string
-        default: ''
     steps:
       - run:
           command: |
             php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
             EXPECTED_SIGNATURE=$(curl -s https://composer.github.io/installer.sig)
             ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');")
-            [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && << parameters.user >> php composer-setup.php --install-dir=/bin --filename=composer || exit 1
-
-  prepare-environment:
-    description: "Preparing the environment"
-    steps:
-      - run: apk update && apk add --update --no-cache git nodejs npm
-      - run:
-          name: Installing WordPress and setting up tests
-          command: |
-            git clone git://develop.git.wordpress.org/ wordpress-develop
-            cp wordpress-develop/wp-tests-config-sample.php wordpress-develop/wp-tests-config.php
-            sed -i 's/localhost/127.0.0.1/g' wordpress-develop/wp-tests-config.php
-      - run: mkdir -p *PLUGIN_FULL_PATH
-      - checkout:
-          path: *PLUGIN_FULL_PATH
-      - run:
-          working_directory: *PLUGIN_FULL_PATH
-          command: composer install && npm install && npm run build
+            [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && sudo php composer-setup.php --install-dir=/bin --filename=composer || exit 1
 
 jobs:
   lint:
@@ -64,27 +41,6 @@ jobs:
       - run: npm run lint
 
   php-tests:
-    parameters:
-      php-version:
-        type: string
-    docker:
-      - image: wordpress:php<< parameters.php-version >>-fpm-alpine
-        environment:
-          WP_TESTS_DIR: /root/project/wordpress-develop/tests/phpunit
-      - image: mysql:5.7
-        environment:
-          MYSQL_DATABASE: youremptytestdbnamehere
-          MYSQL_USER: yourusernamehere
-          MYSQL_PASSWORD: yourpasswordhere
-          MYSQL_ROOT_PASSWORD: wordpress
-    steps:
-      - install-composer
-      - prepare-environment
-      - run:
-          working_directory: *PLUGIN_FULL_PATH
-          command: composer test
-
-  phpunit-tests:
     parameters:
       php-version:
         type: string
@@ -101,16 +57,14 @@ jobs:
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
       - run:
-          name: Install the mysqli extension
+          name: Installing the mysqli extension
           command: sudo docker-php-ext-install mysqli
-      - install-composer:
-          user: sudo
+      - install-composer
       - node/install:
           node-version: lts
       - run:
           name: Installing WordPress and setting up tests
           command: |
-            pwd
             git clone git://develop.git.wordpress.org/ wordpress-develop
             cp wordpress-develop/wp-tests-config-sample.php wordpress-develop/wp-tests-config.php
             sed -i 's/localhost/127.0.0.1/g' wordpress-develop/wp-tests-config.php
@@ -118,10 +72,9 @@ jobs:
       - checkout:
           path: *PLUGIN_PATH
       - run:
-          name: Preparing the environment
+          name: Running PHPUnit
           working_directory: *PLUGIN_PATH
           command: |
-            npm --version && node --version
             composer install && npm install && npm run build
             composer require --dev phpunit/phpunit 5.7.9
             WP_TESTS_DIR=/home/circleci/project/wordpress-develop/tests/phpunit composer test
@@ -138,8 +91,7 @@ jobs:
     steps:
       - checkout
       - run: sudo apt-get update && sudo apt-get install php php-xml
-      - install-composer:
-          user: sudo
+      - install-composer
       - run:
           name: Updating Node version
           command: |
@@ -152,9 +104,14 @@ jobs:
       - run: npm run env start && npm run test:e2e
 
 workflows:
+  lint-all:
+    jobs:
+      - lint
   tests:
     jobs:
-      - phpunit-tests:
+      - php-tests:
           matrix:
             parameters:
               php-version: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
+      - js-tests
+      - e2e-tests
