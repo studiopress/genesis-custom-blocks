@@ -83,7 +83,8 @@ class Repeater extends ControlAbstract {
 			$value = sprintf(
 				// translators: Placeholders are the opening and closing anchor tags of a link.
 				__( '⚠️ Please use Genesis Custom Blocks\'s %1$srepeater functions%2$s to display repeater fields in your template.', 'genesis-custom-blocks' ),
-				'<a href="https://getblocklab.com/docs/fields/repeater/">',
+				// @todo: Add the full URL to the Repeater documentation.
+				'<a href="https://developer.wpengine.com/genesis-custom-blocks">',
 				'</a>'
 			);
 		}

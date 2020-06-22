@@ -57,7 +57,7 @@ A: Although the plugin handles the majority of the work in building a custom blo
 A: This plugin is open source and can only be better through community contribution. The GitHub repo is [here](https://github.com/studiopress/genesis-custom-blocks).
 
 **Q: Where can I find documentation for this plugin?**
-A: [Here](https://getblocklab.com/docs/)
+A: [Here](https://developer.wpengine.com/genesis-custom-blocks)
 
 ## Contributing ##
 

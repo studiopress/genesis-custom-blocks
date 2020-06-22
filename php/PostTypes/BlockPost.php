@@ -859,14 +859,16 @@ class BlockPost extends ComponentAbstract {
 				echo wp_kses_post(
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a> | ',
-						'https://getblocklab.com/docs/get-started/add-a-block-lab-block-to-your-website-content/',
+						// @todo: Add the full URL.
+						'https://developer.wpengine.com/genesis-custom-blocks',
 						esc_html__( 'Block Templates', 'genesis-custom-blocks' )
 					)
 				);
 				echo wp_kses_post(
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
-						'https://getblocklab.com/docs/functions/',
+						// @todo: Add the full URL.
+						'https://developer.wpengine.com/genesis-custom-blocks',
 						esc_html__( 'Template Functions', 'genesis-custom-blocks' )
 					)
 				);
