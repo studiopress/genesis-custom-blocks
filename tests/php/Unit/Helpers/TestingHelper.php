@@ -41,17 +41,7 @@ trait TestingHelper {
 	 * @param bool $is_valid Whether the license is valid.
 	 */
 	public function set_license_validity( $is_valid ) {
-		if ( $is_valid ) {
-			$transient_value = [
-				'license' => 'valid',
-				'expires' => gmdate( 'D, d M Y H:i:s', time() + 1000 ),
-			];
-		} else {
-			$transient_value = [
-				'license' => 'expired',
-			];
-		}
-
+		$transient_value = $is_valid ? 'valid' : 'key-invalid';
 		set_transient( License::TRANSIENT_NAME, $transient_value );
 	}
 }
