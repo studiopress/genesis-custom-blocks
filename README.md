@@ -32,7 +32,7 @@ Simple to use functions, ready to render and work with the values stored through
 ## Links ##
 * [WordPress.org](https://wordpress.org/plugins/genesis-custom-blocks)
 * [Github](https://github.com/studiopress/genesis-custom-blocks)
-* [Documentation](https://getblocklab.com/docs)
+* [Documentation](https://developer.wpengine.com/genesis-custom-blocks)
 * [Support](https://wordpress.org/support/plugin/genesis-custom-blocks)
 
 ## Installation ##
