@@ -61,6 +61,20 @@ class License extends ComponentAbstract {
 	const LICENSE_VALID = 'valid';
 
 	/**
+	 * The transient value for when license requests are locked.
+	 *
+	 * @var string
+	 */
+	const LICENSE_REQUESTS_LOCKED = 'license_requests_locked';
+
+	/**
+	 * The timeout of license requests, in seconds.
+	 *
+	 * @var int
+	 */
+	const LICENSE_REQUEST_TIMEOUT = 10;
+
+	/**
 	 * Register any hooks that this component needs.
 	 */
 	public function register_hooks() {
@@ -125,10 +139,18 @@ class License extends ComponentAbstract {
 	 * @return string The license validation result.
 	 */
 	public function activate_license( $key ) {
+		// If there's already a license validation request in progress,
+		// prevent more requests that could create a stampede.
+		if ( self::LICENSE_REQUESTS_LOCKED === get_transient( self::TRANSIENT_NAME ) ) {
+			return self::LICENSE_REQUESTS_LOCKED;
+		}
+
+		set_transient( self::TRANSIENT_NAME, self::LICENSE_REQUESTS_LOCKED, self::LICENSE_REQUEST_TIMEOUT );
+
 		// Call the Genesis Custom Blocks API.
 		$response = wp_remote_get(
 			self::LICENSE_ENDPOINT . $key,
-			[ 'timeout' => 10 ]
+			[ 'timeout' => self::LICENSE_REQUEST_TIMEOUT ]
 		);
 
 		if ( 200 === wp_remote_retrieve_response_code( $response ) ) {

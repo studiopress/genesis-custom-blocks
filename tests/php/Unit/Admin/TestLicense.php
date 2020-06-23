@@ -51,7 +51,7 @@ class TestLicense extends \WP_UnitTestCase {
 	const EXPECTED_LICENSE_SUCCESS_NOTICE = '<div class="notice notice-success"><p>Your Genesis Custom Blocks license was successfully activated!</p></div>';
 
 	/**
-	 * Setup.
+	 * Sets up each test.
 	 *
 	 * @inheritdoc
 	 */
@@ -168,13 +168,8 @@ class TestLicense extends \WP_UnitTestCase {
 	 * @covers \Genesis\CustomBlocks\Admin\License::get_license()
 	 */
 	public function test_get_license() {
-		$valid_license_transient_value   = [
-			'license' => 'valid',
-			'expires' => gmdate( 'Y-m-d', time() + DAY_IN_SECONDS ),
-		];
-		$invalid_license_transient_value = [
-			'license' => 'expired',
-		];
+		$valid_license_transient_value   = 'valid';
+		$invalid_license_transient_value = 'key-invalid';
 
 		// If the transient is set, get_license() should simply return it.
 		set_transient( License::TRANSIENT_NAME, $valid_license_transient_value );
@@ -186,7 +181,14 @@ class TestLicense extends \WP_UnitTestCase {
 		// If there's no transient or option, this should return false.
 		delete_transient( License::TRANSIENT_NAME );
 		$this->assertFalse( $this->instance->get_license() );
+	}
 
+	/**
+	 * Test get_license when none is stored.
+	 *
+	 * @covers \Genesis\CustomBlocks\Admin\License::get_license()
+	 */
+	public function test_get_license_none_stored() {
 		$expected_error_code = 'key-deleted';
 		add_filter(
 			self::HTTP_FILTER_NAME,
@@ -199,12 +201,32 @@ class TestLicense extends \WP_UnitTestCase {
 			}
 		);
 
-		delete_transient( License::TRANSIENT_NAME );
 		$example_valid_license_key = '5134315';
 		add_option( License::OPTION_NAME, $example_valid_license_key );
 
 		// If the license transient is empty, this should look at the option value and make a request to validate that.
 		$this->assertEquals( $expected_error_code, $this->instance->get_license() );
+	}
+	/**
+	 * Test get_license when this is locked from making more requests.
+	 *
+	 * @covers \Genesis\CustomBlocks\Admin\License::get_license()
+	 */
+	public function test_get_license_locked() {
+		add_filter(
+			self::HTTP_FILTER_NAME,
+			static function( $response ) {
+				unset( $response );
+				return [ 'response' => [ 'code' => 200 ] ];
+			}
+		);
+
+		$requests_locked_value = 'license_requests_locked';
+		set_transient( License::TRANSIENT_NAME, $requests_locked_value );
+
+		// This can be locked from making more requests once a request is in progress, to avoid a stampede.
+		// So this should simply return the fact that this is locked, without making another request.
+		$this->assertEquals( $requests_locked_value, $this->instance->get_license() );
 	}
 
 	/**
