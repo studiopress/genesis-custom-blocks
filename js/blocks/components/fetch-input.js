@@ -29,6 +29,9 @@ const stopEventPropagation = ( event ) => event.stopPropagation();
 class FetchInput extends Component {
 	/**
 	 * Constructs the component class.
+	 *
+	 * @param {Object} args The constructor arguments.
+	 * @param {Object} args.autocompleteRef The ref for auto-completion.
 	 */
 	constructor( { autocompleteRef } ) {
 		super( ...arguments );
