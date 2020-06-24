@@ -173,7 +173,7 @@ class License extends ComponentAbstract {
 	 * @return string
 	 */
 	public function license_success_message() {
-		$message = __( 'Your Genesis Custom Blocks license was successfully activated!', 'genesis-custom-blocks' );
+		$message = __( 'Your Genesis Pro license was successfully activated!', 'genesis-custom-blocks' );
 		return sprintf( '<div class="notice notice-success"><p>%s</p></div>', esc_html( $message ) );
 	}
 
