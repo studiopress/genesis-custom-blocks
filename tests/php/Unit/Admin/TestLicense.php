@@ -48,7 +48,7 @@ class TestLicense extends \WP_UnitTestCase {
 	 *
 	 * @var string
 	 */
-	const EXPECTED_LICENSE_SUCCESS_NOTICE = '<div class="notice notice-success"><p>Your Genesis Custom Blocks license was successfully activated!</p></div>';
+	const EXPECTED_LICENSE_SUCCESS_NOTICE = '<div class="notice notice-success"><p>Your Genesis Pro license was successfully activated!</p></div>';
 
 	/**
 	 * Sets up each test.
