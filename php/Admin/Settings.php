@@ -105,7 +105,7 @@ class Settings extends ComponentAbstract {
 			<a href="<?php echo esc_url( add_query_arg( 'tab', 'license' ) ); ?>" title="<?php esc_attr_e( 'License', 'genesis-custom-blocks' ); ?>" class="nav-tab nav-tab-active dashicons-before dashicons-nametag">
 				<?php esc_html_e( 'License', 'genesis-custom-blocks' ); ?>
 			</a>
-			<a href="https://getblocklab.com/docs/" target="_blank" class="nav-tab dashicons-before dashicons-info">
+			<a href="https://developer.wpengine.com/genesis-custom-blocks" target="_blank" class="nav-tab dashicons-before dashicons-info">
 				<?php esc_html_e( 'Documentation', 'genesis-custom-blocks' ); ?>
 			</a>
 			<a href="https://wordpress.org/support/plugin/genesis-custom-blocks/" target="_blank" class="nav-tab dashicons-before dashicons-sos">

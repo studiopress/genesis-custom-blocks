@@ -7,8 +7,6 @@
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
-use Genesis\CustomBlocks\Admin\License;
-
 ?>
 <section class="container">
 	<div class="dashboard_welcome tile">

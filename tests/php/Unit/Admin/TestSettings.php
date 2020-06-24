@@ -193,7 +193,7 @@ class TestSettings extends \WP_UnitTestCase {
 		$output = ob_get_clean();
 
 		$this->assertContains( '<h2 class="nav-tab-wrapper">', $output );
-		$this->assertContains( '<a href="https://getblocklab.com/docs/" target="_blank" class="nav-tab dashicons-before dashicons-info">', $output );
+		$this->assertContains( '<a href="https://developer.wpengine.com/genesis-custom-blocks" target="_blank" class="nav-tab dashicons-before dashicons-info">', $output );
 	}
 
 	/**
