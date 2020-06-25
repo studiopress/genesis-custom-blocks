@@ -34,6 +34,13 @@ class TestLicense extends \WP_UnitTestCase {
 	 *
 	 * @var string
 	 */
+	const EXPECTED_LICENSE_EMPTY_NOTICE = '<div class="notice notice-error"><p>The license was empty. Please enter a license.</p></div>';
+
+	/**
+	 * The notice for when the validation request fails.
+	 *
+	 * @var string
+	 */
 	const EXPECTED_LICENSE_REQUEST_FAILED_NOTICE = '<div class="notice notice-error"><p>There was a problem activating the license, but it may not be invalid. If the problem persists, please contact support.</p></div>';
 
 	/**
@@ -72,6 +79,39 @@ class TestLicense extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * Gets the testing data for test_save_license_key_empty().
+	 *
+	 * @return array The testing data.
+	 */
+	public function get_data_test_save_license_empty() {
+		return [
+			[ '' ],
+			[ '0' ],
+			[ 0 ],
+			[ false ],
+		];
+	}
+
+	/**
+	 * Test save_license_key when the key is empty.
+	 *
+	 * @dataProvider get_data_test_save_license_empty
+	 * @covers \Genesis\CustomBlocks\Admin\License::save_license_key()
+	 *
+	 * @param string $empty_license_key The entered license key.
+	 */
+	public function test_save_license_key_empty( $empty_license_key ) {
+		$returned_key = $this->instance->save_license_key( $empty_license_key );
+
+		$this->assertFalse( get_transient( License::TRANSIENT_NAME ) );
+		$this->assertEquals(
+			[ self::EXPECTED_LICENSE_EMPTY_NOTICE ],
+			get_option( Settings::NOTICES_OPTION_NAME )
+		);
+		$this->assertFalse( $returned_key );
+	}
+
+	/**
 	 * Test save_license_key with a 404 response.
 	 *
 	 * @covers \Genesis\CustomBlocks\Admin\License::save_license_key()
@@ -87,13 +127,12 @@ class TestLicense extends \WP_UnitTestCase {
 		$mock_invalid_license_key = '0000000';
 		$returned_key             = $this->instance->save_license_key( $mock_invalid_license_key );
 
-		// For the request failing, like with a 404, the method should return '', and the notice should be to retry or contact support.
-		$this->assertEquals( '', $returned_key );
+		// For the request failing, like with a 404, the method should return false, and the notice should be to retry or contact support.
+		$this->assertFalse( $returned_key );
 		$this->assertEquals(
 			[ self::EXPECTED_LICENSE_REQUEST_FAILED_NOTICE ],
 			get_option( Settings::NOTICES_OPTION_NAME )
 		);
-		delete_option( Settings::NOTICES_OPTION_NAME );
 	}
 
 	/**
@@ -114,10 +153,9 @@ class TestLicense extends \WP_UnitTestCase {
 				];
 			}
 		);
-		$returned_key = $this->instance->save_license_key( $mock_invalid_license_key );
 
-		// For an invalid license (not simply the request failing), the method should return ''.
-		$this->assertEquals( '', $returned_key );
+		// For an invalid license (not simply the request failing), the method should return false.
+		$this->assertFalse( $this->instance->save_license_key( $mock_invalid_license_key ) );
 	}
 
 	/**

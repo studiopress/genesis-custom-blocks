@@ -30,7 +30,9 @@ class License extends ComponentAbstract {
 	const OPTION_NAME = 'genesis_pro_subscription_key';
 
 	/**
-	 * The name of the license key transient.
+	 * The name of the license key validation transient.
+	 *
+	 * Stores the result of license validation, like 'valid'.
 	 *
 	 * @var string
 	 */
@@ -86,17 +88,22 @@ class License extends ComponentAbstract {
 	 *
 	 * @param string $key The license key that was submitted.
 	 *
-	 * @return string
+	 * @return string|false
 	 */
 	public function save_license_key( $key ) {
-		$license = $this->activate_license( $key );
+		if ( empty( $key ) ) {
+			genesis_custom_blocks()->admin->settings->prepare_notice( $this->license_empty_message() );
+			delete_transient( self::TRANSIENT_NAME );
+			return false;
+		}
 
+		$license_status = $this->activate_license( $key );
 		if ( ! $this->is_valid() ) {
-			$key = '';
-			if ( self::LICENSE_REQUEST_FAILED === $license ) {
+			$key = false;
+			if ( self::LICENSE_REQUEST_FAILED === $license_status ) {
 				genesis_custom_blocks()->admin->settings->prepare_notice( $this->license_request_failed_message() );
 			} else {
-				genesis_custom_blocks()->admin->settings->prepare_notice( $this->license_invalid_message( $license ) );
+				genesis_custom_blocks()->admin->settings->prepare_notice( $this->license_invalid_message( $license_status ) );
 			}
 		} else {
 			genesis_custom_blocks()->admin->settings->prepare_notice( $this->license_success_message() );
@@ -150,7 +157,7 @@ class License extends ComponentAbstract {
 
 		// Call the Genesis Custom Blocks API.
 		$response = wp_remote_get(
-			self::LICENSE_ENDPOINT . sanitize_key( $sanitized_key ),
+			self::LICENSE_ENDPOINT . $sanitized_key,
 			[ 'timeout' => self::LICENSE_REQUEST_TIMEOUT ]
 		);
 
@@ -166,6 +173,18 @@ class License extends ComponentAbstract {
 		set_transient( self::TRANSIENT_NAME, $license_status, DAY_IN_SECONDS );
 
 		return $license_status;
+	}
+
+	/**
+	 * Admin notice for a license being empty, like ''.
+	 *
+	 * @return string The error notice for the license.
+	 */
+	public function license_empty_message() {
+		return sprintf(
+			'<div class="notice notice-error"><p>%s</p></div>',
+			esc_html__( 'The license was empty. Please enter a license.', 'genesis-custom-blocks' )
+		);
 	}
 
 	/**
