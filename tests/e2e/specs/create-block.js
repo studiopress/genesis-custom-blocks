@@ -47,8 +47,8 @@ describe( 'TextBlock', () => {
 		// Publish the block.
 		await page.click( '#publish' );
 
-		// There should be a success notice.
-		await page.waitForSelector( '.updated' );
+		// Wait for the page to reload.
+		await page.waitForNavigation();
 
 		// Create a new post and add the new block.
 		await createNewPost();
