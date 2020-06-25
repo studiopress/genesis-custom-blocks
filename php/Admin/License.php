@@ -117,7 +117,7 @@ class License extends ComponentAbstract {
 	/**
 	 * Retrieve the license validation status.
 	 *
-	 * @return string The license validation status.
+	 * @return string|false The license validation status, or false if there's no license to validate.
 	 */
 	public function get_license_status() {
 		$license_status = get_transient( self::TRANSIENT_NAME );
