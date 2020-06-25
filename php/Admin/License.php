@@ -111,25 +111,25 @@ class License extends ComponentAbstract {
 	 * @return bool
 	 */
 	public function is_valid() {
-		return self::LICENSE_VALID === $this->get_license();
+		return self::LICENSE_VALID === $this->get_license_status();
 	}
 
 	/**
-	 * Retrieve the license data.
+	 * Retrieve the license validation status.
 	 *
-	 * @return mixed
+	 * @return string The license validation status.
 	 */
-	public function get_license() {
-		$license = get_transient( self::TRANSIENT_NAME );
+	public function get_license_status() {
+		$license_status = get_transient( self::TRANSIENT_NAME );
 
-		if ( ! $license ) {
+		if ( ! $license_status ) {
 			$key = get_option( self::OPTION_NAME );
 			if ( ! empty( $key ) ) {
-				$license = $this->activate_license( $key );
+				$license_status = $this->activate_license( $key );
 			}
 		}
 
-		return $license;
+		return $license_status;
 	}
 
 	/**

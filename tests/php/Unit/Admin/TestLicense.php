@@ -163,32 +163,32 @@ class TestLicense extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Test get_license.
+	 * Test get_license_status.
 	 *
-	 * @covers \Genesis\CustomBlocks\Admin\License::get_license()
+	 * @covers \Genesis\CustomBlocks\Admin\License::get_license_status()
 	 */
-	public function test_get_license() {
+	public function test_get_license_status() {
 		$valid_license_transient_value   = 'valid';
 		$invalid_license_transient_value = 'key-invalid';
 
-		// If the transient is set, get_license() should simply return it.
+		// If the transient is set, get_license_status() should simply return it.
 		set_transient( License::TRANSIENT_NAME, $valid_license_transient_value );
-		$this->assertEquals( $valid_license_transient_value, $this->instance->get_license() );
+		$this->assertEquals( $valid_license_transient_value, $this->instance->get_license_status() );
 
 		set_transient( License::TRANSIENT_NAME, $invalid_license_transient_value );
-		$this->assertEquals( $invalid_license_transient_value, $this->instance->get_license() );
+		$this->assertEquals( $invalid_license_transient_value, $this->instance->get_license_status() );
 
 		// If there's no transient or option, this should return false.
 		delete_transient( License::TRANSIENT_NAME );
-		$this->assertFalse( $this->instance->get_license() );
+		$this->assertFalse( $this->instance->get_license_status() );
 	}
 
 	/**
-	 * Test get_license when none is stored.
+	 * Test get_license_status when none is stored.
 	 *
-	 * @covers \Genesis\CustomBlocks\Admin\License::get_license()
+	 * @covers \Genesis\CustomBlocks\Admin\License::get_license_status()
 	 */
-	public function test_get_license_none_stored() {
+	public function test_get_license_status_none_stored() {
 		$expected_error_code = 'key-deleted';
 		add_filter(
 			self::HTTP_FILTER_NAME,
@@ -205,14 +205,14 @@ class TestLicense extends \WP_UnitTestCase {
 		add_option( License::OPTION_NAME, $example_valid_license_key );
 
 		// If the license transient is empty, this should look at the option value and make a request to validate that.
-		$this->assertEquals( $expected_error_code, $this->instance->get_license() );
+		$this->assertEquals( $expected_error_code, $this->instance->get_license_status() );
 	}
 	/**
-	 * Test get_license when this is locked from making more requests.
+	 * Test get_license_status when this is locked from making more requests.
 	 *
-	 * @covers \Genesis\CustomBlocks\Admin\License::get_license()
+	 * @covers \Genesis\CustomBlocks\Admin\License::get_license_status()
 	 */
-	public function test_get_license_locked() {
+	public function test_get_license_status_locked() {
 		add_filter(
 			self::HTTP_FILTER_NAME,
 			static function( $response ) {
@@ -226,7 +226,7 @@ class TestLicense extends \WP_UnitTestCase {
 
 		// This can be locked from making more requests once a request is in progress, to avoid a stampede.
 		// So this should simply return the fact that this is locked, without making another request.
-		$this->assertEquals( $requests_locked_value, $this->instance->get_license() );
+		$this->assertEquals( $requests_locked_value, $this->instance->get_license_status() );
 	}
 
 	/**
