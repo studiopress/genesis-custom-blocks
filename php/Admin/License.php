@@ -155,17 +155,17 @@ class License extends ComponentAbstract {
 		);
 
 		if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
-			$license = self::LICENSE_VALID;
+			$license_status = self::LICENSE_VALID;
 		} elseif ( is_wp_error( $response ) ) {
-			$license = self::LICENSE_REQUEST_FAILED;
+			$license_status = self::LICENSE_REQUEST_FAILED;
 		} else {
-			$response_body = json_decode( wp_remote_retrieve_body( $response ) );
-			$license       = ! empty( $response_body->error_code ) ? $response_body->error_code : self::LICENSE_ERROR_UNKNOWN;
+			$response_body  = json_decode( wp_remote_retrieve_body( $response ) );
+			$license_status = ! empty( $response_body->error_code ) ? $response_body->error_code : self::LICENSE_ERROR_UNKNOWN;
 		}
 
-		set_transient( self::TRANSIENT_NAME, $license, DAY_IN_SECONDS );
+		set_transient( self::TRANSIENT_NAME, $license_status, DAY_IN_SECONDS );
 
-		return $license;
+		return $license_status;
 	}
 
 	/**
