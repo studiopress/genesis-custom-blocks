@@ -10,7 +10,6 @@
 namespace Genesis\CustomBlocks\Admin;
 
 use Genesis\CustomBlocks\ComponentAbstract;
-use Genesis\CustomBlocks\Admin\License;
 
 /**
  * Class Settings
@@ -78,7 +77,7 @@ class Settings extends ComponentAbstract {
 	 * Register Genesis Custom Blocks settings.
 	 */
 	public function register_settings() {
-		register_setting( 'genesis-custom-blocks-license-key', License::OPTION_NAME );
+		register_setting( 'genesis-custom-blocks-subscription-key', Subscription::OPTION_NAME );
 	}
 
 	/**
@@ -89,7 +88,7 @@ class Settings extends ComponentAbstract {
 		<div class="wrap genesis-custom-blocks-settings">
 			<?php
 			$this->render_page_header();
-			include genesis_custom_blocks()->get_path() . 'php/Views/License.php';
+			include genesis_custom_blocks()->get_path() . 'php/Views/Subscription.php';
 			?>
 		</div>
 		<?php
@@ -102,8 +101,8 @@ class Settings extends ComponentAbstract {
 		?>
 		<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 		<h2 class="nav-tab-wrapper">
-			<a href="<?php echo esc_url( add_query_arg( 'tab', 'license' ) ); ?>" title="<?php esc_attr_e( 'License', 'genesis-custom-blocks' ); ?>" class="nav-tab nav-tab-active dashicons-before dashicons-nametag">
-				<?php esc_html_e( 'License', 'genesis-custom-blocks' ); ?>
+			<a href="<?php echo esc_url( add_query_arg( 'tab', 'subscription' ) ); ?>" title="<?php esc_attr_e( 'Subscription', 'genesis-custom-blocks' ); ?>" class="nav-tab nav-tab-active dashicons-before dashicons-nametag">
+				<?php esc_html_e( 'Subscription', 'genesis-custom-blocks' ); ?>
 			</a>
 			<a href="https://developer.wpengine.com/genesis-custom-blocks" target="_blank" class="nav-tab dashicons-before dashicons-info">
 				<?php esc_html_e( 'Documentation', 'genesis-custom-blocks' ); ?>

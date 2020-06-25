@@ -5,7 +5,7 @@
  * @package Genesis\CustomBlocks
  */
 
-use Genesis\CustomBlocks\Admin\License;
+use Genesis\CustomBlocks\Admin\Subscription;
 
 /**
  * Trait with a helper method.
@@ -36,12 +36,12 @@ trait TestingHelper {
 	}
 
 	/**
-	 * Sets whether the license is valid or not.
+	 * Sets whether the subscription key is valid or not.
 	 *
-	 * @param bool $is_valid Whether the license is valid.
+	 * @param bool $is_valid Whether the subscription key is valid.
 	 */
-	public function set_license_validity( $is_valid ) {
+	public function set_subscription_key_validity( $is_valid ) {
 		$transient_value = $is_valid ? 'valid' : 'key-invalid';
-		set_transient( License::TRANSIENT_NAME, $transient_value );
+		set_transient( Subscription::TRANSIENT_NAME, $transient_value );
 	}
 }

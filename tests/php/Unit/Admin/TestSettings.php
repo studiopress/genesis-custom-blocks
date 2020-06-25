@@ -6,7 +6,7 @@
  */
 
 use Genesis\CustomBlocks\Admin\Settings;
-use Genesis\CustomBlocks\Admin\License;
+use Genesis\CustomBlocks\Admin\Subscription;
 use Brain\Monkey;
 
 /**
@@ -155,7 +155,7 @@ class TestSettings extends \WP_UnitTestCase {
 		global $wp_registered_settings;
 
 		$this->instance->register_settings();
-		$expected_option_group = 'genesis-custom-blocks-license-key';
+		$expected_option_group = 'genesis-custom-blocks-subscription-key';
 		$this->assertEquals(
 			[
 				'description'       => '',
@@ -164,7 +164,7 @@ class TestSettings extends \WP_UnitTestCase {
 				'show_in_rest'      => false,
 				'type'              => 'string',
 			],
-			$wp_registered_settings[ License::OPTION_NAME ]
+			$wp_registered_settings[ Subscription::OPTION_NAME ]
 		);
 	}
 
@@ -179,7 +179,7 @@ class TestSettings extends \WP_UnitTestCase {
 		$output = ob_get_clean();
 
 		$this->assertContains( '<div class="wrap genesis-custom-blocks-settings">', $output );
-		$this->assertContains( '<a href="?tab=license" title="License" class="nav-tab nav-tab-active dashicons-before dashicons-nametag">', $output );
+		$this->assertContains( '<a href="?tab=subscription" title="Subscription" class="nav-tab nav-tab-active dashicons-before dashicons-nametag">', $output );
 	}
 
 	/**
@@ -202,7 +202,7 @@ class TestSettings extends \WP_UnitTestCase {
 	 * @covers \Genesis\CustomBlocks\Admin\Settings::prepare_notice()
 	 */
 	public function test_prepare_notice() {
-		$notice = 'There was a problem activating your Genesis Custom Blocks license.';
+		$notice = 'There was a problem activating your Genesis Pro subscription key.';
 		$this->instance->prepare_notice( $notice );
 
 		$this->assertEquals( [ $notice ], get_option( Settings::NOTICES_OPTION_NAME ) );

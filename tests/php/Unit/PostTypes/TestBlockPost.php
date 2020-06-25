@@ -83,14 +83,14 @@ class TestBlockPost extends \WP_UnitTestCase {
 			$this->assertContains( 'Genesis\CustomBlocks\Blocks\Controls\\', get_class( $instance ) );
 		}
 
-		// Because the pro license isn't active, the 'user' control should not display.
+		// Because the Genesis Pro subscription key isn't active, the 'user' control should not display.
 		$this->assertFalse( isset( $this->instance->controls['user'] ) );
 
-		$this->set_license_validity( true );
+		$this->set_subscription_key_validity( true );
 		genesis_custom_blocks()->admin->init();
 		$this->instance->register_controls();
 
-		// The pro license is active, so the 'user' and 'post' controls should be registered.
+		// The pro subscription is active, so the 'user' and 'post' controls should be registered.
 		$this->assertEquals( 'Genesis\CustomBlocks\Blocks\Controls\Post', get_class( $this->instance->controls['post'] ) );
 		$this->assertEquals( 'Genesis\CustomBlocks\Blocks\Controls\Taxonomy', get_class( $this->instance->controls['taxonomy'] ) );
 		$this->assertEquals( 'Genesis\CustomBlocks\Blocks\Controls\User', get_class( $this->instance->controls['user'] ) );
@@ -122,8 +122,8 @@ class TestBlockPost extends \WP_UnitTestCase {
 		$valid_id         = $expected_wp_user->ID;
 		$control          = 'user';
 
-		// Simulate the pro license being active.
-		$this->set_license_validity( true );
+		// Simulate the pro subscription being active.
+		$this->set_subscription_key_validity( true );
 		genesis_custom_blocks()->admin->init();
 		$this->instance->register_controls();
 
@@ -133,8 +133,8 @@ class TestBlockPost extends \WP_UnitTestCase {
 		$this->assertEquals( '', $this->instance->get_field_value( $invalid_login, $control, true ) );
 		$this->assertEquals( $expected_wp_user->get( 'display_name' ), $this->instance->get_field_value( [ 'id' => $valid_id ], $control, true ) );
 
-		// If the pro license is inactive, this should still render the pro field the same as if it's active.
-		$this->set_license_validity( false );
+		// If the pro subscription is inactive, this should still render the pro field the same as if it's active.
+		$this->set_subscription_key_validity( false );
 		genesis_custom_blocks()->admin->init();
 		$this->instance->register_controls();
 

@@ -12,216 +12,216 @@ namespace Genesis\CustomBlocks\Admin;
 use Genesis\CustomBlocks\ComponentAbstract;
 
 /**
- * Class License
+ * Class Subscription
  */
-class License extends ComponentAbstract {
+class Subscription extends ComponentAbstract {
 	/**
 	 * URL of the Genesis Custom Blocks store.
 	 *
 	 * @var string
 	 */
-	const LICENSE_ENDPOINT = 'https://wp-product-info.wpesvc.net/v1/plugins/genesis-custom-blocks/subscriptions/';
+	const SUBSCRIPTION_ENDPOINT = 'https://wp-product-info.wpesvc.net/v1/plugins/genesis-page-builder/subscriptions/';
 
 	/**
-	 * Option name of the license.
+	 * Option name of the subscription.
 	 *
 	 * @var string
 	 */
 	const OPTION_NAME = 'genesis_pro_subscription_key';
 
 	/**
-	 * The name of the license key validation transient.
+	 * The name of the subscription key validation transient.
 	 *
-	 * Stores the result of license validation, like 'valid'.
+	 * Stores the result of subscription validation, like 'valid'.
 	 *
 	 * @var string
 	 */
-	const TRANSIENT_NAME = 'genesis_custom_blocks_license';
+	const TRANSIENT_NAME = 'genesis_custom_blocks_subscription';
 
 	/**
-	 * The transient license value for when the request to validate the Pro license failed.
+	 * The transient subscription value for when the request to validate the Pro subscription key failed.
 	 *
 	 * This is for when the actual request fails, like if the user has blocked them.
-	 * Not for when it returns that the license is invalid.
+	 * Not for when it returns that the subscription key is invalid.
 	 *
 	 * @var string
 	 */
-	const LICENSE_REQUEST_FAILED = 'request_failed';
+	const SUBSCRIPTION_REQUEST_FAILED = 'request_failed';
 
 	/**
-	 * The transient license value for when there was no error code in the validation, but it was not still not valid.
+	 * The transient subscription key value for when there was no error code in the validation, but it was not still not valid.
 	 *
 	 * @var string
 	 */
-	const LICENSE_ERROR_UNKNOWN = 'unknown';
+	const SUBSCRIPTION_ERROR_UNKNOWN = 'unknown';
 
 	/**
-	 * The license value saved if it's valid.
+	 * The subscription value saved if it's valid.
 	 *
 	 * @var string
 	 */
-	const LICENSE_VALID = 'valid';
+	const SUBSCRIPTION_VALID = 'valid';
 
 	/**
-	 * The transient value for when license requests are locked.
+	 * The transient value for when subscription requests are locked.
 	 *
 	 * @var string
 	 */
-	const LICENSE_REQUESTS_LOCKED = 'license_requests_locked';
+	const SUBSCRIPTION_REQUESTS_LOCKED = 'subscription_requests_locked';
 
 	/**
-	 * The timeout of license requests, in seconds.
+	 * The timeout of subscription requests, in seconds.
 	 *
 	 * @var int
 	 */
-	const LICENSE_REQUEST_TIMEOUT = 10;
+	const SUBSCRIPTION_REQUEST_TIMEOUT = 10;
 
 	/**
 	 * Register any hooks that this component needs.
 	 */
 	public function register_hooks() {
-		add_filter( 'pre_update_option_' . self::OPTION_NAME, [ $this, 'save_license_key' ] );
+		add_filter( 'pre_update_option_' . self::OPTION_NAME, [ $this, 'save_subscription_key' ] );
 	}
 
 	/**
-	 * Check that the license key is valid before saving.
+	 * Check that the subscription key is valid before saving.
 	 *
-	 * @param string $key The license key that was submitted.
+	 * @param string $key The subscription key that was submitted.
 	 *
 	 * @return string|false
 	 */
-	public function save_license_key( $key ) {
+	public function save_subscription_key( $key ) {
 		if ( empty( $key ) ) {
-			genesis_custom_blocks()->admin->settings->prepare_notice( $this->license_empty_message() );
+			genesis_custom_blocks()->admin->settings->prepare_notice( $this->subscription_empty_message() );
 			delete_transient( self::TRANSIENT_NAME );
 			return false;
 		}
 
-		$license_status = $this->activate_license( $key );
+		$subscription_status = $this->activate_subscription( $key );
 		if ( ! $this->is_valid() ) {
 			$key = false;
-			if ( self::LICENSE_REQUEST_FAILED === $license_status ) {
-				genesis_custom_blocks()->admin->settings->prepare_notice( $this->license_request_failed_message() );
+			if ( self::SUBSCRIPTION_REQUEST_FAILED === $subscription_status ) {
+				genesis_custom_blocks()->admin->settings->prepare_notice( $this->subscription_request_failed_message() );
 			} else {
-				genesis_custom_blocks()->admin->settings->prepare_notice( $this->license_invalid_message( $license_status ) );
+				genesis_custom_blocks()->admin->settings->prepare_notice( $this->subscription_invalid_message( $subscription_status ) );
 			}
 		} else {
-			genesis_custom_blocks()->admin->settings->prepare_notice( $this->license_success_message() );
+			genesis_custom_blocks()->admin->settings->prepare_notice( $this->subscription_success_message() );
 		}
 
 		return $key;
 	}
 
 	/**
-	 * Check if the license if valid.
+	 * Check if the subscription if valid.
 	 *
 	 * @return bool
 	 */
 	public function is_valid() {
-		return self::LICENSE_VALID === $this->get_license_status();
+		return self::SUBSCRIPTION_VALID === $this->get_subscription_status();
 	}
 
 	/**
-	 * Retrieve the license validation status.
+	 * Retrieve the subscription validation status.
 	 *
-	 * @return string|false The license validation status, or false if there's no license to validate.
+	 * @return string|false The subscription validation status, or false if there's no subscription to validate.
 	 */
-	public function get_license_status() {
-		$license_status = get_transient( self::TRANSIENT_NAME );
+	public function get_subscription_status() {
+		$subscription_status = get_transient( self::TRANSIENT_NAME );
 
-		if ( ! $license_status ) {
+		if ( ! $subscription_status ) {
 			$key = get_option( self::OPTION_NAME );
 			if ( ! empty( $key ) ) {
-				$license_status = $this->activate_license( $key );
+				$subscription_status = $this->activate_subscription( $key );
 			}
 		}
 
-		return $license_status;
+		return $subscription_status;
 	}
 
 	/**
-	 * Try to activate the license.
+	 * Try to activate the subscription.
 	 *
-	 * @param string $key The license key to activate.
-	 * @return string The license validation result.
+	 * @param string $key The subscription key to activate.
+	 * @return string The subscription validation result.
 	 */
-	public function activate_license( $key ) {
-		// If there's already a license validation request in progress,
+	public function activate_subscription( $key ) {
+		// If there's already a subscription validation request in progress,
 		// prevent more requests that could create a stampede.
-		if ( self::LICENSE_REQUESTS_LOCKED === get_transient( self::TRANSIENT_NAME ) ) {
-			return self::LICENSE_REQUESTS_LOCKED;
+		if ( self::SUBSCRIPTION_REQUESTS_LOCKED === get_transient( self::TRANSIENT_NAME ) ) {
+			return self::SUBSCRIPTION_REQUESTS_LOCKED;
 		}
 
-		set_transient( self::TRANSIENT_NAME, self::LICENSE_REQUESTS_LOCKED, self::LICENSE_REQUEST_TIMEOUT );
+		set_transient( self::TRANSIENT_NAME, self::SUBSCRIPTION_REQUESTS_LOCKED, self::SUBSCRIPTION_REQUEST_TIMEOUT );
 		$sanitized_key = preg_replace( '/[^A-Za-z0-9_-]/', '', $key );
 
 		// Call the Genesis Custom Blocks API.
 		$response = wp_remote_get(
-			self::LICENSE_ENDPOINT . $sanitized_key,
-			[ 'timeout' => self::LICENSE_REQUEST_TIMEOUT ]
+			self::SUBSCRIPTION_ENDPOINT . $sanitized_key,
+			[ 'timeout' => self::SUBSCRIPTION_REQUEST_TIMEOUT ]
 		);
 
 		if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
-			$license_status = self::LICENSE_VALID;
+			$subscription_status = self::SUBSCRIPTION_VALID;
 		} elseif ( is_wp_error( $response ) ) {
-			$license_status = self::LICENSE_REQUEST_FAILED;
+			$subscription_status = self::SUBSCRIPTION_REQUEST_FAILED;
 		} else {
-			$response_body  = json_decode( wp_remote_retrieve_body( $response ) );
-			$license_status = ! empty( $response_body->error_code ) ? $response_body->error_code : self::LICENSE_ERROR_UNKNOWN;
+			$response_body       = json_decode( wp_remote_retrieve_body( $response ) );
+			$subscription_status = ! empty( $response_body->error_code ) ? $response_body->error_code : self::SUBSCRIPTION_ERROR_UNKNOWN;
 		}
 
-		set_transient( self::TRANSIENT_NAME, $license_status, DAY_IN_SECONDS );
+		set_transient( self::TRANSIENT_NAME, $subscription_status, DAY_IN_SECONDS );
 
-		return $license_status;
+		return $subscription_status;
 	}
 
 	/**
-	 * Admin notice for a license being empty, like ''.
+	 * Admin notice for a subscription being empty, like ''.
 	 *
-	 * @return string The error notice for the license.
+	 * @return string The error notice for the subscription.
 	 */
-	public function license_empty_message() {
+	public function subscription_empty_message() {
 		return sprintf(
 			'<div class="notice notice-error"><p>%s</p></div>',
-			esc_html__( 'The license was empty. Please enter a license.', 'genesis-custom-blocks' )
+			esc_html__( 'The subscription key was empty. Please enter a subscription key.', 'genesis-custom-blocks' )
 		);
 	}
 
 	/**
-	 * Admin notice for correct license details.
+	 * Admin notice for correct subscription details.
 	 *
 	 * @return string
 	 */
-	public function license_success_message() {
-		$message = __( 'Your Genesis Pro license was successfully activated!', 'genesis-custom-blocks' );
+	public function subscription_success_message() {
+		$message = __( 'Your Genesis Pro subscription key was successfully activated!', 'genesis-custom-blocks' );
 		return sprintf( '<div class="notice notice-success"><p>%s</p></div>', esc_html( $message ) );
 	}
 
 	/**
-	 * Admin notice for the license request failing.
+	 * Admin notice for the subscription request failing.
 	 *
 	 * This is for a rare case when the validation request fails entirely, like if the user has blocked requests.
-	 * It's not for when it returns that the license is invalid.
-	 * This can help with debugging, as it'll point to whether the issue is related to WP or the license endpoint.
+	 * It's not for when it returns that the subscription key is invalid.
+	 * This can help with debugging, as it'll point to whether the issue is related to WP or the subscription endpoint.
 	 *
 	 * @return string
 	 */
-	public function license_request_failed_message() {
+	public function subscription_request_failed_message() {
 		return sprintf(
 			'<div class="notice notice-error"><p>%1$s</p></div>',
-			__( 'There was a problem activating the license, but it may not be invalid. If the problem persists, please contact support.', 'genesis-custom-blocks' )
+			__( 'There was a problem activating the subscription key, but it may not be invalid. If the problem persists, please contact support.', 'genesis-custom-blocks' )
 		);
 	}
 
 	/**
-	 * Admin notice for incorrect license details.
+	 * Admin notice for incorrect subscription details.
 	 *
 	 * Forked from Genesis Page Builder.
 	 *
 	 * @param string $error_code The error code from the endpoint.
 	 * @return string The error message to display in the notice.
 	 */
-	public function license_invalid_message( $error_code ) {
+	public function subscription_invalid_message( $error_code ) {
 		$account_portal_link = sprintf(
 			'<a href="%1$s" target="_blank" rel="noreferrer noopener">%2$s</a>',
 			esc_url( 'https://my.wpengine.com/products/genesis_pro' ),

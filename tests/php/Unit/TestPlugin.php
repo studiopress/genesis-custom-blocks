@@ -76,10 +76,10 @@ class TestPlugin extends \WP_UnitTestCase {
 	public function test_is_pro() {
 		$this->instance->admin = new Admin();
 		$this->instance->admin->init();
-		$this->set_license_validity( true );
+		$this->set_subscription_key_validity( true );
 		$this->assertTrue( $this->instance->is_pro() );
 
-		$this->set_license_validity( false );
+		$this->set_subscription_key_validity( false );
 		$this->assertFalse( $this->instance->is_pro() );
 	}
 

@@ -24,11 +24,11 @@ class Admin extends ComponentAbstract {
 	public $settings;
 
 	/**
-	 * Plugin license.
+	 * Genesis Pro subscription.
 	 *
-	 * @var License
+	 * @var Subscription
 	 */
-	public $license;
+	public $subscription;
 
 	/**
 	 * User onboarding.
@@ -58,8 +58,8 @@ class Admin extends ComponentAbstract {
 		$this->settings = new Settings();
 		genesis_custom_blocks()->register_component( $this->settings );
 
-		$this->license = new License();
-		genesis_custom_blocks()->register_component( $this->license );
+		$this->subscription = new Subscription();
+		genesis_custom_blocks()->register_component( $this->subscription );
 
 		$this->onboarding = new Onboarding();
 		genesis_custom_blocks()->register_component( $this->onboarding );
@@ -106,7 +106,7 @@ class Admin extends ComponentAbstract {
 	}
 
 	/**
-	 * Redirect to the Settings screen if the license is being saved.
+	 * Redirect to the Settings screen if the subscription key is being saved.
 	 */
 	public function maybe_settings_redirect() {
 		$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
@@ -117,7 +117,7 @@ class Admin extends ComponentAbstract {
 					[
 						'post_type' => 'genesis_custom_block',
 						'page'      => 'genesis-custom-blocks-settings',
-						'tab'       => 'license',
+						'tab'       => 'subscription',
 					],
 					admin_url( 'edit.php' )
 				)
