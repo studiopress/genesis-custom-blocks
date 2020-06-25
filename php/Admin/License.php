@@ -146,10 +146,11 @@ class License extends ComponentAbstract {
 		}
 
 		set_transient( self::TRANSIENT_NAME, self::LICENSE_REQUESTS_LOCKED, self::LICENSE_REQUEST_TIMEOUT );
+		$sanitized_key = preg_replace( '/[^A-Za-z0-9_-]/', '', $key );
 
 		// Call the Genesis Custom Blocks API.
 		$response = wp_remote_get(
-			self::LICENSE_ENDPOINT . $key,
+			self::LICENSE_ENDPOINT . sanitize_key( $sanitized_key ),
 			[ 'timeout' => self::LICENSE_REQUEST_TIMEOUT ]
 		);
 
