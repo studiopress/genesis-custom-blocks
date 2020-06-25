@@ -11,9 +11,6 @@ executors:
   php:
     docker:
       - image: circleci/php:7.4.5-cli-node
-  node-only:
-    docker:
-      - image: cimg/node:12.18
 
 commands:
   set-up-packages:
@@ -80,7 +77,7 @@ jobs:
             WP_TESTS_DIR=~/project/wordpress-develop/tests/phpunit ./vendor/bin/phpunit
 
   js-tests:
-    executor: node-only
+    executor: php
     steps:
       - checkout
       - run: npm ci && npm run test:js
