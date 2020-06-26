@@ -44,9 +44,11 @@ describe( 'TextBlock', () => {
 		await pressKeyWithModifier( 'primary', 'a' );
 		await page.keyboard.type( fieldName );
 
-		// Publish the block.
-		await page.click( '#publish' );
-		await page.waitForNavigation();
+		// Publish the block, and wait for the page to reload.
+		await Promise.all([
+			page.waitForNavigation(),
+			page.click( '#publish' ),
+		] );
 
 		// Create a new post and add the new block.
 		await createNewPost();
