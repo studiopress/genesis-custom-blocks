@@ -31,7 +31,7 @@ class Subscription extends ComponentAbstract {
 	const SUBSCRIPTION_KEY_OPTION_NAME = 'genesis_pro_subscription_key';
 
 	/**
-	 * The name of the subscription key validation transient.
+	 * Transient name of the subscription key validation status.
 	 *
 	 * Stores the result of subscription validation, like 'valid'.
 	 *
@@ -40,7 +40,7 @@ class Subscription extends ComponentAbstract {
 	const SUBSCRIPTION_STATUS_TRANSIENT_NAME = 'genesis_custom_blocks_subscription';
 
 	/**
-	 * The subscription transient value for when the request to validate the Pro subscription key failed.
+	 * The transient value for when the request to validate the Pro subscription key failed.
 	 *
 	 * This is for when the actual request fails, like if the user has blocked requests.
 	 * Not for when it returns that the subscription key is invalid.
@@ -50,14 +50,14 @@ class Subscription extends ComponentAbstract {
 	const REQUEST_FAILED = 'request_failed';
 
 	/**
-	 * The transient subscription key value for when there was no error code in the validation, but it was not still not valid.
+	 * The transient value for when there was no error code in the subscription validation, but it was not still not valid.
 	 *
 	 * @var string
 	 */
 	const ERROR_UNKNOWN = 'unknown';
 
 	/**
-	 * The transient subscription value saved if it's valid.
+	 * The transient value saved if the subscription is valid.
 	 *
 	 * @var string
 	 */
@@ -78,14 +78,14 @@ class Subscription extends ComponentAbstract {
 	const REQUEST_TIMEOUT = 10;
 
 	/**
-	 * Add the component's filter.
+	 * Adds the component filter.
 	 */
 	public function register_hooks() {
 		add_filter( 'pre_update_option_' . self::SUBSCRIPTION_KEY_OPTION_NAME, [ $this, 'save_subscription_key' ] );
 	}
 
 	/**
-	 * Check that the subscription key is valid before saving.
+	 * Checks that the subscription key is valid before saving.
 	 *
 	 * @param string $key The subscription key that was submitted.
 	 *
@@ -114,7 +114,7 @@ class Subscription extends ComponentAbstract {
 	}
 
 	/**
-	 * Check if the subscription if valid.
+	 * Checks if the subscription if valid.
 	 *
 	 * @return bool
 	 */
@@ -123,7 +123,7 @@ class Subscription extends ComponentAbstract {
 	}
 
 	/**
-	 * Retrieve the subscription validation status.
+	 * Retrieves the subscription validation status.
 	 *
 	 * @return string|false The subscription validation status, or false if there's no subscription to validate.
 	 */
@@ -141,7 +141,7 @@ class Subscription extends ComponentAbstract {
 	}
 
 	/**
-	 * Try to activate the subscription.
+	 * Tries to activate the subscription.
 	 *
 	 * @param string $key The subscription key to activate.
 	 * @return string The subscription validation result.
