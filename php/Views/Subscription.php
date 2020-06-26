@@ -12,8 +12,8 @@ use Genesis\CustomBlocks\Admin\Subscription;
 ?>
 <form method="post" action="options.php">
 	<?php
-	settings_fields( 'genesis-custom-blocks-subscription-key' );
-	do_settings_sections( 'genesis-custom-blocks-subscription-key' );
+	settings_fields( Subscription::SUBSCRIPTION_KEY_SETTINGS_GROUP );
+	do_settings_sections( Subscription::SUBSCRIPTION_KEY_SETTINGS_GROUP );
 	?>
 	<table class="form-table">
 		<tr valign="top">

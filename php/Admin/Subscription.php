@@ -24,6 +24,13 @@ class Subscription extends ComponentAbstract {
 	const ENDPOINT = 'https://wp-product-info.wpesvc.net/v1/plugins/genesis-custom-blocks/subscriptions/';
 
 	/**
+	 * Settings group name for the subscription key.
+	 *
+	 * @var string
+	 */
+	const SUBSCRIPTION_KEY_SETTINGS_GROUP = 'genesis-custom-blocks-subscription-key';
+
+	/**
 	 * Option name where the subscription key is stored for this and other Genesis Pro plugins.
 	 *
 	 * @var string
