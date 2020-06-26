@@ -44,10 +44,10 @@ use Genesis\CustomBlocks\Admin\Subscription;
 		</tr>
 		<tr valign="top">
 			<th scope="row">
-				<label for="<?php echo esc_attr( Subscription::OPTION_NAME ); ?>"><?php esc_html_e( 'Subscription key', 'genesis-custom-blocks' ); ?></label>
+				<label for="<?php echo esc_attr( Subscription::SUBSCRIPTION_KEY_OPTION_NAME ); ?>"><?php esc_html_e( 'Subscription key', 'genesis-custom-blocks' ); ?></label>
 			</th>
 			<td>
-				<input type="password" name="<?php echo esc_attr( Subscription::OPTION_NAME ); ?>" id="<?php echo esc_attr( Subscription::OPTION_NAME ); ?>" class="regular-text" value="<?php echo esc_attr( get_option( Subscription::OPTION_NAME ) ); ?>" />
+				<input type="password" name="<?php echo esc_attr( Subscription::SUBSCRIPTION_KEY_OPTION_NAME ); ?>" id="<?php echo esc_attr( Subscription::SUBSCRIPTION_KEY_OPTION_NAME ); ?>" class="regular-text" value="<?php echo esc_attr( get_option( Subscription::SUBSCRIPTION_KEY_OPTION_NAME ) ); ?>" />
 			</td>
 		</tr>
 	</table>

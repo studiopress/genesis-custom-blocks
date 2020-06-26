@@ -103,7 +103,7 @@ class TestSubscription extends \WP_UnitTestCase {
 	public function test_save_subscription_key_empty( $empty_subscription_key ) {
 		$returned_key = $this->instance->save_subscription_key( $empty_subscription_key );
 
-		$this->assertFalse( get_transient( Subscription::TRANSIENT_NAME ) );
+		$this->assertFalse( get_transient( Subscription::SUBSCRIPTION_STATUS_TRANSIENT_NAME ) );
 		$this->assertEquals(
 			[ self::EXPECTED_SUBSCRIPTION_EMPTY_NOTICE ],
 			get_option( Settings::NOTICES_OPTION_NAME )
@@ -192,7 +192,7 @@ class TestSubscription extends \WP_UnitTestCase {
 		$this->assertFalse( $this->instance->is_valid() );
 
 		set_transient(
-			Subscription::TRANSIENT_NAME,
+			Subscription::SUBSCRIPTION_STATUS_TRANSIENT_NAME,
 			'valid'
 		);
 
@@ -210,14 +210,14 @@ class TestSubscription extends \WP_UnitTestCase {
 		$invalid_subscription_transient_value = 'key-invalid';
 
 		// If the transient is set, get_subscription_status() should simply return it.
-		set_transient( Subscription::TRANSIENT_NAME, $valid_subscription_transient_value );
+		set_transient( Subscription::SUBSCRIPTION_STATUS_TRANSIENT_NAME, $valid_subscription_transient_value );
 		$this->assertEquals( $valid_subscription_transient_value, $this->instance->get_subscription_status() );
 
-		set_transient( Subscription::TRANSIENT_NAME, $invalid_subscription_transient_value );
+		set_transient( Subscription::SUBSCRIPTION_STATUS_TRANSIENT_NAME, $invalid_subscription_transient_value );
 		$this->assertEquals( $invalid_subscription_transient_value, $this->instance->get_subscription_status() );
 
 		// If there's no transient or option, this should return false.
-		delete_transient( Subscription::TRANSIENT_NAME );
+		delete_transient( Subscription::SUBSCRIPTION_STATUS_TRANSIENT_NAME );
 		$this->assertFalse( $this->instance->get_subscription_status() );
 	}
 
@@ -240,7 +240,7 @@ class TestSubscription extends \WP_UnitTestCase {
 		);
 
 		$example_valid_subscription_key = '5134315';
-		add_option( Subscription::OPTION_NAME, $example_valid_subscription_key );
+		add_option( Subscription::SUBSCRIPTION_KEY_OPTION_NAME, $example_valid_subscription_key );
 
 		// If the subscription transient is empty, this should look at the option value and make a request to validate that.
 		$this->assertEquals( $expected_error_code, $this->instance->get_subscription_status() );
@@ -260,7 +260,7 @@ class TestSubscription extends \WP_UnitTestCase {
 		);
 
 		$requests_locked_value = 'subscription_requests_locked';
-		set_transient( Subscription::TRANSIENT_NAME, $requests_locked_value );
+		set_transient( Subscription::SUBSCRIPTION_STATUS_TRANSIENT_NAME, $requests_locked_value );
 
 		// This can be locked from making more requests once a request is in progress, to avoid a stampede.
 		// So this should simply return the fact that this is locked, without making another request.
@@ -290,7 +290,7 @@ class TestSubscription extends \WP_UnitTestCase {
 		// This should also store the result in the transient.
 		$this->assertEquals(
 			$expected,
-			get_transient( Subscription::TRANSIENT_NAME )
+			get_transient( Subscription::SUBSCRIPTION_STATUS_TRANSIENT_NAME )
 		);
 	}
 
@@ -311,7 +311,7 @@ class TestSubscription extends \WP_UnitTestCase {
 		$this->instance->activate_subscription( $subscription_key );
 
 		// Having simulated a successful subscription validation with the filter above, this should activate the subscription.
-		$this->assertEquals( 'valid', get_transient( Subscription::TRANSIENT_NAME ) );
+		$this->assertEquals( 'valid', get_transient( Subscription::SUBSCRIPTION_STATUS_TRANSIENT_NAME ) );
 	}
 
 	/**

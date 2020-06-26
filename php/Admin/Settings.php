@@ -77,7 +77,7 @@ class Settings extends ComponentAbstract {
 	 * Register Genesis Custom Blocks settings.
 	 */
 	public function register_settings() {
-		register_setting( 'genesis-custom-blocks-subscription-key', Subscription::OPTION_NAME );
+		register_setting( 'genesis-custom-blocks-subscription-key', Subscription::SUBSCRIPTION_KEY_OPTION_NAME );
 	}
 
 	/**

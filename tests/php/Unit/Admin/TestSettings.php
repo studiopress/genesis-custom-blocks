@@ -164,7 +164,7 @@ class TestSettings extends \WP_UnitTestCase {
 				'show_in_rest'      => false,
 				'type'              => 'string',
 			],
-			$wp_registered_settings[ Subscription::OPTION_NAME ]
+			$wp_registered_settings[ Subscription::SUBSCRIPTION_KEY_OPTION_NAME ]
 		);
 	}
 

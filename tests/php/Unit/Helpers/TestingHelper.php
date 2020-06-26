@@ -42,6 +42,6 @@ trait TestingHelper {
 	 */
 	public function set_subscription_key_validity( $is_valid ) {
 		$transient_value = $is_valid ? 'valid' : 'key-invalid';
-		set_transient( Subscription::TRANSIENT_NAME, $transient_value );
+		set_transient( Subscription::SUBSCRIPTION_STATUS_TRANSIENT_NAME, $transient_value );
 	}
 }
