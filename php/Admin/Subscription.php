@@ -20,7 +20,7 @@ class Subscription extends ComponentAbstract {
 	 *
 	 * @var string
 	 */
-	const SUBSCRIPTION_ENDPOINT = 'https://wp-product-info.wpesvc.net/v1/plugins/genesis-page-builder/subscriptions/';
+	const SUBSCRIPTION_ENDPOINT = 'https://wp-product-info.wpesvc.net/v1/plugins/genesis-custom-blocks/subscriptions/';
 
 	/**
 	 * Option name of the subscription.
