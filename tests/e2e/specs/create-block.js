@@ -45,8 +45,8 @@ describe( 'TextBlock', () => {
 		await page.keyboard.type( fieldName );
 
 		// Publish the block, and wait for the page to reload.
-		await Promise.all([
-			page.waitForNavigation(),
+		await Promise.all( [
+			page.waitForNavigation( { waitUntil: 'networkidle0' } ),
 			page.click( '#publish' ),
 		] );
 
