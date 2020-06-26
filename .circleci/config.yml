@@ -33,6 +33,8 @@ jobs:
     executor:
       name: php
     steps:
+      - node/install:
+          node-version: lts
       - checkout
       - set-up-packages
       - run: npm run lint
@@ -79,6 +81,8 @@ jobs:
   js-tests:
     executor: php
     steps:
+      - node/install:
+          node-version: lts
       - checkout
       - run: npm ci && npm run test:js
 
