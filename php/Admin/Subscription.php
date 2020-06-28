@@ -121,7 +121,7 @@ class Subscription extends ComponentAbstract {
 	}
 
 	/**
-	 * Checks if the subscription if valid.
+	 * Checks if the subscription is valid.
 	 *
 	 * @return bool
 	 */
@@ -132,7 +132,7 @@ class Subscription extends ComponentAbstract {
 	/**
 	 * Retrieves the subscription validation status.
 	 *
-	 * @return string|false The subscription validation status, or false if there's no subscription to validate.
+	 * @return string|false The subscription validation status, or false if there is no subscription key or transient saved.
 	 */
 	public function get_subscription_status() {
 		$subscription_status = get_transient( self::SUBSCRIPTION_STATUS_TRANSIENT_NAME );
