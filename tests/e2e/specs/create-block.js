@@ -52,6 +52,7 @@ describe( 'TextBlock', () => {
 
 		// Create a new post and add the new block.
 		await createNewPost();
+		await page.waitForNavigation( { waitUntil: 'networkidle0' } );
 		await insertBlockFromInserter( blockName );
 		await page.waitForSelector( '.wp-block' );
 
