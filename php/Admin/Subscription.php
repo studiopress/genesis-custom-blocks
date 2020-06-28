@@ -96,7 +96,7 @@ class Subscription extends ComponentAbstract {
 	 *
 	 * @param string $key The subscription key that was submitted.
 	 *
-	 * @return string|false
+	 * @return string|false The subscription key if it was valid, or false.
 	 */
 	public function save_subscription_key( $key ) {
 		if ( empty( $key ) ) {
@@ -123,7 +123,7 @@ class Subscription extends ComponentAbstract {
 	/**
 	 * Checks if the subscription is valid.
 	 *
-	 * @return bool
+	 * @return bool Whether the subscription key is valid.
 	 */
 	public function is_valid() {
 		return self::VALID === $this->get_subscription_status();
@@ -198,7 +198,7 @@ class Subscription extends ComponentAbstract {
 	/**
 	 * Admin notice for correct subscription details.
 	 *
-	 * @return string
+	 * @return string The success notice for the subscription.
 	 */
 	public function subscription_success_message() {
 		return sprintf(
@@ -214,7 +214,7 @@ class Subscription extends ComponentAbstract {
 	 * It's not for when it returns that the subscription key is invalid.
 	 * This can help with debugging, as it'll point to whether the issue is related to WP or the subscription endpoint.
 	 *
-	 * @return string
+	 * @return string The error notice for a failed request.
 	 */
 	public function subscription_request_failed_message() {
 		return sprintf(
