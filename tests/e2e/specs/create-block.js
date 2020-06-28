@@ -45,14 +45,11 @@ describe( 'TextBlock', () => {
 		await page.keyboard.type( fieldName );
 
 		// Publish the block, and wait for the page to reload.
-		await Promise.all( [
-			page.waitForNavigation( { waitUntil: 'networkidle0' } ),
-			page.click( '#publish' ),
-		] );
+		await page.click( '#publish' );
+		await page.waitForNavigation( { waitUntil: 'networkidle0' } );
 
 		// Create a new post and add the new block.
 		await createNewPost();
-		await page.waitForNavigation( { waitUntil: 'networkidle0' } );
 		await insertBlockFromInserter( blockName );
 		await page.waitForSelector( '.wp-block' );
 
