@@ -63,11 +63,11 @@ class TestUtil extends AbstractTemplate {
 		$plugin_instance->admin = new Admin();
 		$plugin_instance->admin->init();
 
-		$this->set_license_validity( true );
+		$this->set_subscription_key_validity( true );
 		$this->assertTrue( $plugin_instance->is_pro() );
 		$this->assertTrue( genesis_custom_blocks()->is_pro() );
 
-		$this->set_license_validity( false );
+		$this->set_subscription_key_validity( false );
 		$this->assertFalse( $plugin_instance->is_pro() );
 		$this->assertFalse( genesis_custom_blocks()->is_pro() );
 	}

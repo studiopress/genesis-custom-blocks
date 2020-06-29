@@ -56,12 +56,12 @@ class TestAdmin extends \WP_UnitTestCase {
 	 * @covers \Genesis\CustomBlocks\Admin\Admin::init()
 	 */
 	public function test_init() {
-		$this->set_license_validity( false );
+		$this->set_subscription_key_validity( false );
 		$this->instance->init();
-		$settings_class = 'Genesis\CustomBlocks\Admin\Settings';
-		$license_class  = 'Genesis\CustomBlocks\Admin\License';
+		$settings_class     = 'Genesis\CustomBlocks\Admin\Settings';
+		$subscription_class = 'Genesis\CustomBlocks\Admin\Subscription';
 		$this->assertEquals( $settings_class, get_class( $this->instance->settings ) );
-		$this->assertEquals( $license_class, get_class( $this->instance->license ) );
+		$this->assertEquals( $subscription_class, get_class( $this->instance->subscription ) );
 
 		$reflection = new ReflectionObject( genesis_custom_blocks() );
 		$components = $reflection->getProperty( 'components' );
@@ -71,10 +71,10 @@ class TestAdmin extends \WP_UnitTestCase {
 		// The settings should have been added to the plugin components.
 		$this->assertEquals( $this->instance->settings->slug, $components_value[ $settings_class ]->slug );
 		$this->assertArrayHasKey( $settings_class, $components_value );
-		$this->assertArrayHasKey( $license_class, $components_value );
+		$this->assertArrayHasKey( $subscription_class, $components_value );
 
-		// With an active Pro license, this should redirect from the Pro page to the settings page.
-		$this->set_license_validity( true );
+		// With an active Genesis Pro subscription key, this should redirect from the Pro page to the settings page.
+		$this->set_subscription_key_validity( true );
 		Monkey\Functions\expect( 'filter_input' )
 			->once()
 			->with(
@@ -166,7 +166,7 @@ class TestAdmin extends \WP_UnitTestCase {
 			[
 				'post_type' => 'genesis_custom_block',
 				'page'      => 'genesis-custom-blocks-settings',
-				'tab'       => 'license',
+				'tab'       => 'subscription',
 			],
 			admin_url( 'edit.php' )
 		);

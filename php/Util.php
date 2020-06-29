@@ -31,12 +31,12 @@ class Util extends ComponentAbstract {
 	public function register_hooks() {}
 
 	/**
-	 * Gets whether a valid Pro license has been activated on this site.
+	 * Gets whether a valid Genesis Pro subscription key has been activated on this site.
 	 *
 	 * @return bool
 	 */
 	public function is_pro() {
-		return $this->plugin->admin->license->is_valid();
+		return $this->plugin->admin->subscription->is_valid();
 	}
 
 	/**
