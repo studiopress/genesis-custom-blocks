@@ -859,7 +859,7 @@ class BlockPost extends ComponentAbstract {
 				echo wp_kses_post(
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a> | ',
-						'https://developer.wpengine.com/genesis-custom-blocks/docs/get-started/add-a-block-lab-block-to-your-website-content/',
+						'https://developer.wpengine.com/genesis-custom-blocks/get-started/add-a-custom-block-to-your-website-content/',
 						esc_html__( 'Block Templates', 'genesis-custom-blocks' )
 					)
 				);

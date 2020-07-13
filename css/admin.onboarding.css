@@ -97,6 +97,9 @@
 .genesis-custom-blocks-notice p.ps {
 	opacity: 0.5;
 }
+.genesis-custom-blocks-notice p.ps a {
+	color: #fff;
+}
 .genesis-custom-blocks-welcome .notice-dismiss:before {
 	color: #372182;
 }
