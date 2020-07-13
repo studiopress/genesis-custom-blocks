@@ -47,12 +47,9 @@ class Onboarding extends ComponentAbstract {
 
 	/**
 	 * Runs during plugin activation.
-	 *
-	 * If users migrated from Block Lab, there will be a query var to not display onboarding.
-	 * They will already have blocks, so this doesn't seem needed.
 	 */
 	public function plugin_activation() {
-		if ( empty( $_REQUEST[ self::QUERY_VAR_DISABLE_ONBOARDING ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( ! filter_input( INPUT_GET, self::QUERY_VAR_DISABLE_ONBOARDING ) ) {
 			$this->add_dummy_data();
 			$this->prepare_welcome_notice();
 		}
