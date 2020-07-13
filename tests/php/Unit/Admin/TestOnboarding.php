@@ -57,8 +57,7 @@ class TestOnboarding extends \WP_UnitTestCase {
 	 * @covers \Genesis\CustomBlocks\Admin\Onboarding::plugin_activation()
 	 */
 	public function test_plugin_activation_onboarding_disabled() {
-		$_REQUEST[ Onboarding::QUERY_VAR_DISABLE_ONBOARDING ]       = true;
-		$_REQUEST[ Onboarding::NONCE_QUERY_VAR_DISABLE_ONBOARDING ] = wp_create_nonce( Onboarding::NONCE_ACTION_DISABLE_ONBOARDING );
+		$_REQUEST[ Onboarding::QUERY_VAR_DISABLE_ONBOARDING ] = true;
 		$this->instance->plugin_activation();
 
 		$this->assertEmpty( get_option( 'genesis_custom_blocks_example_post_id' ) );

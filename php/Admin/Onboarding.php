@@ -32,28 +32,11 @@ class Onboarding extends ComponentAbstract {
 	const OPTION_NAME = 'genesis_custom_blocks_example_post_id';
 
 	/**
-	 * The query var to disable onboarding in Genesis Custom Blocks.
-	 *
-	 * If a user migrated from BL, this will be present.
-	 * Because they'll already have blocks, this doesn't seem useful.
+	 * The query var to disable onboarding.
 	 *
 	 * @var string
 	 */
-	const QUERY_VAR_DISABLE_ONBOARDING = 'disable_gcb_onboarding';
-
-	/**
-	 * The nonce query var to disable onboarding.
-	 *
-	 * @var string
-	 */
-	const NONCE_QUERY_VAR_DISABLE_ONBOARDING = '_wpnonce_disable_onboarding';
-
-	/**
-	 * The nonce name to disable onboarding in Genesis Custom Blocks.
-	 *
-	 * @var string
-	 */
-	const NONCE_ACTION_DISABLE_ONBOARDING = 'nonce_disable_gcb_onboarding';
+	const QUERY_VAR_DISABLE_ONBOARDING = 'disable_onboarding';
 
 	/**
 	 * Register any hooks that this component needs.
@@ -69,16 +52,10 @@ class Onboarding extends ComponentAbstract {
 	 * They will already have blocks, so this doesn't seem needed.
 	 */
 	public function plugin_activation() {
-		if (
-			isset( $_REQUEST[ self::QUERY_VAR_DISABLE_ONBOARDING ], $_REQUEST[ self::NONCE_QUERY_VAR_DISABLE_ONBOARDING ] )
-			&&
-			wp_verify_nonce( $_REQUEST[ self::NONCE_QUERY_VAR_DISABLE_ONBOARDING ], self::NONCE_ACTION_DISABLE_ONBOARDING )
-		) {
-			return;
+		if ( empty( $_REQUEST[ self::QUERY_VAR_DISABLE_ONBOARDING ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$this->add_dummy_data();
+			$this->prepare_welcome_notice();
 		}
-
-		$this->add_dummy_data();
-		$this->prepare_welcome_notice();
 	}
 
 	/**
