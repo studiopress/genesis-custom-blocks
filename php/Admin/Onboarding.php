@@ -445,6 +445,8 @@ class Onboarding extends ComponentAbstract {
 			]
 		);
 
-		update_option( self::OPTION_NAME, $example_post_id );
+		if ( ! is_wp_error( $example_post_id ) ) {
+			update_option( self::OPTION_NAME, $example_post_id );
+		}
 	}
 }
