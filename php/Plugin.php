@@ -100,7 +100,7 @@ class Plugin extends PluginAbstract {
 	}
 
 	/**
-	 * Gets whether there is a conflict from another plugin having the same function.
+	 * Gets whether there is a conflict from another plugin having the same functions.
 	 */
 	public function is_plugin_conflict() {
 		if ( isset( $this->is_conflict ) ) {

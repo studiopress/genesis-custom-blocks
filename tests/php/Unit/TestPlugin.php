@@ -132,7 +132,7 @@ class TestPlugin extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Test is_plugin_conflict when it's expected to be true.
+	 * Test is_plugin_conflict.
 	 *
 	 * @dataProvider get_data_is_conflict
 	 * @covers \Genesis\CustomBlocks\Util::get_template_locations()
@@ -141,7 +141,7 @@ class TestPlugin extends \WP_UnitTestCase {
 	 * @param bool $expected        The expected return value.
 	 * @throws ReflectionException  For a non-accessible property.
 	 */
-	public function test_is_plugin_conflict_true( $function_exists, $expected ) {
+	public function test_is_plugin_conflict( $function_exists, $expected ) {
 		$this->set_protected_property( 'is_conflict', null );
 		expect( 'function_exists' )
 			->andReturn( $function_exists );
