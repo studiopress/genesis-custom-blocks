@@ -7,6 +7,9 @@
 
 use Genesis\CustomBlocks\Plugin;
 use Genesis\CustomBlocks\Admin\Admin;
+use function Brain\Monkey\Functions\expect;
+use function Brain\Monkey\setUp;
+use function Brain\Monkey\tearDown;
 
 /**
  * Tests for class Plugin.
@@ -26,12 +29,25 @@ class TestPlugin extends \WP_UnitTestCase {
 	 * Setup.
 	 *
 	 * @inheritdoc
+	 * @throws ReflectionException For a non-accessible property.
 	 */
 	public function setUp() {
 		parent::setUp();
+		setUp();
 		$this->instance = new Plugin();
+		$this->set_protected_property( 'is_conflict', false );
 		$this->instance->init();
 		$this->instance->plugin_loaded();
+	}
+
+	/**
+	 * Teardown.
+	 *
+	 * @inheritdoc
+	 */
+	public function tearDown() {
+		tearDown();
+		parent::tearDown();
 	}
 
 	/**
@@ -100,6 +116,51 @@ class TestPlugin extends \WP_UnitTestCase {
 				'blocks/block.php',
 			],
 			$this->instance->get_template_locations( $name )
+		);
+	}
+
+	/**
+	 * Gets the test data for test_is_plugin_conflict_true.
+	 *
+	 * @return array The test data.
+	 */
+	public function get_data_is_conflict() {
+		return [
+			'no_conflict' => [ false, false ],
+			'conflict'    => [ true, true ],
+		];
+	}
+
+	/**
+	 * Test is_plugin_conflict when it's expected to be true.
+	 *
+	 * @dataProvider get_data_is_conflict
+	 * @covers \Genesis\CustomBlocks\Util::get_template_locations()
+	 *
+	 * @param bool $function_exists Whether the function exists.
+	 * @param bool $expected        The expected return value.
+	 * @throws ReflectionException  For a non-accessible property.
+	 */
+	public function test_is_plugin_conflict_true( $function_exists, $expected ) {
+		$this->set_protected_property( 'is_conflict', null );
+		expect( 'function_exists' )
+			->andReturn( $function_exists );
+
+		// This should return the cached value, without needing to call function_exists() again.
+		$this->assertEquals( $expected, $this->instance->is_plugin_conflict() );
+	}
+
+	/**
+	 * Test plugin_conflict_notice.
+	 *
+	 * @covers \Genesis\CustomBlocks\Util::plugin_conflict_notice()
+	 */
+	public function test_plugin_conflict_notice() {
+		ob_start();
+		$this->instance->plugin_conflict_notice();
+		$this->assertEquals(
+			'<div class="notice notice-error"><p>It looks like Block Lab is active. Please deactivate it, as Genesis Custom Blocks will not work while it is active.</p></div>',
+			ob_get_clean()
 		);
 	}
 }

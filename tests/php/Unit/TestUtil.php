@@ -54,9 +54,15 @@ class TestUtil extends AbstractTemplate {
 	 * Like genesis_custom_blocks()->is_pro().
 	 *
 	 * @covers \Genesis\CustomBlocks\Util::is_pro()
+	 * @throws ReflectionException If the property is not available.
 	 */
 	public function test_is_pro() {
 		$plugin_instance = new Plugin();
+		$reflection      = new ReflectionObject( $plugin_instance );
+		$property        = $reflection->getProperty( 'is_conflict' );
+		$property->setAccessible( true );
+		$property->setValue( $plugin_instance, false );
+
 		$plugin_instance->init();
 		$plugin_instance->plugin_loaded();
 

@@ -14,6 +14,8 @@ use Genesis\CustomBlocks\Blocks\Loader;
  */
 class TestLoader extends AbstractTemplate {
 
+	use TestingHelper;
+
 	/**
 	 * The instance to test.
 	 *
