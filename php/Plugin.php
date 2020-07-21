@@ -52,11 +52,7 @@ class Plugin extends PluginAbstract {
 	 */
 	public function init() {
 		if ( $this->is_plugin_conflict() ) {
-			add_action(
-				'admin_notices',
-				[ $this, 'plugin_conflict_notice' ]
-			);
-
+			add_action( 'admin_notices', [ $this, 'plugin_conflict_notice' ] );
 			return;
 		}
 
