@@ -101,6 +101,8 @@ class Plugin extends PluginAbstract {
 
 	/**
 	 * Gets whether there is a conflict from another plugin having the same functions.
+	 *
+	 * @return bool Whether there is a conflict.
 	 */
 	public function is_plugin_conflict() {
 		if ( isset( $this->is_conflict ) ) {
