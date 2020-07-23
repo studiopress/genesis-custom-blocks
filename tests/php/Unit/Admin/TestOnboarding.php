@@ -6,10 +6,6 @@
  */
 
 use Genesis\CustomBlocks\Admin\Onboarding;
-use function Brain\Monkey\Functions\expect;
-use function Brain\Monkey\setup;
-use function Brain\Monkey\tearDown;
-
 
 /**
  * Tests for class Onboarding.
@@ -30,19 +26,8 @@ class TestOnboarding extends \WP_UnitTestCase {
 	 */
 	public function setUp() {
 		parent::setUp();
-		setup();
 		$this->instance = new Onboarding();
 		$this->instance->set_plugin( genesis_custom_blocks() );
-	}
-
-	/**
-	 * Teardown.
-	 *
-	 * @inheritdoc
-	 */
-	public function tearDown() {
-		tearDown();
-		parent::tearDown();
 	}
 
 	/**
@@ -56,33 +41,13 @@ class TestOnboarding extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Test plugin_activation when onboarding is enabled.
+	 * Test plugin_activation.
 	 *
 	 * @covers \Genesis\CustomBlocks\Admin\Onboarding::plugin_activation()
 	 */
-	public function test_plugin_activation_onboarding_enabled() {
+	public function test_plugin_activation() {
 		$this->instance->plugin_activation();
 		$this->assertInternalType( 'integer', get_option( 'genesis_custom_blocks_example_post_id' ) );
 		$this->assertEquals( 'true', get_transient( 'genesis_custom_blocks_show_welcome' ) );
-	}
-
-	/**
-	 * Test plugin_activation when onboarding is disabled.
-	 *
-	 * @covers \Genesis\CustomBlocks\Admin\Onboarding::plugin_activation()
-	 */
-	public function test_plugin_activation_onboarding_disabled() {
-		expect( 'filter_input' )
-			->once()
-			->with(
-				INPUT_GET,
-				Onboarding::QUERY_VAR_DISABLE_ONBOARDING
-			)
-			->andReturn( true );
-
-		$this->instance->plugin_activation();
-
-		$this->assertEmpty( get_option( 'genesis_custom_blocks_example_post_id' ) );
-		$this->assertEmpty( get_transient( 'genesis_custom_blocks_show_welcome' ) );
 	}
 }

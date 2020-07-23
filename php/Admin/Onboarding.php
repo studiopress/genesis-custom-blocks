@@ -32,13 +32,6 @@ class Onboarding extends ComponentAbstract {
 	const OPTION_NAME = 'genesis_custom_blocks_example_post_id';
 
 	/**
-	 * The query var to disable onboarding.
-	 *
-	 * @var string
-	 */
-	const QUERY_VAR_DISABLE_ONBOARDING = 'disable_onboarding';
-
-	/**
 	 * Register any hooks that this component needs.
 	 */
 	public function register_hooks() {
@@ -49,10 +42,8 @@ class Onboarding extends ComponentAbstract {
 	 * Runs during plugin activation.
 	 */
 	public function plugin_activation() {
-		if ( ! filter_input( INPUT_GET, self::QUERY_VAR_DISABLE_ONBOARDING ) ) {
-			$this->add_dummy_data();
-			$this->prepare_welcome_notice();
-		}
+		$this->add_dummy_data();
+		$this->prepare_welcome_notice();
 	}
 
 	/**
