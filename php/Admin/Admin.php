@@ -69,7 +69,7 @@ class Admin extends ComponentAbstract {
 		 *
 		 * @param bool Whether this should show the nag.
 		 */
-		$show_pro_nag = apply_filters( 'genesis_custom_blocks_show_pro_nag', false );
+		$show_pro_nag = apply_filters( 'genesis_custom_blocks_show_pro_nag', true );
 
 		if ( $show_pro_nag && ! genesis_custom_blocks()->is_pro() ) {
 			$this->upgrade = new Upgrade();
