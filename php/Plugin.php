@@ -66,5 +66,15 @@ class Plugin extends PluginAbstract {
 	public function plugin_loaded() {
 		$this->admin = new Admin();
 		$this->register_component( $this->admin );
+		$this->require_helpers();
+	}
+
+	/**
+	 * Requires helper functions.
+	 */
+	private function require_helpers() {
+		require_once __DIR__ . '/Helpers.php';
+		require_once __DIR__ . '/BlockApi.php';
+		require_once __DIR__ . '/Deprecated.php';
 	}
 }
