@@ -10,7 +10,7 @@
 ?>
 <section class="container">
 	<div class="gcb-hero">
-		<img src="<?php echo esc_attr( genesis_custom_blocks()->get_assets_url( 'images/logo-reversed.svg' ) ); ?>" alt="<?php esc_html_e( 'Genesis Custom Blocks', 'genesis-custom-block' ); ?>" />
+		<img src="<?php echo esc_attr( genesis_custom_blocks()->get_assets_url( 'images/logo-reversed.svg' ) ); ?>" alt="<?php esc_html_e( 'Genesis Custom Blocks', 'genesis-custom-blocks' ); ?>" />
 		<h3><?php esc_html_e( 'Advanced tools for building better WordPress websites faster.', 'genesis-custom-blocks' ); ?></h3>
 		<div class="gcb-hero__actions">
 			<button class="btn"><?php esc_html_e( 'Get Genesis Pro', 'genesis-custom-blocks' ); ?></button>
