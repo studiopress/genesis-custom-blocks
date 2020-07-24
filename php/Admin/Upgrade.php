@@ -70,6 +70,7 @@ class Upgrade extends ComponentAbstract {
 	public function render_page() {
 		?>
 		<div class="wrap genesis-custom-blocks-pro">
+			<h2 class="screen-reader-text"><?php echo esc_html( get_admin_page_title() ); ?></h2>
 			<?php include genesis_custom_blocks()->get_path() . 'php/Views/Upgrade.php'; ?>
 		</div>
 		<?php
