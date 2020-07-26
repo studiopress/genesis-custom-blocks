@@ -30,27 +30,27 @@
 	font-size: 16px;
 	line-height: 1.5;
 }
-.genesis-custom-blocks-pro p {
+.genesis-custom-blocks-pro .container p {
 	margin-bottom: 1em;
 	font-size: 1em;
 }
-.genesis-custom-blocks-pro h1,
-.genesis-custom-blocks-pro h2,
-.genesis-custom-blocks-pro h3,
-.genesis-custom-blocks-pro h4,
-.genesis-custom-blocks-pro h5,
-.genesis-custom-blocks-pro h6 {
+.genesis-custom-blocks-pro .container h1,
+.genesis-custom-blocks-pro .container h2,
+.genesis-custom-blocks-pro .container h3,
+.genesis-custom-blocks-pro .container h4,
+.genesis-custom-blocks-pro .container h5,
+.genesis-custom-blocks-pro .container h6 {
 	font-weight: 500;
 	margin-bottom: 1em;
 }
-.genesis-custom-blocks-pro h1 {
+.genesis-custom-blocks-pro .container h1 {
 	font-size: 1.875rem;
 }
-.genesis-custom-blocks-pro h2 {
+.genesis-custom-blocks-pro .container h2 {
 	color: var(--color-brand);
 	font-size: 1.5em;
 }
-.genesis-custom-blocks-pro a {
+.genesis-custom-blocks-pro .container a {
 	color: var(--color-brand);
 	text-decoration: underline;
 }
