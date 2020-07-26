@@ -7,6 +7,8 @@
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
+use Genesis\CustomBlocks\Admin\Subscription;
+
 ?>
 <section class="container">
 	<div class="gcb-hero">
@@ -15,9 +17,9 @@
 		<div class="gcb-hero__actions">
 			<button class="btn"><?php esc_html_e( 'Get Genesis Pro', 'genesis-custom-blocks' ); ?></button>
 			<span>or</span>
-			<form class="license-key-form" action="">
-				<label for=""></label>
-				<input type="text" placeholder="<?php esc_html_e( 'Add your license key…', 'genesis-custom-blocks' ); ?>" />
+			<form class="license-key-form" method="post" action="options.php">
+				<?php settings_fields( Subscription::SUBSCRIPTION_KEY_SETTINGS_GROUP ); ?>
+				<input type="text" name="<?php echo esc_attr( Subscription::SUBSCRIPTION_KEY_OPTION_NAME ); ?>" placeholder="<?php esc_html_e( 'Add your license key…', 'genesis-custom-blocks' ); ?>" />
 				<button class="btn"><?php esc_html_e( 'Submit', 'genesis-custom-blocks' ); ?></button>
 			</form>
 		</div>
