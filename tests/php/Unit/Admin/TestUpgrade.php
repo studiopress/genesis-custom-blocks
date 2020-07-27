@@ -123,7 +123,7 @@ class TestUpgrade extends \WP_UnitTestCase {
 		global $submenu;
 
 		$expected_submenu_settings = [
-			'Go Pro',
+			'Genesis Pro',
 			'manage_options',
 			$this->instance->slug,
 			'Genesis Custom Blocks Pro',

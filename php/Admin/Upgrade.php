@@ -57,7 +57,7 @@ class Upgrade extends ComponentAbstract {
 		add_submenu_page(
 			'edit.php?post_type=genesis_custom_block',
 			__( 'Genesis Custom Blocks Pro', 'genesis-custom-blocks' ),
-			__( 'Go Pro', 'genesis-custom-blocks' ),
+			__( 'Genesis Pro', 'genesis-custom-blocks' ),
 			'manage_options',
 			$this->slug,
 			[ $this, 'render_page' ]
