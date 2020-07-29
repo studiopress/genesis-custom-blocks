@@ -146,9 +146,9 @@ class Onboarding extends ComponentAbstract {
 		}
 		?>
 		<div class="genesis-custom-blocks-welcome genesis-custom-blocks-notice notice is-dismissible">
-			<h2>🖖 <?php esc_html_e( 'Welcome, traveller!', 'genesis-custom-blocks' ); ?></h2>
-			<p class="intro"><?php esc_html_e( 'Genesis Custom Blocks makes it super easy to build custom blocks for the WordPress editor.', 'genesis-custom-blocks' ); ?></p>
-			<p><strong><?php esc_html_e( 'Want to see how it\'s done?', 'genesis-custom-blocks' ); ?></strong> <?php esc_html_e( 'Here\'s one I prepared earlier.', 'genesis-custom-blocks' ); ?></p>
+			<h2><span role="image" aria-label="<?php esc_attr_e( 'Waving hand emoji', 'genesis-custom-blocks' ); ?>">👋</span> <?php esc_html_e( 'Hi, and welcome!', 'genesis-custom-blocks' ); ?></h2>
+			<p class="intro"><?php esc_html_e( 'Genesis Custom Blocks makes it easy to build your own blocks for the WordPress editor.', 'genesis-custom-blocks' ); ?></p>
+			<p><strong><?php esc_html_e( 'Want to see how it\'s done?', 'genesis-custom-blocks' ); ?></strong> <?php esc_html_e( 'Here\'s one we prepared earlier.', 'genesis-custom-blocks' ); ?></p>
 			<?php
 			edit_post_link(
 				__( 'Let\'s get started!', 'genesis-custom-blocks' ),
@@ -159,6 +159,16 @@ class Onboarding extends ComponentAbstract {
 			);
 			?>
 			<p class="ps"><?php esc_html_e( 'P.S. We don\'t like to nag. This message won\'t be shown again.', 'genesis-custom-blocks' ); ?></p>
+			<p class="ps">
+				<?php
+				esc_html_e( 'Prefer to look at the docs?', 'genesis-custom-blocks' );
+				printf(
+					'&nbsp;<a href="%1$s" target="_blank" rel="noreferrer noopener">%2$s</a>',
+					'https://developer.wpengine.com/genesis-custom-blocks',
+					esc_html__( 'Start here', 'genesis-custom-blocks' )
+				);
+				?>
+			</p>
 		</div>
 		<?php
 	}
@@ -174,7 +184,7 @@ class Onboarding extends ComponentAbstract {
 		}
 		?>
 		<div class="genesis-custom-blocks-edit-block genesis-custom-blocks-notice notice">
-			<h2>👩‍🔬 <?php echo esc_html_e( 'Ready to begin?', 'genesis-custom-blocks' ); ?></h2>
+			<h2><span role="image" aria-label="<?php esc_attr_e( 'Scientist emoji', 'genesis-custom-blocks' ); ?>">👩</span> <span role="image" aria-label="<?php esc_attr_e( 'Stethescope emoji', 'genesis-custom-blocks' ); ?>">🔬</span> <?php echo esc_html_e( 'Ready to begin?', 'genesis-custom-blocks' ); ?></h2>
 			<p class="intro">
 				<?php
 				echo wp_kses_post(
@@ -201,6 +211,16 @@ class Onboarding extends ComponentAbstract {
 				);
 				?>
 			</p>
+			<p>
+				<?php
+				esc_html_e( 'Learn more:', 'genesis-custom-blocks' );
+				printf(
+					'&nbsp;<a href="%1$s" target="_blank" rel="noreferrer noopener">%2$s</a>',
+					'https://developer.wpengine.com/genesis-custom-blocks/get-started/',
+					esc_html__( 'Get Started', 'genesis-custom-blocks' )
+				);
+				?>
+			</p>
 		</div>
 		<?php
 	}
@@ -220,8 +240,19 @@ class Onboarding extends ComponentAbstract {
 		}
 		?>
 		<div class="genesis-custom-blocks-add-fields genesis-custom-blocks-notice">
-			<h2>🧐 <?php esc_html_e( 'Try adding a field.', 'genesis-custom-blocks' ); ?></h2>
-			<p><?php esc_html_e( 'Fields let you define the options you see when adding your block to a post.', 'genesis-custom-blocks' ); ?></p>
+			<h2><span role="image" aria-label="<?php esc_attr_e( 'Eyeglass emoji', 'genesis-custom-blocks' ); ?>">🧐</span> <?php esc_html_e( 'Try adding a field.', 'genesis-custom-blocks' ); ?></h2>
+			<p><?php esc_html_e( 'Fields let you define the options you see when adding your block to a post or page.', 'genesis-custom-blocks' ); ?></p>
+			<p><?php esc_html_e( 'There are lots of different field types that let you build powerfully dynamic custom blocks.', 'genesis-custom-blocks' ); ?></p>
+			<p>
+				<?php
+				esc_html_e( 'Learn more:', 'genesis-custom-blocks' );
+				printf(
+					'&nbsp;<a href="%1$s" target="_blank" rel="noreferrer noopener">%2$s</a>',
+					'https://developer.wpengine.com/genesis-custom-blocks/fields/',
+					esc_html__( 'Field Types', 'genesis-custom-blocks' )
+				);
+				?>
+			</p>
 		</div>
 		<?php
 	}
@@ -240,7 +271,7 @@ class Onboarding extends ComponentAbstract {
 		}
 		?>
 		<div class="genesis-custom-blocks-publish genesis-custom-blocks-notice">
-			<h2>🧪 <?php esc_html_e( 'Time to experiment!', 'genesis-custom-blocks' ); ?></h2>
+			<h2><span role="image" aria-label="<?php esc_attr_e( 'Test tube emoji', 'genesis-custom-blocks' ); ?>">🧪</span> <?php esc_html_e( 'Time to experiment!', 'genesis-custom-blocks' ); ?></h2>
 			<ol class="intro">
 				<li><?php esc_html_e( 'Choose an icon', 'genesis-custom-blocks' ); ?></li>
 				<li><?php esc_html_e( 'Change the category', 'genesis-custom-blocks' ); ?></li>
@@ -255,6 +286,16 @@ class Onboarding extends ComponentAbstract {
 						'<strong>',
 						'</strong>'
 					)
+				);
+				?>
+			</p>
+			<p>
+				<?php
+				esc_html_e( 'Learn more:', 'genesis-custom-blocks' );
+				printf(
+					'&nbsp;<a href="%1$s" target="_blank" rel="noreferrer noopener">%2$s</a>',
+					'https://developer.wpengine.com/genesis-custom-blocks/get-started/',
+					esc_html__( 'Get Started', 'genesis-custom-blocks' )
 				);
 				?>
 			</p>
@@ -395,6 +436,8 @@ class Onboarding extends ComponentAbstract {
 			]
 		);
 
-		update_option( self::OPTION_NAME, $example_post_id );
+		if ( ! is_wp_error( $example_post_id ) ) {
+			update_option( self::OPTION_NAME, $example_post_id );
+		}
 	}
 }

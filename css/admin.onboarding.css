@@ -1,6 +1,6 @@
 
 .genesis-custom-blocks-notice {
-	border-left: 4px solid #7D5DEC;
+	border-left: 4px solid #0066CC;
 	padding: 10px 20px;
 	background: #fff;
 	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
@@ -51,15 +51,15 @@
 .genesis-custom-blocks-notice .button--white {
 	background-color: #fff;
 	border-color: #fff;
-	color: #7D5DEC;
+	color: #0066CC;
 }
 .genesis-custom-blocks-notice .button--white:active,
 .genesis-custom-blocks-notice .button--white:focus,
 .genesis-custom-blocks-notice .button--white:visited {
-	color: #7D5DEC;
+	color: #0066CC;
 }
 .genesis-custom-blocks-notice .button--white:hover {
-	color: #7D5DEC;
+	color: #0066CC;
 	background-color: #f4f4f4;
 	border-color: #f4f4f4;
 }
@@ -69,8 +69,8 @@
 	box-shadow: 10px 10px 20px 0 rgba( 0, 0, 0, 0.2 );
 }
 .genesis-custom-blocks-welcome {
-	background-color: #7D5DEC;
-	background-image: url('https://getblocklab.com/wp-content/uploads/2019/02/Block-Lab-Pro-Hero-Background-1.svg');
+	background-color: #0066CC;
+	background-image: url('https://wpengine.com/wp-content/uploads/2020/07/gcb_gen_pro_hero_bg_img.png');
 	background-size: cover;
 	background-position: center;
 	color: #fff;
@@ -96,6 +96,9 @@
 }
 .genesis-custom-blocks-notice p.ps {
 	opacity: 0.5;
+}
+.genesis-custom-blocks-notice p.ps a {
+	color: #fff;
 }
 .genesis-custom-blocks-welcome .notice-dismiss:before {
 	color: #372182;
