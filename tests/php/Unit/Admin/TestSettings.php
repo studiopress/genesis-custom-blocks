@@ -147,28 +147,6 @@ class TestSettings extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Test register_settings.
-	 *
-	 * @covers \Genesis\CustomBlocks\Admin\Settings::register_settings()
-	 */
-	public function test_register_settings() {
-		global $wp_registered_settings;
-
-		$this->instance->register_settings();
-		$expected_option_group = 'genesis-custom-blocks-subscription-key';
-		$this->assertEquals(
-			[
-				'description'       => '',
-				'group'             => $expected_option_group,
-				'sanitize_callback' => null,
-				'show_in_rest'      => false,
-				'type'              => 'string',
-			],
-			$wp_registered_settings[ Subscription::SUBSCRIPTION_KEY_OPTION_NAME ]
-		);
-	}
-
-	/**
 	 * Test render_page.
 	 *
 	 * @covers \Genesis\CustomBlocks\Admin\Settings::render_page()

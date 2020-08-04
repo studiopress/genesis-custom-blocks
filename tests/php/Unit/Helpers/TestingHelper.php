@@ -5,8 +5,6 @@
  * @package Genesis\CustomBlocks
  */
 
-use Genesis\CustomBlocks\Admin\Subscription;
-
 /**
  * Trait with a helper method.
  */
@@ -33,15 +31,5 @@ trait TestingHelper {
 		}
 
 		$this->assertEquals( count( $expected_settings ), count( $actual_settings ) );
-	}
-
-	/**
-	 * Sets whether the subscription key is valid or not.
-	 *
-	 * @param bool $is_valid Whether the subscription key is valid.
-	 */
-	public function set_subscription_key_validity( $is_valid ) {
-		$transient_value = $is_valid ? 'valid' : 'key-invalid';
-		set_transient( Subscription::SUBSCRIPTION_STATUS_TRANSIENT_NAME, $transient_value );
 	}
 }

@@ -35,7 +35,6 @@ class Settings extends ComponentAbstract {
 	 */
 	public function register_hooks() {
 		add_action( 'admin_menu', [ $this, 'add_submenu_pages' ] );
-		add_action( 'admin_init', [ $this, 'register_settings' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 		add_action( 'admin_notices', [ $this, 'show_notices' ] );
 	}
@@ -74,13 +73,6 @@ class Settings extends ComponentAbstract {
 	}
 
 	/**
-	 * Register Genesis Custom Blocks settings.
-	 */
-	public function register_settings() {
-		register_setting( Subscription::SUBSCRIPTION_KEY_SETTINGS_GROUP, Subscription::SUBSCRIPTION_KEY_OPTION_NAME );
-	}
-
-	/**
 	 * Render the Settings page.
 	 */
 	public function render_page() {
@@ -100,9 +92,6 @@ class Settings extends ComponentAbstract {
 		?>
 		<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 		<h2 class="nav-tab-wrapper">
-			<a href="<?php echo esc_url( add_query_arg( 'tab', 'subscription' ) ); ?>" title="<?php esc_attr_e( 'Subscription', 'genesis-custom-blocks' ); ?>" class="nav-tab nav-tab-active dashicons-before dashicons-nametag">
-				<?php esc_html_e( 'Subscription', 'genesis-custom-blocks' ); ?>
-			</a>
 			<a href="https://developer.wpengine.com/genesis-custom-blocks" target="_blank" class="nav-tab dashicons-before dashicons-info">
 				<?php esc_html_e( 'Documentation', 'genesis-custom-blocks' ); ?>
 			</a>

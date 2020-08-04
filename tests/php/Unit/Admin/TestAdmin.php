@@ -56,12 +56,9 @@ class TestAdmin extends \WP_UnitTestCase {
 	 * @covers \Genesis\CustomBlocks\Admin\Admin::init()
 	 */
 	public function test_init() {
-		$this->set_subscription_key_validity( false );
 		$this->instance->init();
-		$settings_class     = 'Genesis\CustomBlocks\Admin\Settings';
-		$subscription_class = 'Genesis\CustomBlocks\Admin\Subscription';
+		$settings_class = 'Genesis\CustomBlocks\Admin\Settings';
 		$this->assertEquals( $settings_class, get_class( $this->instance->settings ) );
-		$this->assertEquals( $subscription_class, get_class( $this->instance->subscription ) );
 
 		$reflection = new ReflectionObject( genesis_custom_blocks() );
 		$components = $reflection->getProperty( 'components' );
@@ -71,7 +68,6 @@ class TestAdmin extends \WP_UnitTestCase {
 		// The settings should have been added to the plugin components.
 		$this->assertEquals( $this->instance->settings->slug, $components_value[ $settings_class ]->slug );
 		$this->assertArrayHasKey( $settings_class, $components_value );
-		$this->assertArrayHasKey( $subscription_class, $components_value );
 	}
 
 	/**
