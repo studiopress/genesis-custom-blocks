@@ -24,13 +24,6 @@ class Admin extends ComponentAbstract {
 	public $settings;
 
 	/**
-	 * Genesis Pro subscription.
-	 *
-	 * @var Subscription
-	 */
-	public $subscription;
-
-	/**
 	 * User onboarding.
 	 *
 	 * @var Onboarding
@@ -58,9 +51,6 @@ class Admin extends ComponentAbstract {
 		$this->settings = new Settings();
 		genesis_custom_blocks()->register_component( $this->settings );
 
-		$this->subscription = new Subscription();
-		genesis_custom_blocks()->register_component( $this->subscription );
-
 		$this->onboarding = new Onboarding();
 		genesis_custom_blocks()->register_component( $this->onboarding );
 
@@ -71,7 +61,7 @@ class Admin extends ComponentAbstract {
 		 */
 		$show_pro_nag = apply_filters( 'genesis_custom_blocks_show_pro_nag', true );
 
-		if ( $show_pro_nag && ! genesis_custom_blocks()->is_pro() ) {
+		if ( $show_pro_nag ) {
 			$this->upgrade = new Upgrade();
 			genesis_custom_blocks()->register_component( $this->upgrade );
 		} else {

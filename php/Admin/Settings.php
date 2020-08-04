@@ -88,7 +88,6 @@ class Settings extends ComponentAbstract {
 		<div class="wrap genesis-custom-blocks-settings">
 			<?php
 			$this->render_page_header();
-			include genesis_custom_blocks()->get_path() . 'php/Views/Subscription.php';
 			?>
 		</div>
 		<?php
