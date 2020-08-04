@@ -202,7 +202,7 @@ class TestSettings extends \WP_UnitTestCase {
 	 * @covers \Genesis\CustomBlocks\Admin\Settings::prepare_notice()
 	 */
 	public function test_prepare_notice() {
-		$notice = 'There was a problem activating your Genesis Pro subscription key.';
+		$notice = 'There was a problem.';
 		$this->instance->prepare_notice( $notice );
 
 		$this->assertEquals( [ $notice ], get_option( Settings::NOTICES_OPTION_NAME ) );

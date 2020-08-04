@@ -82,18 +82,6 @@ class TestBlockPost extends \WP_UnitTestCase {
 		foreach ( $this->instance->controls as $control_type => $instance ) {
 			$this->assertContains( 'Genesis\CustomBlocks\Blocks\Controls\\', get_class( $instance ) );
 		}
-
-		// Because the Genesis Pro subscription key isn't active, the 'user' control should not display.
-		$this->assertFalse( isset( $this->instance->controls['user'] ) );
-
-		$this->set_subscription_key_validity( true );
-		genesis_custom_blocks()->admin->init();
-		$this->instance->register_controls();
-
-		// The pro subscription is active, so the 'user' and 'post' controls should be registered.
-		$this->assertEquals( 'Genesis\CustomBlocks\Blocks\Controls\Post', get_class( $this->instance->controls['post'] ) );
-		$this->assertEquals( 'Genesis\CustomBlocks\Blocks\Controls\Taxonomy', get_class( $this->instance->controls['taxonomy'] ) );
-		$this->assertEquals( 'Genesis\CustomBlocks\Blocks\Controls\User', get_class( $this->instance->controls['user'] ) );
 	}
 
 	/**
@@ -109,51 +97,6 @@ class TestBlockPost extends \WP_UnitTestCase {
 
 		// If the control doesn't exist, this should return null.
 		$this->assertEquals( null, $this->instance->get_control( 'non-existant-control' ) );
-	}
-
-	/**
-	 * Test get_field_value.
-	 *
-	 * @covers \Genesis\CustomBlocks\PostTypes\BlockPost::get_field_value()
-	 */
-	public function test_get_field_value() {
-		$invalid_login    = 'asdfg';
-		$expected_wp_user = $this->factory()->user->create_and_get();
-		$valid_id         = $expected_wp_user->ID;
-		$control          = 'user';
-
-		// Simulate the pro subscription being active.
-		$this->set_subscription_key_validity( true );
-		genesis_custom_blocks()->admin->init();
-		$this->instance->register_controls();
-
-		// The 'user' control.
-		$this->assertEquals( false, $this->instance->get_field_value( $invalid_login, $control, false ) );
-		$this->assertEquals( $expected_wp_user, $this->instance->get_field_value( [ 'id' => $valid_id ], $control, false ) );
-		$this->assertEquals( '', $this->instance->get_field_value( $invalid_login, $control, true ) );
-		$this->assertEquals( $expected_wp_user->get( 'display_name' ), $this->instance->get_field_value( [ 'id' => $valid_id ], $control, true ) );
-
-		// If the pro subscription is inactive, this should still render the pro field the same as if it's active.
-		$this->set_subscription_key_validity( false );
-		genesis_custom_blocks()->admin->init();
-		$this->instance->register_controls();
-
-		$this->assertEquals( false, $this->instance->get_field_value( $invalid_login, $control, false ) );
-		$this->assertEquals( $expected_wp_user, $this->instance->get_field_value( [ 'id' => $valid_id ], $control, false ) );
-		$this->assertEquals( '', $this->instance->get_field_value( $invalid_login, $control, true ) );
-		$this->assertEquals( $expected_wp_user->get( 'display_name' ), $this->instance->get_field_value( [ 'id' => $valid_id ], $control, true ) );
-
-		// Any value for the 2nd argument other than 'user' should return the passed $value unchanged.
-		$this->assertEquals( $invalid_login, $this->instance->get_field_value( $invalid_login, 'different-control', false ) );
-		$this->assertEquals( $valid_id, $this->instance->get_field_value( $valid_id, 'random-control', false ) );
-		$this->assertEquals( $invalid_login, $this->instance->get_field_value( $invalid_login, 'some-other-control', true ) );
-
-		$string_value  = 'Example string';
-		$array_value   = [ 'first value', 'second value' ];
-		$boolean_value = true;
-		$this->assertEquals( $string_value, $this->instance->get_field_value( $string_value, 'non-user-control', true ) );
-		$this->assertEquals( $array_value, $this->instance->get_field_value( $array_value, 'some-control', false ) );
-		$this->assertEquals( $boolean_value, $this->instance->get_field_value( $boolean_value, 'not-a-user-control', true ) );
 	}
 
 	/**

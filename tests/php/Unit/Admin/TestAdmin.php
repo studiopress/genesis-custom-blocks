@@ -72,18 +72,6 @@ class TestAdmin extends \WP_UnitTestCase {
 		$this->assertEquals( $this->instance->settings->slug, $components_value[ $settings_class ]->slug );
 		$this->assertArrayHasKey( $settings_class, $components_value );
 		$this->assertArrayHasKey( $subscription_class, $components_value );
-
-		// With an active Genesis Pro subscription key, this should redirect from the Pro page to the settings page.
-		$this->set_subscription_key_validity( true );
-		Monkey\Functions\expect( 'filter_input' )
-			->once()
-			->with(
-				INPUT_GET,
-				'page',
-				FILTER_SANITIZE_STRING
-			)
-			->andReturn( self::PRO_PAGE );
-		$this->assertTrue( $this->did_settings_redirect_occur() );
 	}
 
 	/**

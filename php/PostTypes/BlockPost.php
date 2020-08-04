@@ -609,28 +609,8 @@ class BlockPost extends ComponentAbstract {
 					<?php
 					if ( isset( $this->controls[ $field->control ] ) ) :
 						echo esc_html( $this->controls[ $field->control ]->label );
-					else :
-						?>
-						<span class="dashicons dashicons-warning"></span>
-						<span class="pro-required">
-							<?php
-							/* translators: %1$s is the field type, %2$s is the URL for the Pro license */
-							printf(
-								wp_kses_post( 'This <code>%1$s</code> field requires an active <a href="%2$s">pro license</a>.', 'genesis-custom-blocks' ),
-								esc_html( $field->control ),
-								esc_url(
-									add_query_arg(
-										[
-											'post_type' => $this->slug,
-											'page'      => 'genesis-custom-blocks-pro',
-										],
-										admin_url( 'edit.php' )
-									)
-								)
-							);
-							?>
-						</span>
-					<?php endif; ?>
+					endif;
+					?>
 				</div>
 			</div>
 			<div class="block-fields-edit">
@@ -1067,20 +1047,7 @@ class BlockPost extends ComponentAbstract {
 					$field_config['type'] = $this->controls[ $field_config['control'] ]->type;
 				}
 
-				/*
-				 * Field settings.
-				 * If the field is a pro field that's no longer available, re-save the previous value of that field.
-				 * This allows saving other new fields, while retaining the previous pro field value in case the user reactivates the license.
-				 */
-				if ( ! empty( $_POST['block-is-disabled-pro-field'][ $key ] ) ) {
-					$previous_block = new Block( $post_id );
-					foreach ( $previous_block->fields as $previous_field ) {
-						if ( $name === $previous_field->name ) {
-							$field = $previous_field;
-							break;
-						}
-					}
-				} elseif ( isset( $field_config['control'] ) && isset( $this->controls[ $field_config['control'] ] ) ) {
+				if ( isset( $field_config['control'] ) && isset( $this->controls[ $field_config['control'] ] ) ) {
 					$control = $this->controls[ $field_config['control'] ];
 					foreach ( $control->settings as $setting ) {
 						$value = false; // This is a good default, it allows us to pick up on unchecked checkboxes.
