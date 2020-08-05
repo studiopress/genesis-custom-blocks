@@ -60,7 +60,7 @@ describe( 'TextBlock', () => {
 		expect( await page.evaluate( () => document.querySelector( '.components-base-control__label' ).textContent ) ).toContain( fieldName );
 
 		// Type into the text field.
-		await page.click( `${ fieldSelector } input` );
+		await page.click( `${ fieldSelector } textarea` );
 		await page.keyboard.type( fieldValue );
 
 		// Click away from the block so the <ServerSideRender> displays.
