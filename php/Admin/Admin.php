@@ -64,8 +64,6 @@ class Admin extends ComponentAbstract {
 		if ( $show_pro_nag ) {
 			$this->upgrade = new Upgrade();
 			genesis_custom_blocks()->register_component( $this->upgrade );
-		} else {
-			$this->maybe_settings_redirect();
 		}
 
 		if ( defined( 'WP_LOAD_IMPORTERS' ) && WP_LOAD_IMPORTERS ) {
@@ -93,27 +91,5 @@ class Admin extends ComponentAbstract {
 			[],
 			$this->plugin->get_version()
 		);
-	}
-
-	/**
-	 * Redirect to the Settings screen if the subscription key is being saved.
-	 */
-	public function maybe_settings_redirect() {
-		$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
-
-		if ( 'genesis-custom-blocks-pro' === $page ) {
-			wp_safe_redirect(
-				add_query_arg(
-					[
-						'post_type' => 'genesis_custom_block',
-						'page'      => 'genesis-custom-blocks-settings',
-						'tab'       => 'subscription',
-					],
-					admin_url( 'edit.php' )
-				)
-			);
-
-			die();
-		}
 	}
 }

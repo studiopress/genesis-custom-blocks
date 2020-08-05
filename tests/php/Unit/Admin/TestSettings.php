@@ -6,7 +6,6 @@
  */
 
 use Genesis\CustomBlocks\Admin\Settings;
-use Genesis\CustomBlocks\Admin\Subscription;
 use Brain\Monkey;
 
 /**

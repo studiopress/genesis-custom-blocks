@@ -101,66 +101,6 @@ class TestAdmin extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Test maybe_settings_redirect.
-	 *
-	 * @covers \Genesis\CustomBlocks\Admin\Admin::maybe_settings_redirect()
-	 */
-	public function test_maybe_settings_redirect() {
-		Monkey\Functions\expect( 'filter_input' )
-			->once()
-			->with(
-				INPUT_GET,
-				'page',
-				FILTER_SANITIZE_STRING
-			)
-			->andReturn( 'incorrect-page' );
-
-		// This is on the wrong page, so this should not redirect.
-		$this->assertFalse( $this->did_settings_redirect_occur() );
-
-		Monkey\Functions\expect( 'filter_input' )
-			->twice()
-			->with(
-				INPUT_GET,
-				'page',
-				FILTER_SANITIZE_STRING
-			)
-			->andReturn( self::PRO_PAGE );
-
-		// Now that this is on the correct page, the conditional should be true, and this should redirect.
-		$this->assertTrue( $this->did_settings_redirect_occur() );
-
-		// Mainly copied from Weston Ruter in the AMP Plugin for WordPress.
-		add_filter(
-			'wp_redirect',
-			function( $url, $status ) {
-				throw new Exception( $url, $status );
-			},
-			10,
-			2
-		);
-
-		try {
-			$this->instance->maybe_settings_redirect();
-		} catch ( Exception $e ) {
-			$exception = $e;
-		}
-
-		$expected_url = add_query_arg(
-			[
-				'post_type' => 'genesis_custom_block',
-				'page'      => 'genesis-custom-blocks-settings',
-				'tab'       => 'subscription',
-			],
-			admin_url( 'edit.php' )
-		);
-
-		// Assert that the response was a redirect (302), and that it redirected to the right URL.
-		$this->assertTrue( isset( $exception ) && 302 === $exception->getCode() );
-		$this->assertTrue( isset( $exception ) && $expected_url === $exception->getMessage() );
-	}
-
-	/**
 	 * Invokes maybe_settings_redirect(), and gets whether the redirect occurred.
 	 *
 	 * @return boolean Whether it caused a redirect.
