@@ -98,6 +98,33 @@ class TestBlockPost extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * Test get_field_value.
+	 *
+	 * @covers \Genesis\CustomBlocks\PostTypes\BlockPost::get_field_value()
+	 */
+	public function test_get_field_value() {
+		$invalid_value   = 'asdfg';
+		$control         = 'image';
+		$image_file_name = 'baz.jpeg';
+
+		$image_id = $this->factory()->attachment->create_object(
+			$image_file_name,
+			$this->factory()->post->create(),
+			[ 'post_mime_type' => 'image/jpeg' ]
+		);
+
+		// The 'image' control.
+		$this->assertEquals( false, $this->instance->get_field_value( $invalid_value, $control, false ) );
+		$this->assertEquals( $image_id, $this->instance->get_field_value( $image_id, $control, false ) );
+		$this->assertContains( $image_file_name, $this->instance->get_field_value( $image_id, $control, true ) );
+
+		// Any value for the 2nd argument other than 'image' should return the passed $value unchanged.
+		$this->assertEquals( $invalid_value, $this->instance->get_field_value( $invalid_value, 'different-control', false ) );
+		$this->assertEquals( $image_id, $this->instance->get_field_value( $image_id, 'random-control', false ) );
+		$this->assertEquals( $invalid_value, $this->instance->get_field_value( $invalid_value, 'some-other-control', true ) );
+	}
+
+	/**
 	 * Test get_capabilities.
 	 *
 	 * @covers \Genesis\CustomBlocks\PostTypes\BlockPost::get_capabilities()

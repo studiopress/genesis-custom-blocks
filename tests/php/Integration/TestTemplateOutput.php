@@ -60,8 +60,8 @@ class TestTemplateOutput extends AbstractAttribute {
 		$this->object_fields = [
 			'multiselect',
 		];
-		$image               = wp_get_attachment_image_src( $this->attributes['image'], 'full' );
 
+		$image                     = wp_get_attachment_image_src( $this->attributes['image'], 'full' );
 		$this->special_case_fields = [
 			'checkbox' => [
 				'block_field' => 'Yes',
