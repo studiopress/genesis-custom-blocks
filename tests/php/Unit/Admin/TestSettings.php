@@ -63,7 +63,6 @@ class TestSettings extends \WP_UnitTestCase {
 	public function test_register_hooks() {
 		$this->instance->register_hooks();
 		$this->assertEquals( 10, has_action( 'admin_menu', [ $this->instance, 'add_submenu_pages' ] ) );
-		$this->assertEquals( 10, has_action( 'admin_init', [ $this->instance, 'register_settings' ] ) );
 		$this->assertEquals( 10, has_action( 'admin_enqueue_scripts', [ $this->instance, 'enqueue_scripts' ] ) );
 		$this->assertEquals( 10, has_action( 'admin_notices', [ $this->instance, 'show_notices' ] ) );
 	}
@@ -154,10 +153,8 @@ class TestSettings extends \WP_UnitTestCase {
 	public function test_render_page() {
 		ob_start();
 		$this->instance->render_page();
-		$output = ob_get_clean();
 
-		$this->assertContains( '<div class="wrap genesis-custom-blocks-settings">', $output );
-		$this->assertContains( '<a href="?tab=subscription" title="Subscription" class="nav-tab nav-tab-active dashicons-before dashicons-nametag">', $output );
+		$this->assertContains( '<div class="wrap genesis-custom-blocks-settings">', ob_get_clean() );
 	}
 
 	/**

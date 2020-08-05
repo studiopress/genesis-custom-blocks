@@ -1,6 +1,6 @@
 <?php
 /**
- * A mock template for a block, testing all fields except the repeater.
+ * A mock template for a block, testing all fields.
  *
  * @package Genesis\CustomBlocks
  */
@@ -20,8 +20,6 @@ $non_object_fields = [
 	'checkbox',
 	'radio',
 	'text',
-	'rich-text',
-	'classic-text',
 ];
 
 foreach ( $non_object_fields as $field ) :

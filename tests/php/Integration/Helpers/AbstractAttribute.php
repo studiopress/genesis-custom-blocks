@@ -68,7 +68,6 @@ abstract class AbstractAttribute extends \WP_UnitTestCase {
 	public $special_case_field_names = [
 		'checkbox',
 		'image',
-		'rich-text',
 		'toggle',
 	];
 
@@ -164,20 +163,6 @@ abstract class AbstractAttribute extends \WP_UnitTestCase {
 		return [
 			'id'   => $term->term_id,
 			'name' => $term->name,
-		];
-	}
-
-	/**
-	 * Gets the user attributes.
-	 *
-	 * @return array
-	 */
-	public function get_user_attributes() {
-		$user = $this->factory()->user->create_and_get();
-
-		return [
-			'id'       => $user->ID,
-			'userName' => $user->display_name,
 		];
 	}
 

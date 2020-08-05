@@ -52,7 +52,6 @@ class TestBlockPost extends \WP_UnitTestCase {
 
 		$this->assertEquals( 10, has_action( 'init', [ $this->instance, 'register_post_type' ] ) );
 		$this->assertEquals( 10, has_action( 'admin_init', [ $this->instance, 'add_caps' ] ) );
-		$this->assertEquals( 10, has_action( 'admin_init', [ $this->instance, 'row_export' ] ) );
 		$this->assertEquals( 10, has_action( 'add_meta_boxes', [ $this->instance, 'add_meta_boxes' ] ) );
 		$this->assertEquals( 10, has_action( 'add_meta_boxes', [ $this->instance, 'remove_meta_boxes' ] ) );
 		$this->assertEquals( 10, has_action( 'post_submitbox_start', [ $this->instance, 'save_draft_button' ] ) );
@@ -65,7 +64,6 @@ class TestBlockPost extends \WP_UnitTestCase {
 		$this->assertEquals( 10, has_action( 'disable_months_dropdown', '__return_true' ) );
 		$this->assertEquals( 10, has_action( 'page_row_actions', [ $this->instance, 'page_row_actions' ] ) );
 		$this->assertEquals( 10, has_action( 'bulk_actions-edit-' . self::EXPECTED_SLUG, [ $this->instance, 'bulk_actions' ] ) );
-		$this->assertEquals( 10, has_action( 'handle_bulk_actions-edit-' . self::EXPECTED_SLUG, [ $this->instance, 'bulk_export' ] ) );
 		$this->assertEquals( 10, has_action( 'manage_edit-' . self::EXPECTED_SLUG . '_columns', [ $this->instance, 'list_table_columns' ] ) );
 		$this->assertEquals( 10, has_action( 'manage_' . self::EXPECTED_SLUG . '_posts_custom_column', [ $this->instance, 'list_table_content' ] ) );
 
