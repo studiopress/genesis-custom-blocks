@@ -1246,43 +1246,4 @@ class BlockPost extends ComponentAbstract {
 
 		return $actions;
 	}
-
-	/**
-	 * Export Blocks
-	 *
-	 * @param int[] $post_ids The post IDs to export.
-	 */
-	private function export( $post_ids ) {
-		$blocks = [];
-
-		foreach ( $post_ids as $post_id ) {
-			$post = get_post( $post_id );
-
-			if ( ! $post ) {
-				break;
-			}
-
-			// Check that the post content is valid JSON.
-			$block = json_decode( $post->post_content, true );
-
-			if ( JSON_ERROR_NONE !== json_last_error() ) {
-				break;
-			}
-
-			$blocks = array_merge( $blocks, $block );
-		}
-
-		// If only one block is being exported, use the block's slug as the filename.
-		$filename = 'blocks.json';
-		if ( 1 === count( $post_ids ) ) {
-			$post     = get_post( $post_ids[0] );
-			$filename = $post->post_name . '.json';
-		}
-
-		// Output the JSON file.
-		header( 'Content-disposition: attachment; filename=' . $filename );
-		header( 'Content-type:application/json;charset=utf-8' );
-		echo wp_json_encode( $blocks ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		die();
-	}
 }

@@ -84,7 +84,7 @@ class Settings extends ComponentAbstract {
 			/**
 			 * Runs as the settings page is rendered.
 			 */
-			do_action( 'genesis_custom_blocks_render_settings' )
+			do_action( 'genesis_custom_blocks_render_settings' );
 			?>
 		</div>
 		<?php
@@ -102,7 +102,7 @@ class Settings extends ComponentAbstract {
 			/**
 			 * Runs as the settings page tabs are rendered.
 			 */
-			do_action( 'genesis_custom_blocks_render_settings_tabs' )
+			do_action( 'genesis_custom_blocks_render_settings_tabs' );
 			?>
 			<a href="https://developer.wpengine.com/genesis-custom-blocks" target="_blank" class="nav-tab dashicons-before dashicons-info">
 				<?php esc_html_e( 'Documentation', 'genesis-custom-blocks' ); ?>
