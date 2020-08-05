@@ -31,17 +31,7 @@ class TestField extends \WP_UnitTestCase {
 		'type'     => 'integer',
 		'order'    => 1,
 		'settings' => [
-			'custom'     => 'Custom Setting',
-			'sub_fields' => [
-				'baz' => [
-					'name'    => 'baz',
-					'label'   => 'Baz',
-					'control' => 'text',
-					'type'    => 'string',
-					'order'   => 0,
-					'parent'  => 'foo',
-				],
-			],
+			'custom' => 'Custom Setting',
 		],
 	];
 
@@ -86,11 +76,6 @@ class TestField extends \WP_UnitTestCase {
 		$this->assertAttributeNotEmpty( 'settings', $this->instance );
 		$this->assertArrayHasKey( 'custom', $this->instance->settings );
 		$this->assertEquals( 'Custom Setting', $this->instance->settings['custom'] );
-		$this->assertArrayHasKey( 'sub_fields', $this->instance->settings );
-		$this->assertArrayHasKey( 'baz', $this->instance->settings['sub_fields'] );
-		$this->assertEquals( 'baz', $this->instance->settings['sub_fields']['baz']->name );
-		$this->assertEquals( 'Baz', $this->instance->settings['sub_fields']['baz']->label );
-		$this->assertAttributeNotEmpty( 'settings', $this->instance->settings['sub_fields']['baz'] );
 	}
 
 	/**
@@ -129,10 +114,5 @@ class TestField extends \WP_UnitTestCase {
 		$this->assertArrayHasKey( 'custom', $config );
 		$this->assertArrayNotHasKey( 'settings', $config );
 		$this->assertEquals( 'Custom Setting', $config['custom'] );
-		$this->assertArrayHasKey( 'sub_fields', $config );
-		$this->assertArrayHasKey( 'baz', $config['sub_fields'] );
-		$this->assertArrayNotHasKey( 'settings', $config['sub_fields']['baz'] );
-		$this->assertArrayHasKey( 'parent', $config['sub_fields']['baz'] );
-		$this->assertEquals( 'foo', $config['sub_fields']['baz']['parent'] );
 	}
 }

@@ -31,22 +31,6 @@ class Util extends ComponentAbstract {
 	public function register_hooks() {}
 
 	/**
-	 * Get the loop handler.
-	 *
-	 * @return Blocks\Loop
-	 */
-	public function loop() {
-		static $instance;
-
-		if ( null === $instance ) {
-			$instance = new Blocks\Loop();
-			return $instance;
-		}
-
-		return $instance;
-	}
-
-	/**
 	 * Gets an array of possible template locations.
 	 *
 	 * @param string $name The name of the block (slug as defined in UI).

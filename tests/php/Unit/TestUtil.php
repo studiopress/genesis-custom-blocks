@@ -48,18 +48,6 @@ class TestUtil extends AbstractTemplate {
 	}
 
 	/**
-	 * Test loop.
-	 *
-	 * @covers \Genesis\CustomBlocks\Util::loop()
-	 */
-	public function test_loop() {
-		$this->assertEquals( 'Genesis\CustomBlocks\\Blocks\Loop', get_class( $this->instance->loop() ) );
-
-		// Calling this singleton function repeatedly should return the same instance of the Loop.
-		$this->assertEquals( $this->instance->loop(), $this->instance->loop() );
-	}
-
-	/**
 	 * Test get_template_locations.
 	 *
 	 * @covers \Genesis\CustomBlocks\Util::get_template_locations()
