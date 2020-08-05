@@ -157,11 +157,12 @@ class TestSettings extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Test render_page_header.
+	 * Test get_page_header.
 	 *
-	 * @covers \Genesis\CustomBlocks\Admin\Settings::render_page_header()
+	 * @covers \Genesis\CustomBlocks\Admin\Settings::render_page()
+	 * @covers \Genesis\CustomBlocks\Admin\Settings::get_settings_page()
 	 */
-	public function test_render_page_header() {
+	public function test_get_page_header() {
 		ob_start();
 		$this->instance->render_page();
 		$output = ob_get_clean();
