@@ -6,7 +6,6 @@
  */
 
 use Genesis\CustomBlocks\Admin\Admin;
-use Brain\Monkey;
 
 /**
  * Tests for class Admin.
@@ -36,18 +35,7 @@ class TestAdmin extends \WP_UnitTestCase {
 	 */
 	public function setUp() {
 		parent::setUp();
-		Monkey\setUp();
 		$this->instance = new Admin();
-	}
-
-	/**
-	 * Teardown.
-	 *
-	 * @inheritdoc
-	 */
-	public function tearDown() {
-		Monkey\tearDown();
-		parent::tearDown();
 	}
 
 	/**
