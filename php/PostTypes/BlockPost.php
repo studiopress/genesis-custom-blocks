@@ -674,19 +674,11 @@ class BlockPost extends ComponentAbstract {
 								name="block-fields-control[<?php echo esc_attr( $uid ); ?>]"
 								id="block-fields-edit-control-input_<?php echo esc_attr( $uid ); ?>"
 								data-sync="block-fields-control_<?php echo esc_attr( $uid ); ?>"
+							>
 								<?php
-								$controls_for_select = $this->controls;
-
-								// Don't allow nesting repeaters inside repeaters.
-								if ( ! empty( $field->settings['parent'] ) ) {
-									unset( $controls_for_select['repeater'] );
-								}
-
-								foreach ( $controls_for_select as $control_for_select ) :
+								foreach ( $this->controls as $control_for_select ) :
 									?>
-									<option
-										value="<?php echo esc_attr( $control_for_select->name ); ?>"
-										<?php selected( $field->control, $control_for_select->name ); ?>>
+									<option value="<?php echo esc_attr( $control_for_select->name ); ?>" <?php selected( $field->control, $control_for_select->name ); ?>>
 										<?php echo esc_html( $control_for_select->label ); ?>
 									</option>
 								<?php endforeach; ?>
