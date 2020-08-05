@@ -6,7 +6,7 @@
  */
 
 use Genesis\CustomBlocks\PostTypes\BlockPost;
-use Genesis\CustomBlocks\Blocks\Controls\User;
+use Genesis\CustomBlocks\Blocks\Controls\Textarea;
 
 /**
  * Tests for class BlockPost.
@@ -38,7 +38,7 @@ class TestBlockPost extends \WP_UnitTestCase {
 		parent::setUp();
 		$this->instance = new BlockPost();
 		$this->instance->register_controls();
-		$this->instance->controls['user'] = new User();
+		$this->instance->controls['textarea'] = new Textarea();
 		$this->instance->set_plugin( genesis_custom_blocks() );
 	}
 
@@ -89,12 +89,10 @@ class TestBlockPost extends \WP_UnitTestCase {
 	 */
 	public function test_get_control() {
 		$namespace = 'Genesis\CustomBlocks\Blocks\Controls\\';
-		$this->assertEquals( $namespace . 'Post', get_class( $this->instance->get_control( 'post' ) ) );
-		$this->assertEquals( $namespace . 'Taxonomy', get_class( $this->instance->get_control( 'taxonomy' ) ) );
-		$this->assertEquals( $namespace . 'User', get_class( $this->instance->get_control( 'user' ) ) );
+		$this->assertEquals( $namespace . 'Textarea', get_class( $this->instance->get_control( 'textarea' ) ) );
 
 		// If the control doesn't exist, this should return null.
-		$this->assertEquals( null, $this->instance->get_control( 'non-existant-control' ) );
+		$this->assertEquals( null, $this->instance->get_control( 'non-existent-control' ) );
 	}
 
 	/**

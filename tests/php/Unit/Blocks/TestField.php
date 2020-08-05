@@ -103,8 +103,8 @@ class TestField extends \WP_UnitTestCase {
 		$this->assertEquals( 'string', $this->instance->type );
 
 		$this->instance = new Blocks\Field( [] );
-		$this->instance->from_array( [ 'control' => 'post' ] );
-		$this->assertEquals( 'object', $this->instance->type );
+		$this->instance->from_array( [ 'control' => 'image' ] );
+		$this->assertEquals( 'integer', $this->instance->type );
 
 		// The control class doesn't exist, so this shouldn't change the default value of $type, 'string'.
 		$this->instance = new Blocks\Field( [] );

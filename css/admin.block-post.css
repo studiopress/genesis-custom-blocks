@@ -264,9 +264,6 @@
 	padding: 10px 0;
 	margin: 10px 0;
 }
-#block_fields .block-fields-rows .block-fields-row .block-fields-sub-rows-actions p.repeater-no-fields {
-	background: #f7f7f7;
-}
 #block_fields .block-fields-rows .block-fields-row .block-fields-sub-rows-actions button {
 	margin-left: -32px;
 }
