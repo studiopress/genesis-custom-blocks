@@ -10,8 +10,6 @@
 
 namespace Genesis\CustomBlocks;
 
-use Genesis\CustomBlocks\Blocks;
-
 /**
  * Class Util
  */

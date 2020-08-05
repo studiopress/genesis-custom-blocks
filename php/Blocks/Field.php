@@ -134,16 +134,6 @@ class Field {
 		foreach ( $field_settings as $settings_key ) {
 			$this->settings[ $settings_key ] = $config[ $settings_key ];
 		}
-
-		// Handle the sub-fields setting used by the Repeater.
-		if ( isset( $this->settings['sub_fields'] ) ) {
-			/**
-			 * Recursively loop through sub-fields.
-			 */
-			foreach ( $this->settings['sub_fields'] as $key => $field ) {
-				$this->settings['sub_fields'][ $key ] = new Field( $field );
-			}
-		}
 	}
 
 	/**

@@ -351,25 +351,6 @@ class Loader extends ComponentAbstract {
 				}
 			}
 
-			// Similar to the logic above, populate the Repeater control's sub-fields with default values.
-			foreach ( $block->fields as $field ) {
-				if ( isset( $field->settings['sub_fields'] ) && isset( $attributes[ $field->name ]['rows'] ) ) {
-					$sub_field_settings = $field->settings['sub_fields'];
-					$rows               = $attributes[ $field->name ]['rows'];
-
-					// In each row, apply a field's default value if a value doesn't exist in the attributes.
-					foreach ( $rows as $row_index => $row ) {
-						foreach ( $sub_field_settings as $sub_field_name => $sub_field ) {
-							if ( ! isset( $row[ $sub_field_name ] ) && isset( $sub_field_settings[ $sub_field_name ]->settings['default'] ) ) {
-								$rows[ $row_index ][ $sub_field_name ] = $sub_field_settings[ $sub_field_name ]->settings['default'];
-							}
-						}
-					}
-
-					$attributes[ $field->name ]['rows'] = $rows;
-				}
-			}
-
 			$this->enqueue_block_styles( $block->name, 'block' );
 
 			/**

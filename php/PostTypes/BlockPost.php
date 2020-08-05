@@ -57,7 +57,6 @@ class BlockPost extends ComponentAbstract {
 		add_action( 'wp_insert_post_data', [ $this, 'save_block' ], 10, 2 );
 		add_action( 'init', [ $this, 'register_controls' ] );
 		add_filter( 'genesis_custom_blocks_field_value', [ $this, 'get_field_value' ], 10, 3 );
-		add_filter( 'genesis_custom_blocks_sub_field_value', [ $this, 'get_field_value' ], 10, 3 );
 
 		// Clean up the list table.
 		add_filter( 'disable_months_dropdown', '__return_true', 10, $this->slug );
@@ -554,9 +553,6 @@ class BlockPost extends ComponentAbstract {
 				$this->render_fields_meta_box_row( new Field( $args ) );
 				?>
 			</script>
-			<script type="text/html" id="tmpl-sub-field-rows">
-				<?php $this->render_fields_sub_rows(); ?>
-			</script>
 		</div>
 		<?php
 		do_action( "{$this->slug}_after_fields_list" );
@@ -568,11 +564,10 @@ class BlockPost extends ComponentAbstract {
 	 *
 	 * @param Field $field      The Field containing the options to render.
 	 * @param mixed $uid        A unique ID to used to unify the HTML name, for, and id attributes.
-	 * @param mixed $parent_uid The parent's unique ID, if the field has a parent.
 	 *
 	 * @return void
 	 */
-	public function render_fields_meta_box_row( $field, $uid = false, $parent_uid = false ) {
+	public function render_fields_meta_box_row( $field, $uid = false ) {
 		// Use a template placeholder if no UID provided.
 		if ( ! $uid ) {
 			$uid = '{{ data.uid }}';
@@ -698,59 +693,6 @@ class BlockPost extends ComponentAbstract {
 					</tr>
 				</table>
 			</div>
-			<?php
-			if ( 'repeater' === $field->control ) {
-				if ( ! isset( $field->settings['sub_fields'] ) ) {
-					$field->settings['sub_fields'] = [];
-				}
-				$this->render_fields_sub_rows( $field->settings['sub_fields'], $uid );
-			}
-			if ( $parent_uid ) {
-				?>
-				<input
-					type="hidden"
-					name="block-fields-parent[<?php echo esc_attr( $uid ); ?>]"
-					value="<?php echo esc_attr( $parent_uid ); ?>"
-				/>
-				<?php
-			}
-			?>
-		</div>
-		<?php
-	}
-
-	/**
-	 * Render the actions row when adding a Repeater field.
-	 *
-	 * @param Field[] $fields     The sub fields to render.
-	 * @param mixed   $parent_uid The unique ID of the field's parent.
-	 *
-	 * @return void
-	 */
-	public function render_fields_sub_rows( $fields = [], $parent_uid = false ) {
-		?>
-		<div class="block-fields-sub-rows">
-			<?php
-			if ( ! empty( $fields ) ) {
-				foreach ( $fields as $field ) {
-					$this->render_fields_meta_box_row( $field, uniqid(), $parent_uid );
-				}
-			}
-			?>
-		</div>
-		<div class="block-fields-sub-rows-actions">
-			<p class="repeater-no-fields <?php echo esc_attr( empty( $fields ) ? '' : 'hidden' ); ?>">
-				<button type="button" aria-label="Add Sub-Field" id="block-add-sub-field">
-					<span class="dashicons dashicons-plus"></span>
-					<?php esc_attr_e( 'Add your first Sub-Field', 'genesis-custom-blocks' ); ?>
-				</button>
-			</p>
-			<p class="repeater-has-fields <?php echo esc_attr( empty( $fields ) ? 'hidden' : '' ); ?>">
-				<button type="button" aria-label="Add Sub-Field" id="block-add-sub-field">
-					<span class="dashicons dashicons-plus"></span>
-					<?php esc_attr_e( 'Add Sub-Field', 'genesis-custom-blocks' ); ?>
-				</button>
-			</p>
 		</div>
 		<?php
 	}
@@ -1071,41 +1013,8 @@ class BlockPost extends ComponentAbstract {
 					$field = new Field( $field_config );
 				}
 
-				/*
-				 * Sub-Fields
-				 * If there's a "block-fields-parent" input, include the current field in a "sub-fields" field setting
-				 * for the specified parent.
-				 */
-				if ( ! empty( $_POST['block-fields-parent'][ $key ] ) ) {
-					$parent_uid = sanitize_key( $_POST['block-fields-parent'][ $key ] );
-
-					// The parent's name should have been submitted.
-					if ( ! isset( $fields[ $parent_uid ] ) ) {
-						continue;
-					}
-
-					$parent = $fields[ $parent_uid ];
-
-					// The parent field should be set by now. We expect it to always precede the child field.
-					if ( ! isset( $block->fields[ $parent ] ) ) {
-						continue;
-					}
-
-					if ( ! isset( $block->fields[ $parent ]->settings['sub_fields'] ) ) {
-						$block->fields[ $parent ]->settings['sub_fields'] = [];
-					}
-
-					$field->settings['parent'] = $parent;
-					$field->order              = count(
-						$block->fields[ $parent ]->settings['sub_fields']
-					);
-
-					$block->fields[ $parent ]->settings['sub_fields'][ $name ] = $field;
-				} else {
-					$field->order = count( $block->fields );
-
-					$block->fields[ $name ] = $field;
-				}
+				$field->order           = count( $block->fields );
+				$block->fields[ $name ] = $field;
 			}
 		}
 
