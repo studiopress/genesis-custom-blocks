@@ -139,34 +139,6 @@ abstract class AbstractAttribute extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Gets the post attributes.
-	 *
-	 * @return array
-	 */
-	public function get_post_attributes() {
-		$id = $this->factory()->post->create();
-
-		return [
-			'id'   => $id,
-			'name' => get_the_title( $id ),
-		];
-	}
-
-	/**
-	 * Gets the taxonomy attributes.
-	 *
-	 * @return array
-	 */
-	public function get_taxonomy_attributes() {
-		$term = $this->factory()->tag->create_and_get();
-
-		return [
-			'id'   => $term->term_id,
-			'name' => $term->name,
-		];
-	}
-
-	/**
 	 * Gets the image attribute.
 	 *
 	 * @return int The image's ID.
