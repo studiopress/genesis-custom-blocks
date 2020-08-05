@@ -3,8 +3,6 @@
  */
 import GcbTextControl from './text';
 import GcbTextareaControl from './textarea';
-import GcbClassicTextControl from './classic-text';
-import GcbRichTextControl from './rich-text';
 import GcbURLControl from './url';
 import GcbEmailControl from './email';
 import GcbNumberControl from './number';
@@ -15,17 +13,11 @@ import GcbRadioControl from './radio';
 import GcbRangeControl from './range';
 import GcbSelectControl from './select';
 import GcbMultiselectControl from './multiselect';
-import GcbPostControl from './post';
-import GcbRepeaterControl from './repeater';
-import GcbTaxonomyControl from './taxonomy';
 import GcbToggleControl from './toggle';
-import GcbUserControl from './user';
 
 export default {
 	text: GcbTextControl,
 	textarea: GcbTextareaControl,
-	classic_text: GcbClassicTextControl,
-	rich_text: GcbRichTextControl,
 	url: GcbURLControl,
 	email: GcbEmailControl,
 	number: GcbNumberControl,
@@ -34,11 +26,7 @@ export default {
 	checkbox: GcbCheckboxControl,
 	radio: GcbRadioControl,
 	range: GcbRangeControl,
-	repeater: GcbRepeaterControl,
 	select: GcbSelectControl,
 	multiselect: GcbMultiselectControl,
-	post: GcbPostControl,
-	taxonomy: GcbTaxonomyControl,
 	toggle: GcbToggleControl,
-	user: GcbUserControl,
 };
