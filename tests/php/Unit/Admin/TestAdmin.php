@@ -87,19 +87,4 @@ class TestAdmin extends \WP_UnitTestCase {
 		$this->assertEquals( [], $stylesheet->extra );
 		$this->assertTrue( in_array( $handle, $styles->queue, true ) );
 	}
-
-	/**
-	 * Invokes maybe_settings_redirect(), and gets whether the redirect occurred.
-	 *
-	 * @return boolean Whether it caused a redirect.
-	 */
-	public function did_settings_redirect_occur() {
-		try {
-			$this->instance->maybe_settings_redirect();
-		} catch ( Exception $e ) {
-			$exception = $e;
-		}
-
-		return isset( $exception );
-	}
 }

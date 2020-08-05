@@ -152,20 +152,9 @@ class TestSettings extends \WP_UnitTestCase {
 	public function test_render_page() {
 		ob_start();
 		$this->instance->render_page();
-
-		$this->assertContains( '<div class="wrap genesis-custom-blocks-settings">', ob_get_clean() );
-	}
-
-	/**
-	 * Test get_page_header.
-	 *
-	 * @covers \Genesis\CustomBlocks\Admin\Settings::render_page()
-	 */
-	public function test_get_page_header() {
-		ob_start();
-		$this->instance->render_page();
 		$output = ob_get_clean();
 
+		$this->assertContains( '<div class="wrap genesis-custom-blocks-settings">', $output );
 		$this->assertContains( '<h2 class="nav-tab-wrapper">', $output );
 		$this->assertContains( '<a href="https://developer.wpengine.com/genesis-custom-blocks" target="_blank" class="nav-tab dashicons-before dashicons-info">', $output );
 	}

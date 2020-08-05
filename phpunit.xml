@@ -19,4 +19,9 @@
 			<directory prefix="Test" suffix=".php">./tests/php/Integration/</directory>
 		</testsuite>
 	</testsuites>
+	<filter>
+		<whitelist processUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">./php</directory>
+		</whitelist>
+	</filter>
 </phpunit>
