@@ -80,37 +80,16 @@ class Settings extends ComponentAbstract {
 		<div class="wrap genesis-custom-blocks-settings">
 			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 
-			<?php
-			/**
-			 * The settings page markup.
-			 *
-			 * @param string The markup of the GCB settings page.
-			 */
-			echo apply_filters( 'genesis_custom_blocks_settings_page', $this->get_settings_page() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			?>
-		</div>
+			<h2 class="nav-tab-wrapper">
+				<a href="https://developer.wpengine.com/genesis-custom-blocks" target="_blank" class="nav-tab dashicons-before dashicons-info">
+					<?php esc_html_e( 'Documentation', 'genesis-custom-blocks' ); ?>
+				</a>
+				<a href="https://wordpress.org/support/plugin/genesis-custom-blocks/" target="_blank" class="nav-tab dashicons-before dashicons-sos">
+					<?php esc_html_e( 'Help', 'genesis-custom-blocks' ); ?>
+				</a>
+			</h2>
+			</div>
 		<?php
-	}
-
-	/**
-	 * Gets the Settings page header.
-	 *
-	 * @return string The settings page markup.
-	 */
-	public function get_settings_page() {
-		ob_start();
-		?>
-		<h2 class="nav-tab-wrapper">
-			<a href="https://developer.wpengine.com/genesis-custom-blocks" target="_blank" class="nav-tab dashicons-before dashicons-info">
-				<?php esc_html_e( 'Documentation', 'genesis-custom-blocks' ); ?>
-			</a>
-			<a href="https://wordpress.org/support/plugin/genesis-custom-blocks/" target="_blank" class="nav-tab dashicons-before dashicons-sos">
-				<?php esc_html_e( 'Help', 'genesis-custom-blocks' ); ?>
-			</a>
-		</h2>
-		<?php
-
-		return ob_get_clean();
 	}
 
 	/**
