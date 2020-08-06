@@ -698,13 +698,21 @@ class BlockPost extends ComponentAbstract {
 			/**
 			 * Runs on rendering a block field.
 			 *
-			 * @param Field      $field The field to render.
-			 * @param bool|mixed $uid   The UID of the field.
+			 * @param Field  $field The field to render.
+			 * @param string $uid   The UID of the field.
 			 */
 			do_action( 'genesis_custom_blocks_render_field', $field, $uid );
 			?>
 		</div>
 		<?php
+
+		/**
+		 * Enables rendering row actions for a field.
+		 *
+		 * @param Field  $field The field.
+		 * @param string $uid   The unique ID of the field's parent.
+		 */
+		do_action( 'genesis_custom_blocks_field_row_actions', $field, $uid );
 	}
 
 	/**
