@@ -360,7 +360,13 @@ class Loader extends ComponentAbstract {
 			$this->enqueue_global_styles();
 		}
 
-		$this->data['attributes'] = $attributes;
+		/**
+		 * The block attributes to be sent to the template.
+		 *
+		 * @param array   $attributes The block attributes.
+		 * @param Field[] $fields     The block fields.
+		 */
+		$this->data['attributes'] = apply_filters( 'genesis_custom_blocks_template_attributes', $attributes, $block->fields );
 		$this->data['config']     = $block;
 
 		if ( ! is_admin() && ( ! defined( 'REST_REQUEST' ) || ! REST_REQUEST ) && ! wp_doing_ajax() ) {
