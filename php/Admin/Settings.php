@@ -79,7 +79,6 @@ class Settings extends ComponentAbstract {
 		?>
 		<div class="wrap genesis-custom-blocks-settings">
 			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
-
 			<h2 class="nav-tab-wrapper">
 				<a href="https://developer.wpengine.com/genesis-custom-blocks" target="_blank" class="nav-tab dashicons-before dashicons-info">
 					<?php esc_html_e( 'Documentation', 'genesis-custom-blocks' ); ?>
