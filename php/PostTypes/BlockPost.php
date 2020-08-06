@@ -562,8 +562,8 @@ class BlockPost extends ComponentAbstract {
 	/**
 	 * Render a single Field as a row.
 	 *
-	 * @param Field $field      The Field containing the options to render.
-	 * @param mixed $uid        A unique ID to used to unify the HTML name, for, and id attributes.
+	 * @param Field        $field The Field containing the options to render.
+	 * @param string|false $uid   A unique ID to used to unify the HTML name, for, and id attributes.
 	 *
 	 * @return void
 	 */
@@ -693,6 +693,16 @@ class BlockPost extends ComponentAbstract {
 					</tr>
 				</table>
 			</div>
+			<?php
+
+			/**
+			 * Runs on rendering a block field.
+			 *
+			 * @param Field      $field The field to render.
+			 * @param bool|mixed $uid   The UID of the field.
+			 */
+			do_action( 'genesis_custom_blocks_render_field', $field, $uid );
+			?>
 		</div>
 		<?php
 	}
@@ -1009,7 +1019,9 @@ class BlockPost extends ComponentAbstract {
 
 						$field = new Field( $field_config );
 					}
-				} else {
+				}
+
+				if ( ! isset( $field ) ) {
 					$field = new Field( $field_config );
 				}
 

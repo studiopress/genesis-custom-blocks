@@ -84,7 +84,13 @@ class Field {
 			$this->settings
 		);
 
-		return $config;
+		/**
+		 * The field properties, converted to a config array.
+		 *
+		 * @param array $config   The field config.
+		 * @param array $settings The field settings.
+		 */
+		return apply_filters( 'genesis_custom_blocks_field_to_array', $config, $this->settings );
 	}
 
 	/**
@@ -134,6 +140,13 @@ class Field {
 		foreach ( $field_settings as $settings_key ) {
 			$this->settings[ $settings_key ] = $config[ $settings_key ];
 		}
+
+		/**
+		 * The parsed field, converted from an array.
+		 *
+		 * @param array $settings The field settings.
+		 */
+		$this->settings = apply_filters( 'genesis_custom_blocks_field_from_array', $this->settings );
 	}
 
 	/**
