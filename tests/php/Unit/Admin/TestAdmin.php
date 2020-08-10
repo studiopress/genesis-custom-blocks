@@ -45,8 +45,8 @@ class TestAdmin extends \WP_UnitTestCase {
 	 */
 	public function test_init() {
 		$this->instance->init();
-		$settings_class = 'Genesis\CustomBlocks\Admin\Settings';
-		$this->assertEquals( $settings_class, get_class( $this->instance->settings ) );
+		$documentation_class = 'Genesis\CustomBlocks\Admin\Documentation';
+		$this->assertEquals( $documentation_class, get_class( $this->instance->documentation ) );
 
 		$reflection = new ReflectionObject( genesis_custom_blocks() );
 		$components = $reflection->getProperty( 'components' );
@@ -54,8 +54,8 @@ class TestAdmin extends \WP_UnitTestCase {
 		$components_value = $components->getValue( genesis_custom_blocks() );
 
 		// The settings should have been added to the plugin components.
-		$this->assertEquals( $this->instance->settings->slug, $components_value[ $settings_class ]->slug );
-		$this->assertArrayHasKey( $settings_class, $components_value );
+		$this->assertEquals( $this->instance->documentation->slug, $components_value[ $documentation_class ]->slug );
+		$this->assertArrayHasKey( $documentation_class, $components_value );
 	}
 
 	/**
