@@ -1,5 +1,5 @@
 {
-    "name": "genesis/custom-blocks",
+    "name": "studiopress/genesis-custom-blocks",
     "type": "wordpress-plugin",
     "description": "The easy way to build custom blocks for Gutenberg.",
     "homepage": "https://github.com/studiopress/genesis-custom-blocks",
