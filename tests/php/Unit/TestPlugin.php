@@ -64,6 +64,16 @@ class TestPlugin extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * Test require_deprecated.
+	 *
+	 * @covers \Genesis\CustomBlocks\Plugin::require_deprecated()
+	 */
+	public function test_require_deprecated() {
+		$this->instance->require_deprecated();
+		$this->assertTrue( function_exists( 'block_row' ) );
+	}
+
+	/**
 	 * Test get_template_locations.
 	 *
 	 * This is also essentially the same test as in TestUtil.
