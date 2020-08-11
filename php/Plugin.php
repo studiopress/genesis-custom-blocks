@@ -70,11 +70,21 @@ class Plugin extends PluginAbstract {
 	}
 
 	/**
+	 * Requires deprecated functions.
+	 *
+	 * On a later priority to give other plugins the chance to load the functions.
+	 */
+	public function require_deprecated() {
+		if ( ! function_exists( 'block_row' ) ) {
+			require_once __DIR__ . '/Deprecated.php';
+		}
+	}
+
+	/**
 	 * Requires helper functions.
 	 */
 	private function require_helpers() {
 		require_once __DIR__ . '/Helpers.php';
 		require_once __DIR__ . '/BlockApi.php';
-		require_once __DIR__ . '/Deprecated.php';
 	}
 }
