@@ -27,16 +27,6 @@ class Upgrade extends ComponentAbstract {
 	 * Register any hooks that this component needs.
 	 */
 	public function register_hooks() {
-		/**
-		 * Whether to show the pro nag.
-		 *
-		 * @param bool Whether this should show the nag.
-		 */
-		$show_pro_nag = apply_filters( 'genesis_custom_blocks_show_pro_nag', true );
-		if ( ! $show_pro_nag ) {
-			return;
-		}
-
 		add_action( 'admin_menu', [ $this, 'add_submenu_pages' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 	}
@@ -47,6 +37,16 @@ class Upgrade extends ComponentAbstract {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
+		/**
+		 * Whether to show the pro nag.
+		 *
+		 * @param bool Whether this should show the nag.
+		 */
+		$show_pro_nag = apply_filters( 'genesis_custom_blocks_show_pro_nag', true );
+		if ( ! $show_pro_nag ) {
+			return;
+		}
+
 		$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
 
 		// Enqueue scripts and styles on the edit screen of the Block post type.
@@ -64,6 +64,16 @@ class Upgrade extends ComponentAbstract {
 	 * Add submenu pages to the Genesis Custom Blocks menu.
 	 */
 	public function add_submenu_pages() {
+		/**
+		 * Whether to show the pro nag.
+		 *
+		 * @param bool Whether this should show the nag.
+		 */
+		$show_pro_nag = apply_filters( 'genesis_custom_blocks_show_pro_nag', true );
+		if ( ! $show_pro_nag ) {
+			return;
+		}
+
 		add_submenu_page(
 			'edit.php?post_type=genesis_custom_block',
 			__( 'Genesis Custom Blocks Pro', 'genesis-custom-blocks' ),

@@ -64,16 +64,17 @@ class TestUpgrade extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Test that register_hooks exits if the filter is a certain value.
+	 * Test enqueue_scripts when there is no pro nag.
 	 *
-	 * @covers \Genesis\CustomBlocks\Admin\Upgrade::register_hooks()
+	 * @covers \Genesis\CustomBlocks\Admin\Upgrade::enqueue_scripts()
 	 */
-	public function test_register_hooks_exits_via_filter() {
+	public function test_enqueue_scripts_no_pro_nag() {
 		add_filter( 'genesis_custom_blocks_show_pro_nag', '__return_false' );
-		$this->instance->register_hooks();
+		$this->instance->enqueue_scripts();
+		$styles = wp_styles();
 
-		$this->assertEquals( false, has_action( 'admin_menu', [ $this->instance, 'add_submenu_pages' ] ) );
-		$this->assertEquals( false, has_action( 'admin_enqueue_scripts', [ $this->instance, 'enqueue_scripts' ] ) );
+		$this->assertFalse( in_array( $this->instance->slug, $styles->queue, true ) );
+		$this->assertFalse( in_array( $this->instance->slug, $styles->registered, true ) );
 	}
 
 	/**
