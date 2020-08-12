@@ -52,6 +52,7 @@ class TestUpgrade extends \WP_UnitTestCase {
 		Monkey\tearDown();
 		parent::tearDown();
 	}
+
 	/**
 	 * Test register_hooks.
 	 *
