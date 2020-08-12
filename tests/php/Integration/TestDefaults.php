@@ -35,7 +35,7 @@ class TestDefaults extends AbstractAttribute {
 	 * Sets class properties.
 	 */
 	public function set_properties() {
-		$this->block_name = 'all-fields-except-repeater';
+		$this->block_name = 'all-fields';
 		$this->attributes = [
 			'className' => $this->class_name,
 		];
@@ -48,7 +48,6 @@ class TestDefaults extends AbstractAttribute {
 			'number'      => '56',
 			'radio'       => 'baz',
 			'range'       => 5,
-			'rich-text'   => 'Here is the Rich Text default value',
 			'select'      => 'another',
 			'text'        => 'This is the text default value',
 			'textarea'    => 'And this is the Textarea default',
@@ -68,7 +67,6 @@ class TestDefaults extends AbstractAttribute {
 			'url',
 		];
 
-		$rich_text_value           = sprintf( '<p>%s</p></p>', $this->defaults['rich-text'] );
 		$this->special_case_fields = [
 			'checkbox'    => [
 				'block_field' => $this->defaults['checkbox'] ? 'Yes' : 'No',
@@ -76,10 +74,6 @@ class TestDefaults extends AbstractAttribute {
 			],
 			'multiselect' => [
 				'block_field' => 'example-default',
-			],
-			'rich-text'   => [
-				'block_field' => $rich_text_value,
-				'block_value' => $rich_text_value,
 			],
 			'toggle'      => [
 				'block_field' => $this->defaults['toggle'] ? 'Yes' : 'No',

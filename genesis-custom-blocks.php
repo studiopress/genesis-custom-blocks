@@ -115,7 +115,5 @@ genesis_custom_blocks()
 	->set_version( __FILE__ )
 	->init();
 
-/**
- * Sometimes we need to do some things after the plugin is loaded, so call the PluginInterface::plugin_loaded().
- */
 add_action( 'plugins_loaded', [ genesis_custom_blocks(), 'plugin_loaded' ] );
+add_action( 'plugins_loaded', [ genesis_custom_blocks(), 'require_deprecated' ], 11 );

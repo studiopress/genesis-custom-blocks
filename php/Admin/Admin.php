@@ -17,18 +17,11 @@ use Genesis\CustomBlocks\ComponentAbstract;
 class Admin extends ComponentAbstract {
 
 	/**
-	 * Plugin settings.
+	 * Plugin documentation.
 	 *
-	 * @var Settings
+	 * @var Documentation
 	 */
-	public $settings;
-
-	/**
-	 * Genesis Pro subscription.
-	 *
-	 * @var Subscription
-	 */
-	public $subscription;
+	public $documentation;
 
 	/**
 	 * User onboarding.
@@ -55,11 +48,8 @@ class Admin extends ComponentAbstract {
 	 * Initialise the Admin component.
 	 */
 	public function init() {
-		$this->settings = new Settings();
-		genesis_custom_blocks()->register_component( $this->settings );
-
-		$this->subscription = new Subscription();
-		genesis_custom_blocks()->register_component( $this->subscription );
+		$this->documentation = new Documentation();
+		genesis_custom_blocks()->register_component( $this->documentation );
 
 		$this->onboarding = new Onboarding();
 		genesis_custom_blocks()->register_component( $this->onboarding );
@@ -71,11 +61,9 @@ class Admin extends ComponentAbstract {
 		 */
 		$show_pro_nag = apply_filters( 'genesis_custom_blocks_show_pro_nag', true );
 
-		if ( $show_pro_nag && ! genesis_custom_blocks()->is_pro() ) {
+		if ( $show_pro_nag ) {
 			$this->upgrade = new Upgrade();
 			genesis_custom_blocks()->register_component( $this->upgrade );
-		} else {
-			$this->maybe_settings_redirect();
 		}
 
 		if ( defined( 'WP_LOAD_IMPORTERS' ) && WP_LOAD_IMPORTERS ) {
@@ -103,27 +91,5 @@ class Admin extends ComponentAbstract {
 			[],
 			$this->plugin->get_version()
 		);
-	}
-
-	/**
-	 * Redirect to the Settings screen if the subscription key is being saved.
-	 */
-	public function maybe_settings_redirect() {
-		$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
-
-		if ( 'genesis-custom-blocks-pro' === $page ) {
-			wp_safe_redirect(
-				add_query_arg(
-					[
-						'post_type' => 'genesis_custom_block',
-						'page'      => 'genesis-custom-blocks-settings',
-						'tab'       => 'subscription',
-					],
-					admin_url( 'edit.php' )
-				)
-			);
-
-			die();
-		}
 	}
 }

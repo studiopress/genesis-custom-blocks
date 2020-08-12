@@ -6,7 +6,6 @@
  */
 
 use Genesis\CustomBlocks\Admin\Admin;
-use Brain\Monkey;
 
 /**
  * Tests for class Admin.
@@ -36,18 +35,7 @@ class TestAdmin extends \WP_UnitTestCase {
 	 */
 	public function setUp() {
 		parent::setUp();
-		Monkey\setUp();
 		$this->instance = new Admin();
-	}
-
-	/**
-	 * Teardown.
-	 *
-	 * @inheritdoc
-	 */
-	public function tearDown() {
-		Monkey\tearDown();
-		parent::tearDown();
 	}
 
 	/**
@@ -56,12 +44,9 @@ class TestAdmin extends \WP_UnitTestCase {
 	 * @covers \Genesis\CustomBlocks\Admin\Admin::init()
 	 */
 	public function test_init() {
-		$this->set_subscription_key_validity( false );
 		$this->instance->init();
-		$settings_class     = 'Genesis\CustomBlocks\Admin\Settings';
-		$subscription_class = 'Genesis\CustomBlocks\Admin\Subscription';
-		$this->assertEquals( $settings_class, get_class( $this->instance->settings ) );
-		$this->assertEquals( $subscription_class, get_class( $this->instance->subscription ) );
+		$documentation_class = 'Genesis\CustomBlocks\Admin\Documentation';
+		$this->assertEquals( $documentation_class, get_class( $this->instance->documentation ) );
 
 		$reflection = new ReflectionObject( genesis_custom_blocks() );
 		$components = $reflection->getProperty( 'components' );
@@ -69,21 +54,8 @@ class TestAdmin extends \WP_UnitTestCase {
 		$components_value = $components->getValue( genesis_custom_blocks() );
 
 		// The settings should have been added to the plugin components.
-		$this->assertEquals( $this->instance->settings->slug, $components_value[ $settings_class ]->slug );
-		$this->assertArrayHasKey( $settings_class, $components_value );
-		$this->assertArrayHasKey( $subscription_class, $components_value );
-
-		// With an active Genesis Pro subscription key, this should redirect from the Pro page to the settings page.
-		$this->set_subscription_key_validity( true );
-		Monkey\Functions\expect( 'filter_input' )
-			->once()
-			->with(
-				INPUT_GET,
-				'page',
-				FILTER_SANITIZE_STRING
-			)
-			->andReturn( self::PRO_PAGE );
-		$this->assertTrue( $this->did_settings_redirect_occur() );
+		$this->assertEquals( $this->instance->documentation->slug, $components_value[ $documentation_class ]->slug );
+		$this->assertArrayHasKey( $documentation_class, $components_value );
 	}
 
 	/**
@@ -114,80 +86,5 @@ class TestAdmin extends \WP_UnitTestCase {
 		$this->assertEquals( [], $stylesheet->deps );
 		$this->assertEquals( [], $stylesheet->extra );
 		$this->assertTrue( in_array( $handle, $styles->queue, true ) );
-	}
-
-	/**
-	 * Test maybe_settings_redirect.
-	 *
-	 * @covers \Genesis\CustomBlocks\Admin\Admin::maybe_settings_redirect()
-	 */
-	public function test_maybe_settings_redirect() {
-		Monkey\Functions\expect( 'filter_input' )
-			->once()
-			->with(
-				INPUT_GET,
-				'page',
-				FILTER_SANITIZE_STRING
-			)
-			->andReturn( 'incorrect-page' );
-
-		// This is on the wrong page, so this should not redirect.
-		$this->assertFalse( $this->did_settings_redirect_occur() );
-
-		Monkey\Functions\expect( 'filter_input' )
-			->twice()
-			->with(
-				INPUT_GET,
-				'page',
-				FILTER_SANITIZE_STRING
-			)
-			->andReturn( self::PRO_PAGE );
-
-		// Now that this is on the correct page, the conditional should be true, and this should redirect.
-		$this->assertTrue( $this->did_settings_redirect_occur() );
-
-		// Mainly copied from Weston Ruter in the AMP Plugin for WordPress.
-		add_filter(
-			'wp_redirect',
-			function( $url, $status ) {
-				throw new Exception( $url, $status );
-			},
-			10,
-			2
-		);
-
-		try {
-			$this->instance->maybe_settings_redirect();
-		} catch ( Exception $e ) {
-			$exception = $e;
-		}
-
-		$expected_url = add_query_arg(
-			[
-				'post_type' => 'genesis_custom_block',
-				'page'      => 'genesis-custom-blocks-settings',
-				'tab'       => 'subscription',
-			],
-			admin_url( 'edit.php' )
-		);
-
-		// Assert that the response was a redirect (302), and that it redirected to the right URL.
-		$this->assertTrue( isset( $exception ) && 302 === $exception->getCode() );
-		$this->assertTrue( isset( $exception ) && $expected_url === $exception->getMessage() );
-	}
-
-	/**
-	 * Invokes maybe_settings_redirect(), and gets whether the redirect occurred.
-	 *
-	 * @return boolean Whether it caused a redirect.
-	 */
-	public function did_settings_redirect_occur() {
-		try {
-			$this->instance->maybe_settings_redirect();
-		} catch ( Exception $e ) {
-			$exception = $e;
-		}
-
-		return isset( $exception );
 	}
 }

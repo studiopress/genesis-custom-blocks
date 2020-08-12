@@ -240,37 +240,6 @@
 		line-height: 1.5em;
 	}
 }
-#block_fields .block-fields-rows .block-fields-row .block-fields-sub-rows {
-	grid-column: 1 / span 4;
-	margin: 0 10px;
-	padding: 0 0 0 32px;
-	overflow: hidden;
-}
-#block_fields .block-fields-sub-rows .block-fields-row-columns {
-	grid-template-columns: [handle] minmax( 20px, 3% ) calc(33% - 22px) calc(32% + 38px) calc(32% - 16px);
-}
-#block_fields .block-fields-rows .block-fields-row .block-fields-sub-rows .block-fields-row {
-	border: none;
-	background: #f7f7f7;
-}
-#block_fields .block-fields-rows .block-fields-row .block-fields-sub-rows-actions {
-	grid-column: 1 / span 4;
-	padding: 0;
-	margin: 0 10px 0 42px;
-	text-align: center;
-	background: #fff;
-}
-#block_fields .block-fields-rows .block-fields-row .block-fields-sub-rows-actions p {
-	padding: 10px 0;
-	margin: 10px 0;
-}
-#block_fields .block-fields-rows .block-fields-row .block-fields-sub-rows-actions p.repeater-no-fields {
-	background: #f7f7f7;
-}
-#block_fields .block-fields-rows .block-fields-row .block-fields-sub-rows-actions button {
-	margin-left: -32px;
-}
-
 #block_properties input,
 #block_properties select,
 #block_properties label {

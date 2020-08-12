@@ -68,7 +68,6 @@ abstract class AbstractAttribute extends \WP_UnitTestCase {
 	public $special_case_field_names = [
 		'checkbox',
 		'image',
-		'rich-text',
 		'toggle',
 	];
 
@@ -137,48 +136,6 @@ abstract class AbstractAttribute extends \WP_UnitTestCase {
 				return $mock_theme_directory;
 			}
 		);
-	}
-
-	/**
-	 * Gets the post attributes.
-	 *
-	 * @return array
-	 */
-	public function get_post_attributes() {
-		$id = $this->factory()->post->create();
-
-		return [
-			'id'   => $id,
-			'name' => get_the_title( $id ),
-		];
-	}
-
-	/**
-	 * Gets the taxonomy attributes.
-	 *
-	 * @return array
-	 */
-	public function get_taxonomy_attributes() {
-		$term = $this->factory()->tag->create_and_get();
-
-		return [
-			'id'   => $term->term_id,
-			'name' => $term->name,
-		];
-	}
-
-	/**
-	 * Gets the user attributes.
-	 *
-	 * @return array
-	 */
-	public function get_user_attributes() {
-		$user = $this->factory()->user->create_and_get();
-
-		return [
-			'id'       => $user->ID,
-			'userName' => $user->display_name,
-		];
 	}
 
 	/**

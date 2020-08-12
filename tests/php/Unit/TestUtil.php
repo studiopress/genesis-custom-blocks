@@ -48,43 +48,6 @@ class TestUtil extends AbstractTemplate {
 	}
 
 	/**
-	 * Test is_pro.
-	 *
-	 * This method is normally accessed via Plugin::__call(), as a magic method.
-	 * Like genesis_custom_blocks()->is_pro().
-	 *
-	 * @covers \Genesis\CustomBlocks\Util::is_pro()
-	 */
-	public function test_is_pro() {
-		$plugin_instance = new Plugin();
-		$plugin_instance->init();
-		$plugin_instance->plugin_loaded();
-
-		$plugin_instance->admin = new Admin();
-		$plugin_instance->admin->init();
-
-		$this->set_subscription_key_validity( true );
-		$this->assertTrue( $plugin_instance->is_pro() );
-		$this->assertTrue( genesis_custom_blocks()->is_pro() );
-
-		$this->set_subscription_key_validity( false );
-		$this->assertFalse( $plugin_instance->is_pro() );
-		$this->assertFalse( genesis_custom_blocks()->is_pro() );
-	}
-
-	/**
-	 * Test loop.
-	 *
-	 * @covers \Genesis\CustomBlocks\Util::loop()
-	 */
-	public function test_loop() {
-		$this->assertEquals( 'Genesis\CustomBlocks\\Blocks\Loop', get_class( $this->instance->loop() ) );
-
-		// Calling this singleton function repeatedly should return the same instance of the Loop.
-		$this->assertEquals( $this->instance->loop(), $this->instance->loop() );
-	}
-
-	/**
 	 * Test get_template_locations.
 	 *
 	 * @covers \Genesis\CustomBlocks\Util::get_template_locations()

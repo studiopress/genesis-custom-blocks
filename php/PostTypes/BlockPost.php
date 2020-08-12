@@ -34,20 +34,6 @@ class BlockPost extends ComponentAbstract {
 	public $controls = [];
 
 	/**
-	 * The pro controls.
-	 *
-	 * @var array
-	 */
-	public $pro_controls = [
-		'repeater',
-		'post',
-		'rich_text',
-		'classic_text',
-		'taxonomy',
-		'user',
-	];
-
-	/**
 	 * Block Post constructor.
 	 */
 	public function __construct() {
@@ -62,24 +48,20 @@ class BlockPost extends ComponentAbstract {
 	public function register_hooks() {
 		add_action( 'init', [ $this, 'register_post_type' ] );
 		add_action( 'admin_init', [ $this, 'add_caps' ] );
-		add_action( 'admin_init', [ $this, 'row_export' ] );
 		add_action( 'add_meta_boxes', [ $this, 'add_meta_boxes' ] );
 		add_action( 'add_meta_boxes', [ $this, 'remove_meta_boxes' ] );
 		add_action( 'edit_form_before_permalink', [ $this, 'template_location' ] );
 		add_action( 'post_submitbox_start', [ $this, 'save_draft_button' ] );
 		add_filter( 'enter_title_here', [ $this, 'post_title_placeholder' ] );
-		add_action( 'post_submitbox_misc_actions', [ $this, 'post_type_condition' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 		add_action( 'wp_insert_post_data', [ $this, 'save_block' ], 10, 2 );
 		add_action( 'init', [ $this, 'register_controls' ] );
 		add_filter( 'genesis_custom_blocks_field_value', [ $this, 'get_field_value' ], 10, 3 );
-		add_filter( 'genesis_custom_blocks_sub_field_value', [ $this, 'get_field_value' ], 10, 3 );
 
 		// Clean up the list table.
 		add_filter( 'disable_months_dropdown', '__return_true', 10, $this->slug );
 		add_filter( 'page_row_actions', [ $this, 'page_row_actions' ], 10, 1 );
 		add_filter( 'bulk_actions-edit-' . $this->slug, [ $this, 'bulk_actions' ] );
-		add_filter( 'handle_bulk_actions-edit-' . $this->slug, [ $this, 'bulk_export' ], 10, 3 );
 		add_filter( 'manage_edit-' . $this->slug . '_columns', [ $this, 'list_table_columns' ] );
 		add_action( 'manage_' . $this->slug . '_posts_custom_column', [ $this, 'list_table_content' ], 10, 2 );
 
@@ -108,10 +90,6 @@ class BlockPost extends ComponentAbstract {
 			'checkbox',
 			'radio',
 		];
-
-		if ( genesis_custom_blocks()->is_pro() ) {
-			$control_names = array_merge( $control_names, $this->pro_controls );
-		}
 
 		$controls = [];
 		foreach ( $control_names as $control_name ) {
@@ -169,11 +147,6 @@ class BlockPost extends ComponentAbstract {
 	public function get_field_value( $value, $control, $echo ) {
 		if ( isset( $this->controls[ $control ] ) && method_exists( $this->controls[ $control ], 'validate' ) ) {
 			return call_user_func( [ $this->controls[ $control ], 'validate' ], $value, $echo );
-		} elseif ( in_array( $control, $this->pro_controls, true ) && ! genesis_custom_blocks()->is_pro() ) {
-			$pro_control = $this->get_control( $control );
-			if ( method_exists( $pro_control, 'validate' ) ) {
-				return call_user_func( [ $pro_control, 'validate' ], $value, $echo );
-			}
 		}
 
 		return $value;
@@ -580,9 +553,6 @@ class BlockPost extends ComponentAbstract {
 				$this->render_fields_meta_box_row( new Field( $args ) );
 				?>
 			</script>
-			<script type="text/html" id="tmpl-sub-field-rows">
-				<?php $this->render_fields_sub_rows(); ?>
-			</script>
 		</div>
 		<?php
 		do_action( "{$this->slug}_after_fields_list" );
@@ -592,19 +562,17 @@ class BlockPost extends ComponentAbstract {
 	/**
 	 * Render a single Field as a row.
 	 *
-	 * @param Field $field      The Field containing the options to render.
-	 * @param mixed $uid        A unique ID to used to unify the HTML name, for, and id attributes.
-	 * @param mixed $parent_uid The parent's unique ID, if the field has a parent.
+	 * @param Field        $field The Field containing the options to render.
+	 * @param string|false $uid   A unique ID to used to unify the HTML name, for, and id attributes.
 	 *
 	 * @return void
 	 */
-	public function render_fields_meta_box_row( $field, $uid = false, $parent_uid = false ) {
+	public function render_fields_meta_box_row( $field, $uid = false ) {
 		// Use a template placeholder if no UID provided.
 		if ( ! $uid ) {
 			$uid = '{{ data.uid }}';
 		}
 
-		$is_field_disabled = ( ! isset( $this->controls[ $field->control ] ) && in_array( $field->control, $this->pro_controls, true ) );
 		?>
 		<div class="block-fields-row" data-uid="<?php echo esc_attr( $uid ); ?>">
 			<div class="block-fields-row-columns">
@@ -634,30 +602,10 @@ class BlockPost extends ComponentAbstract {
 				</div>
 				<div class="block-fields-control" id="block-fields-control_<?php echo esc_attr( $uid ); ?>">
 					<?php
-					if ( ! $is_field_disabled && isset( $this->controls[ $field->control ] ) ) :
+					if ( isset( $this->controls[ $field->control ] ) ) :
 						echo esc_html( $this->controls[ $field->control ]->label );
-					else :
-						?>
-						<span class="dashicons dashicons-warning"></span>
-						<span class="pro-required">
-							<?php
-							/* translators: %1$s is the field type, %2$s is the URL for the Pro license */
-							printf(
-								wp_kses_post( 'This <code>%1$s</code> field requires an active <a href="%2$s">pro license</a>.', 'genesis-custom-blocks' ),
-								esc_html( $field->control ),
-								esc_url(
-									add_query_arg(
-										[
-											'post_type' => $this->slug,
-											'page'      => 'genesis-custom-blocks-pro',
-										],
-										admin_url( 'edit.php' )
-									)
-								)
-							);
-							?>
-						</span>
-					<?php endif; ?>
+					endif;
+					?>
 				</div>
 			</div>
 			<div class="block-fields-edit">
@@ -685,15 +633,7 @@ class BlockPost extends ComponentAbstract {
 								class="regular-text"
 								value="<?php echo esc_attr( $field->label ); ?>"
 								data-sync="block-fields-label_<?php echo esc_attr( $uid ); ?>"
-								<?php echo $is_field_disabled ? 'readonly="readonly"' : ''; ?>
 							/>
-							<?php if ( $is_field_disabled ) : ?>
-								<input
-									name="block-is-disabled-pro-field[<?php echo esc_attr( $uid ); ?>]"
-									type="hidden"
-									value="true"
-								/>
-							<?php endif; ?>
 						</td>
 					</tr>
 					<tr class="block-fields-edit-name">
@@ -714,7 +654,6 @@ class BlockPost extends ComponentAbstract {
 								class="regular-text"
 								value="<?php echo esc_attr( $field->name ); ?>"
 								data-sync="block-fields-name-code_<?php echo esc_attr( $uid ); ?>"
-								<?php echo $is_field_disabled ? 'readonly="readonly"' : ''; ?>
 							/>
 						</td>
 					</tr>
@@ -730,25 +669,11 @@ class BlockPost extends ComponentAbstract {
 								name="block-fields-control[<?php echo esc_attr( $uid ); ?>]"
 								id="block-fields-edit-control-input_<?php echo esc_attr( $uid ); ?>"
 								data-sync="block-fields-control_<?php echo esc_attr( $uid ); ?>"
-								<?php disabled( $is_field_disabled ); ?> >
+							>
 								<?php
-								$controls_for_select = $this->controls;
-
-								// If this field is disabled, it was probably added when there was a valid pro license, so still display it.
-								if ( $is_field_disabled && in_array( $field->control, $this->pro_controls, true ) ) {
-									$controls_for_select[ $field->control ] = $this->get_control( $field->control );
-								}
-
-								// Don't allow nesting repeaters inside repeaters.
-								if ( ! empty( $field->settings['parent'] ) ) {
-									unset( $controls_for_select['repeater'] );
-								}
-
-								foreach ( $controls_for_select as $control_for_select ) :
+								foreach ( $this->controls as $control_for_select ) :
 									?>
-									<option
-										value="<?php echo esc_attr( $control_for_select->name ); ?>"
-										<?php selected( $field->control, $control_for_select->name ); ?>>
+									<option value="<?php echo esc_attr( $control_for_select->name ); ?>" <?php selected( $field->control, $control_for_select->name ); ?>>
 										<?php echo esc_html( $control_for_select->label ); ?>
 									</option>
 								<?php endforeach; ?>
@@ -769,60 +694,25 @@ class BlockPost extends ComponentAbstract {
 				</table>
 			</div>
 			<?php
-			if ( 'repeater' === $field->control ) {
-				if ( ! isset( $field->settings['sub_fields'] ) ) {
-					$field->settings['sub_fields'] = [];
-				}
-				$this->render_fields_sub_rows( $field->settings['sub_fields'], $uid );
-			}
-			if ( $parent_uid ) {
-				?>
-				<input
-					type="hidden"
-					name="block-fields-parent[<?php echo esc_attr( $uid ); ?>]"
-					value="<?php echo esc_attr( $parent_uid ); ?>"
-				/>
-				<?php
-			}
-			?>
-		</div>
-		<?php
-	}
 
-	/**
-	 * Render the actions row when adding a Repeater field.
-	 *
-	 * @param Field[] $fields     The sub fields to render.
-	 * @param mixed   $parent_uid The unique ID of the field's parent.
-	 *
-	 * @return void
-	 */
-	public function render_fields_sub_rows( $fields = [], $parent_uid = false ) {
-		?>
-		<div class="block-fields-sub-rows">
-			<?php
-			if ( ! empty( $fields ) ) {
-				foreach ( $fields as $field ) {
-					$this->render_fields_meta_box_row( $field, uniqid(), $parent_uid );
-				}
-			}
+			/**
+			 * Runs on rendering a block field.
+			 *
+			 * @param Field  $field The field to render.
+			 * @param string $uid   The UID of the field.
+			 */
+			do_action( 'genesis_custom_blocks_render_field', $field, $uid );
 			?>
 		</div>
-		<div class="block-fields-sub-rows-actions">
-			<p class="repeater-no-fields <?php echo esc_attr( empty( $fields ) ? '' : 'hidden' ); ?>">
-				<button type="button" aria-label="Add Sub-Field" id="block-add-sub-field">
-					<span class="dashicons dashicons-plus"></span>
-					<?php esc_attr_e( 'Add your first Sub-Field', 'genesis-custom-blocks' ); ?>
-				</button>
-			</p>
-			<p class="repeater-has-fields <?php echo esc_attr( empty( $fields ) ? 'hidden' : '' ); ?>">
-				<button type="button" aria-label="Add Sub-Field" id="block-add-sub-field">
-					<span class="dashicons dashicons-plus"></span>
-					<?php esc_attr_e( 'Add Sub-Field', 'genesis-custom-blocks' ); ?>
-				</button>
-			</p>
-		</div>
 		<?php
+
+		/**
+		 * Enables rendering row actions for a field.
+		 *
+		 * @param Field  $field The field.
+		 * @param string $uid   The unique ID of the field's parent.
+		 */
+		do_action( 'genesis_custom_blocks_field_row_actions', $field, $uid );
 	}
 
 	/**
@@ -1109,20 +999,7 @@ class BlockPost extends ComponentAbstract {
 					$field_config['type'] = $this->controls[ $field_config['control'] ]->type;
 				}
 
-				/*
-				 * Field settings.
-				 * If the field is a pro field that's no longer available, re-save the previous value of that field.
-				 * This allows saving other new fields, while retaining the previous pro field value in case the user reactivates the license.
-				 */
-				if ( ! empty( $_POST['block-is-disabled-pro-field'][ $key ] ) ) {
-					$previous_block = new Block( $post_id );
-					foreach ( $previous_block->fields as $previous_field ) {
-						if ( $name === $previous_field->name ) {
-							$field = $previous_field;
-							break;
-						}
-					}
-				} elseif ( isset( $field_config['control'] ) && isset( $this->controls[ $field_config['control'] ] ) ) {
+				if ( isset( $field_config['control'] ) && isset( $this->controls[ $field_config['control'] ] ) ) {
 					$control = $this->controls[ $field_config['control'] ];
 					foreach ( $control->settings as $setting ) {
 						$value = false; // This is a good default, it allows us to pick up on unchecked checkboxes.
@@ -1150,45 +1027,14 @@ class BlockPost extends ComponentAbstract {
 
 						$field = new Field( $field_config );
 					}
-				} else {
+				}
+
+				if ( ! isset( $field ) ) {
 					$field = new Field( $field_config );
 				}
 
-				/*
-				 * Sub-Fields
-				 * If there's a "block-fields-parent" input, include the current field in a "sub-fields" field setting
-				 * for the specified parent.
-				 */
-				if ( ! empty( $_POST['block-fields-parent'][ $key ] ) ) {
-					$parent_uid = sanitize_key( $_POST['block-fields-parent'][ $key ] );
-
-					// The parent's name should have been submitted.
-					if ( ! isset( $fields[ $parent_uid ] ) ) {
-						continue;
-					}
-
-					$parent = $fields[ $parent_uid ];
-
-					// The parent field should be set by now. We expect it to always precede the child field.
-					if ( ! isset( $block->fields[ $parent ] ) ) {
-						continue;
-					}
-
-					if ( ! isset( $block->fields[ $parent ]->settings['sub_fields'] ) ) {
-						$block->fields[ $parent ]->settings['sub_fields'] = [];
-					}
-
-					$field->settings['parent'] = $parent;
-					$field->order              = count(
-						$block->fields[ $parent ]->settings['sub_fields']
-					);
-
-					$block->fields[ $parent ]->settings['sub_fields'][ $name ] = $field;
-				} else {
-					$field->order = count( $block->fields );
-
-					$block->fields[ $name ] = $field;
-				}
+				$field->order           = count( $block->fields );
+				$block->fields[ $name ] = $field;
 			}
 		}
 
@@ -1212,63 +1058,6 @@ class BlockPost extends ComponentAbstract {
 		}
 
 		return $title;
-	}
-
-	/**
-	 * Displays an option for editing the post type that this block appears on.
-	 */
-	public function post_type_condition() {
-		if ( ! genesis_custom_blocks()->is_pro() ) {
-			return;
-		}
-
-		$screen = get_current_screen();
-
-		// Enqueue scripts and styles on the edit screen of the Block post type.
-		if ( ! is_object( $screen ) || $this->slug !== $screen->post_type ) {
-			return;
-		}
-
-		$post_types = get_post_types(
-			[
-				'show_in_rest' => true,
-				'show_in_menu' => true,
-			],
-			'objects'
-		);
-
-		$post_types = array_filter(
-			$post_types,
-			function( $post_type ) {
-				return post_type_supports( $post_type->name, 'editor' );
-			}
-		);
-
-		$block = new Block( get_the_ID() );
-		?>
-		<div class="genesis-custom-blocks-pub-section hide-if-no-js">
-			<?php esc_html_e( 'Post Types:', 'genesis-custom-blocks' ); ?> <span class="post-types-display"></span>
-			<a href="#post-types-select" class="edit-post-types" role="button">
-				<span aria-hidden="true"><?php esc_html_e( 'Edit', 'genesis-custom-blocks' ); ?></span>
-			</a>
-			<input type="hidden" value="<?php echo esc_attr( implode( ',', $block->excluded ) ); ?>" name="block-excluded-post-types" id="block-excluded-post-types" />
-			<div class="post-types-select">
-				<div class="post-types-select-items">
-					<?php
-					foreach ( $post_types as $post_type ) {
-						?>
-						<input type="checkbox" id="block-post-type-<?php echo esc_attr( $post_type->name ); ?>" value="<?php echo esc_attr( $post_type->name ); ?>">
-						<label for="block-post-type-<?php echo esc_attr( $post_type->name ); ?>"><?php echo esc_html( $post_type->label ); ?></label>
-						<br />
-						<?php
-					}
-					?>
-				</div>
-				<a href="#post-types" class="save-post-types button"><?php esc_html_e( 'OK', 'genesis-custom-blocks' ); ?></a>
-				<a href="#post-types" class="button-cancel"><?php esc_html_e( 'Cancel', 'genesis-custom-blocks' ); ?></a>
-			</div>
-		</div>
-		<?php
 	}
 
 	/**
@@ -1362,28 +1151,6 @@ class BlockPost extends ComponentAbstract {
 			unset( $actions['inline hide-if-no-js'] );
 		}
 
-		// Add the Export link.
-		if ( genesis_custom_blocks()->is_pro() ) {
-			$export = [
-				'export' => sprintf(
-					'<a href="%1$s" aria-label="%2$s">%3$s</a>',
-					add_query_arg( [ 'export' => $post->ID ] ),
-					sprintf(
-						// translators: Placeholder is a post title.
-						__( 'Export %1$s', 'genesis-custom-blocks' ),
-						get_the_title( $post->ID )
-					),
-					__( 'Export', 'genesis-custom-blocks' )
-				),
-			];
-
-			$actions = array_merge(
-				array_slice( $actions, 0, 1 ),
-				$export,
-				array_slice( $actions, 1 )
-			);
-		}
-
 		// Return the set of links without Quick Edit.
 		return $actions;
 	}
@@ -1398,91 +1165,6 @@ class BlockPost extends ComponentAbstract {
 	public function bulk_actions( $actions ) {
 		unset( $actions['edit'] );
 
-		if ( genesis_custom_blocks()->is_pro() ) {
-			$actions['export'] = __( 'Export', 'genesis-custom-blocks' );
-		}
-
 		return $actions;
-	}
-
-	/**
-	 * Handle the Export of a single block.
-	 */
-	public function row_export() {
-		if ( ! genesis_custom_blocks()->is_pro() ) {
-			return;
-		}
-
-		$post_id = filter_input( INPUT_GET, 'export', FILTER_SANITIZE_NUMBER_INT );
-
-		// Check if the export has been requested, and the user has permission.
-		if ( $post_id <= 0 || ! current_user_can( "{$this->slug}_read_block", $post_id ) ) {
-			return;
-		}
-
-		$this->export( [ $post_id ] );
-	}
-
-	/**
-	 * Handle Exporting blocks via Bulk Actions
-	 *
-	 * @param string $redirect Location to redirect to after the bulk action is completed.
-	 * @param string $action The action to handle.
-	 * @param array  $post_ids The IDs to handle.
-	 *
-	 * @return string
-	 */
-	public function bulk_export( $redirect, $action, $post_ids ) {
-		if ( ! genesis_custom_blocks()->is_pro() ) {
-			return $redirect;
-		}
-
-		if ( 'export' !== $action ) {
-			return $redirect;
-		}
-
-		$this->export( $post_ids );
-
-		$redirect = add_query_arg( 'bulk_export', count( $post_ids ), $redirect );
-		return $redirect;
-	}
-
-	/**
-	 * Export Blocks
-	 *
-	 * @param int[] $post_ids The post IDs to export.
-	 */
-	private function export( $post_ids ) {
-		$blocks = [];
-
-		foreach ( $post_ids as $post_id ) {
-			$post = get_post( $post_id );
-
-			if ( ! $post ) {
-				break;
-			}
-
-			// Check that the post content is valid JSON.
-			$block = json_decode( $post->post_content, true );
-
-			if ( JSON_ERROR_NONE !== json_last_error() ) {
-				break;
-			}
-
-			$blocks = array_merge( $blocks, $block );
-		}
-
-		// If only one block is being exported, use the block's slug as the filename.
-		$filename = 'blocks.json';
-		if ( 1 === count( $post_ids ) ) {
-			$post     = get_post( $post_ids[0] );
-			$filename = $post->post_name . '.json';
-		}
-
-		// Output the JSON file.
-		header( 'Content-disposition: attachment; filename=' . $filename );
-		header( 'Content-type:application/json;charset=utf-8' );
-		echo wp_json_encode( $blocks ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		die();
 	}
 }

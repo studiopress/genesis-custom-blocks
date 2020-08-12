@@ -6,7 +6,7 @@
  */
 
 use Genesis\CustomBlocks\PostTypes\BlockPost;
-use Genesis\CustomBlocks\Blocks\Controls\User;
+use Genesis\CustomBlocks\Blocks\Controls\Textarea;
 
 /**
  * Tests for class BlockPost.
@@ -38,7 +38,7 @@ class TestBlockPost extends \WP_UnitTestCase {
 		parent::setUp();
 		$this->instance = new BlockPost();
 		$this->instance->register_controls();
-		$this->instance->controls['user'] = new User();
+		$this->instance->controls['textarea'] = new Textarea();
 		$this->instance->set_plugin( genesis_custom_blocks() );
 	}
 
@@ -52,7 +52,6 @@ class TestBlockPost extends \WP_UnitTestCase {
 
 		$this->assertEquals( 10, has_action( 'init', [ $this->instance, 'register_post_type' ] ) );
 		$this->assertEquals( 10, has_action( 'admin_init', [ $this->instance, 'add_caps' ] ) );
-		$this->assertEquals( 10, has_action( 'admin_init', [ $this->instance, 'row_export' ] ) );
 		$this->assertEquals( 10, has_action( 'add_meta_boxes', [ $this->instance, 'add_meta_boxes' ] ) );
 		$this->assertEquals( 10, has_action( 'add_meta_boxes', [ $this->instance, 'remove_meta_boxes' ] ) );
 		$this->assertEquals( 10, has_action( 'post_submitbox_start', [ $this->instance, 'save_draft_button' ] ) );
@@ -65,7 +64,6 @@ class TestBlockPost extends \WP_UnitTestCase {
 		$this->assertEquals( 10, has_action( 'disable_months_dropdown', '__return_true' ) );
 		$this->assertEquals( 10, has_action( 'page_row_actions', [ $this->instance, 'page_row_actions' ] ) );
 		$this->assertEquals( 10, has_action( 'bulk_actions-edit-' . self::EXPECTED_SLUG, [ $this->instance, 'bulk_actions' ] ) );
-		$this->assertEquals( 10, has_action( 'handle_bulk_actions-edit-' . self::EXPECTED_SLUG, [ $this->instance, 'bulk_export' ] ) );
 		$this->assertEquals( 10, has_action( 'manage_edit-' . self::EXPECTED_SLUG . '_columns', [ $this->instance, 'list_table_columns' ] ) );
 		$this->assertEquals( 10, has_action( 'manage_' . self::EXPECTED_SLUG . '_posts_custom_column', [ $this->instance, 'list_table_content' ] ) );
 
@@ -82,18 +80,6 @@ class TestBlockPost extends \WP_UnitTestCase {
 		foreach ( $this->instance->controls as $control_type => $instance ) {
 			$this->assertContains( 'Genesis\CustomBlocks\Blocks\Controls\\', get_class( $instance ) );
 		}
-
-		// Because the Genesis Pro subscription key isn't active, the 'user' control should not display.
-		$this->assertFalse( isset( $this->instance->controls['user'] ) );
-
-		$this->set_subscription_key_validity( true );
-		genesis_custom_blocks()->admin->init();
-		$this->instance->register_controls();
-
-		// The pro subscription is active, so the 'user' and 'post' controls should be registered.
-		$this->assertEquals( 'Genesis\CustomBlocks\Blocks\Controls\Post', get_class( $this->instance->controls['post'] ) );
-		$this->assertEquals( 'Genesis\CustomBlocks\Blocks\Controls\Taxonomy', get_class( $this->instance->controls['taxonomy'] ) );
-		$this->assertEquals( 'Genesis\CustomBlocks\Blocks\Controls\User', get_class( $this->instance->controls['user'] ) );
 	}
 
 	/**
@@ -103,12 +89,10 @@ class TestBlockPost extends \WP_UnitTestCase {
 	 */
 	public function test_get_control() {
 		$namespace = 'Genesis\CustomBlocks\Blocks\Controls\\';
-		$this->assertEquals( $namespace . 'Post', get_class( $this->instance->get_control( 'post' ) ) );
-		$this->assertEquals( $namespace . 'Taxonomy', get_class( $this->instance->get_control( 'taxonomy' ) ) );
-		$this->assertEquals( $namespace . 'User', get_class( $this->instance->get_control( 'user' ) ) );
+		$this->assertEquals( $namespace . 'Textarea', get_class( $this->instance->get_control( 'textarea' ) ) );
 
 		// If the control doesn't exist, this should return null.
-		$this->assertEquals( null, $this->instance->get_control( 'non-existant-control' ) );
+		$this->assertEquals( null, $this->instance->get_control( 'non-existent-control' ) );
 	}
 
 	/**
@@ -117,43 +101,25 @@ class TestBlockPost extends \WP_UnitTestCase {
 	 * @covers \Genesis\CustomBlocks\PostTypes\BlockPost::get_field_value()
 	 */
 	public function test_get_field_value() {
-		$invalid_login    = 'asdfg';
-		$expected_wp_user = $this->factory()->user->create_and_get();
-		$valid_id         = $expected_wp_user->ID;
-		$control          = 'user';
+		$invalid_value   = 'asdfg';
+		$control         = 'image';
+		$image_file_name = 'baz.jpeg';
 
-		// Simulate the pro subscription being active.
-		$this->set_subscription_key_validity( true );
-		genesis_custom_blocks()->admin->init();
-		$this->instance->register_controls();
+		$image_id = $this->factory()->attachment->create_object(
+			$image_file_name,
+			$this->factory()->post->create(),
+			[ 'post_mime_type' => 'image/jpeg' ]
+		);
 
-		// The 'user' control.
-		$this->assertEquals( false, $this->instance->get_field_value( $invalid_login, $control, false ) );
-		$this->assertEquals( $expected_wp_user, $this->instance->get_field_value( [ 'id' => $valid_id ], $control, false ) );
-		$this->assertEquals( '', $this->instance->get_field_value( $invalid_login, $control, true ) );
-		$this->assertEquals( $expected_wp_user->get( 'display_name' ), $this->instance->get_field_value( [ 'id' => $valid_id ], $control, true ) );
+		// The 'image' control.
+		$this->assertEquals( false, $this->instance->get_field_value( $invalid_value, $control, false ) );
+		$this->assertEquals( $image_id, $this->instance->get_field_value( $image_id, $control, false ) );
+		$this->assertContains( $image_file_name, $this->instance->get_field_value( $image_id, $control, true ) );
 
-		// If the pro subscription is inactive, this should still render the pro field the same as if it's active.
-		$this->set_subscription_key_validity( false );
-		genesis_custom_blocks()->admin->init();
-		$this->instance->register_controls();
-
-		$this->assertEquals( false, $this->instance->get_field_value( $invalid_login, $control, false ) );
-		$this->assertEquals( $expected_wp_user, $this->instance->get_field_value( [ 'id' => $valid_id ], $control, false ) );
-		$this->assertEquals( '', $this->instance->get_field_value( $invalid_login, $control, true ) );
-		$this->assertEquals( $expected_wp_user->get( 'display_name' ), $this->instance->get_field_value( [ 'id' => $valid_id ], $control, true ) );
-
-		// Any value for the 2nd argument other than 'user' should return the passed $value unchanged.
-		$this->assertEquals( $invalid_login, $this->instance->get_field_value( $invalid_login, 'different-control', false ) );
-		$this->assertEquals( $valid_id, $this->instance->get_field_value( $valid_id, 'random-control', false ) );
-		$this->assertEquals( $invalid_login, $this->instance->get_field_value( $invalid_login, 'some-other-control', true ) );
-
-		$string_value  = 'Example string';
-		$array_value   = [ 'first value', 'second value' ];
-		$boolean_value = true;
-		$this->assertEquals( $string_value, $this->instance->get_field_value( $string_value, 'non-user-control', true ) );
-		$this->assertEquals( $array_value, $this->instance->get_field_value( $array_value, 'some-control', false ) );
-		$this->assertEquals( $boolean_value, $this->instance->get_field_value( $boolean_value, 'not-a-user-control', true ) );
+		// Any value for the 2nd argument other than 'image' should return the passed $value unchanged.
+		$this->assertEquals( $invalid_value, $this->instance->get_field_value( $invalid_value, 'different-control', false ) );
+		$this->assertEquals( $image_id, $this->instance->get_field_value( $image_id, 'random-control', false ) );
+		$this->assertEquals( $invalid_value, $this->instance->get_field_value( $invalid_value, 'some-other-control', true ) );
 	}
 
 	/**

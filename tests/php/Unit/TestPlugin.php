@@ -64,23 +64,13 @@ class TestPlugin extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Test is_pro.
+	 * Test require_deprecated.
 	 *
-	 * This is essentially the same test as in TestUtil.
-	 * But this tests that the __call() magic method in Plugin works.
-	 * This method, is_pro(), is called in the Plugin class.
-	 * So this ensures that the magic method refers the call to the Util class.
-	 *
-	 * @covers \Genesis\CustomBlocks\Util::is_pro()
+	 * @covers \Genesis\CustomBlocks\Plugin::require_deprecated()
 	 */
-	public function test_is_pro() {
-		$this->instance->admin = new Admin();
-		$this->instance->admin->init();
-		$this->set_subscription_key_validity( true );
-		$this->assertTrue( $this->instance->is_pro() );
-
-		$this->set_subscription_key_validity( false );
-		$this->assertFalse( $this->instance->is_pro() );
+	public function test_require_deprecated() {
+		$this->instance->require_deprecated();
+		$this->assertTrue( function_exists( 'block_row' ) );
 	}
 
 	/**

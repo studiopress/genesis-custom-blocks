@@ -83,3 +83,74 @@ function block_lab_add_field( $block_name, $field_name, $field_config = [] ) {
 	genesis_custom_blocks_deprecated_function( 'block_lab_add_field', '1.5.4', 'Genesis\\CustomBlocks\\add_field()' );
 	add_field( $block_name, $field_name, $field_config );
 }
+
+/**
+ * Prepare a loop with the first or next row in a repeater.
+ *
+ * @param string $name The name of the repeater field.
+ */
+function block_row( $name ) {
+	unset( $name );
+	_deprecated_function( 'block_row', '1.0.0' );
+}
+
+/**
+ * Determine whether another repeater row exists to loop through.
+ *
+ * @param string $name The name of the repeater field.
+ */
+function block_rows( $name ) {
+	unset( $name );
+	_deprecated_function( 'block_rows', '1.0.0' );
+}
+
+/**
+ * Resets the repeater block rows after the while loop.
+ *
+ * @param string $name The name of the repeater field.
+ */
+function reset_block_rows( $name ) {
+	unset( $name );
+	_deprecated_function( 'reset_block_rows', '1.0.0' );
+}
+
+/**
+ * Return the total amount of rows in a repeater.
+ *
+ * @param string $name The name of the repeater field.
+ */
+function block_row_count( $name ) {
+	unset( $name );
+	_deprecated_function( 'block_row_count', '1.0.0' );
+}
+
+/**
+ * Return the index of the current repeater row.
+ *
+ * @param string $name (Optional) The name of the repeater field.
+ */
+function block_row_index( $name = '' ) {
+	unset( $name );
+	_deprecated_function( 'block_row_index', '1.0.0' );
+}
+
+/**
+ * Return the value of a sub-field.
+ *
+ * @param string $name The name of the sub-field.
+ * @param bool   $echo Whether to echo and return the field, or just return the field.
+ */
+function block_sub_field( $name, $echo = true ) {
+	unset( $name, $echo );
+	_deprecated_function( 'block_sub_field', '1.0.0' );
+}
+
+/**
+ * Return the value of a sub-field, without echoing it.
+ *
+ * @param string $name The name of the sub-field.
+ */
+function block_sub_value( $name ) {
+	unset( $name );
+	_deprecated_function( 'block_sub_value', '1.0.0' );
+}

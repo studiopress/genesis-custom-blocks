@@ -1,6 +1,6 @@
 <?php
 /**
- * A mock template for a block, testing all fields except the repeater.
+ * A mock template for a block, testing all fields.
  *
  * @package Genesis\CustomBlocks
  */
@@ -20,8 +20,6 @@ $non_object_fields = [
 	'checkbox',
 	'radio',
 	'text',
-	'rich-text',
-	'classic-text',
 ];
 
 foreach ( $non_object_fields as $field ) :
@@ -46,32 +44,6 @@ foreach ( $non_object_fields as $field ) :
 		?>
 	</p>
 	<?php
-endforeach;
-
-$non_string_fields = [
-	'post'     => [ 'ID', 'post_name' ],
-	'taxonomy' => [ 'term_id', 'name' ],
-	'user'     => [ 'ID', 'first_name' ],
-];
-
-foreach ( $non_string_fields as $name => $value ) :
-	printf(
-		'Here is the result of block_field() for %s: ',
-		$name
-	);
-	block_field( $name );
-
-	$block_value = block_value( $name );
-	foreach ( $value as $block_value_property ) :
-		if ( isset( $block_value->$block_value_property ) ) :
-			printf(
-				'Here is the result of passing %s to block_value() with the property %s: %s',
-				$name,
-				$block_value_property,
-				$block_value->$block_value_property
-			);
-		endif;
-	endforeach;
 endforeach;
 
 echo 'Here is the result of block_field() for multiselect: ';

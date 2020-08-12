@@ -84,20 +84,13 @@ class Field {
 			$this->settings
 		);
 
-		// Handle the sub-fields setting used by the Repeater.
-		if ( isset( $this->settings['sub_fields'] ) ) {
-			/**
-			 * Recursively loop through sub-fields.
-			 *
-			 * @var string $key   The name of the sub-field's parent.
-			 * @var Field  $field The sub-field.
-			 */
-			foreach ( $this->settings['sub_fields'] as $key => $field ) {
-				$config['sub_fields'][ $key ] = $field->to_array();
-			}
-		}
-
-		return $config;
+		/**
+		 * The field properties, converted to a config array.
+		 *
+		 * @param array $config   The field config.
+		 * @param array $settings The field settings.
+		 */
+		return apply_filters( 'genesis_custom_blocks_field_to_array', $config, $this->settings );
 	}
 
 	/**
@@ -148,15 +141,12 @@ class Field {
 			$this->settings[ $settings_key ] = $config[ $settings_key ];
 		}
 
-		// Handle the sub-fields setting used by the Repeater.
-		if ( isset( $this->settings['sub_fields'] ) ) {
-			/**
-			 * Recursively loop through sub-fields.
-			 */
-			foreach ( $this->settings['sub_fields'] as $key => $field ) {
-				$this->settings['sub_fields'][ $key ] = new Field( $field );
-			}
-		}
+		/**
+		 * The parsed field, converted from an array.
+		 *
+		 * @param array $settings The field settings.
+		 */
+		$this->settings = apply_filters( 'genesis_custom_blocks_field_from_array', $this->settings );
 	}
 
 	/**

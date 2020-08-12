@@ -26,32 +26,26 @@ class TestTemplateOutput extends AbstractAttribute {
 	 * Sets class properties.
 	 */
 	public function set_properties() {
-		$this->block_name = 'all-fields-except-repeater';
+		$this->block_name = 'all-fields';
 
 		$this->attributes = [
-			'classic-text' => '<h1>Here is a heading</h1><p>This is paragraph text that is <strong>bold</strong> and <em>italic</em></p><ul><li>Here is a li</li><li>And the next</li></ul>',
-			'className'    => $this->class_name,
-			'checkbox'     => true,
-			'text'         => 'Here is a text field',
-			'textarea'     => 'And here is something',
-			'url'          => 'https://yourdomain.com/entered',
-			'email'        => 'entered@email.com',
-			'number'       => 15134,
-			'color'        => '#777444',
-			'image'        => $this->get_image_attribute(),
-			'select'       => 'foo',
-			'multiselect'  => [ 'foo' ],
-			'toggle'       => true,
-			'range'        => 7,
-			'radio'        => 'baz',
-			'post'         => $this->get_post_attributes(),
-			'rich-text'    => '<p>This is <strong>bold</strong> and this is <em>italic</em></p><p></p><p>Here is a new line with a space above</p>',
-			'taxonomy'     => $this->get_taxonomy_attributes(),
-			'user'         => $this->get_user_attributes(),
+			'className'   => $this->class_name,
+			'checkbox'    => true,
+			'text'        => 'Here is a text field',
+			'textarea'    => 'And here is something',
+			'url'         => 'https://yourdomain.com/entered',
+			'email'       => 'entered@email.com',
+			'number'      => 15134,
+			'color'       => '#777444',
+			'image'       => $this->get_image_attribute(),
+			'select'      => 'foo',
+			'multiselect' => [ 'foo' ],
+			'toggle'      => true,
+			'range'       => 7,
+			'radio'       => 'baz',
 		];
 
 		$this->string_fields = [
-			'classic-text',
 			'text',
 			'textarea',
 			'url',
@@ -65,28 +59,19 @@ class TestTemplateOutput extends AbstractAttribute {
 
 		$this->object_fields = [
 			'multiselect',
-			'post',
-			'taxonomy',
-			'user',
 		];
 
-		$image     = wp_get_attachment_image_src( $this->attributes['image'], 'full' );
-		$rich_text = '<p>This is <strong>bold</strong> and this is <em>italic</em></p></p><p>Here is a new line with a space above</p></p>';
-
+		$image                     = wp_get_attachment_image_src( $this->attributes['image'], 'full' );
 		$this->special_case_fields = [
-			'checkbox'  => [
+			'checkbox' => [
 				'block_field' => 'Yes',
 				'block_value' => 1,
 			],
-			'image'     => [
+			'image'    => [
 				'block_field' => isset( $image[0] ) ? $image[0] : '',
 				'block_value' => $this->attributes['image'],
 			],
-			'rich-text' => [
-				'block_field' => $rich_text,
-				'block_value' => $rich_text,
-			],
-			'toggle'    => [
+			'toggle'   => [
 				'block_field' => 'Yes',
 				'block_value' => 1,
 			],
@@ -136,7 +121,7 @@ class TestTemplateOutput extends AbstractAttribute {
 	/**
 	 * Tests whether the rendered block template has the expected values.
 	 *
-	 * Every field except the Repeater is tested.
+	 * Every field is tested.
 	 * This sets mock block attributes, like those that would be saved from a block.
 	 * Then, it loads the mock template in the theme's blocks/ directory,
 	 * and ensures that all of these fields appear correctly in it.
@@ -175,39 +160,6 @@ class TestTemplateOutput extends AbstractAttribute {
 				),
 				$actual_template
 			);
-		}
-
-		$object_fields = [
-			'post'     => [
-				'object'     => get_post( $this->attributes['post']['id'] ),
-				'properties' => [ 'ID', 'post_name' ],
-			],
-			'taxonomy' => [
-				'object'     => get_term( $this->attributes['taxonomy']['id'] ),
-				'properties' => [ 'term_id', 'name' ],
-			],
-			'user'     => [
-				'object'     => get_user_by( 'id', $this->attributes['user']['id'] ),
-				'properties' => [ 'ID', 'first_name' ],
-			],
-		];
-
-		/*
-		 * The fields here return objects for block_value(), so test that some of the properties are correct.
-		 * For example, block_value( 'post' )->ID.
-		 */
-		foreach ( $object_fields as $name => $field ) {
-			foreach ( $field['properties'] as $property ) {
-				$this->assertContains(
-					sprintf(
-						'Here is the result of passing %s to block_value() with the property %s: %s',
-						$name,
-						$property,
-						$field['object']->$property
-					),
-					$actual_template
-				);
-			}
 		}
 
 		// Test the fields that don't fit well into the tests above.

@@ -243,35 +243,6 @@ class TestLoader extends AbstractTemplate {
 	 * @covers \Genesis\CustomBlocks\Blocks\Loader::get_block_attributes()
 	 */
 	public function test_get_block_attributes() {
-		$text_name         = 'example-text';
-		$text_type         = 'text';
-		$text_default      = 'Title';
-		$text_field_config = [
-			'type'    => $text_type,
-			'default' => $text_default,
-		];
-
-		$image_name    = 'testing-image';
-		$image_type    = 'image';
-		$image_default = 'https://example/image';
-
-		$image_field_config = [
-			'type'    => $image_type,
-			'default' => $image_default,
-		];
-
-		$sub_fields = [
-			$text_name  => $text_field_config,
-			$image_name => $image_field_config,
-		];
-
-		$repeater_name         = 'baz-repeater';
-		$repeater_type         = 'repeater';
-		$repeater_field_config = [
-			'type'       => $repeater_type,
-			'sub_fields' => $sub_fields,
-		];
-
 		$taxonomy_name         = 'foo-taxonomy';
 		$taxonomy_type         = 'taxonomy';
 		$taxonomy_field_config = [
@@ -282,16 +253,12 @@ class TestLoader extends AbstractTemplate {
 		$block->from_array(
 			[
 				'fields' => [
-					$repeater_name => $repeater_field_config,
 					$taxonomy_name => $taxonomy_field_config,
 				],
 			]
 		);
 
 		$expected_attributes = [
-			$repeater_name => [
-				'type' => $repeater_type,
-			],
 			'className'    => [
 				'type' => 'string',
 			],
@@ -300,7 +267,6 @@ class TestLoader extends AbstractTemplate {
 			],
 		];
 
-		// Repeater sub-fields should not be returned, as they're not added as block attributes.
 		$actual_attributes = $this->invoke_protected_method( 'get_block_attributes', [ $block ] );
 		$this->assertEquals( $expected_attributes, $actual_attributes );
 	}

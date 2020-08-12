@@ -10,8 +10,6 @@
 
 namespace Genesis\CustomBlocks;
 
-use Genesis\CustomBlocks\Blocks;
-
 /**
  * Class Util
  */
@@ -29,31 +27,6 @@ class Util extends ComponentAbstract {
 	 * Not implemented, as this class only has utility methods.
 	 */
 	public function register_hooks() {}
-
-	/**
-	 * Gets whether a valid Genesis Pro subscription key has been activated on this site.
-	 *
-	 * @return bool
-	 */
-	public function is_pro() {
-		return $this->plugin->admin->subscription->is_valid();
-	}
-
-	/**
-	 * Get the loop handler.
-	 *
-	 * @return Blocks\Loop
-	 */
-	public function loop() {
-		static $instance;
-
-		if ( null === $instance ) {
-			$instance = new Blocks\Loop();
-			return $instance;
-		}
-
-		return $instance;
-	}
 
 	/**
 	 * Gets an array of possible template locations.
