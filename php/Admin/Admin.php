@@ -54,17 +54,8 @@ class Admin extends ComponentAbstract {
 		$this->onboarding = new Onboarding();
 		genesis_custom_blocks()->register_component( $this->onboarding );
 
-		/**
-		 * Whether to show the pro nag.
-		 *
-		 * @param bool Whether this should show the nag.
-		 */
-		$show_pro_nag = apply_filters( 'genesis_custom_blocks_show_pro_nag', true );
-
-		if ( $show_pro_nag ) {
-			$this->upgrade = new Upgrade();
-			genesis_custom_blocks()->register_component( $this->upgrade );
-		}
+		$this->upgrade = new Upgrade();
+		genesis_custom_blocks()->register_component( $this->upgrade );
 
 		if ( defined( 'WP_LOAD_IMPORTERS' ) && WP_LOAD_IMPORTERS ) {
 			$this->import = new Import();

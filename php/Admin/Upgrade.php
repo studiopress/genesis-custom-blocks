@@ -27,6 +27,16 @@ class Upgrade extends ComponentAbstract {
 	 * Register any hooks that this component needs.
 	 */
 	public function register_hooks() {
+		/**
+		 * Whether to show the pro nag.
+		 *
+		 * @param bool Whether this should show the nag.
+		 */
+		$show_pro_nag = apply_filters( 'genesis_custom_blocks_show_pro_nag', true );
+		if ( ! $show_pro_nag ) {
+			return;
+		}
+
 		add_action( 'admin_menu', [ $this, 'add_submenu_pages' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 	}

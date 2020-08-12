@@ -52,7 +52,6 @@ class TestUpgrade extends \WP_UnitTestCase {
 		Monkey\tearDown();
 		parent::tearDown();
 	}
-
 	/**
 	 * Test register_hooks.
 	 *
@@ -62,6 +61,19 @@ class TestUpgrade extends \WP_UnitTestCase {
 		$this->instance->register_hooks();
 		$this->assertEquals( 10, has_action( 'admin_menu', [ $this->instance, 'add_submenu_pages' ] ) );
 		$this->assertEquals( 10, has_action( 'admin_enqueue_scripts', [ $this->instance, 'enqueue_scripts' ] ) );
+	}
+
+	/**
+	 * Test that register_hooks exits if the filter is a certain value.
+	 *
+	 * @covers \Genesis\CustomBlocks\Admin\Upgrade::register_hooks()
+	 */
+	public function test_register_hooks_exits_via_filter() {
+		add_filter( 'genesis_custom_blocks_show_pro_nag', '__return_false' );
+		$this->instance->register_hooks();
+
+		$this->assertEquals( false, has_action( 'admin_menu', [ $this->instance, 'add_submenu_pages' ] ) );
+		$this->assertEquals( false, has_action( 'admin_enqueue_scripts', [ $this->instance, 'enqueue_scripts' ] ) );
 	}
 
 	/**
