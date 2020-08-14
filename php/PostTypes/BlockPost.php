@@ -708,11 +708,8 @@ class BlockPost extends ComponentAbstract {
 
 		/**
 		 * Enables rendering row actions for a field.
-		 *
-		 * @param Field  $field The field.
-		 * @param string $uid   The unique ID of the field's parent.
 		 */
-		do_action( 'genesis_custom_blocks_field_row_actions', $field, $uid );
+		do_action( 'genesis_custom_blocks_field_row_actions' );
 	}
 
 	/**
