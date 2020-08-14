@@ -1047,8 +1047,21 @@ class BlockPost extends ComponentAbstract {
 					$field = new Field( $field_config );
 				}
 
-				$field->order           = count( $block->fields );
-				$block->fields[ $name ] = $field;
+				/**
+				 * The block that will be saved in this iteration.
+				 *
+				 * @param Block      $block  Block where the field is.
+				 * @param Field      $field  Block field to save.
+				 * @param array      $fields Block fields to save, as sent from the form's POST request.
+				 * @param int|string $key    Field key.
+				 * @param string     $name   Field name.
+				 */
+				$block = apply_filters( 'genesis_custom_blocks_block_to_save', $block, $field, $fields, $key, $name );
+
+				if ( empty( $_POST['block-fields-parent'][ $key ] ) ) {
+					$field->order           = count( $block->fields );
+					$block->fields[ $name ] = $field;
+				}
 			}
 		}
 
