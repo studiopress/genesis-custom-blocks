@@ -12,7 +12,7 @@ namespace Genesis\CustomBlocks\PostTypes;
 use Genesis\CustomBlocks\ComponentAbstract;
 use Genesis\CustomBlocks\Blocks\Block;
 use Genesis\CustomBlocks\Blocks\Field;
-use Genesis\CustomBlocks\Blocks\Controls;
+use Genesis\CustomBlocks\Blocks\Controls\ControlAbstract;
 
 /**
  * Class Block
@@ -29,7 +29,7 @@ class BlockPost extends ComponentAbstract {
 	/**
 	 * Registered controls.
 	 *
-	 * @var Controls\ControlAbstract[]
+	 * @var ControlAbstract[]
 	 */
 	public $controls = [];
 
@@ -106,7 +106,7 @@ class BlockPost extends ComponentAbstract {
 		 *     An associative array of the available controls.
 		 *
 		 *     @type string $control_name The name of the control, like 'user'.
-		 *     @type object $control The control object, extending Controls\ControlAbstract.
+		 *     @type object $control The control object, extending ControlAbstract.
 		 * }
 		 */
 		$this->controls = apply_filters( 'genesis_custom_blocks_controls', $controls );
@@ -129,6 +129,23 @@ class BlockPost extends ComponentAbstract {
 		if ( class_exists( $control_class ) ) {
 			return new $control_class();
 		}
+	}
+
+	/**
+	 * Gets the registered controls.
+	 *
+	 * @return ControlAbstract[] The block controls.
+	 */
+	public function get_controls() {
+		if ( ! did_action( 'init' ) ) {
+			_doing_it_wrong(
+				__METHOD__,
+				esc_html__( 'Must be called after the init action so the controls are registered', 'genesis-custom-blocks' ),
+				'1.0.0'
+			);
+		}
+
+		return $this->controls;
 	}
 
 	/**

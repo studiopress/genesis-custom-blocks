@@ -94,6 +94,35 @@ class TestBlockPost extends \WP_UnitTestCase {
 		$this->assertEquals( null, $this->instance->get_control( 'non-existent-control' ) );
 	}
 
+
+	/**
+	 * Test get_controls.
+	 *
+	 * @covers \Genesis\CustomBlocks\PostTypes\BlockPost::get_controls()
+	 * @covers \Genesis\CustomBlocks\PostTypes\BlockPost::register_controls()
+	 */
+	public function test_get_controls() {
+		$this->instance->register_controls();
+		$this->assertEquals(
+			[
+				'text',
+				'textarea',
+				'url',
+				'email',
+				'number',
+				'color',
+				'image',
+				'select',
+				'multiselect',
+				'toggle',
+				'range',
+				'checkbox',
+				'radio',
+			],
+			array_keys( $this->instance->get_controls() )
+		);
+	}
+
 	/**
 	 * Test get_field_value.
 	 *
