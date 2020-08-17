@@ -561,17 +561,18 @@ class BlockPost extends ComponentAbstract {
 				<span class="dashicons dashicons-plus"></span>
 				<?php esc_attr_e( 'Add Field', 'genesis-custom-blocks' ); ?>
 			</button>
-			<script type="text/html" id="tmpl-field-repeater">
-				<?php
-				$args = [
-					'name'  => 'new-field',
-					'label' => __( 'New Field', 'genesis-custom-blocks' ),
-				];
-				$this->render_fields_meta_box_row( new Field( $args ) );
-				?>
-			</script>
+			<?php
+			/**
+			 * Runs in the block fields actions.
+			 */
+			do_action( 'genesis_custom_blocks_block_fields_actions' );
+			?>
 		</div>
 		<?php
+
+		/**
+		 * Runs after the fields list.
+		 */
 		do_action( "{$this->slug}_after_fields_list" );
 		wp_nonce_field( "{$this->slug}_save_fields", "{$this->slug}_fields_nonce" );
 	}
@@ -722,11 +723,6 @@ class BlockPost extends ComponentAbstract {
 			?>
 		</div>
 		<?php
-
-		/**
-		 * Enables rendering row actions for a field.
-		 */
-		do_action( 'genesis_custom_blocks_field_row_actions' );
 	}
 
 	/**
@@ -1038,8 +1034,7 @@ class BlockPost extends ComponentAbstract {
 						}
 
 						$field_config['settings'][ $setting->name ] = $value;
-
-						$field = new Field( $field_config );
+						$field                                      = new Field( $field_config );
 					}
 				}
 
