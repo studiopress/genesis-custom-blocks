@@ -118,18 +118,10 @@ class Field {
 			$this->settings = $config['settings'];
 		}
 
-		$separator = '_';
-		if ( ! isset( $config['type'] ) ) {
-			$control_class_name  = 'Genesis\\CustomBlocks\\Blocks\\Controls\\';
-			$control_class_name .= str_replace( $separator, '', ucwords( $this->control, $separator ) );
-			if ( class_exists( $control_class_name ) ) {
-				/**
-				 * An instance of the control, to retrieve the correct type.
-				 *
-				 * @var ControlAbstract $control_class
-				 */
-				$control_class = new $control_class_name();
-				$this->type    = $control_class->type;
+		if ( ! isset( $config['type'] ) && isset( $config['control'] ) ) {
+			$control = genesis_custom_blocks()->block_post->get_control( $config['control'] );
+			if ( $control ) {
+				$this->type = $control->type;
 			}
 		}
 
@@ -146,7 +138,7 @@ class Field {
 		 *
 		 * @param array $settings The field settings.
 		 */
-		$this->settings = apply_filters( 'genesis_custom_blocks_field_from_array', $this->settings );
+		$this->settings = apply_filters( 'genesis_custom_blocks_settings_from_array', $this->settings );
 	}
 
 	/**
