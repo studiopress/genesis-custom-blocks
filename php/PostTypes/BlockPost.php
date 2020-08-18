@@ -258,21 +258,24 @@ class BlockPost extends ComponentAbstract {
 			return;
 		}
 
+		$style_slug  = 'genesis-custom-blocks-block-post-style';
+		$script_slug = 'genesis-custom-blocks-block-post-script';
+
 		// Enqueue scripts and styles on the edit screen of the Block post type.
 		if ( $this->slug === $screen->post_type && 'post' === $screen->base ) {
 			wp_enqueue_style(
-				'block-post',
+				$style_slug,
 				$this->plugin->get_url( 'css/admin.block-post.css' ),
 				[],
 				$this->plugin->get_version()
 			);
 
 			if ( ! in_array( $post->post_status, [ 'publish', 'future', 'pending' ], true ) ) {
-				wp_add_inline_style( 'block-post', '#delete-action { display: none; }' );
+				wp_add_inline_style( $style_slug, '#delete-action { display: none; }' );
 			}
 
 			wp_enqueue_script(
-				'block-post',
+				$script_slug,
 				$this->plugin->get_url( 'js/admin.block-post.js' ),
 				[ 'jquery', 'jquery-ui-sortable', 'wp-util', 'wp-blocks' ],
 				$this->plugin->get_version(),
@@ -280,7 +283,7 @@ class BlockPost extends ComponentAbstract {
 			);
 
 			wp_localize_script(
-				'block-post',
+				$script_slug,
 				'genesisCustomBlocks',
 				[
 					'fieldSettingsNonce' => wp_create_nonce( "{$this->slug}_field_settings_nonce" ),
@@ -300,7 +303,7 @@ class BlockPost extends ComponentAbstract {
 
 		if ( $this->slug === $screen->post_type && 'edit' === $screen->base ) {
 			wp_enqueue_style(
-				'block-edit',
+				$style_slug,
 				$this->plugin->get_url( 'css/admin.block-edit.css' ),
 				[],
 				$this->plugin->get_version()

@@ -134,7 +134,7 @@ class Field {
 		}
 
 		/**
-		 * The parsed field, converted from an array.
+		 * The field settings, parsed from an array.
 		 *
 		 * @param array $settings The field settings.
 		 */
