@@ -94,6 +94,24 @@ While developing, it is a best practice to watch for changes. This command will 
 composer install
 ```
 
+#### PHPUnit
+
+```
+WP_TESTS_DIR=/path/to/wordpress-develop/tests/phpunit composer test
+```
+
+If you've already installed the DB for the [WordPress Core unit tests](https://github.com/WordPress/wordpress-develop/tree/0228dd6a5d17aa42735fdff9b106afccb960311e/tests/phpunit), simply pass the path to [wordpress-develop/tests/phpunit/](https://github.com/WordPress/wordpress-develop/tree/0228dd6a5d17aa42735fdff9b106afccb960311e/tests/phpunit) as `WP_TESTS_DIR`, as shown above.
+
+Otherwise, clone [wordpress-develop](https://github.com/WordPress/wordpress-develop).
+
+Then, `cd` back to this plugin and do:
+
+```
+WP_TESTS_DIR=/path/to/wordpress-develop/tests/phpunit ./bin/install-wp-tests.sh <db name> <db user> <db password>
+```
+
+Use whatever DB name you'd like, and substitute a DB user and password that works in your environment.
+
 Thanks! :heart: :heart: :heart:
 
 Genesis Custom Blocks Team
