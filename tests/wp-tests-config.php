@@ -22,7 +22,7 @@ define( 'WP_DEBUG', true );
 define( 'DB_HOST', 'tests-mysql' );
 define( 'DB_NAME', 'wptests' );
 define( 'DB_USER', 'wptests' );
-define( 'DB_PASSWORD', 'wptests' );
+define( 'DB_PASSWORD', '<insert password here>' );
 
 define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE', '' );
