@@ -16,6 +16,10 @@ gulp.task( 'version', function () {
 	return pluginStream;
 } )
 
+gulp.task( 'install:dependencies', function () {
+	return run( 'composer install -o --no-dev && npm install' ).exec();
+} )
+
 gulp.task( 'run:build', function () {
 	return run( 'npm run build' ).exec();
 } )
@@ -100,6 +104,7 @@ gulp.task( 'clean:bundle', function () {
 
 gulp.task( 'default', gulp.series(
 	'remove:bundle',
+	'install:dependencies',
 	'run:build',
 	'bundle',
 	'wporg:prepare',

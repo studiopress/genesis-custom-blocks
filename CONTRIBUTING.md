@@ -4,7 +4,9 @@
 
 ### Local Setup
 
-Genesis Custom Blocks requires Node.js and generally follows the WordPress coding standards for PHP and JavaScript.
+Genesis Custom Blocks generally follows WordPress coding standards for PHP and JavaScript.
+
+There's a pre-commit hook and linting scripts like `npm run lint`.
 
 **Install Dependencies**
 
