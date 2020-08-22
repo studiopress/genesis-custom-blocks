@@ -564,7 +564,7 @@ class BlockPost extends ComponentAbstract {
 				<span class="dashicons dashicons-plus"></span>
 				<?php esc_attr_e( 'Add Field', 'genesis-custom-blocks' ); ?>
 			</button>
-			<script type="text/html" id="tmpl-field-repeater">
+			<script type="text/html" id="tmpl-gcb-field">
 				<?php
 				$args = [
 					'name'  => 'new-field',
