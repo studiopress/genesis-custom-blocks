@@ -19,15 +19,15 @@ fi
 
 if ! git diff-files --quiet || ! git diff-index --quiet --cached HEAD --; then
   echo "Error: Repo is in dirty state"
-  #exit 3
+  exit 3
 fi
 
 git checkout "$tag"
 mkdir built
 git clone . built/
 cd built
-git checkout $tag
-git rm -r $(git ls-files)
+git checkout "$tag"
+git rm -r "$(git ls-files)"
 rsync -avz ../package/trunk/ ./
 git add -A .
 git commit -m "Build $tag" --no-verify
