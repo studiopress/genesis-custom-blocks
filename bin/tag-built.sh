@@ -2,8 +2,10 @@
 # Mainly copied from the Official AMP Plugin for WordPress
 
 set -e
+composer install -o --no-dev && npm install
+gulp
 
-tag=$(cat package/trunk/genesis-custom-blocks.php | grep 'Version:' | sed 's/.*: //' | sed 's/-[0-9]\{8\}T[0-9]\{6\}Z-[a-f0-9]*$//')
+tag=$(grep 'Version:' package/trunk/genesis-custom-blocks.php | sed 's/.*: //' | sed 's/-[0-9]\{8\}T[0-9]\{6\}Z-[a-f0-9]*$//')
 if [[ -z "$tag" ]]; then
   echo "Error: Unable to determine tag."
   exit 1
@@ -21,8 +23,6 @@ if ! git diff-files --quiet || ! git diff-index --quiet --cached HEAD --; then
 fi
 
 git checkout "$tag"
-composer install -o --no-dev && npm install
-gulp
 mkdir built
 git clone . built/
 cd built
