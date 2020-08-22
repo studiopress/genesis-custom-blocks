@@ -560,10 +560,19 @@ class BlockPost extends ComponentAbstract {
 			</table>
 		</div>
 		<div class="block-fields-actions-add-field">
-			<button type="button" aria-label="Add Field" class="block-fields-action" id="block-add-field">
+			<button type="button" aria-label="<?php esc_attr_e( 'Add Field', 'genesis-custom-blocks' ); ?>" class="block-fields-action" id="block-add-field">
 				<span class="dashicons dashicons-plus"></span>
 				<?php esc_attr_e( 'Add Field', 'genesis-custom-blocks' ); ?>
 			</button>
+			<script type="text/html" id="tmpl-field-repeater">
+				<?php
+				$args = [
+					'name'  => 'new-field',
+					'label' => __( 'New Field', 'genesis-custom-blocks' ),
+				];
+				$this->render_fields_meta_box_row( new Field( $args ) );
+				?>
+			</script>
 			<?php
 			/**
 			 * Runs in the block fields actions.
