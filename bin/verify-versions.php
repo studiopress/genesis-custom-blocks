@@ -26,7 +26,7 @@ if ( ! preg_match( '/\*\s*Version:\s*(?P<version>\d+\.\d+(?:.\d+)?(-\w+)?)/', $p
 $versions['genesis-custom-blocks.php#metadata'] = $matches['version'];
 $version_number = $matches['version'];
 
-$package_json = json_decode( file_get_contents( dirname( __FILE__ ) . '/../package.json' ) );
+$package_json             = json_decode( file_get_contents( dirname( __FILE__ ) . '/../package.json' ) );
 $versions['package.json'] = $package_json->version;
 
 fwrite( STDERR, "Version references:\n" );
@@ -49,4 +49,4 @@ if ( false === strpos( $changelog, $version_number ) ) {
 	exit( 1 );
 }
 
-fwrite( STDOUT, "Success! All of the version numbers are the same, and there's a CHANGELOG.md entry" );
+fwrite( STDOUT, "Success! All of the version numbers are the same, and there's a CHANGELOG.md entry. \n" );
