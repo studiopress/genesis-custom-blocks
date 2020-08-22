@@ -38,12 +38,15 @@ Use whatever DB name you'd like, and substitute a DB user and password that work
 
 ### Release Procedure
 
-1. [Create a release](https://github.com/studiopress/genesis-custom-blocks/releases/new), targeting either `develop` or the release branch, like `1.0.0`.
-2. The 'Tag version' should be the version preceded with `v`, like `v1.0.0`.
-3. Attach a `.zip` file of the built plugin.
-4. `checkout` locally whatever branch you chose from step 1.
-5. Do `./bin/tag-built.sh`
-6. This will create a built version of the plugin and tag it. Then, other plugins or entire sites can require the plugin as a Composer dependency.
+1. `checkout` locally whatever branch you want to release. It could be `develop`, or a release branch like `1.0`. 
+1. Do `gulp`, and you'll see a `genesis-custom-blocks.zip` file in this plugin directory.
+1. Smoke test that `.zip` file.
+1. [Create a release](https://github.com/studiopress/genesis-custom-blocks/releases/new), targeting whatever branch you chose in step 1.
+1. Upload the `.zip` file you created to the release page.
+1. The 'Tag version' should be the plugin version preceded with `v`, like `v1.0.0`.
+1. There will be a `package/trunk/` directory from running `gulp` earlier. Use this to commit the new plugin version to the wp.org SVN repo.
+1. Do `./bin/tag-built.sh`
+1. This will create a built tag of the plugin and push it. Then, other plugins or entire sites can require the plugin as a Composer dependency.
 
 Thanks! :heart: :heart: :heart:
 
