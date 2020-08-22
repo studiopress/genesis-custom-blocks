@@ -16,7 +16,7 @@ commands:
   set-up-packages:
     description: "Installing packages and building"
     steps:
-      - run: composer install && npm install && npm run build
+      - run: composer remove --dev phpunit/phpunit && composer install && npm install && npm run build
 
   install-composer:
     description: "Installing Composer"
