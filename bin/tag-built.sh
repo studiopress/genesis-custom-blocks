@@ -17,11 +17,11 @@ fi
 
 if ! git diff-files --quiet || ! git diff-index --quiet --cached HEAD --; then
   echo "Error: Repo is in dirty state"
-  exit 3
+  #exit 3
 fi
 
 git checkout "$tag"
-composer install && npm install
+composer install -o --no-dev && npm install
 gulp
 mkdir built
 git clone . built/
