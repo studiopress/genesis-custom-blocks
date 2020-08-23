@@ -3,7 +3,6 @@
 
 set -e
 
-gulp
 tag=$(grep 'Version:' package/trunk/genesis-custom-blocks.php | sed 's/.*: //' | sed 's/-[0-9]\{8\}T[0-9]\{6\}Z-[a-f0-9]*$//')
 if [[ -z "$tag" ]]; then
     echo "Error: Unable to determine tag."
@@ -17,6 +16,7 @@ if git rev-parse "$built_tag" >/dev/null 2>&1; then
 fi
 
 git checkout "$tag"
+gulp
 mkdir built
 git clone . built/
 cd built
