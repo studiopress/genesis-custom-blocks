@@ -7,13 +7,15 @@
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
+$genesis_pro_url = 'https://my.wpengine.com/signup?plan=genesis-pro';
+
 ?>
 <section class="container">
 	<div class="gcb-hero">
 		<img src="<?php echo esc_url( genesis_custom_blocks()->get_assets_url( 'images/logo-reversed.svg' ) ); ?>" alt="<?php esc_html_e( 'Genesis Custom Blocks', 'genesis-custom-blocks' ); ?>" />
 		<h3><?php esc_html_e( 'Advanced tools for building better WordPress websites faster.', 'genesis-custom-blocks' ); ?></h3>
 		<div class="gcb-hero__actions">
-			<button class="btn"><?php esc_html_e( 'Get Genesis Pro', 'genesis-custom-blocks' ); ?></button>
+			<a class="btn" href="<?php echo esc_url( $genesis_pro_url ); ?>"><?php esc_html_e( 'Get Genesis Pro', 'genesis-custom-blocks' ); ?></a>
 		</div>
 	</div>
 	<div class="gcb-content-body">
@@ -118,7 +120,7 @@
 					<li><?php esc_html_e( 'Genesis Blocks', 'genesis-custom-blocks' ); ?></li>
 					<li><?php esc_html_e( 'Genesis Custom Blocks', 'genesis-custom-blocks' ); ?></li>
 				</ul>
-				<a class="btn btn-secondary" style="margin-top: auto;" href="#"><?php esc_html_e( 'Learn more', 'genesis-custom-blocks' ); ?></a>
+				<a class="btn btn-secondary" style="margin-top: auto;" href="<?php echo esc_url( $genesis_pro_url ); ?>"><?php esc_html_e( 'Learn more', 'genesis-custom-blocks' ); ?></a>
 			</div>
 			<div class="gen-feature-table--col">
 				<h3><?php esc_html_e( 'Genesis Pro', 'genesis-custom-blocks' ); ?></h3>
@@ -130,7 +132,7 @@
 					<li><?php esc_html_e( 'StudioPress Themes', 'genesis-custom-blocks' ); ?></li>
 					<li><?php esc_html_e( '24/7 Support', 'genesis-custom-blocks' ); ?></li>
 				</ul>
-				<a class="btn" style="margin-top: auto;" href="#"><?php esc_html_e( 'Learn more', 'genesis-custom-blocks' ); ?></a>
+				<a class="btn" style="margin-top: auto;" href="<?php echo esc_url( $genesis_pro_url ); ?>"><?php esc_html_e( 'Learn more', 'genesis-custom-blocks' ); ?></a>
 			</div>
 		</div>
 	</div>
