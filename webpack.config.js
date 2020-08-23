@@ -9,7 +9,7 @@ const IgnoreEmitPlugin = require( 'ignore-emit-webpack-plugin' );
  * WordPress dependencies
  */
 const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extraction-webpack-plugin' );
-const { defaultRequestToExternal, defaultRequestToHandle } = require( '@wordpress/dependency-extraction-webpack-plugin/util' );
+const { defaultRequestToExternal, defaultRequestToHandle } = require( '@wordpress/dependency-extraction-webpack-plugin/lib/util' );
 const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
 
 const isProduction = process.env.NODE_ENV === 'production';
