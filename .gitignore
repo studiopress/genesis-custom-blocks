@@ -109,7 +109,7 @@ vendor
 # Tests
 tests/data/
 tests/includes/
-coverage/html/
+coverage/
 
 # Builds
 js/editor.blocks.js

@@ -94,7 +94,6 @@ class TestBlockPost extends \WP_UnitTestCase {
 		$this->assertEquals( null, $this->instance->get_control( 'non-existent-control' ) );
 	}
 
-
 	/**
 	 * Test get_controls.
 	 *

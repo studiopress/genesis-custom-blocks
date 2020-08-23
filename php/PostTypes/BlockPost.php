@@ -303,7 +303,7 @@ class BlockPost extends ComponentAbstract {
 
 		if ( $this->slug === $screen->post_type && 'edit' === $screen->base ) {
 			wp_enqueue_style(
-				$style_slug,
+				'genesis-custom-blocks-block-edit',
 				$this->plugin->get_url( 'css/admin.block-edit.css' ),
 				[],
 				$this->plugin->get_version()
