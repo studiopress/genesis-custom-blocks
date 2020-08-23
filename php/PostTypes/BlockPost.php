@@ -106,7 +106,7 @@ class BlockPost extends ComponentAbstract {
 		 *     An associative array of the available controls.
 		 *
 		 *     @type string $control_name The name of the control, like 'user'.
-		 *     @type object $control The control object, extending ControlAbstract.
+		 *     @type object $control      The control object, extending ControlAbstract.
 		 * }
 		 */
 		$this->controls = apply_filters( 'genesis_custom_blocks_controls', $controls );
@@ -575,9 +575,9 @@ class BlockPost extends ComponentAbstract {
 			</script>
 			<?php
 			/**
-			 * Runs in the block fields actions.
+			 * Runs when rendering field templates.
 			 */
-			do_action( 'genesis_custom_blocks_block_fields_actions' );
+			do_action( 'genesis_custom_blocks_render_field_templates' );
 			?>
 		</div>
 		<?php

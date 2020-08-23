@@ -72,9 +72,9 @@ function block_field( $name, $echo = true ) {
 	/**
 	 * Filters the value to be made available or echoed on the front-end template.
 	 *
-	 * @param mixed       $value The value.
+	 * @param mixed       $value   The value.
 	 * @param string|null $control The type of the control, like 'user', or null if this is the 'className', which has no control.
-	 * @param bool        $echo Whether or not this value will be echoed.
+	 * @param bool        $echo    Whether or not this value will be echoed.
 	 */
 	$value = apply_filters( 'genesis_custom_blocks_field_value', $value, $control, $echo );
 
