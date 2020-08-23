@@ -21,7 +21,7 @@ mkdir built
 git clone . built/
 cd built
 git checkout "$tag"
-git rm -r "$(git ls-files)"
+git rm -r $(git ls-files)
 rsync -avz ../package/trunk/ ./
 git add -A .
 git commit -m "Build $tag" --no-verify
