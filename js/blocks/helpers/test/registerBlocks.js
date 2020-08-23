@@ -6,6 +6,7 @@ import { registerBlocks } from '../';
 const mockRegisterBlockType = jest.fn();
 jest.mock( '@wordpress/blocks', () => {
 	return {
+		...jest.requireActual( '@wordpress/blocks' ),
 		registerBlockType: ( ...args ) => mockRegisterBlockType( ...args ),
 	};
 } );
