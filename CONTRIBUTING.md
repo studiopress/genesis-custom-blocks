@@ -47,6 +47,7 @@ Use whatever DB name you'd like, and substitute a DB user and password that work
 1. There will be a `package/trunk/` directory from running `gulp` earlier. Use this to commit the new plugin version to the wp.org SVN repo.
 1. Do `./bin/tag-built.sh`
 1. This will create a built tag of the plugin and push it. Then, other plugins or entire sites can require the plugin as a Composer dependency.
+1. To resume normal local development, do `composer install`, as running `gulp` will remove the Composer dev dependencies.
 
 Thanks! :heart: :heart: :heart:
 
