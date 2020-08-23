@@ -9,7 +9,6 @@ import { applyFilters } from '@wordpress/hooks';
  * Internal dependencies
  */
 import { getSimplifiedFields } from '../helpers';
-import controls from '../controls';
 
 /**
  * Gets the rendered controls for the Inspector Controls, based on the field values.
@@ -26,7 +25,7 @@ const GcbInspector = ( { blockProps, block } ) => {
 			return null;
 		}
 
-		const loadedControls = applyFilters( 'genesisCustomBlocks.controls', controls );
+		const loadedControls = applyFilters( 'genesisCustomBlocks.controls', {} );
 		const Control = loadedControls[ field.control ];
 		if ( ! Control ) {
 			return null;

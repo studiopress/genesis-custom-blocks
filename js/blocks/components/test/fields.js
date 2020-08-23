@@ -6,12 +6,17 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 
 /**
+ * WordPress dependencies
+ */
+import { addFilter } from '@wordpress/hooks';
+
+/**
  * Internal dependencies
  */
 import Fields from '../fields';
+import { addControls } from '../../helpers';
 
 const helpText = 'This is help text';
-
 describe( 'Fields', () => {
 	it( 'does not display a control that is supposed to be in the Inspector Controls', () => {
 		render(
@@ -30,6 +35,7 @@ describe( 'Fields', () => {
 	} );
 
 	it( 'displays a control that is supposed to be in the editor', () => {
+		addFilter( 'genesisCustomBlocks.controls', 'genesisCustomBlocks/addControls', addControls );
 		render(
 			<Fields
 				fields={ [ {

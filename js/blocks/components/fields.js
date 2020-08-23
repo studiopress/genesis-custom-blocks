@@ -8,7 +8,6 @@ import { select } from '@wordpress/data';
  * Internal dependencies
  */
 import { getSimplifiedFields } from '../helpers';
-import controls from '../controls';
 
 /**
  * Gets the control function for the field.
@@ -17,7 +16,7 @@ import controls from '../controls';
  * @return {Function} The control function.
  */
 const getControl = ( field ) => {
-	const loadedControls = applyFilters( 'genesisCustomBlocks.controls', controls );
+	const loadedControls = applyFilters( 'genesisCustomBlocks.controls', {} );
 	return loadedControls[ field.control ];
 };
 
