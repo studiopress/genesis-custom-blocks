@@ -93,7 +93,7 @@
 	transition-duration: .2sec;
 }
 
-.genesis-custom-blocks-pro .btn:hover {
+.genesis-custom-blocks-pro .container .btn:hover {
 	cursor: pointer;
 	background-color: var(--color-white);
 	color: var(--color-brand);
