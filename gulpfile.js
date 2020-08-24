@@ -88,6 +88,7 @@ gulp.task( 'clean:bundle', function () {
 		'package/trunk/css/*.map',
 		'package/trunk/css/src',
 		'package/trunk/bin',
+		'package/trunk/built',
 		'package/trunk/node_modules',
 		'package/trunk/tests',
 		'package/trunk/trunk',
