@@ -34,7 +34,6 @@ gulp.task( 'bundle', function () {
 		'!bin/**/*',
 		'!node_modules/**/*',
 		'!composer.*',
-		'!genesis-custom-blocks.zip',
 		'!js/blocks/**/*',
 		'!js/src/**/*',
 		'!js/tests/**/*',
@@ -108,7 +107,7 @@ gulp.task( 'clean:bundle', function () {
 } );
 
 gulp.task( 'create:zip', function () {
-	return run( 'if [ -e genesis-custom-blocks.zip ]; then rm genesis-custom-blocks.zip; fi; cd package/trunk; pwd; zip -r ../../genesis-custom-blocks.zip .; cd ..; cd ..; echo "ZIP of build: $(pwd)/genesis-custom-blocks.zip"' ).exec();
+	return run( 'if [ -e genesis-custom-blocks.zip ]; then rm genesis-custom-blocks.zip; fi; cd package/trunk; pwd; zip -r ../genesis-custom-blocks.zip .; cd ..; echo "ZIP of build: $(pwd)/genesis-custom-blocks.zip"' ).exec();
 } )
 
 gulp.task( 'default', gulp.series(
