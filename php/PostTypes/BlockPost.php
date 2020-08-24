@@ -12,7 +12,7 @@ namespace Genesis\CustomBlocks\PostTypes;
 use Genesis\CustomBlocks\ComponentAbstract;
 use Genesis\CustomBlocks\Blocks\Block;
 use Genesis\CustomBlocks\Blocks\Field;
-use Genesis\CustomBlocks\Blocks\Controls;
+use Genesis\CustomBlocks\Blocks\Controls\ControlAbstract;
 
 /**
  * Class Block
@@ -29,7 +29,7 @@ class BlockPost extends ComponentAbstract {
 	/**
 	 * Registered controls.
 	 *
-	 * @var Controls\ControlAbstract[]
+	 * @var ControlAbstract[]
 	 */
 	public $controls = [];
 
@@ -106,7 +106,7 @@ class BlockPost extends ComponentAbstract {
 		 *     An associative array of the available controls.
 		 *
 		 *     @type string $control_name The name of the control, like 'user'.
-		 *     @type object $control The control object, extending Controls\ControlAbstract.
+		 *     @type object $control      The control object, extending ControlAbstract.
 		 * }
 		 */
 		$this->controls = apply_filters( 'genesis_custom_blocks_controls', $controls );
@@ -129,6 +129,23 @@ class BlockPost extends ComponentAbstract {
 		if ( class_exists( $control_class ) ) {
 			return new $control_class();
 		}
+	}
+
+	/**
+	 * Gets the registered controls.
+	 *
+	 * @return ControlAbstract[] The block controls.
+	 */
+	public function get_controls() {
+		if ( ! did_action( 'init' ) ) {
+			_doing_it_wrong(
+				__METHOD__,
+				esc_html__( 'Must be called after the init action so the controls are registered', 'genesis-custom-blocks' ),
+				'1.0.0'
+			);
+		}
+
+		return $this->controls;
 	}
 
 	/**
@@ -241,21 +258,24 @@ class BlockPost extends ComponentAbstract {
 			return;
 		}
 
+		$style_slug  = 'genesis-custom-blocks-block-post-style';
+		$script_slug = 'genesis-custom-blocks-block-post-script';
+
 		// Enqueue scripts and styles on the edit screen of the Block post type.
 		if ( $this->slug === $screen->post_type && 'post' === $screen->base ) {
 			wp_enqueue_style(
-				'block-post',
+				$style_slug,
 				$this->plugin->get_url( 'css/admin.block-post.css' ),
 				[],
 				$this->plugin->get_version()
 			);
 
 			if ( ! in_array( $post->post_status, [ 'publish', 'future', 'pending' ], true ) ) {
-				wp_add_inline_style( 'block-post', '#delete-action { display: none; }' );
+				wp_add_inline_style( $style_slug, '#delete-action { display: none; }' );
 			}
 
 			wp_enqueue_script(
-				'block-post',
+				$script_slug,
 				$this->plugin->get_url( 'js/admin.block-post.js' ),
 				[ 'jquery', 'jquery-ui-sortable', 'wp-util', 'wp-blocks' ],
 				$this->plugin->get_version(),
@@ -263,7 +283,7 @@ class BlockPost extends ComponentAbstract {
 			);
 
 			wp_localize_script(
-				'block-post',
+				$script_slug,
 				'genesisCustomBlocks',
 				[
 					'fieldSettingsNonce' => wp_create_nonce( "{$this->slug}_field_settings_nonce" ),
@@ -283,7 +303,7 @@ class BlockPost extends ComponentAbstract {
 
 		if ( $this->slug === $screen->post_type && 'edit' === $screen->base ) {
 			wp_enqueue_style(
-				'block-edit',
+				'genesis-custom-blocks-block-edit',
 				$this->plugin->get_url( 'css/admin.block-edit.css' ),
 				[],
 				$this->plugin->get_version()
@@ -540,11 +560,11 @@ class BlockPost extends ComponentAbstract {
 			</table>
 		</div>
 		<div class="block-fields-actions-add-field">
-			<button type="button" aria-label="Add Field" class="block-fields-action" id="block-add-field">
+			<button type="button" aria-label="<?php esc_attr_e( 'Add Field', 'genesis-custom-blocks' ); ?>" class="block-fields-action" id="block-add-field">
 				<span class="dashicons dashicons-plus"></span>
 				<?php esc_attr_e( 'Add Field', 'genesis-custom-blocks' ); ?>
 			</button>
-			<script type="text/html" id="tmpl-field-repeater">
+			<script type="text/html" id="tmpl-gcb-field">
 				<?php
 				$args = [
 					'name'  => 'new-field',
@@ -553,8 +573,18 @@ class BlockPost extends ComponentAbstract {
 				$this->render_fields_meta_box_row( new Field( $args ) );
 				?>
 			</script>
+			<?php
+			/**
+			 * Runs when rendering field templates.
+			 */
+			do_action( 'genesis_custom_blocks_render_field_templates' );
+			?>
 		</div>
 		<?php
+
+		/**
+		 * Runs after the fields list.
+		 */
 		do_action( "{$this->slug}_after_fields_list" );
 		wp_nonce_field( "{$this->slug}_save_fields", "{$this->slug}_fields_nonce" );
 	}
@@ -705,14 +735,6 @@ class BlockPost extends ComponentAbstract {
 			?>
 		</div>
 		<?php
-
-		/**
-		 * Enables rendering row actions for a field.
-		 *
-		 * @param Field  $field The field.
-		 * @param string $uid   The unique ID of the field's parent.
-		 */
-		do_action( 'genesis_custom_blocks_field_row_actions', $field, $uid );
 	}
 
 	/**
@@ -1024,8 +1046,7 @@ class BlockPost extends ComponentAbstract {
 						}
 
 						$field_config['settings'][ $setting->name ] = $value;
-
-						$field = new Field( $field_config );
+						$field                                      = new Field( $field_config );
 					}
 				}
 
@@ -1033,8 +1054,21 @@ class BlockPost extends ComponentAbstract {
 					$field = new Field( $field_config );
 				}
 
-				$field->order           = count( $block->fields );
-				$block->fields[ $name ] = $field;
+				/**
+				 * The block that will be saved in this iteration.
+				 *
+				 * @param Block      $block  Block where the field is.
+				 * @param Field      $field  Block field to save.
+				 * @param array      $fields Block fields to save, as sent from the form's POST request.
+				 * @param int|string $key    Field key.
+				 * @param string     $name   Field name.
+				 */
+				$block = apply_filters( 'genesis_custom_blocks_block_to_save', $block, $field, $fields, $key, $name );
+
+				if ( empty( $_POST['block-fields-parent'][ $key ] ) ) {
+					$field->order           = count( $block->fields );
+					$block->fields[ $name ] = $field;
+				}
 			}
 		}
 

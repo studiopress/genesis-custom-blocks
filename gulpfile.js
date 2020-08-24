@@ -7,6 +7,10 @@ var replace = require( 'gulp-string-replace' );
 var fs = require( 'fs' );
 var config = JSON.parse( fs.readFileSync( './package.json' ) );
 
+gulp.task( 'verify:versions', function () {
+	return run( 'php bin/verify-versions.php' ).exec();
+} )
+
 gulp.task( 'version', function () {
 	var pluginStream = gulp.src( [ 'genesis-custom-blocks.php' ] )
 		.pipe( replace( new RegExp( /Version:\s*(.*)/, 'g' ), "Version: " + config.version ) )
@@ -14,6 +18,10 @@ gulp.task( 'version', function () {
 		.pipe(gulp.dest('./'))
 
 	return pluginStream;
+} )
+
+gulp.task( 'install:dependencies', function () {
+	return run( 'composer install -o --no-dev && npm install' ).exec();
 } )
 
 gulp.task( 'run:build', function () {
@@ -78,7 +86,9 @@ gulp.task( 'clean:bundle', function () {
 		'package/trunk/js/src',
 		'package/trunk/js/*.map',
 		'package/trunk/css/*.map',
+		'package/trunk/css/src',
 		'package/trunk/bin',
+		'package/trunk/built',
 		'package/trunk/node_modules',
 		'package/trunk/tests',
 		'package/trunk/trunk',
@@ -97,8 +107,14 @@ gulp.task( 'clean:bundle', function () {
 	] );
 } );
 
+gulp.task( 'create:zip', function () {
+	return run( 'if [ -e genesis-custom-blocks.zip ]; then rm genesis-custom-blocks.zip; fi; cd package/trunk; pwd; zip -r ../genesis-custom-blocks.zip .; cd ..; echo "ZIP of build: $(pwd)/genesis-custom-blocks.zip"' ).exec();
+} )
+
 gulp.task( 'default', gulp.series(
+	'verify:versions',
 	'remove:bundle',
+	'install:dependencies',
 	'run:build',
 	'bundle',
 	'wporg:prepare',
@@ -106,5 +122,6 @@ gulp.task( 'default', gulp.series(
 	'wporg:readme',
 	'wporg:trunk',
 	'version',
-	'clean:bundle'
+	'clean:bundle',
+	'create:zip'
 ) );

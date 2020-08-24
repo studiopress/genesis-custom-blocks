@@ -16,7 +16,7 @@ commands:
   set-up-packages:
     description: "Installing packages and building"
     steps:
-      - run: composer install && npm install && npm run build
+      - run: composer remove --dev phpunit/phpunit && composer install && npm ci && npm run build
 
   install-composer:
     description: "Installing Composer"
@@ -75,7 +75,7 @@ jobs:
           name: Running PHPUnit
           working_directory: *PLUGIN_PATH
           command: |
-            composer install && npm install && npm run build
+            composer remove --dev phpunit/phpunit && composer install && npm ci && npm run build
             composer require --dev phpunit/phpunit 5.7.9
             WP_TESTS_DIR=~/project/wordpress-develop/tests/phpunit ./vendor/bin/phpunit
 

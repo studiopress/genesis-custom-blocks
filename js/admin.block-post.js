@@ -15,7 +15,7 @@
 		blockPostTypesInit();
 
 		$( '#block-add-field' ).on( 'click', function() {
-			const template = wp.template( 'field-repeater' ),
+			const template = wp.template( 'gcb-field' ),
 				data = { uid: new Date().getTime() },
 				row = $( template( data ) ),
 				edit = row.find( '.block-fields-actions-edit' ),

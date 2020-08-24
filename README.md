@@ -3,7 +3,7 @@
 Contributors: lukecarbis, ryankienstra, Stino11, rheinardkorf
 Tags: gutenberg, blocks, block editor, fields, template
 Requires at least: 5.0
-Tested up to: 5.4
+Tested up to: 5.5
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
@@ -43,11 +43,9 @@ Simple to use functions, ready to render and work with the values stored through
 * Activate Genesis Custom Blocks from your Plugins page.
 
 ### Manually ###
-* Clone Genesis Custom Blocks into a working directory with `https://github.com/studiopress/genesis-custom-blocks.git`
-* `cd` into the `genesis-custom-blocks` directory, and run `npm install && composer install`
-* Next, build the scripts and styles with `npm build`
-* Move the `genesis-custom-blocks` folder to your `/wp-content/plugins/` directory
-* Activate the Genesis Custom Blocks plugin through the Plugins menu in WordPress
+* Clone [Genesis Custom Blocks](https://github.com/studiopress/genesis-custom-blocks.git) into `/wp-content/plugins/`
+* Follow the [local setup instructions](https://github.com/studiopress/genesis-custom-blocks/blob/develop/CONTRIBUTING.md#local-setup)
+* Activate this plugin via WP-CLI or `/wp-admin` > Plugins
 
 ## Frequently Asked Questions ###
 **Q: Do I need to write code to use this plugin?**

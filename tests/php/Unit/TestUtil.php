@@ -261,6 +261,6 @@ class TestUtil extends AbstractTemplate {
 	public function test_get_url_from_path() {
 		$subdirectory_path = 'wp-content/theme/blocks/test-block-here.css';
 		$path              = ABSPATH . $subdirectory_path;
-		$this->assertEquals( '/' . $subdirectory_path, $this->instance->get_url_from_path( $path ) );
+		$this->assertContains( '/' . $subdirectory_path, $this->instance->get_url_from_path( $path ) );
 	}
 }

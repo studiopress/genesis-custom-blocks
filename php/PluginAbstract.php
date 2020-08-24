@@ -270,7 +270,6 @@ abstract class PluginAbstract implements PluginInterface {
 	 * @return PluginAbstract The plugin instance.
 	 */
 	public function register_component( ComponentInterface $component ) {
-
 		$component_class = get_class( $component );
 
 		// If component already registered, then there is nothing left to do.

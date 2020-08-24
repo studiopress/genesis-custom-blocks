@@ -62,7 +62,6 @@ class TestBlockPost extends \WP_UnitTestCase {
 		$this->assertEquals( 10, has_action( 'genesis_custom_blocks_field_value', [ $this->instance, 'get_field_value' ] ) );
 
 		$this->assertEquals( 10, has_action( 'disable_months_dropdown', '__return_true' ) );
-		$this->assertEquals( 10, has_action( 'page_row_actions', [ $this->instance, 'page_row_actions' ] ) );
 		$this->assertEquals( 10, has_action( 'bulk_actions-edit-' . self::EXPECTED_SLUG, [ $this->instance, 'bulk_actions' ] ) );
 		$this->assertEquals( 10, has_action( 'manage_edit-' . self::EXPECTED_SLUG . '_columns', [ $this->instance, 'list_table_columns' ] ) );
 		$this->assertEquals( 10, has_action( 'manage_' . self::EXPECTED_SLUG . '_posts_custom_column', [ $this->instance, 'list_table_content' ] ) );
@@ -93,6 +92,34 @@ class TestBlockPost extends \WP_UnitTestCase {
 
 		// If the control doesn't exist, this should return null.
 		$this->assertEquals( null, $this->instance->get_control( 'non-existent-control' ) );
+	}
+
+	/**
+	 * Test get_controls.
+	 *
+	 * @covers \Genesis\CustomBlocks\PostTypes\BlockPost::get_controls()
+	 * @covers \Genesis\CustomBlocks\PostTypes\BlockPost::register_controls()
+	 */
+	public function test_get_controls() {
+		$this->instance->register_controls();
+		$this->assertEquals(
+			[
+				'text',
+				'textarea',
+				'url',
+				'email',
+				'number',
+				'color',
+				'image',
+				'select',
+				'multiselect',
+				'toggle',
+				'range',
+				'checkbox',
+				'radio',
+			],
+			array_keys( $this->instance->get_controls() )
+		);
 	}
 
 	/**

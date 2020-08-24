@@ -28,67 +28,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 
 /**
- * Admin notice for incompatible versions of PHP.
- */
-function genesis_custom_blocks_php_version_error() {
-	printf( '<div class="error"><p>%s</p></div>', esc_html( genesis_custom_blocks_php_version_text() ) );
-}
-
-/**
- * String describing the minimum PHP version.
- *
- * "Namespace" is a PHP 5.3 introduced feature. This is a hard requirement
- * for the plugin structure.
- *
- * "Traits" is a PHP 5.4 introduced feature. Remove "Traits" support from
- * php/autoloader if you want to support a lower PHP version.
- * Remember to update the checked version below if you do.
- *
- * @return string
- */
-function genesis_custom_blocks_php_version_text() {
-	return __( 'Genesis Custom Blocks plugin error: Your version of PHP is too old to run this plugin. You must be running PHP 5.4 or higher.', 'genesis-custom-blocks' );
-}
-
-// If the PHP version is too low, show warning and return.
-if ( version_compare( phpversion(), '5.4', '<' ) ) {
-	if ( defined( 'WP_CLI' ) ) {
-		WP_CLI::warning( genesis_custom_blocks_php_version_text() );
-	} else {
-		add_action( 'admin_notices', 'genesis_custom_blocks_php_version_error' );
-	}
-
-	return;
-}
-
-/**
- * Admin notice for incompatible versions of WordPress or missing Gutenberg Plugin.
- */
-function genesis_custom_blocks_wp_version_error() {
-	printf( '<div class="error"><p>%s</p></div>', esc_html( genesis_custom_blocks_wp_version_text() ) );
-}
-
-/**
- * String describing the minimum WP version or Gutenberg Plugin requirement.
- *
- * "Blocks" are a feature of WordPress 5.0+ or require the Gutenberg plugin.
- *
- * @return string
- */
-function genesis_custom_blocks_wp_version_text() {
-	return __( 'Genesis Custom Blocks plugin error: Your version of WordPress is too old. You must be running WordPress 5.0 to use Genesis Custom Blocks.', 'genesis-custom-blocks' );
-}
-
-// If the WordPress version is too low, show warning and return.
-if ( ! function_exists( 'register_block_type' ) ) {
-	if ( defined( 'WP_CLI' ) ) {
-		WP_CLI::warning( genesis_custom_blocks_wp_version_text() );
-	} else {
-		add_action( 'admin_notices', 'genesis_custom_blocks_wp_version_error' );
-	}
-}
-
-/**
  * Get the plugin object.
  *
  * @return Plugin

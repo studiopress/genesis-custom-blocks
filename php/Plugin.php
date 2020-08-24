@@ -27,6 +27,13 @@ class Plugin extends PluginAbstract {
 	protected $util;
 
 	/**
+	 * The block post type.
+	 *
+	 * @var BlockPost
+	 */
+	public $block_post;
+
+	/**
 	 * WP Admin resources.
 	 *
 	 * @var Admin\Admin
@@ -46,7 +53,8 @@ class Plugin extends PluginAbstract {
 	public function init() {
 		$this->util = new Util();
 		$this->register_component( $this->util );
-		$this->register_component( new BlockPost() );
+		$this->block_post = new BlockPost();
+		$this->register_component( $this->block_post );
 
 		$this->loader = new Loader();
 		$this->register_component( $this->loader );

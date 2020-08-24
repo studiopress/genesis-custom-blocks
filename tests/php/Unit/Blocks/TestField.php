@@ -5,7 +5,7 @@
  * @package Genesis\CustomBlocks
  */
 
-use Genesis\CustomBlocks\Blocks;
+use Genesis\CustomBlocks\Blocks\Field;
 
 /**
  * Tests for class Field.
@@ -15,7 +15,7 @@ class TestField extends \WP_UnitTestCase {
 	/**
 	 * The instance to test.
 	 *
-	 * @var Blocks\Field
+	 * @var Field
 	 */
 	public $instance;
 
@@ -43,7 +43,7 @@ class TestField extends \WP_UnitTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$this->instance = new Blocks\Field( [] );
+		$this->instance = new Field( [] );
 	}
 
 	/**
@@ -84,15 +84,16 @@ class TestField extends \WP_UnitTestCase {
 	 * @covers \Genesis\CustomBlocks\Blocks\Field::from_array()
 	 */
 	public function test_from_array_without_type() {
+		genesis_custom_blocks()->block_post->register_controls();
 		$this->instance->from_array( [ 'control' => 'rich_text' ] );
 		$this->assertEquals( 'string', $this->instance->type );
 
-		$this->instance = new Blocks\Field( [] );
+		$this->instance = new Field( [] );
 		$this->instance->from_array( [ 'control' => 'image' ] );
 		$this->assertEquals( 'integer', $this->instance->type );
 
 		// The control class doesn't exist, so this shouldn't change the default value of $type, 'string'.
-		$this->instance = new Blocks\Field( [] );
+		$this->instance = new Field( [] );
 		$this->instance->from_array( [ 'control' => 'non-existent' ] );
 		$this->assertEquals( 'string', $this->instance->type );
 	}

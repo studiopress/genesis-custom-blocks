@@ -17,6 +17,13 @@ use Genesis\CustomBlocks\ComponentAbstract;
 class Upgrade extends ComponentAbstract {
 
 	/**
+	 * The default value for whether to show the Pro nag.
+	 *
+	 * @var bool
+	 */
+	const DEFAULT_SHOW_PRO_NAG = true;
+
+	/**
 	 * Page slug.
 	 *
 	 * @var string
@@ -24,7 +31,7 @@ class Upgrade extends ComponentAbstract {
 	public $slug = 'genesis-custom-blocks-pro';
 
 	/**
-	 * Register any hooks that this component needs.
+	 * Registers any hooks that this component needs.
 	 */
 	public function register_hooks() {
 		add_action( 'admin_menu', [ $this, 'add_submenu_pages' ] );
@@ -32,11 +39,19 @@ class Upgrade extends ComponentAbstract {
 	}
 
 	/**
-	 * Enqueue scripts and styles used by the Upgrade screen.
-	 *
-	 * @return void
+	 * Enqueues scripts and styles used by the Upgrade screen.
 	 */
 	public function enqueue_scripts() {
+		/**
+		 * Whether to show the pro nag.
+		 *
+		 * @param bool
+		 */
+		$show_pro_nag = apply_filters( 'genesis_custom_blocks_show_pro_nag', self::DEFAULT_SHOW_PRO_NAG );
+		if ( ! $show_pro_nag ) {
+			return;
+		}
+
 		$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
 
 		// Enqueue scripts and styles on the edit screen of the Block post type.
@@ -54,6 +69,12 @@ class Upgrade extends ComponentAbstract {
 	 * Add submenu pages to the Genesis Custom Blocks menu.
 	 */
 	public function add_submenu_pages() {
+		/** This filter is documented in enqueue_scripts() */
+		$show_pro_nag = apply_filters( 'genesis_custom_blocks_show_pro_nag', self::DEFAULT_SHOW_PRO_NAG );
+		if ( ! $show_pro_nag ) {
+			return;
+		}
+
 		add_submenu_page(
 			'edit.php?post_type=genesis_custom_block',
 			__( 'Genesis Custom Blocks Pro', 'genesis-custom-blocks' ),

@@ -19,5 +19,14 @@ if [ ! -z "$js_files" ]; then
     fi
 fi
 
+# Lint staged .scss files
+scss_files=$( git diff --diff-filter=d --staged --name-only | grep -E '/*\.scss$' )
+if [ -n "$scss_files" ]; then
+    npm run lint:css:files $scss_files
+    if [ $? != 0 ]; then
+        exit 1
+    fi
+fi
+
 # Lint package.json
 npm run lint:pkg-json

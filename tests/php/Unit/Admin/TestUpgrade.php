@@ -65,6 +65,20 @@ class TestUpgrade extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * Test enqueue_scripts when there is no pro nag.
+	 *
+	 * @covers \Genesis\CustomBlocks\Admin\Upgrade::enqueue_scripts()
+	 */
+	public function test_enqueue_scripts_no_pro_nag() {
+		add_filter( 'genesis_custom_blocks_show_pro_nag', '__return_false' );
+		$this->instance->enqueue_scripts();
+		$styles = wp_styles();
+
+		$this->assertFalse( in_array( $this->instance->slug, $styles->queue, true ) );
+		$this->assertFalse( in_array( $this->instance->slug, $styles->registered, true ) );
+	}
+
+	/**
 	 * Test enqueue_scripts.
 	 *
 	 * @covers \Genesis\CustomBlocks\Admin\Upgrade::enqueue_scripts()

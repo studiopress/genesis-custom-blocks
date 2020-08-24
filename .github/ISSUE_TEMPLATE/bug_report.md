@@ -18,7 +18,10 @@ about: Report a problem
 ## Expected behavior
 
 ## Actual behavior
-<!-- Please include screenshots of the behavior and the JS console, if there was an error or warning there --> 
+<!-- Please include screenshots of the behavior --> 
+
+## JS Console
+<!-- Please copy the JS console here -->
 
 ## Additional information
 
@@ -30,6 +33,7 @@ about: Report a problem
  - WordPress version:
  - Genesis Custom Blocks version: <!-- Please ensure the latest version of Genesis Custom Blocks is running: https://github.com/studiopress/genesis-custom-blocks -->
  - Gutenberg plugin version (if active):
+ - Other block-related plugins (if active):
  - OS:
  - Browser:
  - Device: <!-- like MacBook -->

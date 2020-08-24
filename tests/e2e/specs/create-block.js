@@ -3,28 +3,11 @@
  */
 import {
 	createNewPost,
-	openGlobalBlockInserter,
+	insertBlock,
 	pressKeyWithModifier,
 	visitAdminPage,
 } from '@wordpress/e2e-test-utils';
 
-/**
- * Inserts a block from the block inserter, mainly copied from Gutenberg.
- *
- * @see https://github.com/WordPress/gutenberg/blob/56f912adc681ebd3a6fb6a17eb4cfcb2c0050f5b/packages/e2e-test-utils/src/insert-block.js
- *
- * @param {string} blockName The block name to search for.
- */
-const insertBlockFromInserter = async ( blockName ) => {
-	await openGlobalBlockInserter();
-	await page.focus( '[placeholder="Search for a block"]' );
-	await pressKeyWithModifier( 'primary', 'a' );
-	await page.keyboard.type( blockName );
-	const insertButton = (
-		await page.$x( `//button//span[contains(text(), '${ blockName }')]` )
-	)[ 0 ];
-	await insertButton.click();
-};
 const customPostType = 'genesis_custom_block';
 
 describe( 'TextBlock', () => {
@@ -44,13 +27,12 @@ describe( 'TextBlock', () => {
 		await pressKeyWithModifier( 'primary', 'a' );
 		await page.keyboard.type( fieldName );
 
-		// Publish the block, and wait for the page to reload.
+		// Publish the block.
 		await page.click( '#publish' );
-		await page.waitForNavigation( { waitUntil: 'networkidle0' } );
 
 		// Create a new post and add the new block.
 		await createNewPost();
-		await insertBlockFromInserter( blockName );
+		await insertBlock( blockName );
 		await page.waitForSelector( '.wp-block' );
 
 		const fieldValue = 'this is some example text';
