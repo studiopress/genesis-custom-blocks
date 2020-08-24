@@ -99,7 +99,7 @@
 	color: var(--color-brand);
 }
 
-.genesis-custom-blocks-pro .btn-secondary {
+.genesis-custom-blocks-pro .container .btn-secondary {
 	color: var(--color-brand);
 	border-color: var(--color-brand);
 }
