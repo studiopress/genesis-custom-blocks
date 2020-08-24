@@ -104,7 +104,7 @@
 	border-color: var(--color-brand);
 }
 
-.genesis-custom-blocks-pro .btn-secondary:hover {
+.genesis-custom-blocks-pro .container .btn-secondary:hover {
 	color: var(--color-white);
 	background-color: var(--color-brand);
 }
