@@ -20,7 +20,7 @@ composer install && npm install
 npm run dev
 ```
 
-#### PHPUnit
+### PHPUnit
 
 ```
 WP_TESTS_DIR=/path/to/wordpress-develop/tests/phpunit composer test
@@ -36,6 +36,16 @@ WP_TESTS_DIR=/path/to/wordpress-develop/tests/phpunit ./bin/install-wp-tests.sh 
 
 Use whatever DB name you'd like, and substitute a DB user and password that works in your environment.
 
+### Branching
+
+Generally, you'll want to branch off the default branch, `develop`.
+
+If you're targeting a release branch, like `1.1`, branch off that.
+
+### Plugin Versions
+
+The plugin versions should follow [Semantic Versioning](https://semver.org/#semantic-versioning-200).
+
 ### Release Procedure
 
 1. `checkout` locally whatever branch you want to release. It could be `develop`, or a release branch like `1.0`. 
@@ -43,10 +53,11 @@ Use whatever DB name you'd like, and substitute a DB user and password that work
 1. Smoke test that `.zip` file.
 1. [Create a release](https://github.com/studiopress/genesis-custom-blocks/releases/new), targeting whatever branch you chose in step 1.
 1. Upload the `.zip` file you created to the release page.
-1. The 'Tag version' should be the plugin version preceded with `v`, like `v1.0.0`.
+1. The 'Tag version' should be the plugin version, like `1.0.0`.
 1. There will be a `package/trunk/` directory from running `gulp` earlier. Use this to commit the new plugin version to the wp.org SVN repo.
 1. Do `./bin/tag-built.sh`
 1. This will create a built tag of the plugin and push it. Then, other plugins or entire sites can require the plugin as a Composer dependency.
+1. If this release was for a release branch, like `1.0`, open a PR from that branch to `develop`.
 1. To resume normal local development, do `composer install`, as running `gulp` will remove the Composer dev dependencies.
 
 Thanks! :heart: :heart: :heart:
