@@ -20,7 +20,7 @@ composer install && npm install
 npm run dev
 ```
 
-### PHPUnit
+**PHPUnit**
 
 ```
 WP_TESTS_DIR=/path/to/wordpress-develop/tests/phpunit composer test
@@ -40,7 +40,9 @@ Use whatever DB name you'd like, and substitute a DB user and password that work
 
 Generally, you'll want to branch off the default branch, `develop`.
 
-If you're targeting a release branch, like `1.1`, branch off that.
+If you're developing for a release branch, like `1.1`, branch off that.
+
+Release branches themselves should be branched off `develop`.
 
 ### Plugin Versions
 
