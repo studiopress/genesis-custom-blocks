@@ -90,6 +90,7 @@
     "build": "wp-scripts build",
     "dev": "wp-scripts start",
     "env": "wp-env",
+    "gulp": "gulp",
     "lint": "npm-run-all --parallel lint:*",
     "lint:css": "wp-scripts lint-style '**/*.scss'",
     "lint:css:files": "wp-scripts lint-style",
