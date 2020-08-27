@@ -71,7 +71,7 @@ class TestOnboarding extends \WP_UnitTestCase {
 			'<div class="genesis-custom-blocks-welcome genesis-custom-blocks-notice notice is-dismissible">',
 			$output
 		);
-		$this->assertContains( "post.php?post={$post_id}&amp;action=edit", $output );
+		$this->assertContains( strval( $post_id ), $output );
 	}
 
 	/**
