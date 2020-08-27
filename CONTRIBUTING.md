@@ -39,7 +39,7 @@ Use whatever DB name you'd like, and substitute a DB user and password that work
 ### Release Procedure
 
 1. `checkout` locally whatever branch you want to release. It could be `develop`, or a release branch like `1.0`. 
-1. Do `gulp`, and you'll see a `genesis-custom-blocks.zip` file in the `package/` directory.
+1. Do `npm run gulp`, and you'll see `package/genesis-custom-blocks.zip`.
 1. Smoke test that `.zip` file.
 1. [Create a release](https://github.com/studiopress/genesis-custom-blocks/releases/new), targeting whatever branch you chose in step 1.
 1. Upload the `.zip` file you created to the release page.
