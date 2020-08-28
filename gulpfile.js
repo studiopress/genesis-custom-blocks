@@ -45,8 +45,7 @@ gulp.task( 'bundle', function () {
 
 gulp.task( 'remove:bundle', function () {
 	return del( [
-		'package/trunk',
-		'package/assets',
+		'package',
 	] );
 } );
 
