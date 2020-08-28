@@ -87,7 +87,7 @@ It can also be installed manually.
 3. Log into WordPress and navigate to the Plugins screen.
 4. Locate Genesis Custom Blocks in the list and click the Activate link.
 
-## Frequently Asked Questions ###
+## Frequently Asked Questions ##
 **Q: Do I need to work with the Genesis Framework or any of the other Genesis plugins/themes to use this plugin?**
 A: No. You can use this plugin completely independently. All you need is to have the block editor enabled on your WordPress site.
 
