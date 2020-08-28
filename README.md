@@ -77,15 +77,15 @@ Developer tools are only as good as their docs. That's why we take them seriousl
 ## Installation ##
 This plugin can be installed directly from your site.
 1. Log in and navigate to Plugins → Add New.
-1. Type “Genesis Custom Blocks” into the Search and hit Enter.
-1. Locate the Genesis Custom Blocks plugin in the list of search results and click Install Now.
-1. Once installed, click the Activate link.
+2. Type “Genesis Custom Blocks” into the Search and hit Enter.
+3. Locate the Genesis Custom Blocks plugin in the list of search results and click Install Now.
+4. Once installed, click the Activate link.
 
 It can also be installed manually.
 1. Download the Genesis Custom Blocks plugin from WordPress.org.
-1. Unzip the package and move to your plugins directory.
-1. Log into WordPress and navigate to the Plugins screen.
-1. Locate Genesis Custom Blocks in the list and click the Activate link.
+2. Unzip the package and move to your plugins directory.
+3. Log into WordPress and navigate to the Plugins screen.
+4. Locate Genesis Custom Blocks in the list and click the Activate link.
 
 ## Frequently Asked Questions ###
 **Q: Do I need to work with the Genesis Framework or any of the other Genesis plugins/themes to use this plugin?**
