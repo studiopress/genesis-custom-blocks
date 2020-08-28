@@ -56,7 +56,8 @@ The plugin versions should follow [Semantic Versioning](https://semver.org/#sema
 1. [Create a release](https://github.com/studiopress/genesis-custom-blocks/releases/new), targeting whatever branch you chose in step 1.
 1. Upload the `.zip` file you created to the release page.
 1. The 'Tag version' should be the plugin version, like `1.0.0`.
-1. There will be a `package/trunk/` directory from running `gulp` earlier. Use this to commit the new plugin version to the wp.org SVN repo.
+1. There will be a `package/trunk/` directory from running `gulp` earlier, along with a tag directory `/package/x.x.x/`, with `x.x.x` being the version number.
+1. Commit both of those directories to the wp.org SVN repo.
 1. Do `./bin/tag-built.sh`
 1. This will create a built tag of the plugin and push it. Then, other plugins or entire sites can require the plugin as a Composer dependency.
 1. If this release was for a release branch, like `1.0`, open a PR from that branch to `develop`.
