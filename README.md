@@ -13,9 +13,9 @@ Custom blocks for WordPress made easy.
 
 ## Description ##
 
-Genesis Custom Blocks Pro provides WordPress developers with the tools they need to take control of the block-first reality of modern WordPress.
+Genesis Custom Blocks provides WordPress developers with the tools they need to take control of the block-first reality of modern WordPress.
 
-The WordPress block editor (AKA Gutenberg) opens up a whole new world for the way we build pages, posts, and websites with WordPress. Genesis Custom Blocks Pro makes it easy to harness this and build custom blocks the way you want them to be built. Whether you want to implement a custom design, deliver unique functionality, or even remove your dependence on other plugins, Genesis Custom Blocks Pro equips you with the tools you need to hit “Publish” sooner.
+The WordPress block editor (AKA Gutenberg) opens up a whole new world for the way we build pages, posts, and websites with WordPress. Genesis Custom Blocks makes it easy to harness this and build custom blocks the way you want them to be built. Whether you want to implement a custom design, deliver unique functionality, or even remove your dependence on other plugins, Genesis Custom Blocks equips you with the tools you need to hit “Publish” sooner.
 
 **Take control of design** - Implement beautiful, custom designs with fine-tuned front-end templating control.
 
