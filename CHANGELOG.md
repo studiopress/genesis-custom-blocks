@@ -6,4 +6,4 @@ Plugin released!
 
 * Easily create custom blocks
 * 13 fields to add
-* Simply templating, with PHP files
+* Simple templating, with PHP files
