@@ -1,4 +1,9 @@
 ## Changelog #
 
-### 1.0.0 - 2020-XX-XX ###
-* Initial release.
+### 1.0.0 - 2020-09-01 ###
+
+Plugin released!
+
+* Easily create custom blocks
+* 13 fields to add
+* Simply templating, with PHP files

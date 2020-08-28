@@ -1,6 +1,6 @@
 # Genesis Custom Blocks #
 
-Contributors: lukecarbis, ryankienstra, Stino11, rheinardkorf
+Contributors: lukecarbis, ryankienstra, Stino11, rheinardkorf, studiopress, wpengine
 Tags: gutenberg, blocks, block editor, fields, template
 Requires at least: 5.0
 Tested up to: 5.5
@@ -9,11 +9,19 @@ Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl
 
-The easy way to build custom blocks for Gutenberg.
+Custom blocks for WordPress made easy.
 
 ## Description ##
 
-Gutenberg, the new WordPress editor, opens up a whole new world for the way we build pages, posts, and websites with WordPress. Genesis Custom Blocks makes it easy to harness Gutenberg and build custom blocks the way you want them to be built. Whether you want to implement a custom design, deliver unique functionality, or even remove your dependence on other plugins, Genesis Custom Blocks equips you with the tools you need to hit “Publish” sooner.
+Genesis Custom Blocks Pro provides WordPress developers with the tools they need to take control of the block-first reality of modern WordPress.
+
+The WordPress block editor (AKA Gutenberg) opens up a whole new world for the way we build pages, posts, and websites with WordPress. Genesis Custom Blocks Pro makes it easy to harness this and build custom blocks the way you want them to be built. Whether you want to implement a custom design, deliver unique functionality, or even remove your dependence on other plugins, Genesis Custom Blocks Pro equips you with the tools you need to hit “Publish” sooner.
+
+**Take control of design** - Implement beautiful, custom designs with fine-tuned front-end templating control.
+
+**Build unique functionality** - Build blocks that function and behave exactly as you need.
+
+**Extend & Integrate** - Easily extend your custom blocks to integrate with third-party apps and plugins.
 
 ## Features ##
 
@@ -27,36 +35,48 @@ Add from a growing list of available fields to your custom blocks.
 Let the plugin do the heavy lifting so you can use familiar WordPress development practices to build block templates.
 
 ### Developer Friendly Functions ###
-Simple to use functions, ready to render and work with the values stored through your custom block fields.
+Simple to use functions, ready to render and work with the data stored through your custom block fields.
+
+### Block-level Import & Export ###
+Easily export and import individual blocks to better share block assets between projects.
+
+## Currently available block fields ##
+* Text Field
+* Image Field
+* URL Field
+* Toggle Field
+* Textarea Field
+* Select Field
+* Range Rield
+* Radio Field
+* Number Field
+* Multi-select Field
+* Email Field
+* Color Field
+* Checkbox Field
+
+## Developer docs you can rely on. ##
+
+Developer tools are only as good as their docs. That's why we take them seriously. Here are a few links to get you started:
 
 ## Links ##
 * [WordPress.org](https://wordpress.org/plugins/genesis-custom-blocks)
-* [Github](https://github.com/studiopress/genesis-custom-blocks)
+* [GitHub](https://github.com/studiopress/genesis-custom-blocks)
 * [Documentation](https://developer.wpengine.com/genesis-custom-blocks)
-* [Support](https://wordpress.org/support/plugin/genesis-custom-blocks)
 
 ## Installation ##
-### From Within WordPress ###
-* Visit Plugins > Add New
-* Search for "Genesis Custom Blocks"
-* Install the Genesis Custom Blocks plugin
-* Activate Genesis Custom Blocks from your Plugins page.
+This plugin can be installed directly from your site.
+* Log in and navigate to Plugins → Add New.
+* Type “Genesis Custom Blocks” into the Search and hit Enter.
+* Locate the Genesis Custom Blocks plugin in the list of search results and click Install Now.
+* Once installed, click the Activate link.
 
-### Manually ###
-* Clone [Genesis Custom Blocks](https://github.com/studiopress/genesis-custom-blocks.git) into `/wp-content/plugins/`
-* Follow the [local setup instructions](https://github.com/studiopress/genesis-custom-blocks/blob/develop/CONTRIBUTING.md#local-setup)
-* Activate this plugin via WP-CLI or `/wp-admin` > Plugins
+It can also be installed manually.
+* Download the Genesis Custom Blocks plugin from WordPress.org.
+* Unzip the package and move to your plugins directory.
+* Log into WordPress and navigate to the Plugins screen.
+* Locate Genesis Custom Blocks in the list and click the Activate link.
 
 ## Frequently Asked Questions ###
-**Q: Do I need to write code to use this plugin?**
-A: Although the plugin handles the majority of the work in building a custom block, you will need to build HTML templates to display the content of the block. You can learn how in the developer documentation.
-
-**Q: I have an idea for the plugin**
-A: This plugin is open source and can only be better through community contribution. The GitHub repo is [here](https://github.com/studiopress/genesis-custom-blocks).
-
-**Q: Where can I find documentation for this plugin?**
-A: [Here](https://developer.wpengine.com/genesis-custom-blocks)
-
-## Contributing ##
-
-See [Contributing to Genesis Custom Blocks](https://github.com/studiopress/genesis-custom-blocks/blob/develop/CONTRIBUTING.md).
+**Q: Do I need to work with the Genesis Framework or any of the other Genesis plugins/themes to use this plugin?**
+A: No. You can use this plugin completely independently. All you need is to have the block editor enabled on your WordPress site.
