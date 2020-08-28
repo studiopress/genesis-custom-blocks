@@ -103,12 +103,17 @@ gulp.task( 'clean:bundle', function () {
 		'package/trunk/CONTRIBUTING.md',
 		'package/trunk/webpack.config.js',
 		'package/trunk/.github',
+		'package/trunk/SHASUMS*',
 		'package/prepare',
 	] );
 } );
 
+gulp.task( 'copy:tag', function () {
+	return run( 'export BUILD_VERSION=$(grep "Version" genesis-custom-blocks.php | cut -f4 -d" "); cp -r package/trunk package/$BUILD_VERSION' ).exec();
+} )
+
 gulp.task( 'create:zip', function () {
-	return run( 'if [ -e genesis-custom-blocks.zip ]; then rm genesis-custom-blocks.zip; fi; cd package/trunk; pwd; zip -r ../genesis-custom-blocks.zip .; cd ..; echo "ZIP of build: $(pwd)/genesis-custom-blocks.zip"' ).exec();
+	return run( 'cp -r package/trunk package/genesis-custom-blocks; export BUILD_VERSION=$(grep "Version" genesis-custom-blocks.php | cut -f4 -d" "); cd package; pwd; zip -r genesis-custom-blocks.$BUILD_VERSION.zip genesis-custom-blocks/; echo "ZIP of build: $(pwd)/genesis-custom-blocks.$BUILD_VERSION.zip"; rm -rf genesis-custom-blocks' ).exec();
 } )
 
 gulp.task( 'default', gulp.series(
@@ -123,5 +128,6 @@ gulp.task( 'default', gulp.series(
 	'wporg:trunk',
 	'version',
 	'clean:bundle',
+	'copy:tag',
 	'create:zip'
 ) );
