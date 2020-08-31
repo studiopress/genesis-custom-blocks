@@ -69,6 +69,7 @@ Genesis Pro includes even more value for modern WordPress content creators, mark
 
 ## Developer docs you can rely on. ##
 Developer tools are only as good as their docs. That's why we take them seriously. Here are a few links to get you started:
+
 * [Getting Started](https://developer.wpengine.com/genesis-custom-blocks/get-started/)
 * [FAQs](https://developer.wpengine.com/genesis-custom-blocks/faqs/)
 * [Block Fields](https://developer.wpengine.com/genesis-custom-blocks/fields/)
