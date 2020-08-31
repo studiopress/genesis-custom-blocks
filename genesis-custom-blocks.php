@@ -7,7 +7,6 @@
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  *
  * Plugin Name: Genesis Custom Blocks
- * Plugin URI: https://studiopress.com
  * Description: The easy way to build custom blocks for Gutenberg.
  * Version: 1.0.0
  * Author: Genesis Custom Blocks
