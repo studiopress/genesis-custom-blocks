@@ -18,6 +18,14 @@ if ( 'cli' !== php_sapi_name() ) {
 
 $versions = [];
 
+$readme_md = file_get_contents( dirname( __FILE__ ) . '/../README.md' );
+if ( ! preg_match( '/Stable tag:\s+(?P<version>\S+)/i', $readme_md, $matches ) ) {
+	echo "Could not find stable tag in readme\n";
+	exit( 1 );
+}
+
+$versions['readme.txt#stable-tag'] = $matches['version'];
+
 $plugin_file = file_get_contents( dirname( __FILE__ ) . '/../genesis-custom-blocks.php' );
 if ( ! preg_match( '/\*\s*Version:\s*(?P<version>\d+\.\d+(?:.\d+)?(-\w+)?)/', $plugin_file, $matches ) ) {
 	echo "Could not find version in main plugin file metadata\n";
