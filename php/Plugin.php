@@ -74,6 +74,7 @@ class Plugin extends PluginAbstract {
 	public function plugin_loaded() {
 		$this->admin = new Admin();
 		$this->register_component( $this->admin );
+		$this->require_api();
 		$this->require_helpers();
 	}
 
@@ -89,6 +90,14 @@ class Plugin extends PluginAbstract {
 	}
 
 	/**
+	 * Require the API functions.
+	 */
+	private function require_api() {
+		require_once __DIR__ . '/BlockApi.php';
+	}
+
+
+	/**
 	 * Requires helper functions.
 	 */
 	private function require_helpers() {
@@ -96,7 +105,6 @@ class Plugin extends PluginAbstract {
 			add_action( 'admin_notices', [ $this, 'plugin_conflict_notice' ] );
 		} else {
 			require_once __DIR__ . '/Helpers.php';
-			require_once __DIR__ . '/BlockApi.php';
 		}
 	}
 
@@ -106,7 +114,7 @@ class Plugin extends PluginAbstract {
 	 * @return bool Whether there is a conflict.
 	 */
 	public function is_plugin_conflict() {
-		return function_exists( 'block_field' ) && function_exists( 'block_value' );
+		return function_exists( 'block_field' ) || function_exists( 'block_value' );
 	}
 
 	/**
@@ -116,13 +124,6 @@ class Plugin extends PluginAbstract {
 		if ( ! current_user_can( 'deactivate_plugins' ) ) {
 			return;
 		}
-
-		wp_enqueue_style(
-			'block-lab-plugin-conflict-notice-style',
-			$this->get_url( 'css/admin.conflict-notice.css' ),
-			[],
-			$this->get_version()
-		);
 
 		$plugin_file      = 'block-lab/block-lab.php';
 		$deactivation_url = add_query_arg(
@@ -137,14 +138,29 @@ class Plugin extends PluginAbstract {
 		);
 
 		?>
-		<div id="bl-conflict-notice" class="notice notice-error bl-notice-conflict">
-			<div class="bl-conflict-copy">
+		<style>
+			.gcb-notice-conflict {
+				display: flex;
+				padding-top: 0.2rem;
+				padding-bottom: 0.2rem;
+			}
+
+			.gcb-notice-conflict .gcb-conflict-copy {
+				margin-right: auto;
+			}
+
+			.gcb-notice-conflict .gcb-link-deactivate {
+				margin: auto 0.2rem;
+			}
+		</style>
+		<div id="gcb-conflict-notice" class="notice notice-error gcb-notice-conflict">
+			<div class="gcb-conflict-copy">
 				<p><?php esc_html_e( 'It looks like Block Lab is active. Please deactivate it or migrate, as it will not work while Genesis Custom Blocks is active.', 'genesis-custom-blocks' ); ?></p>
 			</div>
 			<?php
 			if ( current_user_can( 'deactivate_plugins' ) ) :
 				?>
-				<a href="<?php echo esc_url( $deactivation_url ); ?>" class="bl-link-deactivate button button-primary">
+				<a href="<?php echo esc_url( $deactivation_url ); ?>" class="gcb-link-deactivate button button-primary">
 					<?php echo esc_html_x( 'Deactivate', 'plugin', 'genesis-custom-blocks' ); ?>
 				</a>
 			<?php endif; ?>
