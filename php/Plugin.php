@@ -92,7 +92,63 @@ class Plugin extends PluginAbstract {
 	 * Requires helper functions.
 	 */
 	private function require_helpers() {
-		require_once __DIR__ . '/Helpers.php';
-		require_once __DIR__ . '/BlockApi.php';
+		if ( $this->is_plugin_conflict() ) {
+			add_action( 'admin_notices', [ $this, 'plugin_conflict_notice' ] );
+		} else {
+			require_once __DIR__ . '/Helpers.php';
+			require_once __DIR__ . '/BlockApi.php';
+		}
+	}
+
+	/**
+	 * Gets whether there is a conflict from another plugin having the same functions.
+	 *
+	 * @return bool Whether there is a conflict.
+	 */
+	public function is_plugin_conflict() {
+		return function_exists( 'block_field' ) && function_exists( 'block_value' );
+	}
+
+	/**
+	 * An admin notice for another plugin being active.
+	 */
+	public function plugin_conflict_notice() {
+		if ( ! current_user_can( 'deactivate_plugins' ) ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			'block-lab-plugin-conflict-notice-style',
+			$this->get_url( 'css/admin.conflict-notice.css' ),
+			[],
+			$this->get_version()
+		);
+
+		$plugin_file      = 'block-lab/block-lab.php';
+		$deactivation_url = add_query_arg(
+			[
+				'action'        => 'deactivate',
+				'plugin'        => rawurlencode( $plugin_file ),
+				'plugin_status' => 'all',
+				'paged'         => 1,
+				'_wpnonce'      => wp_create_nonce( 'deactivate-plugin_' . $plugin_file ),
+			],
+			admin_url( 'plugins.php' )
+		);
+
+		?>
+		<div id="bl-conflict-notice" class="notice notice-error bl-notice-conflict">
+			<div class="bl-conflict-copy">
+				<p><?php esc_html_e( 'It looks like Block Lab is active. Please deactivate it or migrate, as it will not work while Genesis Custom Blocks is active.', 'genesis-custom-blocks' ); ?></p>
+			</div>
+			<?php
+			if ( current_user_can( 'deactivate_plugins' ) ) :
+				?>
+				<a href="<?php echo esc_url( $deactivation_url ); ?>" class="bl-link-deactivate button button-primary">
+					<?php echo esc_html_x( 'Deactivate', 'plugin', 'genesis-custom-blocks' ); ?>
+				</a>
+			<?php endif; ?>
+		</div>
+		<?php
 	}
 }
