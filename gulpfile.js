@@ -50,7 +50,7 @@ gulp.task( 'remove:bundle', function () {
 } );
 
 gulp.task( 'wporg:prepare', function () {
-	return run( 'mkdir -p package/assets package/trunk package/trunk/language' ).exec();
+	return run( 'mkdir -p package/assets package/trunk package/tags package/trunk/language' ).exec();
 } )
 
 gulp.task( 'wporg:assets', function () {
@@ -108,7 +108,7 @@ gulp.task( 'clean:bundle', function () {
 } );
 
 gulp.task( 'copy:tag', function () {
-	return run( 'export BUILD_VERSION=$(grep "Version" genesis-custom-blocks.php | cut -f4 -d" "); cp -r package/trunk package/$BUILD_VERSION' ).exec();
+	return run( 'export BUILD_VERSION=$(grep "Version" genesis-custom-blocks.php | cut -f4 -d" "); cp -r package/trunk package/tags/$BUILD_VERSION' ).exec();
 } )
 
 gulp.task( 'create:zip', function () {
