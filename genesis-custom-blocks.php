@@ -54,5 +54,4 @@ genesis_custom_blocks()
 	->init();
 
 add_action( 'plugins_loaded', [ genesis_custom_blocks(), 'plugin_loaded' ] );
-add_action( 'plugins_loaded', [ genesis_custom_blocks(), 'require_helpers' ], 11 );
 add_action( 'plugins_loaded', [ genesis_custom_blocks(), 'require_deprecated' ], 11 );
