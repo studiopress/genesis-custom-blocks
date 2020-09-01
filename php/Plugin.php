@@ -150,7 +150,7 @@ class Plugin extends PluginAbstract {
 		</style>
 		<div id="gcb-conflict-notice" class="notice notice-error gcb-notice-conflict">
 			<div class="gcb-conflict-copy">
-				<p><?php esc_html_e( 'It looks like Block Lab is active. Please deactivate it, as it will not work while Genesis Custom Blocks is active.', 'genesis-custom-blocks' ); ?></p>
+				<p><?php esc_html_e( 'It looks like Block Lab is active. Please upgrade, so you can migrate to Genesis Custom Blocks.', 'genesis-custom-blocks' ); ?></p>
 			</div>
 			<?php
 			if ( current_user_can( 'deactivate_plugins' ) ) :
