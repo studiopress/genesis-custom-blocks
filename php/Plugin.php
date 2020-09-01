@@ -66,6 +66,8 @@ class Plugin extends PluginAbstract {
 				$onboarding->plugin_activation();
 			}
 		);
+
+		$this->require_helpers();
 	}
 
 	/**
@@ -74,7 +76,6 @@ class Plugin extends PluginAbstract {
 	public function plugin_loaded() {
 		$this->admin = new Admin();
 		$this->register_component( $this->admin );
-		$this->require_helpers();
 	}
 
 	/**
