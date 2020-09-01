@@ -21,7 +21,7 @@ gulp.task( 'version', function () {
 } )
 
 gulp.task( 'install:dependencies', function () {
-	return run( 'composer install -o --no-dev && npm install' ).exec();
+	return run( 'composer install -o --no-dev' ).exec();
 } )
 
 gulp.task( 'run:build', function () {
