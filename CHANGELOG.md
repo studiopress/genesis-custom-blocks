@@ -8,7 +8,7 @@ Plugin released!
 * 13 fields to add
 * Simple templating, with PHP files
 
-## 1.0.1 - 2020-09-01 ###
+### 1.0.1 - 2020-09-01 ###
 
 Fix an error if Block Lab 1.5.6 is also active
 
