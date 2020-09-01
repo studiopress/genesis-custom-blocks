@@ -74,6 +74,20 @@ class TestPlugin extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * Test plugin_conflict_notice.
+	 *
+	 * @covers \Genesis\CustomBlocks\Plugin::plugin_conflict_notice
+	 */
+	public function test_plugin_conflict_notice() {
+		ob_start();
+		$this->instance->plugin_conflict_notice();
+		$output = ob_get_clean();
+
+		$this->assertContains( 'It looks like Block Lab is active.', $output );
+		$this->assertContains( 'Deactivate', $output );
+	}
+
+	/**
 	 * Test get_template_locations.
 	 *
 	 * This is also essentially the same test as in TestUtil.

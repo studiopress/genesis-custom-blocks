@@ -96,7 +96,6 @@ class Plugin extends PluginAbstract {
 		require_once __DIR__ . '/BlockApi.php';
 	}
 
-
 	/**
 	 * Requires helper functions.
 	 */
@@ -121,10 +120,6 @@ class Plugin extends PluginAbstract {
 	 * An admin notice for another plugin being active.
 	 */
 	public function plugin_conflict_notice() {
-		if ( ! current_user_can( 'deactivate_plugins' ) ) {
-			return;
-		}
-
 		$plugin_file      = 'block-lab/block-lab.php';
 		$deactivation_url = add_query_arg(
 			[
