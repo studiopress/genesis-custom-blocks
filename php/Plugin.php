@@ -95,7 +95,7 @@ class Plugin extends PluginAbstract {
 	private function require_helpers() {
 		require_once __DIR__ . '/BlockApi.php';
 
-		if ( function_exists( 'block_field' ) || function_exists( 'block_row' ) ) {
+		if ( function_exists( 'block_field' ) || function_exists( 'block_value' ) ) {
 			return;
 		}
 
