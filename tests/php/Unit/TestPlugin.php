@@ -84,7 +84,6 @@ class TestPlugin extends \WP_UnitTestCase {
 		$output = ob_get_clean();
 
 		$this->assertContains( 'It looks like Block Lab is active.', $output );
-		$this->assertContains( 'Deactivate', $output );
 	}
 
 	/**
