@@ -66,6 +66,8 @@ class Plugin extends PluginAbstract {
 				$onboarding->plugin_activation();
 			}
 		);
+
+		$this->require_helpers();
 	}
 
 	/**
@@ -74,7 +76,6 @@ class Plugin extends PluginAbstract {
 	public function plugin_loaded() {
 		$this->admin = new Admin();
 		$this->register_component( $this->admin );
-		$this->require_helpers();
 	}
 
 	/**
@@ -92,7 +93,13 @@ class Plugin extends PluginAbstract {
 	 * Requires helper functions.
 	 */
 	private function require_helpers() {
-		require_once __DIR__ . '/Helpers.php';
 		require_once __DIR__ . '/BlockApi.php';
+
+		if ( function_exists( 'block_field' ) || function_exists( 'block_value' ) ) {
+			return;
+		}
+
+		require_once __DIR__ . '/Helpers.php';
+
 	}
 }
