@@ -28,6 +28,19 @@ commands:
             ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');")
             [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && sudo php composer-setup.php --install-dir=/bin --filename=composer || exit 1
 
+  svn-setup:
+    description: "Set up SVN"
+    steps:
+      - run:
+          command: |
+            sudo apt-get update && sudo apt-get install subversion
+            svn co https://plugins.svn.wordpress.org/genesis-custom-blocks package
+            npm ci && npm run gulp
+            cd package
+            svn up trunk
+            svn up tags
+            svn stat
+
 jobs:
   lint:
     executor:
@@ -99,6 +112,16 @@ jobs:
       - set-up-packages
       - run: npm run env start && npm run test:e2e
 
+  svn-deploy-tag:
+    executor:
+      name: php
+    working_directory: ~/project/svn_deploy
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - checkout
+      - svn-setup
+
 workflows:
   lint-all:
     jobs:
@@ -111,3 +134,12 @@ workflows:
               php-version: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
       - js-tests
       - e2e-tests
+  deploy:
+    jobs:
+      - svn-deploy-tag:
+          context: genesis-svn
+          filters:
+            tags:
+              only: /^\d+\.\d+\.\d+((?!built))$/
+            branches:
+              ignore: /.*/
