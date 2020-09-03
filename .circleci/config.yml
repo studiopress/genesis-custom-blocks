@@ -28,8 +28,13 @@ commands:
             ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');")
             [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && sudo php composer-setup.php --install-dir=/bin --filename=composer || exit 1
 
+  set-version:
+    description: "Set the VERSION environment variable"
+    steps:
+      - run: echo "export BUILD_VERSION=$(grep 'Version:' genesis-custom-blocks.php | cut -f4 -d' ')" >> ${BASH_ENV}
+
   svn-setup:
-    description: "Set up SVN"
+    description: "Set up SVN and check in the plugin"
     steps:
       - run:
           command: |
@@ -40,6 +45,7 @@ commands:
             svn up trunk
             svn up tags
             svn stat
+            source $BASH_ENV
 
 jobs:
   lint:
@@ -120,6 +126,7 @@ jobs:
       - attach_workspace:
           at: ~/project
       - checkout
+      - set-version
       - svn-setup
 
 workflows:
