@@ -33,19 +33,6 @@ commands:
     steps:
       - run: echo "export BUILD_VERSION=$(grep 'Version:' genesis-custom-blocks.php | cut -f4 -d' ')" >> ${BASH_ENV}
 
-  svn-setup:
-    description: "Set up SVN and check in the plugin"
-    steps:
-      - run:
-          command: |
-            sudo apt-get update && sudo apt-get install subversion
-            svn co https://plugins.svn.wordpress.org/genesis-custom-blocks package
-            npm ci && npm run gulp
-            cd package
-            svn add trunk/* tags/* assets/* --force
-            svn stat
-            source $BASH_ENV
-
 jobs:
   lint:
     executor:
@@ -126,7 +113,15 @@ jobs:
           at: ~/project
       - checkout
       - set-version
-      - svn-setup
+      - run:
+          command: |
+            sudo apt-get update && sudo apt-get install subversion
+            svn co https://plugins.svn.wordpress.org/genesis-custom-blocks package
+            npm ci && npm run gulp
+            cd package
+            svn add trunk/* tags/* assets/* --force
+            svn stat
+            source $BASH_ENV
 
 workflows:
   lint-all:
@@ -144,8 +139,3 @@ workflows:
     jobs:
       - svn-deploy-tag:
           context: genesis-svn
-          filters:
-            tags:
-              only: /^\d+\.\d+\.\d+((?!built))$/
-            branches:
-              ignore: /.*/
