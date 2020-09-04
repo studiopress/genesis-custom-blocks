@@ -45,13 +45,18 @@ gulp.task( 'bundle', function () {
 
 gulp.task( 'remove:bundle', function () {
 	return del( [
+		'package/assets/*',
 		'package/tags/*',
 		'package/trunk/*',
 	] );
 } );
 
 gulp.task( 'wporg:prepare', function () {
-	return run( 'mkdir -p package/trunk package/tags package/trunk/language' ).exec();
+	return run( 'mkdir -p package/assets package/trunk package/tags package/trunk/language' ).exec();
+} )
+
+gulp.task( 'wporg:assets', function () {
+	return run( 'mv package/prepare/assets/wporg/*.* package/assets' ).exec();
 } )
 
 gulp.task( 'wporg:readme', function ( cb ) {
@@ -76,6 +81,7 @@ gulp.task( 'wporg:trunk', function () {
 gulp.task( 'clean:bundle', function () {
 	return del( [
 		'package/trunk/package',
+		'package/trunk/assets/wporg',
 		'package/trunk/coverage',
 		'package/trunk/js/blocks',
 		'package/trunk/js/src',
@@ -118,6 +124,7 @@ gulp.task( 'default', gulp.series(
 	'run:build',
 	'bundle',
 	'wporg:prepare',
+	'wporg:assets',
 	'wporg:readme',
 	'wporg:trunk',
 	'version',

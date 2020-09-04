@@ -42,8 +42,7 @@ commands:
             svn co https://plugins.svn.wordpress.org/genesis-custom-blocks package
             npm ci && npm run gulp
             cd package
-            svn up trunk
-            svn up tags
+            svn add trunk/* tags/* assets/* --force
             svn stat
             source $BASH_ENV
 
