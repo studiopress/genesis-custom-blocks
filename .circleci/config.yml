@@ -115,13 +115,14 @@ jobs:
       - set-version
       - run:
           command: |
+            source $BASH_ENV
             sudo apt-get update && sudo apt-get install subversion
             svn co https://plugins.svn.wordpress.org/genesis-custom-blocks package
             npm ci && npm run gulp
             cd package
-            svn add trunk/* tags/* assets/* --force
+            svn add trunk/* tags/$BUILD_VERSION/* assets/*
+            echo "Here is the stat"
             svn stat
-            source $BASH_ENV
 
 workflows:
   lint-all:

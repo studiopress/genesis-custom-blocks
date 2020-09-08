@@ -109,7 +109,7 @@ gulp.task( 'clean:bundle', function () {
 } );
 
 gulp.task( 'copy:tag', function () {
-	return run( 'export BUILD_VERSION=$(grep "Version" genesis-custom-blocks.php | cut -f4 -d" "); cp -r package/trunk package/tags/$BUILD_VERSION' ).exec();
+	return run( 'export BUILD_VERSION=$(grep "Version" genesis-custom-blocks.php | cut -f4 -d" "); mkdir -p package/tags/$BUILD_VERSION/; cp -r package/trunk/* package/tags/$BUILD_VERSION/' ).exec();
 } )
 
 gulp.task( 'create:zip', function () {
