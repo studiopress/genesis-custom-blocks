@@ -104,7 +104,7 @@ jobs:
       - set-up-packages
       - run: npm run env start && npm run test:e2e
 
-  svn-deploy-tag:
+  svn-deploy:
     executor:
       name: php
     working_directory: ~/project/svn_deploy
@@ -120,7 +120,8 @@ jobs:
             svn co https://plugins.svn.wordpress.org/genesis-custom-blocks package
             npm ci && npm run gulp
             cd package
-            svn add trunk/* tags/$BUILD_VERSION/* assets/*
+            svn up trunk assets
+            svn up tags --depth=empty
             echo "Here is the stat"
             svn stat
 
@@ -138,5 +139,5 @@ workflows:
       - e2e-tests
   deploy:
     jobs:
-      - svn-deploy-tag:
+      - svn-deploy:
           context: genesis-svn
