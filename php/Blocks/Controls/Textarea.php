@@ -22,11 +22,11 @@ class Textarea extends ControlAbstract {
 	public $name = 'textarea';
 
 	/**
-	 * Control type.
+	 * Field variable type.
 	 *
 	 * @var string
 	 */
-	public $type = 'textarea';
+	public $type = 'string';
 
 	/**
 	 * Textarea constructor.

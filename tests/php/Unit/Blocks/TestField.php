@@ -116,4 +116,61 @@ class TestField extends \WP_UnitTestCase {
 		$this->assertArrayNotHasKey( 'settings', $config );
 		$this->assertEquals( 'Custom Setting', $config['custom'] );
 	}
+
+	/**
+	 * Test cast_value on a textarea field with no autop.
+	 *
+	 * @covers \Genesis\CustomBlocks\Blocks\Field::cast_value()
+	 */
+	public function test_cast_value_textarea_no_autop() {
+		$field         = new Field(
+			[
+				'type'    => 'text',
+				'control' => 'textarea',
+			]
+		);
+		$initial_value = "\n\n Here is some text \n\n This is more";
+
+		$this->assertEquals( $initial_value, $field->cast_value( $initial_value ) );
+	}
+
+	/**
+	 * Test cast_value on a textarea field with autop.
+	 *
+	 * @covers \Genesis\CustomBlocks\Blocks\Field::cast_value()
+	 */
+	public function test_cast_value_textarea_with_autop() {
+		$field = new Field(
+			[
+				'type'     => 'text',
+				'control'  => 'textarea',
+				'settings' => [ 'new_lines' => 'autop' ],
+			]
+		);
+
+		$this->assertEquals(
+			"<p>Here is some text<br />\n This is more</p>\n",
+			$field->cast_value( "Here is some text \n This is more" )
+		);
+	}
+
+	/**
+	 * Test cast_value on a textarea field with autobr.
+	 *
+	 * @covers \Genesis\CustomBlocks\Blocks\Field::cast_value()
+	 */
+	public function test_cast_value_textarea_with_autbr() {
+		$field = new Field(
+			[
+				'type'     => 'text',
+				'control'  => 'textarea',
+				'settings' => [ 'new_lines' => 'autobr' ],
+			]
+		);
+
+		$this->assertEquals(
+			"Here is some text <br />\n This is more <br />\n Here is another one",
+			$field->cast_value( "Here is some text \n This is more \n Here is another one" )
+		);
+	}
 }

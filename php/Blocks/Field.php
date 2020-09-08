@@ -152,17 +152,6 @@ class Field {
 			case 'string':
 				$value = strval( $value );
 				break;
-			case 'textarea':
-				$value = strval( $value );
-				if ( isset( $this->settings['new_lines'] ) ) {
-					if ( 'autop' === $this->settings['new_lines'] ) {
-						$value = wpautop( $value );
-					}
-					if ( 'autobr' === $this->settings['new_lines'] ) {
-						$value = nl2br( $value );
-					}
-				}
-				break;
 			case 'boolean':
 				if ( 1 === $value ) {
 					$value = true;
@@ -178,6 +167,18 @@ class Field {
 					$value = (array) $value;
 				}
 				break;
+		}
+
+		if ( 'textarea' === $this->control ) {
+			$value = strval( $value );
+			if ( isset( $this->settings['new_lines'] ) ) {
+				if ( 'autop' === $this->settings['new_lines'] ) {
+					$value = wpautop( $value );
+				}
+				if ( 'autobr' === $this->settings['new_lines'] ) {
+					$value = nl2br( $value );
+				}
+			}
 		}
 
 		return $value;
