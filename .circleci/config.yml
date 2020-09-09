@@ -120,9 +120,10 @@ jobs:
             svn co https://plugins.svn.wordpress.org/genesis-custom-blocks package
             npm ci && npm run gulp
             cd package
-            svn up trunk assets
-            svn up tags --depth=empty
-            echo "Here is the stat"
+            svn up trunk tags assets
+            svn stat | grep -E '^\?\s+((trunk)|(tags)|(assets))/' | cut -c8- | xargs svn add
+            svn stat | grep -E '^\!\s+((trunk)|(tags)|(assets))/' | cut -c8- | xargs svn rm
+            echo "Here is the svn stat about to be checked in:"
             svn stat
 
 workflows:
