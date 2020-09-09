@@ -120,7 +120,7 @@ jobs:
             svn co https://plugins.svn.wordpress.org/genesis-custom-blocks package
             npm ci && npm run gulp
             cd package
-            SVN_DIRECTORIES="trunks tags assets"
+            SVN_DIRECTORIES="trunk tags assets"
             svn stat $SVN_DIRECTORIES | { grep -E '^\?' || true; } | awk '{print $2}' | xargs -r svn add
             svn stat $SVN_DIRECTORIES | { grep -E '^\!' || true; } | awk '{print $2}' | xargs -r svn rm
             svn up $SVN_DIRECTORIES
