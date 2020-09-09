@@ -122,7 +122,6 @@ jobs:
             cd package
             svn up trunk tags assets
             svn stat | grep -E '^\?\s+((trunk)|(tags)|(assets))/' | cut -c8- | xargs svn add
-            svn stat | grep -E '^\!\s+((trunk)|(tags)|(assets))/' | cut -c8- | xargs svn rm
             echo "Here is the svn stat about to be checked in:"
             svn stat
 
