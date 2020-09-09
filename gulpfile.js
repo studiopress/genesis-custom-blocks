@@ -1,9 +1,7 @@
-const gulp = require( 'gulp' );
 const del = require( 'del' );
-const run = require( 'gulp-run' );
-
 const fs = require( 'fs' );
-const config = JSON.parse( fs.readFileSync( './package.json' ).toString() );
+const gulp = require( 'gulp' );
+const run = require( 'gulp-run' );
 
 gulp.task( 'verify:versions', function () {
 	return run( 'php bin/verify-versions.php' ).exec();
@@ -15,7 +13,6 @@ gulp.task( 'remove:bundle', function () {
 		'package/trunk/*',
 	] );
 } );
-
 
 gulp.task( 'install:dependencies', function () {
 	return run( 'composer install -o --no-dev' ).exec();
