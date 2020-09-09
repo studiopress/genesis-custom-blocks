@@ -159,7 +159,7 @@ class TestField extends \WP_UnitTestCase {
 	 *
 	 * @covers \Genesis\CustomBlocks\Blocks\Field::cast_value()
 	 */
-	public function test_cast_value_textarea_with_autbr() {
+	public function test_cast_value_textarea_with_autobr() {
 		$field = new Field(
 			[
 				'type'     => 'text',
