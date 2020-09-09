@@ -141,3 +141,8 @@ workflows:
     jobs:
       - svn-deploy:
           context: genesis-svn
+          filters:
+            tags:
+              only: /^\d+\.\d+\.\d+$/
+            branches:
+              ignore: /.*/
