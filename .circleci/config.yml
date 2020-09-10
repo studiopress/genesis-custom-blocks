@@ -122,10 +122,7 @@ jobs:
             svn stat
 
 workflows:
-  lint-all:
-    jobs:
-      - lint
-  tests:
+  test-deploy:
     jobs:
       - php-tests:
           matrix:
@@ -133,10 +130,12 @@ workflows:
               php-version: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
       - js-tests
       - e2e-tests
-  deploy:
-    jobs:
+      - lint
       - svn-deploy:
           context: genesis-svn
+          requires:
+            - php-tests
+            - lint
           filters:
             tags:
               only: /^\d+\.\d+\.\d+$/
