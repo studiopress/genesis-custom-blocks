@@ -120,6 +120,7 @@ jobs:
             svn up $SVN_DIRECTORIES
             echo "Here is the svn stat about to be checked in:"
             svn stat
+            svn ci -m "Tagging ${BUILD_VERSION} from GitHub" --no-auth-cache --non-interactive --username "${SVN_USERNAME}" --password "${SVN_PASSWORD}"
 
 workflows:
   test-deploy:
