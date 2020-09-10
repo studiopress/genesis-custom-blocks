@@ -109,6 +109,7 @@ jobs:
       - checkout
       - run:
           command: |
+            BUILD_VERSION=$(grep 'Version:' genesis-custom-blocks.php | cut -f4 -d' ')
             sudo apt-get update && sudo apt-get install subversion
             svn co https://plugins.svn.wordpress.org/genesis-custom-blocks package
             npm ci && npm run gulp
