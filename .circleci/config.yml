@@ -109,7 +109,6 @@ jobs:
       - checkout
       - run:
           command: |
-            source $BASH_ENV
             sudo apt-get update && sudo apt-get install subversion
             svn co https://plugins.svn.wordpress.org/genesis-custom-blocks package
             npm ci && npm run gulp
