@@ -99,11 +99,31 @@ jobs:
       - set-up-packages
       - run: npm run env start && npm run test:e2e
 
+  svn-deploy:
+    executor:
+      name: php
+    working_directory: ~/project/svn_deploy
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - checkout
+      - run:
+          command: |
+            BUILD_VERSION=$(grep 'Version:' genesis-custom-blocks.php | cut -f4 -d' ')
+            sudo apt-get update && sudo apt-get install subversion
+            svn co https://plugins.svn.wordpress.org/genesis-custom-blocks package
+            npm ci && npm run gulp
+            cd package
+            SVN_DIRECTORIES="trunk tags assets"
+            svn stat $SVN_DIRECTORIES | { grep -E '^\?' || true; } | awk '{print $2}' | xargs -r svn add
+            svn stat $SVN_DIRECTORIES | { grep -E '^\!' || true; } | awk '{print $2}' | xargs -r svn rm
+            svn up $SVN_DIRECTORIES
+            echo "Here is the svn stat about to be checked in:"
+            svn stat
+            svn ci -m "Tagging ${BUILD_VERSION} from GitHub" --no-auth-cache --non-interactive --username "${SVN_USERNAME}" --password "${SVN_PASSWORD}"
+
 workflows:
-  lint-all:
-    jobs:
-      - lint
-  tests:
+  test-deploy:
     jobs:
       - php-tests:
           matrix:
@@ -111,3 +131,14 @@ workflows:
               php-version: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
       - js-tests
       - e2e-tests
+      - lint
+      - svn-deploy:
+          context: genesis-svn
+          requires:
+            - php-tests
+            - lint
+          filters:
+            tags:
+              only: /^\d+\.\d+\.\d+$/
+            branches:
+              ignore: /.*/

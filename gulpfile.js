@@ -1,32 +1,27 @@
-var gulp = require( 'gulp' );
-var merge = require('merge-stream');
-var del = require( 'del' );
-var run = require( 'gulp-run' );
-var replace = require( 'gulp-string-replace' );
-
-var fs = require( 'fs' );
-var config = JSON.parse( fs.readFileSync( './package.json' ) );
+const del = require( 'del' );
+const fs = require( 'fs' );
+const gulp = require( 'gulp' );
+const run = require( 'gulp-run' );
 
 gulp.task( 'verify:versions', function () {
 	return run( 'php bin/verify-versions.php' ).exec();
-} )
+} );
 
-gulp.task( 'version', function () {
-	var pluginStream = gulp.src( [ 'genesis-custom-blocks.php' ] )
-		.pipe( replace( new RegExp( /Version:\s*(.*)/, 'g' ), "Version: " + config.version ) )
-		.pipe(gulp.dest('./package/trunk/'))
-		.pipe(gulp.dest('./'))
-
-	return pluginStream;
-} )
+gulp.task( 'remove:bundle', function () {
+	return del( [
+		'package/assets/*',
+		'package/trunk/*',
+	] );
+} );
 
 gulp.task( 'install:dependencies', function () {
 	return run( 'composer install -o --no-dev' ).exec();
-} )
+} );
+
 
 gulp.task( 'run:build', function () {
 	return run( 'npm run build' ).exec();
-} )
+} );
 
 gulp.task( 'bundle', function () {
 	return gulp.src( [
@@ -43,40 +38,31 @@ gulp.task( 'bundle', function () {
 	.pipe( gulp.dest( 'package/prepare' ) );
 } );
 
-gulp.task( 'remove:bundle', function () {
-	return del( [
-		'package/assets/*',
-		'package/tags/*',
-		'package/trunk/*',
-	] );
-} );
-
 gulp.task( 'wporg:prepare', function () {
 	return run( 'mkdir -p package/assets package/trunk package/tags package/trunk/language' ).exec();
-} )
+} );
 
 gulp.task( 'wporg:assets', function () {
 	return run( 'mv package/prepare/assets/wporg/*.* package/assets' ).exec();
-} )
+} );
 
 gulp.task( 'wporg:readme', function ( cb ) {
-	var changelog = fs.readFileSync( './CHANGELOG.md' ).toString();
+	const changelog = fs.readFileSync( './CHANGELOG.md' ).toString();
 
-	var readme = fs.readFileSync( './README.md' )
+	const readme = fs.readFileSync( './README.md' )
 		.toString()
 		.concat( '\n' + changelog )
-		.replace( new RegExp( /Stable tag:\s*(.*)/, 'g' ), "Stable tag: " + config.version )
 		.replace( new RegExp( '###', 'g'), '=' )
 		.replace( new RegExp( '##', 'g'), '==' )
 		.replace( new RegExp( '#', 'g'), '===' )
 		.replace( new RegExp( '__', 'g'), '*' );
 
 	return fs.writeFile( 'package/trunk/readme.txt', readme, cb );
-} )
+} );
 
 gulp.task( 'wporg:trunk', function () {
 	return run( 'mv package/prepare/* package/trunk' ).exec();
-} )
+} );
 
 gulp.task( 'clean:bundle', function () {
 	return del( [
@@ -110,12 +96,12 @@ gulp.task( 'clean:bundle', function () {
 } );
 
 gulp.task( 'copy:tag', function () {
-	return run( 'export BUILD_VERSION=$(grep "Version" genesis-custom-blocks.php | cut -f4 -d" "); cp -r package/trunk package/tags/$BUILD_VERSION' ).exec();
-} )
+	return run( 'export BUILD_VERSION=$(grep "Version" genesis-custom-blocks.php | cut -f4 -d" "); [ -z "$BUILD_VERSION" ] && exit 1; mkdir -p package/tags/$BUILD_VERSION/; rm -rf package/tags/$BUILD_VERSION/*; cp -r package/trunk/* package/tags/$BUILD_VERSION/' ).exec();
+} );
 
 gulp.task( 'create:zip', function () {
 	return run( 'cp -r package/trunk package/genesis-custom-blocks; export BUILD_VERSION=$(grep "Version" genesis-custom-blocks.php | cut -f4 -d" "); cd package; pwd; zip -r genesis-custom-blocks.$BUILD_VERSION.zip genesis-custom-blocks/; echo "ZIP of build: $(pwd)/genesis-custom-blocks.$BUILD_VERSION.zip"; rm -rf genesis-custom-blocks' ).exec();
-} )
+} );
 
 gulp.task( 'default', gulp.series(
 	'verify:versions',
@@ -127,7 +113,6 @@ gulp.task( 'default', gulp.series(
 	'wporg:assets',
 	'wporg:readme',
 	'wporg:trunk',
-	'version',
 	'clean:bundle',
 	'copy:tag',
 	'create:zip'
