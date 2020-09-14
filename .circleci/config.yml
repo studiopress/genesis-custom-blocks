@@ -123,20 +123,41 @@ jobs:
             svn ci -m "Tagging ${BUILD_VERSION} from GitHub" --no-auth-cache --non-interactive --username "${SVN_USERNAME}" --password "${SVN_PASSWORD}"
 
 workflows:
-  test-deploy:
+  lint-all:
+    jobs:
+      - lint
+
+  test-php:
+    when:
+      or:
+        - or: [ git diff --name-only << pipeline.git.revision >> << pipeline.git.revision >> | grep -E '\.php$' ]
+        - or: [ pipeline.git.tag ]
     jobs:
       - php-tests:
           matrix:
             parameters:
               php-version: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
+
+  test-js:
+    when:
+      or:
+        - or: [ git diff --name-only << pipeline.git.revision >> << pipeline.git.revision >> | grep -E '\.js$' ]
+        - or: [ pipeline.git.tag ]
+    jobs:
       - js-tests
+
+  test-e2e:
+    when:
+      or:
+        - or: [ git diff --name-only << pipeline.git.revision >> << pipeline.git.revision >> | grep -E '\.((js)|(css)|(php))$' ]
+        - or: [ pipeline.git.tag ]
+    jobs:
       - e2e-tests
-      - lint
+
+  deploy:
+    jobs:
       - svn-deploy:
           context: genesis-svn
-          requires:
-            - php-tests
-            - lint
           filters:
             tags:
               only: /^\d+\.\d+\.\d+$/
