@@ -130,7 +130,7 @@ workflows:
   test-php:
     when:
       or:
-        - ''
+        - $(git diff --name-only << pipeline.git.revision >> << pipeline.git.revision >> | grep -E '\.php$')
     jobs:
       - php-tests:
           matrix:
