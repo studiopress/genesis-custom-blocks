@@ -130,8 +130,8 @@ workflows:
   test-php:
     when:
       or:
-        - or: [ git diff --name-only << pipeline.git.revision >> << pipeline.git.revision >> | grep -E '\.php$' ]
-        - or: [ pipeline.git.tag ]
+        - git diff --name-only << pipeline.git.revision >> << pipeline.git.revision >> | grep -E '\.php$'
+        - pipeline.git.tag
     jobs:
       - php-tests:
           matrix:
@@ -141,16 +141,16 @@ workflows:
   test-js:
     when:
       or:
-        - or: [ git diff --name-only << pipeline.git.revision >> << pipeline.git.revision >> | grep -E '\.js$' ]
-        - or: [ pipeline.git.tag ]
+        - git diff --name-only << pipeline.git.revision >> << pipeline.git.revision >> | grep -E '\.js$'
+        - pipeline.git.tag
     jobs:
       - js-tests
 
   test-e2e:
     when:
       or:
-        - or: [ git diff --name-only << pipeline.git.revision >> << pipeline.git.revision >> | grep -E '\.((js)|(css)|(php))$' ]
-        - or: [ pipeline.git.tag ]
+        - git diff --name-only << pipeline.git.revision >> << pipeline.git.revision >> | grep -E '\.((js)|(css)|(php))$'
+        - pipeline.git.tag
     jobs:
       - e2e-tests
 
