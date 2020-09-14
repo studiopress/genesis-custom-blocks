@@ -132,7 +132,7 @@ workflows:
   test-php:
     when:
       or:
-        - or: git log --name-status --exit-code --format=oneline << pipeline.git.revision >>...<< pipeline.git.base_revision >> | grep -E '\.php$'
+        - git log --name-status --exit-code --format=oneline << pipeline.git.revision >>...<< pipeline.git.base_revision >> | grep -E '\.php$'
     jobs:
       - php-tests:
           matrix:
@@ -149,7 +149,7 @@ workflows:
   test-e2e:
     when:
       or:
-        - or: [ git diff --name-only << pipeline.git.revision >> << pipeline.git.base_revision >> | grep '\.((js)|(css)|(php))$' ]
+        - git diff --name-only << pipeline.git.revision >> << pipeline.git.base_revision >> | grep '\.((js)|(css)|(php))$'
     jobs:
       - e2e-tests
 
