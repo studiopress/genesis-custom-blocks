@@ -64,6 +64,8 @@ jobs:
       - run:
           name: Installing WordPress and setting up tests
           command: |
+            echo "Here is the diff:"
+            git diff --name-only << pipeline.git.revision >> << pipeline.git.base_revision >> | grep '\.((js)|(css)|(php))$'
             git clone git://develop.git.wordpress.org/ wordpress-develop
             cp wordpress-develop/wp-tests-config-sample.php wordpress-develop/wp-tests-config.php
             sed -i 's/localhost/127.0.0.1/g' wordpress-develop/wp-tests-config.php
@@ -147,7 +149,7 @@ workflows:
   test-e2e:
     when:
       or:
-        - git log --name-status --exit-code --format=oneline << pipeline.git.revision >>...<< pipeline.git.base_revision >> | grep '\.((js)|(css)|(php))$' | xargs echo
+        - git diff --name-only << pipeline.git.revision >> << pipeline.git.base_revision >> | grep '\.((js)|(css)|(php))$'
     jobs:
       - e2e-tests
 
