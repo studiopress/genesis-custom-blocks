@@ -132,7 +132,7 @@ workflows:
   test-php:
     when:
       and:
-        - or: [ $(git log --name-status --exit-code --format=oneline << pipeline.git.revision >>...<< pipeline.git.base_revision >> | grep -E '\.php$' | xargs echo ) ]
+        - equal: [ true, -n $(git log --name-status --exit-code --format=oneline << pipeline.git.revision >>...<< pipeline.git.base_revision >> | grep -E '\.php$' | xargs echo ) ]
     jobs:
       - php-tests:
           matrix:
