@@ -19,7 +19,7 @@
 
 use Genesis\CustomBlocks\Plugin;
 
-// If accessed directly, exit.
+// Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
