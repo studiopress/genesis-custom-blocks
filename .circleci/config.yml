@@ -86,6 +86,8 @@ jobs:
       - node/install:
           node-version: lts
       - run: npm ci && npm run test:js
+      - run: echo "Here are the staged JS files:"
+      - run: git diff --name-only << pipeline.git.revision >> << pipeline.git.revision >> | grep -E '\.js$'
 
   e2e-tests:
     machine:
