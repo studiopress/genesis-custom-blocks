@@ -1,5 +1,5 @@
 /**
- * Used for editing Blocks.
+ * This is used for editing Blocks.
  *
  * @copyright Copyright(c) 2020, Genesis Custom Blocks
  * @license GPL-2.0-only
