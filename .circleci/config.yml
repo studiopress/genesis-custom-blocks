@@ -142,14 +142,14 @@ workflows:
   test-js:
     when:
       or:
-        - or: [ $(git diff --name-only << pipeline.git.revision >> << pipeline.git.base_revision >> | grep '\.js$') ]
+        - equal: [ true, -z $(git diff --name-only << pipeline.git.revision >> << pipeline.git.base_revision >> | grep '\.js$') ]
     jobs:
       - js-tests
 
   test-e2e:
     when:
       or:
-        - equal: [ true, $(git diff --name-only << pipeline.git.revision >> << pipeline.git.base_revision >> | grep '\.((js)|(css)|(php))$') ]
+        - equal: [ true, -n $(git diff --name-only << pipeline.git.revision >> << pipeline.git.base_revision >> | grep '\.((js)|(css)|(php))$') ]
     jobs:
       - e2e-tests
 
