@@ -24,7 +24,7 @@ if ( ! preg_match( '/Stable tag:\s+(?P<version>\S+)/i', $readme_md, $matches ) )
 	exit( 1 );
 }
 
-$versions['readme.txt#stable-tag'] = $matches['version'];
+$versions['README.md#stable-tag'] = $matches['version'];
 
 $plugin_file = file_get_contents( dirname( __FILE__ ) . '/../genesis-custom-blocks.php' );
 if ( ! preg_match( '/\*\s*Version:\s*(?P<version>\d+\.\d+(?:.\d+)?(-\w+)?)/', $plugin_file, $matches ) ) {
