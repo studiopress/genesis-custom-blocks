@@ -19,4 +19,4 @@ Fix an error if Block Lab 1.5.6 is also active
 
 Fix a notice from the Textarea field
 
-* Fixes a notice from the Textarea field having the wrong type. [#33](https://github.com/studiopress/genesis-custom-blocks/pull/33)
+* Fixes a notice from the Textarea field having the wrong type. [PR 33](https://github.com/studiopress/genesis-custom-blocks/pull/33)
