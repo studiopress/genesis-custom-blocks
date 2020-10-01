@@ -57,8 +57,10 @@ jobs:
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
       - checkout
-      - skip/skip_unchanged:
-          paths: php tests/php
+      - run:
+          name: Check if changes to relevant files
+          command: |
+            changes=`git show --name-only ${CIRCLE_SHA1} | tail -n +7` if [ "$changes" = ".circleci/config.yml" ]; then echo "Only found a configuration change. Stopping build" circleci-agent step halt fi
       - run:
           name: Installing the mysqli extension
           command: sudo docker-php-ext-install mysqli
@@ -85,8 +87,10 @@ jobs:
     executor: php
     steps:
       - checkout
-      - skip/skip_unchanged:
-          paths: js tests/js
+      - run:
+          name: Check if changes to relevant files
+          command: |
+            changes=`git show --name-only ${CIRCLE_SHA1} | tail -n +7` if [ "$changes" = ".circleci/config.yml" ]; then echo "Only found a configuration change. Stopping build" circleci-agent step halt fi
       - node/install:
           node-version: lts
       - run: npm ci && npm run test:js
