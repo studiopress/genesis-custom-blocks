@@ -57,7 +57,7 @@ class Field {
 	public $settings = [];
 
 	/**
-	 * Field constructor.
+	 * The field constructor.
 	 *
 	 * @param array $config An associative array with keys corresponding to the Field's properties.
 	 */
