@@ -56,6 +56,10 @@ jobs:
           MYSQL_PASSWORD: <insert password here>
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
+      - checkout:
+          path: *PLUGIN_PATH
+      - skip/skip_unchanged:
+          paths: php tests/php
       - run:
           name: Installing the mysqli extension
           command: sudo docker-php-ext-install mysqli
@@ -70,10 +74,6 @@ jobs:
             sed -i 's/localhost/127.0.0.1/g' wordpress-develop/wp-tests-config.php
             sed -i 's/yourpasswordhere/<insert password here>/g' wordpress-develop/wp-tests-config.php
       - run: mkdir -p *PLUGIN_PATH
-      - checkout:
-          path: *PLUGIN_PATH
-      - skip/skip_unchanged:
-          paths: php tests/php
       - run:
           name: Running PHPUnit
           working_directory: *PLUGIN_PATH
