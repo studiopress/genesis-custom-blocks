@@ -86,9 +86,10 @@ jobs:
       - run:
           name: Check if changes to relevant files
           command: |
-            CHANGES=`git show --name-only ${CIRCLE_SHA1} | tail -n +7`
-            if [ "$CHANGES" = ".circleci/config.yml" ]; then
-            echo "Only found a configuration change. Stopping build"
+            PATHS="js tests/js"
+            CHANGED_FILES="$(git diff << parameters.git_base_branch >>...${CIRCLE_SHA1} --name-only --diff-filter=ACMRT $PATHS)";
+            if [ -n "$CHANGED_FILES" ]; then
+            echo "No change to JavaScript files. Stopping build"
             circleci-agent step halt
             fi
       - node/install:
