@@ -142,11 +142,7 @@ jobs:
             svn ci -m "Tagging ${BUILD_VERSION} from GitHub" --no-auth-cache --non-interactive --username "${SVN_USERNAME}" --password "${SVN_PASSWORD}"
 
 workflows:
-  lint-all:
-    jobs:
-      - lint
-
-  test-php:
+  test-deploy:
     jobs:
       - php-tests:
           filters:
@@ -169,6 +165,9 @@ workflows:
               only: /.*/
       - svn-deploy:
           context: genesis-svn
+          requires:
+            - php-tests
+            - lint
           filters:
             tags:
               only: /^\d+\.\d+\.\d+$/
