@@ -202,7 +202,7 @@ class Loader extends ComponentAbstract {
 	}
 
 	/**
-	 * Registers a block.
+	 * Registers a GCB block.
 	 *
 	 * @param string $block_name The name of the block, including namespace.
 	 * @param Block  $block      The block to register.
