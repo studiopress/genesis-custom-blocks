@@ -58,10 +58,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Check if changes to relevant files
-          command: |
-            changes=`git show --name-only ${CIRCLE_SHA1} | tail -n +7` if [ "$changes" = ".circleci/config.yml" ]; then echo "Only found a configuration change. Stopping build" circleci-agent step halt fi
-      - run:
           name: Installing the mysqli extension
           command: sudo docker-php-ext-install mysqli
       - install-composer
@@ -90,7 +86,11 @@ jobs:
       - run:
           name: Check if changes to relevant files
           command: |
-            changes=`git show --name-only ${CIRCLE_SHA1} | tail -n +7` if [ "$changes" = ".circleci/config.yml" ]; then echo "Only found a configuration change. Stopping build" circleci-agent step halt fi
+            CHANGES=`git show --name-only ${CIRCLE_SHA1} | tail -n +7`
+            if [ "$CHANGES" = ".circleci/config.yml" ]; then
+            echo "Only found a configuration change. Stopping build"
+            circleci-agent step halt
+            fi
       - node/install:
           node-version: lts
       - run: npm ci && npm run test:js
