@@ -29,6 +29,18 @@ commands:
             ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');")
             [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && sudo php composer-setup.php --install-dir=/bin --filename=composer || exit 1
 
+  conditionally-skip:
+    description: "Skip if no changes to relevant files"
+    parameters:
+      directories:
+        type: string
+    steps:
+      - run:
+          command: |
+            PATHS="js tests/js"
+            CHANGED_FILES="$( git diff HEAD^ HEAD --name-only --diff-filter=ACMRT << parameters.directories >> )"
+            if [ -z "$CHANGED_FILES" ]; then echo "No change to relevant file, exiting build" && circleci-agent step halt; fi
+
 jobs:
   lint:
     executor:
@@ -56,7 +68,10 @@ jobs:
           MYSQL_PASSWORD: <insert password here>
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
-      - checkout
+      - checkout:
+          path: *PLUGIN_PATH
+      - conditionally-skip:
+          directories: php tests/php
       - run:
           name: Installing the mysqli extension
           command: sudo docker-php-ext-install mysqli
@@ -83,15 +98,8 @@ jobs:
     executor: php
     steps:
       - checkout
-      - run:
-          name: Check if changes to relevant files
-          command: |
-            PATHS="js tests/js"
-            CHANGED_FILES="$( git diff HEAD^ HEAD --name-only --diff-filter=ACMRT js tests/js )"
-            if [ -n "$CHANGED_FILES" ]; then
-            echo "No change to JavaScript files. Stopping build"
-            circleci-agent step halt
-            fi
+      - conditionally-skip:
+          directories: js tests/js
       - node/install:
           node-version: lts
       - run: npm ci && npm run test:js
@@ -101,6 +109,8 @@ jobs:
       image: ubuntu-1604:202004-01
     steps:
       - checkout
+      - conditionally-skip:
+          directories: php js
       - run: sudo apt-get update && sudo apt-get install php php-xml
       - install-composer
       - node/install:
