@@ -110,7 +110,7 @@ jobs:
     steps:
       - checkout
       - conditionally-skip:
-          directories: php js
+          directories: php js css tests/e2e
       - run: sudo apt-get update && sudo apt-get install php php-xml
       - install-composer
       - node/install:
