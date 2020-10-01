@@ -87,7 +87,7 @@ jobs:
           name: Check if changes to relevant files
           command: |
             PATHS="js tests/js"
-            CHANGED_FILES="$(git diff << parameters.git_base_branch >>...${CIRCLE_SHA1} --name-only --diff-filter=ACMRT $PATHS)";
+            CHANGED_FILES="$(git diff HEAD^ HEAD --diff-filter=ACMRT 'js tests/js' )"
             if [ -n "$CHANGED_FILES" ]; then
             echo "No change to JavaScript files. Stopping build"
             circleci-agent step halt
