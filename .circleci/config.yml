@@ -56,8 +56,7 @@ jobs:
           MYSQL_PASSWORD: <insert password here>
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
-      - checkout:
-          path: *PLUGIN_PATH
+      - checkout
       - skip/skip_unchanged:
           paths: php tests/php
       - run:
