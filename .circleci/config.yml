@@ -149,20 +149,24 @@ workflows:
   test-php:
     jobs:
       - php-tests:
+          filters:
+            tags:
+              only: /.*/
           matrix:
             parameters:
               php-version: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
-
-  test-js:
-    jobs:
-      - js-tests
-
-  test-e2e:
-    jobs:
-      - e2e-tests
-
-  deploy:
-    jobs:
+      - js-tests:
+          filters:
+            tags:
+              only: /.*/
+      - e2e-tests:
+          filters:
+            tags:
+              only: /.*/
+      - lint:
+          filters:
+            tags:
+              only: /.*/
       - svn-deploy:
           context: genesis-svn
           filters:
