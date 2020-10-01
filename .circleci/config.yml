@@ -29,7 +29,7 @@ commands:
             [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && sudo php composer-setup.php --install-dir=/bin --filename=composer || exit 1
 
   conditionally-skip:
-    description: "Skip if no changes to relevant files"
+    description: "Skip if the current commit has no change in relevant directories"
     parameters:
       directories:
         type: string
