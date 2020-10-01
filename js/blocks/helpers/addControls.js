@@ -6,7 +6,7 @@
 import controls from '../controls';
 
 /**
- * This adds this plugin's controls.
+ * Adds this plugin's controls.
  *
  * @param {Object} initialControls The initial controls to filter.
  * @return {Object} The filtered controls.

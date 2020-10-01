@@ -35,6 +35,7 @@ commands:
         type: string
     steps:
       - run:
+          name: Checking whether relevant files were changed
           command: |
             CHANGED_FILES="$( git diff HEAD^ HEAD --name-only --diff-filter=ACMRT << parameters.directories >> )"
             if [ -z "$CHANGED_FILES" ] && [ -z "$CIRCLE_TAG" ]; then echo "No change to relevant file, exiting job" && circleci-agent step halt; fi
