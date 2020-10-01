@@ -36,7 +36,6 @@ commands:
     steps:
       - run:
           command: |
-            PATHS="js tests/js"
             CHANGED_FILES="$( git diff HEAD^ HEAD --name-only --diff-filter=ACMRT << parameters.directories >> )"
             if [ -z "$CHANGED_FILES" ] && [ -z "$CIRCLE_TAG" ]; then echo "No change to relevant file, exiting job" && circleci-agent step halt; fi
 
