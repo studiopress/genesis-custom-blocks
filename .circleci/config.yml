@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   node: circleci/node@3.0.0
-  skip: theodo/skip@1
+  skip: theodo/skip@0.0.4
 
 references:
   PLUGIN_PATH: &PLUGIN_PATH
