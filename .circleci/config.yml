@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   node: circleci/node@3.0.0
+  skip: theodo/skip@1
 
 references:
   PLUGIN_PATH: &PLUGIN_PATH
@@ -55,6 +56,8 @@ jobs:
           MYSQL_PASSWORD: <insert password here>
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
+      - skip/skip_unchanged:
+          paths: php tests/php
       - run:
           name: Installing the mysqli extension
           command: sudo docker-php-ext-install mysqli
@@ -130,9 +133,6 @@ workflows:
       - lint
 
   test-php:
-    when:
-      or:
-        - git log --name-status --exit-code --format=oneline << pipeline.git.revision >>...<< pipeline.git.base_revision >> | grep -E '\.php$'
     jobs:
       - php-tests:
           matrix:
@@ -140,16 +140,10 @@ workflows:
               php-version: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
 
   test-js:
-    when:
-      or:
-        - or: [ git diff --name-only << pipeline.git.revision >> << pipeline.git.base_revision >> | grep '\.js$' ]
     jobs:
       - js-tests
 
   test-e2e:
-    when:
-      or:
-        - git diff --name-only << pipeline.git.revision >> << pipeline.git.base_revision >> | grep '\.((js)|(css)|(php))$'
     jobs:
       - e2e-tests
 
