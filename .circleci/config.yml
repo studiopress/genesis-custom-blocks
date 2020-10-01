@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   node: circleci/node@3.0.0
-  skip: theodo/skip@0.0.4
 
 references:
   PLUGIN_PATH: &PLUGIN_PATH
@@ -39,7 +38,7 @@ commands:
           command: |
             PATHS="js tests/js"
             CHANGED_FILES="$( git diff HEAD^ HEAD --name-only --diff-filter=ACMRT << parameters.directories >> )"
-            if [ -z "$CHANGED_FILES" ]; then echo "No change to relevant file, exiting build" && circleci-agent step halt; fi
+            if [ -z "$CHANGED_FILES" ]; then echo "No change to relevant file, exiting job" && circleci-agent step halt; fi
 
 jobs:
   lint:
@@ -68,8 +67,7 @@ jobs:
           MYSQL_PASSWORD: <insert password here>
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
-      - checkout:
-          path: *PLUGIN_PATH
+      - checkout
       - conditionally-skip:
           directories: php tests/php
       - run:
@@ -86,6 +84,8 @@ jobs:
             sed -i 's/localhost/127.0.0.1/g' wordpress-develop/wp-tests-config.php
             sed -i 's/yourpasswordhere/<insert password here>/g' wordpress-develop/wp-tests-config.php
       - run: mkdir -p *PLUGIN_PATH
+      - checkout:
+          path: *PLUGIN_PATH
       - run:
           name: Running PHPUnit
           working_directory: *PLUGIN_PATH
