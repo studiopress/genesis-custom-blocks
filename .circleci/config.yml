@@ -85,6 +85,8 @@ jobs:
     executor: php
     steps:
       - checkout
+      - skip/skip_unchanged:
+          paths: js tests/js
       - node/install:
           node-version: lts
       - run: npm ci && npm run test:js
