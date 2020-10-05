@@ -28,6 +28,18 @@ commands:
             ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');")
             [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && sudo php composer-setup.php --install-dir=/bin --filename=composer || exit 1
 
+  conditionally-skip:
+    description: "Skip if the current commit has no change in relevant directories"
+    parameters:
+      directories:
+        type: string
+    steps:
+      - run:
+          name: Checking whether relevant files were changed
+          command: |
+            CHANGED_FILES="$( git diff HEAD^ HEAD --name-only --diff-filter=ACMRT << parameters.directories >> )"
+            if [ -z "$CHANGED_FILES" ] && [ -z "$CIRCLE_TAG" ]; then echo "No change to relevant file, exiting job" && circleci-agent step halt; fi
+
 jobs:
   lint:
     executor:
@@ -55,6 +67,9 @@ jobs:
           MYSQL_PASSWORD: <insert password here>
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
+      - checkout
+      - conditionally-skip:
+          directories: php tests/php
       - run:
           name: Installing the mysqli extension
           command: sudo docker-php-ext-install mysqli
@@ -83,6 +98,8 @@ jobs:
     executor: php
     steps:
       - checkout
+      - conditionally-skip:
+          directories: js tests/js
       - node/install:
           node-version: lts
       - run: npm ci && npm run test:js
@@ -92,6 +109,8 @@ jobs:
       image: ubuntu-1604:202004-01
     steps:
       - checkout
+      - conditionally-skip:
+          directories: php js css tests/e2e
       - run: sudo apt-get update && sudo apt-get install php php-xml
       - install-composer
       - node/install:
