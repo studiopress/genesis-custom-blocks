@@ -592,7 +592,7 @@ class Loader extends ComponentAbstract {
 	 * @see https://core.trac.wordpress.org/ticket/49680#comment:15
 	 *
 	 * @param array $endpoints The REST API endpoints, an associative array of $route => $handlers.
-	 * @return array The filtered endpoints, with the Block Lab endpoints allowing POST requests.
+	 * @return array The filtered endpoints, with the GCB endpoints allowing POST requests.
 	 */
 	public function add_rest_method( $endpoints ) {
 		if ( is_wp_version_compatible( '5.6' ) ) {
