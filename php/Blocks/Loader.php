@@ -589,6 +589,7 @@ class Loader extends ComponentAbstract {
 	 * The <ServerSideRender> uses the httpMethod of 'Post' to handle a larger attributes object.
 	 * The method is added in WP 5.6+, so no need to add it there.
 	 *
+	 * @todo: Delete when this plugin's 'Requires at least' is bumped to 5.6.
 	 * @see https://core.trac.wordpress.org/ticket/49680#comment:15
 	 *
 	 * @param array $endpoints The REST API endpoints, an associative array of $route => $handlers.
