@@ -503,12 +503,7 @@ class TestLoader extends AbstractTemplate {
 			$initial_routes[ $gcb_block_route ]['methods'] = $expected_methods;
 		}
 
-		$actual = $this->instance->add_rest_method(
-			[
-				$gcb_block_route => $this->mock_handler,
-			]
-		);
-
+		$actual = $this->instance->add_rest_method( $initial_routes );
 		$this->assertEquals(
 			[
 				'methods'  => $expected_methods,
