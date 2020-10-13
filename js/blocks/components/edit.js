@@ -38,6 +38,7 @@ const Edit = ( { blockProps, block } ) => {
 						block={ `genesis-custom-blocks/${ block.name }` }
 						attributes={ attributes }
 						className="genesis-custom-blocks-editor__ssr"
+						httpMethod="POST"
 					/>
 				) }
 			</div>

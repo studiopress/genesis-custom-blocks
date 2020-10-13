@@ -26,7 +26,7 @@ class TestLoader extends AbstractTemplate {
 	 *
 	 * @var array
 	 */
-	public $block_config_without_name = [
+	private $block_config_without_name = [
 		'foo' => 'Example Value',
 	];
 
@@ -35,12 +35,40 @@ class TestLoader extends AbstractTemplate {
 	 *
 	 * @var array
 	 */
-	public $block_config_with_name = [
+	private $block_config_with_name = [
 		'name' => 'Example Block',
 	];
 
 	/**
-	 * Teardown.
+	 * The REST API route for blocks.
+	 *
+	 * @var string
+	 */
+	private $rest_api_route = '/wp/v2/block-renderer/';
+
+	/**
+	 * A mock REST API handler.
+	 *
+	 * @var array
+	 */
+	private $mock_handler = [
+		0 => [
+			'methods'  => [ 'GET' ],
+			'callback' => [ 'example_callback' ],
+		],
+	];
+
+	/**
+	 * The WP version with the correct 'block-renderer' endpoint.
+	 *
+	 * @see https://core.trac.wordpress.org/ticket/49680#comment:15
+	 *
+	 * @var string
+	 */
+	private $wp_version_with_correct_endpoint = '5.6';
+
+	/**
+	 * Tear down after each test.
 	 *
 	 * @inheritdoc
 	 */
@@ -70,18 +98,13 @@ class TestLoader extends AbstractTemplate {
 	 * @covers \Genesis\CustomBlocks\Blocks\Loader::register_hooks()
 	 */
 	public function test_register_hooks() {
-		global $wp_filter;
-
 		$this->instance->register_hooks();
-		$expected_filters = [
-			'enqueue_block_editor_assets',
-			'block_categories',
-			'init',
-		];
 
-		foreach ( $expected_filters as $filter ) {
-			$this->assertNotEmpty( $wp_filter[ $filter ]->callbacks[10] );
-		}
+		$this->assertEquals( 10, has_action( 'enqueue_block_editor_assets', [ $this->instance, 'editor_assets' ] ) );
+		$this->assertEquals( 10, has_filter( 'block_categories', [ $this->instance, 'register_categories' ] ) );
+		$this->assertEquals( 10, has_action( 'init', [ $this->instance, 'retrieve_blocks' ] ) );
+		$this->assertEquals( 10, has_action( 'init', [ $this->instance, 'dynamic_block_loader' ] ) );
+		$this->assertEquals( 10, has_filter( 'rest_endpoints', [ $this->instance, 'add_rest_method' ] ) );
 	}
 
 	/**
@@ -142,7 +165,7 @@ class TestLoader extends AbstractTemplate {
 		$style_handle  = 'genesis-custom-blocks-editor-css';
 
 		$this->instance->init();
-		$this->invoke_protected_method( 'editor_assets' );
+		$this->instance->editor_assets();
 
 		$this->assertTrue( wp_script_is( $script_handle ) );
 		$this->assertContains(
@@ -433,6 +456,60 @@ class TestLoader extends AbstractTemplate {
 		$this->assertEquals(
 			$field_config_with_name,
 			$actual_blocks[ $full_block_name ]['fields'][ $field_name ]
+		);
+	}
+
+	/**
+	 * Test add_rest_method when there is no GCB block.
+	 *
+	 * @covers \Genesis\CustomBlocks\Blocks\Loader::add_rest_method()
+	 */
+	public function test_add_rest_method_no_gcb_block() {
+		$initial_methods     = [ 'GET' ];
+		$non_gcb_block_route = $this->rest_api_route . '(?P<name>different-block-namespace/main-hero)';
+		$actual              = $this->instance->add_rest_method(
+			[
+				$non_gcb_block_route => [
+					0 => [
+						'methods'  => $initial_methods,
+						'callback' => '__return_false',
+					],
+				],
+			]
+		);
+
+		$this->assertEquals(
+			[
+				'methods'  => $initial_methods,
+				'callback' => '__return_false',
+			],
+			$actual[ $non_gcb_block_route ][0]
+		);
+	}
+
+	/**
+	 * Test add_rest_method when there is a GCB block.
+	 *
+	 * @covers \Genesis\CustomBlocks\Blocks\Loader::add_rest_method()
+	 */
+	public function test_add_rest_method_with_gcb_block() {
+		$expected_methods = [ 'GET', 'POST' ];
+		$gcb_block_route  = $this->rest_api_route . '(?P<name>genesis-custom-blocks/main-hero)';
+		$initial_routes   = [
+			$gcb_block_route => $this->mock_handler,
+		];
+
+		if ( is_wp_version_compatible( $this->wp_version_with_correct_endpoint ) ) {
+			$initial_routes[ $gcb_block_route ]['methods'] = $expected_methods;
+		}
+
+		$actual = $this->instance->add_rest_method( $initial_routes );
+		$this->assertEquals(
+			[
+				'methods'  => $expected_methods,
+				'callback' => $this->mock_handler[0]['callback'],
+			],
+			$actual[ $gcb_block_route ][0]
 		);
 	}
 
