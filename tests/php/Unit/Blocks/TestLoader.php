@@ -165,7 +165,7 @@ class TestLoader extends AbstractTemplate {
 		$style_handle  = 'genesis-custom-blocks-editor-css';
 
 		$this->instance->init();
-		$this->invoke_protected_method( 'editor_assets' );
+		$this->instance->editor_assets();
 
 		$this->assertTrue( wp_script_is( $script_handle ) );
 		$this->assertContains(
