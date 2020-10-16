@@ -51,6 +51,7 @@ class TestBlockPost extends \WP_UnitTestCase {
 		$this->instance->register_hooks();
 
 		$this->assertEquals( 10, has_action( 'init', [ $this->instance, 'register_post_type' ] ) );
+		$this->assertEquals( 10, has_action( 'admin_init', [ $this->instance, 'add_caps' ] ) );
 		$this->assertEquals( 10, has_action( 'add_meta_boxes', [ $this->instance, 'add_meta_boxes' ] ) );
 		$this->assertEquals( 10, has_action( 'add_meta_boxes', [ $this->instance, 'remove_meta_boxes' ] ) );
 		$this->assertEquals( 10, has_action( 'post_submitbox_start', [ $this->instance, 'save_draft_button' ] ) );
@@ -146,6 +147,16 @@ class TestBlockPost extends \WP_UnitTestCase {
 		$this->assertEquals( $invalid_value, $this->instance->get_field_value( $invalid_value, 'different-control', false ) );
 		$this->assertEquals( $image_id, $this->instance->get_field_value( $image_id, 'random-control', false ) );
 		$this->assertEquals( $invalid_value, $this->instance->get_field_value( $invalid_value, 'some-other-control', true ) );
+	}
+
+	/**
+	 * Test get_capabilities.
+	 *
+	 * @covers \Genesis\CustomBlocks\PostTypes\BlockPost::get_capabilities()
+	 */
+	public function test_get_capabilities() {
+		$capabilities = $this->instance->get_capabilities();
+		$this->assertEquals( 'genesis_custom_block_edit_block', $capabilities['edit_post'] );
 	}
 
 	/**

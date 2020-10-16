@@ -47,6 +47,7 @@ class BlockPost extends ComponentAbstract {
 	 */
 	public function register_hooks() {
 		add_action( 'init', [ $this, 'register_post_type' ] );
+		add_action( 'admin_init', [ $this, 'add_caps' ] );
 		add_action( 'add_meta_boxes', [ $this, 'add_meta_boxes' ] );
 		add_action( 'add_meta_boxes', [ $this, 'remove_meta_boxes' ] );
 		add_action( 'edit_form_before_permalink', [ $this, 'template_location' ] );
@@ -203,10 +204,45 @@ class BlockPost extends ComponentAbstract {
 			'query_var'     => true,
 			'rewrite'       => [ 'slug' => $this->slug ],
 			'hierarchical'  => true,
+			'capabilities'  => $this->get_capabilities(),
+			'map_meta_cap'  => true,
 			'supports'      => [ 'title' ],
 		];
 
 		register_post_type( $this->slug, $args );
+	}
+
+	/**
+	 * Add custom capabilities
+	 *
+	 * @return void
+	 */
+	public function add_caps() {
+		$admin = get_role( 'administrator' );
+		if ( ! $admin ) {
+			return;
+		}
+
+		foreach ( $this->get_capabilities() as $capability => $custom_capability ) {
+			$admin->add_cap( $custom_capability );
+		}
+	}
+
+	/**
+	 * Gets the mapping of capabilities for the custom post type.
+	 *
+	 * @return array An associative array of capability key => custom capability value.
+	 */
+	public function get_capabilities() {
+		return [
+			'edit_post'          => "{$this->slug}_edit_block",
+			'edit_posts'         => "{$this->slug}_edit_blocks",
+			'edit_others_posts'  => "{$this->slug}_edit_others_blocks",
+			'publish_posts'      => "{$this->slug}_publish_blocks",
+			'read_post'          => "{$this->slug}_read_block",
+			'read_private_posts' => "{$this->slug}_read_private_blocks",
+			'delete_post'        => "{$this->slug}_delete_block",
+		];
 	}
 
 	/**
