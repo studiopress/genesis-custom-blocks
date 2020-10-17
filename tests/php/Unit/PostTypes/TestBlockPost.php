@@ -51,7 +51,7 @@ class TestBlockPost extends \WP_UnitTestCase {
 		$this->instance->register_hooks();
 
 		$this->assertEquals( 10, has_action( 'init', [ $this->instance, 'register_post_type' ] ) );
-		$this->assertEquals( 10, has_action( 'admin_init', [ $this->instance, 'add_caps' ] ) );
+		$this->assertEquals( 10, has_action( 'plugins_loaded', [ $this->instance, 'add_caps' ] ) );
 		$this->assertEquals( 10, has_action( 'add_meta_boxes', [ $this->instance, 'add_meta_boxes' ] ) );
 		$this->assertEquals( 10, has_action( 'add_meta_boxes', [ $this->instance, 'remove_meta_boxes' ] ) );
 		$this->assertEquals( 10, has_action( 'post_submitbox_start', [ $this->instance, 'save_draft_button' ] ) );
