@@ -75,28 +75,6 @@ class TestOnboarding extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Test get_edit_link when the post ID is not for a post.
-	 *
-	 * @covers \Genesis\CustomBlocks\Admin\Onboarding::get_edit_link()
-	 */
-	public function test_get_edit_link_no_post() {
-		$this->assertEmpty( $this->instance->get_edit_link( 123456789 ) );
-	}
-
-	/**
-	 * Test get_edit_link when there is a valid post.
-	 *
-	 * @covers \Genesis\CustomBlocks\Admin\Onboarding::get_edit_link()
-	 */
-	public function test_get_edit_link_with_post() {
-		$post_id = $this->factory()->post->create( [ 'post_type' => 'genesis_custom_block' ] );
-		$this->assertContains(
-			"post.php?post={$post_id}&amp;action=edit",
-			$this->instance->get_edit_link( $post_id )
-		);
-	}
-
-	/**
 	 * Test plugin_activation.
 	 *
 	 * @covers \Genesis\CustomBlocks\Admin\Onboarding::plugin_activation()
