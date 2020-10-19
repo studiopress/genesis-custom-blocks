@@ -11,8 +11,13 @@ import { App } from './components';
 
 // Renders the app in the container.
 domReady( () => {
+	let container = document.querySelector( 'body > div:first-child' );
+	if ( ! container ) {
+		container = document.querySelector( 'body' );
+	}
+
 	render(
 		<App />,
-		document.querySelector( 'body' )
+		container
 	);
 } );
