@@ -104,7 +104,7 @@ class Loader extends ComponentAbstract {
 	 */
 	public function editor_assets() {
 		$js_config  = require $this->plugin->get_path( 'js/dist/block-editor.asset.php' );
-		$css_config = require $this->plugin->get_path( 'css/blocks.editor.asset.php' );
+		$css_config = require $this->plugin->get_path( 'css/dist/blocks.editor.asset.php' );
 
 		wp_enqueue_script(
 			'genesis-custom-blocks-blocks',

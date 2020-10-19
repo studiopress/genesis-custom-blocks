@@ -20,7 +20,7 @@ module.exports = {
 	entry: {
 		'./js/dist/block-editor': './js/src/block-editor/index.js',
 		'./js/dist/edit-block': './js/src/edit-block/index.js',
-		'./css/blocks.editor': './css/src/editor.scss',
+		'./css/dist/blocks.editor': './css/src/editor.scss',
 	},
 	output: {
 		path: path.resolve( __dirname ),
