@@ -47,7 +47,7 @@ class BlockPost extends ComponentAbstract {
 	 */
 	public function register_hooks() {
 		add_action( 'init', [ $this, 'register_post_type' ] );
-		add_action( 'admin_init', [ $this, 'add_caps' ] );
+		add_action( 'plugins_loaded', [ $this, 'add_caps' ] );
 		add_action( 'add_meta_boxes', [ $this, 'add_meta_boxes' ] );
 		add_action( 'add_meta_boxes', [ $this, 'remove_meta_boxes' ] );
 		add_action( 'edit_form_before_permalink', [ $this, 'template_location' ] );
@@ -218,6 +218,10 @@ class BlockPost extends ComponentAbstract {
 	 * @return void
 	 */
 	public function add_caps() {
+		if ( ! is_admin() ) {
+			return;
+		}
+
 		$admin = get_role( 'administrator' );
 		if ( ! $admin ) {
 			return;

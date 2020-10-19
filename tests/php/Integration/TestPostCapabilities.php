@@ -119,7 +119,9 @@ class TestPostCapabilities extends \WP_UnitTestCase {
 	 * @param bool   $expected The expected result for those capability and roles.
 	 */
 	public function test_user_capability( $user_role, $capability, $expected ) {
+		set_current_screen( 'edit-post' );
 		wp_set_current_user( $this->factory()->user->create( [ 'role' => $user_role ] ) );
+
 		$this->assertEquals( $expected, current_user_can( $capability, $this->post_id ) );
 	}
 }

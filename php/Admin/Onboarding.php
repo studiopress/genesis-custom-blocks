@@ -149,11 +149,15 @@ class Onboarding extends ComponentAbstract {
 			<h2><span role="image" aria-label="<?php esc_attr_e( 'Waving hand emoji', 'genesis-custom-blocks' ); ?>">👋</span> <?php esc_html_e( 'Hi, and welcome!', 'genesis-custom-blocks' ); ?></h2>
 			<p class="intro"><?php esc_html_e( 'Genesis Custom Blocks makes it easy to build your own blocks for the WordPress editor.', 'genesis-custom-blocks' ); ?></p>
 			<p><strong><?php esc_html_e( 'Want to see how it\'s done?', 'genesis-custom-blocks' ); ?></strong> <?php esc_html_e( 'Here\'s one we prepared earlier.', 'genesis-custom-blocks' ); ?></p>
-			<p>
-				<a class="button button--white button_cta" href="<?php echo esc_url( $this->get_edit_link( $example_post_id ) ); ?>">
-					<?php esc_html_e( 'Let\'s get started!', 'genesis-custom-blocks' ); ?>
-				</a>
-			</p>
+			<?php
+			edit_post_link(
+				__( 'Let\'s get started!', 'genesis-custom-blocks' ),
+				'<p>',
+				'</p>',
+				$example_post_id,
+				'button button--white button_cta'
+			);
+			?>
 			<p class="ps"><?php esc_html_e( 'P.S. We don\'t like to nag. This message won\'t be shown again.', 'genesis-custom-blocks' ); ?></p>
 			<p class="ps">
 				<?php
@@ -167,31 +171,6 @@ class Onboarding extends ComponentAbstract {
 			</p>
 		</div>
 		<?php
-	}
-
-	/**
-	 * Gets the link to edit a post.
-	 *
-	 * A forked and simplified version of get_edit_post_link().
-	 *
-	 * @param string|int $post_id The ID of the post.
-	 * @return string|null The URL to edit the post.
-	 */
-	public function get_edit_link( $post_id ) {
-		$post = get_post( $post_id );
-		if ( ! $post ) {
-			return null;
-		}
-
-		$post_type_object = get_post_type_object( $post->post_type );
-		if ( empty( $post_type_object->_edit_link ) ) {
-			return null;
-		}
-
-		$link = admin_url( sprintf( $post_type_object->_edit_link . '&amp;action=edit', $post->ID ) );
-
-		/** This filter is documented in wp-includes/link-template.php */
-		return apply_filters( 'get_edit_post_link', $link, $post->ID, 'display' );
 	}
 
 	/**
