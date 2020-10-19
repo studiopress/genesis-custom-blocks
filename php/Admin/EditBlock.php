@@ -73,7 +73,7 @@ class EditBlock extends ComponentAbstract {
 		$script_config = require $this->plugin->get_path( 'js/dist/edit-block.asset.php' );
 		wp_enqueue_script(
 			$script_slug,
-			$this->plugin->get_url( 'js/edit-block.js' ),
+			$this->plugin->get_url( 'js/dist/edit-block.js' ),
 			$script_config['dependencies'],
 			$script_config['version'],
 			true
