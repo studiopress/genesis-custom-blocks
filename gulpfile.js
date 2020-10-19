@@ -29,7 +29,6 @@ gulp.task( 'bundle', function () {
 		'!bin/**/*',
 		'!node_modules/**/*',
 		'!composer.*',
-		'!js/blocks/**/*',
 		'!js/src/**/*',
 		'!js/tests/**/*',
 		'!js/coverage/**/*',

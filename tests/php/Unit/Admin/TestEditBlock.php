@@ -5,7 +5,6 @@
  * @package Genesis\CustomBlocks
  */
 
-use WP_Screen;
 use Genesis\CustomBlocks\Admin\EditBlock;
 
 /**
@@ -90,7 +89,8 @@ class TestEditBlock extends AbstractTemplate {
 	 * @covers \Genesis\CustomBlocks\Admin\EditBlock::enqueue_assets()
 	 */
 	public function test_enqueue_assets_correct_page() {
-		$wp_screen            = new WP_Screen();
+		set_current_screen( 'edit-post' );
+		$wp_screen            = get_current_screen();
 		$wp_screen->base      = 'post';
 		$wp_screen->post_type = 'genesis_custom_block';
 		$this->instance->enqueue_assets();
