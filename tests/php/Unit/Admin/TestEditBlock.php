@@ -34,6 +34,7 @@ class TestEditBlock extends AbstractTemplate {
 	public function setUp() {
 		parent::setUp();
 		$this->instance = new EditBlock();
+		$this->instance->set_plugin( genesis_custom_blocks() );
 	}
 
 	/**
@@ -44,7 +45,8 @@ class TestEditBlock extends AbstractTemplate {
 	public function test_register_hooks() {
 		$this->instance->register_hooks();
 		$this->assertEquals( 10, has_filter( 'replace_editor', [ $this->instance, 'should_replace_editor' ] ) );
-		$this->assertEquals( 10, has_filter( 'admin_enqueue_scripts', [ $this->instance, 'enqueue_assets' ] ) );
+		$this->assertEquals( 10, has_filter( 'use_block_editor_for_post_type', [ $this->instance, 'should_use_block_editor_for_post_type' ] ) );
+		$this->assertEquals( 10, has_action( 'admin_footer', [ $this->instance, 'enqueue_assets' ] ) );
 	}
 
 	/**
@@ -77,6 +79,7 @@ class TestEditBlock extends AbstractTemplate {
 	 * @covers \Genesis\CustomBlocks\Admin\EditBlock::enqueue_assets()
 	 */
 	public function test_enqueue_assets_wrong_page() {
+		set_current_screen( 'front' );
 		$slug = 'genesis-custom-blocks-edit-block-script';
 		$this->instance->enqueue_assets();
 		$this->assertFalse( wp_script_is( $slug ) );

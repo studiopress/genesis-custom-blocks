@@ -22,7 +22,7 @@ class EditBlock extends ComponentAbstract {
 	 */
 	public function register_hooks() {
 		add_filter( 'replace_editor', [ $this, 'should_replace_editor' ], 10, 2 );
-		add_filter( 'use_block_editor_for_post_type', [ $this, 'should_use_block_editor_for_post_type' ] );
+		add_filter( 'use_block_editor_for_post_type', [ $this, 'should_use_block_editor_for_post_type' ], 10, 2 );
 		add_action( 'admin_footer', [ $this, 'enqueue_assets' ] );
 	}
 
@@ -65,7 +65,11 @@ class EditBlock extends ComponentAbstract {
 	public function enqueue_assets() {
 		$screen = get_current_screen();
 
-		if ( genesis_custom_blocks()->get_post_type_slug() !== $screen->post_type || 'post' !== $screen->base ) {
+		if (
+			! is_object( $screen ) ||
+			genesis_custom_blocks()->get_post_type_slug() !== $screen->post_type ||
+			'post' !== $screen->base
+		) {
 			return;
 		}
 
