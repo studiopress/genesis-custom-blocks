@@ -113,7 +113,7 @@ coverage/
 
 # Builds
 js/dist/
-css/blocks.editor.css
+css/dist/
 package/
 built/
 *.asset.php

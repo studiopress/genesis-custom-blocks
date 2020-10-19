@@ -48,11 +48,11 @@ class Loader extends ComponentAbstract {
 		$this->assets = [
 			'path' => [
 				'entry'        => $this->plugin->get_path( 'js/dist/block-editor.js' ),
-				'editor_style' => $this->plugin->get_path( 'css/blocks.editor.css' ),
+				'editor_style' => $this->plugin->get_path( 'css/dist/blocks.editor.css' ),
 			],
 			'url'  => [
 				'entry'        => $this->plugin->get_url( 'js/dist/block-editor.js' ),
-				'editor_style' => $this->plugin->get_url( 'css/blocks.editor.css' ),
+				'editor_style' => $this->plugin->get_url( 'css/dist/blocks.editor.css' ),
 			],
 		];
 

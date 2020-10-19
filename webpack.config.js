@@ -68,7 +68,7 @@ module.exports = {
 			cleanOnceBeforeBuildPatterns: [ 'js/dist', 'css/dist' ],
 		} ),
 		new MiniCssExtractPlugin( {
-			filename: './css/blocks.editor.css',
+			filename: './css/dist/blocks.editor.css',
 		} ),
 		// Copied from Gutenberg.
 		// MiniCSSExtractPlugin creates JavaScript assets for CSS that are

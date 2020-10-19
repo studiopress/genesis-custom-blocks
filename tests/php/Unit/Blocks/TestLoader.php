@@ -87,9 +87,9 @@ class TestLoader extends AbstractTemplate {
 		$assets = $this->get_protected_property( 'assets' );
 		$this->assertEquals( 'Genesis\\CustomBlocks\\Blocks\\Loader', get_class( $this->instance->init() ) );
 		$this->assertContains( 'js/dist/block-editor.js', $assets['path']['entry'] );
-		$this->assertContains( 'css/blocks.editor.css', $assets['path']['editor_style'] );
+		$this->assertContains( 'css/dist/blocks.editor.css', $assets['path']['editor_style'] );
 		$this->assertContains( 'js/dist/block-editor.js', $assets['url']['entry'] );
-		$this->assertContains( 'css/blocks.editor.css', $assets['url']['editor_style'] );
+		$this->assertContains( 'css/dist/blocks.editor.css', $assets['url']['editor_style'] );
 	}
 
 	/**
