@@ -2,6 +2,7 @@
  * External dependencies
  */
 const path = require( 'path' );
+const { CleanWebpackPlugin } = require( 'clean-webpack-plugin' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 const IgnoreEmitPlugin = require( 'ignore-emit-webpack-plugin' );
 
@@ -17,7 +18,8 @@ const isProduction = process.env.NODE_ENV === 'production';
 module.exports = {
 	...defaultConfig,
 	entry: {
-		'./js/editor.blocks': './js/blocks/index.js',
+		'./js/dist/block-editor': './js/src/block-editor/index.js',
+		'./js/dist/edit-block': './js/src/edit-block/index.js',
 		'./css/blocks.editor': './css/src/editor.scss',
 	},
 	output: {
@@ -62,6 +64,9 @@ module.exports = {
 		],
 	},
 	plugins: [
+		new CleanWebpackPlugin( {
+			cleanOnceBeforeBuildPatterns: [ 'js/dist', 'css/dist' ],
+		} ),
 		new MiniCssExtractPlugin( {
 			filename: './css/blocks.editor.css',
 		} ),

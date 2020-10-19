@@ -47,11 +47,11 @@ class Loader extends ComponentAbstract {
 	public function init() {
 		$this->assets = [
 			'path' => [
-				'entry'        => $this->plugin->get_path( 'js/editor.blocks.js' ),
+				'entry'        => $this->plugin->get_path( 'js/dist/block-editor.js' ),
 				'editor_style' => $this->plugin->get_path( 'css/blocks.editor.css' ),
 			],
 			'url'  => [
-				'entry'        => $this->plugin->get_url( 'js/editor.blocks.js' ),
+				'entry'        => $this->plugin->get_url( 'js/dist/block-editor.js' ),
 				'editor_style' => $this->plugin->get_url( 'css/blocks.editor.css' ),
 			],
 		];
@@ -103,7 +103,7 @@ class Loader extends ComponentAbstract {
 	 * Launch the blocks inside Gutenberg.
 	 */
 	public function editor_assets() {
-		$js_config  = require $this->plugin->get_path( 'js/editor.blocks.asset.php' );
+		$js_config  = require $this->plugin->get_path( 'js/dist/block-editor.asset.php' );
 		$css_config = require $this->plugin->get_path( 'css/blocks.editor.asset.php' );
 
 		wp_enqueue_script(

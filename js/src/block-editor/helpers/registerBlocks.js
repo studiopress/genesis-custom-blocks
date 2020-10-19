@@ -6,7 +6,7 @@ import { registerBlockType } from '@wordpress/blocks';
 /**
  * Internal dependencies
  */
-import icons from '../../../assets/icons.json';
+import icons from '../../../../assets/icons.json';
 import { getGcbBlockAttributes } from './';
 
 /**

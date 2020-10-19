@@ -38,6 +38,13 @@ class Admin extends ComponentAbstract {
 	public $upgrade;
 
 	/**
+	 * The 'Edit Block' UI.
+	 *
+	 * @var EditBlock
+	 */
+	public $edit_block;
+
+	/**
 	 * JSON import.
 	 *
 	 * @var Import
@@ -56,6 +63,9 @@ class Admin extends ComponentAbstract {
 
 		$this->upgrade = new Upgrade();
 		genesis_custom_blocks()->register_component( $this->upgrade );
+
+		$this->edit_block = new EditBlock();
+		genesis_custom_blocks()->register_component( $this->edit_block );
 
 		if ( defined( 'WP_LOAD_IMPORTERS' ) && WP_LOAD_IMPORTERS ) {
 			$this->import = new Import();

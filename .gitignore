@@ -112,8 +112,7 @@ tests/includes/
 coverage/
 
 # Builds
-js/editor.blocks.js
-js/scripts.js
+js/dist/
 css/blocks.editor.css
 package/
 built/
