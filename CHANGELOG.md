@@ -21,7 +21,7 @@ Fix a notice from the Textarea field
 
 * Fixes a notice from the Textarea field having the wrong type. [PR 33](https://github.com/studiopress/genesis-custom-blocks/pull/33)
 
-### 1.0.3 - 2020-09-21 ###
+### 1.0.3 - 2020-10-21 ###
 
 Allow more text and improve activation experience
 
