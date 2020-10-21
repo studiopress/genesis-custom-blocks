@@ -20,3 +20,10 @@ Fix an error if Block Lab 1.5.6 is also active
 Fix a notice from the Textarea field
 
 * Fixes a notice from the Textarea field having the wrong type. [PR 33](https://github.com/studiopress/genesis-custom-blocks/pull/33)
+
+### 1.0.3 - 2020-10-21 ###
+
+Allow more text and improve activation experience
+
+* Allow fields with a huge amount of text. [PR 39](https://github.com/studiopress/genesis-custom-blocks/pull/39)
+* Ensure that all submenus appear on first installation. [PR 40](https://github.com/studiopress/genesis-custom-blocks/pull/40)
