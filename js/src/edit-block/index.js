@@ -1,13 +1,14 @@
+/* global gcbEditor */
+
 /**
  * WordPress dependencies
  */
 import domReady from '@wordpress/dom-ready';
-import { render } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import { App } from './components';
+import { initializeEditor } from './helpers';
 
 // Renders the app in the container.
 domReady( () => {
@@ -16,8 +17,5 @@ domReady( () => {
 		container = document.querySelector( 'body' );
 	}
 
-	render(
-		<App />,
-		container
-	);
+	initializeEditor( gcbEditor, container );
 } );
