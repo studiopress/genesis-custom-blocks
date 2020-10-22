@@ -8,17 +8,20 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
+import { compose } from '@wordpress/compose';
 import {
 	EditorProvider,
 	PostTitle,
 	PostPublishButton,
+	PostSavedState,
 } from '@wordpress/editor';
-import { withSelect } from '@wordpress/data';
+import { useEffect } from '@wordpress/element';
+import { withDispatch, withSelect } from '@wordpress/data';
 
 /**
  * Internal dependencies
  */
-import { Fields, PostSaveUpdate } from './';
+import { Fields } from './';
 
 /**
  * The migration admin page.
@@ -27,7 +30,11 @@ import { Fields, PostSaveUpdate } from './';
  * @return {React.ReactElement} The main editor component.
  */
 const Editor = ( props ) => {
-	const { onError, post, settings, initialEdits } = props;
+	const { post, settings, initialEdits, removeBlocks } = props;
+
+	useEffect( () => {
+		removeBlocks();
+	}, [ post ] );
 
 	if ( ! post ) {
 		return null;
@@ -46,17 +53,40 @@ const Editor = ( props ) => {
 			useSubRegistry={ false }
 		>
 			<PostTitle />
-			<PostSaveUpdate />
+			<PostSavedState />
 			<PostPublishButton />
 			<Fields />
 		</EditorProvider>
 	);
 };
 
-export default withSelect( ( select, { postId, postType } ) => {
-	const { getEntityRecord } = select( 'core' );
+export default compose( [
+	withSelect( ( select, { postId, postType } ) => {
+		const { getEntityRecord } = select( 'core' );
 
-	return {
-		post: getEntityRecord( 'postType', postType, postId ),
-	};
-} )( Editor );
+		return {
+			post: getEntityRecord( 'postType', postType, postId ),
+		};
+	} ),
+	withDispatch( ( dispatch, { postId, postType, post } ) => ( {
+		// A hack to remove blocks from the edited entity.
+		// The stores use getEditedPostContent(),
+		// which gets the blocks if they exist.
+		// But this editor doesn't use blocks.
+		// With this, getEditedPostContent() defaults
+		// to returning the post content, instead of
+		// parsing [] blocks and returning ''.
+		removeBlocks: () => {
+			if ( ! post ) {
+				return;
+			}
+
+			dispatch( 'core' ).editEntityRecord(
+				'postType',
+				postType,
+				postId,
+				{ blocks: null }
+			);
+		},
+	} ) ),
+] )( Editor );
