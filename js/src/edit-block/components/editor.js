@@ -10,8 +10,6 @@ import * as React from 'react';
  */
 import {
 	EditorProvider,
-	ErrorBoundary,
-	PostSavedState,
 	PostTitle,
 	PostPublishButton,
 } from '@wordpress/editor';
@@ -20,7 +18,7 @@ import { withSelect } from '@wordpress/data';
 /**
  * Internal dependencies
  */
-import { Fields } from './';
+import { Fields, PostSaveUpdate } from './';
 
 /**
  * The migration admin page.
@@ -47,12 +45,10 @@ const Editor = ( props ) => {
 			initialEdits={ initialEdits }
 			useSubRegistry={ false }
 		>
-			<ErrorBoundary onError={ onError }>
-				<PostTitle />
-				<PostSavedState />
-				<PostPublishButton />
-				<Fields />
-			</ErrorBoundary>
+			<PostTitle />
+			<PostSaveUpdate />
+			<PostPublishButton />
+			<Fields />
 		</EditorProvider>
 	);
 };
