@@ -8,8 +8,13 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
-import { EntityProvider } from '@wordpress/core-data';
-import { PostSavedState, PostTitle } from '@wordpress/editor';
+import {
+	EditorProvider,
+	ErrorBoundary,
+	PostSavedState,
+	PostTitle,
+	PostPublishButton,
+} from '@wordpress/editor';
 import { withSelect } from '@wordpress/data';
 
 /**
@@ -20,19 +25,35 @@ import { Fields } from './';
 /**
  * The migration admin page.
  *
+ * @param {Object} props The component props.
  * @return {React.ReactElement} The main editor component.
  */
-const Editor = () => {
+const Editor = ( props ) => {
+	const { onError, post, settings, initialEdits } = props;
+
+	if ( ! post ) {
+		return null;
+	}
+
 	return (
-		<EntityProvider
-			kind="root"
-			type="postType"
-			id={ `gcb-editor` }
+		<EditorProvider
+			settings={
+				{
+					...settings,
+					richEditingEnabled: false,
+				}
+			}
+			post={ post }
+			initialEdits={ initialEdits }
+			useSubRegistry={ false }
 		>
-			<PostTitle />
-			<PostSavedState />
-			<Fields />
-		</EntityProvider>
+			<ErrorBoundary onError={ onError }>
+				<PostTitle />
+				<PostSavedState />
+				<PostPublishButton />
+				<Fields />
+			</ErrorBoundary>
+		</EditorProvider>
 	);
 };
 

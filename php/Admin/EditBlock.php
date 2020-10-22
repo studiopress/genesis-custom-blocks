@@ -119,7 +119,7 @@ class EditBlock extends ComponentAbstract {
 		// Restore the global $post as it was before API preloading.
 		$post = $backup_global_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 
-		wp_enqueue_script( 'wp-api-fetch' );
+		wp_default_packages_inline_scripts( wp_scripts() );
 		wp_add_inline_script(
 			'wp-api-fetch',
 			sprintf( 'wp.apiFetch.use( wp.apiFetch.createPreloadingMiddleware( %s ) );', wp_json_encode( $preload_data ) ),
@@ -146,8 +146,6 @@ class EditBlock extends ComponentAbstract {
 				'initialEdits' => $this->get_initial_edits(),
 			]
 		);
-		wp_enqueue_script( 'wp-api-fetch' );
-		wp_default_packages_inline_scripts( wp_scripts() );
 	}
 
 	/**
