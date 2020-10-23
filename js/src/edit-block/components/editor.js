@@ -8,8 +8,9 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
+import { Button, Icon } from '@wordpress/components';
 import { compose } from '@wordpress/compose';
-import { __experimentalFullscreenModeClose as FullscreenModeClose } from '@wordpress/edit-post';
+import { withDispatch, withSelect } from '@wordpress/data';
 import {
 	EditorNotices,
 	EditorProvider,
@@ -18,7 +19,9 @@ import {
 	PostSavedState,
 } from '@wordpress/editor';
 import { useEffect } from '@wordpress/element';
-import { withDispatch, withSelect } from '@wordpress/data';
+import { wordpress } from '@wordpress/icons';
+import { __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies
@@ -44,7 +47,15 @@ const Editor = ( props ) => {
 
 	return (
 		<>
-			<FullscreenModeClose />
+			<Button
+				className="edit-post-fullscreen-mode-close has-icon"
+				href={ addQueryArgs( 'edit.php', {
+					post_type: 'genesis_custom_block',
+				} ) }
+				label={ __( 'Back to view blocks', 'genesis-custom-blocks' ) }
+			>
+				<Icon size={ 36 } icon={ wordpress } />
+			</Button>
 			<BrowserURL />
 			<EditorProvider
 				settings={
