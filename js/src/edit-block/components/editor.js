@@ -9,7 +9,9 @@ import * as React from 'react';
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose';
+import { __experimentalFullscreenModeClose as FullscreenModeClose } from '@wordpress/edit-post';
 import {
+	EditorNotices,
 	EditorProvider,
 	PostTitle,
 	PostPublishButton,
@@ -42,6 +44,7 @@ const Editor = ( props ) => {
 
 	return (
 		<>
+			<FullscreenModeClose />
 			<BrowserURL />
 			<EditorProvider
 				settings={
@@ -57,6 +60,7 @@ const Editor = ( props ) => {
 				<PostTitle />
 				<PostSavedState />
 				<PostPublishButton />
+				<EditorNotices />
 				<Fields />
 			</EditorProvider>
 		</>
