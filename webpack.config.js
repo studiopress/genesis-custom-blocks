@@ -74,7 +74,7 @@ module.exports = {
 		// MiniCSSExtractPlugin creates JavaScript assets for CSS that are
 		// obsolete and should be removed. Related webpack issue:
 		// https://github.com/webpack-contrib/mini-css-extract-plugin/issues/85
-		new IgnoreEmitPlugin( [ 'blocks.editor.js' ] ),
+		new IgnoreEmitPlugin( [ 'block-editor.js' ] ),
 		new DependencyExtractionWebpackPlugin( {
 			useDefaults: false,
 			requestToHandle: ( request ) => {
