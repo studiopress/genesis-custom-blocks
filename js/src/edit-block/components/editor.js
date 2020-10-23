@@ -21,7 +21,7 @@ import { withDispatch, withSelect } from '@wordpress/data';
 /**
  * Internal dependencies
  */
-import { Fields } from './';
+import { BrowserURL, Fields } from './';
 
 /**
  * The migration admin page.
@@ -41,22 +41,25 @@ const Editor = ( props ) => {
 	}
 
 	return (
-		<EditorProvider
-			settings={
-				{
-					...settings,
-					richEditingEnabled: false,
+		<>
+			<BrowserURL />
+			<EditorProvider
+				settings={
+					{
+						...settings,
+						richEditingEnabled: false,
+					}
 				}
-			}
-			post={ post }
-			initialEdits={ initialEdits }
-			useSubRegistry={ false }
-		>
-			<PostTitle />
-			<PostSavedState />
-			<PostPublishButton />
-			<Fields />
-		</EditorProvider>
+				post={ post }
+				initialEdits={ initialEdits }
+				useSubRegistry={ false }
+			>
+				<PostTitle />
+				<PostSavedState />
+				<PostPublishButton />
+				<Fields />
+			</EditorProvider>
+		</>
 	);
 };
 

@@ -38,10 +38,8 @@ const Fields = ( { content, storeEditedPost } ) => {
 
 export default compose( [
 	withSelect( ( select ) => {
-		const { getCurrentPostId, getCurrentPostType } = select( 'core/editor' );
-		const { getEditedEntityRecord } = select( 'core' );
-		const record = getEditedEntityRecord( 'postType', getCurrentPostType(), getCurrentPostId() );
-		return { content: record.content };
+		const { getEditedPostContent } = select( 'core/editor' );
+		return { content: getEditedPostContent() };
 	} ),
 	withDispatch( ( dispatch ) => {
 		const { editPost } = dispatch( 'core/editor' );
