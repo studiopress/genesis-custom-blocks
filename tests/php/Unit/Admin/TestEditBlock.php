@@ -13,13 +13,6 @@ use Genesis\CustomBlocks\Admin\EditBlock;
 class TestEditBlock extends AbstractTemplate {
 
 	/**
-	 * The slug of the script.
-	 *
-	 * @var string
-	 */
-	const SCRIPT_SLUG = 'genesis-custom-blocks-edit-block-script';
-
-	/**
 	 * Instance of EditBlock.
 	 *
 	 * @var EditBlock
@@ -108,6 +101,8 @@ class TestEditBlock extends AbstractTemplate {
 		$wp_screen->post_type = 'genesis_custom_block';
 		$this->instance->enqueue_assets();
 
-		$this->assertTrue( wp_script_is( self::SCRIPT_SLUG ) );
+		$this->assertTrue( wp_script_is( EditBlock::SCRIPT_SLUG ) );
+		$this->assertTrue( wp_style_is( EditBlock::STYLE_SLUG ) );
+		$this->assertTrue( wp_style_is( EditBlock::TAILWIND_SLUG ) );
 	}
 }

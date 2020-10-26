@@ -37,7 +37,7 @@ const GcbNumberControl = ( props ) => {
 				onChange( Number( numberControl ) );
 			} }
 			onFocus={ ( event ) => {
-				setErrorClass( document.activeElement, false );
+				setErrorClass( document.activeElement, false ); // eslint-disable-line @wordpress/no-global-active-element
 				event.target.reportValidity();
 			} }
 			onBlur={ ( event ) => {

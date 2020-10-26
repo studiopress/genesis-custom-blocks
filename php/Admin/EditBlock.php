@@ -18,6 +18,27 @@ use Genesis\CustomBlocks\ComponentAbstract;
 class EditBlock extends ComponentAbstract {
 
 	/**
+	 * The slug of the script.
+	 *
+	 * @var string
+	 */
+	const SCRIPT_SLUG = 'genesis-custom-blocks-edit-block-script';
+
+	/**
+	 * The slug of the style.
+	 *
+	 * @var string
+	 */
+	const STYLE_SLUG = 'genesis-custom-blocks-edit-block-style';
+
+	/**
+	 * The slug of the style.
+	 *
+	 * @var string
+	 */
+	const TAILWIND_SLUG = 'genesis-custom-blocks-tailwind';
+
+	/**
 	 * Register any hooks that this component needs.
 	 */
 	public function register_hooks() {
@@ -74,18 +95,32 @@ class EditBlock extends ComponentAbstract {
 			return;
 		}
 
-		$script_slug   = 'genesis-custom-blocks-edit-block-script';
 		$script_handle = require $this->plugin->get_path( 'js/dist/edit-block.asset.php' );
 		wp_enqueue_script(
-			$script_slug,
+			self::SCRIPT_SLUG,
 			$this->plugin->get_url( 'js/dist/edit-block.js' ),
 			array_merge( $script_handle['dependencies'], [ 'wp-api-fetch' ] ),
 			$script_handle['version'],
 			true
 		);
 
+		wp_enqueue_style(
+			self::STYLE_SLUG,
+			$this->plugin->get_url( 'css/edit-block.css' ),
+			[],
+			$this->plugin->get_version()
+		);
+
+		// @todo: get only the style rules that are needed, and add them to a CSS file in this plugin.
+		wp_enqueue_style(
+			self::TAILWIND_SLUG,
+			'https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css',
+			[],
+			$this->plugin->get_version()
+		);
+
 		wp_localize_script(
-			$script_slug,
+			self::SCRIPT_SLUG,
 			'gcbEditor',
 			[
 				'postType'     => get_post_type(),

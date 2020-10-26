@@ -35,7 +35,7 @@ const GcbEmailControl = ( props ) => {
 			value={ value }
 			onChange={ onChange }
 			onFocus={ ( event ) => {
-				setErrorClass( document.activeElement, false );
+				setErrorClass( document.activeElement, false ); // eslint-disable-line @wordpress/no-global-active-element
 				event.target.reportValidity();
 			} }
 			onBlur={ ( event ) => {

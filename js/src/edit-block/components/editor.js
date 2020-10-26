@@ -8,25 +8,19 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
-import { Button, Icon } from '@wordpress/components';
 import { compose } from '@wordpress/compose';
 import { withDispatch, withSelect } from '@wordpress/data';
 import {
 	EditorNotices,
 	EditorProvider,
 	PostTitle,
-	PostPublishButton,
-	PostSavedState,
 } from '@wordpress/editor';
 import { useEffect } from '@wordpress/element';
-import { wordpress } from '@wordpress/icons';
-import { __ } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies
  */
-import { BrowserURL, Fields } from './';
+import { BrowserURL, Header, Side } from './';
 
 /**
  * The migration admin page.
@@ -47,15 +41,6 @@ const Editor = ( props ) => {
 
 	return (
 		<>
-			<Button
-				className="edit-post-fullscreen-mode-close has-icon"
-				href={ addQueryArgs( 'edit.php', {
-					post_type: 'genesis_custom_block',
-				} ) }
-				label={ __( 'Back to view blocks', 'genesis-custom-blocks' ) }
-			>
-				<Icon size={ 36 } icon={ wordpress } />
-			</Button>
 			<BrowserURL />
 			<EditorProvider
 				settings={
@@ -68,11 +53,10 @@ const Editor = ( props ) => {
 				initialEdits={ initialEdits }
 				useSubRegistry={ false }
 			>
-				<PostTitle />
-				<PostSavedState />
-				<PostPublishButton />
 				<EditorNotices />
-				<Fields />
+				<Header />
+				<PostTitle />
+				<Side />
 			</EditorProvider>
 		</>
 	);
@@ -89,10 +73,10 @@ export default compose( [
 	withDispatch( ( dispatch, { postId, postType, post } ) => ( {
 		// A hack to remove blocks from the edited entity.
 		// The stores use getEditedPostContent(),
-		// which gets the blocks if they exist.
+		// which gets the blocks if the .blocks propety exists.
 		// But this editor doesn't use blocks.
-		// With this, getEditedPostContent() defaults
-		// to returning the post content, instead of
+		// This change makes getEditedPostContent()
+		// return the post content, instead of
 		// parsing [] blocks and returning ''.
 		removeBlocks: () => {
 			if ( ! post ) {
