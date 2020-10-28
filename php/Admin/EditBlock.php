@@ -104,6 +104,23 @@ class EditBlock extends ComponentAbstract {
 			true
 		);
 
+		wp_add_inline_script(
+			self::SCRIPT_SLUG,
+			sprintf(
+				'const gcbEditor = %s;',
+				wp_json_encode(
+					[
+						'postType'     => get_post_type(),
+						'postId'       => get_the_ID(),
+						'settings'     => [],
+						'initialEdits' => $this->get_initial_edits(),
+						'controls'     => genesis_custom_blocks()->block_post->get_controls(),
+					]
+				)
+			),
+			'before'
+		);
+
 		wp_enqueue_style(
 			self::STYLE_SLUG,
 			$this->plugin->get_url( 'css/edit-block.css' ),
@@ -117,17 +134,6 @@ class EditBlock extends ComponentAbstract {
 			'https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css',
 			[],
 			$this->plugin->get_version()
-		);
-
-		wp_localize_script(
-			self::SCRIPT_SLUG,
-			'gcbEditor',
-			[
-				'postType'     => get_post_type(),
-				'postId'       => get_the_ID(),
-				'settings'     => [],
-				'initialEdits' => $this->get_initial_edits(),
-			]
 		);
 	}
 
