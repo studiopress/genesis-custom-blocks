@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { FieldSettings } from './';
+import { FieldPanel } from './';
 
 const Side = () => {
 	return (
@@ -10,7 +10,7 @@ const Side = () => {
 				<button className="flex items-center h-12 px-5 text-sm focus:outline-none">Block</button>
 				<button className="flex items-center h-12 px-5 text-sm font-semibold border-b-4 border-blue-600 focus:outline-none">Field</button>
 			</div>
-			<FieldSettings />
+			<FieldPanel />
 		</div>
 	);
 };

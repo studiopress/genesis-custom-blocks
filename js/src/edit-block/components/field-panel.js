@@ -10,20 +10,24 @@ import React from 'react';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { compose } from '@wordpress/compose';
 import { withSelect } from '@wordpress/data';
 
 /**
- * The migration admin page.
+ * @typedef {Object} FieldPanelProps The component props.
+ * @property {Object} block The block config.
+ */
+
+/**
+ * The field settings.
  *
- * @param {Object} props The component props.
- * @param {Object} props.block The block config.
+ * @param {FieldPanelProps} props The component props.
  * @return {React.ReactElement} The component for the admin page.
  */
-const FieldSettings = ( { block } ) => {
+const FieldPanel = ( { block } ) => {
+	// @ts-ignore
+	const controls = Object.values( gcbEditor.controls );
 	// Todo: When the main editor area exists, change this to be the field that's selected.
 	const field = Object.values( block.fields )[ 0 ];
-	const controls = Object.values( gcbEditor.controls );
 
 	return (
 		<div className="p-4">
@@ -51,8 +55,8 @@ const FieldSettings = ( { block } ) => {
 			<div className="mt-5">
 				<label className="text-sm" htmlFor="setting-3">{ __( 'Field ', 'genesis-custom-blocks' ) }</label>
 				<select className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm" name="" id="setting-3">
-					{ controls.map( ( control ) => {
-						return <option value={ control.name }>{ control.label }</option>;
+					{ controls.map( ( control, index ) => {
+						return <option value={ control.name } key={ `control-option-${ index }` }>{ control.label }</option>;
 					} ) }
 				</select>
 			</div>
@@ -67,19 +71,35 @@ const FieldSettings = ( { block } ) => {
 			</div>
 			<div className="mt-5">
 				<label className="text-sm" htmlFor="setting-5">{ __( 'Help Text', 'genesis-custom-blocks' ) }</label>
-				<input className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm" type="text" id="setting-5" />
+				<input
+					className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm"
+					type="text"
+					id="setting-5"
+					value={ field.help }
+				/>
 			</div>
 			<div className="mt-5">
 				<label className="text-sm" htmlFor="setting-6">{ __( 'Default Value', 'genesis-custom-blocks' ) }</label>
-				<input className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm" type="text" id="setting-6" />
+				<input
+					className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm"
+					type="text"
+					id="setting-6"
+					value={ field.default }
+				/>
 			</div>
 			<div className="mt-5">
 				<label className="text-sm" htmlFor="setting-7">{ __( 'Placeholder Text', 'genesis-custom-blocks' ) }</label>
-				<input className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm" type="text" id="setting-7" />
+				<input
+					className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm"
+					type="text"
+					id="setting-7"
+					value={ field.placeholder }
+				/>
 			</div>
 			<div className="mt-5">
 				<label className="text-sm" htmlFor="setting-8">{ __( 'Character Limit', 'genesis-custom-blocks' ) }</label>
-				<input className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm" type="number" id="setting-8" />
+				<input
+					className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm" type="number" id="setting-8" />
 			</div>
 			<div className="flex justify-between mt-5 border-t border-gray-300 pt-3">
 				<button className="flex items-center bg-red-200 text-sm h-6 px-2 rounded-sm leading-none text-red-700 hover:bg-red-500 hover:text-red-100">{ __( 'Delete', 'genesis-custom-blocks' ) }</button>
@@ -89,17 +109,15 @@ const FieldSettings = ( { block } ) => {
 	);
 };
 
-export default compose( [
-	withSelect( ( select ) => {
-		const { getEditedPostContent } = select( 'core/editor' );
+export default withSelect( ( select ) => {
+	const { getEditedPostContent } = select( 'core/editor' );
 
-		let parsedContent;
-		try {
-			parsedContent = JSON.parse( getEditedPostContent() );
-		} catch ( error ) {
-			parsedContent = {};
-		}
+	let parsedContent;
+	try {
+		parsedContent = JSON.parse( getEditedPostContent() );
+	} catch ( error ) {
+		parsedContent = {};
+	}
 
-		return { block: Object.values( parsedContent )[ 0 ] };
-	} ),
-] )( FieldSettings );
+	return { block: Object.values( parsedContent )[ 0 ] };
+} )( FieldPanel );

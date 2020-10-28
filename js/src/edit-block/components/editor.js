@@ -83,6 +83,7 @@ export default compose( [
 				return;
 			}
 
+			// @ts-ignore
 			dispatch( 'core' ).editEntityRecord(
 				'postType',
 				postType,
