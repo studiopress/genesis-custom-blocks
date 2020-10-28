@@ -11,7 +11,13 @@ import React from 'react';
 import { __ } from '@wordpress/i18n';
 
 /**
+ * Internal dependencies
+ */
+import { Text } from './settings';
+
+/**
  * @typedef {Object} FieldSettingsProps The component props.
+ * @property {Object} controls All of the possible controls.
  * @property {Object} field The current field.
  */
 
@@ -21,7 +27,9 @@ import { __ } from '@wordpress/i18n';
  * @param {FieldSettingsProps} props The component props.
  * @return {React.ReactElement} The component for the admin page.
  */
-const FieldSettings = ( { field } ) => {
+const FieldSettings = ( { controls, field } ) => {
+	const control = controls[ field.control ];
+
 	return (
 		<>
 			<div className="mt-5">
@@ -33,33 +41,9 @@ const FieldSettings = ( { field } ) => {
 					<button className="w-0 flex-grow h-8 border-l border-gray-600 text-sm focus:outline-none">100%</button>
 				</div>
 			</div>
-			<div className="mt-5">
-				<label className="text-sm" htmlFor="setting-5">{ __( 'Help Text', 'genesis-custom-blocks' ) }</label>
-				<input
-					className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm"
-					type="text"
-					id="setting-5"
-					value={ field.help }
-				/>
-			</div>
-			<div className="mt-5">
-				<label className="text-sm" htmlFor="setting-6">{ __( 'Default Value', 'genesis-custom-blocks' ) }</label>
-				<input
-					className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm"
-					type="text"
-					id="setting-6"
-					value={ field.default }
-				/>
-			</div>
-			<div className="mt-5">
-				<label className="text-sm" htmlFor="setting-7">{ __( 'Placeholder Text', 'genesis-custom-blocks' ) }</label>
-				<input
-					className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm"
-					type="text"
-					id="setting-7"
-					value={ field.placeholder }
-				/>
-			</div>
+			<Text setting={ control.settings[ 2 ] } value={ field.help } />
+			<Text setting={ control.settings[ 3 ] } value={ field.default } />
+			<Text setting={ control.settings[ 4 ] } value={ field.placeholder } />
 			<div className="mt-5">
 				<label className="text-sm" htmlFor="setting-8">{ __( 'Character Limit', 'genesis-custom-blocks' ) }</label>
 				<input

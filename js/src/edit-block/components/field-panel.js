@@ -30,7 +30,8 @@ import { FieldSettings } from './';
  */
 const FieldPanel = ( { block } ) => {
 	// @ts-ignore
-	const controls = Object.values( gcbEditor.controls );
+	const { controls } = gcbEditor;
+	const controlValues = Object.values( controls );
 	// Todo: When the main editor area exists, change this to be the field that's selected.
 	const field = Object.values( block.fields )[ 0 ];
 
@@ -60,7 +61,7 @@ const FieldPanel = ( { block } ) => {
 			<div className="mt-5">
 				<label className="text-sm" htmlFor="setting-3">{ __( 'Field ', 'genesis-custom-blocks' ) }</label>
 				<select className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm" name="" id="setting-3">
-					{ controls.map( ( control, index ) => {
+					{ controlValues.map( ( control, index ) => {
 						return <option value={ control.name } key={ `control-option-${ index }` }>{ control.label }</option>;
 					} ) }
 				</select>
