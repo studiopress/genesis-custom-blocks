@@ -11,7 +11,7 @@ import React from 'react';
 import { Input } from '../';
 
 /**
- * @typedef {Object} FieldSettingsProps The component props.
+ * @typedef {Object} MaxlengthProps The component props.
  * @property {Object} setting This setting.
  * @property {string|undefined} value The setting value.
  */
@@ -19,11 +19,11 @@ import { Input } from '../';
 /**
  * The field settings.
  *
- * @param {FieldSettingsProps} props The component props.
+ * @param {MaxlengthProps} props The component props.
  * @return {React.ReactElement} The component for the admin page.
  */
-const Text = ( props ) => {
-	return <Input { ...props } type="text" />;
+const Maxlength = ( props ) => {
+	return <Input { ...props } type="number" />;
 };
 
-export default Text;
+export default Maxlength;

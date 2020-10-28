@@ -40,5 +40,6 @@ describe( 'FieldSettings', () => {
 
 		expect( getByText( 'Field Width' ) ).toBeInTheDocument();
 		expect( getByLabelText( 'Help Text' ) ).toBeInTheDocument();
+		expect( getByLabelText( 'Character Limit' ) ).toBeInTheDocument();
 	} );
 } );

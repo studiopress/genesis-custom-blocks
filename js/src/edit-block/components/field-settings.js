@@ -13,7 +13,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Text } from './settings';
+import { Maxlength, Text } from './settings';
 
 /**
  * @typedef {Object} FieldSettingsProps The component props.
@@ -44,11 +44,7 @@ const FieldSettings = ( { controls, field } ) => {
 			<Text setting={ control.settings[ 2 ] } value={ field.help } />
 			<Text setting={ control.settings[ 3 ] } value={ field.default } />
 			<Text setting={ control.settings[ 4 ] } value={ field.placeholder } />
-			<div className="mt-5">
-				<label className="text-sm" htmlFor="setting-8">{ __( 'Character Limit', 'genesis-custom-blocks' ) }</label>
-				<input
-					className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm" type="number" id="setting-8" />
-			</div>
+			<Maxlength setting={ control.settings[ 5 ] } value={ field.placeholder } />
 			<div className="flex justify-between mt-5 border-t border-gray-300 pt-3">
 				<button className="flex items-center bg-red-200 text-sm h-6 px-2 rounded-sm leading-none text-red-700 hover:bg-red-500 hover:text-red-100">{ __( 'Delete', 'genesis-custom-blocks' ) }</button>
 				<button className="flex items-center bg-blue-200 text-sm h-6 px-2 rounded-sm leading-none text-blue-700 hover:bg-blue-500 hover:text-blue-100">{ __( 'Duplicate', 'genesis-custom-blocks' ) }</button>
