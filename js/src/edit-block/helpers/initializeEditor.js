@@ -15,6 +15,8 @@ import { Editor } from '../components';
  * an unhandled error occurs, replacing previously mounted editor element using
  * an initial state from prior to the crash.
  *
+ * Forked from Gutenberg.
+ *
  * @param {Object}  postType     Post type of the post to edit.
  * @param {Object}  postId       ID of the post to edit.
  * @param {Element} target       DOM node in which editor is rendered.
