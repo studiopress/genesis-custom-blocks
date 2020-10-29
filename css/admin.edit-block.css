@@ -4,17 +4,21 @@
 .post-type-genesis_custom_block .inline-edit-group {
 	display: none;
 }
+
 .post-type-genesis_custom_block .column-template code {
 	background: none;
 	font-size: 12px;
 	padding-left: 0;
 }
+
 .post-type-genesis_custom_block .fixed .column-icon {
 	width: 10%;
 }
+
 .post-type-genesis_custom_block .fixed td.column-icon {
 	color: #72777c;
 }
+
 .post-type-genesis_custom_block .fixed td.column-icon .icon {
 	background: #ffffff;
 	border: 1px solid #aaa;
@@ -24,6 +28,7 @@
 	height: 24px;
 	display: inline-block;
 }
+
 .post-type-genesis_custom_block .fixed .column-fields {
 	width: 10%;
 }

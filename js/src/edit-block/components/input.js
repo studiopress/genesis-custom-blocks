@@ -10,6 +10,7 @@ import React from 'react';
  * @property {Object} setting This setting.
  * @property {string|undefined} value The setting value.
  * @property {string} type The type of <input>, like 'text'.
+ * @property {number} [min] The min attribute of an input[type="number"].
  */
 
 /**
@@ -18,7 +19,7 @@ import React from 'react';
  * @param {InputProps} props The component props.
  * @return {React.ReactElement} The component for the admin page.
  */
-const Input = ( { setting, value, type } ) => {
+const Input = ( { setting, value, type, min } ) => {
 	const id = `setting-input-${ setting.name }`;
 
 	return (
@@ -29,6 +30,7 @@ const Input = ( { setting, value, type } ) => {
 				type={ type }
 				id={ id }
 				value={ value }
+				min={ min }
 			/>
 		</div>
 	);

@@ -13,13 +13,45 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Maxlength, Text } from './settings';
+import * as settingsComponents from './settings';
 
 /**
  * @typedef {Object} FieldSettingsProps The component props.
  * @property {Object} controls All of the possible controls.
  * @property {Object} field The current field.
  */
+
+/**
+ * Capitalizes a name.
+ *
+ * @param {string} name The name to capitalize.
+ */
+const capitalize = ( name ) => name.charAt( 0 ).toUpperCase() + name.slice( 1 );
+
+/**
+ * Gets the settings component if there is one.
+ *
+ * Converts a snake_case argument to a PascalCase.
+ * For example, passing 'number_non_negative' to this will return
+ * a <NumberNonNegative> component.
+ *
+ * @param {string} settingType The type of setting, like 'text'
+ * @return {React.ReactComponentElement|null} The settings component, if it exists.
+ */
+const getSettingsComponent = ( settingType ) => {
+	const splitSettingType = settingType.split( '_' );
+	let componentName;
+
+	if ( 1 === splitSettingType.length ) {
+		componentName = capitalize( settingType );
+	} else {
+		componentName = splitSettingType.reduce( ( accumulator, currentValue ) => {
+			return capitalize( accumulator ) + capitalize( currentValue );
+		} );
+	}
+
+	return settingsComponents[ componentName ] ? settingsComponents[ componentName ] : null; /* eslint-disable-line import/namespace */
+};
 
 /**
  * The field settings.
@@ -32,22 +64,25 @@ const FieldSettings = ( { controls, field } ) => {
 
 	return (
 		<>
-			<div className="mt-5">
-				<label className="text-sm" htmlFor="setting-4">{ __( 'Field Width', 'genesis-custom-blocks' ) }</label>
-				<div className="flex w-full border border-gray-600 rounded-sm mt-2">
-					<button className="w-0 flex-grow h-8 rounded-sm text-sm focus:outline-none" id="setting-4">25%</button>
-					<button className="w-0 flex-grow h-8 border-l border-gray-600 text-sm focus:outline-none">50%</button>
-					<button className="w-0 flex-grow h-8 border-l border-gray-600 text-sm focus:outline-none">75%</button>
-					<button className="w-0 flex-grow h-8 border-l border-gray-600 text-sm focus:outline-none">100%</button>
-				</div>
-			</div>
-			<Text setting={ control.settings[ 2 ] } value={ field.help } />
-			<Text setting={ control.settings[ 3 ] } value={ field.default } />
-			<Text setting={ control.settings[ 4 ] } value={ field.placeholder } />
-			<Maxlength setting={ control.settings[ 5 ] } value={ field.placeholder } />
+			{
+				control.settings.map( ( setting, index ) => {
+					const SettingComponent = getSettingsComponent( setting.type );
+					const key = `field-setting-${ index }`;
+
+					if ( SettingComponent ) {
+						return <SettingComponent key={ key } setting={ setting } value={ field[ setting.name ] } />;
+					}
+
+					return null;
+				} )
+			}
 			<div className="flex justify-between mt-5 border-t border-gray-300 pt-3">
-				<button className="flex items-center bg-red-200 text-sm h-6 px-2 rounded-sm leading-none text-red-700 hover:bg-red-500 hover:text-red-100">{ __( 'Delete', 'genesis-custom-blocks' ) }</button>
-				<button className="flex items-center bg-blue-200 text-sm h-6 px-2 rounded-sm leading-none text-blue-700 hover:bg-blue-500 hover:text-blue-100">{ __( 'Duplicate', 'genesis-custom-blocks' ) }</button>
+				<button className="flex items-center bg-red-200 text-sm h-6 px-2 rounded-sm leading-none text-red-700 hover:bg-red-500 hover:text-red-100">
+					{ __( 'Delete', 'genesis-custom-blocks' ) }
+				</button>
+				<button className="flex items-center bg-blue-200 text-sm h-6 px-2 rounded-sm leading-none text-blue-700 hover:bg-blue-500 hover:text-blue-100">
+					{ __( 'Duplicate', 'genesis-custom-blocks' ) }
+				</button>
 			</div>
 		</>
 	);

@@ -69,3 +69,7 @@ input[type="radio"]:checked + div {
 	left: auto;
 	right: 3px;
 }
+
+.gcb-setting-width button.active {
+	background-color: #add8e6;
+}
