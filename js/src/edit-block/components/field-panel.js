@@ -75,10 +75,10 @@ const FieldPanel = ( { block, editField } ) => {
 				<label className="text-sm" htmlFor="setting-3">{ __( 'Field ', 'genesis-custom-blocks' ) }</label>
 				<select
 					className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm"
-					value={ field.type }
+					value={ field.control }
 					onChange={ ( event ) => {
 						if ( event.target ) {
-							editField( fieldName, 'type', event.target.value );
+							editField( fieldName, 'control', event.target.value );
 						}
 					} }
 				>
