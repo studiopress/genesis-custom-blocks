@@ -19,20 +19,21 @@ import React from 'react';
  * @return {React.ReactElement} The component for the admin page.
  */
 const Checkbox = ( { handleOnChange, setting, value } ) => {
-	const checkedValue = '1';
 	const isChecked = value;
+	const checked = '1';
 	const id = `setting-input-${ setting.name }`;
 
 	return (
 		<>
 			<label className="text-sm" htmlFor={ id }>{ setting.label }</label>
 			<input
+				id={ id }
 				type="checkbox"
-				value={ checkedValue }
+				value={ checked }
 				checked={ isChecked }
 				onChange={ ( event ) => {
 					if ( event.target ) {
-						handleOnChange( event.target.value );
+						handleOnChange( event.target.checked );
 					}
 				} }
 			/>
