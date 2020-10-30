@@ -6,11 +6,6 @@
 import React from 'react';
 
 /**
- * Internal dependencies
- */
-import { Input } from '../';
-
-/**
  * @typedef {Object} TextareaProps The component props.
  * @property {Object} setting This setting.
  * @property {string|undefined} value The setting value.
@@ -23,7 +18,7 @@ import { Input } from '../';
  * @param {TextareaProps} props The component props.
  * @return {React.ReactElement} The component for the admin page.
  */
-const Textarea = ( { handleOnChange, setting, value} ) => {
+const Textarea = ( { handleOnChange, setting, value } ) => {
 	const id = `setting-input-${ setting.name }`;
 
 	return (
@@ -39,7 +34,7 @@ const Textarea = ( { handleOnChange, setting, value} ) => {
 				} }
 			>
 				{ value }
-			</textarea>	
+			</textarea>
 		</>
 	);
 };
