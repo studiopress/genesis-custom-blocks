@@ -23,7 +23,7 @@ const Input = ( { setting, value, type, min } ) => {
 	const id = `setting-input-${ setting.name }`;
 
 	return (
-		<div className="mt-5">
+		<>
 			<label className="text-sm" htmlFor={ id }>{ setting.label }</label>
 			<input
 				className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm"
@@ -32,7 +32,7 @@ const Input = ( { setting, value, type, min } ) => {
 				value={ value }
 				min={ min }
 			/>
-		</div>
+		</>
 	);
 };
 

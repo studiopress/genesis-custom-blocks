@@ -70,7 +70,11 @@ const FieldSettings = ( { controls, field } ) => {
 					const key = `field-setting-${ index }`;
 
 					if ( SettingComponent ) {
-						return <SettingComponent key={ key } setting={ setting } value={ field[ setting.name ] } />;
+						return (
+							<div className="mt-5" key={ key }>
+								<SettingComponent setting={ setting } value={ field[ setting.name ] } />
+							</div>
+						);
 					}
 
 					return null;

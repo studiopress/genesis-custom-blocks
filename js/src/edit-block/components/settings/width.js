@@ -21,7 +21,7 @@ import classNames from 'classnames';
 const Width = ( { setting, value } ) => {
 	const name = `setting-${ setting.name }`;
 	return (
-		<div className="mt-5 gcb-setting-width">
+		<>
 			<span className="text-sm">{ setting.label }</span>
 			<div className="flex w-full border border-gray-600 rounded-sm mt-2">
 				{ [ '25', '50', '75', '100' ].map( ( width, index ) => {
@@ -43,7 +43,7 @@ const Width = ( { setting, value } ) => {
 					);
 				} ) }
 			</div>
-		</div>
+		</>
 	);
 };
 
