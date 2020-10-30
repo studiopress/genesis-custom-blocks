@@ -19,6 +19,7 @@ import * as settingsComponents from './settings';
  * @typedef {Object} FieldSettingsProps The component props.
  * @property {Object} controls All of the possible controls.
  * @property {Object} field The current field.
+ * @property {Function} editField Edits a given field's value.
  */
 
 /**
@@ -59,7 +60,7 @@ const getSettingsComponent = ( settingType ) => {
  * @param {FieldSettingsProps} props The component props.
  * @return {React.ReactElement} The component for the admin page.
  */
-const FieldSettings = ( { controls, field } ) => {
+const FieldSettings = ( { controls, editField, field } ) => {
 	const control = controls[ field.control ];
 
 	return (
@@ -72,7 +73,13 @@ const FieldSettings = ( { controls, field } ) => {
 					if ( SettingComponent ) {
 						return (
 							<div className="mt-5" key={ key }>
-								<SettingComponent setting={ setting } value={ field[ setting.name ] } />
+								<SettingComponent
+									setting={ setting }
+									value={ field[ setting.name ] }
+									handleOnChange={ ( newSettingValue ) => {
+										editField( field.name, setting.name, newSettingValue );
+									} }
+								/>
 							</div>
 						);
 					}

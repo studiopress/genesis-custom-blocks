@@ -14,6 +14,7 @@ import { __ } from '@wordpress/i18n';
  * @typedef {Object} LocationProps The component props.
  * @property {Object} setting This setting.
  * @property {string|undefined} value The setting value.
+ * @property {Function} handleOnChange Handles a change to this setting.
  */
 
 /**
@@ -22,13 +23,13 @@ import { __ } from '@wordpress/i18n';
  * @param {LocationProps} props The component props.
  * @return {React.ReactElement} The component for the admin page.
  */
-const Location = ( { setting, value } ) => {
+const Location = ( { handleOnChange, setting, value } ) => {
 	const locations = [
-		{ 
+		{
 			value: 'editor',
 			label: __( 'Editor', 'genesis-custom-blocks' ),
 		},
-		{ 
+		{
 			value: 'inspector',
 			label: __( 'Inspector', 'genesis-custom-blocks' ),
 		},
@@ -43,6 +44,11 @@ const Location = ( { setting, value } ) => {
 				id={ id }
 				name={ id }
 				className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm"
+				onBlur={ ( event ) => {
+					if ( event.target ) {
+						handleOnChange( event.target.value );
+					}
+				} }
 			>
 				{
 					locations.map( ( location ) => {

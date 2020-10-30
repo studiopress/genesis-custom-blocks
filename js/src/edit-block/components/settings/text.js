@@ -14,6 +14,7 @@ import { Input } from '../';
  * @typedef {Object} TextProps The component props.
  * @property {Object} setting This setting.
  * @property {string|undefined} value The setting value.
+ * @property {Function} handleOnChange Handles a change in this setting.
  */
 
 /**

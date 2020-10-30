@@ -7,9 +7,10 @@ import React from 'react';
 
 /**
  * @typedef {Object} InputProps The component props.
+ * @property {Function} handleOnChange Handles a change in this setting.
  * @property {Object} setting This setting.
- * @property {string|undefined} value The setting value.
  * @property {string} type The type of <input>, like 'text'.
+ * @property {string|undefined} value The setting value.
  * @property {number} [min] The min attribute of an input[type="number"].
  */
 
@@ -19,7 +20,7 @@ import React from 'react';
  * @param {InputProps} props The component props.
  * @return {React.ReactElement} The component for the admin page.
  */
-const Input = ( { setting, value, type, min } ) => {
+const Input = ( { handleOnChange, setting, type, value, min } ) => {
 	const id = `setting-input-${ setting.name }`;
 
 	return (
@@ -31,6 +32,11 @@ const Input = ( { setting, value, type, min } ) => {
 				id={ id }
 				value={ value }
 				min={ min }
+				onChange={ ( event ) => {
+					if ( event.target ) {
+						handleOnChange( event.target.value );
+					}
+				} }
 			/>
 		</>
 	);
