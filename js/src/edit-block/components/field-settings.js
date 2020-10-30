@@ -1,5 +1,3 @@
-// @ts-check
-
 /**
  * External dependencies
  */
@@ -37,7 +35,7 @@ const capitalize = ( name ) => name.charAt( 0 ).toUpperCase() + name.slice( 1 );
  * a <NumberNonNegative> component.
  *
  * @param {string} settingType The type of setting, like 'text'
- * @return {React.ReactComponentElement|null} The settings component, if it exists.
+ * @return {React.Component} The settings component, if it exists.
  */
 const getSettingsComponent = ( settingType ) => {
 	const splitSettingType = settingType.split( '_' );
@@ -69,13 +67,14 @@ const FieldSettings = ( { controls, editField, field } ) => {
 				control.settings.map( ( setting, index ) => {
 					const SettingComponent = getSettingsComponent( setting.type );
 					const key = `field-setting-${ index }`;
+					const value = null === field[ setting.name ] ? setting.default : field[ setting.name ];
 
 					if ( SettingComponent ) {
 						return (
 							<div className="mt-5" key={ key }>
 								<SettingComponent
 									setting={ setting }
-									value={ field[ setting.name ] }
+									value={ value }
 									handleOnChange={ ( newSettingValue ) => {
 										editField( field.name, setting.name, newSettingValue );
 									} }

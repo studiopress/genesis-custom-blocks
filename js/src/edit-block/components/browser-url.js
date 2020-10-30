@@ -40,6 +40,7 @@ export function getPostTrashedURL( postId, postType ) {
  */
 export class BrowserURL extends Component {
 	constructor() {
+		// @ts-ignore
 		super( ...arguments );
 
 		this.state = {

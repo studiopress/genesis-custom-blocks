@@ -1,5 +1,3 @@
-// @ts-check
-
 /**
  * External dependencies
  */
@@ -9,6 +7,11 @@ import React from 'react';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies
+ */
+import { Select } from '../';
 
 /**
  * @typedef {Object} LocationProps The component props.
@@ -23,7 +26,7 @@ import { __ } from '@wordpress/i18n';
  * @param {LocationProps} props The component props.
  * @return {React.ReactElement} The component for the admin page.
  */
-const Location = ( { handleOnChange, setting, value } ) => {
+const Location = ( props ) => {
 	const locations = [
 		{
 			value: 'editor',
@@ -34,37 +37,9 @@ const Location = ( { handleOnChange, setting, value } ) => {
 			label: __( 'Inspector', 'genesis-custom-blocks' ),
 		},
 	];
-	const id = `setting-${ setting.name }`;
+	const id = `setting-${ props.setting.name }`;
 
-	return (
-		<>
-			<label className="text-sm" htmlFor={ id }>{ setting.label }</label>
-			<select /* eslint-disable-line jsx-a11y/no-onchange */
-				value={ value }
-				id={ id }
-				name={ id }
-				className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm"
-				onChange={ ( event ) => {
-					if ( event.target ) {
-						handleOnChange( event.target.value );
-					}
-				} }
-			>
-				{
-					locations.map( ( location ) => {
-						return (
-							<option
-								value={ location.value }
-								key={ `location-option-${ location.value }` }
-							>
-								{ location.label }
-							</option>
-						);
-					} )
-				}
-			</select>
-		</>
-	);
+	return <Select { ...props } id={ id } options={ locations } />;
 };
 
 export default Location;
