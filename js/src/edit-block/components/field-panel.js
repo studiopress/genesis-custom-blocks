@@ -76,7 +76,7 @@ const FieldPanel = ( { block, editField } ) => {
 				<select
 					className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm"
 					value={ field.type }
-					onBlur={ ( event ) => {
+					onChange={ ( event ) => {
 						if ( event.target ) {
 							editField( fieldName, 'type', event.target.value );
 						}

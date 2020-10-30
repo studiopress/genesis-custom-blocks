@@ -44,7 +44,7 @@ const Location = ( { handleOnChange, setting, value } ) => {
 				id={ id }
 				name={ id }
 				className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm"
-				onBlur={ ( event ) => {
+				onChange={ ( event ) => {
 					if ( event.target ) {
 						handleOnChange( event.target.value );
 					}
