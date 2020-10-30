@@ -53,7 +53,10 @@ const Editor = ( props ) => {
 			>
 				<EditorNotices />
 				<Header />
-				<PostTitle />
+				<div className="block-title-field w-full mt-10 text-center focus:outline-none">
+					<PostTitle />
+				</div>
+
 				<Side />
 			</EditorProvider>
 		</>

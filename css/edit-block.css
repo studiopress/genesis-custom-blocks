@@ -15,7 +15,7 @@ input[type="radio"]:checked + div {
 }
 
 .block-title-field {
-	font-size: 4rem;
+	font-size: 2rem;
 }
 
 .repeater-insert-row button {
@@ -72,4 +72,30 @@ input[type="radio"]:checked + div {
 
 .gcb-setting-width button.active {
 	background-color: #bee3f8;
+}
+
+#save-and-publish {
+	margin-left: auto;
+}
+
+/* Forked from Gutenberg */
+
+.editor-post-title .editor-post-title__input:focus {
+	border: 1px solid transparent;
+	outline: 1px solid transparent;
+	box-shadow: none;
+}
+
+.components-visually-hidden {
+	border: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	-webkit-clip-path: inset(50%);
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	word-wrap: normal !important;
 }
