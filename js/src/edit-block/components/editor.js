@@ -33,7 +33,7 @@ const Editor = ( props ) => {
 
 	useEffect( () => {
 		removeBlocks();
-	}, [ post ] );
+	}, [ removeBlocks, post ] );
 
 	if ( ! post ) {
 		return null;

@@ -73,7 +73,7 @@ const FieldPanel = ( { block, editField } ) => {
 			</div>
 			<div className="mt-5">
 				<label className="text-sm" htmlFor="setting-3">{ __( 'Field ', 'genesis-custom-blocks' ) }</label>
-				<select
+				<select /* eslint-disable-line jsx-a11y/no-onchange */
 					className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm"
 					value={ field.control }
 					onChange={ ( event ) => {

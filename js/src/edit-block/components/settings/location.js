@@ -39,7 +39,7 @@ const Location = ( { handleOnChange, setting, value } ) => {
 	return (
 		<>
 			<label className="text-sm" htmlFor={ id }>{ setting.label }</label>
-			<select
+			<select /* eslint-disable-line jsx-a11y/no-onchange */
 				value={ value }
 				id={ id }
 				name={ id }

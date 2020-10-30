@@ -37,7 +37,7 @@ const Checkbox = ( { handleOnChange, setting, value } ) => {
 				} }
 			/>
 		</>
-	)
+	);
 };
 
 export default Checkbox;
