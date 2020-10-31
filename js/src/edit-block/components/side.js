@@ -15,7 +15,7 @@ import { FieldPanel } from './';
 
 const Side = () => {
 	return (
-		<div className="inspector flex-shrink-0 flex flex-col border-l border-gray-300 overflow-scroll">
+		<div className="side flex-shrink-0 flex flex-col border-l border-gray-300 overflow-scroll">
 			<div className="flex w-full border-b border-gray-300">
 				<button className="flex items-center h-12 px-5 text-sm focus:outline-none">
 					{ __( 'Block', 'genesis-custom-blocks' ) }

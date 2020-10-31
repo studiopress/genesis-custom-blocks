@@ -6,8 +6,13 @@ input[type="radio"]:checked + div {
 	border-color: rgb(0, 124, 186);
 }
 
-.inspector {
+.side {
 	width: 280px;
+}
+
+.side input[type="checkbox"] {
+	display: block;
+	margin-top: 0.5rem;
 }
 
 .field-resize {
