@@ -24,6 +24,7 @@ const Textarea = ( { handleOnChange, setting, value } ) => {
 			<label className="text-sm" htmlFor={ id }>{ setting.label }</label>
 			<textarea
 				id={ id }
+				className="flex items-center w-full rounded-sm border border-gray-600 mt-2 px-2 text-sm"
 				rows={ 6 }
 				onChange={ ( event ) => {
 					if ( event.target ) {

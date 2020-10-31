@@ -11,14 +11,13 @@ import { withDispatch, withSelect } from '@wordpress/data';
 import {
 	EditorNotices,
 	EditorProvider,
-	PostTitle,
 } from '@wordpress/editor';
 import { useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import { BrowserURL, Header, Side } from './';
+import { BrowserURL, Header, Main, Side } from './';
 
 /**
  * The migration admin page.
@@ -38,7 +37,7 @@ const Editor = ( props ) => {
 	}
 
 	return (
-		<>
+		<div className="h-screen flex flex-col items-center text-black">
 			<BrowserURL />
 			<EditorProvider
 				settings={
@@ -53,13 +52,12 @@ const Editor = ( props ) => {
 			>
 				<EditorNotices />
 				<Header />
-				<div className="block-title-field w-full mt-10 text-center focus:outline-none">
-					<PostTitle />
+				<div className="flex w-full h-0 flex-grow">
+					<Main />
+					<Side />
 				</div>
-
-				<Side />
 			</EditorProvider>
-		</>
+		</div>
 	);
 };
 

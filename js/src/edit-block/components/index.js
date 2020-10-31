@@ -5,5 +5,6 @@ export { default as FieldPanel } from './field-panel';
 export { default as FieldSettings } from './field-settings';
 export { default as Header } from './header';
 export { default as Input } from './input';
+export { default as Main } from './main';
 export { default as Select } from './select';
 export { default as Side } from './side';
