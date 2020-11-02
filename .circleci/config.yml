@@ -60,7 +60,6 @@ jobs:
       - run:
           name: Installing the mysqli extension
           command: sudo docker-php-ext-install mysqli
-      - install-composer
       - node/install:
           node-version: lts
       - run:
@@ -77,7 +76,7 @@ jobs:
           name: Running PHPUnit
           working_directory: *PLUGIN_PATH
           command: |
-            composer self-update --rollback 1.10.16
+            composer self-update 1.10.16
             composer remove --dev phpunit/phpunit && composer install -W
             npm ci && npm run build
             composer require --dev -W phpunit/phpunit 5.7.9
