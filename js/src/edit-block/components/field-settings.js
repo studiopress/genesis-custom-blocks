@@ -28,6 +28,13 @@ import * as settingsComponents from './settings';
 const capitalize = ( name ) => name.charAt( 0 ).toUpperCase() + name.slice( 1 );
 
 /**
+ * @typedef {Object} SettingsComponentProps The component props.
+ * @property {Function} handleOnChange Handles a change in this setting.
+ * @property {Object} setting This setting.
+ * @property {boolean|undefined} value The setting value.
+ */
+
+/**
  * Gets the settings component if there is one.
  *
  * Converts a snake_case argument to a PascalCase.
@@ -35,7 +42,7 @@ const capitalize = ( name ) => name.charAt( 0 ).toUpperCase() + name.slice( 1 );
  * a <NumberNonNegative> component.
  *
  * @param {string} settingType The type of setting, like 'text'
- * @return {React.Component} The settings component, if it exists.
+ * @return {React.ComponentType<SettingsComponentProps>} The settings component, if it exists.
  */
 const getSettingsComponent = ( settingType ) => {
 	const splitSettingType = settingType.split( '_' );
