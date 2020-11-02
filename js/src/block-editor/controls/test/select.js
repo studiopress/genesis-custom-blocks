@@ -40,5 +40,5 @@ test( 'select control', async () => {
 
 	// This should send the new value to the onChange handler.
 	user.selectOptions( control, secondValue );
-	await waitFor( () => expect( props.onChange ).toHaveBeenCalledWith( secondValue, { target: { value: secondValue } } ) );
+	await waitFor( () => expect( props.onChange ).toHaveBeenCalled() );
 } );
