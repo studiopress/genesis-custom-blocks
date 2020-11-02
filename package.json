@@ -69,7 +69,7 @@
     "gulp": "4.0.2",
     "gulp-run": "1.7.1",
     "gulp-string-replace": "1.1.2",
-    "husky": "4.2.5",
+    "husky": "4.3.0",
     "ignore-emit-webpack-plugin": "2.0.2",
     "jest-axe": "3.5.0",
     "jest-environment-jsdom-sixteen": "1.0.3",
