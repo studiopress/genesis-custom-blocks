@@ -76,7 +76,7 @@ jobs:
           name: Running PHPUnit
           working_directory: *PLUGIN_PATH
           command: |
-            sudo composer self-update --1
+            sudo composer self-update 1.10.16
             composer remove --dev phpunit/phpunit && composer install -W
             npm ci && npm run build
             composer require --dev -W phpunit/phpunit 5.7.9
