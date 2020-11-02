@@ -26,7 +26,7 @@ commands:
             php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
             EXPECTED_SIGNATURE=$(curl -s https://composer.github.io/installer.sig)
             ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');")
-            [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && sudo php composer-setup.php --install-dir=/bin --version=1.10.16 --filename=composer || exit 1
+            [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && sudo php composer-setup.php --version=1.10.16 --install-dir=/bin --filename=composer || exit 1
 
 jobs:
   lint:
@@ -77,6 +77,7 @@ jobs:
           name: Running PHPUnit
           working_directory: *PLUGIN_PATH
           command: |
+            composer self-update --1
             composer remove --dev phpunit/phpunit && composer install -W
             npm ci && npm run build
             composer require --dev -W phpunit/phpunit 5.7.9
