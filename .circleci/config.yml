@@ -16,7 +16,7 @@ commands:
   set-up-packages:
     description: "Installing packages and building"
     steps:
-      - run: sudo apt-get update && sudo apt-get install libkrb5-dev && composer remove --dev phpunit/phpunit && composer install && npm ci && npm run build
+      - run: composer remove --dev phpunit/phpunit && composer install && npm ci && npm run build
 
   install-composer:
     description: "Installing Composer"
@@ -48,6 +48,7 @@ jobs:
       - checkout
       - node/install:
           node-version: lts
+      - run: sudo apt-get update && sudo apt-get install libkrb5-dev
       - set-up-packages
       - run: npm run lint
 
