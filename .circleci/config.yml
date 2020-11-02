@@ -27,6 +27,10 @@ commands:
             EXPECTED_SIGNATURE=$(curl -s https://composer.github.io/installer.sig)
             ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');")
             [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && sudo php composer-setup.php --version=1.10.16 --install-dir=/bin --filename=composer || exit 1
+  nodegit-workaround:
+    description: "Ensure nodegit runs without error"
+    stpes:
+      - run: sudo apt-get update && sudo apt-get install libkrb5-dev
 
 jobs:
   lint:
@@ -36,7 +40,7 @@ jobs:
       - checkout
       - node/install:
           node-version: lts
-      - run: sudo apt-get update && sudo apt-get install libkrb5-dev
+      - nodegit-workaround
       - set-up-packages
       - run: npm run lint
 
@@ -62,6 +66,7 @@ jobs:
           command: sudo docker-php-ext-install mysqli
       - node/install:
           node-version: lts
+      - nodegit-workaround
       - run:
           name: Installing WordPress and setting up tests
           command: |
@@ -78,7 +83,6 @@ jobs:
           command: |
             sudo composer self-update 1.10.16
             composer remove --dev phpunit/phpunit && composer install
-            sudo apt-get update && sudo apt-get install libkrb5-dev
             npm ci && npm run build
             composer require --dev phpunit/phpunit 5.7.9
             WP_TESTS_DIR=~/project/wordpress-develop/tests/phpunit ./vendor/bin/phpunit
@@ -100,6 +104,7 @@ jobs:
       - install-composer
       - node/install:
           node-version: lts
+      - nodegit-workaround
       - set-up-packages
       - run: npm run env start && npm run test:e2e
 
