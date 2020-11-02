@@ -11,7 +11,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import * as settingsComponents from './settings';
+import { getSettingsComponent } from '../helpers';
 
 /**
  * @typedef {Object} FieldSettingsProps The component props.
@@ -19,45 +19,6 @@ import * as settingsComponents from './settings';
  * @property {Object} field The current field.
  * @property {Function} editField Edits a given field's value.
  */
-
-/**
- * Capitalizes a name.
- *
- * @param {string} name The name to capitalize.
- */
-const capitalize = ( name ) => name.charAt( 0 ).toUpperCase() + name.slice( 1 );
-
-/**
- * @typedef {Object} SettingsComponentProps The component props.
- * @property {Function} handleOnChange Handles a change in this setting.
- * @property {Object} setting This setting.
- * @property {boolean|undefined} value The setting value.
- */
-
-/**
- * Gets the settings component if there is one.
- *
- * Converts a snake_case argument to a PascalCase.
- * For example, passing 'number_non_negative' to this will return
- * a <NumberNonNegative> component.
- *
- * @param {string} settingType The type of setting, like 'text'
- * @return {React.ComponentType<SettingsComponentProps>} The settings component, if it exists.
- */
-const getSettingsComponent = ( settingType ) => {
-	const splitSettingType = settingType.split( '_' );
-	let componentName;
-
-	if ( 1 === splitSettingType.length ) {
-		componentName = capitalize( settingType );
-	} else {
-		componentName = splitSettingType.reduce( ( accumulator, currentValue ) => {
-			return capitalize( accumulator ) + capitalize( currentValue );
-		} );
-	}
-
-	return settingsComponents[ componentName ] ? settingsComponents[ componentName ] : null; /* eslint-disable-line import/namespace */
-};
 
 /**
  * The field settings.
