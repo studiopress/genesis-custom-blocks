@@ -78,6 +78,7 @@ jobs:
           command: |
             sudo composer self-update 1.10.16
             composer remove --dev phpunit/phpunit && composer install
+            sudo apt-get update && sudo apt-get install libkrb5-dev
             npm ci && npm run build
             composer require --dev phpunit/phpunit 5.7.9
             WP_TESTS_DIR=~/project/wordpress-develop/tests/phpunit ./vendor/bin/phpunit
