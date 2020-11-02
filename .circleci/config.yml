@@ -37,7 +37,12 @@ commands:
       - run:
           name: Checking whether relevant files were changed
           command: |
-            CHANGED_FILES="$( git diff << pipeline.git.branch >> << pipeline.git.base_revision >> --name-only --diff-filter=ACMRT << parameters.directories >> )"
+            sudo apt-get update && sudo apt-get install jq
+            echo "Here is the ORG: $ORG and the PROJECT: $PROJECT and the PR number: $CIRCLE_PR_NUMBER"
+            API_URL=url="https://api.github.com/repos/$ORG/$PROJECT/pulls/$CIRCLE_PR_NUMBER
+            TARGET_BRANCH=$( curl "$url" | jq '.base.ref' | tr -d '"')
+            echo "The target branch URL is: $TARGET_BRANCH"
+            CHANGED_FILES="$( git diff << pipeline.git.branch >> $TARGET_BRANCH --name-only --diff-filter=ACMRT << parameters.directories >> )"
             if [ -z "$CHANGED_FILES" ] && [ -z "$CIRCLE_TAG" ]; then echo "No change to relevant file, exiting job" && circleci-agent step halt; fi
 
 jobs:
