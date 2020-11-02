@@ -16,7 +16,7 @@ commands:
   set-up-packages:
     description: "Installing packages and building"
     steps:
-      - run: composer remove --dev phpunit/phpunit && composer install && npm rebuild node-sass && npm ci && npm run build
+      - run: sudo apt-get update && sudo apt-get install libkrb5-dev && composer remove --dev phpunit/phpunit && composer install && npm ci && npm run build
 
   install-composer:
     description: "Installing Composer"
