@@ -4,6 +4,11 @@
 import * as React from 'react';
 
 /**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks';
+
+/**
  * Internal dependencies
  */
 import * as settingsComponents from '../components/settings';
@@ -44,7 +49,8 @@ const getSettingsComponent = ( settingType ) => {
 		} );
 	}
 
-	return settingsComponents[ componentName ] ? settingsComponents[ componentName ] : null; /* eslint-disable-line import/namespace */
+	const filteredComponents = applyFilters( 'genesisCustomBlocks.settingsComponents', settingsComponents );
+	return filteredComponents[ componentName ] ? filteredComponents[ componentName ] : null; /* eslint-disable-line import/namespace */
 };
 
 export default getSettingsComponent;
