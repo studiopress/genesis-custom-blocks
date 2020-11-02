@@ -29,7 +29,7 @@ commands:
             [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && sudo php composer-setup.php --version=1.10.16 --install-dir=/bin --filename=composer || exit 1
   nodegit-workaround:
     description: "Ensure nodegit runs without error"
-    stpes:
+    steps:
       - run: sudo apt-get update && sudo apt-get install libkrb5-dev
 
 jobs:
