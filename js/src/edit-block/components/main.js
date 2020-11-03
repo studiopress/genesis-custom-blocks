@@ -53,8 +53,22 @@ const Main = () => {
 							/>
 						</svg>
 						<p className="font-semibold ml-1">{ __( 'Learn more:', 'genesis-custom-blocks' ) }</p>
-						<a className="underline ml-2" href={ urlBlockTemplates }>{ __( 'Block Templates', 'genesis-custom-blocks' ) }</a>
-						<a className="underline ml-2" href={ urlTemplateFunctions }>{ __( 'Template Functions', 'genesis-custom-blocks' ) }</a>
+						<a
+							className="underline ml-2"
+							href={ urlBlockTemplates }
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							{ __( 'Block Templates', 'genesis-custom-blocks' ) }
+						</a>
+						<a
+							className="underline ml-2"
+							href={ urlTemplateFunctions }
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							{ __( 'Template Functions', 'genesis-custom-blocks' ) }
+						</a>
 					</div>
 				</div>
 			</div>
