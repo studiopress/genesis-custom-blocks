@@ -17,7 +17,7 @@ import React from 'react';
  * @return {React.ReactElement} The component for the admin page.
  */
 const Textarea = ( { handleOnChange, setting, value } ) => {
-	const id = `setting-input-${ setting.name }`;
+	const id = `setting-textarea-${ setting.name }`;
 
 	return (
 		<>

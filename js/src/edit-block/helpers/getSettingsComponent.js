@@ -39,15 +39,10 @@ const capitalize = ( name ) => name.charAt( 0 ).toUpperCase() + name.slice( 1 );
  */
 const getSettingsComponent = ( settingType ) => {
 	const splitSettingType = settingType.split( '_' );
-	let componentName;
 
-	if ( 1 === splitSettingType.length ) {
-		componentName = capitalize( settingType );
-	} else {
-		componentName = splitSettingType.reduce( ( accumulator, currentValue ) => {
-			return capitalize( accumulator ) + capitalize( currentValue );
-		} );
-	}
+	const componentName = splitSettingType.reduce( ( accumulator, currentValue ) => {
+		return capitalize( accumulator ) + capitalize( currentValue );
+	}, '' );
 
 	const filteredComponents = applyFilters( 'genesisCustomBlocks.settingsComponents', settingsComponents );
 	return filteredComponents[ componentName ] ? filteredComponents[ componentName ] : null; /* eslint-disable-line import/namespace */

@@ -12,6 +12,7 @@ describe( 'getSettingsComponent', () => {
 		[ 'number', 'Number' ],
 		[ 'text', 'Text' ],
 		[ 'textarea', 'Textarea' ],
+		[ 'textarea_array', 'TextareaArray' ],
 		[ 'width', 'Width' ],
 	] )( 'should have the setting',
 		( settingName, expected ) => {

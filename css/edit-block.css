@@ -79,6 +79,11 @@ input[type="radio"]:checked + div {
 	background-color: #bee3f8;
 }
 
+.editor-post-title__input {
+	width: 100%;
+	text-align: center;
+}
+
 #save-and-publish {
 	margin-left: auto;
 }
