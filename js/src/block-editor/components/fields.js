@@ -8,6 +8,7 @@ import { select } from '@wordpress/data';
  * Internal dependencies
  */
 import { getSimplifiedFields } from '../helpers';
+import React from 'react';
 
 /**
  * Gets the control function for the field.
@@ -37,14 +38,19 @@ const getClassName = ( field ) => {
 };
 
 /**
+ * @typedef {Object} FieldProps The component props.
+ * @property {Array}  fields The fields to render.
+ * @property {Object} parentBlockProps The props to pass to the control function.
+ * @property {Object} parentBlock The block where the fields are.
+ * @property {number} rowIndex The index of the repeater row, if this field is in one (optional).
+ * @property {Function} changeFieldSetting Edits a field value.
+ */
+
+/**
  * Renders the fields, using their control functions.
  *
- * @param {Object} props                  The component props.
- * @param {Array}  props.fields           The fields to render.
- * @param {Object} props.parentBlockProps The props to pass to the control function.
- * @param {Object} props.parentBlock      The block where the fields are.
- * @param {number} props.rowIndex         The index of the repeater row, if this field is in one (optional).
- * @return {Function} fields The rendered fields.
+ * @param {FieldProps} props The component props.
+ * @return {React.ReactElement[]} fields The rendered fields.
  */
 const Fields = ( { fields, parentBlockProps, parentBlock, rowIndex } ) => {
 	return getSimplifiedFields( fields ).map( ( field ) => {

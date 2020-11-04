@@ -9,7 +9,7 @@ import React from 'react';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { withDispatch, withSelect } from '@wordpress/data';
+import { withDispatch, withSelect, useSelect } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
 
 /**
@@ -17,10 +17,14 @@ import { compose } from '@wordpress/compose';
  */
 import { FieldSettings } from './';
 
+// @ts-ignore
+const { controls } = gcbEditor;
+
 /**
  * @typedef {Object} FieldPanelProps The component props.
  * @property {Object} block The block config.
- * @property {Function} editField Edits a field value.
+ * @property {Function} changeControl Change the control.
+ * @property {Function} changeFieldSetting Edits a field value.
  */
 
 /**
@@ -29,10 +33,11 @@ import { FieldSettings } from './';
  * @param {FieldPanelProps} props The component props.
  * @return {React.ReactElement} The component for the admin page.
  */
-const FieldPanel = ( { block, editField } ) => {
+const FieldPanel = ( { block, changeControl, changeFieldSetting } ) => {
 	// @ts-ignore
 	const { controls } = gcbEditor;
 	const controlValues = Object.values( controls );
+
 	// Todo: When the main editor area exists, change this to be the field that's selected.
 	const fieldName = Object.keys( block.fields )[ 0 ];
 	const field = block.fields[ fieldName ];
@@ -49,7 +54,7 @@ const FieldPanel = ( { block, editField } ) => {
 					value={ field.label }
 					onChange={ ( event ) => {
 						if ( event.target ) {
-							editField( fieldName, 'label', event.target.value );
+							changeFieldSetting( fieldName, 'label', event.target.value );
 						}
 					} }
 				/>
@@ -64,7 +69,7 @@ const FieldPanel = ( { block, editField } ) => {
 					value={ field.name }
 					onChange={ ( event ) => {
 						if ( event.target ) {
-							editField( fieldName, 'name', event.target.value );
+							changeFieldSetting( fieldName, 'name', event.target.value );
 						}
 					} }
 				/>
@@ -77,7 +82,7 @@ const FieldPanel = ( { block, editField } ) => {
 					value={ field.control }
 					onChange={ ( event ) => {
 						if ( event.target ) {
-							editField( fieldName, 'control', event.target.value );
+							changeControl( fieldName, event.target.value );
 						}
 					} }
 				>
@@ -86,7 +91,7 @@ const FieldPanel = ( { block, editField } ) => {
 					} ) }
 				</select>
 			</div>
-			<FieldSettings field={ field } controls={ controls } editField={ editField } />
+			<FieldSettings field={ field } controls={ controls } changeFieldSetting={ changeFieldSetting } />
 		</div>
 	);
 };
@@ -112,8 +117,44 @@ export default compose( [
 		const blockNameWithNamespace = Object.keys( fullBlock )[ 0 ];
 
 		return {
-			editField: ( fieldName, settingKey, newSettingValue ) => {
+			/**
+			 * Changes the control of a field.
+			 *
+			 * @param {string} fieldName The name (slug) of the field.
+			 * @param {string} settingKey The key of the setting, like 'label' or 'placeholder'. 
+			 * @param {any} newSettingValue The new setting value.
+			 */
+			changeFieldSetting: ( fieldName, settingKey, newSettingValue ) => {
 				fullBlock[ blockNameWithNamespace ].fields[ fieldName ][ settingKey ] = newSettingValue;
+				editPost( { content: JSON.stringify( fullBlock ) } );
+			},
+
+			/**
+			 * Changes the control of a field.
+			 *
+			 * @param {string} fieldName The name (slug) of the field.
+			 * @param {string} newControlName The name of the control to change to.
+			 */
+			changeControl: ( fieldName, newControlName ) => {
+				const control = controls[ newControlName ];
+				if ( ! control ) {
+					return;
+				}
+
+				if ( ! fullBlock[ blockNameWithNamespace ].fields ) {
+					fullBlock[ blockNameWithNamespace ].fields = [];
+				}
+
+				// Todo: handle multiple fields when it's possible to add a field.
+				const previousField = fullBlock[ blockNameWithNamespace ].fields[ fieldName ];
+				const newField = {
+					name: previousField.name,
+					label: previousField.label,
+					control: control.name,
+					type: control.type,
+				}
+
+				fullBlock[ blockNameWithNamespace ].fields[ fieldName ] = newField;
 				editPost( { content: JSON.stringify( fullBlock ) } );
 			},
 		};

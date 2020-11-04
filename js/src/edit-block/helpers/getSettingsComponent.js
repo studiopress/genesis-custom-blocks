@@ -30,8 +30,9 @@ const capitalize = ( name ) => name.charAt( 0 ).toUpperCase() + name.slice( 1 );
 /**
  * Gets the settings component if there is one.
  *
- * Converts a snake_case argument to a PascalCase.
- * For example, passing 'number_non_negative' to this will return
+ * Converts a snake_case settingType to a PascalCase,
+ * then gets a field component of that name if it exists.
+ * For example, passing 'number_non_negative' will return
  * a <NumberNonNegative> component.
  *
  * @param {string} settingType The type of setting, like 'text'

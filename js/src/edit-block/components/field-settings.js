@@ -17,7 +17,7 @@ import { getSettingsComponent } from '../helpers';
  * @typedef {Object} FieldSettingsProps The component props.
  * @property {Object} controls All of the possible controls.
  * @property {Object} field The current field.
- * @property {Function} editField Edits a given field's value.
+ * @property {Function} changeFieldSetting Edits a given field's value.
  */
 
 /**
@@ -26,7 +26,7 @@ import { getSettingsComponent } from '../helpers';
  * @param {FieldSettingsProps} props The component props.
  * @return {React.ReactElement} The component for the admin page.
  */
-const FieldSettings = ( { controls, editField, field } ) => {
+const FieldSettings = ( { controls, changeFieldSetting, field } ) => {
 	const control = controls[ field.control ];
 
 	return (
@@ -44,7 +44,7 @@ const FieldSettings = ( { controls, editField, field } ) => {
 									setting={ setting }
 									value={ value }
 									handleOnChange={ ( newSettingValue ) => {
-										editField( field.name, setting.name, newSettingValue );
+										changeFieldSetting( field.name, setting.name, newSettingValue );
 									} }
 								/>
 							</div>
