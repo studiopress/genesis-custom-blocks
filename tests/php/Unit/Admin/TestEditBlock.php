@@ -83,9 +83,8 @@ class TestEditBlock extends AbstractTemplate {
 	 */
 	public function test_enqueue_assets_wrong_page() {
 		set_current_screen( 'front' );
-		$slug = 'genesis-custom-blocks-edit-block-script';
 		$this->instance->enqueue_assets();
-		$this->assertFalse( wp_script_is( $slug ) );
+		$this->assertFalse( wp_script_is( EditBlock::SCRIPT_SLUG ) );
 	}
 
 
