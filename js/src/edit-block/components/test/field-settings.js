@@ -29,7 +29,7 @@ const baseTextSettings = [
 global.gcbEditor = { controls: {} };
 
 describe( 'FieldSettings', () => {
-	it( 'Text field has the right settings', () => {
+	it( 'has the right settings for text', () => {
 		const field = {
 			name: 'text',
 			label: 'Text',
@@ -54,7 +54,7 @@ describe( 'FieldSettings', () => {
 		expect( getByLabelText( maxlengthSetting.label ) ).toBeInTheDocument();
 	} );
 
-	it( 'Textarea field has the right settings', () => {
+	it( 'has the right settings for textarea', () => {
 		const field = {
 			name: 'textarea',
 			label: 'Textarea',
@@ -87,7 +87,7 @@ describe( 'FieldSettings', () => {
 		expect( getByLabelText( newLinesSetting.label ) ).toBeInTheDocument();
 	} );
 
-	it( 'Multiselect field has the right settings', () => {
+	it( 'has the right settings for multiselect', () => {
 		const field = {
 			name: 'multiselect',
 			label: 'Multiselect',

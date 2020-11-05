@@ -1,5 +1,3 @@
-// @ts-check
-
 /**
  * External dependencies
  */
@@ -27,7 +25,7 @@ import { Editor } from '../components';
  * @param {Object}  postId       ID of the post to edit.
  * @param {Element} target       DOM node in which editor is rendered.
  * @param {?Object} settings     Editor settings object.
- * @param {Object}  initialEdits Programmatic edits to apply initially, to be
+ * @param {Object|null}  initialEdits Programmatic edits to apply initially, to be
  *                               considered as non-user-initiated (bypass for
  *                               unsaved changes prompt).
  */

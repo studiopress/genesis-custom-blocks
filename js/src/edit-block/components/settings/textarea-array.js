@@ -10,9 +10,9 @@ import { convertToArray, convertToString } from '../../helpers';
 
 /**
  * @typedef {Object} TextareaArrayProps The component props.
+ * @property {Function} handleOnChange Handles a change in this setting.
  * @property {Object} setting This setting.
  * @property {Array|undefined} value The setting value.
- * @property {Function} handleOnChange Handles a change in this setting.
  */
 
 /**

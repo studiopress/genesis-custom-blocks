@@ -29,7 +29,7 @@ import { BrowserURL, Header, Main, Side } from './';
 
 /**
  * @typedef {Object} EditorSettingsProps The component props.
- * @property {Object} initialEdits The initial edits, if any.
+ * @property {Object|null} initialEdits The initial edits, if any.
  * @property {onErrorType} onError Handler for errors.
  * @property {number} postId The current post ID.
  * @property {string} postType The current post type.

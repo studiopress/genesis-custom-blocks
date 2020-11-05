@@ -18,7 +18,7 @@ import React from 'react';
  * @param {SelectProps} props The component props.
  * @return {React.ReactElement} The select component.
  */
-const Select = ( { handleOnChange, setting, id, value, options } ) => {
+const Select = ( { handleOnChange, id, options, value, setting } ) => {
 	const selectValue = undefined === value ? setting.default : value;
 
 	return (
@@ -40,7 +40,7 @@ const Select = ( { handleOnChange, setting, id, value, options } ) => {
 						return (
 							<option
 								value={ location.value }
-								key={ `selection-option-${ location.value }` }
+								key={ `select-option-${ location.value }` }
 							>
 								{ location.label }
 							</option>

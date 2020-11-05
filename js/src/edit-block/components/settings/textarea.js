@@ -5,9 +5,9 @@ import React from 'react';
 
 /**
  * @typedef {Object} TextareaProps The component props.
+ * @property {Function} handleOnChange Handles a change in this setting.
  * @property {Object} setting This setting.
  * @property {string|undefined} value The setting value.
- * @property {Function} handleOnChange Handles a change in this setting.
  */
 
 /**

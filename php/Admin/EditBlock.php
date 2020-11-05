@@ -32,14 +32,14 @@ class EditBlock extends ComponentAbstract {
 	const STYLE_SLUG = 'genesis-custom-blocks-edit-block-style';
 
 	/**
-	 * The slug of the style.
+	 * The slug of tailwind.
 	 *
 	 * @var string
 	 */
 	const TAILWIND_SLUG = 'genesis-custom-blocks-tailwind';
 
 	/**
-	 * Register any hooks that this component needs.
+	 * Registers the hooks.
 	 */
 	public function register_hooks() {
 		add_filter( 'replace_editor', [ $this, 'should_replace_editor' ], 10, 2 );
@@ -48,10 +48,10 @@ class EditBlock extends ComponentAbstract {
 	}
 
 	/**
-	 * Whether this should replace the native editor.
+	 * Gets whether this should replace the native editor.
 	 *
 	 * @param bool    $replace Whether to replace the editor.
-	 * @param WP_Post $post The current post.
+	 * @param WP_Post $post    The current post.
 	 * @return bool Whether this should replace the editor.
 	 */
 	public function should_replace_editor( $replace, $post ) {
@@ -66,7 +66,7 @@ class EditBlock extends ComponentAbstract {
 	 * Whether to use the block editor for a given post type.
 	 *
 	 * @param bool   $use_block_editor Whether this should use the block editor.
-	 * @param string $post_type      The post type.
+	 * @param string $post_type        The post type.
 	 * @return bool Whether this should use the block editor.
 	 */
 	public function should_use_block_editor_for_post_type( $use_block_editor, $post_type ) {
@@ -80,7 +80,6 @@ class EditBlock extends ComponentAbstract {
 	/**
 	 * Enqueues the assets.
 	 *
-	 * Forked from Core.
 	 * The action 'admin_enqueue_scripts' does not run for the 'Edit Block' page,
 	 * as the native editor is disabled.
 	 */

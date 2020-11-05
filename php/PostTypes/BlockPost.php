@@ -197,7 +197,7 @@ class BlockPost extends ComponentAbstract {
 			'public'        => false,
 			'show_ui'       => true,
 			'show_in_menu'  => true,
-			'show_in_rest'  => true,
+			'show_in_rest'  => current_user_can( 'edit_posts' ),
 			'menu_position' => 100,
 			'menu_icon'     => 'data:image/svg+xml;base64,' . base64_encode( // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 				file_get_contents( $this->plugin->get_assets_path( 'images/admin-menu-icon.svg' ) ) // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- This SVG icon is being included from the plugin directory, so using file_get_contents is okay.
