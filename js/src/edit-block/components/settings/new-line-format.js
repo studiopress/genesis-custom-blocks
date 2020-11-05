@@ -21,10 +21,10 @@ import { Select } from '../';
  */
 
 /**
- * The field settings.
+ * The new line format component.
  *
  * @param {NewLineFormatProps} props The component props.
- * @return {React.ReactElement} The component for the admin page.
+ * @return {React.ReactElement} The new line format component.
  */
 const NewLineFormat = ( props ) => {
 	const id = `setting-${ props.setting.name }`;

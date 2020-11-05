@@ -16,10 +16,10 @@ import { Input } from '../';
  */
 
 /**
- * The field settings.
+ * The number non-negative component.
  *
  * @param {NumberNonNegativeProps} props The component props.
- * @return {React.ReactElement} The component for the admin page.
+ * @return {React.ReactElement} The number non-negative component.
  */
 const NumberNonNegative = ( props ) => {
 	return <Input { ...props } type="number" min={ 0 } />;

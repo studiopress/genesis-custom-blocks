@@ -16,10 +16,10 @@ import { convertToArray, convertToString } from '../../helpers';
  */
 
 /**
- * The field settings.
+ * The textarea array component.
  *
  * @param {TextareaArrayProps} props The component props.
- * @return {React.ReactElement} The component for the admin page.
+ * @return {React.ReactElement} The textarea array component.
  */
 const TextareaArray = ( { handleOnChange, setting, value } ) => {
 	const id = `setting-textarea-array-${ setting.name }`;

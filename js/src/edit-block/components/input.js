@@ -13,10 +13,10 @@ import React from 'react';
  */
 
 /**
- * The field settings.
+ * The input component.
  *
  * @param {InputProps} props The component props.
- * @return {React.ReactElement} The component for the admin page.
+ * @return {React.ReactElement} The input component.
  */
 const Input = ( { handleOnChange, setting, type, value, min } ) => {
 	const id = `setting-input-${ setting.name }`;

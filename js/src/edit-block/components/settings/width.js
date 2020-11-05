@@ -12,10 +12,10 @@ import classNames from 'classnames';
  */
 
 /**
- * The field settings.
+ * The width component.
  *
  * @param {WidthProps} props The component props.
- * @return {React.ReactElement} The component for the admin page.
+ * @return {React.ReactElement} The width component.
  */
 const Width = ( { handleOnChange, setting, value } ) => {
 	const name = `setting-${ setting.name }`;

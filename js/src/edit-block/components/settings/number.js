@@ -16,10 +16,10 @@ import { Input } from '../';
  */
 
 /**
- * The field settings.
+ * The number component.
  *
  * @param {NumberProps} props The component props.
- * @return {React.ReactElement} The component for the admin page.
+ * @return {React.ReactElement} The number component.
  */
 const Number = ( props ) => {
 	return <Input { ...props } type="number" />;

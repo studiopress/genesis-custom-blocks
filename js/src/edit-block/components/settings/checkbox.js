@@ -11,10 +11,10 @@ import React from 'react';
  */
 
 /**
- * The field settings.
+ * The checkbox component.
  *
- * @param {CheckboxProps} props The component props.
- * @return {React.ReactElement} The component for the admin page.
+ * @param {CheckboxProps} props The checkbox props.
+ * @return {React.ReactElement} The checkbox component.
  */
 const Checkbox = ( { handleOnChange, setting, value } ) => {
 	const isChecked = undefined === value ? setting.default : value;

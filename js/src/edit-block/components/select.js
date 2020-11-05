@@ -13,10 +13,10 @@ import React from 'react';
  */
 
 /**
- * The field settings.
+ * The select component.
  *
  * @param {SelectProps} props The component props.
- * @return {React.ReactElement} The component for the admin page.
+ * @return {React.ReactElement} The select component.
  */
 const Select = ( { handleOnChange, setting, id, value, options } ) => {
 	const selectValue = undefined === value ? setting.default : value;
@@ -40,7 +40,7 @@ const Select = ( { handleOnChange, setting, id, value, options } ) => {
 						return (
 							<option
 								value={ location.value }
-								key={ `location-option-${ location.value }` }
+								key={ `selection-option-${ location.value }` }
 							>
 								{ location.label }
 							</option>

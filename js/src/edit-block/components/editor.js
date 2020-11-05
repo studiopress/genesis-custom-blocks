@@ -37,10 +37,10 @@ import { BrowserURL, Header, Main, Side } from './';
  */
 
 /**
- * The migration admin page.
+ * The editor component.
  *
  * @param {EditorSettingsProps} props The component props.
- * @return {React.ReactElement} The main editor component.
+ * @return {React.ReactElement} The editor component.
  */
 const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 	const post = useSelect(

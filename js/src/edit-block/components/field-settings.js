@@ -24,7 +24,7 @@ import { getSettingsComponent } from '../helpers';
  * The field settings.
  *
  * @param {FieldSettingsProps} props The component props.
- * @return {React.ReactElement} The component for the admin page.
+ * @return {React.ReactElement} The field settings component.
  */
 const FieldSettings = ( { controls, changeFieldSetting, field } ) => {
 	const control = controls[ field.control ];

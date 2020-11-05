@@ -15,6 +15,11 @@ import {
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
+/**
+ * The header component.
+ *
+ * @return {React.ReactElement} The header component.
+ */
 const Header = () => {
 	const backURL = addQueryArgs( 'edit.php', {
 		post_type: 'genesis_custom_block',
@@ -44,7 +49,6 @@ const Header = () => {
 				<PostSavedState
 					forceIsDirty={ false }
 					forceIsSaving={ false }
-					showIconLabels={ false }
 				/>
 				<PostPublishButton />
 			</div>

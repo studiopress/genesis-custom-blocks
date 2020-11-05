@@ -16,10 +16,10 @@ import { Input } from '../';
  */
 
 /**
- * The field settings.
+ * The text component.
  *
  * @param {TextProps} props The component props.
- * @return {React.ReactElement} The component for the admin page.
+ * @return {React.ReactElement} The text component.
  */
 const Text = ( props ) => {
 	return <Input { ...props } type="text" />;

@@ -18,9 +18,9 @@ import { useCallback } from '@wordpress/element';
 import { FieldSettings } from './';
 
 /**
- * The field settings.
+ * The field panel.
  *
- * @return {React.ReactElement} The component for the admin page.
+ * @return {React.ReactElement} The field panel component.
  */
 const FieldPanel = () => {
 	// @ts-ignore

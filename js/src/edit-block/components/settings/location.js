@@ -21,10 +21,10 @@ import { Select } from '../';
  */
 
 /**
- * The field settings.
+ * The location component.
  *
  * @param {LocationProps} props The component props.
- * @return {React.ReactElement} The component for the admin page.
+ * @return {React.ReactElement} The select component.
  */
 const Location = ( props ) => {
 	const locations = [

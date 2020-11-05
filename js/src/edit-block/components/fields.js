@@ -12,12 +12,12 @@ import { compose } from '@wordpress/compose';
 import { EditorHistoryRedo, EditorHistoryUndo } from '@wordpress/editor';
 
 /**
- * The migration admin page.
+ * The fields component.
  *
  * @param {Object} props The component props.
  * @param {string} props.content The post content.
  * @param {Function} props.storeEditedPost Stores the edited post.
- * @return {React.ReactElement} The component for the admin page.
+ * @return {React.ReactElement} The fields component.
  */
 const Fields = ( { content, storeEditedPost } ) => {
 	return (

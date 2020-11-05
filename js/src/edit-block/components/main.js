@@ -9,7 +9,13 @@ import * as React from 'react';
 import { __ } from '@wordpress/i18n';
 import { PostTitle } from '@wordpress/editor';
 
-// Todo: add the rest of this and make it dynamic.
+/**
+ * The main editing area component.
+ *
+ * Todo: add the rest of this and make it dynamic.
+ *
+ * @return {React.ReactElement} The main editing area.
+ */
 const Main = () => {
 	const urlBlockTemplates = 'https://developer.wpengine.com/genesis-custom-blocks/get-started/add-a-custom-block-to-your-website-content/';
 	const urlTemplateFunctions = 'https://developer.wpengine.com/genesis-custom-blocks/';

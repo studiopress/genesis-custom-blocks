@@ -13,6 +13,11 @@ import { __ } from '@wordpress/i18n';
  */
 import { FieldPanel } from './';
 
+/**
+ * The side component.
+ *
+ * @return {React.ReactElement} The side component.
+ */
 const Side = () => {
 	return (
 		<div className="side flex-shrink-0 flex flex-col border-l border-gray-300 overflow-scroll">

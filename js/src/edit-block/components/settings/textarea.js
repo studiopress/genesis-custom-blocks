@@ -11,10 +11,10 @@ import React from 'react';
  */
 
 /**
- * The field settings.
+ * The textarea component.
  *
  * @param {TextareaProps} props The component props.
- * @return {React.ReactElement} The component for the admin page.
+ * @return {React.ReactElement} The textarea component.
  */
 const Textarea = ( { handleOnChange, setting, value } ) => {
 	const id = `setting-textarea-${ setting.name }`;
