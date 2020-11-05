@@ -1,6 +1,11 @@
 // @ts-check
 
 /**
+ * External dependencies
+ */
+import React from 'react';
+
+/**
  * WordPress dependencies
  */
 import { render, unmountComponentAtNode } from '@wordpress/element';

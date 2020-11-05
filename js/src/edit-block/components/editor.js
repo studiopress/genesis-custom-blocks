@@ -6,8 +6,10 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
-import { compose } from '@wordpress/compose';
-import { withDispatch, withSelect } from '@wordpress/data';
+import {
+	useDispatch,
+	useSelect,
+} from '@wordpress/data';
 import {
 	EditorNotices,
 	EditorProvider,
@@ -20,17 +22,44 @@ import { useEffect } from '@wordpress/element';
 import { BrowserURL, Header, Main, Side } from './';
 
 /**
+ * @typedef {Object} EditorSettingsProps The component props.
+ * @property {number} postId The current post ID.
+ * @property {string} postType The current post type.
+ * @property {string} field The current field.
+ * @property {Object} settings The editor settings.
+ * @property {Object} initialEdits The initial edits, if any.
+ */
+
+/**
  * The migration admin page.
  *
- * @param {Object} props The component props.
+ * @param {EditorSettingsProps} props The component props.
  * @return {React.ReactElement} The main editor component.
  */
-const Editor = ( props ) => {
-	const { post, settings, initialEdits, removeBlocks } = props;
+const Editor = ( { postId, postType, settings, initialEdits } ) => {
+	const post = useSelect(
+		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
+		[ postId, postType ]
+	);
+	// @ts-ignore
+	const { editEntityRecord } = useDispatch( 'core' );
 
+	// A hack to remove blocks from the edited entity.
+	// The stores use getEditedPostContent(), which gets the blocks if the .blocks property exists.
+	// This change makes getEditedPostContent() return the post content, instead of
+	// parsing [] blocks and returning ''.
 	useEffect( () => {
-		removeBlocks();
-	}, [ removeBlocks, post ] );
+		if ( ! post ) {
+			return;
+		}
+
+		editEntityRecord(
+			'postType',
+			postType,
+			postId,
+			{ blocks: null }
+		);
+	}, [ editEntityRecord, post, postId, postType ] );
 
 	if ( ! post ) {
 		return null;
@@ -61,34 +90,4 @@ const Editor = ( props ) => {
 	);
 };
 
-export default compose( [
-	withSelect( ( select, { postId, postType } ) => {
-		const { getEntityRecord } = select( 'core' );
-
-		return {
-			post: getEntityRecord( 'postType', postType, postId ),
-		};
-	} ),
-	withDispatch( ( dispatch, { postId, postType, post } ) => ( {
-		// A hack to remove blocks from the edited entity.
-		// The stores use getEditedPostContent(),
-		// which gets the blocks if the .blocks propety exists.
-		// But this editor doesn't use blocks.
-		// This change makes getEditedPostContent()
-		// return the post content, instead of
-		// parsing [] blocks and returning ''.
-		removeBlocks: () => {
-			if ( ! post ) {
-				return;
-			}
-
-			// @ts-ignore
-			dispatch( 'core' ).editEntityRecord(
-				'postType',
-				postType,
-				postId,
-				{ blocks: null }
-			);
-		},
-	} ) ),
-] )( Editor );
+export default Editor;
