@@ -8,6 +8,7 @@ import { select } from '@wordpress/data';
  * Internal dependencies
  */
 import { getSimplifiedFields } from '../helpers';
+
 /**
  * External dependencies
  */
@@ -41,10 +42,10 @@ const getClassName = ( field ) => {
 };
 
 /**
- * @typedef {Object} FieldProps The component props.
+ * @typedef {Object} FieldsProps The component props.
  * @property {Array}  fields The fields to render.
- * @property {Object} parentBlockProps The props to pass to the control function.
  * @property {Object} parentBlock The block where the fields are.
+ * @property {Object} parentBlockProps The props to pass to the control function.
  * @property {number} rowIndex The index of the repeater row, if this field is in one (optional).
  * @property {Function} changeFieldSetting Edits a field value.
  */
@@ -52,10 +53,10 @@ const getClassName = ( field ) => {
 /**
  * Renders the fields, using their control functions.
  *
- * @param {FieldProps} props The component props.
+ * @param {FieldsProps} props The component props.
  * @return {React.ReactElement[]} fields The rendered fields.
  */
-const Fields = ( { fields, parentBlockProps, parentBlock, rowIndex } ) => {
+const Fields = ( { fields, parentBlock, parentBlockProps, rowIndex } ) => {
 	return getSimplifiedFields( fields ).map( ( field ) => {
 		if ( field.location && ! field.location.includes( 'editor' ) ) {
 			return null; // This is not meant for the editor.

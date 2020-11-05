@@ -80,7 +80,7 @@ const FieldPanel = () => {
 	const controlValues = Object.values( controls );
 
 	/**
-	 * Changes the control of a field.
+	 * Changes a field setting.
 	 *
 	 * @param {string} settingKey The key of the setting, like 'label' or 'placeholder'.
 	 * @param {any} newSettingValue The new setting value.
