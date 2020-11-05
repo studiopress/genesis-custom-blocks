@@ -36,16 +36,18 @@ const Select = ( { handleOnChange, id, options, value, setting } ) => {
 				} }
 			>
 				{
-					options.map( ( location ) => {
-						return (
-							<option
-								value={ location.value }
-								key={ `select-option-${ location.value }` }
-							>
-								{ location.label }
-							</option>
-						);
-					} )
+					options && options.length
+						? options.map( ( location ) => {
+							return (
+								<option
+									value={ location.value }
+									key={ `select-option-${ location.value }` }
+								>
+									{ location.label }
+								</option>
+							);
+						} )
+						: null
 				}
 			</select>
 		</>

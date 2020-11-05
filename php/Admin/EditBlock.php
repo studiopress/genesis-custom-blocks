@@ -94,12 +94,12 @@ class EditBlock extends ComponentAbstract {
 			return;
 		}
 
-		$script_handle = require $this->plugin->get_path( 'js/dist/edit-block.asset.php' );
+		$js_config = require $this->plugin->get_path( 'js/dist/edit-block.asset.php' );
 		wp_enqueue_script(
 			self::SCRIPT_SLUG,
 			$this->plugin->get_url( 'js/dist/edit-block.js' ),
-			array_merge( $script_handle['dependencies'], [ 'wp-api-fetch' ] ),
-			$script_handle['version'],
+			$js_config['dependencies'],
+			$js_config['version'],
 			true
 		);
 
