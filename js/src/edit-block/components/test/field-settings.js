@@ -26,6 +26,8 @@ const baseTextSettings = [
 	maxlengthSetting,
 ];
 
+global.gcbEditor = { controls: {} };
+
 describe( 'FieldSettings', () => {
 	it( 'Text field has the right settings', () => {
 		const field = {

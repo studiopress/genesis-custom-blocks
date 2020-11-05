@@ -19,11 +19,13 @@ import React from 'react';
  * @return {React.ReactElement} The component for the admin page.
  */
 const Select = ( { handleOnChange, setting, id, value, options } ) => {
+	const selectValue = undefined === value ? setting.default : value;
+
 	return (
 		<>
 			<label className="text-sm" htmlFor={ id }>{ setting.label }</label>
 			<select /* eslint-disable-line jsx-a11y/no-onchange */
-				value={ value }
+				value={ selectValue }
 				id={ id }
 				name={ id }
 				className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm"

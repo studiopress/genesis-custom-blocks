@@ -3,6 +3,8 @@
  */
 import { getSettingsComponent } from '../';
 
+global.gcbEditor = { controls: {} };
+
 describe( 'getSettingsComponent', () => {
 	it.each( [
 		[ 'checkbox', 'Checkbox' ],

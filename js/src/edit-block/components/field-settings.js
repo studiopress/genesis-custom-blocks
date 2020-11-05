@@ -44,7 +44,7 @@ const FieldSettings = ( { controls, changeFieldSetting, field } ) => {
 									setting={ setting }
 									value={ value }
 									handleOnChange={ ( newSettingValue ) => {
-										changeFieldSetting( field.name, setting.name, newSettingValue );
+										changeFieldSetting( setting.name, newSettingValue );
 									} }
 								/>
 							</div>

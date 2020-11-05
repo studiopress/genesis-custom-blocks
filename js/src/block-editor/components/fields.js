@@ -8,6 +8,9 @@ import { select } from '@wordpress/data';
  * Internal dependencies
  */
 import { getSimplifiedFields } from '../helpers';
+/**
+ * External dependencies
+ */
 import React from 'react';
 
 /**

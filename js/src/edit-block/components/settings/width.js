@@ -19,13 +19,15 @@ import classNames from 'classnames';
  */
 const Width = ( { handleOnChange, setting, value } ) => {
 	const name = `setting-${ setting.name }`;
+	const widthValue = undefined === value ? setting.default : value;
+
 	return (
 		<>
 			<span className="text-sm">{ setting.label }</span>
 			<div className="gcb-setting-width flex w-full border border-gray-600 rounded-sm mt-2">
 				{ [ '25', '50', '75', '100' ].map( ( width, index ) => {
 					const key = `${ name }-${ index }`;
-					const isSelected = width === value;
+					const isSelected = width === widthValue;
 
 					return (
 						<button

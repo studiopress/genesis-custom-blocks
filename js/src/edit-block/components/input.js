@@ -20,6 +20,7 @@ import React from 'react';
  */
 const Input = ( { handleOnChange, setting, type, value, min } ) => {
 	const id = `setting-input-${ setting.name }`;
+	const inputValue = undefined === value ? setting.default : value;
 
 	return (
 		<>
@@ -28,7 +29,7 @@ const Input = ( { handleOnChange, setting, type, value, min } ) => {
 				className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm"
 				type={ type }
 				id={ id }
-				value={ value }
+				value={ inputValue }
 				min={ min }
 				onChange={ ( event ) => {
 					if ( event.target ) {

@@ -18,6 +18,7 @@ import React from 'react';
  */
 const Textarea = ( { handleOnChange, setting, value } ) => {
 	const id = `setting-textarea-${ setting.name }`;
+	const textAreaValue = undefined === value ? setting.default : value;
 
 	return (
 		<>
@@ -31,9 +32,8 @@ const Textarea = ( { handleOnChange, setting, value } ) => {
 						handleOnChange( event.target.value );
 					}
 				} }
-			>
-				{ value }
-			</textarea>
+				value={ textAreaValue }
+			/>
 		</>
 	);
 };

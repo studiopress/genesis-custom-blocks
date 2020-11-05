@@ -9,38 +9,86 @@ import React from 'react';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { withDispatch, withSelect, useSelect } from '@wordpress/data';
-import { compose } from '@wordpress/compose';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { useCallback } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import { FieldSettings } from './';
 
-// @ts-ignore
-const { controls } = gcbEditor;
-
-/**
- * @typedef {Object} FieldPanelProps The component props.
- * @property {Object} block The block config.
- * @property {Function} changeControl Change the control.
- * @property {Function} changeFieldSetting Edits a field value.
- */
-
 /**
  * The field settings.
  *
- * @param {FieldPanelProps} props The component props.
  * @return {React.ReactElement} The component for the admin page.
  */
-const FieldPanel = ( { block, changeControl, changeFieldSetting } ) => {
+const FieldPanel = () => {
 	// @ts-ignore
 	const { controls } = gcbEditor;
-	const controlValues = Object.values( controls );
+	const editedPostContent = useSelect(
+		( select ) => select( 'core/editor' ).getEditedPostContent(),
+		[]
+	);
+
+	const getFullBlock = useCallback( () => {
+		try {
+			return JSON.parse( editedPostContent );
+		} catch ( error ) {
+			return {};
+		}
+	}, [ editedPostContent ] );
+
+	const fullBlock = getFullBlock();
+	const { editPost } = useDispatch( 'core/editor' );
+	const blockNameWithNamespace = Object.keys( fullBlock )[ 0 ];
+
+	/**
+	 * Changes the control of a field.
+	 *
+	 * @param {string} fieldName The name (slug) of the field.
+	 * @param {string} newControlName The name of the control to change to.
+	 */
+	const changeControl = useCallback( ( fieldName, newControlName ) => {
+		const newControl = controls[ newControlName ];
+		if ( ! newControl ) {
+			return;
+		}
+
+		if ( ! fullBlock[ blockNameWithNamespace ].fields ) {
+			fullBlock[ blockNameWithNamespace ].fields = [];
+		}
+
+		// Todo: handle multiple fields when it's possible to add a field.
+		const previousField = fullBlock[ blockNameWithNamespace ].fields[ fieldName ];
+		const newField = {
+			name: previousField.name,
+			label: previousField.label,
+			control: newControl.name,
+			type: newControl.type,
+		};
+
+		fullBlock[ blockNameWithNamespace ].fields[ fieldName ] = newField;
+		editPost( { content: JSON.stringify( fullBlock ) } );
+	}, [ blockNameWithNamespace, controls, editPost, fullBlock ] );
+
+	const block = fullBlock[ blockNameWithNamespace ];
 
 	// Todo: When the main editor area exists, change this to be the field that's selected.
+	// Also, ensure there is always a first field populated.
 	const fieldName = Object.keys( block.fields )[ 0 ];
 	const field = block.fields[ fieldName ];
+	const controlValues = Object.values( controls );
+
+	/**
+	 * Changes the control of a field.
+	 *
+	 * @param {string} settingKey The key of the setting, like 'label' or 'placeholder'.
+	 * @param {any} newSettingValue The new setting value.
+	 */
+	const changeFieldSetting = useCallback( ( settingKey, newSettingValue ) => {
+		fullBlock[ blockNameWithNamespace ].fields[ fieldName ][ settingKey ] = newSettingValue;
+		editPost( { content: JSON.stringify( fullBlock ) } );
+	}, [ blockNameWithNamespace, editPost, fieldName, fullBlock ] );
 
 	return (
 		<div className="p-4">
@@ -54,7 +102,7 @@ const FieldPanel = ( { block, changeControl, changeFieldSetting } ) => {
 					value={ field.label }
 					onChange={ ( event ) => {
 						if ( event.target ) {
-							changeFieldSetting( fieldName, 'label', event.target.value );
+							changeFieldSetting( 'label', event.target.value );
 						}
 					} }
 				/>
@@ -69,7 +117,7 @@ const FieldPanel = ( { block, changeControl, changeFieldSetting } ) => {
 					value={ field.name }
 					onChange={ ( event ) => {
 						if ( event.target ) {
-							changeFieldSetting( fieldName, 'name', event.target.value );
+							changeFieldSetting( 'name', event.target.value );
 						}
 					} }
 				/>
@@ -96,67 +144,4 @@ const FieldPanel = ( { block, changeControl, changeFieldSetting } ) => {
 	);
 };
 
-export default compose( [
-	withSelect( ( select ) => {
-		const { getEditedPostContent } = select( 'core/editor' );
-
-		let parsedContent;
-		try {
-			parsedContent = JSON.parse( getEditedPostContent() );
-		} catch ( error ) {
-			parsedContent = {};
-		}
-
-		return {
-			block: Object.values( parsedContent )[ 0 ],
-			fullBlock: parsedContent,
-		};
-	} ),
-	withDispatch( ( dispatch, { fullBlock } ) => {
-		const { editPost } = dispatch( 'core/editor' );
-		const blockNameWithNamespace = Object.keys( fullBlock )[ 0 ];
-
-		return {
-			/**
-			 * Changes the control of a field.
-			 *
-			 * @param {string} fieldName The name (slug) of the field.
-			 * @param {string} settingKey The key of the setting, like 'label' or 'placeholder'. 
-			 * @param {any} newSettingValue The new setting value.
-			 */
-			changeFieldSetting: ( fieldName, settingKey, newSettingValue ) => {
-				fullBlock[ blockNameWithNamespace ].fields[ fieldName ][ settingKey ] = newSettingValue;
-				editPost( { content: JSON.stringify( fullBlock ) } );
-			},
-
-			/**
-			 * Changes the control of a field.
-			 *
-			 * @param {string} fieldName The name (slug) of the field.
-			 * @param {string} newControlName The name of the control to change to.
-			 */
-			changeControl: ( fieldName, newControlName ) => {
-				const control = controls[ newControlName ];
-				if ( ! control ) {
-					return;
-				}
-
-				if ( ! fullBlock[ blockNameWithNamespace ].fields ) {
-					fullBlock[ blockNameWithNamespace ].fields = [];
-				}
-
-				// Todo: handle multiple fields when it's possible to add a field.
-				const previousField = fullBlock[ blockNameWithNamespace ].fields[ fieldName ];
-				const newField = {
-					name: previousField.name,
-					label: previousField.label,
-					control: control.name,
-					type: control.type,
-				}
-
-				fullBlock[ blockNameWithNamespace ].fields[ fieldName ] = newField;
-				editPost( { content: JSON.stringify( fullBlock ) } );
-			},
-		};
-	} ),
-] )( FieldPanel );
+export default FieldPanel;

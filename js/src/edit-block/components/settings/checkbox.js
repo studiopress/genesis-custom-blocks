@@ -17,7 +17,7 @@ import React from 'react';
  * @return {React.ReactElement} The component for the admin page.
  */
 const Checkbox = ( { handleOnChange, setting, value } ) => {
-	const isChecked = value;
+	const isChecked = undefined === value ? setting.default : value;
 	const checked = '1';
 	const id = `setting-input-${ setting.name }`;
 

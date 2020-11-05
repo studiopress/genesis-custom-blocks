@@ -72,6 +72,7 @@ const TextareaArray = ( { handleOnChange, setting, value } ) => {
 
 	const id = `setting-textarea-array-${ setting.name }`;
 	const stringValue = convertToString( value );
+	const textAreaValue = undefined === stringValue ? setting.default : stringValue;
 
 	return (
 		<>
@@ -85,9 +86,8 @@ const TextareaArray = ( { handleOnChange, setting, value } ) => {
 						handleOnChange( convertToArray( event.target.value ) );
 					}
 				} }
-			>
-				{ stringValue }
-			</textarea>
+				value={ textAreaValue }
+			/>
 		</>
 	);
 };
