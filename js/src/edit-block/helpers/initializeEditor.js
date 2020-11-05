@@ -21,6 +21,7 @@ import { Editor } from '../components';
  * an initial state from prior to the crash.
  *
  * Forked from Gutenberg.
+ * https://github.com/WordPress/gutenberg/blob/e61483bda071f69f3dddf4e34345d1278b6cdc6e/packages/edit-post/src/index.js
  *
  * @param {Object}  postType     Post type of the post to edit.
  * @param {Object}  postId       ID of the post to edit.
@@ -54,7 +55,6 @@ export function reinitializeEditor(
 			postId={ postId }
 			postType={ postType }
 			initialEdits={ initialEdits }
-			recovery
 		/>,
 		target
 	);
@@ -64,7 +64,6 @@ export function reinitializeEditor(
  * Initializes the editor.
  *
  * Forked from Gutenberg.
- * https://github.com/WordPress/gutenberg/blob/e61483bda071f69f3dddf4e34345d1278b6cdc6e/packages/edit-post/src/index.js
  *
  * @param {Object} gcbEditor The initial controls to filter.
  * @param {Object} container The initial controls to filter.
@@ -103,7 +102,6 @@ const initializeEditor = (
 	// For details see issue #18632 and PR #18686
 	// Specifically, we scroll `interface-interface-skeleton__body` to enable a fixed top toolbar.
 	// But Mobile Safari forces the `html` element to scroll upwards, hiding the toolbar.
-
 	const isIphone = window.navigator.userAgent.indexOf( 'iPhone' ) !== -1;
 	if ( isIphone ) {
 		window.addEventListener( 'scroll', ( event ) => {

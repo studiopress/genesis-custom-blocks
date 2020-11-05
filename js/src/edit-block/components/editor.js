@@ -13,8 +13,9 @@ import {
 import {
 	EditorNotices,
 	EditorProvider,
+	ErrorBoundary,
 } from '@wordpress/editor';
-import { useEffect } from '@wordpress/element';
+import { StrictMode, useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -22,12 +23,17 @@ import { useEffect } from '@wordpress/element';
 import { BrowserURL, Header, Main, Side } from './';
 
 /**
+ * @callback onErrorType Handler for errors.
+ * @return {void}
+ */
+
+/**
  * @typedef {Object} EditorSettingsProps The component props.
+ * @property {Object} initialEdits The initial edits, if any.
+ * @property {onErrorType} onError Handler for errors.
  * @property {number} postId The current post ID.
  * @property {string} postType The current post type.
- * @property {string} field The current field.
  * @property {Object} settings The editor settings.
- * @property {Object} initialEdits The initial edits, if any.
  */
 
 /**
@@ -36,7 +42,7 @@ import { BrowserURL, Header, Main, Side } from './';
  * @param {EditorSettingsProps} props The component props.
  * @return {React.ReactElement} The main editor component.
  */
-const Editor = ( { postId, postType, settings, initialEdits } ) => {
+const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 	const post = useSelect(
 		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
 		[ postId, postType ]
@@ -66,27 +72,31 @@ const Editor = ( { postId, postType, settings, initialEdits } ) => {
 	}
 
 	return (
-		<div className="h-screen flex flex-col items-center text-black">
-			<BrowserURL />
-			<EditorProvider
-				settings={
-					{
-						...settings,
-						richEditingEnabled: false,
+		<StrictMode>
+			<div className="h-screen flex flex-col items-center text-black">
+				<BrowserURL />
+				<EditorProvider
+					settings={
+						{
+							...settings,
+							richEditingEnabled: false,
+						}
 					}
-				}
-				post={ post }
-				initialEdits={ initialEdits }
-				useSubRegistry={ false }
-			>
-				<EditorNotices />
-				<Header />
-				<div className="flex w-full h-0 flex-grow">
-					<Main />
-					<Side />
-				</div>
-			</EditorProvider>
-		</div>
+					post={ post }
+					initialEdits={ initialEdits }
+					useSubRegistry={ false }
+				>
+					<ErrorBoundary onError={ onError }>
+						<EditorNotices />
+						<Header />
+						<div className="flex w-full h-0 flex-grow">
+							<Main />
+							<Side />
+						</div>
+					</ErrorBoundary>
+				</EditorProvider>
+			</div>
+		</StrictMode>
 	);
 };
 
