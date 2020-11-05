@@ -74,7 +74,7 @@ const FieldPanel = () => {
 	const block = fullBlock[ blockNameWithNamespace ];
 
 	// Todo: When the main editor area exists, change this to be the field that's selected.
-	// Also, ensure there is always a first field populated.
+	// Also, when a new block is created, populate a first field.
 	const fieldName = Object.keys( block.fields )[ 0 ];
 	const field = block.fields[ fieldName ];
 	const controlValues = Object.values( controls );
