@@ -29,7 +29,7 @@ const Header = () => {
 	return (
 		<div className="flex items-center h-16 border-b border-gray-300 w-full">
 			<a
-				className="flex items-center justify-center h-full w-16"
+				className="link-back-wp flex items-center justify-center h-full w-16"
 				href={ backURL }
 				aria-label={ __( 'Go back to WordPress', 'genesis-custom-blocks' ) }
 			>

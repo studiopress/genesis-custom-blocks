@@ -93,6 +93,15 @@ input[type="radio"]:checked + div {
 }
 
 /* Forked from Gutenberg */
+.link-back-wp {
+    -ms-grid-row-align: stretch;
+    align-self: stretch;
+    border: none;
+    background: #23282e;
+    color: #fff;
+    border-radius: 0;
+}
+
 .editor-post-title .editor-post-title__input:focus {
 	border: 1px solid transparent;
 	outline: 1px solid transparent;
