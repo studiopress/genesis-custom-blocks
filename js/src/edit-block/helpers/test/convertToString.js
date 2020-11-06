@@ -1,9 +1,9 @@
 /**
  * Internal dependencies
  */
-import { convertToString } from '../';
+import { convertSettingsArrayToString } from '../';
 
-describe( 'convertToString', () => {
+describe( 'convertSettingsArrayToString', () => {
 	it.each( [
 		[
 			[
@@ -50,7 +50,7 @@ describe( 'convertToString', () => {
 		],
 	] )( 'should convert the array',
 		( toConvert, expected ) => {
-			expect( convertToString( toConvert ) ).toEqual( expected );
+			expect( convertSettingsArrayToString( toConvert ) ).toEqual( expected );
 		}
 	);
 } );

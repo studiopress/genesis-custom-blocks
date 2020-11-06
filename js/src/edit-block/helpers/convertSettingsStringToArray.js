@@ -4,13 +4,13 @@
 import { TEXT_ARRAY_DELIMITER } from '../constants';
 
 /**
- * Converts the setting to an array.
+ * Converts the settings to an array.
  *
- * @param {string} settingValues The settings values.
+ * @param {string} settings The settings values.
  * @return {Array} The setting converted to a string.
  */
-const convertToArray = ( settingValues ) => {
-	return settingValues
+const convertSettingsStringToArray = ( settings ) => {
+	return settings
 		.split( /\r\n|[\r\n]/ )
 		.reduce( ( accumulator, option ) => {
 			const splitOption = option.split( TEXT_ARRAY_DELIMITER );
@@ -36,4 +36,4 @@ const convertToArray = ( settingValues ) => {
 		}, [] );
 };
 
-export default convertToArray;
+export default convertSettingsStringToArray;

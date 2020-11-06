@@ -1,4 +1,4 @@
-export { default as convertToArray } from './convertToArray';
-export { default as convertToString } from './convertToString';
+export { default as convertSettingsStringToArray } from './convertSettingsStringToArray';
+export { default as convertSettingsArrayToString } from './convertSettingsArrayToString';
 export { default as getSettingsComponent } from './getSettingsComponent';
 export { default as initializeEditor } from './initializeEditor';

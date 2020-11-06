@@ -1,9 +1,9 @@
 /**
  * Internal dependencies
  */
-import { convertToArray } from '../';
+import { convertSettingsStringToArray } from '../';
 
-describe( 'convertToArray', () => {
+describe( 'convertSettingsStringToArray', () => {
 	it.each( [
 		[
 			'foo : Foo',
@@ -49,7 +49,7 @@ describe( 'convertToArray', () => {
 		],
 	] )( 'should convert %s to the value',
 		( toConvert, expected ) => {
-			expect( convertToArray( toConvert ) ).toEqual( expected );
+			expect( convertSettingsStringToArray( toConvert ) ).toEqual( expected );
 		}
 	);
 } );

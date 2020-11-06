@@ -6,10 +6,10 @@ import { TEXT_ARRAY_DELIMITER } from '../constants';
 /**
  * Converts the setting to a string.
  *
- * @param {Array} settingValues The settings values.
- * @return {string} The setting converted to a string.
+ * @param {*} settingValues The settings values as an Array, or another type that will be returned right away.
+ * @return {*} The setting converted to a string, or if passed a non-Array, the same type it was passed.
  */
-const convertToString = ( settingValues ) => {
+const convertSettingsArrayToString = ( settingValues ) => {
 	if ( ! Array.isArray( settingValues ) ) {
 		return settingValues;
 	}
@@ -33,4 +33,4 @@ const convertToString = ( settingValues ) => {
 	}, '' );
 };
 
-export default convertToString;
+export default convertSettingsArrayToString;

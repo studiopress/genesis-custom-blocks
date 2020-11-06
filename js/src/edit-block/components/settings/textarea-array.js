@@ -6,7 +6,7 @@ import React from 'react';
 /**
  * Internal dependencies
  */
-import { convertToArray, convertToString } from '../../helpers';
+import { convertSettingsStringToArray, convertSettingsArrayToString } from '../../helpers';
 
 /**
  * @typedef {Object} TextareaArrayProps The component props.
@@ -23,7 +23,7 @@ import { convertToArray, convertToString } from '../../helpers';
  */
 const TextareaArray = ( { handleOnChange, setting, value } ) => {
 	const id = `setting-textarea-array-${ setting.name }`;
-	const stringValue = convertToString( value );
+	const stringValue = convertSettingsArrayToString( value );
 	const textAreaValue = undefined === stringValue ? setting.default : stringValue;
 
 	return (
@@ -35,7 +35,7 @@ const TextareaArray = ( { handleOnChange, setting, value } ) => {
 				rows={ 6 }
 				onChange={ ( event ) => {
 					if ( event.target ) {
-						handleOnChange( convertToArray( event.target.value ) );
+						handleOnChange( convertSettingsStringToArray( event.target.value ) );
 					}
 				} }
 				value={ textAreaValue }
