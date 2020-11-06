@@ -47,12 +47,12 @@ class Loader extends ComponentAbstract {
 	public function init() {
 		$this->assets = [
 			'path' => [
-				'entry'        => $this->plugin->get_path( 'js/editor.blocks.js' ),
-				'editor_style' => $this->plugin->get_path( 'css/blocks.editor.css' ),
+				'entry'        => $this->plugin->get_path( 'js/dist/block-editor.js' ),
+				'editor_style' => $this->plugin->get_path( 'css/dist/blocks.editor.css' ),
 			],
 			'url'  => [
-				'entry'        => $this->plugin->get_url( 'js/editor.blocks.js' ),
-				'editor_style' => $this->plugin->get_url( 'css/blocks.editor.css' ),
+				'entry'        => $this->plugin->get_url( 'js/dist/block-editor.js' ),
+				'editor_style' => $this->plugin->get_url( 'css/dist/blocks.editor.css' ),
 			],
 		];
 
@@ -103,11 +103,14 @@ class Loader extends ComponentAbstract {
 	 * Launch the blocks inside Gutenberg.
 	 */
 	public function editor_assets() {
-		$js_config  = require $this->plugin->get_path( 'js/editor.blocks.asset.php' );
-		$css_config = require $this->plugin->get_path( 'css/blocks.editor.asset.php' );
+		$js_handle  = 'genesis-custom-blocks-blocks';
+		$css_handle = 'genesis-custom-blocks-editor-css';
+
+		$js_config  = require $this->plugin->get_path( 'js/dist/block-editor.asset.php' );
+		$css_config = require $this->plugin->get_path( 'css/dist/blocks.editor.asset.php' );
 
 		wp_enqueue_script(
-			'genesis-custom-blocks-blocks',
+			$js_handle,
 			$this->assets['url']['entry'],
 			$js_config['dependencies'],
 			$js_config['version'],
@@ -116,7 +119,7 @@ class Loader extends ComponentAbstract {
 
 		// Add dynamic Gutenberg blocks.
 		wp_add_inline_script(
-			'genesis-custom-blocks-blocks',
+			$js_handle,
 			'const gcbBlocks = ' . wp_json_encode( $this->blocks ),
 			'before'
 		);
@@ -133,7 +136,7 @@ class Loader extends ComponentAbstract {
 
 		$author_block_slugs = wp_list_pluck( $author_blocks, 'post_name' );
 		wp_localize_script(
-			'genesis-custom-blocks-blocks',
+			$js_handle,
 			'genesisCustomBlocks',
 			[
 				'authorBlocks' => $author_block_slugs,
@@ -143,7 +146,7 @@ class Loader extends ComponentAbstract {
 
 		// Enqueue optional editor only styles.
 		wp_enqueue_style(
-			'genesis-custom-blocks-editor-css',
+			$css_handle,
 			$this->assets['url']['editor_style'],
 			$css_config['dependencies'],
 			$css_config['version']
@@ -520,11 +523,9 @@ class Loader extends ComponentAbstract {
 		);
 
 		if ( 0 < $block_posts->post_count ) {
-			/** The WordPress Post object. @var \WP_Post $post */
 			foreach ( $block_posts->posts as $post ) {
 				$block_data = json_decode( $post->post_content, true );
 
-				// Merge if no json_decode error occurred.
 				if ( json_last_error() == JSON_ERROR_NONE ) { // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 					$this->blocks = array_merge( $this->blocks, $block_data );
 				}

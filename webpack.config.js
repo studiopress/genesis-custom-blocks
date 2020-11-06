@@ -2,8 +2,8 @@
  * External dependencies
  */
 const path = require( 'path' );
+const { CleanWebpackPlugin } = require( 'clean-webpack-plugin' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
-const IgnoreEmitPlugin = require( 'ignore-emit-webpack-plugin' );
 
 /**
  * WordPress dependencies
@@ -17,8 +17,9 @@ const isProduction = process.env.NODE_ENV === 'production';
 module.exports = {
 	...defaultConfig,
 	entry: {
-		'./js/editor.blocks': './js/blocks/index.js',
-		'./css/blocks.editor': './css/src/editor.scss',
+		'./js/dist/block-editor': './js/src/block-editor/index.js',
+		'./js/dist/edit-block': './js/src/edit-block/index.js',
+		'./css/dist/blocks.editor': './css/src/editor.scss',
 	},
 	output: {
 		path: path.resolve( __dirname ),
@@ -62,14 +63,12 @@ module.exports = {
 		],
 	},
 	plugins: [
-		new MiniCssExtractPlugin( {
-			filename: './css/blocks.editor.css',
+		new CleanWebpackPlugin( {
+			cleanOnceBeforeBuildPatterns: [ 'js/dist', 'css/dist' ],
 		} ),
-		// Copied from Gutenberg.
-		// MiniCSSExtractPlugin creates JavaScript assets for CSS that are
-		// obsolete and should be removed. Related webpack issue:
-		// https://github.com/webpack-contrib/mini-css-extract-plugin/issues/85
-		new IgnoreEmitPlugin( [ 'blocks.editor.js' ] ),
+		new MiniCssExtractPlugin( {
+			filename: './css/dist/blocks.editor.css',
+		} ),
 		new DependencyExtractionWebpackPlugin( {
 			useDefaults: false,
 			requestToHandle: ( request ) => {

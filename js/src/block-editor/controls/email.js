@@ -8,7 +8,7 @@ import classNames from 'classnames';
  */
 import { TextControl } from '@wordpress/components';
 
-const GcbNumberControl = ( props ) => {
+const GcbEmailControl = ( props ) => {
 	const { field, getValue, onChange } = props;
 	const initialValue = getValue( props );
 	const value = 'undefined' !== typeof initialValue ? initialValue : field.default;
@@ -28,16 +28,14 @@ const GcbNumberControl = ( props ) => {
 
 	return (
 		<TextControl
-			type="number"
+			type="email"
 			label={ field.label }
 			placeholder={ field.placeholder || '' }
 			help={ field.help }
 			value={ value }
-			onChange={ ( numberControl ) => {
-				onChange( Number( numberControl ) );
-			} }
+			onChange={ onChange }
 			onFocus={ ( event ) => {
-				setErrorClass( document.activeElement, false );
+				setErrorClass( document.activeElement, false ); // eslint-disable-line @wordpress/no-global-active-element
 				event.target.reportValidity();
 			} }
 			onBlur={ ( event ) => {
@@ -47,4 +45,4 @@ const GcbNumberControl = ( props ) => {
 	);
 };
 
-export default GcbNumberControl;
+export default GcbEmailControl;

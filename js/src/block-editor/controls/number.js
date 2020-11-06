@@ -8,7 +8,7 @@ import classNames from 'classnames';
  */
 import { TextControl } from '@wordpress/components';
 
-const GcbURLControl = ( props ) => {
+const GcbNumberControl = ( props ) => {
 	const { field, getValue, onChange } = props;
 	const initialValue = getValue( props );
 	const value = 'undefined' !== typeof initialValue ? initialValue : field.default;
@@ -17,7 +17,7 @@ const GcbURLControl = ( props ) => {
 	 * Sets the Error Class for the Text Control.
 	 *
 	 * @param {string} element The HTML element.
-	 * @param {boolean} valid Whether the value is value.
+	 * @param {boolean} valid Whether the value is valid.
 	 * @return {void}
 	 */
 	const setErrorClass = ( element, valid ) => {
@@ -28,14 +28,16 @@ const GcbURLControl = ( props ) => {
 
 	return (
 		<TextControl
-			type="url"
+			type="number"
 			label={ field.label }
 			placeholder={ field.placeholder || '' }
 			help={ field.help }
 			value={ value }
-			onChange={ onChange }
+			onChange={ ( numberControl ) => {
+				onChange( Number( numberControl ) );
+			} }
 			onFocus={ ( event ) => {
-				setErrorClass( document.activeElement, false );
+				setErrorClass( document.activeElement, false ); // eslint-disable-line @wordpress/no-global-active-element
 				event.target.reportValidity();
 			} }
 			onBlur={ ( event ) => {
@@ -45,4 +47,4 @@ const GcbURLControl = ( props ) => {
 	);
 };
 
-export default GcbURLControl;
+export default GcbNumberControl;

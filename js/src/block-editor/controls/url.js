@@ -8,7 +8,7 @@ import classNames from 'classnames';
  */
 import { TextControl } from '@wordpress/components';
 
-const GcbEmailControl = ( props ) => {
+const GcbURLControl = ( props ) => {
 	const { field, getValue, onChange } = props;
 	const initialValue = getValue( props );
 	const value = 'undefined' !== typeof initialValue ? initialValue : field.default;
@@ -17,7 +17,7 @@ const GcbEmailControl = ( props ) => {
 	 * Sets the Error Class for the Text Control.
 	 *
 	 * @param {string} element The HTML element.
-	 * @param {boolean} valid Whether the value is valid.
+	 * @param {boolean} valid Whether the value is value.
 	 * @return {void}
 	 */
 	const setErrorClass = ( element, valid ) => {
@@ -28,14 +28,14 @@ const GcbEmailControl = ( props ) => {
 
 	return (
 		<TextControl
-			type="email"
+			type="url"
 			label={ field.label }
 			placeholder={ field.placeholder || '' }
 			help={ field.help }
 			value={ value }
 			onChange={ onChange }
 			onFocus={ ( event ) => {
-				setErrorClass( document.activeElement, false );
+				setErrorClass( document.activeElement, false ); // eslint-disable-line @wordpress/no-global-active-element
 				event.target.reportValidity();
 			} }
 			onBlur={ ( event ) => {
@@ -45,4 +45,4 @@ const GcbEmailControl = ( props ) => {
 	);
 };
 
-export default GcbEmailControl;
+export default GcbURLControl;

@@ -112,9 +112,8 @@ tests/includes/
 coverage/
 
 # Builds
-js/editor.blocks.js
-js/scripts.js
-css/blocks.editor.css
+js/dist/
+css/dist/
 package/
 built/
 *.asset.php

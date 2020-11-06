@@ -140,7 +140,7 @@ class TinyMCE extends Component {
 			const rootNode = this.editor.getBody();
 
 			// Create the toolbar by refocussing the editor.
-			if ( document.activeElement === rootNode ) {
+			if ( document.activeElement === rootNode ) { // eslint-disable-line @wordpress/no-global-active-element
 				rootNode.blur();
 				this.editor.focus();
 			}

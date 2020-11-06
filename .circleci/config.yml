@@ -26,19 +26,11 @@ commands:
             php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
             EXPECTED_SIGNATURE=$(curl -s https://composer.github.io/installer.sig)
             ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');")
-            [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && sudo php composer-setup.php --install-dir=/bin --filename=composer || exit 1
-
-  conditionally-skip:
-    description: "Skip if the current commit has no change in relevant directories"
-    parameters:
-      directories:
-        type: string
+            [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && sudo php composer-setup.php --version=1.10.16 --install-dir=/bin --filename=composer || exit 1
+  nodegit-workaround:
+    description: "Ensure nodegit runs without error"
     steps:
-      - run:
-          name: Checking whether relevant files were changed
-          command: |
-            CHANGED_FILES="$( git diff HEAD^ HEAD --name-only --diff-filter=ACMRT << parameters.directories >> )"
-            if [ -z "$CHANGED_FILES" ] && [ -z "$CIRCLE_TAG" ]; then echo "No change to relevant file, exiting job" && circleci-agent step halt; fi
+      - run: sudo apt-get update && sudo apt-get install libkrb5-dev
 
 jobs:
   lint:
@@ -48,6 +40,7 @@ jobs:
       - checkout
       - node/install:
           node-version: lts
+      - nodegit-workaround
       - set-up-packages
       - run: npm run lint
 
@@ -68,14 +61,12 @@ jobs:
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
       - checkout
-      - conditionally-skip:
-          directories: php tests/php
       - run:
           name: Installing the mysqli extension
           command: sudo docker-php-ext-install mysqli
-      - install-composer
       - node/install:
           node-version: lts
+      - nodegit-workaround
       - run:
           name: Installing WordPress and setting up tests
           command: |
@@ -90,7 +81,9 @@ jobs:
           name: Running PHPUnit
           working_directory: *PLUGIN_PATH
           command: |
-            composer remove --dev phpunit/phpunit && composer install && npm ci && npm run build
+            sudo composer self-update 1.10.16
+            composer remove --dev phpunit/phpunit && composer install
+            npm ci && npm run build
             composer require --dev phpunit/phpunit 5.7.9
             WP_TESTS_DIR=~/project/wordpress-develop/tests/phpunit ./vendor/bin/phpunit
 
@@ -98,25 +91,10 @@ jobs:
     executor: php
     steps:
       - checkout
-      - conditionally-skip:
-          directories: js tests/js
       - node/install:
           node-version: lts
+      - nodegit-workaround
       - run: npm ci && npm run test:js
-
-  e2e-tests:
-    machine:
-      image: ubuntu-1604:202004-01
-    steps:
-      - checkout
-      - conditionally-skip:
-          directories: php js css tests/e2e
-      - run: sudo apt-get update && sudo apt-get install php php-xml
-      - install-composer
-      - node/install:
-          node-version: lts
-      - set-up-packages
-      - run: npm run env start && npm run test:e2e
 
   svn-deploy:
     executor:
@@ -152,10 +130,6 @@ workflows:
             parameters:
               php-version: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
       - js-tests:
-          filters:
-            tags:
-              only: /.*/
-      - e2e-tests:
           filters:
             tags:
               only: /.*/

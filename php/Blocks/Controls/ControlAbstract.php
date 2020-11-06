@@ -9,12 +9,13 @@
 
 namespace Genesis\CustomBlocks\Blocks\Controls;
 
+use JsonSerializable;
 use Genesis\CustomBlocks\Blocks\Field;
 
 /**
  * Class ControlAbstract
  */
-abstract class ControlAbstract {
+abstract class ControlAbstract implements JsonSerializable {
 
 	/**
 	 * Control name.
@@ -132,6 +133,26 @@ abstract class ControlAbstract {
 	 * @return void
 	 */
 	abstract public function register_settings();
+
+	/**
+	 * Gets a JSON-serialized version of this object.
+	 *
+	 * @return array|mixed The JSON-serialized object.
+	 */
+	public function jsonSerialize() {
+		$object = clone( $this );
+
+		unset( $object->settings_config );
+		$object->settings = array_map(
+			static function( $setting ) {
+				unset( $setting->sanitize, $setting->validate );
+				return $setting;
+			},
+			$object->settings
+		);
+
+		return get_object_vars( $object );
+	}
 
 	/**
 	 * Render additional settings in table rows.

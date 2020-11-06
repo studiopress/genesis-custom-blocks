@@ -6,7 +6,8 @@
     "plugin:eslint-comments/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:testing-library/recommended",
-    "plugin:jest-dom/recommended"
+    "plugin:jest-dom/recommended",
+    "plugin:react-hooks/recommended"
   ],
   "globals": {
     "wp": "readonly"

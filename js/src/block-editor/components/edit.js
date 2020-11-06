@@ -7,7 +7,7 @@ import ServerSideRender from '@wordpress/server-side-render';
  * Internal dependencies
  */
 import { GcbInspector, FormControls } from './';
-import icons from '../../../assets/icons.json';
+import icons from '../../../../assets/icons.json';
 
 /**
  * The Edit function for the block.
