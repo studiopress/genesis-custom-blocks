@@ -64,8 +64,7 @@ jobs:
       - run:
           name: Installing the mysqli and gd extensions
           command: |
-            sudo docker-php-ext-install mysqli
-            sudo docker-php-ext-install gd
+            sudo docker-php-ext-install mysqli gd
       - node/install:
           node-version: lts
       - nodegit-workaround
