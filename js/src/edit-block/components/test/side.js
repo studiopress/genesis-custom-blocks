@@ -4,6 +4,7 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render } from '@testing-library/react';
+import user from '@testing-library/user-event'
 
 /**
  * Internal dependencies
@@ -67,11 +68,24 @@ global.gcbEditor = {
 window.fetch = jest.fn();
 
 describe( 'Side', () => {
-	it( 'has the right settings for text', () => {
-		const { getAllByText, getByText } = render( <Side /> );
+	it( 'has the right settings for text', async () => {
+		const { getAllByText, getByLabelText, getByText } = render( <Side /> );
 
 		getAllByText( /block/i );
 		getAllByText( /field/i );
-		expect( getByText( 'Block Settings' ) ).toBeInTheDocument();
+		expect( getByText( /block settings/i ) ).toBeInTheDocument();
+		expect( getByText( /slug/i ) ).toBeInTheDocument();
+		expect( getByText( /keywords/i ) ).toBeInTheDocument();
+
+		user.click( getByText( /field/i ) );
+		expect( getByText( /field settings/i ) ).toBeInTheDocument();
+		expect( getByLabelText( /field label/i ) ).toBeInTheDocument();
+		expect( getByText( 'Field Name (slug)' ) ).toBeInTheDocument();
+		expect( getByText( locationSetting.label ) ).toBeInTheDocument();
+		expect( getByText( widthSetting.label ) ).toBeInTheDocument();
+		expect( getByText( helpSetting.label ) ).toBeInTheDocument();
+		expect( getByText( defaultSetting.label ) ).toBeInTheDocument();
+		expect( getByText( placeholderSetting.label ) ).toBeInTheDocument();
+		expect( getByText( maxlengthSetting.label ) ).toBeInTheDocument();
 	} );
 } );
