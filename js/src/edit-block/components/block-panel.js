@@ -7,6 +7,7 @@ import React from 'react';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { FormTokenField } from '@wordpress/components';
 
 /**
  * Internal dependencies
@@ -20,6 +21,7 @@ import { useField } from '../hooks';
  */
 const BlockPanel = () => {
 	const { field, changeFieldSetting } = useField();
+	const maxNumberOfKeyword = 3;
 
 	return (
 		<div className="p-4">
@@ -40,19 +42,20 @@ const BlockPanel = () => {
 				<span className="block italic text-xs mt-1">{ __( 'Used to determine the name of the template file.', 'genesis-custom-blocks' ) }</span>
 			</div>
 			<div className="mt-5">
-				<label className="text-sm" htmlFor="block-keywords">{ __( 'Keywords', 'genesis-custom-blocks' ) }</label>
-				<input
-					className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm font-mono"
-					type="text"
-					id="block-keywords"
+				<FormTokenField
+					// @ts-ignore
+					label={ __( 'Keywords', 'genesis-custom-blocks' ) }
 					value={ field.keywords }
-					onChange={ ( event ) => {
-						if ( event.target ) {
-							changeFieldSetting( 'keywords', event.target.value );
-						}
+					maxLength={ maxNumberOfKeyword }
+					onChange={ ( tokens ) => {
+						changeFieldSetting( 'keywords', tokens );
+					} }
+					messages={ {
+						added: __( 'Keyword added.', 'genesis-custom-blocks' ),
+						removed: __( 'Keyword removed.' ),
+						remove: __( 'Remove keyword' ),
 					} }
 				/>
-				<span className="block italic text-xs mt-1">{ __( 'A comma separated list of keywords, used when searching. Maximum of 3.', 'genesis-custom-blocks' ) }</span>
 			</div>
 		</div>
 	);

@@ -123,7 +123,7 @@ class EditBlock extends ComponentAbstract {
 		wp_enqueue_style(
 			self::STYLE_SLUG,
 			$this->plugin->get_url( 'css/edit-block.css' ),
-			[],
+			[ 'wp-components' ],
 			$this->plugin->get_version()
 		);
 

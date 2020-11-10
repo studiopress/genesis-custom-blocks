@@ -15,6 +15,10 @@ input[type="radio"]:checked + div {
 	margin-top: 0.5rem;
 }
 
+.components-form-token-field__label {
+	font-size: .875rem;
+}
+
 .field-resize {
 	cursor: col-resize;
 }
