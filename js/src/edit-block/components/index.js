@@ -1,3 +1,4 @@
+export { default as BlockPanel } from './block-panel';
 export { default as BrowserURL } from './browser-url';
 export { default as Editor } from './editor';
 export { default as FieldPanel } from './field-panel';
