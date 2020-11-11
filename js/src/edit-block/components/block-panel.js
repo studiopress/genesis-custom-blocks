@@ -8,13 +8,12 @@ import React from 'react';
  */
 import { __ } from '@wordpress/i18n';
 import { FormTokenField } from '@wordpress/components';
-import { useSelect, useDispatch } from '@wordpress/data';
 import { useCallback, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import { useField } from '../hooks';
+import { useBlock, useCategories } from '../hooks';
 
 /**
  * The field panel.
@@ -22,16 +21,18 @@ import { useField } from '../hooks';
  * @return {React.ReactElement} The field panel component.
  */
 const BlockPanel = () => {
-	const { field, changeFieldSetting } = useField();
-	const categories = useSelect(
-		( select ) => select( 'core/blocks' ).getCategories(),
-		[]
-	);
-	const { setCategories } = useDispatch( 'core/blocks' );
+	const { block, changeBlock } = useBlock();
+	const { categories, setCategories } = useCategories();
 	const [ showNewCategoryForm, setShowNewCategoryForm ] = useState( false );
 	const [ newCategorySlug, setNewCategorySlug ] = useState( '' );
 	const maxNumberOfKeyword = 3;
-	const onChangeCategoryName = ( event ) => {
+
+	/**
+	 * Handles changing the category name.
+	 *
+	 * @param {{ target: { value: React.SetStateAction<string>; }; }} event The event on changing the name.
+	 */
+	const handleChangeCategoryName = ( event ) => {
 		if ( event.target ) {
 			setNewCategorySlug( event.target.value );
 		}
@@ -55,19 +56,19 @@ const BlockPanel = () => {
 				newCategory,
 			]
 		);
-		changeFieldSetting(
+		changeBlock(
 			'category',
 			newCategory
 		);
 		setShowNewCategoryForm( ( previousValue ) => ! previousValue );
-	}, [ categories, changeFieldSetting, newCategorySlug, setCategories ] );
+	}, [ categories, changeBlock, newCategorySlug, setCategories ] );
 
 	const isDefaultCategory = useCallback( () => {
 		const matchedCategories = categories.filter( ( cat ) => {
-			return field.category && ( field.category.slug === cat.slug );
+			return block.category && ( block.category.slug === cat.slug );
 		} );
 		return matchedCategories.length > 0;
-	}, [ categories, field ] );
+	}, [ categories, block ] );
 
 	return (
 		<div className="p-4">
@@ -78,10 +79,10 @@ const BlockPanel = () => {
 					className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm"
 					type="text"
 					id="block-name"
-					value={ field.name }
+					value={ block.name }
 					onChange={ ( event ) => {
 						if ( event.target ) {
-							changeFieldSetting( 'name', event.target.value );
+							changeBlock( 'name', event.target.value );
 						}
 					} }
 				/>
@@ -92,7 +93,7 @@ const BlockPanel = () => {
 				<select /* eslint-disable-line jsx-a11y/no-onchange */
 					className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm"
 					id="block-categories"
-					value={ field.category && field.category.slug ? field.category.slug : null }
+					value={ block.category && block.category.slug ? block.category.slug : null }
 					onChange={ ( event ) => {
 						if ( ! event.target ) {
 							return;
@@ -106,7 +107,7 @@ const BlockPanel = () => {
 						}
 						const newCategory = matchedCategories[ 0 ];
 
-						changeFieldSetting(
+						changeBlock(
 							'category',
 							{
 								icon: newCategory.icon,
@@ -119,7 +120,7 @@ const BlockPanel = () => {
 					{ categories.map( ( category, index ) => {
 						return <option value={ category.slug } key={ `block-category-${ index }` }>{ category.title ? category.title : category.slug }</option>;
 					} ) }
-					{ isDefaultCategory() ? null : <option value={ field.category.slug } key="block-category-non-default">{ field.category.title ? field.category.title : field.category.slug }</option> }
+					{ isDefaultCategory() ? null : <option value={ block.category.slug } key="block-category-non-default">{ block.category.title ? block.category.title : block.category.slug }</option> }
 				</select>
 				<button
 					onClick={ () => {
@@ -142,14 +143,14 @@ const BlockPanel = () => {
 							id="add-new-category"
 							className="editor-post-taxonomies__hierarchical-terms-input"
 							value={ newCategorySlug }
-							onChange={ onChangeCategoryName }
+							onChange={ handleChangeCategoryName }
 							required
 						/>
 						<button type="submit">
 							{ __( 'Add New Category', 'genesis-custom-blocks' ) }
 						</button>
 					</form>
-					:					null
+					: null
 				}
 				<span className="block italic text-xs mt-1">{ __( 'Used to determine the name of the template file.', 'genesis-custom-blocks' ) }</span>
 			</div>
@@ -157,10 +158,10 @@ const BlockPanel = () => {
 				<FormTokenField
 					// @ts-ignore
 					label={ __( 'Keywords', 'genesis-custom-blocks' ) }
-					value={ field.keywords }
+					value={ block.keywords }
 					maxLength={ maxNumberOfKeyword }
 					onChange={ ( tokens ) => {
-						changeFieldSetting( 'keywords', tokens );
+						changeBlock( 'keywords', tokens );
 					} }
 					messages={ {
 						added: __( 'Keyword added.', 'genesis-custom-blocks' ),

@@ -7,14 +7,17 @@ import { render } from '@testing-library/react';
 import user from '@testing-library/user-event';
 
 /**
- * WordPress dependencies
- */
-import { useSelect } from '@wordpress/data';
-
-/**
  * Internal dependencies
  */
 import { Side } from '../../components';
+
+const mockEmailField = {
+	control: 'email',
+	label: 'Email Example',
+	location: 'editor',
+	name: 'email-example',
+	type: 'string',
+};
 
 const mockBlock = {
 	name: 'test-email',
@@ -28,18 +31,63 @@ const mockBlock = {
 	keywords: [],
 	excluded: [],
 	fields: {
-		email: {
-			control: 'email',
-			label: 'Email Example',
-			location: 'editor',
-			name: 'email-example',
-			type: 'string',
-		},
+		email: mockEmailField,
 	},
 };
 
-jest.mock( '@wordpress/data/build/components/use-select', () => {
-	return jest.fn();
+const mockCategories = [
+	{
+		slug: 'text',
+		title: 'Text',
+	},
+	{
+		slug: 'media',
+		title: 'Media',
+	},
+	{
+		slug: 'design',
+		title: 'Design',
+	},
+	{
+		slug: 'widgets',
+		title: 'Widgets',
+	},
+	{
+		slug: 'embed',
+		title: 'Embeds',
+	},
+	{
+		slug: 'reusable',
+		title: 'Reusable blocks',
+	},
+	{
+		icon: null,
+		slug: 'New',
+		title: 'New',
+	},
+];
+
+jest.mock( '../../hooks/use-block', () => {
+	return jest.fn( () => ( {
+		block: mockBlock,
+		changeBlock: jest.fn(),
+	} ) );
+} );
+
+jest.mock( '../../hooks/use-categories', () => {
+	return jest.fn( () => ( {
+		categories: mockCategories,
+		setCategories: jest.fn(),
+	} ) );
+} );
+
+jest.mock( '../../hooks/use-field', () => {
+	return jest.fn( () => ( {
+		controls: mockControls,
+		field: mockEmailField,
+		changeControl: jest.fn(),
+		changeFieldSetting: jest.fn(),
+	} ) );
 } );
 
 const locationSetting = { name: 'location', label: 'Field Location', type: 'location', default: 'editor', help: '' };
@@ -49,35 +97,24 @@ const defaultSetting = { name: 'default', label: 'Default Value', type: 'text', 
 const placeholderSetting = { name: 'placeholder', label: 'Placeholder Text', type: 'text', default: '', helpSetting: '' };
 const maxlengthSetting = { name: 'maxlength', label: 'Character Limit', type: 'number_non_negative', default: '', helpSetting: '' };
 
-global.gcbEditor = {
-	controls: {
-		email: {
-			label: 'Email',
-			locations: { editor: 'Editor', inspector: 'Inspector' },
-			name: 'email',
-			settings: [
-				locationSetting,
-				widthSetting,
-				helpSetting,
-				defaultSetting,
-				placeholderSetting,
-				maxlengthSetting,
-			],
-		},
+const mockControls = {
+	email: {
+		label: 'Email',
+		locations: { editor: 'Editor', inspector: 'Inspector' },
+		name: 'email',
+		settings: [
+			locationSetting,
+			widthSetting,
+			helpSetting,
+			defaultSetting,
+			placeholderSetting,
+			maxlengthSetting,
+		],
 	},
 };
-window.fetch = jest.fn();
 
 describe( 'Side', () => {
 	it( 'has the right settings for text', async () => {
-		useSelect.mockImplementation( () => {
-			return jest.fn( () => {
-				return JSON.stringify( {
-					'genesis-custom-blocks/email-example': mockBlock,
-				} );
-			} );
-		} );
-
 		const { getAllByText, getByLabelText, getByText } = render( <Side /> );
 
 		getAllByText( /block/i );
@@ -85,8 +122,9 @@ describe( 'Side', () => {
 		expect( getByText( /block settings/i ) ).toBeInTheDocument();
 		expect( getByText( /slug/i ) ).toBeInTheDocument();
 		expect( getByText( /keywords/i ) ).toBeInTheDocument();
-		expect( getByText( /category/i ) ).toBeInTheDocument();
+		expect( getByLabelText( /category/i ) ).toBeInTheDocument();
 
+		// Clicking the 'Field' button should show the field panel.
 		user.click( getByText( /field/i ) );
 		expect( getByText( /field settings/i ) ).toBeInTheDocument();
 		expect( getByLabelText( /field label/i ) ).toBeInTheDocument();
