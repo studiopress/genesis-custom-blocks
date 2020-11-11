@@ -7,6 +7,11 @@ import { render } from '@testing-library/react';
 import user from '@testing-library/user-event';
 
 /**
+ * WordPress dependencies
+ */
+import { useSelect } from '@wordpress/data';
+
+/**
  * Internal dependencies
  */
 import { Side } from '../../components';
@@ -34,11 +39,7 @@ const mockBlock = {
 };
 
 jest.mock( '@wordpress/data/build/components/use-select', () => {
-	return jest.fn( ( callback ) => {
-		return JSON.stringify( {
-			'genesis-custom-blocks/email-example': mockBlock,
-		} );
-	} );
+	return jest.fn();
 } );
 
 const locationSetting = { name: 'location', label: 'Field Location', type: 'location', default: 'editor', help: '' };
@@ -69,6 +70,14 @@ window.fetch = jest.fn();
 
 describe( 'Side', () => {
 	it( 'has the right settings for text', async () => {
+		useSelect.mockImplementation( () => {
+			return jest.fn( () => {
+				return JSON.stringify( {
+					'genesis-custom-blocks/email-example': mockBlock,
+				} );
+			} );
+		} );
+
 		const { getAllByText, getByLabelText, getByText } = render( <Side /> );
 
 		getAllByText( /block/i );

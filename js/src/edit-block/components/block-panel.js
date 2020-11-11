@@ -8,7 +8,8 @@ import React from 'react';
  */
 import { __ } from '@wordpress/i18n';
 import { FormTokenField } from '@wordpress/components';
-import { useSelect } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
+import { useCallback, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -26,7 +27,47 @@ const BlockPanel = () => {
 		( select ) => select( 'core/blocks' ).getCategories(),
 		[]
 	);
+	const { setCategories } = useDispatch( 'core/blocks' );
+	const [ showNewCategoryForm, setShowNewCategoryForm ] = useState( false );
+	const [ newCategorySlug, setNewCategorySlug ] = useState( '' );
 	const maxNumberOfKeyword = 3;
+	const onChangeCategoryName = ( event ) => {
+		if ( event.target ) {
+			setNewCategorySlug( event.target.value );
+		}
+	};
+
+	const onSubmitCategoryName = useCallback( ( event ) => {
+		event.preventDefault();
+		if ( ! newCategorySlug ) {
+			return;
+		}
+
+		const newCategory = {
+			icon: null,
+			slug: newCategorySlug,
+			title: newCategorySlug,
+		};
+
+		setCategories(
+			[
+				...categories,
+				newCategory,
+			]
+		);
+		changeFieldSetting(
+			'category',
+			newCategory
+		);
+		setShowNewCategoryForm( ( previousValue ) => ! previousValue );
+	}, [ categories, changeFieldSetting, newCategorySlug, setCategories ] );
+
+	const isDefaultCategory = useCallback( () => {
+		const matchedCategories = categories.filter( ( cat ) => {
+			return field.category && ( field.category.slug === cat.slug );
+		} );
+		return matchedCategories.length > 0;
+	}, [ categories, field ] );
 
 	return (
 		<div className="p-4">
@@ -76,9 +117,40 @@ const BlockPanel = () => {
 					} }
 				>
 					{ categories.map( ( category, index ) => {
-						return <option value={ category.slug } key={ `block-category-${ index }` }>{ category.title }</option>;
+						return <option value={ category.slug } key={ `block-category-${ index }` }>{ category.title ? category.title : category.slug }</option>;
 					} ) }
+					{ isDefaultCategory() ? null : <option value={ field.category.slug } key="block-category-non-default">{ field.category.title ? field.category.title : field.category.slug }</option> }
 				</select>
+				<button
+					onClick={ () => {
+						setShowNewCategoryForm( ( previousValue ) => ! previousValue );
+					} }
+					aria-expanded={ showNewCategoryForm }
+				>
+					{ __( 'Add New Category', 'genesis-custom-blocks' ) }
+				</button>
+				{ showNewCategoryForm
+					? <form onSubmit={ onSubmitCategoryName } key="hierarchical-terms-form">
+						<label
+							htmlFor="add-new-category"
+							className="editor-post-taxonomies__hierarchical-terms-label"
+						>
+							{ __( 'New Category Name', 'genesis-custom-blocks' ) }
+						</label>
+						<input
+							type="text"
+							id="add-new-category"
+							className="editor-post-taxonomies__hierarchical-terms-input"
+							value={ newCategorySlug }
+							onChange={ onChangeCategoryName }
+							required
+						/>
+						<button type="submit">
+							{ __( 'Add New Category', 'genesis-custom-blocks' ) }
+						</button>
+					</form>
+					:					null
+				}
 				<span className="block italic text-xs mt-1">{ __( 'Used to determine the name of the template file.', 'genesis-custom-blocks' ) }</span>
 			</div>
 			<div className="mt-5">
