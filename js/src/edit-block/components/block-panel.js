@@ -8,6 +8,7 @@ import React from 'react';
  */
 import { __ } from '@wordpress/i18n';
 import { FormTokenField } from '@wordpress/components';
+import { useSelect } from '@wordpress/data';
 
 /**
  * Internal dependencies
@@ -21,6 +22,10 @@ import { useField } from '../hooks';
  */
 const BlockPanel = () => {
 	const { field, changeFieldSetting } = useField();
+	const categories = useSelect(
+		( select ) => select( 'core/blocks' ).getCategories(),
+		[]
+	);
 	const maxNumberOfKeyword = 3;
 
 	return (
@@ -39,6 +44,41 @@ const BlockPanel = () => {
 						}
 					} }
 				/>
+				<span className="block italic text-xs mt-1">{ __( 'Used to determine the name of the template file.', 'genesis-custom-blocks' ) }</span>
+			</div>
+			<div className="mt-5">
+				<label className="text-sm" htmlFor="block-categories">{ __( 'Category', 'genesis-custom-blocks' ) }</label>
+				<select /* eslint-disable-line jsx-a11y/no-onchange */
+					className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm"
+					id="block-categories"
+					value={ field.category && field.category.slug ? field.category.slug : null }
+					onChange={ ( event ) => {
+						if ( ! event.target ) {
+							return;
+						}
+						const matchedCategories = categories.filter( ( category ) => {
+							return event.target.value === category.slug;
+						} );
+
+						if ( ! matchedCategories.length ) {
+							return;
+						}
+						const newCategory = matchedCategories[ 0 ];
+
+						changeFieldSetting(
+							'category',
+							{
+								icon: newCategory.icon,
+								slug: newCategory.slug,
+								title: newCategory.title,
+							}
+						);
+					} }
+				>
+					{ categories.map( ( category, index ) => {
+						return <option value={ category.slug } key={ `block-category-${ index }` }>{ category.title }</option>;
+					} ) }
+				</select>
 				<span className="block italic text-xs mt-1">{ __( 'Used to determine the name of the template file.', 'genesis-custom-blocks' ) }</span>
 			</div>
 			<div className="mt-5">

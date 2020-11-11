@@ -4,7 +4,7 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render } from '@testing-library/react';
-import user from '@testing-library/user-event'
+import user from '@testing-library/user-event';
 
 /**
  * Internal dependencies
@@ -34,7 +34,7 @@ const mockBlock = {
 };
 
 jest.mock( '@wordpress/data/build/components/use-select', () => {
-	return jest.fn( () => {
+	return jest.fn( ( callback ) => {
 		return JSON.stringify( {
 			'genesis-custom-blocks/email-example': mockBlock,
 		} );
@@ -76,6 +76,7 @@ describe( 'Side', () => {
 		expect( getByText( /block settings/i ) ).toBeInTheDocument();
 		expect( getByText( /slug/i ) ).toBeInTheDocument();
 		expect( getByText( /keywords/i ) ).toBeInTheDocument();
+		expect( getByText( /category/i ) ).toBeInTheDocument();
 
 		user.click( getByText( /field/i ) );
 		expect( getByText( /field settings/i ) ).toBeInTheDocument();
