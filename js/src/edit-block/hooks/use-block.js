@@ -9,6 +9,17 @@ import { useCallback } from '@wordpress/element';
  */
 import { getBlock } from '../helpers';
 
+/**
+ * @typedef {Object} UseBlockReturn The return value of useBlock.
+ * @property {Object} block The block, parsed into an object.
+ * @property {Function} changeBlock Changes the block configuration.
+ */
+
+/**
+ * Gets the block context.
+ *
+ * @return {UseBlockReturn}
+ */
 const useBlock = () => {
 	const editedPostContent = useSelect(
 		( select ) => select( 'core/editor' ).getEditedPostContent(),

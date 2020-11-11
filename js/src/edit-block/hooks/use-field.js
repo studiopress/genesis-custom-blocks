@@ -11,6 +11,19 @@ import { useCallback } from '@wordpress/element';
  */
 import { getBlock } from '../helpers';
 
+/**
+ * @typedef {Object} UseFieldReturn The return value of useField.
+ * @property {Object} controls All of the possible controls.
+ * @property {Object} field The block field.
+ * @property {Function} changeControl Changes the control of the field.
+ * @property {Function} changeFieldSetting Changes a field setting.
+ */
+
+/**
+ * Gets the field context.
+ *
+ * @return {UseFieldReturn}
+ */
 const useField = () => {
 	// @ts-ignore
 	const { controls } = gcbEditor;

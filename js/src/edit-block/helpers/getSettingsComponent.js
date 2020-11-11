@@ -17,6 +17,7 @@ import * as settingsComponents from '../components/settings';
  * Capitalizes a name.
  *
  * @param {string} name The name to capitalize.
+ * @return {string} The capitalized name.
  */
 const capitalize = ( name ) => name.charAt( 0 ).toUpperCase() + name.slice( 1 );
 
