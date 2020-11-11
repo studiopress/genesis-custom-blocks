@@ -6,6 +6,11 @@
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useCallback } from '@wordpress/element';
 
+/**
+ * Internal dependencies
+ */
+import { getBlock } from '../helpers';
+
 const useField = () => {
 	// @ts-ignore
 	const { controls } = gcbEditor;
@@ -14,13 +19,10 @@ const useField = () => {
 		[]
 	);
 
-	const getFullBlock = useCallback( () => {
-		try {
-			return JSON.parse( editedPostContent );
-		} catch ( error ) {
-			return {};
-		}
-	}, [ editedPostContent ] );
+	const getFullBlock = useCallback(
+		() => getBlock( editedPostContent ),
+		[ editedPostContent ]
+	);
 
 	const fullBlock = getFullBlock();
 	const { editPost } = useDispatch( 'core/editor' );

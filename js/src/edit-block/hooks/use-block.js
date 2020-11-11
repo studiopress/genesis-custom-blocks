@@ -4,6 +4,11 @@
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useCallback } from '@wordpress/element';
 
+/**
+ * Internal dependencies
+ */
+import { getBlock } from '../helpers';
+
 const useBlock = () => {
 	const editedPostContent = useSelect(
 		( select ) => select( 'core/editor' ).getEditedPostContent(),
@@ -11,13 +16,10 @@ const useBlock = () => {
 	);
 	const { editPost } = useDispatch( 'core/editor' );
 
-	const getFullBlock = useCallback( () => {
-		try {
-			return JSON.parse( editedPostContent );
-		} catch ( error ) {
-			return {};
-		}
-	}, [ editedPostContent ] );
+	const getFullBlock = useCallback(
+		() => getBlock( editedPostContent ),
+		[ editedPostContent ]
+	);
 
 	const fullBlock = getFullBlock();
 	const blockNameWithNamespace = Object.keys( fullBlock )[ 0 ];
