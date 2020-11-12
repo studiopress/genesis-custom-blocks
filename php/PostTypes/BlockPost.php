@@ -402,7 +402,7 @@ class BlockPost extends ComponentAbstract {
 	public function render_properties_meta_box() {
 		$post  = get_post();
 		$block = new Block( $post->ID );
-		$icons = genesis_custom_blocks()->get_icons();
+		$icons = [];
 
 		if ( ! $block->icon ) {
 			$block->icon = 'genesis_custom_blocks';
@@ -1129,7 +1129,7 @@ class BlockPost extends ComponentAbstract {
 	public function list_table_content( $column, $post_id ) {
 		if ( 'icon' === $column ) {
 			$block = new Block( $post_id );
-			$icons = genesis_custom_blocks()->get_icons();
+			$icons = [];
 
 			if ( isset( $icons[ $block->icon ] ) ) {
 				printf(

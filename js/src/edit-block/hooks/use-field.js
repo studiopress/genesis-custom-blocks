@@ -22,7 +22,7 @@ import { getBlock } from '../helpers';
 /**
  * Gets the field context.
  *
- * @return {UseFieldReturn}
+ * @return {UseFieldReturn} The field context and functions to change it.
  */
 const useField = () => {
 	// @ts-ignore

@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import React from 'react';
+
+/**
  * Internal dependencies
  */
 import { Fields } from './';
@@ -9,7 +14,7 @@ import { Fields } from './';
  * @param {Object} props The props of this components.
  * @param {Object} props.blockProps The block's props.
  * @param {Object} props.block The block.
- * @return {Function|null} The Edit component for the block.
+ * @return {React.ReactElement} The form controls.
  */
 const FormControls = ( { blockProps, block } ) => {
 	return (

@@ -7,13 +7,14 @@ import React from 'react';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { FormTokenField } from '@wordpress/components';
+import { FormTokenField, Icon } from '@wordpress/components';
 import { useCallback, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import { useBlock, useCategories } from '../hooks';
+import { getIconComponent } from '../../common/helpers';
 
 /**
  * The field panel.
@@ -88,6 +89,11 @@ const BlockPanel = () => {
 				/>
 				<span className="block italic text-xs mt-1">{ __( 'Used to determine the name of the template file.', 'genesis-custom-blocks' ) }</span>
 			</div>
+			<div className="mt-5">
+				<label className="text-sm" htmlFor="block-icon">{ __( 'Icon', 'genesis-custom-blocks' ) }</label>
+				<Icon size={ 24 } icon={ getIconComponent( block.icon ) } />
+			</div>
+
 			<div className="mt-5">
 				<label className="text-sm" htmlFor="block-categories">{ __( 'Category', 'genesis-custom-blocks' ) }</label>
 				<select /* eslint-disable-line jsx-a11y/no-onchange */

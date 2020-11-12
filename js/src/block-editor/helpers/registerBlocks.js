@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import React from 'react';
+
+/**
  * WordPress dependencies
  */
 import { registerBlockType } from '@wordpress/blocks';
@@ -6,8 +11,8 @@ import { registerBlockType } from '@wordpress/blocks';
 /**
  * Internal dependencies
  */
-import icons from '../../../../assets/icons.json';
 import { getGcbBlockAttributes } from './';
+import { getIconComponent } from '../../common/helpers';
 
 /**
  * Loops through all of the blocks, but not guaranteed to be sequential.
@@ -34,12 +39,7 @@ const registerBlocks = ( genesisCustomBlocks, gcbBlocks, EditComponent ) => {
 			}
 		}
 
-		let icon = '';
-		if ( 'undefined' !== typeof icons[ block.icon ] ) {
-			icon = (
-				<span dangerouslySetInnerHTML={ { __html: icons[ block.icon ] } } />
-			);
-		}
+		const icon = getIconComponent( block.icon );
 
 		// Register the block.
 		registerBlockType( blockName, {

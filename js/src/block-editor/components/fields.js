@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import React from 'react';
+
+/**
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks';
@@ -8,11 +13,6 @@ import { select } from '@wordpress/data';
  * Internal dependencies
  */
 import { getSimplifiedFields } from '../helpers';
-
-/**
- * External dependencies
- */
-import React from 'react';
 
 /**
  * Gets the control function for the field.
@@ -46,15 +46,15 @@ const getClassName = ( field ) => {
  * @property {Array}  fields The fields to render.
  * @property {Object} parentBlock The block where the fields are.
  * @property {Object} parentBlockProps The props to pass to the control function.
- * @property {number} rowIndex The index of the repeater row, if this field is in one (optional).
- * @property {Function} changeFieldSetting Edits a field value.
+ * @property {number} [rowIndex] The index of the repeater row, if this field is in one (optional).
+ * @property {Function} [changeFieldSetting] Edits a field value.
  */
 
 /**
  * Renders the fields, using their control functions.
  *
  * @param {FieldsProps} props The component props.
- * @return {React.ReactElement[]} fields The rendered fields.
+ * @return {React.ReactComponentElement[]} The fields.
  */
 const Fields = ( { fields, parentBlock, parentBlockProps, rowIndex } ) => {
 	return getSimplifiedFields( fields ).map( ( field ) => {
@@ -125,8 +125,8 @@ const Fields = ( { fields, parentBlock, parentBlockProps, rowIndex } ) => {
 
 		const Control = getControl( field );
 
-		return !! Control && (
-			<div className={ getClassName( field ) } key={ `${ field.name }-control-${ rowIndex }` }>
+		return Control
+			? <div className={ getClassName( field ) } key={ `${ field.name }-control-${ rowIndex }` }>
 				<Control
 					field={ field }
 					getValue={ getValue }
@@ -136,7 +136,7 @@ const Fields = ( { fields, parentBlock, parentBlockProps, rowIndex } ) => {
 					parentBlockProps={ parentBlockProps }
 				/>
 			</div>
-		);
+			:			null;
 	} );
 };
 

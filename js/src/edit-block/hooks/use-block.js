@@ -18,7 +18,7 @@ import { getBlock } from '../helpers';
 /**
  * Gets the block context.
  *
- * @return {UseBlockReturn}
+ * @return {UseBlockReturn} The block and a function to change it.
  */
 const useBlock = () => {
 	const editedPostContent = useSelect(

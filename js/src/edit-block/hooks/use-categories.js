@@ -12,7 +12,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
 /**
  * Gets the categories context.
  *
- * @return {UseCategoriesReturn}
+ * @return {UseCategoriesReturn} The categories and a function to set them.
  */
 const useCategories = () => {
 	const categories = useSelect(

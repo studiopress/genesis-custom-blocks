@@ -1,13 +1,22 @@
 /**
  * WordPress dependencies
  */
+/**
+ * External dependencies
+ */
+import React from 'react';
+
+/**
+ * WordPress dependencies
+ */
+import { Icon } from '@wordpress/components';
 import ServerSideRender from '@wordpress/server-side-render';
 
 /**
  * Internal dependencies
  */
 import { GcbInspector, FormControls } from './';
-import icons from '../../../../assets/icons.json';
+import { getIconComponent } from '../../common/helpers';
 
 /**
  * The Edit function for the block.
@@ -15,14 +24,10 @@ import icons from '../../../../assets/icons.json';
  * @param {Object} props The props of this component.
  * @param {Object} props.blockProps The block's props.
  * @param {Object} props.block The block.
- * @return {Function} The Edit function for the block.
+ * @return {React.ReactElement} The Edit function for the block.
  */
 const Edit = ( { blockProps, block } ) => {
 	const { attributes, className, isSelected } = blockProps;
-
-	if ( 'undefined' === typeof icons[ block.icon ] ) {
-		icons[ block.icon ] = '';
-	}
 
 	return (
 		<>
@@ -30,7 +35,10 @@ const Edit = ( { blockProps, block } ) => {
 			<div className={ className } key={ `form-controls-${ block.name }` } >
 				{ isSelected ? (
 					<div className="block-form">
-						<h3 dangerouslySetInnerHTML={ { __html: icons[ block.icon ] + ' ' + block.title } } />
+						<h3>
+							<Icon size={ 24 } icon={ getIconComponent( block.icon ) } />
+							{ block.title }
+						</h3>
 						<FormControls blockProps={ blockProps } block={ block } />
 					</div>
 				) : (

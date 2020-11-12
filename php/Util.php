@@ -137,30 +137,6 @@ class Util extends ComponentAbstract {
 	}
 
 	/**
-	 * Provides a list of all available block icons.
-	 *
-	 * To include additional icons in this list, use the genesis_custom_blocks_icons filter, and add a new svg string to the array,
-	 * using a unique key. For example:
-	 *
-	 * $icons['foo'] = '<svg>…</svg>';
-	 *
-	 * @return array
-	 */
-	public function get_icons() {
-		// This is on the local filesystem, so file_get_contents() is ok to use here.
-		$json_file = genesis_custom_blocks()->get_assets_path( 'icons.json' );
-		$json      = file_get_contents( $json_file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
-		$icons     = json_decode( $json, true );
-
-		/**
-		 * The available block icons.
-		 *
-		 * @param array $icons The available icons.
-		 */
-		return apply_filters( 'genesis_custom_blocks_icons', $icons );
-	}
-
-	/**
 	 * Provides a list of allowed tags to be used by an <svg>.
 	 *
 	 * @return array

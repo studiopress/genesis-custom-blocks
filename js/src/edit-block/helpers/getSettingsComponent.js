@@ -12,14 +12,7 @@ import { applyFilters } from '@wordpress/hooks';
  * Internal dependencies
  */
 import * as settingsComponents from '../components/settings';
-
-/**
- * Capitalizes a name.
- *
- * @param {string} name The name to capitalize.
- * @return {string} The capitalized name.
- */
-const capitalize = ( name ) => name.charAt( 0 ).toUpperCase() + name.slice( 1 );
+import { snakeCaseToPascalCase } from '../../common/helpers';
 
 /**
  * @typedef {Object} SettingsComponentProps The component props.
@@ -40,11 +33,11 @@ const capitalize = ( name ) => name.charAt( 0 ).toUpperCase() + name.slice( 1 );
  * @return {React.ComponentType<SettingsComponentProps>} The settings component, if it exists.
  */
 const getSettingsComponent = ( settingType ) => {
-	const splitSettingType = settingType.split( '_' );
+	if ( ! settingType || 'string' !== typeof settingType ) {
+		return null;
+	}
 
-	const componentName = splitSettingType.reduce( ( accumulator, currentValue ) => {
-		return capitalize( accumulator ) + capitalize( currentValue );
-	}, '' );
+	const componentName = snakeCaseToPascalCase( settingType );
 
 	const filteredComponents = applyFilters( 'genesisCustomBlocks.settingsComponents', settingsComponents );
 	return filteredComponents[ componentName ] ? filteredComponents[ componentName ] : null; /* eslint-disable-line import/namespace */
