@@ -16,7 +16,7 @@ import React from 'react';
  * The input component.
  *
  * @param {InputProps} props The component props.
- * @return {React.ReactElement} The input component.
+ * @return {React.ReactElement} The input.
  */
 const Input = ( { handleOnChange, setting, type, value, min } ) => {
 	const id = `setting-input-${ setting.name }`;

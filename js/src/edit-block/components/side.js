@@ -18,7 +18,7 @@ import { BlockPanel, FieldPanel } from './';
 /**
  * The side component.
  *
- * @return {React.ReactElement} The side component.
+ * @return {React.ReactElement} The side area.
  */
 const Side = () => {
 	const [ displayFieldPanel, setDisplayFieldPanel ] = useState( false );

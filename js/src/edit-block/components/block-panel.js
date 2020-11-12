@@ -26,7 +26,9 @@ import {
 const BlockPanel = () => {
 	return (
 		<div className="p-4">
-			<h4 className="text-sm font-semibold">{ __( 'Block Settings', 'genesis-custom-blocks' ) }</h4>
+			<h4 className="text-sm font-semibold">
+				{ __( 'Block Settings', 'genesis-custom-blocks' ) }
+			</h4>
 			<SlugSection />
 			<IconSection />
 			<CategorySection />

@@ -19,7 +19,7 @@ import { addQueryArgs } from '@wordpress/url';
 /**
  * The header component.
  *
- * @return {React.ReactElement} The header component.
+ * @return {React.ReactElement} The header.
  */
 const Header = () => {
 	const backURL = addQueryArgs( 'edit.php', {

@@ -17,7 +17,7 @@ import { useField } from '../hooks';
 /**
  * The field panel.
  *
- * @return {React.ReactElement} The field panel component.
+ * @return {React.ReactElement} The field panel.
  */
 const FieldPanel = () => {
 	const { controls, field, changeControl, changeFieldSetting } = useField();

@@ -28,7 +28,7 @@ const IconSection = () => {
 
 	return (
 		<div className="mt-5">
-			<span className="text-sm" htmlFor="block-icon">{ __( 'Icon', 'genesis-custom-blocks' ) }</span>
+			<span className="text-sm">{ __( 'Icon', 'genesis-custom-blocks' ) }</span>
 			<Icon size={ 24 } icon={ getIconComponent( block.icon ) } />
 			<button
 				className="block-properties-icon-button"
