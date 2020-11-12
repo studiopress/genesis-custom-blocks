@@ -136,7 +136,7 @@ const Fields = ( { fields, parentBlock, parentBlockProps, rowIndex } ) => {
 					parentBlockProps={ parentBlockProps }
 				/>
 			</div>
-			:			null;
+			: null;
 	} );
 };
 

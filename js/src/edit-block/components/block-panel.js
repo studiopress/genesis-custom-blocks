@@ -14,7 +14,8 @@ import { useCallback, useState } from '@wordpress/element';
  * Internal dependencies
  */
 import { useBlock, useCategories } from '../hooks';
-import { getIconComponent } from '../../common/helpers';
+import { getIconComponent, pascalCaseToSnakeCase } from '../../common/helpers';
+import * as blockIcons from '../../common/icons';
 
 /**
  * The field panel.
@@ -26,6 +27,7 @@ const BlockPanel = () => {
 	const { categories, setCategories } = useCategories();
 	const [ showNewCategoryForm, setShowNewCategoryForm ] = useState( false );
 	const [ newCategorySlug, setNewCategorySlug ] = useState( '' );
+	const [ showIcons, setShowIcons ] = useState( false );
 	const maxNumberOfKeyword = 3;
 
 	/**
@@ -92,6 +94,40 @@ const BlockPanel = () => {
 			<div className="mt-5">
 				<label className="text-sm" htmlFor="block-icon">{ __( 'Icon', 'genesis-custom-blocks' ) }</label>
 				<Icon size={ 24 } icon={ getIconComponent( block.icon ) } />
+				<button
+					className="block-properties-icon-button"
+					onClick={ () => {
+						setShowIcons( ( current ) => ! current );
+					} }
+				>
+					{ showIcons ? __( 'Close', 'genesis-custom-blocks' ) : __( 'Choose', 'genesis-custom-blocks' ) }
+				</button>
+				{ showIcons
+					? <div role="listbox" id="block-icon" className="flex flex-wrap">
+						{
+							Object.keys( blockIcons ).map( ( iconName, index ) => {
+								const snakeCaseIconName = pascalCaseToSnakeCase( iconName );
+
+								return (
+									<div key={ `block-icon-item-${ index }` } className="block_icon_item">
+										<button
+											type="button"
+											role="option"
+											aria-selected={ block.icon === snakeCaseIconName }
+											onClick={ () => {
+												changeBlock( 'icon', snakeCaseIconName );
+											} }
+										>
+											{ /* eslint-disable-next-line import/namespace */ }
+											<Icon size={ 24 } icon={ blockIcons[ iconName ] } />
+										</button>
+									</div>
+								);
+							} )
+						}
+					</div>
+					: null
+				}
 			</div>
 
 			<div className="mt-5">
