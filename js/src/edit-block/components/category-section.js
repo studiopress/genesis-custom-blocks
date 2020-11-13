@@ -26,6 +26,34 @@ const CategorySection = () => {
 	const [ newCategorySlug, setNewCategorySlug ] = useState( '' );
 
 	/**
+	 * Handles changing the category.
+	 *
+	 * @param {{ target: { value: React.SetStateAction<string>; }; }} event The event on changing the category.
+	 */
+	const handleChangeCategory = ( event ) => {
+		if ( ! event.target ) {
+			return;
+		}
+		const matchedCategories = categories.filter( ( category ) => {
+			return event.target.value === category.slug;
+		} );
+
+		if ( ! matchedCategories.length ) {
+			return;
+		}
+		const newCategory = matchedCategories[ 0 ];
+
+		changeBlock(
+			'category',
+			{
+				icon: newCategory.icon,
+				slug: newCategory.slug,
+				title: newCategory.title,
+			}
+		);
+	};
+
+	/**
 	 * Handles changing the category name.
 	 *
 	 * @param {{ target: { value: React.SetStateAction<string>; }; }} event The event on changing the name.
@@ -75,28 +103,7 @@ const CategorySection = () => {
 				className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm"
 				id="block-categories"
 				value={ block.category && block.category.slug ? block.category.slug : null }
-				onChange={ ( event ) => {
-					if ( ! event.target ) {
-						return;
-					}
-					const matchedCategories = categories.filter( ( category ) => {
-						return event.target.value === category.slug;
-					} );
-
-					if ( ! matchedCategories.length ) {
-						return;
-					}
-					const newCategory = matchedCategories[ 0 ];
-
-					changeBlock(
-						'category',
-						{
-							icon: newCategory.icon,
-							slug: newCategory.slug,
-							title: newCategory.title,
-						}
-					);
-				} }
+				onChange={ handleChangeCategory }
 			>
 				{ categories.map( ( category, index ) => {
 					return <option value={ category.slug } key={ `block-category-${ index }` }>{ category.title ? category.title : category.slug }</option>;

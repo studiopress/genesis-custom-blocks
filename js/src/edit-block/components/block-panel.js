@@ -15,6 +15,7 @@ import {
 	CategorySection,
 	IconSection,
 	KeywordsSection,
+	PostTypesSection,
 	SlugSection,
 } from './';
 
@@ -32,6 +33,7 @@ const BlockPanel = () => (
 		<IconSection />
 		<CategorySection />
 		<KeywordsSection />
+		<PostTypesSection />
 	</div>
 );
 

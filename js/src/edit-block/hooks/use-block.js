@@ -37,10 +37,10 @@ const useBlock = () => {
 	const block = fullBlock[ blockNameWithNamespace ];
 
 	/**
-	 * Changes a field setting.
+	 * Changes a block value.
 	 *
-	 * @param {string} settingKey The key of the setting, like 'label' or 'placeholder'.
-	 * @param {any} newSettingValue The new setting value.
+	 * @param {string} settingKey The key, like 'name' or 'title'.
+	 * @param {any} newSettingValue The new block value.
 	 */
 	const changeBlock = useCallback( ( key, newValue ) => {
 		fullBlock[ blockNameWithNamespace ][ key ] = newValue;

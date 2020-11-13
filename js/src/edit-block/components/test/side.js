@@ -127,6 +127,7 @@ describe( 'Side', () => {
 		expect( getByText( /icon/i ) ).toBeInTheDocument();
 		expect( getByLabelText( /category/i ) ).toBeInTheDocument();
 		expect( getByLabelText( /keywords/i ) ).toBeInTheDocument();
+		expect( getByText( /post types/i ) ).toBeInTheDocument();
 
 		// Clicking the 'Field' button should show the field panel.
 		user.click( getByText( /field/i ) );

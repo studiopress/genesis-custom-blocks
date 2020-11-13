@@ -24,7 +24,10 @@ const Width = ( { handleOnChange, setting, value } ) => {
 	return (
 		<>
 			<span className="text-sm">{ setting.label }</span>
-			<div className="gcb-setting-width flex w-full border border-gray-600 rounded-sm mt-2">
+			<div
+				className="gcb-setting-width flex w-full border border-gray-600 rounded-sm mt-2"
+				role="listbox"
+			>
 				{ [ '25', '50', '75', '100' ].map( ( width, index ) => {
 					const key = `${ name }-${ index }`;
 					const isSelected = width === widthValue;
@@ -38,6 +41,8 @@ const Width = ( { handleOnChange, setting, value } ) => {
 									{ active: isSelected }
 								)
 							}
+							role="option"
+							aria-selected={ isSelected }
 							onClick={ () => {
 								handleOnChange( width );
 							} }
