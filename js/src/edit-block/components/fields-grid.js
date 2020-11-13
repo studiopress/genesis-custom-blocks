@@ -7,13 +7,14 @@ import className from 'classnames';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { useCallback } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import { useBlock } from '../hooks';
+import { getNewFieldNumber } from '../helpers';
 
 /**
  * The main editing area component.
@@ -27,14 +28,26 @@ const FieldsGrid = () => {
 
 	const addNewField = useCallback( () => {
 		const newFields = block.fields ? { ...block.fields } : {};
+		const newFieldNumber = getNewFieldNumber( newFields );
+		const name = newFieldNumber
+			? `new-field-${ newFieldNumber.toString() }`
+			: 'new-field';
+		const label = newFieldNumber
+			? sprintf(
+				// translators: %s: the field number
+				__( 'New Field %s', 'genesis-custom-blocks' ),
+				newFieldNumber.toString()
+			)
+			: __( 'New Field', 'genesis-custom-blocks' );
+
 		const newField = {
-			name: 'new-field',
-			label: __( 'New Field', 'genesis-custom-blocks' ),
+			name,
+			label,
 			control: 'text',
 			type: 'string',
 		};
 
-		newFields[ newField.name ] = newField;
+		newFields[ name ] = newField;
 		changeBlock( 'fields', newFields );
 	}, [ block, changeBlock ] );
 
