@@ -4,8 +4,14 @@
 import React from 'react';
 
 /**
+ * @typedef {Object} SvgContainerProps The component props.
+ * @property {React.ReactElement} children The children of this component.
+ */
+
+/**
  * An SVG container.
  *
+ * @param {SvgContainerProps} props The component props.
  * @return {React.ReactElement} The SVG container.
  */
 const SvgContainer = ( { children } ) => (

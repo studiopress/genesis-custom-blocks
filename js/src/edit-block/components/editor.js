@@ -25,7 +25,7 @@ import { BrowserURL, Header, Main, Side } from './';
  */
 
 /**
- * @typedef {Object} EditorSettingsProps The component props.
+ * @typedef {Object} EditorProps The component props.
  * @property {Object|null} initialEdits The initial edits, if any.
  * @property {onErrorType} onError Handler for errors.
  * @property {number} postId The current post ID.
@@ -36,7 +36,7 @@ import { BrowserURL, Header, Main, Side } from './';
 /**
  * The editor component.
  *
- * @param {EditorSettingsProps} props The component props.
+ * @param {EditorProps} props The component props.
  * @return {React.ReactElement} The editor.
  */
 const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
