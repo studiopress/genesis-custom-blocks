@@ -18,7 +18,7 @@ import { getSimplifiedFields } from '../helpers';
  * Gets the control function for the field.
  *
  * @param {Object} field The field to get the control function of.
- * @return {React.FunctionComponent} The control function.
+ * @return {React.FunctionComponent} The control component.
  */
 const getControl = ( field ) => {
 	const loadedControls = applyFilters( 'genesisCustomBlocks.controls', {} );
