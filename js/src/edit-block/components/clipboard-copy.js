@@ -39,22 +39,12 @@ const ClipboardCopy = ( { text } ) => {
 		lastHasCopied.current = hasCopied;
 	}, [ hasCopied ] );
 
-	// Workaround for inconsistent behavior in Safari, where <textarea> is not
-	// the document.activeElement at the moment when the copy event fires.
-	// This causes documentHasSelection() in the copy-handler component to
-	// mistakenly override the ClipboardButton, and copy a serialized string
-	// of the current block instead.
-	const focusOnCopyEventTarget = ( event ) => {
-		event.target.focus();
-	};
+	const handleOnCopy = speak( 'Copied the text' );
 
 	return (
 		<div
 			ref={ ref }
-			onCopy={ () => {
-				focusOnCopyEventTarget()
-				speak( 'Copied the text' );
-			} }
+			onCopy={ handleOnCopy }
 		>
 			{
 				hasCopied
