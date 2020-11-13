@@ -4,14 +4,20 @@
 import { useSelect } from '@wordpress/data';
 
 /**
- * @typedef {Object} UsePostTypesReturn The return value of useBlock.
- * @property {Object} postTypes The post types, with their value and label.
+ * @typedef {Object} PostType The return value of useBlock.
+ * @property {string} slug The slug of the post type.
+ * @property {string} label The label of the post type.
  */
 
 /**
- * Gets the block context.
+ * @typedef {Object} UsePostTypesReturn The return value of useBlock.
+ * @property {PostType[]} postTypes The post types, with their value and label.
+ */
+
+/**
+ * Gets the post types context.
  *
- * @return {UsePostTypesReturn} The block and a function to change it.
+ * @return {UsePostTypesReturn} The post types.
  */
 const usePostTypes = () => {
 	const parsedPostTypes = useSelect(
@@ -29,7 +35,7 @@ const usePostTypes = () => {
 
 				accumulator.push(
 					{
-						value: postType.slug,
+						slug: postType.slug,
 						label: postType.labels && postType.labels.name ? postType.labels.name : postType.slug,
 					}
 				);

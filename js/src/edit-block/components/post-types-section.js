@@ -60,7 +60,7 @@ const PostTypesSection = () => {
 		}
 
 		changeBlock( 'excluded', newExcluded );
-	}, [ excluded, changeBlock ] );
+	}, [ changeBlock, excluded ] );
 
 	return (
 		<div className="mt-5">
@@ -68,9 +68,10 @@ const PostTypesSection = () => {
 			{
 				Array.isArray( postTypes ) && postTypes.length
 					? postTypes.map( ( postType ) => {
-						const id = `post-type-${ postType.value }`;
-						const key = `post-type-enabled${ postType.value }`;
-						const checked = isEnabled( postType.value );
+						const id = `post-type-${ postType.slug }`;
+						const key = `post-type-enabled${ postType.slug }`;
+						const checked = isEnabled( postType.slug );
+
 						return (
 							<div className="mt-2" key={ key }>
 								<input
@@ -80,7 +81,7 @@ const PostTypesSection = () => {
 									value="1"
 									checked={ checked }
 									onChange={ ( event ) => {
-										handleChangePostTypes( event, postType.value );
+										handleChangePostTypes( event, postType.slug );
 									} }
 								/>
 								<label className="text-sm" forHtml={ id }>
