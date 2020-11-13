@@ -137,6 +137,26 @@ class Util extends ComponentAbstract {
 	}
 
 	/**
+	 * Provided a list of all available block icons.
+	 *
+	 * The icons are now only available in JavaScript.
+	 *
+	 * @return array
+	 */
+	public function get_icons() {
+		_deprecated_function(
+			sprintf(
+				/* translators: %s: the function name */
+				esc_html__( "Genesis Custom Blocks's %s", 'genesis-custom-blocks' ),
+				'get_icons'
+			),
+			'1.1.0'
+		);
+
+		return [];
+	}
+
+	/**
 	 * Provides a list of allowed tags to be used by an <svg>.
 	 *
 	 * @return array
