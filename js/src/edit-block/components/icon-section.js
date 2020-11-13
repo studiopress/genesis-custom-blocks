@@ -29,35 +29,39 @@ const IconSection = () => {
 	return (
 		<div className="mt-5">
 			<span className="text-sm">{ __( 'Icon', 'genesis-custom-blocks' ) }</span>
-			<Icon size={ 24 } icon={ getIconComponent( block.icon ) } />
-			<button
-				className="block-properties-icon-button"
-				onClick={ () => {
-					setShowIcons( ( current ) => ! current );
-				} }
-			>
-				{ showIcons ? __( 'Close', 'genesis-custom-blocks' ) : __( 'Choose', 'genesis-custom-blocks' ) }
-			</button>
+			<div className="flex border border-gray-600 rounded-sm mt-2">
+				<div className="flex items-center justify-center h-8 w-8 border-r border-gray-600">
+					<Icon size={ 24 } icon={ getIconComponent( block.icon ) } />
+				</div>
+				<button
+					className="flex items-center h-8 px-3"
+					onClick={ () => {
+						setShowIcons( ( current ) => ! current );
+					} }
+				>
+					{ showIcons ? __( 'Close', 'genesis-custom-blocks' ) : __( 'Choose', 'genesis-custom-blocks' ) }
+				</button>
+			</div>
 			{ showIcons
-				? <div role="listbox" id="block-icon" className="flex flex-wrap" aria-label={ __( 'Icons', 'genesis-custom-blocks' ) } >
+				? <div role="listbox" className="grid grid-cols-6 border border-gray-600 rounded-sm h-40 p-1 overflow-auto mt-2" aria-label={ __( 'Icons', 'genesis-custom-blocks' ) } >
 					{
 						Object.keys( blockIcons ).map( ( iconName, index ) => {
 							const snakeCaseIconName = pascalCaseToSnakeCase( iconName );
 
 							return (
-								<div key={ `block-icon-item-${ index }` } className="block_icon_item">
-									<button
-										type="button"
-										role="option"
-										aria-selected={ block.icon === snakeCaseIconName }
-										onClick={ () => {
-											changeBlock( 'icon', snakeCaseIconName );
-										} }
-									>
-										{ /* eslint-disable-next-line import/namespace */ }
-										<Icon size={ 24 } icon={ blockIcons[ iconName ] } />
-									</button>
-								</div>
+								<button
+									key={ `block-icon-item-${ index }` }
+									className="flex items-center justify-center h-10 w-10 border border-transparent rounded-sm hover:border-black"
+									type="button"
+									role="option"
+									aria-selected={ block.icon === snakeCaseIconName }
+									onClick={ () => {
+										changeBlock( 'icon', snakeCaseIconName );
+									} }
+								>
+									{ /* eslint-disable-next-line import/namespace */ }
+									<Icon className="w-5 h-5" size={ 24 } icon={ blockIcons[ iconName ] } />
+								</button>
 							);
 						} )
 					}
