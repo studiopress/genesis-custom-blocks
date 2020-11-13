@@ -1,5 +1,5 @@
 /**
- * Gets a PascalCase string from a snake_case one.
+ * Gets a snake_case string from a PascalCase one.
  *
  * @param {string} pascalCase A snake_case string.
  * @return {string} A PascalCase string.

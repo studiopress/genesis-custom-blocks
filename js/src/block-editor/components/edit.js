@@ -15,16 +15,16 @@ import ServerSideRender from '@wordpress/server-side-render';
 /**
  * Internal dependencies
  */
-import { GcbInspector, FormControls } from './';
+import { Fields, GcbInspector } from './';
 import { getIconComponent } from '../../common/helpers';
 
 /**
- * The Edit function for the block.
+ * The editor component for the block.
  *
  * @param {Object} props The props of this component.
  * @param {Object} props.blockProps The block's props.
  * @param {Object} props.block The block.
- * @return {React.ReactElement} The Edit function for the block.
+ * @return {React.ReactElement} The editor display.
  */
 const Edit = ( { blockProps, block } ) => {
 	const { attributes, className, isSelected } = blockProps;
@@ -39,7 +39,12 @@ const Edit = ( { blockProps, block } ) => {
 							<Icon size={ 24 } icon={ getIconComponent( block.icon ) } />
 							{ block.title }
 						</h3>
-						<FormControls blockProps={ blockProps } block={ block } />
+						<Fields
+							key={ `${ block.name }-fields` }
+							fields={ block.fields }
+							parentBlockProps={ blockProps }
+							parentBlock={ blockProps }
+						/>
 					</div>
 				) : (
 					<ServerSideRender

@@ -17,10 +17,10 @@ import { snakeCaseToPascalCase } from '.';
 /**
  * Gets the icon component, if it exists.
  *
- * Converts a snake_case settingType to a PascalCase,
- * then gets a field component of that name if it exists.
+ * Converts a snake_case icon name to a PascalCase,
+ * then gets an icon component of that name if it exists.
  * For example, passing 'genesis_custom_blocks' will return
- * a <GenesisCustomBlocks> component.
+ * a <GenesisCustomBlocks> icon component.
  *
  * @param {string} iconName The type of setting, like 'text'
  * @return {React.ComponentElement|null} The settings component, if it exists.

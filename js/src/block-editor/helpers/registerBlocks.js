@@ -39,13 +39,11 @@ const registerBlocks = ( genesisCustomBlocks, gcbBlocks, EditComponent ) => {
 			}
 		}
 
-		const icon = getIconComponent( block.icon );
-
 		// Register the block.
 		registerBlockType( blockName, {
 			title: block.title,
 			category: 'object' === typeof block.category ? block.category.slug : block.category,
-			icon,
+			icon: getIconComponent( block.icon ),
 			keywords: block.keywords,
 			attributes: getGcbBlockAttributes( block.fields ),
 			edit( props ) {

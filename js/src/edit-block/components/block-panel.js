@@ -23,18 +23,16 @@ import {
  *
  * @return {React.ReactElement} The field panel component.
  */
-const BlockPanel = () => {
-	return (
-		<div className="p-4">
-			<h4 className="text-sm font-semibold">
-				{ __( 'Block Settings', 'genesis-custom-blocks' ) }
-			</h4>
-			<SlugSection />
-			<IconSection />
-			<CategorySection />
-			<KeywordsSection />
-		</div>
-	);
-};
+const BlockPanel = () => (
+	<div className="p-4">
+		<h4 className="text-sm font-semibold">
+			{ __( 'Block Settings', 'genesis-custom-blocks' ) }
+		</h4>
+		<SlugSection />
+		<IconSection />
+		<CategorySection />
+		<KeywordsSection />
+	</div>
+);
 
 export default BlockPanel;
