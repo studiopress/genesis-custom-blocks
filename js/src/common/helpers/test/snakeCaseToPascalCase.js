@@ -11,7 +11,7 @@ describe( 'snakeCaseToPascalCase', () => {
 		[ 'flight', 'Flight' ],
 		[ 'toggle_on', 'ToggleOn' ],
 		[ '', '' ],
-	] )( 'should be in snake_case',
+	] )( 'should be in PascalCase',
 		( snakeCase, expected ) => {
 			expect( snakeCaseToPascalCase( snakeCase ) ).toEqual( expected );
 		}

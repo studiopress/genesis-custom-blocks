@@ -114,11 +114,13 @@ const mockControls = {
 };
 
 describe( 'Side', () => {
-	it( 'has the right settings for text', async () => {
+	it( 'displays the panels with their sections', async () => {
 		const { getAllByText, getByLabelText, getByText } = render( <Side /> );
 
 		getAllByText( /block/i );
 		getAllByText( /field/i );
+
+		// Initially, the 'Block' panel should display.
 		expect( getByText( /block settings/i ) ).toBeInTheDocument();
 		expect( getByText( /slug/i ) ).toBeInTheDocument();
 		expect( getByText( /keywords/i ) ).toBeInTheDocument();

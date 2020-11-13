@@ -12,7 +12,7 @@ describe( 'getIconComponent', () => {
 		[ 'brightness_2', 'Brightness2' ],
 		[ 'flight', 'Flight' ],
 		[ 'toggle_on', 'ToggleOn' ],
-	] )( 'should have the setting',
+	] )( 'should have the icon component',
 		( settingName, expected ) => {
 			expect( getIconComponent( settingName ).name ).toEqual( expected );
 		}
