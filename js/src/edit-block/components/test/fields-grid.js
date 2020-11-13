@@ -4,6 +4,7 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render } from '@testing-library/react';
+import user from '@testing-library/user-event';
 
 /**
  * Internal dependencies
@@ -45,9 +46,11 @@ window.fetch = jest.fn();
 
 describe( 'FieldsGrid', () => {
 	it( 'displays the main editor area', async () => {
-		const { getByText } = render( <FieldsGrid /> );
+		const { getByText, getByTitle } = render( <FieldsGrid /> );
 
 		expect( getByText( mockUrlField.name ) ).toBeInTheDocument();
 		expect( getByText( mockUrlField.label ) ).toBeInTheDocument();
+
+		user.click( getByTitle( /new field/i ) );
 	} );
 } );

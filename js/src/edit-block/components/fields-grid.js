@@ -5,6 +5,12 @@ import * as React from 'react';
 import className from 'classnames';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+import { useCallback } from '@wordpress/element';
+
+/**
  * Internal dependencies
  */
 import { useBlock } from '../hooks';
@@ -17,7 +23,20 @@ import { useBlock } from '../hooks';
  * @return {React.ReactElement} The main editing area.
  */
 const FieldsGrid = () => {
-	const { block } = useBlock();
+	const { block, changeBlock } = useBlock();
+
+	const addNewField = useCallback( () => {
+		const newFields = block.fields ? { ...block.fields } : {};
+		const newField = {
+			name: 'new-field',
+			label: __( 'New Field', 'genesis-custom-blocks' ),
+			control: 'text',
+			type: 'string',
+		};
+
+		newFields[ newField.name ] = newField;
+		changeBlock( 'fields', newFields );
+	}, [ block, changeBlock ] );
 
 	/**
 	 * Gets a class for a given width.
@@ -26,7 +45,11 @@ const FieldsGrid = () => {
 	 * @return {string} The class for the width.
 	 */
 	const getWidthClass = ( width ) => {
-		return `col-span-${ ( parseInt( width ) / 25 ).toString() || '4' }`;
+		const defaultWidth = '4';
+		const widthOrDefault = 'string' === typeof width && width
+			? ( parseInt( width ) / 25 ).toString()
+			: defaultWidth;
+		return `col-span-${ widthOrDefault }`;
 	};
 
 	return (
@@ -61,8 +84,18 @@ const FieldsGrid = () => {
 						: null
 				}
 			</div>
-			<button className="flex items-center justify-center h-6 w-6 bg-black rounded-sm text-white mt-4 ml-auto">
-				<svg className="w-4 h-4 fill-current" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd"></path></svg>
+			<button
+				className="flex items-center justify-center h-6 w-6 bg-black rounded-sm text-white mt-4 ml-auto"
+				onClick={ addNewField }
+			>
+				<svg
+					className="w-4 h-4 fill-current"
+					fill="currentColor"
+					viewBox="0 0 20 20"
+				>
+					<title>{ __( 'New field', 'genesis-custom-blocks' ) }</title>
+					<path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+				</svg>
 			</button>
 		</>
 	);
