@@ -2,6 +2,7 @@
  * External dependencies
  */
 import React from 'react';
+import className from 'classnames';
 
 /**
  * WordPress dependencies
@@ -29,32 +30,39 @@ const IconSection = () => {
 	return (
 		<div className="mt-5">
 			<span className="text-sm">{ __( 'Icon', 'genesis-custom-blocks' ) }</span>
-			<div className="flex border border-gray-600 rounded-sm mt-2">
+			<button
+				className="flex border border-gray-600 rounded-sm mt-2"
+				onClick={ () => {
+					setShowIcons( ( current ) => ! current );
+				} }
+			>
 				<div className="flex items-center justify-center h-8 w-8 border-r border-gray-600">
 					<Icon size={ 24 } icon={ getIconComponent( block.icon ) } />
 				</div>
-				<button
-					className="flex items-center h-8 px-3"
-					onClick={ () => {
-						setShowIcons( ( current ) => ! current );
-					} }
-				>
+				<div className="flex items-center h-8 px-3">
 					{ showIcons ? __( 'Close', 'genesis-custom-blocks' ) : __( 'Choose', 'genesis-custom-blocks' ) }
-				</button>
-			</div>
+				</div>
+			</button>
 			{ showIcons
 				? <div role="listbox" className="grid grid-cols-6 border border-gray-600 rounded-sm h-40 p-1 overflow-auto mt-2" aria-label={ __( 'Icons', 'genesis-custom-blocks' ) } >
 					{
 						Object.keys( blockIcons ).map( ( iconName, index ) => {
 							const snakeCaseIconName = pascalCaseToSnakeCase( iconName );
+							const isSelected = block.icon === snakeCaseIconName;
 
 							return (
 								<button
 									key={ `block-icon-item-${ index }` }
-									className="flex items-center justify-center h-10 w-10 border border-transparent rounded-sm hover:border-black"
+									className={ className(
+										'flex items-center justify-center h-10 w-10 border rounded-sm hover:border-black',
+										{
+											'border-transparent': ! isSelected,
+											'border-blue-700': isSelected,
+										}
+									) }
 									type="button"
 									role="option"
-									aria-selected={ block.icon === snakeCaseIconName }
+									aria-selected={ isSelected }
 									onClick={ () => {
 										changeBlock( 'icon', snakeCaseIconName );
 									} }
