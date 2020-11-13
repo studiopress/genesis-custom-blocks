@@ -136,7 +136,6 @@ const CategorySection = () => {
 				</form>
 				: null
 			}
-			<span className="block italic text-xs mt-1">{ __( 'Used to determine the name of the template file.', 'genesis-custom-blocks' ) }</span>
 		</div>
 	);
 };
