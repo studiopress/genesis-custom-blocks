@@ -15,6 +15,7 @@ import { useCallback } from '@wordpress/element';
  */
 import { useBlock } from '../hooks';
 import { getNewFieldNumber } from '../helpers';
+import { ClipboardCopy } from './';
 
 /**
  * The main editing area component.
@@ -54,7 +55,7 @@ const FieldsGrid = () => {
 	/**
 	 * Gets a class for a given width.
 	 *
-	 * @param {string} width The width as a string.
+	 * @param {string} width The width as a string, like '100'.
 	 * @return {string} The class for the width.
 	 */
 	const getWidthClass = ( width ) => {
@@ -87,7 +88,7 @@ const FieldsGrid = () => {
 										<span className=" ml-4 truncate">{ field.label }</span>
 										<button className="flex items-center h-6 px-2 bg-gray-200 rounded-sm ml-auto hover:bg-gray-400">
 											<span className="text-xs font-mono">{ field.name }</span>
-											<svg className="h-4 w-4 fill-current ml-1" fill="currentColor" viewBox="0 0 20 20"><path d="M8 2a1 1 0 000 2h2a1 1 0 100-2H8z"></path><path d="M3 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v6h-4.586l1.293-1.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L10.414 13H15v3a2 2 0 01-2 2H5a2 2 0 01-2-2V5zM15 11h2a1 1 0 110 2h-2v-2z"></path></svg>
+											<ClipboardCopy text={ field.name } />
 										</button>
 										<button className="field-resize w-4 absolute -mr-2 right-0 top-0 bottom-0 focus:outline-none"></button>
 									</div>
