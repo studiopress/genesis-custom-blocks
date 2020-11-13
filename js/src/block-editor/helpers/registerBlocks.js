@@ -19,7 +19,7 @@ import { getIconComponent } from '../../common/helpers';
  *
  * @param {Object} genesisCustomBlocks Genesis Custom Blocks properties, available via wp_localize_script().
  * @param {Object} gcbBlocks The registered Genesis Custom Blocks blocks, available via wp_add_inline_script().
- * @param {Function} EditComponent The edit component to render the blocks.
+ * @param {React.FunctionComponent} EditComponent The edit component to render the blocks.
  */
 const registerBlocks = ( genesisCustomBlocks, gcbBlocks, EditComponent ) => {
 	for ( const blockName in gcbBlocks ) {

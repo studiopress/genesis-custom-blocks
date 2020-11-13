@@ -35,8 +35,8 @@ const KeywordsSection = () => {
 				} }
 				messages={ {
 					added: __( 'Keyword added.', 'genesis-custom-blocks' ),
-					removed: __( 'Keyword removed.' ),
-					remove: __( 'Remove keyword' ),
+					removed: __( 'Keyword removed.', 'genesis-custom-blocks' ),
+					remove: __( 'Remove keyword', 'genesis-custom-blocks' ),
 				} }
 			/>
 		</div>

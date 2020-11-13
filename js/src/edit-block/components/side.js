@@ -21,9 +21,9 @@ import { BlockPanel, FieldPanel } from './';
  * @return {React.ReactElement} The side area.
  */
 const Side = () => {
-	const [ displayFieldPanel, setDisplayFieldPanel ] = useState( false );
+	const [ displayBlockPanel, setDisplayBlockPanel ] = useState( true );
 	const toggleDisplayFieldPanel = () => {
-		setDisplayFieldPanel( ( shouldDisplayFieldPanel ) => ! shouldDisplayFieldPanel );
+		setDisplayBlockPanel( ( shouldDisplayFieldPanel ) => ! shouldDisplayFieldPanel );
 	};
 	const buttonClass = 'flex items-center h-12 px-5 text-sm focus:outline-none';
 
@@ -35,7 +35,7 @@ const Side = () => {
 					className={
 						classNames(
 							buttonClass,
-							{ 'font-semibold border-b-4 border-blue-600': ! displayFieldPanel }
+							{ 'font-semibold border-b-4 border-blue-600': displayBlockPanel }
 						)
 					}
 				>
@@ -46,14 +46,14 @@ const Side = () => {
 					className={
 						classNames(
 							buttonClass,
-							{ 'font-semibold border-b-4 border-blue-600': displayFieldPanel }
+							{ 'font-semibold border-b-4 border-blue-600': ! displayBlockPanel }
 						)
 					}
 				>
 					{ __( 'Field', 'genesis-custom-blocks' ) }
 				</button>
 			</div>
-			{ displayFieldPanel ? <FieldPanel /> : <BlockPanel /> }
+			{ displayBlockPanel ? <BlockPanel /> : <FieldPanel /> }
 		</div>
 	);
 };

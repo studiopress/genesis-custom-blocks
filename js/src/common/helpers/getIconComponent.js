@@ -23,7 +23,7 @@ import { snakeCaseToPascalCase } from '.';
  * a <GenesisCustomBlocks> icon component.
  *
  * @param {string} iconName The type of setting, like 'text'
- * @return {React.ComponentElement|null} The settings component, if it exists.
+ * @return {React.FunctionComponent|null} The settings component, if it exists.
  */
 const getIconComponent = ( iconName ) => {
 	if ( ! iconName || 'string' !== typeof iconName ) {
