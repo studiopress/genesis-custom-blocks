@@ -8,7 +8,7 @@ import className from 'classnames';
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { useCallback } from '@wordpress/element';
+import { useCallback, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -30,6 +30,7 @@ import { ClipboardCopy } from './';
  */
 const FieldsGrid = ( { setSelectedFieldName } ) => {
 	const { block, changeBlock } = useBlock();
+	const [ isEditorDisplay, setIsEditorDisplay ] = useState( true );
 
 	const addNewField = useCallback( () => {
 		const newFields = block.fields ? { ...block.fields } : {};
@@ -70,15 +71,69 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 		return `col-span-${ widthOrDefault }`;
 	};
 
+	const buttonClass = 'focus:outline-none h-12 px-4 text-sm';
+
+	/**
+	 * Gets fields with a given location.
+	 *
+	 * @param {string} location The location, either 'editor' or 'inspector'.
+	 * @return {Array} The fields with the given location.
+	 */
+	const getFieldsForLocation = useCallback( () => {
+		if ( ! block.fields || ! Object.values( block.fields ).length ) {
+			return null;
+		}
+
+		return Object.values( block.fields ).filter( ( field ) => {
+			if ( isEditorDisplay ) {
+				return ! field.location || 'editor' === field.location;
+			}
+
+			return field.location === 'inspector';
+		} );
+	}, [ block, isEditorDisplay ] );
+
+	const fields = getFieldsForLocation();
+
 	return (
 		<>
+			<div className="flex mt-6">
+				<button
+					className={ buttonClass }
+					onClick={ () => {
+						setIsEditorDisplay( true );
+					} }
+				>
+					<span
+						className={ className( {
+							'font-semibold': isEditorDisplay,
+						} ) }
+					>
+						{ __( 'Editor Fields', 'genesis-custom-blocks' ) }
+					</span>
+				</button>
+				<button
+					className={ buttonClass }
+					onClick={ () => {
+						setIsEditorDisplay( false );
+					} }
+				>
+					<span
+						className={ className( {
+							'font-semibold': ! isEditorDisplay,
+						} ) }
+					>
+						{ __( 'Inspector Fields', 'genesis-custom-blocks' ) }
+					</span>
+				</button>
+			</div>
 			<div
 				role="grid"
 				className="grid grid-cols-4 gap-4 w-full items-start mt-2"
 			>
 				{
-					block.fields && Object.values( block.fields ).length
-						? Object.values( block.fields ).map( ( field, index ) => {
+					fields && fields.length
+						? fields.map( ( field, index ) => {
 							const selectField = () => {
 								setSelectedFieldName( field.name );
 							};
