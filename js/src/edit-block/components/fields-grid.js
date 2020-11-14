@@ -18,13 +18,17 @@ import { getNewFieldNumber } from '../helpers';
 import { ClipboardCopy } from './';
 
 /**
- * The main editing area component.
+ * @typedef {Object} FieldsGridProps The component props.
+ * @property {Function} setSelectedFieldName Sets the name of the selected field.
+ */
+
+/**
+ * The grid of fields.
  *
- * Todo: add the rest of this and make it dynamic.
- *
+ * @param {FieldsGridProps} props
  * @return {React.ReactElement} The main editing area.
  */
-const FieldsGrid = () => {
+const FieldsGrid = ( { setSelectedFieldName } ) => {
 	const { block, changeBlock } = useBlock();
 
 	const addNewField = useCallback( () => {
@@ -68,10 +72,17 @@ const FieldsGrid = () => {
 
 	return (
 		<>
-			<div className="grid grid-cols-4 gap-4 w-full items-start mt-2">
+			<div
+				role="grid"
+				className="grid grid-cols-4 gap-4 w-full items-start mt-2"
+			>
 				{
 					block.fields && Object.values( block.fields ).length
 						? Object.values( block.fields ).map( ( field, index ) => {
+							const selectField = () => {
+								setSelectedFieldName( field.name );
+							};
+
 							return (
 								<div
 									className={ className(
@@ -79,6 +90,17 @@ const FieldsGrid = () => {
 										getWidthClass( field.width )
 									) }
 									key={ `field-item-${ index }` }
+									role="gridcell"
+									tabIndex="0"
+									aria-label={
+										sprintf(
+											// translators: %s: the label of the field
+											__( 'Field: %s', 'genesis-custom-blocks' ),
+											field.label
+										)
+									}
+									onClick={ selectField }
+									onKeyPress={ selectField }
 								>
 									<div className="relative flex items-center w-full p-4 bg-white border border-gray-400 rounded-sm cursor-pointer hover:border-black">
 										<button className="field-resize w-4 absolute -ml-2 left-0 top-0 bottom-0 focus:outline-none"></button>

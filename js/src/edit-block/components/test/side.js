@@ -84,9 +84,9 @@ jest.mock( '../../hooks/use-categories', () => {
 jest.mock( '../../hooks/use-field', () => {
 	return jest.fn( () => ( {
 		controls: mockControls,
-		field: mockEmailField,
 		changeControl: jest.fn(),
 		changeFieldSetting: jest.fn(),
+		getField: () => mockEmailField,
 	} ) );
 } );
 
