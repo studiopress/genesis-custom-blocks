@@ -20,7 +20,7 @@ import { useField } from '../hooks';
  * @return {React.ReactElement} The field panel.
  */
 const FieldPanel = () => {
-	const { controls, field, changeControl, changeFieldSetting } = useField();
+	const { controls, deleteField, field, changeControl, changeFieldSetting } = useField();
 
 	const controlValues = Object.values( controls );
 	return (
@@ -73,7 +73,12 @@ const FieldPanel = () => {
 					} ) }
 				</select>
 			</div>
-			<FieldSettings field={ field } controls={ controls } changeFieldSetting={ changeFieldSetting } />
+			<FieldSettings
+				field={ field }
+				controls={ controls }
+				changeFieldSetting={ changeFieldSetting }
+				deleteField={ deleteField }
+			/>
 		</div>
 	);
 };

@@ -14,6 +14,7 @@ import { getBlock } from '../helpers';
 /**
  * @typedef {Object} UseFieldReturn The return value of useField.
  * @property {Object} controls All of the possible controls.
+ * @property {Function} deleteField Deletes this field.
  * @property {Object} field The block field.
  * @property {Function} changeControl Changes the control of the field.
  * @property {Function} changeFieldSetting Changes a field setting.
@@ -87,7 +88,21 @@ const useField = () => {
 		editPost( { content: JSON.stringify( fullBlock ) } );
 	}, [ blockNameWithNamespace, editPost, fieldName, fullBlock ] );
 
-	return { controls, field, changeControl, changeFieldSetting };
+	/**
+	 * Deletes this field.
+	 */
+	const deleteField = useCallback( () => {
+		delete fullBlock[ blockNameWithNamespace ].fields[ fieldName ];
+		editPost( { content: JSON.stringify( fullBlock ) } );
+	}, [ blockNameWithNamespace, editPost, fieldName, fullBlock ] );
+
+	return {
+		controls,
+		deleteField,
+		field,
+		changeControl,
+		changeFieldSetting,
+	};
 };
 
 export default useField;

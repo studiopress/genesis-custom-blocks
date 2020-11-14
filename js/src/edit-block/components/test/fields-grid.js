@@ -42,7 +42,7 @@ jest.mock( '../../hooks/use-block', () => {
 	} ) );
 } );
 
-window.fetch = jest.fn();
+window.fetch = jest.fn( () => Promise.resolve( {} ) );
 
 describe( 'FieldsGrid', () => {
 	it( 'displays the main editor area', async () => {
