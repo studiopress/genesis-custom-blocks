@@ -1,42 +1,45 @@
 /**
  * Internal dependencies
  */
-import { getSimplifiedFields } from '../';
+import { getFieldsAsArray } from '../';
 
-describe( 'getBlockFromContent', () => {
+describe( 'getFieldsAsArray', () => {
 	it( 'should return an empty array if passed an empty object', () => {
-		expect( getSimplifiedFields( {} ) ).toStrictEqual( [] );
+		expect( getFieldsAsArray( {} ) ).toStrictEqual( [] );
 	} );
 
-	it( 'should return simplified fields for an object of 3 fields', () => {
-		expect( getSimplifiedFields( {
+	it( 'should return fields as an array for a typical object of fields', () => {
+		expect( getFieldsAsArray( {
 			example_post: {
 				type: 'post',
 				help: 'This is some example help text',
 				location: 'editor',
 				post_type: 'posts',
 				width: '100',
+				order: 2,
 			},
 			example_classic_text: {
 				type: 'classic_text',
 				default: 'https://example.com/go-here',
 				help: 'Here is the help text',
 				location: 'editor',
+				order: 1,
 			},
 			example_user: {
 				type: 'user',
 				default: 'https://example.com/go-here',
 				help: 'Here is the help text',
 				location: 'inspector',
+				order: 0,
 			},
 		} ) ).toStrictEqual( [
 			{
-				name: 'example_post',
-				type: 'post',
-				help: 'This is some example help text',
-				location: 'editor',
-				post_type: 'posts',
-				width: '100',
+				name: 'example_user',
+				type: 'user',
+				default: 'https://example.com/go-here',
+				help: 'Here is the help text',
+				location: 'inspector',
+				order: 0,
 			},
 			{
 				name: 'example_classic_text',
@@ -44,19 +47,22 @@ describe( 'getBlockFromContent', () => {
 				default: 'https://example.com/go-here',
 				help: 'Here is the help text',
 				location: 'editor',
+				order: 1,
 			},
 			{
-				name: 'example_user',
-				type: 'user',
-				default: 'https://example.com/go-here',
-				help: 'Here is the help text',
-				location: 'inspector',
+				name: 'example_post',
+				type: 'post',
+				help: 'This is some example help text',
+				location: 'editor',
+				post_type: 'posts',
+				width: '100',
+				order: 2,
 			},
 		] );
 	} );
 
 	it( 'should still include falsy values in the simplified fields', () => {
-		expect( getSimplifiedFields( {
+		expect( getFieldsAsArray( {
 			test_taxonomy: {
 				default: '',
 			},

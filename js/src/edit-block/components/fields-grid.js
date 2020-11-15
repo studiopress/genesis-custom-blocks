@@ -7,14 +7,15 @@ import className from 'classnames';
 /**
  * WordPress dependencies
  */
+import { useCallback, useRef, useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
-import { useCallback, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import { useBlock } from '../hooks';
 import { getNewFieldNumber } from '../helpers';
+import { getFieldsAsObject, getFieldsAsArray } from '../../common/helpers';
 import { ClipboardCopy } from './';
 
 /**
@@ -31,6 +32,8 @@ import { ClipboardCopy } from './';
 const FieldsGrid = ( { setSelectedFieldName } ) => {
 	const { block, changeBlock } = useBlock();
 	const [ isEditorDisplay, setIsEditorDisplay ] = useState( true );
+	const fieldCurrentlyDragging = useRef( null );
+	const lastFieldDraggedOver = useRef( null );
 
 	const addNewField = useCallback( () => {
 		const newFields = block.fields ? { ...block.fields } : {};
@@ -51,6 +54,7 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 			label,
 			control: 'text',
 			type: 'string',
+			order: Object.values( newFields ).length,
 		};
 
 		newFields[ name ] = newField;
@@ -80,11 +84,11 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 	 * @return {Array} The fields with the given location.
 	 */
 	const getFieldsForLocation = useCallback( () => {
-		if ( ! block.fields || ! Object.values( block.fields ).length ) {
+		if ( ! block || ! block.fields ) {
 			return null;
 		}
 
-		return Object.values( block.fields ).filter( ( field ) => {
+		return getFieldsAsArray( block.fields ).filter( ( field ) => {
 			if ( isEditorDisplay ) {
 				return ! field.location || 'editor' === field.location;
 			}
@@ -94,6 +98,19 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 	}, [ block, isEditorDisplay ] );
 
 	const fields = getFieldsForLocation();
+
+	const reorderFields = useCallback( ( moveFrom, moveTo ) => {
+		const fieldsToReorder = getFieldsForLocation();
+		if ( ! fieldsToReorder.length ) {
+			return;
+		}
+
+		const newFields = [ ...fieldsToReorder ];
+
+		const toMove = newFields.splice( moveFrom, 1 );
+		newFields.splice( moveTo, 0, toMove[ 0 ] );
+		changeBlock( 'fields', getFieldsAsObject( newFields ) );
+	}, [ getFieldsForLocation, changeBlock ] );
 
 	return (
 		<>
@@ -138,12 +155,32 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 								setSelectedFieldName( field.name );
 							};
 
+							const handleDragStart = () => {
+								fieldCurrentlyDragging.current = index;
+							};
+
+							const handleDragEnd = ( event ) => {
+								event.preventDefault();
+								if ( fieldCurrentlyDragging.current !== lastFieldDraggedOver.current ) {
+									reorderFields( fieldCurrentlyDragging.current, lastFieldDraggedOver.current );
+								}
+							};
+
+							const handleDragOver = ( event ) => {
+								event.preventDefault();
+								lastFieldDraggedOver.current = index;
+							};
+
 							return (
 								<div
+									draggable
 									className={ className(
-										'field w-full',
+										'field w-full cursor-move',
 										getWidthClass( field.width )
 									) }
+									onDragStart={ handleDragStart }
+									onDragEnd={ handleDragEnd }
+									onDragOver={ handleDragOver }
 									key={ `field-item-${ index }` }
 									role="gridcell"
 									tabIndex="0"
@@ -157,9 +194,12 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 									onClick={ selectField }
 									onKeyPress={ selectField }
 								>
-									<div className="relative flex items-center w-full p-4 bg-white border border-gray-400 rounded-sm cursor-pointer hover:border-black">
+									<div
+										className="relative flex items-center w-full p-4 bg-white border border-gray-400 rounded-sm hover:border-black"
+										id={ `field-item-${ index }` }
+									>
 										<button className="field-resize w-4 absolute -ml-2 left-0 top-0 bottom-0 focus:outline-none"></button>
-										<button className="cursor-move">
+										<button>
 											<svg className="fill-current h-6 w-6" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M5 17v2h14v-2H5zm4.5-4.2h5l.9 2.2h2.1L12.75 4h-1.5L6.5 15h2.1l.9-2.2zM12 5.98L13.87 11h-3.74L12 5.98z" /></svg>
 										</button>
 										<span className=" ml-4 truncate">{ field.label }</span>

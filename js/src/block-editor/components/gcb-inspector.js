@@ -13,7 +13,7 @@ import { applyFilters } from '@wordpress/hooks';
 /**
  * Internal dependencies
  */
-import { getSimplifiedFields } from '../helpers';
+import { getFieldsAsArray } from '../../common/helpers';
 
 /**
  * Gets the rendered controls for the Inspector Controls, based on the field values.
@@ -24,7 +24,7 @@ import { getSimplifiedFields } from '../helpers';
  * @return {React.ReactElement} The inspector controls.
  */
 const GcbInspector = ( { blockProps, block } ) => {
-	const fields = getSimplifiedFields( block.fields ).map( ( field ) => {
+	const fields = getFieldsAsArray( block.fields ).map( ( field ) => {
 		// If it's not meant for the inspector, continue (return null).
 		if ( ! field.location || ! field.location.includes( 'inspector' ) ) {
 			return null;
