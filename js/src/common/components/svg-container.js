@@ -1,11 +1,11 @@
 /**
  * External dependencies
  */
-import React from 'react';
+import * as React from 'react';
 
 /**
  * @typedef {Object} SvgContainerProps The component props.
- * @property {React.ReactElement} children The children of this component.
+ * @property {React.children} children The children of this component.
  */
 
 /**
