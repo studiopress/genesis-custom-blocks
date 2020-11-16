@@ -35,7 +35,7 @@ const mockBlock = {
 	},
 };
 
-jest.mock( '../../hooks/use-block', () => {
+jest.mock( '../../hooks/useBlock', () => {
 	return jest.fn( () => ( {
 		block: mockBlock,
 		changeBlock: jest.fn(),

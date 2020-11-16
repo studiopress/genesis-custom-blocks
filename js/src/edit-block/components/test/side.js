@@ -67,21 +67,21 @@ const mockCategories = [
 	},
 ];
 
-jest.mock( '../../hooks/use-block', () => {
+jest.mock( '../../hooks/useBlock', () => {
 	return jest.fn( () => ( {
 		block: mockBlock,
 		changeBlock: jest.fn(),
 	} ) );
 } );
 
-jest.mock( '../../hooks/use-categories', () => {
+jest.mock( '../../hooks/useCategories', () => {
 	return jest.fn( () => ( {
 		categories: mockCategories,
 		setCategories: jest.fn(),
 	} ) );
 } );
 
-jest.mock( '../../hooks/use-field', () => {
+jest.mock( '../../hooks/useField', () => {
 	return jest.fn( () => ( {
 		controls: mockControls,
 		changeControl: jest.fn(),
