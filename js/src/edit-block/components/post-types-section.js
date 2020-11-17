@@ -69,7 +69,7 @@ const PostTypesSection = () => {
 				Array.isArray( postTypes ) && postTypes.length
 					? postTypes.map( ( postType ) => {
 						const id = `post-type-${ postType.slug }`;
-						const key = `post-type-enabled${ postType.slug }`;
+						const key = `post-type-enabled-${ postType.slug }`;
 						const checked = isEnabled( postType.slug );
 
 						return (
