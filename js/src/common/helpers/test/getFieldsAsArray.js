@@ -4,7 +4,7 @@
 import { getFieldsAsArray } from '../';
 
 describe( 'getFieldsAsArray', () => {
-	it( 'should return an empty array if passed an empty object', () => {
+	it( 'should handle an argument of an empty object', () => {
 		expect( getFieldsAsArray( {} ) ).toStrictEqual( [] );
 	} );
 

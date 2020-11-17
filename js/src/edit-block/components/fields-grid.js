@@ -16,7 +16,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { ClipboardCopy } from './';
 import { useBlock } from '../hooks';
 import { getNewFieldNumber, getWidthClass } from '../helpers';
-import { getFieldsAsObject, getFieldsAsArray } from '../../common/helpers';
+import { getFieldsAsArray } from '../../common/helpers';
 
 /**
  * @typedef {Object} FieldsGridProps The component props.
@@ -130,7 +130,7 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 							return (
 								<div
 									className={ className(
-										'field w-full cursor-move',
+										'field w-full',
 										getWidthClass( field.width )
 									) }
 									key={ `field-item-${ index }` }
