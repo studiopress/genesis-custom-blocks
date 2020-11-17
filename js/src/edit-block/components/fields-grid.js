@@ -7,16 +7,16 @@ import className from 'classnames';
 /**
  * WordPress dependencies
  */
-import { useCallback, useRef, useState } from '@wordpress/element';
+import { useCallback, useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
+import { ClipboardCopy } from './';
 import { useBlock } from '../hooks';
 import { getNewFieldNumber, getWidthClass } from '../helpers';
 import { getFieldsAsObject, getFieldsAsArray } from '../../common/helpers';
-import { ClipboardCopy } from './';
 
 /**
  * @typedef {Object} FieldsGridProps The component props.
@@ -32,8 +32,6 @@ import { ClipboardCopy } from './';
 const FieldsGrid = ( { setSelectedFieldName } ) => {
 	const { block, changeBlock } = useBlock();
 	const [ isEditorDisplay, setIsEditorDisplay ] = useState( true );
-	const fieldCurrentlyDragging = useRef( null );
-	const lastFieldDraggedOver = useRef( null );
 
 	/**
 	 * Adds a new field to the end of the existing fields.
@@ -86,25 +84,6 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 	const fields = getFieldsForLocation();
 	const buttonClass = 'focus:outline-none h-12 px-4 text-sm';
 
-	/**
-	 * Reorders fields, moving a single field to another position.
-	 *
-	 * @param {number} moveFrom The index of the field to move.
-	 * @param {number} moveTo The index that the field should be moved to.
-	 */
-	const reorderFields = useCallback( ( moveFrom, moveTo ) => {
-		const fieldsToReorder = getFieldsForLocation();
-		if ( ! fieldsToReorder.length ) {
-			return;
-		}
-
-		const newFields = [ ...fieldsToReorder ];
-
-		const fieldToMove = newFields.splice( moveFrom, 1 );
-		newFields.splice( moveTo, 0, fieldToMove[ 0 ] );
-		changeBlock( 'fields', getFieldsAsObject( newFields ) );
-	}, [ getFieldsForLocation, changeBlock ] );
-
 	return (
 		<>
 			<div className="flex mt-6">
@@ -148,32 +127,12 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 								setSelectedFieldName( field.name );
 							};
 
-							const handleDragStart = () => {
-								fieldCurrentlyDragging.current = index;
-							};
-
-							const handleDragEnd = ( event ) => {
-								event.preventDefault();
-								if ( fieldCurrentlyDragging.current !== lastFieldDraggedOver.current ) {
-									reorderFields( fieldCurrentlyDragging.current, lastFieldDraggedOver.current );
-								}
-							};
-
-							const handleDragOver = ( event ) => {
-								event.preventDefault();
-								lastFieldDraggedOver.current = index;
-							};
-
 							return (
 								<div
-									draggable
 									className={ className(
 										'field w-full cursor-move',
 										getWidthClass( field.width )
 									) }
-									onDragStart={ handleDragStart }
-									onDragEnd={ handleDragEnd }
-									onDragOver={ handleDragOver }
 									key={ `field-item-${ index }` }
 									role="gridcell"
 									tabIndex="0"
