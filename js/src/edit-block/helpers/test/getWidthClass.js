@@ -61,7 +61,7 @@ describe( 'getWidthClass', () => {
 			102,
 			'col-span-4',
 		],
-	] )( 'should return a populated object if passed valid JSON',
+	] )( 'should return the class of the width',
 		( width, expected ) => {
 			expect( getWidthClass( width ) ).toEqual( expected );
 		}

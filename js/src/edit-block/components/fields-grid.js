@@ -24,7 +24,7 @@ import { ClipboardCopy } from './';
  */
 
 /**
- * The grid of fields.
+ * The main grid of fields.
  *
  * @param {FieldsGridProps} props
  * @return {React.ReactElement} The main editing area.
@@ -35,6 +35,9 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 	const fieldCurrentlyDragging = useRef( null );
 	const lastFieldDraggedOver = useRef( null );
 
+	/**
+	 * Adds a new field to the end of the existing fields.
+	 */
 	const addNewField = useCallback( () => {
 		const fields = block.fields ? { ...block.fields } : {};
 		const newFieldNumber = getNewFieldNumber( fields );
@@ -61,7 +64,7 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 		changeBlock( 'fields', fields );
 	}, [ block, changeBlock ] );
 
-	/*
+	/**
 	 * Gets the fields for either the editor or inspector.
 	 *
 	 * @return {Array} The fields with the given location.
@@ -83,6 +86,12 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 	const fields = getFieldsForLocation();
 	const buttonClass = 'focus:outline-none h-12 px-4 text-sm';
 
+	/**
+	 * Reorders fields, moving a single field to another position.
+	 *
+	 * @param {number} moveFrom The index of the field to move.
+	 * @param {number} moveTo The index that the field should be moved to.
+	 */
 	const reorderFields = useCallback( ( moveFrom, moveTo ) => {
 		const fieldsToReorder = getFieldsForLocation();
 		if ( ! fieldsToReorder.length ) {
