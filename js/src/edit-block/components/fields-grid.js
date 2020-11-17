@@ -14,7 +14,7 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useBlock } from '../hooks';
-import { getNewFieldNumber } from '../helpers';
+import { getNewFieldNumber, getWidthClass } from '../helpers';
 import { getFieldsAsObject, getFieldsAsArray } from '../../common/helpers';
 import { ClipboardCopy } from './';
 
@@ -36,8 +36,8 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 	const lastFieldDraggedOver = useRef( null );
 
 	const addNewField = useCallback( () => {
-		const newFields = block.fields ? { ...block.fields } : {};
-		const newFieldNumber = getNewFieldNumber( newFields );
+		const fields = block.fields ? { ...block.fields } : {};
+		const newFieldNumber = getNewFieldNumber( fields );
 		const name = newFieldNumber
 			? `new-field-${ newFieldNumber.toString() }`
 			: 'new-field';
@@ -54,33 +54,16 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 			label,
 			control: 'text',
 			type: 'string',
-			order: Object.values( newFields ).length,
+			order: Object.values( fields ).length,
 		};
 
-		newFields[ name ] = newField;
-		changeBlock( 'fields', newFields );
+		fields[ name ] = newField;
+		changeBlock( 'fields', fields );
 	}, [ block, changeBlock ] );
 
-	/**
-	 * Gets a class for a given width.
+	/*
+	 * Gets the fields for either the editor or inspector.
 	 *
-	 * @param {string} width The width as a string, like '100'.
-	 * @return {string} The class for the width.
-	 */
-	const getWidthClass = ( width ) => {
-		const defaultWidth = '4';
-		const widthOrDefault = 'string' === typeof width && width
-			? ( parseInt( width ) / 25 ).toString()
-			: defaultWidth;
-		return `col-span-${ widthOrDefault }`;
-	};
-
-	const buttonClass = 'focus:outline-none h-12 px-4 text-sm';
-
-	/**
-	 * Gets fields with a given location.
-	 *
-	 * @param {string} location The location, either 'editor' or 'inspector'.
 	 * @return {Array} The fields with the given location.
 	 */
 	const getFieldsForLocation = useCallback( () => {
@@ -98,6 +81,7 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 	}, [ block, isEditorDisplay ] );
 
 	const fields = getFieldsForLocation();
+	const buttonClass = 'focus:outline-none h-12 px-4 text-sm';
 
 	const reorderFields = useCallback( ( moveFrom, moveTo ) => {
 		const fieldsToReorder = getFieldsForLocation();
@@ -107,8 +91,8 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 
 		const newFields = [ ...fieldsToReorder ];
 
-		const toMove = newFields.splice( moveFrom, 1 );
-		newFields.splice( moveTo, 0, toMove[ 0 ] );
+		const fieldToMove = newFields.splice( moveFrom, 1 );
+		newFields.splice( moveTo, 0, fieldToMove[ 0 ] );
 		changeBlock( 'fields', getFieldsAsObject( newFields ) );
 	}, [ getFieldsForLocation, changeBlock ] );
 
