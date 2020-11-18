@@ -1,12 +1,7 @@
 /**
- * WordPress dependencies
- */
-import ServerSideRender from '@wordpress/server-side-render';
-
-/**
  * Internal dependencies
  */
-import { GcbInspector, FormControls } from './';
+import { GcbInspector, FormControls, Preview } from './';
 import icons from '../../../assets/icons.json';
 
 /**
@@ -34,11 +29,9 @@ const Edit = ( { blockProps, block } ) => {
 						<FormControls blockProps={ blockProps } block={ block } />
 					</div>
 				) : (
-					<ServerSideRender
-						block={ `genesis-custom-blocks/${ block.name }` }
+					<Preview
+						blockName={ block.name }
 						attributes={ attributes }
-						className="genesis-custom-blocks-editor__ssr"
-						httpMethod="POST"
 					/>
 				) }
 			</div>
