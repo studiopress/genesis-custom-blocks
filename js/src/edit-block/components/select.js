@@ -16,7 +16,7 @@ import React from 'react';
  * The select component.
  *
  * @param {SelectProps} props The component props.
- * @return {React.ReactElement} The select component.
+ * @return {React.ReactElement} A select.
  */
 const Select = ( { handleOnChange, id, options, value, setting } ) => {
 	const selectValue = undefined === value ? setting.default : value;

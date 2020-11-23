@@ -16,7 +16,7 @@ describe( 'getSettingsComponent', () => {
 		[ 'textarea', 'Textarea' ],
 		[ 'textarea_array', 'TextareaArray' ],
 		[ 'width', 'Width' ],
-	] )( 'should have the setting',
+	] )( 'should have the setting component',
 		( settingName, expected ) => {
 			expect( getSettingsComponent( settingName ).name ).toEqual( expected );
 		}

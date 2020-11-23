@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import React from 'react';
+
+/**
  * WordPress dependencies
  */
 import { PanelBody } from '@wordpress/components';
@@ -16,7 +21,7 @@ import { getSimplifiedFields } from '../helpers';
  * @param {Object} props This component's props.
  * @param {Object} props.blockProps The block's props.
  * @param {Object} props.block The block.
- * @return {Function|null} The inspector controls.
+ * @return {React.ReactElement} The inspector controls.
  */
 const GcbInspector = ( { blockProps, block } ) => {
 	const fields = getSimplifiedFields( block.fields ).map( ( field ) => {

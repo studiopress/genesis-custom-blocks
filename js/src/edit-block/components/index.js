@@ -1,9 +1,15 @@
+export { default as BlockPanel } from './block-panel';
 export { default as BrowserURL } from './browser-url';
+export { default as CategorySection } from './category-section';
 export { default as Editor } from './editor';
 export { default as FieldPanel } from './field-panel';
 export { default as FieldSettings } from './field-settings';
 export { default as Header } from './header';
+export { default as IconSection } from './icon-section';
 export { default as Input } from './input';
+export { default as KeywordsSection } from './keywords-section';
 export { default as Main } from './main';
+export { default as PostTypesSection } from './post-types-section';
 export { default as Select } from './select';
 export { default as Side } from './side';
+export { default as SlugSection } from './slug-section';

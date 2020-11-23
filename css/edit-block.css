@@ -10,9 +10,8 @@ input[type="radio"]:checked + div {
 	width: 280px;
 }
 
-.side input[type="checkbox"] {
-	display: block;
-	margin-top: 0.5rem;
+.components-form-token-field__label {
+	font-size: .875rem;
 }
 
 .field-resize {

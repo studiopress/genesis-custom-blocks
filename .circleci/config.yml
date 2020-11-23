@@ -62,8 +62,10 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Installing the mysqli extension
-          command: sudo docker-php-ext-install mysqli
+          name: Installing PHP extensions
+          command: |
+            sudo apt-get update && sudo apt-get install libpng-dev
+            sudo docker-php-ext-install mysqli gd
       - node/install:
           node-version: lts
       - nodegit-workaround
@@ -94,7 +96,7 @@ jobs:
       - node/install:
           node-version: lts
       - nodegit-workaround
-      - run: npm ci && npm run test:js
+      - run: HUSKY_SKIP_INSTALL=1 npm ci && npm run test:js
 
   svn-deploy:
     executor:

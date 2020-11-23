@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import React from 'react';
+
+/**
  * WordPress dependencies
  */
 import { registerBlockType } from '@wordpress/blocks';
@@ -6,15 +11,15 @@ import { registerBlockType } from '@wordpress/blocks';
 /**
  * Internal dependencies
  */
-import icons from '../../../../assets/icons.json';
 import { getGcbBlockAttributes } from './';
+import { getIconComponent } from '../../common/helpers';
 
 /**
  * Loops through all of the blocks, but not guaranteed to be sequential.
  *
  * @param {Object} genesisCustomBlocks Genesis Custom Blocks properties, available via wp_localize_script().
  * @param {Object} gcbBlocks The registered Genesis Custom Blocks blocks, available via wp_add_inline_script().
- * @param {Function} EditComponent The edit component to render the blocks.
+ * @param {React.FunctionComponent} EditComponent The edit component to render the blocks.
  */
 const registerBlocks = ( genesisCustomBlocks, gcbBlocks, EditComponent ) => {
 	for ( const blockName in gcbBlocks ) {
@@ -34,18 +39,11 @@ const registerBlocks = ( genesisCustomBlocks, gcbBlocks, EditComponent ) => {
 			}
 		}
 
-		let icon = '';
-		if ( 'undefined' !== typeof icons[ block.icon ] ) {
-			icon = (
-				<span dangerouslySetInnerHTML={ { __html: icons[ block.icon ] } } />
-			);
-		}
-
 		// Register the block.
 		registerBlockType( blockName, {
 			title: block.title,
 			category: 'object' === typeof block.category ? block.category.slug : block.category,
-			icon,
+			icon: getIconComponent( block.icon ),
 			keywords: block.keywords,
 			attributes: getGcbBlockAttributes( block.fields ),
 			edit( props ) {

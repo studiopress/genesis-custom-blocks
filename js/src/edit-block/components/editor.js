@@ -6,10 +6,7 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
-import {
-	useDispatch,
-	useSelect,
-} from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import {
 	EditorNotices,
 	EditorProvider,
@@ -28,7 +25,7 @@ import { BrowserURL, Header, Main, Side } from './';
  */
 
 /**
- * @typedef {Object} EditorSettingsProps The component props.
+ * @typedef {Object} EditorProps The component props.
  * @property {Object|null} initialEdits The initial edits, if any.
  * @property {onErrorType} onError Handler for errors.
  * @property {number} postId The current post ID.
@@ -39,8 +36,8 @@ import { BrowserURL, Header, Main, Side } from './';
 /**
  * The editor component.
  *
- * @param {EditorSettingsProps} props The component props.
- * @return {React.ReactElement} The editor component.
+ * @param {EditorProps} props The component props.
+ * @return {React.ReactElement} The editor.
  */
 const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 	const post = useSelect(

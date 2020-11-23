@@ -14,7 +14,7 @@ const Edit = () => {};
 const expectedArgs = {
 	title: expect.any( String ),
 	category: expect.any( String ),
-	icon: expect.any( String ),
+	icon: expect.any( Function ),
 	keywords: expect.any( Array ),
 	attributes: expect.any( Object ),
 	edit: expect.any( Function ),
@@ -34,6 +34,7 @@ describe( 'registerBlocks', () => {
 			title: 'Test Post',
 			category: 'widget',
 			keywords: [ 'foobaz', 'example' ],
+			icon: 'camera_alt',
 		};
 
 		registerBlocks( {}, gcbBlocks, Edit );
@@ -51,11 +52,13 @@ describe( 'registerBlocks', () => {
 					title: 'An Example Post',
 					category: 'widget',
 					keywords: [ 'foobaz', 'example' ],
+					icon: 'genesis_custom_blocks',
 				},
 				'genesis-custom-blocks/example-email': {
 					title: 'Example Email',
 					category: 'widget',
 					keywords: [ 'example-keyword', 'another' ],
+					icon: 'add_circle_outline',
 				},
 			},
 			Edit
