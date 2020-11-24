@@ -596,7 +596,7 @@ class Loader extends ComponentAbstract {
 	 * @return array The filtered endpoints, with the GCB endpoints allowing POST requests.
 	 */
 	public function add_rest_method( $endpoints ) {
-		if ( is_wp_version_compatible( '5.6' ) ) {
+		if ( is_wp_version_compatible( '5.5' ) ) {
 			return $endpoints;
 		}
 

@@ -65,7 +65,7 @@ class TestLoader extends AbstractTemplate {
 	 *
 	 * @var string
 	 */
-	private $wp_version_with_correct_endpoint = '5.6';
+	private $wp_version_with_correct_endpoint = '5.5';
 
 	/**
 	 * Tear down after each test.
@@ -500,7 +500,7 @@ class TestLoader extends AbstractTemplate {
 		];
 
 		if ( is_wp_version_compatible( $this->wp_version_with_correct_endpoint ) ) {
-			$initial_routes[ $gcb_block_route ]['methods'] = $expected_methods;
+			$initial_routes[ $gcb_block_route ][0]['methods'] = $expected_methods;
 		}
 
 		$actual = $this->instance->add_rest_method( $initial_routes );
