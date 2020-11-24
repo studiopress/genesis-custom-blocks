@@ -55,6 +55,7 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 			label,
 			control: 'text',
 			type: 'string',
+			location: isEditorDisplay ? 'editor' : 'inspector',
 			order: Object.values( fields ).length,
 		};
 
