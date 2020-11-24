@@ -84,7 +84,7 @@ const PostTypesSection = () => {
 										handleChangePostTypes( event, postType.slug );
 									} }
 								/>
-								<label className="text-sm" forHtml={ id }>
+								<label className="text-sm" htmlFor={ id }>
 									{ postType.label }
 								</label>
 							</div>
