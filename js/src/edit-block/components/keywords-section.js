@@ -23,16 +23,22 @@ const KeywordsSection = () => {
 	const { block, changeBlock } = useBlock();
 	const maxNumberOfKeyword = 3;
 
+	/**
+	 * Handles changing of the tokens.
+	 *
+	 * @param {Array} tokens The new tokens (keywords).
+	 */
+	const handleChange = ( tokens ) => {
+		changeBlock( 'keywords', tokens );
+	};
+
 	return (
 		<div className="mt-5">
 			<FormTokenField
-				// @ts-ignore
 				label={ __( 'Keywords', 'genesis-custom-blocks' ) }
 				value={ block.keywords }
 				maxLength={ maxNumberOfKeyword }
-				onChange={ ( tokens ) => {
-					changeBlock( 'keywords', tokens );
-				} }
+				onChange={ handleChange }
 				messages={ {
 					added: __( 'Keyword added.', 'genesis-custom-blocks' ),
 					removed: __( 'Keyword removed.', 'genesis-custom-blocks' ),
