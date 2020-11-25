@@ -55,10 +55,10 @@ const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 
 	useEffect( () => {
 		if ( isSavingPost && ! block.name ) {
-			const defaultBlock = getDefaultBlock();
+			const defaultBlock = getDefaultBlock( postId );
 			changeBlockName( defaultBlock.name, defaultBlock );
 		}
-	}, [ block, changeBlockName, isSavingPost ] );
+	}, [ block, changeBlockName, isSavingPost, postId ] );
 
 	useEffect( () => {
 		if ( ! post ) {
