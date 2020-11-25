@@ -7,6 +7,7 @@ import { useCallback } from '@wordpress/element';
 /**
  * Internal dependencies
  */
+import { BLOCK_NAMESPACE } from '../constants';
 import { getBlock } from '../helpers';
 
 /**
@@ -32,22 +33,62 @@ const useBlock = () => {
 		[ editedPostContent ]
 	);
 
+	const getBlockNameWithNameSpace = useCallback( ( block ) => {
+		return Object.keys( block ).length
+			? Object.keys( block )[ 0 ]
+			: '';
+	}, [] );
+
 	const fullBlock = getFullBlock();
-	const blockNameWithNamespace = Object.keys( fullBlock )[ 0 ];
-	const block = fullBlock[ blockNameWithNamespace ];
+
+	const blockNameWithNamespace = getBlockNameWithNameSpace( fullBlock );
+	const block = fullBlock[ blockNameWithNamespace ] || {};
 
 	/**
-	 * Changes a block value.
+	 * Changes a block's values.
 	 *
-	 * @param {string} settingKey The key, like 'name' or 'title'.
+	 * Does not overwrite the whole block, only the values
+	 * passed in newValues.
+	 *
+	 * @param {Object} newValues The new value(s) to set.
 	 * @param {any} newSettingValue The new block value.
 	 */
-	const changeBlock = useCallback( ( key, newValue ) => {
-		fullBlock[ blockNameWithNamespace ][ key ] = newValue;
-		editPost( { content: JSON.stringify( fullBlock ) } );
-	}, [ blockNameWithNamespace, editPost, fullBlock ] );
+	const changeBlock = useCallback( ( newValues ) => {
+		const newBlock = getFullBlock();
+		const previousBlockName = getBlockNameWithNameSpace( newBlock );
 
-	return { block, changeBlock };
+		newBlock[ previousBlockName ] = {
+			...newBlock[ previousBlockName ],
+			...newValues,
+		};
+		editPost( { content: JSON.stringify( newBlock ) } );
+	}, [ editPost, getFullBlock, getBlockNameWithNameSpace ] );
+
+	/**
+	 * Changes a block name (slug).
+	 *
+	 * @param {string} newName The new bock name (slug).
+	 * @param {Object} defaultValues The new block values, if any.
+	 */
+	const changeBlockName = useCallback( ( newName, defaultValues = {} ) => {
+		const previousBlock = getFullBlock();
+		const previousBlockName = getBlockNameWithNameSpace( previousBlock );
+
+		const newBlock = {
+			[ `${ BLOCK_NAMESPACE }/${ newName }` ]: {
+				...defaultValues,
+				...previousBlock[ previousBlockName ],
+				name: newName,
+			},
+		};
+		editPost( { content: JSON.stringify( newBlock ) } );
+	}, [ editPost, getBlockNameWithNameSpace, getFullBlock ] );
+
+	return {
+		block,
+		changeBlock,
+		changeBlockName,
+	};
 };
 
 export default useBlock;

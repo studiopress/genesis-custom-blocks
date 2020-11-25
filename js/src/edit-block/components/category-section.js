@@ -44,11 +44,12 @@ const CategorySection = () => {
 		const newCategory = matchedCategories[ 0 ];
 
 		changeBlock(
-			'category',
 			{
-				icon: newCategory.icon,
-				slug: newCategory.slug,
-				title: newCategory.title,
+				category: {
+					icon: newCategory.icon,
+					slug: newCategory.slug,
+					title: newCategory.title,
+				},
 			}
 		);
 	};
@@ -82,10 +83,7 @@ const CategorySection = () => {
 				newCategory,
 			]
 		);
-		changeBlock(
-			'category',
-			newCategory
-		);
+		changeBlock( { category: newCategory } );
 		setShowNewCategoryForm( ( previousValue ) => ! previousValue );
 	}, [ categories, changeBlock, newCategorySlug, setCategories ] );
 
@@ -106,9 +104,32 @@ const CategorySection = () => {
 				onChange={ handleChangeCategory }
 			>
 				{ categories.map( ( category, index ) => {
-					return <option value={ category.slug } key={ `block-category-${ index }` }>{ category.title ? category.title : category.slug }</option>;
+					const categoryWithDefault = category || {};
+
+					return (
+						<option
+							value={ category.slug }
+							key={ `block-category-${ index }` }>
+							{
+								categoryWithDefault.title
+									? categoryWithDefault.title
+									: categoryWithDefault.slug
+							}
+						</option>
+					);
 				} ) }
-				{ isDefaultCategory() ? null : <option value={ block.category.slug } key="block-category-non-default">{ block.category.title ? block.category.title : block.category.slug }</option> }
+				{
+					block.category && ! isDefaultCategory()
+						? (
+							<option
+								value={ block && block.category ? block.category.slug : null }
+								key="block-category-non-default"
+							>
+								{ block.category && block.category.title ? block.category.title : block.category.slug }
+							</option>
+						)
+						: null
+				}
 			</select>
 			<button
 				className="text-sm text-blue-600 focus:outline-none md:underline mt-2"

@@ -60,8 +60,8 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 		};
 
 		fields[ name ] = newField;
-		changeBlock( 'fields', fields );
-	}, [ block, changeBlock ] );
+		changeBlock( { fields } );
+	}, [ block, changeBlock, isEditorDisplay ] );
 
 	/**
 	 * Gets the fields for either the editor or inspector.

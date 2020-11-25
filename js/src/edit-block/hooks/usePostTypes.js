@@ -19,8 +19,8 @@ import { useSelect } from '@wordpress/data';
  *
  * @return {UsePostTypesReturn} The post types.
  */
-const usePostTypes = () => {
-	const parsedPostTypes = useSelect(
+const usePostTypes = () => ( {
+	postTypes: useSelect(
 		( select ) => {
 			const postTypes = select( 'core' ).getPostTypes();
 
@@ -44,9 +44,7 @@ const usePostTypes = () => {
 			}, [] );
 		},
 		[]
-	);
-
-	return { postTypes: parsedPostTypes };
-};
+	),
+} );
 
 export default usePostTypes;

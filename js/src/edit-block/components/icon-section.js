@@ -64,7 +64,7 @@ const IconSection = () => {
 									role="option"
 									aria-selected={ isSelected }
 									onClick={ () => {
-										changeBlock( 'icon', snakeCaseIconName );
+										changeBlock( { icon: snakeCaseIconName } );
 									} }
 								>
 									{ /* eslint-disable-next-line import/namespace */ }

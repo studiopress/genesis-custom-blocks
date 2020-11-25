@@ -31,7 +31,7 @@ const KeywordsSection = () => {
 				value={ block.keywords }
 				maxLength={ maxNumberOfKeyword }
 				onChange={ ( tokens ) => {
-					changeBlock( 'keywords', tokens );
+					changeBlock( { keywords: tokens } );
 				} }
 				messages={ {
 					added: __( 'Keyword added.', 'genesis-custom-blocks' ),
