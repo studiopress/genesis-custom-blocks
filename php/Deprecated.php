@@ -46,7 +46,7 @@ function genesis_custom_blocks_deprecated_function( $function, $version, $replac
  */
 function block_lab_get_icons() {
 	genesis_custom_blocks_deprecated_function( 'block_lab_get_icons', '1.3.5', 'genesis_custom_blocks()->get_icons()' );
-	return genesis_custom_blocks()->get_icons();
+	return [];
 }
 
 /**

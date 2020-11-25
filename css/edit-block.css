@@ -1,0 +1,113 @@
+body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+input[type="radio"]:checked + div {
+	border-color: rgb(0, 124, 186);
+}
+
+.side {
+	width: 280px;
+}
+
+.components-form-token-field__label {
+	font-size: .875rem;
+}
+
+.field-resize {
+	cursor: col-resize;
+}
+
+.block-title-field {
+	font-size: 2rem;
+}
+
+.repeater-insert-row button {
+	display: none;
+}
+
+.repeater-insert-row:hover button {
+	display: flex;
+}
+
+.repeater-row__move:after {
+	content: "";
+	display: block;
+	position: absolute;
+	height: 300%;
+	width: 2.5rem;
+	top: -.5rem;
+	right: -.5rem;
+	/* border:1px solid red; */
+}
+
+.repeater-row__delete-duplicate,
+.repeater-row__move {
+	display: none;
+}
+
+.repeater-row:hover .repeater-row__delete-duplicate,
+.repeater-row:hover .repeater-row__move {
+	display: flex;
+}
+
+.toggle-field:after {
+	content: "";
+	display: block;
+	position: absolute;
+	height: 14px;
+	width: 14px;
+	background-color: #000;
+	border-radius: 8px;
+	top: 2px;
+	left: 3px;
+}
+
+.toggle-field:checked {
+	border-color: #3182ce;
+	background-color: #3182ce;
+}
+
+.toggle-field:checked:after {
+	background-color: #fff;
+	left: auto;
+	right: 3px;
+}
+
+.gcb-setting-width button.active {
+	background-color: #bee3f8;
+}
+
+.editor-post-title__input {
+	width: 100%;
+	text-align: center;
+}
+
+#save-and-publish {
+	margin-left: auto;
+}
+
+#wpfooter {
+	display: none;
+}
+
+/* Forked from Gutenberg */
+.editor-post-title .editor-post-title__input:focus {
+	border: 1px solid transparent;
+	outline: 1px solid transparent;
+	box-shadow: none;
+}
+
+.components-visually-hidden {
+	border: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	-webkit-clip-path: inset(50%);
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	word-wrap: normal !important;
+}
