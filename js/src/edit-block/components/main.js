@@ -38,8 +38,11 @@ const Main = ( { setSelectedFieldName } ) => {
 
 	// When the title is edited, update it in the block JSON.
 	const changeTitle = useCallback( () => {
-		if ( editedTitle !== block.title ) {
-			changeBlock( 'title', editedTitle );
+		if (
+			( editedTitle && editedTitle !== block.title ) ||
+			( ! editedTitle && block.title )
+		) {
+			changeBlock( { title: editedTitle } );
 		}
 	}, [ block, changeBlock, editedTitle ] );
 
