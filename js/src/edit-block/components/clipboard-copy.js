@@ -7,8 +7,8 @@ import React from 'react';
  * WordPress dependencies
  */
 import { speak } from '@wordpress/a11y';
-import { useEffect, useRef } from '@wordpress/element';
 import { useCopyOnClick } from '@wordpress/compose';
+import { useEffect, useRef } from '@wordpress/element';
 import { Icon, check } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 

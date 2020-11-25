@@ -41,7 +41,7 @@ import { useBlock } from '../hooks';
  * @return {React.ReactElement} The editor.
  */
 const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
-	const { block, changeBlock, changeBlockName } = useBlock();
+	const { block, changeBlockName } = useBlock();
 	const [ selectedFieldName, setSelectedFieldName ] = useState( '' );
 	const post = useSelect(
 		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
@@ -50,8 +50,6 @@ const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 	const isSavingPost = useSelect(
 		( select ) => select( 'core/editor' ).isSavingPost()
 	);
-
-	// @ts-ignore
 	const { editEntityRecord } = useDispatch( 'core' );
 
 	useEffect( () => {
@@ -68,7 +66,9 @@ const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 		if ( isSavingPost && ! block.name ) {
 			changeBlockName( defaultBlock.name, defaultBlock );
 		}
+	}, [ block, changeBlockName, isSavingPost ] );
 
+	useEffect( () => {
 		if ( ! post ) {
 			return;
 		}
@@ -83,16 +83,7 @@ const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 			postId,
 			{ blocks: null }
 		);
-	}, [
-		block,
-		changeBlock,
-		changeBlockName,
-		editEntityRecord,
-		isSavingPost,
-		post,
-		postId,
-		postType,
-	] );
+	}, [ editEntityRecord, post, postId, postType ] );
 
 	if ( ! post ) {
 		return null;
