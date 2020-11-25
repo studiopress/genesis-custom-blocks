@@ -111,7 +111,9 @@ class EditBlock extends ComponentAbstract {
 					[
 						'postType'     => get_post_type(),
 						'postId'       => get_the_ID(),
-						'settings'     => [],
+						'settings'     => [
+							'titlePlaceholder' => __( 'Block title', 'genesis-custom-blocks' ),
+						],
 						'initialEdits' => null,
 						'controls'     => genesis_custom_blocks()->block_post->get_controls(),
 					]
