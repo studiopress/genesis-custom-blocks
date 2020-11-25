@@ -94,12 +94,7 @@ const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 			<div className="h-screen flex flex-col items-center text-black">
 				<BrowserURL />
 				<EditorProvider
-					settings={
-						{
-							...settings,
-							richEditingEnabled: false,
-						}
-					}
+					settings={ settings }
 					post={ post }
 					initialEdits={ initialEdits }
 					useSubRegistry={ false }
