@@ -12,6 +12,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { getDefaultBlock } from '../helpers';
 import { useBlock, useCategories } from '../hooks';
 
 /**
@@ -100,7 +101,7 @@ const CategorySection = () => {
 			<select /* eslint-disable-line jsx-a11y/no-onchange */
 				className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm"
 				id="block-categories"
-				value={ block.category && block.category.slug ? block.category.slug : null }
+				value={ block.category && block.category.slug ? block.category.slug : getDefaultBlock().category }
 				onChange={ handleChangeCategory }
 			>
 				{ categories.map( ( category, index ) => {

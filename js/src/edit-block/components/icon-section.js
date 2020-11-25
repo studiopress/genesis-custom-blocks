@@ -17,6 +17,7 @@ import { __ } from '@wordpress/i18n';
 import { useBlock } from '../hooks';
 import { getIconComponent, pascalCaseToSnakeCase } from '../../common/helpers';
 import * as blockIcons from '../../common/icons';
+import { getDefaultBlock } from '../helpers';
 
 /**
  * The icon editor section.
@@ -26,6 +27,7 @@ import * as blockIcons from '../../common/icons';
 const IconSection = () => {
 	const { block, changeBlock } = useBlock();
 	const [ showIcons, setShowIcons ] = useState( false );
+	const currentIcon = block.icon || getDefaultBlock().icon;
 
 	return (
 		<div className="mt-5">
@@ -37,7 +39,7 @@ const IconSection = () => {
 				} }
 			>
 				<div className="flex items-center justify-center h-8 w-8 border-r border-gray-600">
-					<Icon size={ 24 } icon={ getIconComponent( block.icon ) } />
+					<Icon size={ 24 } icon={ getIconComponent( currentIcon ) } />
 				</div>
 				<div className="flex items-center h-8 px-3">
 					{ showIcons ? __( 'Close', 'genesis-custom-blocks' ) : __( 'Choose', 'genesis-custom-blocks' ) }
@@ -48,7 +50,7 @@ const IconSection = () => {
 					{
 						Object.keys( blockIcons ).map( ( iconName, index ) => {
 							const snakeCaseIconName = pascalCaseToSnakeCase( iconName );
-							const isSelected = block.icon === snakeCaseIconName;
+							const isSelected = currentIcon === snakeCaseIconName;
 
 							return (
 								<button

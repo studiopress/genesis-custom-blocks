@@ -18,6 +18,7 @@ import { StrictMode, useEffect, useState } from '@wordpress/element';
  * Internal dependencies
  */
 import { BrowserURL, Header, Main, Side } from './';
+import { getDefaultBlock } from '../helpers';
 import { useBlock } from '../hooks';
 
 /**
@@ -53,17 +54,8 @@ const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 	const { editEntityRecord } = useDispatch( 'core' );
 
 	useEffect( () => {
-		const defaultBlock = {
-			name: 'block',
-			category: {
-				icon: null,
-				slug: 'text',
-				title: 'Text',
-			},
-			icon: 'genesis_custom_blocks',
-		};
-
 		if ( isSavingPost && ! block.name ) {
+			const defaultBlock = getDefaultBlock();
 			changeBlockName( defaultBlock.name, defaultBlock );
 		}
 	}, [ block, changeBlockName, isSavingPost ] );
