@@ -153,14 +153,28 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 									>
 										<button className="field-resize w-4 absolute -ml-2 left-0 top-0 bottom-0 focus:outline-none"></button>
 										<button>
-											<svg className="fill-current h-6 w-6" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M5 17v2h14v-2H5zm4.5-4.2h5l.9 2.2h2.1L12.75 4h-1.5L6.5 15h2.1l.9-2.2zM12 5.98L13.87 11h-3.74L12 5.98z" /></svg>
+											<svg className="fill-current h-6 w-6" viewBox="0 0 24 24">
+												<path d="M0 0h24v24H0z" fill="none" />
+												<path d="M5 17v2h14v-2H5zm4.5-4.2h5l.9 2.2h2.1L12.75 4h-1.5L6.5 15h2.1l.9-2.2zM12 5.98L13.87 11h-3.74L12 5.98z" />
+											</svg>
 										</button>
 										<span className=" ml-4 truncate">{ field.label }</span>
 										<button className="flex items-center h-6 px-2 bg-gray-200 rounded-sm ml-auto hover:bg-gray-400">
 											<span className="text-xs font-mono">{ field.name }</span>
 											<ClipboardCopy text={ field.name } />
 										</button>
-										<button className="field-resize w-4 absolute -mr-2 right-0 top-0 bottom-0 focus:outline-none"></button>
+										<div className="builder-field-move absolute top-0 left-0 hidden flex-col justify-between top-0 left-0 -ml-8 mt-0 rounded-sm bg-white border border-black">
+											<button className="flex items-center justify-center text-sm w-6 h-5 hover:text-blue-700 z-10">
+												<svg className="h-4 w-4 stroke-current" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+													<path d="M5 15l7-7 7 7" />
+												</svg>
+											</button>
+											<button className="flex items-center justify-center text-sm w-6 h-5 hover:text-blue-700 z-10">
+												<svg className="h-4 w-4 stroke-current" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+													<path d="M19 9l-7 7-7-7" />
+												</svg>
+											</button>
+										</div>
 									</div>
 								</div>
 							);
