@@ -14,10 +14,6 @@ input[type="radio"]:checked + div {
 	font-size: .875rem;
 }
 
-.field-resize {
-	cursor: col-resize;
-}
-
 .block-title-field {
 	font-size: 2rem;
 }

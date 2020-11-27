@@ -179,7 +179,6 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 										className="relative flex items-center w-full p-4 bg-white border border-gray-400 rounded-sm hover:border-black"
 										id={ `field-item-${ index }` }
 									>
-										<button className="field-resize w-4 absolute -ml-2 left-0 top-0 bottom-0 focus:outline-none"></button>
 										<button>
 											<svg className="fill-current h-6 w-6" viewBox="0 0 24 24">
 												<path d="M0 0h24v24H0z" fill="none" />
@@ -197,6 +196,7 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 												onClick={ () => {
 													reorderFields( index, index - 1 );
 												} }
+												disabled={ 0 === index }
 											>
 												<svg className="h-4 w-4 stroke-current" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
 													<path d="M5 15l7-7 7 7" />
@@ -207,6 +207,7 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 												onClick={ () => {
 													reorderFields( index, index + 1 );
 												} }
+												disabled={ index >= ( fields.length - 1 ) }
 											>
 												<svg className="h-4 w-4 stroke-current" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
 													<path d="M19 9l-7 7-7-7" />
