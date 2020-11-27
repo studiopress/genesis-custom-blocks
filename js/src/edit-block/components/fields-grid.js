@@ -16,7 +16,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { ClipboardCopy } from './';
 import { useBlock } from '../hooks';
 import { getNewFieldNumber, getWidthClass } from '../helpers';
-import { getFieldsAsArray } from '../../common/helpers';
+import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
 
 /**
  * @typedef {Object} FieldsGridProps The component props.
@@ -82,8 +82,36 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 		} );
 	}, [ block, isEditorDisplay ] );
 
+	/**
+	 * Reorders fields, moving a single field to another position.
+	 *
+	 * @param {number} moveFrom The index of the field to move.
+	 * @param {number} moveTo The index that the field should be moved to.
+	 */
+	const reorderFields = useCallback( ( moveFrom, moveTo ) => {
+		const fieldsToReorder = getFieldsForLocation();
+		if ( ! fieldsToReorder.length ) {
+			return;
+		}
+
+		const newFields = [ ...fieldsToReorder ];
+		[ newFields[ moveFrom ], newFields[ moveTo ] ] = [ newFields[ moveTo ], newFields[ moveFrom ] ];
+
+		const newFieldsWithOrder = newFields.reduce( ( accumulator, field, index ) => {
+			return [
+				...accumulator,
+				{
+					...field,
+					order: index,
+				},
+			];
+		}, [] );
+
+		changeBlock( { fields: getFieldsAsObject( newFieldsWithOrder ) } );
+	}, [ changeBlock, getFieldsForLocation ] );
+
 	const fields = getFieldsForLocation();
-	const buttonClass = 'focus:outline-none h-12 px-4 text-sm';
+	const buttonClass = 'h-12 px-4 text-sm focus:outline-none';
 
 	return (
 		<>
@@ -164,12 +192,22 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 											<ClipboardCopy text={ field.name } />
 										</button>
 										<div className="builder-field-move absolute top-0 left-0 hidden flex-col justify-between top-0 left-0 -ml-8 mt-0 rounded-sm bg-white border border-black">
-											<button className="flex items-center justify-center text-sm w-6 h-5 hover:text-blue-700 z-10">
+											<button
+												className="flex items-center justify-center text-sm w-6 h-5 hover:text-blue-700 z-10"
+												onClick={ () => {
+													reorderFields( index, index - 1 );
+												} }
+											>
 												<svg className="h-4 w-4 stroke-current" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
 													<path d="M5 15l7-7 7 7" />
 												</svg>
 											</button>
-											<button className="flex items-center justify-center text-sm w-6 h-5 hover:text-blue-700 z-10">
+											<button
+												className="flex items-center justify-center text-sm w-6 h-5 hover:text-blue-700 z-10"
+												onClick={ () => {
+													reorderFields( index, index + 1 );
+												} }
+											>
 												<svg className="h-4 w-4 stroke-current" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
 													<path d="M19 9l-7 7-7-7" />
 												</svg>
