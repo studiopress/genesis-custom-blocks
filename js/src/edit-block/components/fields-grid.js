@@ -20,6 +20,7 @@ import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
 
 /**
  * @typedef {Object} FieldsGridProps The component props.
+ * @property {string} selectedFieldName The currenetly selected field.
  * @property {Function} setSelectedFieldName Sets the name of the selected field.
  */
 
@@ -29,7 +30,7 @@ import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
  * @param {FieldsGridProps} props
  * @return {React.ReactElement} The main editing area.
  */
-const FieldsGrid = ( { setSelectedFieldName } ) => {
+const FieldsGrid = ( { selectedFieldName, setSelectedFieldName } ) => {
 	const { block, changeBlock } = useBlock();
 	const [ isEditorDisplay, setIsEditorDisplay ] = useState( true );
 
@@ -66,21 +67,22 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 	/**
 	 * Gets the fields for either the editor or inspector.
 	 *
+	 * @param {string} location The location, like 'editor', or 'inspector'.
 	 * @return {Array} The fields with the given location.
 	 */
-	const getFieldsForLocation = useCallback( () => {
+	const getFieldsForLocation = useCallback( ( location ) => {
 		if ( ! block || ! block.fields ) {
 			return null;
 		}
 
 		return getFieldsAsArray( block.fields ).filter( ( field ) => {
-			if ( isEditorDisplay ) {
+			if ( 'editor' === location ) {
 				return ! field.location || 'editor' === field.location;
 			}
 
 			return field.location === 'inspector';
 		} );
-	}, [ block, isEditorDisplay ] );
+	}, [ block ] );
 
 	/**
 	 * Reorders fields, moving a single field to another position.
@@ -89,7 +91,8 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 	 * @param {number} moveTo The index that the field should be moved to.
 	 */
 	const reorderFields = useCallback( ( moveFrom, moveTo ) => {
-		const fieldsToReorder = getFieldsForLocation();
+		const location = isEditorDisplay ? 'editor' : 'inspector';
+		const fieldsToReorder = getFieldsForLocation( location );
 		if ( ! fieldsToReorder.length ) {
 			return;
 		}
@@ -107,17 +110,27 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 			];
 		}, [] );
 
-		changeBlock( { fields: getFieldsAsObject( newFieldsWithOrder ) } );
-	}, [ changeBlock, getFieldsForLocation ] );
+		const otherLocation = isEditorDisplay ? 'inspector' : 'editor';
+		changeBlock( {
+			fields: getFieldsAsObject(
+				[
+					...newFieldsWithOrder,
+					...getFieldsForLocation( otherLocation ),
+				]
+			),
+		} );
+	}, [ changeBlock, getFieldsForLocation, isEditorDisplay ] );
 
-	const fields = getFieldsForLocation();
-	const buttonClass = 'h-12 px-4 text-sm focus:outline-none';
+	const fields = getFieldsForLocation( isEditorDisplay ? 'editor' : 'inspector' );
+	const locationButtonClass = 'h-12 px-4 text-sm focus:outline-none';
+	const moveButtonClass = 'flex items-center justify-center text-sm w-6 h-5 hover:text-blue-700 z-10';
+	const buttonDisabledClasses = 'opacity-50 cursor-not-allowed';
 
 	return (
 		<>
 			<div className="flex mt-6">
 				<button
-					className={ buttonClass }
+					className={ locationButtonClass }
 					onClick={ () => {
 						setIsEditorDisplay( true );
 					} }
@@ -131,7 +144,7 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 					</span>
 				</button>
 				<button
-					className={ buttonClass }
+					className={ locationButtonClass }
 					onClick={ () => {
 						setIsEditorDisplay( false );
 					} }
@@ -155,16 +168,19 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 							const selectField = () => {
 								setSelectedFieldName( field.name );
 							};
+							const isUpButtonDisabled = 0 === index;
+							const isDownButtonDisabled = index >= ( fields.length - 1 );
 
 							return (
 								<div
 									className={ className(
+										{ 'is-selected': field.name === selectedFieldName },
 										'field w-full',
 										getWidthClass( field.width )
 									) }
 									key={ `field-item-${ index }` }
 									role="gridcell"
-									tabIndex="0"
+									tabIndex={ 0 }
 									aria-label={
 										sprintf(
 											// translators: %s: the label of the field
@@ -192,22 +208,30 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 										</button>
 										<div className="builder-field-move absolute top-0 left-0 hidden flex-col justify-between top-0 left-0 -ml-8 mt-0 rounded-sm bg-white border border-black">
 											<button
-												className="flex items-center justify-center text-sm w-6 h-5 hover:text-blue-700 z-10"
-												onClick={ () => {
+												className={ className(
+													moveButtonClass,
+													{ [ buttonDisabledClasses ]: isUpButtonDisabled }
+												) }
+												onClick={ ( event ) => {
+													event.preventDefault();
 													reorderFields( index, index - 1 );
 												} }
-												disabled={ 0 === index }
+												disabled={ isUpButtonDisabled }
 											>
 												<svg className="h-4 w-4 stroke-current" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
 													<path d="M5 15l7-7 7 7" />
 												</svg>
 											</button>
 											<button
-												className="flex items-center justify-center text-sm w-6 h-5 hover:text-blue-700 z-10"
-												onClick={ () => {
+												className={ className(
+													moveButtonClass,
+													{ [ buttonDisabledClasses ]: isDownButtonDisabled }
+												) }
+												onClick={ ( event ) => {
+													event.preventDefault();
 													reorderFields( index, index + 1 );
 												} }
-												disabled={ index >= ( fields.length - 1 ) }
+												disabled={ isDownButtonDisabled }
 											>
 												<svg className="h-4 w-4 stroke-current" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
 													<path d="M19 9l-7 7-7-7" />

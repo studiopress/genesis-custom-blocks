@@ -16,7 +16,8 @@ import { getBlock } from '../helpers';
  * @property {Object} controls All of the possible controls.
  * @property {Function} deleteField Deletes this field.
  * @property {Function} changeControl Changes the control of the field.
- * @property {Function} changeFieldSetting Changes a field setting.
+ * @property {Function} changeFieldName Changes the field name.
+ * @property {Function} changeFieldSettings Changes field settings.
  * @property {Function} getField Gets the selected field.
  */
 
@@ -40,8 +41,8 @@ const useField = () => {
 
 	const fullBlock = getFullBlock();
 	const { editPost } = useDispatch( 'core/editor' );
-	const blockNameWithNamespace = Object.keys( fullBlock )[ 0 ];
-	const block = fullBlock[ blockNameWithNamespace ];
+	const blockNameWithNameSpace = Object.keys( fullBlock )[ 0 ];
+	const block = fullBlock[ blockNameWithNameSpace ];
 
 	/**
 	 * Changes the control of a field.
@@ -54,12 +55,11 @@ const useField = () => {
 			return;
 		}
 
-		if ( ! fullBlock[ blockNameWithNamespace ].fields ) {
-			fullBlock[ blockNameWithNamespace ].fields = [];
+		if ( ! fullBlock[ blockNameWithNameSpace ].fields ) {
+			fullBlock[ blockNameWithNameSpace ].fields = [];
 		}
 
-		// Todo: handle multiple fields when it's possible to add a field.
-		const previousField = fullBlock[ blockNameWithNamespace ].fields[ fieldName ];
+		const previousField = fullBlock[ blockNameWithNameSpace ].fields[ fieldName ];
 		const newField = {
 			name: previousField.name,
 			label: previousField.label,
@@ -67,9 +67,9 @@ const useField = () => {
 			type: newControl.type,
 		};
 
-		fullBlock[ blockNameWithNamespace ].fields[ fieldName ] = newField;
+		fullBlock[ blockNameWithNameSpace ].fields[ fieldName ] = newField;
 		editPost( { content: JSON.stringify( fullBlock ) } );
-	}, [ blockNameWithNamespace, controls, editPost, fullBlock ] );
+	}, [ blockNameWithNameSpace, controls, editPost, fullBlock ] );
 
 	/**
 	 * Gets a field, if it exists.
@@ -87,25 +87,50 @@ const useField = () => {
 	 * @param {string} settingKey The key of the setting, like 'label' or 'placeholder'.
 	 * @param {any} newSettingValue The new setting value.
 	 */
-	const changeFieldSetting = useCallback( ( fieldName, settingKey, newSettingValue ) => {
-		fullBlock[ blockNameWithNamespace ].fields[ fieldName ][ settingKey ] = newSettingValue;
+	const changeFieldSettings = useCallback( ( fieldName, newSettings ) => {
+		const field = fullBlock[ blockNameWithNameSpace ].fields[ fieldName ];
+		fullBlock[ blockNameWithNameSpace ].fields[ fieldName ] = {
+			...field,
+			...newSettings,
+		};
+
 		editPost( { content: JSON.stringify( fullBlock ) } );
-	}, [ blockNameWithNamespace, editPost, fullBlock ] );
+	}, [ blockNameWithNameSpace, editPost, fullBlock ] );
+
+	/**
+	 * Changes a field name (slug).
+	 *
+	 * @param {string} previousName The previous field name (slug).
+	 * @param {string} newName The new field name (slug).
+	 * @param {Object} defaultValues The new field values, if any.
+	 */
+	const changeFieldName = useCallback( ( previousName, newName, newValues = {} ) => {
+		fullBlock[ blockNameWithNameSpace ].fields[ newName ] = fullBlock[ blockNameWithNameSpace ].fields[ previousName ];
+		delete fullBlock[ blockNameWithNameSpace ].fields[ previousName ];
+
+		fullBlock[ blockNameWithNameSpace ].fields[ newName ] = {
+			...fullBlock[ blockNameWithNameSpace ].fields[ newName ],
+			...newValues,
+		};
+
+		editPost( { content: JSON.stringify( fullBlock ) } );
+	}, [ editPost, blockNameWithNameSpace, fullBlock ] );
 
 	/**
 	 * Deletes this field.
 	 */
 	const deleteField = useCallback( ( fieldName ) => {
-		delete fullBlock[ blockNameWithNamespace ].fields[ fieldName ];
+		delete fullBlock[ blockNameWithNameSpace ].fields[ fieldName ];
 		editPost( { content: JSON.stringify( fullBlock ) } );
-	}, [ blockNameWithNamespace, editPost, fullBlock ] );
+	}, [ blockNameWithNameSpace, editPost, fullBlock ] );
 
 	return {
 		controls,
 		deleteField,
 		getField,
 		changeControl,
-		changeFieldSetting,
+		changeFieldName,
+		changeFieldSettings,
 	};
 };
 

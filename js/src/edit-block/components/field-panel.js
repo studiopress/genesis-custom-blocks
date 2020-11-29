@@ -6,17 +6,19 @@ import React from 'react';
 /**
  * WordPress dependencies
  */
+import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import { FieldSettings } from './';
+import { convertToSlug } from '../helpers';
 import { useField } from '../hooks';
 
 /**
  * @typedef {Object} FieldPanelProps The component props.
- * @property {Function} selectedFieldName The name of the selected field.
+ * @property {string} selectedFieldName The name of the selected field.
  */
 
 /**
@@ -26,10 +28,40 @@ import { useField } from '../hooks';
  * @return {React.ReactElement} The field panel.
  */
 const FieldPanel = ( { selectedFieldName } ) => {
-	const { controls, deleteField, getField, changeControl, changeFieldSetting } = useField();
+	const { controls, deleteField, getField, changeControl, changeFieldName, changeFieldSettings } = useField();
 
+	const [ isAutoSluggingComplete, setIsAutoSluggingComplete ] = useState( false );
 	const controlValues = Object.values( controls );
 	const field = getField( selectedFieldName );
+
+	/**
+	 * Handles changing of the field label.
+	 *
+	 * @param {React.ChangeEvent} event The change event.
+	 */
+	const handleChangeLabel = ( event ) => {
+		if ( ! event.target ) {
+			return;
+		}
+
+		// @ts-ignore
+		const { value } = event.target;
+
+		const newField = { label: value };
+		if ( ( ! isAutoSluggingComplete || ! field.name ) && value ) {
+			changeFieldName(
+				field.name,
+				convertToSlug( value ),
+				newField
+			);
+		} else {
+			changeFieldSettings( selectedFieldName, newField );
+		}
+
+		if ( ! field.name ) {
+			setIsAutoSluggingComplete( false );
+		}
+	};
 
 	return (
 		<div className="p-4">
@@ -44,11 +76,12 @@ const FieldPanel = ( { selectedFieldName } ) => {
 								type="text"
 								id="field-label"
 								value={ field.label }
-								onChange={ ( event ) => {
-									if ( event.target ) {
-										changeFieldSetting( selectedFieldName, 'label', event.target.value );
+								onBlur={ () => {
+									if ( field.name ) {
+										setIsAutoSluggingComplete( true );
 									}
 								} }
+								onChange={ handleChangeLabel }
 							/>
 							<span className="block italic text-xs mt-1">{ __( 'A label or a title for this field.', 'genesis-custom-blocks' ) }</span>
 						</div>
@@ -61,7 +94,7 @@ const FieldPanel = ( { selectedFieldName } ) => {
 								value={ field.name }
 								onChange={ ( event ) => {
 									if ( event.target ) {
-										changeFieldSetting( selectedFieldName, 'name', event.target.value );
+										changeFieldSettings( selectedFieldName, { name: event.target.value } );
 									}
 								} }
 							/>
@@ -87,7 +120,7 @@ const FieldPanel = ( { selectedFieldName } ) => {
 						<FieldSettings
 							field={ field }
 							controls={ controls }
-							changeFieldSetting={ changeFieldSetting }
+							changeFieldSettings={ changeFieldSettings }
 							deleteField={ () => {
 								deleteField( selectedFieldName );
 							} }

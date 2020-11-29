@@ -17,7 +17,7 @@ import { BlockPanel, FieldPanel } from './';
 
 /**
  * @typedef {Object} SideProps The component props.
- * @property {Function} selectedFieldName The name of the selected field.
+ * @property {string} selectedFieldName The name of the selected field.
  */
 
 /**

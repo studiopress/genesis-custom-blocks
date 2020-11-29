@@ -51,6 +51,7 @@ const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 	const isSavingPost = useSelect(
 		( select ) => select( 'core/editor' ).isSavingPost()
 	);
+	// @ts-ignore
 	const { editEntityRecord } = useDispatch( 'core' );
 
 	useEffect( () => {
@@ -95,7 +96,10 @@ const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 						<EditorNotices />
 						<Header />
 						<div className="flex w-full h-0 flex-grow">
-							<Main setSelectedFieldName={ setSelectedFieldName }	/>
+							<Main
+								selectedFieldName={ selectedFieldName }
+								setSelectedFieldName={ setSelectedFieldName }
+							/>
 							<Side selectedFieldName={ selectedFieldName } />
 						</div>
 					</ErrorBoundary>

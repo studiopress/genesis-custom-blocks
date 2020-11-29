@@ -18,7 +18,7 @@ import { getSettingsComponent } from '../helpers';
  * @property {Object} controls All of the possible controls.
  * @property {Function} deleteField Deletes this field.
  * @property {Object} field The current field.
- * @property {Function} changeFieldSetting Edits a given field's value.
+ * @property {Function} changeFieldSettings Edits a given field's value.
  */
 
 /**
@@ -27,7 +27,7 @@ import { getSettingsComponent } from '../helpers';
  * @param {FieldSettingsProps} props The component props.
  * @return {React.ReactElement} The field settings.
  */
-const FieldSettings = ( { controls, changeFieldSetting, deleteField, field } ) => {
+const FieldSettings = ( { controls, changeFieldSettings, deleteField, field } ) => {
 	const control = controls[ field.control ];
 
 	return (
@@ -45,7 +45,10 @@ const FieldSettings = ( { controls, changeFieldSetting, deleteField, field } ) =
 									setting={ setting }
 									value={ value }
 									handleOnChange={ ( newSettingValue ) => {
-										changeFieldSetting( field.name, setting.name, newSettingValue );
+										changeFieldSettings(
+											field.name,
+											{ [ setting.name ]: newSettingValue }
+										);
 									} }
 								/>
 							</div>

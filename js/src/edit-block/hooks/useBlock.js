@@ -14,6 +14,7 @@ import { getBlock } from '../helpers';
  * @typedef {Object} UseBlockReturn The return value of useBlock.
  * @property {Object} block The block, parsed into an object.
  * @property {Function} changeBlock Changes the block configuration.
+ * @property {Function} changeBlockName Changes the block name.
  */
 
 /**
