@@ -123,17 +123,18 @@ class EditBlock extends ComponentAbstract {
 			'before'
 		);
 
+		$edit_block_style_path = 'css/edit-block.css';
 		wp_enqueue_style(
 			self::STYLE_SLUG,
-			$this->plugin->get_url( 'css/edit-block.css' ),
+			$this->plugin->get_url( $edit_block_style_path ),
 			[ 'wp-components' ],
-			$this->plugin->get_version()
+			filemtime( $this->plugin->get_path( $edit_block_style_path ) )
 		);
 
 		// @todo: get only the style rules that are needed, and add them to a CSS file in this plugin.
 		wp_enqueue_style(
 			self::TAILWIND_SLUG,
-			'https://unpkg.com/tailwindcss@1.9.6/dist/tailwind.min.css',
+			$this->plugin->get_url( 'css/tailwind.min.css' ),
 			[],
 			$this->plugin->get_version()
 		);
