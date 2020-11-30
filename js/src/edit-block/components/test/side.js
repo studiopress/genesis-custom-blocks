@@ -90,6 +90,14 @@ jest.mock( '../../hooks/useField', () => {
 	} ) );
 } );
 
+jest.mock( '@wordpress/api-fetch', () => {
+	return jest.fn( () => {
+		return Promise.resolve( {
+			json: () => Promise.resolve( {} ),
+		} );
+	} );
+} );
+
 const locationSetting = { name: 'location', label: 'Field Location', type: 'location', default: 'editor', help: '' };
 const widthSetting = { name: 'width', label: 'Field Width', type: 'width', default: '100', help: '' };
 const helpSetting = { name: 'help', label: 'Help Text', type: 'text', default: '', help: '' };
