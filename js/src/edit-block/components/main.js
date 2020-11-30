@@ -18,7 +18,9 @@ import { useBlock } from '../hooks';
 
 /**
  * @typedef {Object} MainProps The component props.
+ * @property {string} currentLocation The currently selected location.
  * @property {string} selectedFieldName The currently selected field.
+ * @property {Function} setCurrentLocation Sets the currently selected location.
  * @property {Function} setSelectedFieldName Sets the name of the selected field.
  */
 
@@ -30,7 +32,12 @@ import { useBlock } from '../hooks';
  * @param {MainProps} props
  * @return {React.ReactElement} The main editing area.
  */
-const Main = ( { selectedFieldName, setSelectedFieldName } ) => {
+const Main = ( {
+	currentLocation,
+	selectedFieldName,
+	setCurrentLocation,
+	setSelectedFieldName,
+} ) => {
 	const { block, changeBlock } = useBlock();
 	const editedTitle = useSelect(
 		( select ) => select( 'core/editor' ).getEditedPostAttribute( 'title' ),
@@ -58,7 +65,9 @@ const Main = ( { selectedFieldName, setSelectedFieldName } ) => {
 					<PostTitle />
 				</div>
 				<FieldsGrid
+					currentLocation={ currentLocation }
 					selectedFieldName={ selectedFieldName }
+					setCurrentLocation={ setCurrentLocation }
 					setSelectedFieldName={ setSelectedFieldName }
 				/>
 			</div>

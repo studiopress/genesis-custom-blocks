@@ -9,7 +9,8 @@ import { useCallback } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { getBlock } from '../helpers';
+import { getBlock, getOtherLocation, setCorrectOrderForFields } from '../helpers';
+import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
 
 /**
  * @typedef {Object} UseFieldReturn The return value of useField.
@@ -19,6 +20,8 @@ import { getBlock } from '../helpers';
  * @property {Function} changeFieldName Changes the field name.
  * @property {Function} changeFieldSettings Changes field settings.
  * @property {Function} getField Gets the selected field.
+ * @property {Function} getFieldsForLocation Gets all of the fields for a given location.
+ * @property {Function} reorderFields Reorders the fields for a given location.
  */
 
 /**
@@ -82,12 +85,65 @@ const useField = () => {
 	}, [ block ] );
 
 	/**
+	 * Gets the fields for either the editor or inspector.
+	 *
+	 * @param {string} location The location, like 'editor', or 'inspector'.
+	 * @return {Array} The fields with the given location.
+	 */
+	const getFieldsForLocation = useCallback( ( location ) => {
+		if ( ! block || ! block.fields ) {
+			return null;
+		}
+
+		return getFieldsAsArray( block.fields ).filter( ( field ) => {
+			if ( 'editor' === location ) {
+				return ! field.location || 'editor' === field.location;
+			}
+
+			return field.location === 'inspector';
+		} );
+	}, [ block ] );
+
+	/**
+	 * Moves a field to another location, and sets the correct order properties.
+	 *
+	 * @param {number} moveFrom The index of the field to move.
+	 * @param {number} moveTo The index that the field should be moved to.
+	 * @param {string} currentLocation The current field's location, like 'editor'.
+	 */
+	const changeFieldLocation = useCallback( ( fields, fieldName, newLocation ) => {
+		const fieldToMove = fields[ fieldName ];
+		const previousLocation = fieldToMove.location;
+
+		const previousLocationFields = getFieldsForLocation( previousLocation );
+		const fieldsWithoutMovedField = previousLocationFields.filter( ( field ) => {
+			return field.name !== fieldName;
+		} );
+
+		const newLocationFields = getFieldsForLocation( newLocation );
+		newLocationFields.push( fieldToMove );
+
+		return getFieldsAsObject( [
+			...setCorrectOrderForFields( fieldsWithoutMovedField ),
+			...setCorrectOrderForFields( newLocationFields ),
+		] );
+	}, [ getFieldsForLocation ] );
+
+	/**
 	 * Changes a field setting.
 	 *
 	 * @param {string} settingKey The key of the setting, like 'label' or 'placeholder'.
 	 * @param {any} newSettingValue The new setting value.
 	 */
 	const changeFieldSettings = useCallback( ( fieldName, newSettings ) => {
+		if ( newSettings.location ) {
+			fullBlock[ blockNameWithNameSpace ].fields = changeFieldLocation(
+				fullBlock[ blockNameWithNameSpace ].fields,
+				fieldName,
+				newSettings.location
+			);
+		}
+
 		const field = fullBlock[ blockNameWithNameSpace ].fields[ fieldName ];
 		fullBlock[ blockNameWithNameSpace ].fields[ fieldName ] = {
 			...field,
@@ -95,7 +151,7 @@ const useField = () => {
 		};
 
 		editPost( { content: JSON.stringify( fullBlock ) } );
-	}, [ blockNameWithNameSpace, editPost, fullBlock ] );
+	}, [ blockNameWithNameSpace, changeFieldLocation, editPost, fullBlock ] );
 
 	/**
 	 * Changes a field name (slug).
@@ -117,6 +173,29 @@ const useField = () => {
 	}, [ editPost, blockNameWithNameSpace, fullBlock ] );
 
 	/**
+	 * Reorders fields, moving a single field to another position.
+	 *
+	 * @param {number} moveFrom The index of the field to move.
+	 * @param {number} moveTo The index that the field should be moved to.
+	 * @param {string} currentLocation The current field's location, like 'editor'.
+	 */
+	const reorderFields = useCallback( ( moveFrom, moveTo, currentLocation ) => {
+		const fieldsToReorder = getFieldsForLocation( currentLocation );
+		if ( ! fieldsToReorder.length ) {
+			return;
+		}
+
+		const newFields = [ ...fieldsToReorder ];
+		[ newFields[ moveFrom ], newFields[ moveTo ] ] = [ newFields[ moveTo ], newFields[ moveFrom ] ];
+
+		fullBlock[ blockNameWithNameSpace ].fields = getFieldsAsObject( [
+			...setCorrectOrderForFields( newFields ),
+			...getFieldsForLocation( getOtherLocation( currentLocation ) ),
+		] );
+		editPost( { content: JSON.stringify( fullBlock ) } );
+	}, [ blockNameWithNameSpace, editPost, fullBlock, getFieldsForLocation ] );
+
+	/**
 	 * Deletes this field.
 	 */
 	const deleteField = useCallback( ( fieldName ) => {
@@ -128,9 +207,11 @@ const useField = () => {
 		controls,
 		deleteField,
 		getField,
+		getFieldsForLocation,
 		changeControl,
 		changeFieldName,
 		changeFieldSettings,
+		reorderFields,
 	};
 };
 

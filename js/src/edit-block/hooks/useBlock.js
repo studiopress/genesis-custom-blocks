@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { useDispatch, useSelect } from '@wordpress/data';
-import { useCallback } from '@wordpress/element';
+import { useCallback, useMemo } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -43,7 +43,10 @@ const useBlock = () => {
 	const fullBlock = getFullBlock();
 
 	const blockNameWithNamespace = getBlockNameWithNameSpace( fullBlock );
-	const block = fullBlock[ blockNameWithNamespace ] || {};
+	const block = useMemo(
+		() => fullBlock[ blockNameWithNamespace ] || {},
+		[ fullBlock, blockNameWithNamespace ]
+	);
 
 	/**
 	 * Changes a block's values.

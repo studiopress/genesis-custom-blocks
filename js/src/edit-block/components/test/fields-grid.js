@@ -42,11 +42,32 @@ jest.mock( '../../hooks/useBlock', () => {
 	} ) );
 } );
 
-window.fetch = jest.fn( () => Promise.resolve( {} ) );
+jest.mock( '../../hooks/useField', () => {
+	return jest.fn( () => ( {
+		getFieldsForLocation: () => [ mockUrlField ],
+	} ) );
+} );
+
+jest.mock( '@wordpress/api-fetch', () => {
+	return jest.fn( () => {
+		return Promise.resolve( {
+			json: () => Promise.resolve( {} ),
+		} );
+	} );
+} );
+
+global.gcbEditor = { controls: {} };
 
 describe( 'FieldsGrid', () => {
 	it( 'displays the main editor area', async () => {
-		const { getByText, getByTitle } = render( <FieldsGrid /> );
+		const { getByText, getByTitle } = render(
+			<FieldsGrid
+				currentLocation="editor"
+				selectedFieldName={ mockUrlField.name }
+				setCurrentLocation={ jest.fn() }
+				setSelectedFieldName={ jest.fn() }
+			/>
+		);
 
 		expect( getByText( mockUrlField.name ) ).toBeInTheDocument();
 		expect( getByText( mockUrlField.label ) ).toBeInTheDocument();

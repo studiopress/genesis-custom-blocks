@@ -8,3 +8,5 @@ export { default as getOtherLocation } from './getOtherLocation';
 export { default as getSettingsComponent } from './getSettingsComponent';
 export { default as getWidthClass } from './getWidthClass';
 export { default as initializeEditor } from './initializeEditor';
+export { default as setCorrectOrderForFields } from './setCorrectOrderForFields';
+

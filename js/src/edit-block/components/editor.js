@@ -18,6 +18,7 @@ import { StrictMode, useEffect, useState } from '@wordpress/element';
  * Internal dependencies
  */
 import { BrowserURL, Header, Main, Side } from './';
+import { DEFAULT_LOCATION } from '../constants';
 import { getDefaultBlock } from '../helpers';
 import { useBlock } from '../hooks';
 
@@ -44,6 +45,8 @@ import { useBlock } from '../hooks';
 const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 	const { block, changeBlockName } = useBlock();
 	const [ selectedFieldName, setSelectedFieldName ] = useState( '' );
+	const [ currentLocation, setCurrentLocation ] = useState( DEFAULT_LOCATION );
+
 	const post = useSelect(
 		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
 		[ postId, postType ]
@@ -97,10 +100,15 @@ const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 						<Header />
 						<div className="flex w-full h-0 flex-grow">
 							<Main
+								currentLocation={ currentLocation }
 								selectedFieldName={ selectedFieldName }
+								setCurrentLocation={ setCurrentLocation }
 								setSelectedFieldName={ setSelectedFieldName }
 							/>
-							<Side selectedFieldName={ selectedFieldName } />
+							<Side
+								selectedFieldName={ selectedFieldName }
+								setCurrentLocation={ setCurrentLocation }
+							/>
 						</div>
 					</ErrorBoundary>
 				</EditorProvider>

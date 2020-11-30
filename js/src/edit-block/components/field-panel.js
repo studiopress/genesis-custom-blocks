@@ -19,6 +19,7 @@ import { useField } from '../hooks';
 /**
  * @typedef {Object} FieldPanelProps The component props.
  * @property {string} selectedFieldName The name of the selected field.
+ * @property {Function} setCurrentLocation Sets the current location, like 'editor'.
  */
 
 /**
@@ -27,8 +28,15 @@ import { useField } from '../hooks';
  * @param {FieldPanelProps} props
  * @return {React.ReactElement} The field panel.
  */
-const FieldPanel = ( { selectedFieldName } ) => {
-	const { controls, deleteField, getField, changeControl, changeFieldName, changeFieldSettings } = useField();
+const FieldPanel = ( { selectedFieldName, setCurrentLocation } ) => {
+	const {
+		controls,
+		deleteField,
+		getField,
+		changeControl,
+		changeFieldName,
+		changeFieldSettings,
+	} = useField();
 
 	const [ isAutoSluggingComplete, setIsAutoSluggingComplete ] = useState( false );
 	const controlValues = Object.values( controls );
@@ -124,6 +132,7 @@ const FieldPanel = ( { selectedFieldName } ) => {
 							deleteField={ () => {
 								deleteField( selectedFieldName );
 							} }
+							setCurrentLocation={ setCurrentLocation }
 						/>
 					</>
 					: <span className="text-sm">

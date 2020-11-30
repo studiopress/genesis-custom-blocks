@@ -7,21 +7,22 @@ import className from 'classnames';
 /**
  * WordPress dependencies
  */
-import { useCallback, useState } from '@wordpress/element';
+import { useCallback } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import { ClipboardCopy } from './';
-import { useBlock } from '../hooks';
+import { useBlock, useField } from '../hooks';
 import { ALTERNATE_LOCATION, DEFAULT_LOCATION } from '../constants';
-import { getNewFieldNumber, getOtherLocation, getWidthClass } from '../helpers';
-import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
+import { getNewFieldNumber, getWidthClass } from '../helpers';
 
 /**
  * @typedef {Object} FieldsGridProps The component props.
+ * @property {string} currentLocation The currently selected location.
  * @property {string} selectedFieldName The currenetly selected field.
+ * @property {Function} setCurrentLocation Sets the currently selected location.
  * @property {Function} setSelectedFieldName Sets the name of the selected field.
  */
 
@@ -31,9 +32,14 @@ import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
  * @param {FieldsGridProps} props
  * @return {React.ReactElement} The main editing area.
  */
-const FieldsGrid = ( { selectedFieldName, setSelectedFieldName } ) => {
+const FieldsGrid = ( {
+	currentLocation,
+	selectedFieldName,
+	setCurrentLocation,
+	setSelectedFieldName,
+} ) => {
 	const { block, changeBlock } = useBlock();
-	const [ currentLocation, setCurrentLocation ] = useState( DEFAULT_LOCATION );
+	const { getFieldsForLocation, reorderFields } = useField();
 
 	/**
 	 * Adds a new field to the end of the existing fields.
@@ -64,72 +70,6 @@ const FieldsGrid = ( { selectedFieldName, setSelectedFieldName } ) => {
 		fields[ name ] = newField;
 		changeBlock( { fields } );
 	}, [ block, changeBlock, currentLocation ] );
-
-	/**
-	 * Gets the fields for either the editor or inspector.
-	 *
-	 * @param {string} location The location, like 'editor', or 'inspector'.
-	 * @return {Array} The fields with the given location.
-	 */
-	const getFieldsForLocation = useCallback( ( location ) => {
-		if ( ! block || ! block.fields ) {
-			return null;
-		}
-
-		return getFieldsAsArray( block.fields ).filter( ( field ) => {
-			if ( 'editor' === location ) {
-				return ! field.location || 'editor' === field.location;
-			}
-
-			return field.location === 'inspector';
-		} );
-	}, [ block ] );
-
-	/**
-	 * Ensures the order property is sequential for the fields.
-	 *
-	 * For example, the first field object should have an order property of 0,
-	 * the next should have 1, etc...
-	 *
-	 * @param {Object[]} initialFields The fields to set the order of.
-	 * @return {Array} The fields with correct order properties.
-	 */
-	const setCorrectOrderForFields = ( initialFields ) => {
-		return initialFields.reduce( ( accumulator, field, index ) => {
-			return [
-				...accumulator,
-				{
-					...field,
-					order: index,
-				},
-			];
-		}, [] );
-	};
-
-	/**
-	 * Reorders fields, moving a single field to another position.
-	 *
-	 * @param {number} moveFrom The index of the field to move.
-	 * @param {number} moveTo The index that the field should be moved to.
-	 */
-	const reorderFields = useCallback( ( moveFrom, moveTo ) => {
-		const fieldsToReorder = getFieldsForLocation( currentLocation );
-		if ( ! fieldsToReorder.length ) {
-			return;
-		}
-
-		const newFields = [ ...fieldsToReorder ];
-		[ newFields[ moveFrom ], newFields[ moveTo ] ] = [ newFields[ moveTo ], newFields[ moveFrom ] ];
-
-		changeBlock( {
-			fields: getFieldsAsObject(
-				[
-					...setCorrectOrderForFields( newFields ),
-					...getFieldsForLocation( getOtherLocation( currentLocation ) ),
-				]
-			),
-		} );
-	}, [ changeBlock, getFieldsForLocation, currentLocation ] );
 
 	const fields = getFieldsForLocation( currentLocation );
 	const locationButtonClass = 'h-12 px-4 text-sm focus:outline-none';
@@ -231,7 +171,7 @@ const FieldsGrid = ( { selectedFieldName, setSelectedFieldName } ) => {
 												) }
 												onClick={ ( event ) => {
 													event.preventDefault();
-													reorderFields( index, index - 1 );
+													reorderFields( index, index - 1, currentLocation );
 												} }
 												disabled={ isUpButtonDisabled }
 											>
@@ -256,7 +196,7 @@ const FieldsGrid = ( { selectedFieldName, setSelectedFieldName } ) => {
 												) }
 												onClick={ ( event ) => {
 													event.preventDefault();
-													reorderFields( index, index + 1 );
+													reorderFields( index, index + 1, currentLocation );
 												} }
 												disabled={ isDownButtonDisabled }
 											>

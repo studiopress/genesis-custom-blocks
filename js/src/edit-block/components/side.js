@@ -18,6 +18,7 @@ import { BlockPanel, FieldPanel } from './';
 /**
  * @typedef {Object} SideProps The component props.
  * @property {string} selectedFieldName The name of the selected field.
+ * @property {Function} setCurrentLocation Sets the current location, like 'editor'.
  */
 
 /**
@@ -26,7 +27,7 @@ import { BlockPanel, FieldPanel } from './';
  * @param {SideProps} props
  * @return {React.ReactElement} The side area.
  */
-const Side = ( { selectedFieldName } ) => {
+const Side = ( { selectedFieldName, setCurrentLocation } ) => {
 	const [ displayBlockPanel, setDisplayBlockPanel ] = useState( true );
 	const buttonClass = 'flex items-center h-12 px-5 text-sm focus:outline-none';
 
@@ -35,12 +36,10 @@ const Side = ( { selectedFieldName } ) => {
 			<div className="flex w-full border-b border-gray-300">
 				<button
 					onClick={ () => setDisplayBlockPanel( true ) }
-					className={
-						classNames(
-							buttonClass,
-							{ 'font-semibold border-b-4 border-blue-600': displayBlockPanel }
-						)
-					}
+					className={ classNames(
+						buttonClass,
+						{ 'font-semibold border-b-4 border-blue-600': displayBlockPanel }
+					) }
 				>
 					{ __( 'Block', 'genesis-custom-blocks' ) }
 				</button>
@@ -56,10 +55,9 @@ const Side = ( { selectedFieldName } ) => {
 					{ __( 'Field', 'genesis-custom-blocks' ) }
 				</button>
 			</div>
-			{
-				displayBlockPanel
-					? <BlockPanel />
-					: <FieldPanel selectedFieldName={ selectedFieldName } />
+			{ displayBlockPanel
+				? <BlockPanel />
+				: <FieldPanel selectedFieldName={ selectedFieldName } setCurrentLocation={ setCurrentLocation } />
 			}
 		</div>
 	);

@@ -14,11 +14,17 @@ import { __ } from '@wordpress/i18n';
 import { getSettingsComponent } from '../helpers';
 
 /**
+ * @callback onClickDelete Handler for deleting a field.
+ * @return {void}
+ */
+
+/**
  * @typedef {Object} FieldSettingsProps The component props.
  * @property {Object} controls All of the possible controls.
- * @property {Function} deleteField Deletes this field.
+ * @property {onClickDelete} deleteField Deletes this field.
  * @property {Object} field The current field.
  * @property {Function} changeFieldSettings Edits a given field's value.
+ * @property {Function} setCurrentLocation Sets the current location, like 'editor'.
  */
 
 /**
@@ -27,7 +33,13 @@ import { getSettingsComponent } from '../helpers';
  * @param {FieldSettingsProps} props The component props.
  * @return {React.ReactElement} The field settings.
  */
-const FieldSettings = ( { controls, changeFieldSettings, deleteField, field } ) => {
+const FieldSettings = ( {
+	controls,
+	changeFieldSettings,
+	deleteField,
+	field,
+	setCurrentLocation,
+} ) => {
 	const control = controls[ field.control ];
 
 	return (
@@ -50,6 +62,7 @@ const FieldSettings = ( { controls, changeFieldSettings, deleteField, field } ) 
 											{ [ setting.name ]: newSettingValue }
 										);
 									} }
+									setCurrentLocation={ setCurrentLocation }
 								/>
 							</div>
 						);
