@@ -170,11 +170,12 @@ const FieldsGrid = ( { selectedFieldName, setSelectedFieldName } ) => {
 							};
 							const isUpButtonDisabled = 0 === index;
 							const isDownButtonDisabled = index >= ( fields.length - 1 );
+							const isSelected = field.name === selectedFieldName;
 
 							return (
 								<div
 									className={ className(
-										{ 'is-selected': field.name === selectedFieldName },
+										{ 'is-selected': isSelected },
 										'field w-full',
 										getWidthClass( field.width )
 									) }
@@ -195,19 +196,25 @@ const FieldsGrid = ( { selectedFieldName, setSelectedFieldName } ) => {
 										className="relative flex items-center w-full p-4 bg-white border border-gray-400 rounded-sm hover:border-black"
 										id={ `field-item-${ index }` }
 									>
-										<button>
+										<div>
 											<svg className="fill-current h-6 w-6" viewBox="0 0 24 24">
 												<path d="M0 0h24v24H0z" fill="none" />
 												<path d="M5 17v2h14v-2H5zm4.5-4.2h5l.9 2.2h2.1L12.75 4h-1.5L6.5 15h2.1l.9-2.2zM12 5.98L13.87 11h-3.74L12 5.98z" />
 											</svg>
-										</button>
+										</div>
 										<span className=" ml-4 truncate">{ field.label }</span>
-										<button className="flex items-center h-6 px-2 bg-gray-200 rounded-sm ml-auto hover:bg-gray-400">
+										<div className="flex items-center h-6 px-2 bg-gray-200 rounded-sm ml-auto hover:bg-gray-400">
 											<span className="text-xs font-mono">{ field.name }</span>
 											<ClipboardCopy text={ field.name } />
-										</button>
-										<div className="builder-field-move absolute top-0 left-0 hidden flex-col justify-between top-0 left-0 -ml-8 mt-0 rounded-sm bg-white border border-black">
+										</div>
+										<div
+											className={ className(
+												isSelected ? 'flex' : 'hidden',
+												'builder-field-move absolute top-0 left-0 flex-col justify-between top-0 left-0 -ml-8 mt-0 rounded-sm bg-white border border-black'
+											) }
+										>
 											<button
+												aria-describedby={ `move-up-button-${ index }` }
 												className={ className(
 													moveButtonClass,
 													{ [ buttonDisabledClasses ]: isUpButtonDisabled }
@@ -222,7 +229,17 @@ const FieldsGrid = ( { selectedFieldName, setSelectedFieldName } ) => {
 													<path d="M5 15l7-7 7 7" />
 												</svg>
 											</button>
+											<span id={ `move-up-button-${ index }` } className="hidden">
+												{ sprintf(
+													/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
+													__( 'Move %1$s field up from position %2$d to position %3$d', 'genesis-custom-blocks' ),
+													field.label,
+													index,
+													index - 1
+												) }
+											</span>
 											<button
+												aria-describedby={ `move-down-button-${ index }` }
 												className={ className(
 													moveButtonClass,
 													{ [ buttonDisabledClasses ]: isDownButtonDisabled }
@@ -237,6 +254,15 @@ const FieldsGrid = ( { selectedFieldName, setSelectedFieldName } ) => {
 													<path d="M19 9l-7 7-7-7" />
 												</svg>
 											</button>
+											<span id={ `move-down-button-${ index }` } className="hidden">
+												{ sprintf(
+													/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
+													__( 'Move %1$s field down from position %2$d to position %3$d', 'genesis-custom-blocks' ),
+													field.label,
+													index,
+													index + 1
+												) }
+											</span>
 										</div>
 									</div>
 								</div>
