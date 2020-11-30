@@ -86,6 +86,27 @@ const FieldsGrid = ( { selectedFieldName, setSelectedFieldName } ) => {
 	}, [ block ] );
 
 	/**
+	 * Ensures the order property is sequential for the fields.
+	 *
+	 * For example, the first field object should have an order property of 0,
+	 * the next should have 1, etc...
+	 *
+	 * @param {Object[]} initialFields The fields to set the order of.
+	 * @return {Array} The fields with correct order properties.
+	 */
+	const setCorrectOrderForFields = ( initialFields ) => {
+		return initialFields.reduce( ( accumulator, field, index ) => {
+			return [
+				...accumulator,
+				{
+					...field,
+					order: index,
+				},
+			];
+		}, [] );
+	};
+
+	/**
 	 * Reorders fields, moving a single field to another position.
 	 *
 	 * @param {number} moveFrom The index of the field to move.
@@ -100,20 +121,10 @@ const FieldsGrid = ( { selectedFieldName, setSelectedFieldName } ) => {
 		const newFields = [ ...fieldsToReorder ];
 		[ newFields[ moveFrom ], newFields[ moveTo ] ] = [ newFields[ moveTo ], newFields[ moveFrom ] ];
 
-		const newFieldsWithOrder = newFields.reduce( ( accumulator, field, index ) => {
-			return [
-				...accumulator,
-				{
-					...field,
-					order: index,
-				},
-			];
-		}, [] );
-
 		changeBlock( {
 			fields: getFieldsAsObject(
 				[
-					...newFieldsWithOrder,
+					...setCorrectOrderForFields( newFields ),
 					...getFieldsForLocation( getOtherLocation( currentLocation ) ),
 				]
 			),
