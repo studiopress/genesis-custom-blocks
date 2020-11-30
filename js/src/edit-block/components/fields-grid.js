@@ -15,7 +15,8 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 import { ClipboardCopy } from './';
 import { useBlock } from '../hooks';
-import { getNewFieldNumber, getWidthClass } from '../helpers';
+import { ALTERNATE_LOCATION, DEFAULT_LOCATION } from '../constants';
+import { getNewFieldNumber, getOtherLocation, getWidthClass } from '../helpers';
 import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
 
 /**
@@ -32,7 +33,7 @@ import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
  */
 const FieldsGrid = ( { selectedFieldName, setSelectedFieldName } ) => {
 	const { block, changeBlock } = useBlock();
-	const [ isEditorDisplay, setIsEditorDisplay ] = useState( true );
+	const [ currentLocation, setCurrentLocation ] = useState( DEFAULT_LOCATION );
 
 	/**
 	 * Adds a new field to the end of the existing fields.
@@ -56,13 +57,13 @@ const FieldsGrid = ( { selectedFieldName, setSelectedFieldName } ) => {
 			label,
 			control: 'text',
 			type: 'string',
-			location: isEditorDisplay ? 'editor' : 'inspector',
+			location: currentLocation,
 			order: Object.values( fields ).length,
 		};
 
 		fields[ name ] = newField;
 		changeBlock( { fields } );
-	}, [ block, changeBlock, isEditorDisplay ] );
+	}, [ block, changeBlock, currentLocation ] );
 
 	/**
 	 * Gets the fields for either the editor or inspector.
@@ -91,8 +92,7 @@ const FieldsGrid = ( { selectedFieldName, setSelectedFieldName } ) => {
 	 * @param {number} moveTo The index that the field should be moved to.
 	 */
 	const reorderFields = useCallback( ( moveFrom, moveTo ) => {
-		const location = isEditorDisplay ? 'editor' : 'inspector';
-		const fieldsToReorder = getFieldsForLocation( location );
+		const fieldsToReorder = getFieldsForLocation( currentLocation );
 		if ( ! fieldsToReorder.length ) {
 			return;
 		}
@@ -110,18 +110,17 @@ const FieldsGrid = ( { selectedFieldName, setSelectedFieldName } ) => {
 			];
 		}, [] );
 
-		const otherLocation = isEditorDisplay ? 'inspector' : 'editor';
 		changeBlock( {
 			fields: getFieldsAsObject(
 				[
 					...newFieldsWithOrder,
-					...getFieldsForLocation( otherLocation ),
+					...getFieldsForLocation( getOtherLocation( currentLocation ) ),
 				]
 			),
 		} );
-	}, [ changeBlock, getFieldsForLocation, isEditorDisplay ] );
+	}, [ changeBlock, getFieldsForLocation, currentLocation ] );
 
-	const fields = getFieldsForLocation( isEditorDisplay ? 'editor' : 'inspector' );
+	const fields = getFieldsForLocation( currentLocation );
 	const locationButtonClass = 'h-12 px-4 text-sm focus:outline-none';
 	const moveButtonClass = 'flex items-center justify-center text-sm w-6 h-5 hover:text-blue-700 z-10';
 	const buttonDisabledClasses = 'opacity-50 cursor-not-allowed';
@@ -132,12 +131,12 @@ const FieldsGrid = ( { selectedFieldName, setSelectedFieldName } ) => {
 				<button
 					className={ locationButtonClass }
 					onClick={ () => {
-						setIsEditorDisplay( true );
+						setCurrentLocation( DEFAULT_LOCATION );
 					} }
 				>
 					<span
 						className={ className( {
-							'font-semibold': isEditorDisplay,
+							'font-semibold': DEFAULT_LOCATION === currentLocation,
 						} ) }
 					>
 						{ __( 'Editor Fields', 'genesis-custom-blocks' ) }
@@ -146,12 +145,12 @@ const FieldsGrid = ( { selectedFieldName, setSelectedFieldName } ) => {
 				<button
 					className={ locationButtonClass }
 					onClick={ () => {
-						setIsEditorDisplay( false );
+						setCurrentLocation( ALTERNATE_LOCATION );
 					} }
 				>
 					<span
 						className={ className( {
-							'font-semibold': ! isEditorDisplay,
+							'font-semibold': ALTERNATE_LOCATION === currentLocation,
 						} ) }
 					>
 						{ __( 'Inspector Fields', 'genesis-custom-blocks' ) }

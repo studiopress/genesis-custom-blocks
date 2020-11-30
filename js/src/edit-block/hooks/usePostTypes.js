@@ -22,6 +22,7 @@ import { useSelect } from '@wordpress/data';
 const usePostTypes = () => ( {
 	postTypes: useSelect(
 		( select ) => {
+			// @ts-ignore
 			const postTypes = select( 'core' ).getPostTypes();
 
 			if ( ! postTypes || ! postTypes.length ) {

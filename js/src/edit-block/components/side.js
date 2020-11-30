@@ -28,16 +28,13 @@ import { BlockPanel, FieldPanel } from './';
  */
 const Side = ( { selectedFieldName } ) => {
 	const [ displayBlockPanel, setDisplayBlockPanel ] = useState( true );
-	const toggleDisplayFieldPanel = () => {
-		setDisplayBlockPanel( ( shouldDisplayFieldPanel ) => ! shouldDisplayFieldPanel );
-	};
 	const buttonClass = 'flex items-center h-12 px-5 text-sm focus:outline-none';
 
 	return (
 		<div className="side flex-shrink-0 flex flex-col border-l border-gray-300 overflow-scroll">
 			<div className="flex w-full border-b border-gray-300">
 				<button
-					onClick={ toggleDisplayFieldPanel }
+					onClick={ () => setDisplayBlockPanel( true ) }
 					className={
 						classNames(
 							buttonClass,
@@ -48,7 +45,7 @@ const Side = ( { selectedFieldName } ) => {
 					{ __( 'Block', 'genesis-custom-blocks' ) }
 				</button>
 				<button
-					onClick={ toggleDisplayFieldPanel }
+					onClick={ () => setDisplayBlockPanel( false ) }
 					className={
 						classNames(
 							buttonClass,
