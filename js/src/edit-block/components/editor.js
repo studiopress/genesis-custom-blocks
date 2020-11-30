@@ -12,7 +12,7 @@ import {
 	EditorProvider,
 	ErrorBoundary,
 } from '@wordpress/editor';
-import { StrictMode, useEffect } from '@wordpress/element';
+import { StrictMode, useEffect, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -40,6 +40,7 @@ import { BrowserURL, Header, Main, Side } from './';
  * @return {React.ReactElement} The editor.
  */
 const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
+	const [ selectedFieldName, setSelectedFieldName ] = useState( '' );
 	const post = useSelect(
 		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
 		[ postId, postType ]
@@ -87,8 +88,8 @@ const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 						<EditorNotices />
 						<Header />
 						<div className="flex w-full h-0 flex-grow">
-							<Main />
-							<Side />
+							<Main setSelectedFieldName={ setSelectedFieldName }	/>
+							<Side selectedFieldName={ selectedFieldName } />
 						</div>
 					</ErrorBoundary>
 				</EditorProvider>

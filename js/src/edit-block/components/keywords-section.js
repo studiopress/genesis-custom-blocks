@@ -1,12 +1,12 @@
 /**
  * External dependencies
  */
-import React from 'react';
+import * as React from 'react';
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { FormTokenField } from '@wordpress/components';
 
 /**
@@ -21,18 +21,29 @@ import { useBlock } from '../hooks';
  */
 const KeywordsSection = () => {
 	const { block, changeBlock } = useBlock();
-	const maxNumberOfKeyword = 3;
+	const maxNumberOfKeywords = 3;
+
+	/**
+	 * Handles changing of the tokens.
+	 *
+	 * @param {Array} tokens The new tokens (keywords).
+	 */
+	const handleChange = ( tokens ) => {
+		changeBlock( 'keywords', tokens );
+	};
 
 	return (
 		<div className="mt-5">
 			<FormTokenField
 				// @ts-ignore
-				label={ __( 'Keywords', 'genesis-custom-blocks' ) }
+				label={ sprintf(
+					/* translators: %1$d: the max number of keywords */
+					__( 'Keywords (max %1$d)', 'genesis-custom-blocks' ),
+					maxNumberOfKeywords
+				) }
 				value={ block.keywords }
-				maxLength={ maxNumberOfKeyword }
-				onChange={ ( tokens ) => {
-					changeBlock( 'keywords', tokens );
-				} }
+				maxLength={ maxNumberOfKeywords }
+				onChange={ handleChange }
 				messages={ {
 					added: __( 'Keyword added.', 'genesis-custom-blocks' ),
 					removed: __( 'Keyword removed.', 'genesis-custom-blocks' ),

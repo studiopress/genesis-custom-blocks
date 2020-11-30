@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import React from 'react';
+import * as React from 'react';
 
 /**
  * WordPress dependencies
@@ -69,7 +69,7 @@ const PostTypesSection = () => {
 				Array.isArray( postTypes ) && postTypes.length
 					? postTypes.map( ( postType ) => {
 						const id = `post-type-${ postType.slug }`;
-						const key = `post-type-enabled${ postType.slug }`;
+						const key = `post-type-enabled-${ postType.slug }`;
 						const checked = isEnabled( postType.slug );
 
 						return (
@@ -84,7 +84,7 @@ const PostTypesSection = () => {
 										handleChangePostTypes( event, postType.slug );
 									} }
 								/>
-								<label className="text-sm" forHtml={ id }>
+								<label className="text-sm" htmlFor={ id }>
 									{ postType.label }
 								</label>
 							</div>

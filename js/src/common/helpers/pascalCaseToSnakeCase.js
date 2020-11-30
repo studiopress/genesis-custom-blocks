@@ -6,8 +6,8 @@
  */
 const pascalCaseToSnakeCase = ( pascalCase ) => {
 	return pascalCase.replace(
-		/(?<=[a-z])[A-Z1-9]/g,
-		( match ) => '_' + match
+		/([a-z])([A-Z1-9])/g,
+		( match, p1, p2 ) => p1 + '_' + p2
 	).toLowerCase();
 };
 

@@ -1,8 +1,10 @@
 export { default as BlockPanel } from './block-panel';
 export { default as BrowserURL } from './browser-url';
 export { default as CategorySection } from './category-section';
+export { default as ClipboardCopy } from './clipboard-copy';
 export { default as Editor } from './editor';
 export { default as FieldPanel } from './field-panel';
+export { default as FieldsGrid } from './fields-grid';
 export { default as FieldSettings } from './field-settings';
 export { default as Header } from './header';
 export { default as IconSection } from './icon-section';

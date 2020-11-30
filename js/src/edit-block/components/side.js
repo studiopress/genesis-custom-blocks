@@ -16,11 +16,17 @@ import { __ } from '@wordpress/i18n';
 import { BlockPanel, FieldPanel } from './';
 
 /**
- * The side component.
+ * @typedef {Object} SideProps The component props.
+ * @property {Function} selectedFieldName The name of the selected field.
+ */
+
+/**
+ * The Side component.
  *
+ * @param {SideProps} props
  * @return {React.ReactElement} The side area.
  */
-const Side = () => {
+const Side = ( { selectedFieldName } ) => {
 	const [ displayBlockPanel, setDisplayBlockPanel ] = useState( true );
 	const toggleDisplayFieldPanel = () => {
 		setDisplayBlockPanel( ( shouldDisplayFieldPanel ) => ! shouldDisplayFieldPanel );
@@ -53,7 +59,11 @@ const Side = () => {
 					{ __( 'Field', 'genesis-custom-blocks' ) }
 				</button>
 			</div>
-			{ displayBlockPanel ? <BlockPanel /> : <FieldPanel /> }
+			{
+				displayBlockPanel
+					? <BlockPanel />
+					: <FieldPanel selectedFieldName={ selectedFieldName } />
+			}
 		</div>
 	);
 };

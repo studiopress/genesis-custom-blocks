@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import React from 'react';
+import * as React from 'react';
 
 /**
  * WordPress dependencies
@@ -16,6 +16,7 @@ import { getSettingsComponent } from '../helpers';
 /**
  * @typedef {Object} FieldSettingsProps The component props.
  * @property {Object} controls All of the possible controls.
+ * @property {Function} deleteField Deletes this field.
  * @property {Object} field The current field.
  * @property {Function} changeFieldSetting Edits a given field's value.
  */
@@ -26,7 +27,7 @@ import { getSettingsComponent } from '../helpers';
  * @param {FieldSettingsProps} props The component props.
  * @return {React.ReactElement} The field settings.
  */
-const FieldSettings = ( { controls, changeFieldSetting, field } ) => {
+const FieldSettings = ( { controls, changeFieldSetting, deleteField, field } ) => {
 	const control = controls[ field.control ];
 
 	return (
@@ -44,7 +45,7 @@ const FieldSettings = ( { controls, changeFieldSetting, field } ) => {
 									setting={ setting }
 									value={ value }
 									handleOnChange={ ( newSettingValue ) => {
-										changeFieldSetting( setting.name, newSettingValue );
+										changeFieldSetting( field.name, setting.name, newSettingValue );
 									} }
 								/>
 							</div>
@@ -55,7 +56,10 @@ const FieldSettings = ( { controls, changeFieldSetting, field } ) => {
 				} )
 			}
 			<div className="flex justify-between mt-5 border-t border-gray-300 pt-3">
-				<button className="flex items-center bg-red-200 text-sm h-6 px-2 rounded-sm leading-none text-red-700 hover:bg-red-500 hover:text-red-100">
+				<button
+					className="flex items-center bg-red-200 text-sm h-6 px-2 rounded-sm leading-none text-red-700 hover:bg-red-500 hover:text-red-100"
+					onClick={ deleteField }
+				>
 					{ __( 'Delete', 'genesis-custom-blocks' ) }
 				</button>
 				<button className="flex items-center bg-blue-200 text-sm h-6 px-2 rounded-sm leading-none text-blue-700 hover:bg-blue-500 hover:text-blue-100">

@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import React from 'react';
+import * as React from 'react';
 
 /**
  * WordPress dependencies
@@ -12,7 +12,7 @@ import { select } from '@wordpress/data';
 /**
  * Internal dependencies
  */
-import { getSimplifiedFields } from '../helpers';
+import { getFieldsAsArray } from '../../common/helpers';
 
 /**
  * Gets the control function for the field.
@@ -59,7 +59,7 @@ const getClassName = ( field ) => {
 const Fields = ( { fields, parentBlock, parentBlockProps, rowIndex } ) => (
 	<>
 		{
-			getSimplifiedFields( fields ).map( ( field ) => {
+			getFieldsAsArray( fields ).map( ( field ) => {
 				if ( field.location && ! field.location.includes( 'editor' ) ) {
 					return null; // This is not meant for the editor.
 				}
