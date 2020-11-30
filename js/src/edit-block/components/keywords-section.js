@@ -39,7 +39,6 @@ const KeywordsSection = () => {
 				value={ block.keywords }
 				maxLength={ maxNumberOfKeyword }
 				onChange={ handleChange }
-				onInputChange={ () => {} }
 				messages={ {
 					added: __( 'Keyword added.', 'genesis-custom-blocks' ),
 					removed: __( 'Keyword removed.', 'genesis-custom-blocks' ),
