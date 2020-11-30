@@ -26,7 +26,7 @@ commands:
             php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
             EXPECTED_SIGNATURE=$(curl -s https://composer.github.io/installer.sig)
             ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');")
-            [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && sudo php composer-setup.php --version=1.10.16 --install-dir=/bin --filename=composer || exit 1
+            [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && sudo php composer-setup.php --install-dir=/bin --filename=composer || exit 1
   nodegit-workaround:
     description: "Ensure nodegit runs without error"
     steps:
@@ -83,7 +83,6 @@ jobs:
           name: Running PHPUnit
           working_directory: *PLUGIN_PATH
           command: |
-            sudo composer self-update 1.10.16
             composer remove --dev phpunit/phpunit && composer install
             npm ci && npm run build
             composer require --dev phpunit/phpunit 5.7.9
