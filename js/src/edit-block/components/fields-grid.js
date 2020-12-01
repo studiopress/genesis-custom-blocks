@@ -83,9 +83,9 @@ const FieldsGrid = ( {
 						? fields.map( ( field, index ) => {
 							const selectField = () => {
 								setSelectedField( field.name );
-								setCurrentLocation( DEFAULT_LOCATION );
 								setPanelDisplaying( FIELD_PANEL );
 							};
+							const shouldDisplayMoveButtons = fields.length > 1;
 							const isUpButtonDisabled = 0 === index;
 							const isDownButtonDisabled = index >= ( fields.length - 1 );
 							const isSelected = field.name === selectedField;
@@ -123,63 +123,68 @@ const FieldsGrid = ( {
 											<span className="text-xs font-mono">{ field.name }</span>
 											<ClipboardCopy text={ field.name } />
 										</div>
-										<div
-											className={ className(
-												isSelected ? 'flex' : 'hidden',
-												'builder-field-move absolute top-0 left-0 flex-col justify-between top-0 left-0 -ml-8 mt-0 rounded-sm bg-white border border-black'
-											) }
-										>
-											<button
-												aria-describedby={ `move-up-button-${ index }` }
-												className={ className(
-													moveButtonClass,
-													{ [ buttonDisabledClasses ]: isUpButtonDisabled }
-												) }
-												onClick={ ( event ) => {
-													event.preventDefault();
-													reorderFields( index, index - 1, currentLocation );
-												} }
-												disabled={ isUpButtonDisabled }
-											>
-												<svg className="h-4 w-4 stroke-current" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-													<path d="M5 15l7-7 7 7" />
-												</svg>
-											</button>
-											<span id={ `move-up-button-${ index }` } className="hidden">
-												{ sprintf(
-													/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
-													__( 'Move %1$s field up from position %2$d to position %3$d', 'genesis-custom-blocks' ),
-													field.label,
-													index,
-													index - 1
-												) }
-											</span>
-											<button
-												aria-describedby={ `move-down-button-${ index }` }
-												className={ className(
-													moveButtonClass,
-													{ [ buttonDisabledClasses ]: isDownButtonDisabled }
-												) }
-												onClick={ ( event ) => {
-													event.preventDefault();
-													reorderFields( index, index + 1, currentLocation );
-												} }
-												disabled={ isDownButtonDisabled }
-											>
-												<svg className="h-4 w-4 stroke-current" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-													<path d="M19 9l-7 7-7-7" />
-												</svg>
-											</button>
-											<span id={ `move-down-button-${ index }` } className="hidden">
-												{ sprintf(
-													/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
-													__( 'Move %1$s field down from position %2$d to position %3$d', 'genesis-custom-blocks' ),
-													field.label,
-													index,
-													index + 1
-												) }
-											</span>
-										</div>
+										{ shouldDisplayMoveButtons
+											? (
+												<div
+													className={ className(
+														isSelected ? 'flex' : 'hidden',
+														'absolute top-0 left-0 flex-col justify-between top-0 left-0 -ml-8 mt-0 rounded-sm bg-white border border-black'
+													) }
+												>
+													<button
+														aria-describedby={ `move-up-button-${ index }` }
+														className={ className(
+															moveButtonClass,
+															{ [ buttonDisabledClasses ]: isUpButtonDisabled }
+														) }
+														onClick={ ( event ) => {
+															event.preventDefault();
+															reorderFields( index, index - 1, currentLocation );
+														} }
+														disabled={ isUpButtonDisabled }
+													>
+														<svg className="h-4 w-4 stroke-current" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+															<path d="M5 15l7-7 7 7" />
+														</svg>
+													</button>
+													<span id={ `move-up-button-${ index }` } className="hidden">
+														{ sprintf(
+															/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
+															__( 'Move %1$s field up from position %2$d to position %3$d', 'genesis-custom-blocks' ),
+															field.label,
+															index,
+															index - 1
+														) }
+													</span>
+													<button
+														aria-describedby={ `move-down-button-${ index }` }
+														className={ className(
+															moveButtonClass,
+															{ [ buttonDisabledClasses ]: isDownButtonDisabled }
+														) }
+														onClick={ ( event ) => {
+															event.preventDefault();
+															reorderFields( index, index + 1, currentLocation );
+														} }
+														disabled={ isDownButtonDisabled }
+													>
+														<svg className="h-4 w-4 stroke-current" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+															<path d="M19 9l-7 7-7-7" />
+														</svg>
+													</button>
+													<span id={ `move-down-button-${ index }` } className="hidden">
+														{ sprintf(
+															/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
+															__( 'Move %1$s field down from position %2$d to position %3$d', 'genesis-custom-blocks' ),
+															field.label,
+															index,
+															index + 1
+														) }
+													</span>
+												</div>
+											)
+											: null
+										}
 									</div>
 								</div>
 							);
