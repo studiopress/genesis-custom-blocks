@@ -93,7 +93,8 @@ jobs:
     steps:
       - checkout
       - node/install:
-          node-version: latest
+          node-version: lts
+      - nodegit-workaround
       - run: HUSKY_SKIP_INSTALL=1 npm ci && npm run test:js
 
   svn-deploy:
