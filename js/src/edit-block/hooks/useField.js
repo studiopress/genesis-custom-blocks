@@ -109,6 +109,8 @@ const useField = () => {
 		const newField = {
 			name: previousField.name,
 			label: previousField.label,
+			location: previousField.location,
+			order: previousField.order,
 			control: newControl.name,
 			type: newControl.type,
 		};
