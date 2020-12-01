@@ -8,10 +8,11 @@ import { useCallback, useMemo } from '@wordpress/element';
  * Internal dependencies
  */
 import { BLOCK_NAMESPACE } from '../constants';
-import { getBlock } from '../helpers';
+import { getBlock, getNewFieldNumber } from '../helpers';
 
 /**
  * @typedef {Object} UseBlockReturn The return value of useBlock.
+ * @property {Function} addNewField Adds a new field.
  * @property {Object} block The block, parsed into an object.
  * @property {Function} changeBlock Changes the block configuration.
  * @property {Function} changeBlockName Changes the block name.
@@ -88,7 +89,40 @@ const useBlock = () => {
 		editPost( { content: JSON.stringify( newBlock ) } );
 	}, [ editPost, getBlockNameWithNameSpace, getFullBlock ] );
 
+	/**
+	 * Adds a new field to the end of the existing fields.
+	 *
+	 * @param {string} currentLocation The location displaying, either 'editor' or 'location'.
+	 */
+	const addNewField = useCallback( ( currentLocation ) => {
+		const fields = block.fields ? { ...block.fields } : {};
+		const newFieldNumber = getNewFieldNumber( fields );
+		const name = newFieldNumber
+			? `new-field-${ newFieldNumber.toString() }`
+			: 'new-field';
+		const label = newFieldNumber
+			? sprintf(
+				// translators: %s: the field number
+				__( 'New Field %s', 'genesis-custom-blocks' ),
+				newFieldNumber.toString()
+			)
+			: __( 'New Field', 'genesis-custom-blocks' );
+
+		const newField = {
+			name,
+			label,
+			control: 'text',
+			type: 'string',
+			location: currentLocation,
+			order: Object.values( fields ).length,
+		};
+
+		fields[ name ] = newField;
+		changeBlock( { fields } );
+	}, [ block, changeBlock ] );
+
 	return {
+		addNewField,
 		block,
 		changeBlock,
 		changeBlockName,

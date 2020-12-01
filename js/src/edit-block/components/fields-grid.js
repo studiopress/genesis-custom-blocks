@@ -16,7 +16,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { ClipboardCopy } from './';
 import { useBlock, useField } from '../hooks';
 import { ALTERNATE_LOCATION, DEFAULT_LOCATION } from '../constants';
-import { getNewFieldNumber, getWidthClass } from '../helpers';
+import { getWidthClass } from '../helpers';
 
 /**
  * @typedef {Object} FieldsGridProps The component props.
@@ -38,38 +38,8 @@ const FieldsGrid = ( {
 	setCurrentLocation,
 	setSelectedFieldName,
 } ) => {
-	const { block, changeBlock } = useBlock();
+	const { addNewField } = useBlock();
 	const { getFieldsForLocation, reorderFields } = useField();
-
-	/**
-	 * Adds a new field to the end of the existing fields.
-	 */
-	const addNewField = useCallback( () => {
-		const fields = block.fields ? { ...block.fields } : {};
-		const newFieldNumber = getNewFieldNumber( fields );
-		const name = newFieldNumber
-			? `new-field-${ newFieldNumber.toString() }`
-			: 'new-field';
-		const label = newFieldNumber
-			? sprintf(
-				// translators: %s: the field number
-				__( 'New Field %s', 'genesis-custom-blocks' ),
-				newFieldNumber.toString()
-			)
-			: __( 'New Field', 'genesis-custom-blocks' );
-
-		const newField = {
-			name,
-			label,
-			control: 'text',
-			type: 'string',
-			location: currentLocation,
-			order: Object.values( fields ).length,
-		};
-
-		fields[ name ] = newField;
-		changeBlock( { fields } );
-	}, [ block, changeBlock, currentLocation ] );
 
 	const fields = getFieldsForLocation( currentLocation );
 	const locationButtonClass = 'h-12 px-4 text-sm focus:outline-none';
@@ -223,7 +193,7 @@ const FieldsGrid = ( {
 			</div>
 			<button
 				className="flex items-center justify-center h-6 w-6 bg-black rounded-sm text-white mt-4 ml-auto"
-				onClick={ addNewField }
+				onClick={ addNewField( currentLocation ) }
 			>
 				<svg
 					className="w-4 h-4 fill-current"
