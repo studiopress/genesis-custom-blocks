@@ -61,6 +61,7 @@ const useField = () => {
 	 * Adds a new field to the end of the existing fields.
 	 *
 	 * @param {string} location The location to add the field to.
+	 * @return {string} The name of the new field.
 	 */
 	const addNewField = useCallback( ( location ) => {
 		const { fields = {} } = block;
@@ -70,9 +71,9 @@ const useField = () => {
 			: 'new-field';
 		const label = newFieldNumber
 			? sprintf(
-				// translators: %s: the field number
-				__( 'New Field %s', 'genesis-custom-blocks' ),
-				newFieldNumber.toString()
+				// translators: %1$d: the field number
+				__( 'New Field %1$d', 'genesis-custom-blocks' ),
+				newFieldNumber
 			)
 			: __( 'New Field', 'genesis-custom-blocks' );
 
@@ -102,10 +103,6 @@ const useField = () => {
 		const newControl = controls[ newControlName ];
 		if ( ! newControl || ! fieldName ) {
 			return;
-		}
-
-		if ( ! fullBlock[ blockNameWithNameSpace ].fields ) {
-			fullBlock[ blockNameWithNameSpace ].fields = [];
 		}
 
 		const previousField = fullBlock[ blockNameWithNameSpace ].fields[ fieldName ];

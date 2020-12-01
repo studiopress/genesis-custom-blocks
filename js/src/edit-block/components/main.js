@@ -19,7 +19,7 @@ import { useBlock } from '../hooks';
 /**
  * @typedef {Object} MainProps The component props.
  * @property {string} currentLocation The currently selected location.
- * @property {string} selectedField The currently selected field.
+ * @property {string|null} selectedField The currently selected field.
  * @property {Function} setCurrentLocation Sets the currently selected location.
  * @property {Function} setPanelDisplaying Sets the current panel displaying.
  * @property {Function} setSelectedField Sets the name of the selected field.
@@ -50,7 +50,7 @@ const Main = ( {
 	const changeTitle = useCallback( () => {
 		if (
 			( editedTitle && editedTitle !== block.title ) ||
-			( ! editedTitle && block.title )
+			( ! editedTitle && block.title ) // If the user deletes the title.
 		) {
 			changeBlock( { title: editedTitle } );
 		}

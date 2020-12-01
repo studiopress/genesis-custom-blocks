@@ -13,14 +13,14 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { ClipboardCopy } from './';
-import { useField } from '../hooks';
 import { ALTERNATE_LOCATION, DEFAULT_LOCATION, FIELD_PANEL } from '../constants';
+import { useField } from '../hooks';
 import { getWidthClass } from '../helpers';
 
 /**
  * @typedef {Object} FieldsGridProps The component props.
  * @property {string} currentLocation The currently selected location.
- * @property {string} selectedField The currenetly selected field.
+ * @property {string|null} selectedField The currenetly selected field.
  * @property {Function} setCurrentLocation Sets the currently selected location.
  * @property {Function} setPanelDisplaying Sets the current panel displaying.
  * @property {Function} setSelectedField Sets the name of the selected field.

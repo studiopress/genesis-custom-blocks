@@ -118,6 +118,7 @@ const emailField = {
 		maxlengthSetting,
 	],
 };
+
 const mockControls = {
 	email: emailField,
 };
@@ -148,7 +149,7 @@ describe( 'Side', () => {
 		expect( getByText( /post types/i ) ).toBeInTheDocument();
 	} );
 
-	it( 'displays the panels with their sections', async () => {
+	it( 'displays the field panel with its sections', async () => {
 		const { getAllByText, getByLabelText, getByText } = render(
 			<Side { ...getProps() } panelDisplaying={ FIELD_PANEL } />
 		);

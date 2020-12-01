@@ -50,14 +50,6 @@ jest.mock( '../../hooks/useField', () => {
 	} ) );
 } );
 
-jest.mock( '@wordpress/api-fetch', () => {
-	return jest.fn( () => {
-		return Promise.resolve( {
-			json: () => Promise.resolve( {} ),
-		} );
-	} );
-} );
-
 global.gcbEditor = { controls: {} };
 
 describe( 'FieldsGrid', () => {

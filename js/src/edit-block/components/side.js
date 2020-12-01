@@ -18,7 +18,7 @@ import { BLOCK_PANEL, FIELD_PANEL } from '../constants';
 /**
  * @typedef {Object} SideProps The component props.
  * @property {string} panelDisplaying The panel currently displaying in the side, like 'block'.
- * @property {string} selectedField The name of the selected field.
+ * @property {string|null} selectedField The name of the selected field.
  * @property {Function} setCurrentLocation Sets the current location, like 'editor'.
  * @property {Function} setPanelDisplaying Sets the panel currently displaying in the side.
  * @property {Function} setSelectedField Sets the selected field name.
