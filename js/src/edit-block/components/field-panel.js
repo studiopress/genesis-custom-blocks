@@ -6,14 +6,12 @@ import React from 'react';
 /**
  * WordPress dependencies
  */
-import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import { FieldSettings } from './';
-import { convertToSlug } from '../helpers';
 import { useField } from '../hooks';
 
 /**
@@ -42,29 +40,8 @@ const FieldPanel = ( {
 		changeFieldSettings,
 	} = useField();
 
-	const [ isAutoSluggingComplete, setIsAutoSluggingComplete ] = useState( false );
 	const controlValues = Object.values( controls );
 	const field = getField( selectedField );
-
-	/**
-	 * Handles changing of the field label.
-	 *
-	 * @param {React.ChangeEvent} event The change event.
-	 */
-	const handleChangeLabel = ( event ) => {
-		if ( ! event.target ) {
-			return;
-		}
-
-		// @ts-ignore
-		const { value } = event.target;
-		const newField = { label: value };
-		if ( ! isAutoSluggingComplete && value ) {
-			newField.name = convertToSlug( value );
-		}
-
-		changeFieldSettings( selectedField, newField );
-	};
 
 	return (
 		<div className="p-4">
@@ -82,13 +59,12 @@ const FieldPanel = ( {
 								type="text"
 								id="field-label"
 								value={ field.label }
-								onFocus={ () => {
-									if ( ! field.name ) {
-										setIsAutoSluggingComplete( false );
+								onChange={ ( event ) => {
+									if ( event.target ) {
+										// @ts-ignore
+										changeFieldSettings( selectedField, { label: event.target.value } );
 									}
 								} }
-								onBlur={ () => setIsAutoSluggingComplete( true ) }
-								onChange={ handleChangeLabel }
 							/>
 							<span className="block italic text-xs mt-1">{ __( 'A label or a title for this field.', 'genesis-custom-blocks' ) }</span>
 						</div>
