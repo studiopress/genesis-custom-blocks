@@ -18,9 +18,9 @@ import { useField } from '../hooks';
 
 /**
  * @typedef {Object} FieldPanelProps The component props.
- * @property {string} selectedFieldName The name of the selected field.
+ * @property {string} selectedField The name of the selected field.
  * @property {Function} setCurrentLocation Sets the current location, like 'editor'.
- * @property {Function} setSelectedFieldName Sets the currently selected field name.
+ * @property {Function} setSelectedField Sets the currently selected field name.
  */
 
 /**
@@ -30,9 +30,9 @@ import { useField } from '../hooks';
  * @return {React.ReactElement} The field panel.
  */
 const FieldPanel = ( {
-	selectedFieldName,
+	selectedField,
 	setCurrentLocation,
-	setSelectedFieldName,
+	setSelectedField,
 } ) => {
 	const {
 		controls,
@@ -44,7 +44,7 @@ const FieldPanel = ( {
 
 	const [ isAutoSluggingComplete, setIsAutoSluggingComplete ] = useState( false );
 	const controlValues = Object.values( controls );
-	const field = getField( selectedFieldName );
+	const field = getField( selectedField );
 
 	/**
 	 * Handles changing of the field label.
@@ -63,13 +63,13 @@ const FieldPanel = ( {
 			newField.name = convertToSlug( value );
 		}
 
-		changeFieldSettings( selectedFieldName, newField );
+		changeFieldSettings( selectedField, newField );
 	};
 
 	return (
 		<div className="p-4">
 			{
-				null === selectedFieldName
+				null === selectedField
 					? <span className="text-sm">
 						{ __( 'No field selected', 'genesis-custom-blocks' ) }
 					</span>
@@ -101,8 +101,8 @@ const FieldPanel = ( {
 								value={ field.name }
 								onChange={ ( event ) => {
 									if ( event.target ) {
-										changeFieldSettings( selectedFieldName, { name: event.target.value } );
-										setSelectedFieldName( event.target.value );
+										changeFieldSettings( selectedField, { name: event.target.value } );
+										setSelectedField( event.target.value );
 									}
 								} }
 							/>
@@ -116,7 +116,7 @@ const FieldPanel = ( {
 								value={ field.control }
 								onChange={ ( event ) => {
 									if ( event.target ) {
-										changeControl( selectedFieldName, event.target.value );
+										changeControl( selectedField, event.target.value );
 									}
 								} }
 							>
@@ -130,7 +130,7 @@ const FieldPanel = ( {
 							controls={ controls }
 							changeFieldSettings={ changeFieldSettings }
 							deleteField={ () => {
-								deleteField( selectedFieldName );
+								deleteField( selectedField );
 							} }
 							setCurrentLocation={ setCurrentLocation }
 						/>

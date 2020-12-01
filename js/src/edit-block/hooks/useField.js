@@ -108,6 +108,7 @@ const useField = () => {
 		fullBlock[ blockNameWithNameSpace ] = block;
 
 		editPost( { content: JSON.stringify( fullBlock ) } );
+		return newFieldName;
 	}, [ block, blockNameWithNameSpace, editPost, fullBlock ] );
 
 	/**

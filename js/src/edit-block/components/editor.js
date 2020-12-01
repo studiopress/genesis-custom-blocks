@@ -18,7 +18,7 @@ import { StrictMode, useEffect, useState } from '@wordpress/element';
  * Internal dependencies
  */
 import { BrowserURL, Header, Main, Side } from './';
-import { DEFAULT_LOCATION } from '../constants';
+import { DEFAULT_LOCATION, BLOCK_PANEL } from '../constants';
 import { getDefaultBlock } from '../helpers';
 import { useBlock } from '../hooks';
 
@@ -44,8 +44,9 @@ import { useBlock } from '../hooks';
  */
 const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 	const { block, changeBlockName } = useBlock();
-	const [ selectedFieldName, setSelectedFieldName ] = useState( null );
+	const [ selectedField, setSelectedField ] = useState( null );
 	const [ currentLocation, setCurrentLocation ] = useState( DEFAULT_LOCATION );
+	const [ panelDisplaying, setPanelDisplaying ] = useState( BLOCK_PANEL );
 
 	const post = useSelect(
 		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
@@ -101,14 +102,17 @@ const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 						<div className="flex w-full h-0 flex-grow">
 							<Main
 								currentLocation={ currentLocation }
-								selectedFieldName={ selectedFieldName }
+								selectedField={ selectedField }
 								setCurrentLocation={ setCurrentLocation }
-								setSelectedFieldName={ setSelectedFieldName }
+								setPanelDisplaying={ setPanelDisplaying }
+								setSelectedField={ setSelectedField }
 							/>
 							<Side
-								selectedFieldName={ selectedFieldName }
+								panelDisplaying={ panelDisplaying }
+								setPanelDisplaying={ setPanelDisplaying }
+								selectedField={ selectedField }
 								setCurrentLocation={ setCurrentLocation }
-								setSelectedFieldName={ setSelectedFieldName }
+								setSelectedField={ setSelectedField }
 							/>
 						</div>
 					</ErrorBoundary>

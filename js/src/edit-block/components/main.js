@@ -19,9 +19,10 @@ import { useBlock } from '../hooks';
 /**
  * @typedef {Object} MainProps The component props.
  * @property {string} currentLocation The currently selected location.
- * @property {string} selectedFieldName The currently selected field.
+ * @property {string} selectedField The currently selected field.
  * @property {Function} setCurrentLocation Sets the currently selected location.
- * @property {Function} setSelectedFieldName Sets the name of the selected field.
+ * @property {Function} setPanelDisplaying Sets the current panel displaying.
+ * @property {Function} setSelectedField Sets the name of the selected field.
  */
 
 /**
@@ -34,9 +35,10 @@ import { useBlock } from '../hooks';
  */
 const Main = ( {
 	currentLocation,
-	selectedFieldName,
+	selectedField,
 	setCurrentLocation,
-	setSelectedFieldName,
+	setPanelDisplaying,
+	setSelectedField,
 } ) => {
 	const { block, changeBlock } = useBlock();
 	const editedTitle = useSelect(
@@ -66,9 +68,10 @@ const Main = ( {
 				</div>
 				<FieldsGrid
 					currentLocation={ currentLocation }
-					selectedFieldName={ selectedFieldName }
+					selectedField={ selectedField }
 					setCurrentLocation={ setCurrentLocation }
-					setSelectedFieldName={ setSelectedFieldName }
+					setPanelDisplaying={ setPanelDisplaying }
+					setSelectedField={ setSelectedField }
 				/>
 			</div>
 		</div>

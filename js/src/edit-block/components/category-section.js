@@ -119,17 +119,16 @@ const CategorySection = () => {
 						</option>
 					);
 				} ) }
-				{
-					block.category && ! isDefaultCategory()
-						? (
-							<option
-								value={ block && block.category ? block.category.slug : null }
-								key="block-category-non-default"
-							>
-								{ block.category && block.category.title ? block.category.title : block.category.slug }
-							</option>
-						)
-						: null
+				{ block.category && ! isDefaultCategory()
+					? (
+						<option
+							value={ block && block.category ? block.category.slug : null }
+							key="block-category-non-default"
+						>
+							{ block.category && block.category.title ? block.category.title : block.category.slug }
+						</option>
+					)
+					: null
 				}
 			</select>
 			<button

@@ -10,6 +10,7 @@ import user from '@testing-library/user-event';
  * Internal dependencies
  */
 import { FieldsGrid } from '../../components';
+import { BLOCK_PANEL } from '../../constants';
 
 const mockUrlField = {
 	control: 'url',
@@ -64,9 +65,11 @@ describe( 'FieldsGrid', () => {
 		const { getByText, getByTitle } = render(
 			<FieldsGrid
 				currentLocation="editor"
-				selectedFieldName={ mockUrlField.name }
+				panelDisplaying={ BLOCK_PANEL }
+				selectedField={ mockUrlField.name }
 				setCurrentLocation={ jest.fn() }
-				setSelectedFieldName={ jest.fn() }
+				setPanelDisplaying={ jest.fn() }
+				setSelectedField={ jest.fn() }
 			/>
 		);
 

@@ -5,7 +5,9 @@ import { __ } from '@wordpress/i18n';
 
 export const ALTERNATE_LOCATION = 'inspector';
 export const BLOCK_NAMESPACE = 'genesis-custom-blocks';
+export const BLOCK_PANEL = 'block';
 export const DEFAULT_LOCATION = 'editor';
+export const FIELD_PANEL = 'field';
 export const LOCATIONS = [ DEFAULT_LOCATION, 'inspector' ];
 export const LOCATIONS_WITH_LABEL = [
 	{

@@ -14,15 +14,16 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 import { ClipboardCopy } from './';
 import { useField } from '../hooks';
-import { ALTERNATE_LOCATION, DEFAULT_LOCATION } from '../constants';
+import { ALTERNATE_LOCATION, DEFAULT_LOCATION, FIELD_PANEL } from '../constants';
 import { getWidthClass } from '../helpers';
 
 /**
  * @typedef {Object} FieldsGridProps The component props.
  * @property {string} currentLocation The currently selected location.
- * @property {string} selectedFieldName The currenetly selected field.
+ * @property {string} selectedField The currenetly selected field.
  * @property {Function} setCurrentLocation Sets the currently selected location.
- * @property {Function} setSelectedFieldName Sets the name of the selected field.
+ * @property {Function} setPanelDisplaying Sets the current panel displaying.
+ * @property {Function} setSelectedField Sets the name of the selected field.
  */
 
 /**
@@ -33,9 +34,10 @@ import { getWidthClass } from '../helpers';
  */
 const FieldsGrid = ( {
 	currentLocation,
-	selectedFieldName,
+	selectedField,
 	setCurrentLocation,
-	setSelectedFieldName,
+	setPanelDisplaying,
+	setSelectedField,
 } ) => {
 	const { addNewField, getFieldsForLocation, reorderFields } = useField();
 
@@ -49,9 +51,7 @@ const FieldsGrid = ( {
 			<div className="flex mt-6">
 				<button
 					className={ locationButtonClass }
-					onClick={ () => {
-						setCurrentLocation( DEFAULT_LOCATION );
-					} }
+					onClick={ () => setCurrentLocation( DEFAULT_LOCATION ) }
 				>
 					<span
 						className={ className( {
@@ -63,9 +63,7 @@ const FieldsGrid = ( {
 				</button>
 				<button
 					className={ locationButtonClass }
-					onClick={ () => {
-						setCurrentLocation( ALTERNATE_LOCATION );
-					} }
+					onClick={ () => setCurrentLocation( ALTERNATE_LOCATION ) }
 				>
 					<span
 						className={ className( {
@@ -84,12 +82,12 @@ const FieldsGrid = ( {
 					fields && fields.length
 						? fields.map( ( field, index ) => {
 							const selectField = () => {
-								setSelectedFieldName( field.name );
+								setSelectedField( field.name );
 								setCurrentLocation( DEFAULT_LOCATION );
 							};
 							const isUpButtonDisabled = 0 === index;
 							const isDownButtonDisabled = index >= ( fields.length - 1 );
-							const isSelected = field.name === selectedFieldName;
+							const isSelected = field.name === selectedField;
 
 							return (
 								<div
@@ -101,13 +99,11 @@ const FieldsGrid = ( {
 									key={ `field-item-${ index }` }
 									role="gridcell"
 									tabIndex={ 0 }
-									aria-label={
-										sprintf(
-											// translators: %s: the label of the field
-											__( 'Field: %s', 'genesis-custom-blocks' ),
-											field.label
-										)
-									}
+									aria-label={ sprintf(
+										// translators: %s: the label of the field
+										__( 'Field: %s', 'genesis-custom-blocks' ),
+										field.label
+									) }
 									onClick={ selectField }
 									onKeyPress={ selectField }
 								>
@@ -192,7 +188,11 @@ const FieldsGrid = ( {
 			</div>
 			<button
 				className="flex items-center justify-center h-6 w-6 bg-black rounded-sm text-white mt-4 ml-auto"
-				onClick={ () => addNewField( currentLocation ) }
+				onClick={ () => {
+					const newFieldName = addNewField( currentLocation );
+					setSelectedField( newFieldName );
+					setPanelDisplaying( FIELD_PANEL );
+				} }
 			>
 				<svg
 					className="w-4 h-4 fill-current"
