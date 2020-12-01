@@ -151,7 +151,7 @@ const useField = () => {
 				return ! field.location || 'editor' === field.location;
 			}
 
-			return field.location === 'inspector';
+			return location === field.location;
 		} );
 	}, [ block ] );
 
