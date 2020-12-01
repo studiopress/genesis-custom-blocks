@@ -72,7 +72,6 @@
     "gulp-string-replace": "1.1.2",
     "husky": "4.3.0",
     "ignore-emit-webpack-plugin": "2.0.2",
-    "jest": "26.6.3",
     "jest-axe": "3.5.0",
     "jest-environment-jsdom-sixteen": "1.0.3",
     "jest-silent-reporter": "0.2.1",
@@ -112,7 +111,7 @@
     "precommit": "./bin/pre-commit.sh",
     "test:e2e": "wp-scripts test-e2e --config=tests/e2e/jest.config.js --runInBand",
     "test:e2e:interactive": "npm run test:e2e -- --puppeteer-interactive",
-    "test:js": "jest --config=tests/js/jest.config.js",
+    "test:js": "wp-scripts test-unit-js --config=tests/js/jest.config.js",
     "test:js:coverage": "npm run test:js -- --coverage --coverageDirectory=tests/coverage/js",
     "test:js:watch": "npm run test:js -- --watch"
   },
