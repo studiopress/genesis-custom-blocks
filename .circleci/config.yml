@@ -94,11 +94,7 @@ jobs:
       - checkout
       - node/install:
           node-version: lts
-      - nodegit-workaround
-      - run:
-          command: |
-            HUSKY_SKIP_INSTALL=1 npm ci
-            npm run test:js
+      - run: HUSKY_SKIP_INSTALL=1 npm ci && npm run test:js
 
   svn-deploy:
     executor:
