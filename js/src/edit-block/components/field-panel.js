@@ -34,7 +34,6 @@ const FieldPanel = ( { selectedFieldName, setCurrentLocation } ) => {
 		deleteField,
 		getField,
 		changeControl,
-		changeFieldName,
 		changeFieldSettings,
 	} = useField();
 
@@ -54,21 +53,12 @@ const FieldPanel = ( { selectedFieldName, setCurrentLocation } ) => {
 
 		// @ts-ignore
 		const { value } = event.target;
-
 		const newField = { label: value };
-		if ( ( ! isAutoSluggingComplete || ! field.name ) && value ) {
-			changeFieldName(
-				field.name,
-				convertToSlug( value ),
-				newField
-			);
-		} else {
-			changeFieldSettings( selectedFieldName, newField );
+		if ( ! isAutoSluggingComplete && value ) {
+			newField.name = convertToSlug( value );
 		}
 
-		if ( ! field.name ) {
-			setIsAutoSluggingComplete( false );
-		}
+		changeFieldSettings( selectedFieldName, newField );
 	};
 
 	return (
@@ -84,11 +74,12 @@ const FieldPanel = ( { selectedFieldName, setCurrentLocation } ) => {
 								type="text"
 								id="field-label"
 								value={ field.label }
-								onBlur={ () => {
-									if ( field.name ) {
-										setIsAutoSluggingComplete( true );
+								onFocus={ () => {
+									if ( ! field.name ) {
+										setIsAutoSluggingComplete( false );
 									}
 								} }
+								onBlur={ () => setIsAutoSluggingComplete( true ) }
 								onChange={ handleChangeLabel }
 							/>
 							<span className="block italic text-xs mt-1">{ __( 'A label or a title for this field.', 'genesis-custom-blocks' ) }</span>
