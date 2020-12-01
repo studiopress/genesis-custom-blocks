@@ -19,6 +19,7 @@ import { BlockPanel, FieldPanel } from './';
  * @typedef {Object} SideProps The component props.
  * @property {string} selectedFieldName The name of the selected field.
  * @property {Function} setCurrentLocation Sets the current location, like 'editor'.
+ * @property {Function} setSelectedFieldName Sets the selected field name.
  */
 
 /**
@@ -27,7 +28,11 @@ import { BlockPanel, FieldPanel } from './';
  * @param {SideProps} props
  * @return {React.ReactElement} The side area.
  */
-const Side = ( { selectedFieldName, setCurrentLocation } ) => {
+const Side = ( {
+	selectedFieldName,
+	setCurrentLocation,
+	setSelectedFieldName,
+} ) => {
 	const [ displayBlockPanel, setDisplayBlockPanel ] = useState( true );
 	const buttonClass = 'flex items-center h-12 px-5 text-sm focus:outline-none';
 
@@ -57,7 +62,13 @@ const Side = ( { selectedFieldName, setCurrentLocation } ) => {
 			</div>
 			{ displayBlockPanel
 				? <BlockPanel />
-				: <FieldPanel selectedFieldName={ selectedFieldName } setCurrentLocation={ setCurrentLocation } />
+				: (
+					<FieldPanel
+						selectedFieldName={ selectedFieldName }
+						setCurrentLocation={ setCurrentLocation }
+						setSelectedFieldName={ setSelectedFieldName }
+					/>
+				)
 			}
 		</div>
 	);

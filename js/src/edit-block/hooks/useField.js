@@ -4,13 +4,19 @@
  * WordPress dependencies
  */
 import { useDispatch, useSelect } from '@wordpress/data';
-import { useCallback } from '@wordpress/element';
+import { useCallback, useMemo } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { getBlock, getNewFieldNumber, getOtherLocation, setCorrectOrderForFields } from '../helpers';
+import {
+	getBlock,
+	getBlockNameWithNameSpace,
+	getNewFieldNumber,
+	getOtherLocation,
+	setCorrectOrderForFields,
+} from '../helpers';
 import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
 
 /**
@@ -45,8 +51,11 @@ const useField = () => {
 
 	const fullBlock = getFullBlock();
 	const { editPost } = useDispatch( 'core/editor' );
-	const blockNameWithNameSpace = Object.keys( fullBlock )[ 0 ];
-	const block = fullBlock[ blockNameWithNameSpace ];
+	const blockNameWithNameSpace = getBlockNameWithNameSpace( fullBlock );
+	const block = useMemo(
+		() => fullBlock[ blockNameWithNameSpace ] || {},
+		[ fullBlock, blockNameWithNameSpace ]
+	);
 
 	/**
 	 * Changes a field name (slug), and returns the fields.
@@ -61,8 +70,7 @@ const useField = () => {
 	 * @return {Object} The fields with the field renamed.
 	 */
 	const changeFieldName = ( fields, previousName, newName ) => {
-		const renamedField = { ...fields[ previousName ], name: newName };
-		fields[ newName ] = renamedField;
+		fields[ newName ] = { ...fields[ previousName ], name: newName };
 		delete fields[ previousName ];
 		return fields;
 	};
@@ -73,7 +81,7 @@ const useField = () => {
 	 * @param {string} location The location to add the field to.
 	 */
 	const addNewField = useCallback( ( location ) => {
-		const { fields = {} } = fullBlock[ blockNameWithNameSpace ];
+		const { fields = {} } = block;
 		const newFieldNumber = getNewFieldNumber( fields );
 		const newFieldName = newFieldNumber
 			? `new-field-${ newFieldNumber.toString() }`
@@ -96,10 +104,11 @@ const useField = () => {
 		};
 
 		fields[ newFieldName ] = newField;
-		fullBlock[ blockNameWithNameSpace ].fields = fields;
+		block.fields = fields;
+		fullBlock[ blockNameWithNameSpace ] = block;
 
 		editPost( { content: JSON.stringify( fullBlock ) } );
-	}, [ blockNameWithNameSpace, editPost, fullBlock ] );
+	}, [ block, blockNameWithNameSpace, editPost, fullBlock ] );
 
 	/**
 	 * Changes the control of a field.
@@ -135,7 +144,7 @@ const useField = () => {
 	 * @return {Object} The field, or {}.
 	 */
 	const getField = useCallback( ( fieldName ) => {
-		return fieldName ? block.fields[ fieldName ] : {};
+		return block.fields[ fieldName ] ? block.fields[ fieldName ] : {};
 	}, [ block ] );
 
 	/**
@@ -198,7 +207,7 @@ const useField = () => {
 			);
 		}
 
-		if ( newSettings.name ) {
+		if ( newSettings.hasOwnProperty( 'name' ) ) {
 			fullBlock[ blockNameWithNameSpace ].fields = changeFieldName(
 				fullBlock[ blockNameWithNameSpace ].fields,
 				fieldName,
@@ -206,8 +215,9 @@ const useField = () => {
 			);
 		}
 
-		const field = fullBlock[ blockNameWithNameSpace ].fields[ fieldName ];
-		fullBlock[ blockNameWithNameSpace ].fields[ fieldName ] = {
+		const newName = newSettings.hasOwnProperty( 'name' ) ? newSettings.name : fieldName;
+		const field = fullBlock[ blockNameWithNameSpace ].fields[ newName ];
+		fullBlock[ blockNameWithNameSpace ].fields[ newName ] = {
 			...field,
 			...newSettings,
 		};

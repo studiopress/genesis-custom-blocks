@@ -44,7 +44,7 @@ import { useBlock } from '../hooks';
  */
 const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 	const { block, changeBlockName } = useBlock();
-	const [ selectedFieldName, setSelectedFieldName ] = useState( '' );
+	const [ selectedFieldName, setSelectedFieldName ] = useState( null );
 	const [ currentLocation, setCurrentLocation ] = useState( DEFAULT_LOCATION );
 
 	const post = useSelect(
@@ -108,6 +108,7 @@ const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 							<Side
 								selectedFieldName={ selectedFieldName }
 								setCurrentLocation={ setCurrentLocation }
+								setSelectedFieldName={ setSelectedFieldName }
 							/>
 						</div>
 					</ErrorBoundary>

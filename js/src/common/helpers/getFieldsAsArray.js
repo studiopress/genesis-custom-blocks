@@ -24,10 +24,6 @@ const compare = ( a, b ) => {
 const getFieldsAsArray = ( fields ) => {
 	return Object.keys( fields )
 		.reduce( ( accumulator, fieldName ) => {
-			if ( '' === fieldName ) {
-				return accumulator;
-			}
-
 			accumulator.push(
 				{
 					...fields[ fieldName ],

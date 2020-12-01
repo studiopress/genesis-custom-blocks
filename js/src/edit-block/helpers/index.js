@@ -2,6 +2,7 @@ export { default as convertSettingsStringToArray } from './convertSettingsString
 export { default as convertSettingsArrayToString } from './convertSettingsArrayToString';
 export { default as convertToSlug } from './convertToSlug';
 export { default as getBlock } from './getBlock';
+export { default as getBlockNameWithNameSpace } from './getBlockNameWithNameSpace';
 export { default as getDefaultBlock } from './getDefaultBlock';
 export { default as getNewFieldNumber } from './getNewFieldNumber';
 export { default as getOtherLocation } from './getOtherLocation';

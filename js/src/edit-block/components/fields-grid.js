@@ -85,6 +85,7 @@ const FieldsGrid = ( {
 						? fields.map( ( field, index ) => {
 							const selectField = () => {
 								setSelectedFieldName( field.name );
+								setCurrentLocation( DEFAULT_LOCATION );
 							};
 							const isUpButtonDisabled = 0 === index;
 							const isDownButtonDisabled = index >= ( fields.length - 1 );

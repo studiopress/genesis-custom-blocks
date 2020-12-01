@@ -20,6 +20,7 @@ import { useField } from '../hooks';
  * @typedef {Object} FieldPanelProps The component props.
  * @property {string} selectedFieldName The name of the selected field.
  * @property {Function} setCurrentLocation Sets the current location, like 'editor'.
+ * @property {Function} setSelectedFieldName Sets the currently selected field name.
  */
 
 /**
@@ -28,7 +29,11 @@ import { useField } from '../hooks';
  * @param {FieldPanelProps} props
  * @return {React.ReactElement} The field panel.
  */
-const FieldPanel = ( { selectedFieldName, setCurrentLocation } ) => {
+const FieldPanel = ( {
+	selectedFieldName,
+	setCurrentLocation,
+	setSelectedFieldName,
+} ) => {
 	const {
 		controls,
 		deleteField,
@@ -64,8 +69,11 @@ const FieldPanel = ( { selectedFieldName, setCurrentLocation } ) => {
 	return (
 		<div className="p-4">
 			{
-				field && Object.keys( field ).length
-					? <>
+				null === selectedFieldName
+					? <span className="text-sm">
+						{ __( 'No field selected', 'genesis-custom-blocks' ) }
+					</span>
+					: <>
 						<h4 className="text-sm font-semibold">{ __( 'Field Settings', 'genesis-custom-blocks' ) }</h4>
 						<div className="mt-5">
 							<label className="text-sm" htmlFor="field-label">{ __( 'Field Label', 'genesis-custom-blocks' ) }</label>
@@ -94,6 +102,7 @@ const FieldPanel = ( { selectedFieldName, setCurrentLocation } ) => {
 								onChange={ ( event ) => {
 									if ( event.target ) {
 										changeFieldSettings( selectedFieldName, { name: event.target.value } );
+										setSelectedFieldName( event.target.value );
 									}
 								} }
 							/>
@@ -126,9 +135,6 @@ const FieldPanel = ( { selectedFieldName, setCurrentLocation } ) => {
 							setCurrentLocation={ setCurrentLocation }
 						/>
 					</>
-					: <span className="text-sm">
-						{ __( 'No field selected', 'genesis-custom-blocks' ) }
-					</span>
 			}
 		</div>
 	);

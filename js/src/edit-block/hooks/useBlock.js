@@ -8,7 +8,7 @@ import { useCallback, useMemo } from '@wordpress/element';
  * Internal dependencies
  */
 import { BLOCK_NAMESPACE } from '../constants';
-import { getBlock } from '../helpers';
+import { getBlock, getBlockNameWithNameSpace } from '../helpers';
 
 /**
  * @typedef {Object} UseBlockReturn The return value of useBlock.
@@ -34,18 +34,12 @@ const useBlock = () => {
 		[ editedPostContent ]
 	);
 
-	const getBlockNameWithNameSpace = useCallback( ( block ) => {
-		return Object.keys( block ).length
-			? Object.keys( block )[ 0 ]
-			: '';
-	}, [] );
-
 	const fullBlock = getFullBlock();
 
-	const blockNameWithNamespace = getBlockNameWithNameSpace( fullBlock );
+	const blockNameWithNameSpace = getBlockNameWithNameSpace( fullBlock );
 	const block = useMemo(
-		() => fullBlock[ blockNameWithNamespace ] || {},
-		[ fullBlock, blockNameWithNamespace ]
+		() => fullBlock[ blockNameWithNameSpace ] || {},
+		[ fullBlock, blockNameWithNameSpace ]
 	);
 
 	/**
@@ -66,7 +60,7 @@ const useBlock = () => {
 			...newValues,
 		};
 		editPost( { content: JSON.stringify( newBlock ) } );
-	}, [ editPost, getFullBlock, getBlockNameWithNameSpace ] );
+	}, [ editPost, getFullBlock ] );
 
 	/**
 	 * Changes a block name (slug).
@@ -86,7 +80,7 @@ const useBlock = () => {
 			},
 		};
 		editPost( { content: JSON.stringify( newBlock ) } );
-	}, [ editPost, getBlockNameWithNameSpace, getFullBlock ] );
+	}, [ editPost, getFullBlock ] );
 
 	return {
 		block,
