@@ -5,15 +5,17 @@
  */
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useCallback } from '@wordpress/element';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { getBlock, getOtherLocation, setCorrectOrderForFields } from '../helpers';
+import { getBlock, getNewFieldNumber, getOtherLocation, setCorrectOrderForFields } from '../helpers';
 import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
 
 /**
  * @typedef {Object} UseFieldReturn The return value of useField.
+ * @property {Function} addNewField Adds a new field.
  * @property {Object} controls All of the possible controls.
  * @property {Function} deleteField Deletes this field.
  * @property {Function} changeControl Changes the control of the field.
@@ -46,6 +48,40 @@ const useField = () => {
 	const { editPost } = useDispatch( 'core/editor' );
 	const blockNameWithNameSpace = Object.keys( fullBlock )[ 0 ];
 	const block = fullBlock[ blockNameWithNameSpace ];
+
+	/**
+	 * Adds a new field to the end of the existing fields.
+	 *
+	 * @param {string} location The location to add the field to.
+	 */
+	const addNewField = useCallback( ( location ) => {
+		const { fields = {} } = fullBlock[ blockNameWithNameSpace ];
+		const newFieldNumber = getNewFieldNumber( fields );
+		const newFieldName = newFieldNumber
+			? `new-field-${ newFieldNumber.toString() }`
+			: 'new-field';
+		const label = newFieldNumber
+			? sprintf(
+				// translators: %s: the field number
+				__( 'New Field %s', 'genesis-custom-blocks' ),
+				newFieldNumber.toString()
+			)
+			: __( 'New Field', 'genesis-custom-blocks' );
+
+		const newField = {
+			name: newFieldName,
+			location,
+			label,
+			control: 'text',
+			type: 'string',
+			order: Object.values( fields ).length,
+		};
+
+		fields[ newFieldName ] = newField;
+		fullBlock[ blockNameWithNameSpace ].fields = fields;
+
+		editPost( { content: JSON.stringify( fullBlock ) } );
+	}, [ blockNameWithNameSpace, editPost, fullBlock ] );
 
 	/**
 	 * Changes the control of a field.
@@ -204,6 +240,7 @@ const useField = () => {
 	}, [ blockNameWithNameSpace, editPost, fullBlock ] );
 
 	return {
+		addNewField,
 		controls,
 		deleteField,
 		getField,

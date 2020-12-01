@@ -7,14 +7,13 @@ import className from 'classnames';
 /**
  * WordPress dependencies
  */
-import { useCallback } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import { ClipboardCopy } from './';
-import { useBlock, useField } from '../hooks';
+import { useField } from '../hooks';
 import { ALTERNATE_LOCATION, DEFAULT_LOCATION } from '../constants';
 import { getWidthClass } from '../helpers';
 
@@ -38,8 +37,7 @@ const FieldsGrid = ( {
 	setCurrentLocation,
 	setSelectedFieldName,
 } ) => {
-	const { addNewField } = useBlock();
-	const { getFieldsForLocation, reorderFields } = useField();
+	const { addNewField, getFieldsForLocation, reorderFields } = useField();
 
 	const fields = getFieldsForLocation( currentLocation );
 	const locationButtonClass = 'h-12 px-4 text-sm focus:outline-none';
@@ -193,7 +191,7 @@ const FieldsGrid = ( {
 			</div>
 			<button
 				className="flex items-center justify-center h-6 w-6 bg-black rounded-sm text-white mt-4 ml-auto"
-				onClick={ addNewField( currentLocation ) }
+				onClick={ () => addNewField( currentLocation ) }
 			>
 				<svg
 					className="w-4 h-4 fill-current"

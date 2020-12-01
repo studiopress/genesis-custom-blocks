@@ -45,6 +45,7 @@ jest.mock( '../../hooks/useBlock', () => {
 jest.mock( '../../hooks/useField', () => {
 	return jest.fn( () => ( {
 		getFieldsForLocation: () => [ mockUrlField ],
+		addNewField: jest.fn(),
 	} ) );
 } );
 
