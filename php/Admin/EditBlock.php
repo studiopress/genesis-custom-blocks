@@ -134,7 +134,7 @@ class EditBlock extends ComponentAbstract {
 		// @todo: get only the style rules that are needed, and add them to a CSS file in this plugin.
 		wp_enqueue_style(
 			self::TAILWIND_SLUG,
-			$this->plugin->get_url( 'css/tailwind.min.css' ),
+			'https://unpkg.com/tailwindcss@1.9.6/dist/tailwind.min.css',
 			[],
 			$this->plugin->get_version()
 		);
