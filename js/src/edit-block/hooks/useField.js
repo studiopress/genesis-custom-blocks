@@ -145,7 +145,7 @@ const useField = () => {
 	 * @return {Object} The field, or {}.
 	 */
 	const getField = useCallback( ( fieldName ) => {
-		return block.fields[ fieldName ] ? block.fields[ fieldName ] : {};
+		return block.fields && block.fields[ fieldName ] ? block.fields[ fieldName ] : {};
 	}, [ block ] );
 
 	/**
