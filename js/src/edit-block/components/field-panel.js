@@ -33,11 +33,11 @@ const FieldPanel = ( {
 	setSelectedField,
 } ) => {
 	const {
+		changeControl,
+		changeFieldSettings,
 		controls,
 		deleteField,
 		getField,
-		changeControl,
-		changeFieldSettings,
 	} = useField();
 
 	const controlValues = Object.values( controls );

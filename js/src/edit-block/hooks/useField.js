@@ -58,24 +58,6 @@ const useField = () => {
 	);
 
 	/**
-	 * Changes a field name (slug), and returns the fields.
-	 *
-	 * Each field is accessed in fields with a key of its name.
-	 * So renaming a field involves changing that key
-	 * and the field's name property.
-	 *
-	 * @param {Object} fields The fields from which to rename a field.
-	 * @param {string} previousName The previous field name (slug).
-	 * @param {string} newName The new field name (slug).
-	 * @return {Object} The fields with the field renamed.
-	 */
-	const changeFieldName = ( fields, previousName, newName ) => {
-		fields[ newName ] = { ...fields[ previousName ], name: newName };
-		delete fields[ previousName ];
-		return fields;
-	};
-
-	/**
 	 * Adds a new field to the end of the existing fields.
 	 *
 	 * @param {string} location The location to add the field to.
@@ -139,14 +121,22 @@ const useField = () => {
 	}, [ blockNameWithNameSpace, controls, editPost, fullBlock ] );
 
 	/**
-	 * Gets a field, if it exists.
+	 * Changes a field name (slug), and returns the fields.
 	 *
-	 * @param {string} fieldName The name of the field.
-	 * @return {Object} The field, or {}.
+	 * Each field is accessed in fields with a key of its name.
+	 * So renaming a field involves changing that key
+	 * and the field's name property.
+	 *
+	 * @param {Object} fields The fields from which to rename a field.
+	 * @param {string} previousName The previous field name (slug).
+	 * @param {string} newName The new field name (slug).
+	 * @return {Object} The fields with the field renamed.
 	 */
-	const getField = useCallback( ( fieldName ) => {
-		return block.fields && block.fields[ fieldName ] ? block.fields[ fieldName ] : {};
-	}, [ block ] );
+	const changeFieldName = ( fields, previousName, newName ) => {
+		fields[ newName ] = { ...fields[ previousName ], name: newName };
+		delete fields[ previousName ];
+		return fields;
+	};
 
 	/**
 	 * Gets the fields for either the editor or inspector.
@@ -227,6 +217,24 @@ const useField = () => {
 	}, [ blockNameWithNameSpace, changeFieldLocation, editPost, fullBlock ] );
 
 	/**
+	 * Deletes this field.
+	 */
+	const deleteField = useCallback( ( fieldName ) => {
+		delete fullBlock[ blockNameWithNameSpace ].fields[ fieldName ];
+		editPost( { content: JSON.stringify( fullBlock ) } );
+	}, [ blockNameWithNameSpace, editPost, fullBlock ] );
+
+	/**
+	 * Gets a field, if it exists.
+	 *
+	 * @param {string} fieldName The name of the field.
+	 * @return {Object} The field, or {}.
+	 */
+	const getField = useCallback( ( fieldName ) => {
+		return block.fields && block.fields[ fieldName ] ? block.fields[ fieldName ] : {};
+	}, [ block ] );
+
+	/**
 	 * Reorders fields, moving a single field to another position.
 	 *
 	 * @param {number} moveFrom The index of the field to move.
@@ -249,22 +257,14 @@ const useField = () => {
 		editPost( { content: JSON.stringify( fullBlock ) } );
 	}, [ blockNameWithNameSpace, editPost, fullBlock, getFieldsForLocation ] );
 
-	/**
-	 * Deletes this field.
-	 */
-	const deleteField = useCallback( ( fieldName ) => {
-		delete fullBlock[ blockNameWithNameSpace ].fields[ fieldName ];
-		editPost( { content: JSON.stringify( fullBlock ) } );
-	}, [ blockNameWithNameSpace, editPost, fullBlock ] );
-
 	return {
 		addNewField,
 		controls,
+		changeControl,
+		changeFieldSettings,
 		deleteField,
 		getField,
 		getFieldsForLocation,
-		changeControl,
-		changeFieldSettings,
 		reorderFields,
 	};
 };

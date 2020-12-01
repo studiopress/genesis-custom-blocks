@@ -44,15 +44,13 @@ const CategorySection = () => {
 		}
 		const newCategory = matchedCategories[ 0 ];
 
-		changeBlock(
-			{
-				category: {
-					icon: newCategory.icon,
-					slug: newCategory.slug,
-					title: newCategory.title,
-				},
-			}
-		);
+		changeBlock( {
+			category: {
+				icon: newCategory.icon,
+				slug: newCategory.slug,
+				title: newCategory.title,
+			},
+		} );
 	};
 
 	/**
@@ -111,10 +109,9 @@ const CategorySection = () => {
 						<option
 							value={ category.slug }
 							key={ `block-category-${ index }` }>
-							{
-								categoryWithDefault.title
-									? categoryWithDefault.title
-									: categoryWithDefault.slug
+							{ categoryWithDefault.title
+								? categoryWithDefault.title
+								: categoryWithDefault.slug
 							}
 						</option>
 					);

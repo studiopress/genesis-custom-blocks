@@ -47,7 +47,6 @@ const getClassName = ( field ) => {
  * @property {Object} parentBlock The block where the fields are.
  * @property {Object} parentBlockProps The props to pass to the control function.
  * @property {number} [rowIndex] The index of the repeater row, if this field is in one (optional).
- * @property {Function} [changeFieldSettings] Edits a field value.
  */
 
 /**
