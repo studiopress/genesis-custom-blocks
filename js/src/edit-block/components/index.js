@@ -11,6 +11,7 @@ export { default as IconSection } from './icon-section';
 export { default as Input } from './input';
 export { default as KeywordsSection } from './keywords-section';
 export { default as Main } from './main';
+export { default as PostTitle } from './post-title';
 export { default as PostTypesSection } from './post-types-section';
 export { default as Select } from './select';
 export { default as Side } from './side';
