@@ -18,7 +18,7 @@ import { StrictMode, useEffect, useState } from '@wordpress/element';
  * Internal dependencies
  */
 import { BrowserURL, Header, Main, Side } from './';
-import { DEFAULT_LOCATION, BLOCK_PANEL, NO_FIELD_SELECTED } from '../constants';
+import { BLOCK_PANEL, DEFAULT_LOCATION, NO_FIELD_SELECTED } from '../constants';
 import { getDefaultBlock } from '../helpers';
 import { useBlock } from '../hooks';
 
