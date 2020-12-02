@@ -12,6 +12,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { getSettingsComponent } from '../helpers';
+import { NO_FIELD_SELECTED } from '../constants';
 
 /**
  * @callback onClickDelete Handler for deleting a field.
@@ -25,6 +26,7 @@ import { getSettingsComponent } from '../helpers';
  * @property {Object} field The current field.
  * @property {Function} changeFieldSettings Edits a given field's value.
  * @property {Function} setCurrentLocation Sets the current location, like 'editor'.
+ * @property {Function} setSelectedField Sets the current location, like 'editor'.
  */
 
 /**
@@ -39,13 +41,14 @@ const FieldSettings = ( {
 	deleteField,
 	field,
 	setCurrentLocation,
+	setSelectedField,
 } ) => {
 	const control = controls[ field.control ];
 
 	return (
 		<>
-			{
-				control.settings.map( ( setting, index ) => {
+			{ control
+				? control.settings.map( ( setting, index ) => {
 					const SettingComponent = getSettingsComponent( setting.type );
 					const key = `field-setting-${ index }`;
 					const value = null === field[ setting.name ] ? setting.default : field[ setting.name ];
@@ -70,11 +73,15 @@ const FieldSettings = ( {
 
 					return null;
 				} )
+				: null
 			}
 			<div className="flex justify-between mt-5 border-t border-gray-300 pt-3">
 				<button
 					className="flex items-center bg-red-200 text-sm h-6 px-2 rounded-sm leading-none text-red-700 hover:bg-red-500 hover:text-red-100"
-					onClick={ deleteField }
+					onClick={ () => {
+						deleteField();
+						setSelectedField( NO_FIELD_SELECTED );
+					} }
 				>
 					{ __( 'Delete', 'genesis-custom-blocks' ) }
 				</button>

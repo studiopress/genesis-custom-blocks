@@ -13,6 +13,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { FieldSettings } from './';
 import { useField } from '../hooks';
+import { NO_FIELD_SELECTED } from '../constants';
 
 /**
  * @typedef {Object} FieldPanelProps The component props.
@@ -45,7 +46,7 @@ const FieldPanel = ( {
 
 	return (
 		<div className="p-4">
-			{ null === selectedField
+			{ NO_FIELD_SELECTED === selectedField
 				? <span className="text-sm">
 					{ __( 'No field selected', 'genesis-custom-blocks' ) }
 				</span>
@@ -101,11 +102,12 @@ const FieldPanel = ( {
 						</select>
 					</div>
 					<FieldSettings
-						field={ field }
 						controls={ controls }
 						changeFieldSettings={ changeFieldSettings }
 						deleteField={ () => deleteField( selectedField ) }
+						field={ field }
 						setCurrentLocation={ setCurrentLocation }
+						setSelectedField={ setSelectedField }
 					/>
 				</>
 			}

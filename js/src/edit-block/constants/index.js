@@ -19,4 +19,5 @@ export const LOCATIONS_WITH_LABEL = [
 		label: __( 'Inspector', 'genesis-custom-blocks' ),
 	},
 ];
+export const NO_FIELD_SELECTED = null;
 export const TEXT_ARRAY_DELIMITER = ' : ';

@@ -4,6 +4,7 @@
 import * as React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render } from '@testing-library/react';
+import user from '@testing-library/user-event';
 
 /**
  * Internal dependencies
@@ -83,10 +84,11 @@ jest.mock( '../../hooks/useCategories', () => {
 
 jest.mock( '../../hooks/useField', () => {
 	return jest.fn( () => ( {
-		controls: mockControls,
 		changeControl: jest.fn(),
 		changeFieldSettings: jest.fn(),
+		controls: mockControls,
 		getField: () => mockEmailField,
+		deleteField: () => jest.fn(),
 	} ) );
 } );
 
@@ -166,5 +168,6 @@ describe( 'Side', () => {
 		expect( getByText( defaultSetting.label ) ).toBeInTheDocument();
 		expect( getByText( placeholderSetting.label ) ).toBeInTheDocument();
 		expect( getByText( maxlengthSetting.label ) ).toBeInTheDocument();
+		user.click( getByText( /delete/i ) );
 	} );
 } );

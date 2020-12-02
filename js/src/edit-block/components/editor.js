@@ -18,7 +18,7 @@ import { StrictMode, useEffect, useState } from '@wordpress/element';
  * Internal dependencies
  */
 import { BrowserURL, Header, Main, Side } from './';
-import { DEFAULT_LOCATION, BLOCK_PANEL } from '../constants';
+import { DEFAULT_LOCATION, BLOCK_PANEL, NO_FIELD_SELECTED } from '../constants';
 import { getDefaultBlock } from '../helpers';
 import { useBlock } from '../hooks';
 
@@ -44,7 +44,7 @@ import { useBlock } from '../hooks';
  */
 const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 	const { block, changeBlockName } = useBlock();
-	const [ selectedField, setSelectedField ] = useState( null );
+	const [ selectedField, setSelectedField ] = useState( NO_FIELD_SELECTED );
 	const [ currentLocation, setCurrentLocation ] = useState( DEFAULT_LOCATION );
 	const [ panelDisplaying, setPanelDisplaying ] = useState( BLOCK_PANEL );
 
