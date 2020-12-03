@@ -18,7 +18,12 @@ import { StrictMode, useEffect, useState } from '@wordpress/element';
  * Internal dependencies
  */
 import { BrowserURL, Header, Main, Side } from './';
-import { BLOCK_PANEL, DEFAULT_LOCATION, NO_FIELD_SELECTED } from '../constants';
+import {
+	BLOCK_PANEL,
+	DEFAULT_LOCATION,
+	NO_FIELD_SELECTED,
+	NO_NEW_FIELD,
+} from '../constants';
 import { getDefaultBlock } from '../helpers';
 import { useBlock } from '../hooks';
 
@@ -44,6 +49,7 @@ import { useBlock } from '../hooks';
  */
 const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 	const { block, changeBlockName } = useBlock();
+	const [ newField, setNewField ] = useState( NO_NEW_FIELD );
 	const [ selectedField, setSelectedField ] = useState( NO_FIELD_SELECTED );
 	const [ currentLocation, setCurrentLocation ] = useState( DEFAULT_LOCATION );
 	const [ panelDisplaying, setPanelDisplaying ] = useState( BLOCK_PANEL );
@@ -104,14 +110,17 @@ const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 								currentLocation={ currentLocation }
 								selectedField={ selectedField }
 								setCurrentLocation={ setCurrentLocation }
+								setNewField={ setNewField }
 								setPanelDisplaying={ setPanelDisplaying }
 								setSelectedField={ setSelectedField }
 							/>
 							<Side
+								newField={ newField }
 								panelDisplaying={ panelDisplaying }
 								setPanelDisplaying={ setPanelDisplaying }
 								selectedField={ selectedField }
 								setCurrentLocation={ setCurrentLocation }
+								setNewField={ setNewField }
 								setSelectedField={ setSelectedField }
 							/>
 						</div>

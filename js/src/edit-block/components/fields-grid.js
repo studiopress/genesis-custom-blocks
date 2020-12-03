@@ -22,6 +22,7 @@ import { getWidthClass } from '../helpers';
  * @property {string} currentLocation The currently selected location.
  * @property {string|null} selectedField The currenetly selected field.
  * @property {Function} setCurrentLocation Sets the currently selected location.
+ * @property {Function} setNewField Sets the new field, if any.
  * @property {Function} setPanelDisplaying Sets the current panel displaying.
  * @property {Function} setSelectedField Sets the name of the selected field.
  */
@@ -36,11 +37,11 @@ const FieldsGrid = ( {
 	currentLocation,
 	selectedField,
 	setCurrentLocation,
+	setNewField,
 	setPanelDisplaying,
 	setSelectedField,
 } ) => {
 	const { addNewField, getFieldsForLocation, reorderFields } = useField();
-
 	const fields = getFieldsForLocation( currentLocation );
 	const locationButtonClass = 'h-12 px-4 text-sm focus:outline-none';
 	const moveButtonClass = 'flex items-center justify-center text-sm w-6 h-5 hover:text-blue-700 z-10';
@@ -197,6 +198,7 @@ const FieldsGrid = ( {
 				onClick={ () => {
 					const newFieldName = addNewField( currentLocation );
 					setSelectedField( newFieldName );
+					setNewField( newFieldName );
 					setPanelDisplaying( FIELD_PANEL );
 				} }
 			>

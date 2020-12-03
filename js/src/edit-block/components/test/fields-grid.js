@@ -61,6 +61,7 @@ describe( 'FieldsGrid', () => {
 				selectedField={ mockUrlField.name }
 				setCurrentLocation={ jest.fn() }
 				setPanelDisplaying={ jest.fn() }
+				setNewField={ jest.fn() }
 				setSelectedField={ jest.fn() }
 			/>
 		);

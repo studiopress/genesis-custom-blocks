@@ -7,18 +7,21 @@ import React from 'react';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { useEffect, useMemo, useRef } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import { FieldSettings } from './';
-import { NO_FIELD_SELECTED } from '../constants';
+import { NO_FIELD_SELECTED, NO_NEW_FIELD } from '../constants';
 import { useField } from '../hooks';
 
 /**
  * @typedef {Object} FieldPanelProps The component props.
+ * @property {string|null} newField The new field name, or null if there is none.
  * @property {string|null} selectedField The name of the selected field.
  * @property {Function} setCurrentLocation Sets the current location, like 'editor'.
+ * @property {Function} setNewField Sets the current new field, if any.
  * @property {Function} setSelectedField Sets the currently selected field name.
  */
 
@@ -29,8 +32,10 @@ import { useField } from '../hooks';
  * @return {React.ReactElement} The field panel.
  */
 const FieldPanel = ( {
+	newField,
 	selectedField,
 	setCurrentLocation,
+	setNewField,
 	setSelectedField,
 } ) => {
 	const {
@@ -43,6 +48,19 @@ const FieldPanel = ( {
 
 	const controlValues = Object.values( controls );
 	const field = getField( selectedField );
+	const isNewField = useMemo(
+		() => newField && field && newField === field.name,
+		[ field, newField ]
+	);
+
+	const ref = useRef();
+
+	useEffect( () => {
+		if ( isNewField && ref.current ) {
+			//@ts-ignore
+			ref.current.select();
+		}
+	}, [ field, isNewField ] );
 
 	return (
 		<div className="p-4">
@@ -59,10 +77,11 @@ const FieldPanel = ( {
 							type="text"
 							id="field-label"
 							value={ field.label }
+							ref={ ref }
 							onChange={ ( event ) => {
 								if ( event.target ) {
-									// @ts-ignore
 									changeFieldSettings( selectedField, { label: event.target.value } );
+									setNewField( NO_NEW_FIELD );
 								}
 							} }
 						/>

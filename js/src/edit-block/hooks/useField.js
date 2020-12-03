@@ -189,7 +189,7 @@ const useField = () => {
 	 * @param {any} newSettingValue The new setting value.
 	 */
 	const changeFieldSettings = useCallback( ( fieldName, newSettings ) => {
-		if ( newSettings.location ) {
+		if ( newSettings.hasOwnProperty( 'location' ) ) {
 			fullBlock[ blockNameWithNameSpace ].fields = changeFieldLocation(
 				fullBlock[ blockNameWithNameSpace ].fields,
 				fieldName,
