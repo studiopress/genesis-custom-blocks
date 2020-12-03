@@ -8,11 +8,12 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
-import { useEffect, useRef, useState } from '@wordpress/element';
-import { useSelect, useDispatch } from '@wordpress/data';
+// @ts-ignore
 import { VisuallyHidden } from '@wordpress/components';
 import { useInstanceId } from '@wordpress/compose';
+import { useSelect, useDispatch } from '@wordpress/data';
+import { useEffect, useRef, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -21,7 +22,7 @@ import { useBlock } from '../hooks';
 import { convertToSlug } from '../helpers';
 
 /**
- * Forked from Gutenberg, so this can have a prop of onBlur.
+ * Forked from Gutenberg, so this can end autoslugging during onBlur.
  *
  * @see https://github.com/WordPress/gutenberg/blob/d7e7561b7ea8128766f4f9f4150dc7c039c2cdeb/packages/editor/src/components/post-title/index.js
  *
@@ -80,18 +81,9 @@ const PostTitle = () => {
 		editPost( { title: newTitle } );
 	};
 
-	const onSelect = () => {
-		setIsSelected( true );
-	};
-
-	const onUnselect = () => {
-		setIsSelected( false );
-	};
-
-	const onChange = ( event ) => {
-		onUpdate( event.target.value );
-	};
-
+	const onSelect = () => setIsSelected( true );
+	const onUnselect = () => setIsSelected( false );
+	const onChange = ( event ) => onUpdate( event.target.value );
 	const onBlur = () => {
 		if ( block.name ) {
 			setIsAutoSlugging( false );

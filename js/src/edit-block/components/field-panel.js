@@ -12,8 +12,8 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { FieldSettings } from './';
-import { useField } from '../hooks';
 import { NO_FIELD_SELECTED } from '../constants';
+import { useField } from '../hooks';
 
 /**
  * @typedef {Object} FieldPanelProps The component props.
