@@ -23,6 +23,7 @@ import { NO_FIELD_SELECTED } from '../constants';
  * @typedef {Object} FieldSettingsProps The component props.
  * @property {Object} controls All of the possible controls.
  * @property {onClickDelete} deleteField Deletes this field.
+ * @property {onClickDuplicate} duplicateField Deletes this field.
  * @property {Object} field The current field.
  * @property {Function} changeFieldSettings Edits a given field's value.
  * @property {Function} setCurrentLocation Sets the current location, like 'editor'.
@@ -39,6 +40,7 @@ const FieldSettings = ( {
 	controls,
 	changeFieldSettings,
 	deleteField,
+	duplicateField,
 	field,
 	setCurrentLocation,
 	setSelectedField,
@@ -85,7 +87,10 @@ const FieldSettings = ( {
 				>
 					{ __( 'Delete', 'genesis-custom-blocks' ) }
 				</button>
-				<button className="flex items-center bg-blue-200 text-sm h-6 px-2 rounded-sm leading-none text-blue-700 hover:bg-blue-500 hover:text-blue-100">
+				<button
+					className="flex items-center bg-blue-200 text-sm h-6 px-2 rounded-sm leading-none text-blue-700 hover:bg-blue-500 hover:text-blue-100"
+					onClick={ () => { duplicateField(); } }
+				>
 					{ __( 'Duplicate', 'genesis-custom-blocks' ) }
 				</button>
 			</div>
