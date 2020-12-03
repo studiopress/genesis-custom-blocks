@@ -60,9 +60,7 @@ const PostTitle = () => {
 		// only happen for a new post, which means we focus the title on new
 		// post so the author can start typing right away, without needing to
 		// click anything.
-		if ( isCleanNewPost &&
-			( ! activeElement || body === activeElement )
-		) {
+		if ( isCleanNewPost && ( ! activeElement || body === activeElement ) ) {
 			ref.current.focus();
 		}
 	}, [ isCleanNewPost ] );
@@ -74,8 +72,7 @@ const PostTitle = () => {
 
 		const newBlock = { title: newTitle };
 		if ( isAutoSlugging || ! block.name ) {
-			newBlock.name = convertToSlug( newTitle );
-			changeBlockName( newTitle, newBlock );
+			changeBlockName( convertToSlug( newTitle ), newBlock );
 		} else {
 			changeBlock( newBlock );
 		}
