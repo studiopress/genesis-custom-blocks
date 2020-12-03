@@ -45,13 +45,16 @@ const PostTitle = () => {
 	} );
 
 	useEffect( () => {
-		const { ownerDocument: { activeElement, body } } = ref.current;
+		const { ownerDocument } = ref.current;
 
 		// Only autofocus the title when the post is entirely empty. This should
 		// only happen for a new post, which means we focus the title on new
 		// post so the author can start typing right away, without needing to
 		// click anything.
-		if ( isCleanNewPost && ( ! activeElement || body === activeElement ) ) {
+		if ( isCleanNewPost &&
+			ownerDocument &&
+			( ! ownerDocument.activeElement || ownerDocument.body === ownerDocument.activeElement )
+		) {
 			ref.current.focus();
 		}
 	}, [ isCleanNewPost ] );
