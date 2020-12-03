@@ -28,7 +28,7 @@ import { convertToSlug } from '../helpers';
  * @return {React.ReactElement} The post title editing area.
  */
 const PostTitle = () => {
-	const { block, changeBlock } = useBlock();
+	const { block, changeBlock, changeBlockName } = useBlock();
 	const instanceId = useInstanceId( PostTitle );
 	const ref = useRef( null );
 	const { editPost } = useDispatch( 'core/editor' );
@@ -50,7 +50,7 @@ const PostTitle = () => {
 			placeholder: titlePlaceholder,
 		};
 	} );
-	const [ isAutoSlugging, setIsAutoSlugging ] = useState( isCleanNewPost );
+	const [ isAutoSlugging, setIsAutoSlugging ] = useState( ! block || ! block.name );
 	const [ isSelected, setIsSelected ] = useState( false );
 
 	useEffect( () => {
@@ -68,12 +68,18 @@ const PostTitle = () => {
 	}, [ isCleanNewPost ] );
 
 	const onUpdate = ( newTitle ) => {
-		const newBlock = { title: newTitle };
-		if ( isAutoSlugging ) {
-			newBlock.name = convertToSlug( newTitle );
+		if ( ! block.name ) {
+			setIsAutoSlugging( true );
 		}
 
-		changeBlock( newBlock );
+		const newBlock = { title: newTitle };
+		if ( isAutoSlugging || ! block.name ) {
+			newBlock.name = convertToSlug( newTitle );
+			changeBlockName( newTitle, newBlock );
+		} else {
+			changeBlock( newBlock );
+		}
+
 		editPost( { title: newTitle } );
 	};
 
