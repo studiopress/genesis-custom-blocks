@@ -4,20 +4,31 @@
  * WordPress dependencies
  */
 import { useDispatch, useSelect } from '@wordpress/data';
-import { useCallback } from '@wordpress/element';
+import { useCallback, useMemo } from '@wordpress/element';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { getBlock } from '../helpers';
+import {
+	getBlock,
+	getBlockNameWithNameSpace,
+	getNewFieldNumber,
+	getOtherLocation,
+	setCorrectOrderForFields,
+} from '../helpers';
+import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
 
 /**
  * @typedef {Object} UseFieldReturn The return value of useField.
+ * @property {Function} addNewField Adds a new field.
  * @property {Object} controls All of the possible controls.
  * @property {Function} deleteField Deletes this field.
  * @property {Function} changeControl Changes the control of the field.
- * @property {Function} changeFieldSetting Changes a field setting.
+ * @property {Function} changeFieldSettings Changes field settings.
  * @property {Function} getField Gets the selected field.
+ * @property {Function} getFieldsForLocation Gets all of the fields for a given location.
+ * @property {Function} reorderFields Reorders the fields for a given location.
  */
 
 /**
@@ -40,8 +51,48 @@ const useField = () => {
 
 	const fullBlock = getFullBlock();
 	const { editPost } = useDispatch( 'core/editor' );
-	const blockNameWithNamespace = Object.keys( fullBlock )[ 0 ];
-	const block = fullBlock[ blockNameWithNamespace ];
+	const blockNameWithNameSpace = getBlockNameWithNameSpace( fullBlock );
+	const block = useMemo(
+		() => fullBlock[ blockNameWithNameSpace ] || {},
+		[ fullBlock, blockNameWithNameSpace ]
+	);
+
+	/**
+	 * Adds a new field to the end of the existing fields.
+	 *
+	 * @param {string} location The location to add the field to.
+	 * @return {string} The name of the new field.
+	 */
+	const addNewField = useCallback( ( location ) => {
+		const { fields = {} } = block;
+		const newFieldNumber = getNewFieldNumber( fields );
+		const newFieldName = newFieldNumber
+			? `new-field-${ newFieldNumber.toString() }`
+			: 'new-field';
+		const label = newFieldNumber
+			? sprintf(
+				// translators: %1$d: the field number
+				__( 'New Field %1$d', 'genesis-custom-blocks' ),
+				newFieldNumber
+			)
+			: __( 'New Field', 'genesis-custom-blocks' );
+
+		const newField = {
+			name: newFieldName,
+			location,
+			label,
+			control: 'text',
+			type: 'string',
+			order: Object.values( fields ).length,
+		};
+
+		fields[ newFieldName ] = newField;
+		block.fields = fields;
+		fullBlock[ blockNameWithNameSpace ] = block;
+
+		editPost( { content: JSON.stringify( fullBlock ) } );
+		return newFieldName;
+	}, [ block, blockNameWithNameSpace, editPost, fullBlock ] );
 
 	/**
 	 * Changes the control of a field.
@@ -54,22 +105,123 @@ const useField = () => {
 			return;
 		}
 
-		if ( ! fullBlock[ blockNameWithNamespace ].fields ) {
-			fullBlock[ blockNameWithNamespace ].fields = [];
-		}
-
-		// Todo: handle multiple fields when it's possible to add a field.
-		const previousField = fullBlock[ blockNameWithNamespace ].fields[ fieldName ];
+		const previousField = fullBlock[ blockNameWithNameSpace ].fields[ fieldName ];
 		const newField = {
 			name: previousField.name,
 			label: previousField.label,
+			location: previousField.location,
+			order: previousField.order,
 			control: newControl.name,
 			type: newControl.type,
 		};
 
-		fullBlock[ blockNameWithNamespace ].fields[ fieldName ] = newField;
+		fullBlock[ blockNameWithNameSpace ].fields[ fieldName ] = newField;
 		editPost( { content: JSON.stringify( fullBlock ) } );
-	}, [ blockNameWithNamespace, controls, editPost, fullBlock ] );
+	}, [ blockNameWithNameSpace, controls, editPost, fullBlock ] );
+
+	/**
+	 * Changes a field name (slug), and returns the fields.
+	 *
+	 * Each field is accessed in fields with a key of its name.
+	 * So renaming a field involves changing that key
+	 * and the field's name property.
+	 *
+	 * @param {Object} fields The fields from which to rename a field.
+	 * @param {string} previousName The previous field name (slug).
+	 * @param {string} newName The new field name (slug).
+	 * @return {Object} The fields with the field renamed.
+	 */
+	const changeFieldName = ( fields, previousName, newName ) => {
+		fields[ newName ] = { ...fields[ previousName ], name: newName };
+		delete fields[ previousName ];
+		return fields;
+	};
+
+	/**
+	 * Gets the fields for either the editor or inspector.
+	 *
+	 * @param {string} location The location, like 'editor', or 'inspector'.
+	 * @return {Array} The fields with the given location.
+	 */
+	const getFieldsForLocation = useCallback( ( location ) => {
+		if ( ! block || ! block.fields ) {
+			return null;
+		}
+
+		return getFieldsAsArray( block.fields ).filter( ( field ) => {
+			if ( 'editor' === location ) {
+				return ! field.location || 'editor' === field.location;
+			}
+
+			return location === field.location;
+		} );
+	}, [ block ] );
+
+	/**
+	 * Moves a field to another location, and sets the correct order properties.
+	 *
+	 * @param {number} moveFrom The index of the field to move.
+	 * @param {number} moveTo The index that the field should be moved to.
+	 * @param {string} currentLocation The current field's location, like 'editor'.
+	 */
+	const changeFieldLocation = useCallback( ( fields, fieldName, newLocation ) => {
+		const fieldToMove = fields[ fieldName ];
+		const previousLocation = fieldToMove.location;
+
+		const previousLocationFields = getFieldsForLocation( previousLocation );
+		const fieldsWithoutMovedField = previousLocationFields.filter( ( field ) => {
+			return field.name !== fieldName;
+		} );
+
+		const newLocationFields = getFieldsForLocation( newLocation );
+		newLocationFields.push( fieldToMove );
+
+		return getFieldsAsObject( [
+			...setCorrectOrderForFields( fieldsWithoutMovedField ),
+			...setCorrectOrderForFields( newLocationFields ),
+		] );
+	}, [ getFieldsForLocation ] );
+
+	/**
+	 * Changes a field setting.
+	 *
+	 * @param {string} settingKey The key of the setting, like 'label' or 'placeholder'.
+	 * @param {any} newSettingValue The new setting value.
+	 */
+	const changeFieldSettings = useCallback( ( fieldName, newSettings ) => {
+		if ( newSettings.location ) {
+			fullBlock[ blockNameWithNameSpace ].fields = changeFieldLocation(
+				fullBlock[ blockNameWithNameSpace ].fields,
+				fieldName,
+				newSettings.location
+			);
+		}
+
+		if ( newSettings.hasOwnProperty( 'name' ) ) {
+			fullBlock[ blockNameWithNameSpace ].fields = changeFieldName(
+				fullBlock[ blockNameWithNameSpace ].fields,
+				fieldName,
+				newSettings.name
+			);
+		}
+
+		const newName = newSettings.hasOwnProperty( 'name' ) ? newSettings.name : fieldName;
+		const field = fullBlock[ blockNameWithNameSpace ].fields[ newName ];
+		fullBlock[ blockNameWithNameSpace ].fields[ newName ] = {
+			...field,
+			...newSettings,
+		};
+
+		editPost( { content: JSON.stringify( fullBlock ) } );
+	}, [ blockNameWithNameSpace, changeFieldLocation, editPost, fullBlock ] );
+
+	/**
+	 * Deletes this field.
+	 */
+	const deleteField = useCallback( ( fieldName ) => {
+		delete fullBlock[ blockNameWithNameSpace ].fields[ fieldName ];
+		editPost( { content: JSON.stringify( fullBlock ) } );
+	}, [ blockNameWithNameSpace, editPost, fullBlock ] );
 
 	/**
 	 * Gets a field, if it exists.
@@ -78,34 +230,41 @@ const useField = () => {
 	 * @return {Object} The field, or {}.
 	 */
 	const getField = useCallback( ( fieldName ) => {
-		return fieldName ? block.fields[ fieldName ] : {};
+		return block.fields && block.fields[ fieldName ] ? block.fields[ fieldName ] : {};
 	}, [ block ] );
 
 	/**
-	 * Changes a field setting.
+	 * Reorders fields, moving a single field to another position.
 	 *
-	 * @param {string} settingKey The key of the setting, like 'label' or 'placeholder'.
-	 * @param {any} newSettingValue The new setting value.
+	 * @param {number} moveFrom The index of the field to move.
+	 * @param {number} moveTo The index that the field should be moved to.
+	 * @param {string} currentLocation The current field's location, like 'editor'.
 	 */
-	const changeFieldSetting = useCallback( ( fieldName, settingKey, newSettingValue ) => {
-		fullBlock[ blockNameWithNamespace ].fields[ fieldName ][ settingKey ] = newSettingValue;
-		editPost( { content: JSON.stringify( fullBlock ) } );
-	}, [ blockNameWithNamespace, editPost, fullBlock ] );
+	const reorderFields = useCallback( ( moveFrom, moveTo, currentLocation ) => {
+		const fieldsToReorder = getFieldsForLocation( currentLocation );
+		if ( ! fieldsToReorder.length ) {
+			return;
+		}
 
-	/**
-	 * Deletes this field.
-	 */
-	const deleteField = useCallback( ( fieldName ) => {
-		delete fullBlock[ blockNameWithNamespace ].fields[ fieldName ];
+		const newFields = [ ...fieldsToReorder ];
+		[ newFields[ moveFrom ], newFields[ moveTo ] ] = [ newFields[ moveTo ], newFields[ moveFrom ] ];
+
+		fullBlock[ blockNameWithNameSpace ].fields = getFieldsAsObject( [
+			...setCorrectOrderForFields( newFields ),
+			...getFieldsForLocation( getOtherLocation( currentLocation ) ),
+		] );
 		editPost( { content: JSON.stringify( fullBlock ) } );
-	}, [ blockNameWithNamespace, editPost, fullBlock ] );
+	}, [ blockNameWithNameSpace, editPost, fullBlock, getFieldsForLocation ] );
 
 	return {
+		addNewField,
 		controls,
+		changeControl,
+		changeFieldSettings,
 		deleteField,
 		getField,
-		changeControl,
-		changeFieldSetting,
+		getFieldsForLocation,
+		reorderFields,
 	};
 };
 

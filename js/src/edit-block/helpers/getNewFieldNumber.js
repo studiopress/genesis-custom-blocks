@@ -6,15 +6,11 @@
  * Like 'new-field', 'new-field-1', 'new-field-2', etc...
  *
  * @param {Object} fields The existing fields.
- * @return {string|null} The new field number as a string, or null.
+ * @return {number|null} The new field number as a string, or null.
  */
 const getNewFieldNumber = ( fields ) => {
 	const numberOfFields = Object.values( fields ).length;
-	if ( ! numberOfFields ) {
-		return null;
-	}
-
-	if ( ! fields.hasOwnProperty( 'new-field' ) ) {
+	if ( ! numberOfFields || ! fields.hasOwnProperty( 'new-field' ) ) {
 		return null;
 	}
 

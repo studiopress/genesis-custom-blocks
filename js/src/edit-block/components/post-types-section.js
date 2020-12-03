@@ -59,7 +59,7 @@ const PostTypesSection = () => {
 			newExcluded.pop( newExcluded.indexOf( postType ) );
 		}
 
-		changeBlock( 'excluded', newExcluded );
+		changeBlock( { excluded: newExcluded } );
 	}, [ changeBlock, excluded ] );
 
 	return (

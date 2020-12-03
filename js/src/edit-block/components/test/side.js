@@ -10,6 +10,7 @@ import user from '@testing-library/user-event';
  * Internal dependencies
  */
 import { Side } from '../../components';
+import { BLOCK_PANEL, FIELD_PANEL } from '../../constants';
 
 const mockEmailField = {
 	control: 'email',
@@ -83,11 +84,20 @@ jest.mock( '../../hooks/useCategories', () => {
 
 jest.mock( '../../hooks/useField', () => {
 	return jest.fn( () => ( {
-		controls: mockControls,
 		changeControl: jest.fn(),
-		changeFieldSetting: jest.fn(),
+		changeFieldSettings: jest.fn(),
+		controls: mockControls,
 		getField: () => mockEmailField,
+		deleteField: () => jest.fn(),
 	} ) );
+} );
+
+jest.mock( '@wordpress/api-fetch', () => {
+	return jest.fn( () => {
+		return Promise.resolve( {
+			json: () => Promise.resolve( {} ),
+		} );
+	} );
 } );
 
 const locationSetting = { name: 'location', label: 'Field Location', type: 'location', default: 'editor', help: '' };
@@ -97,25 +107,36 @@ const defaultSetting = { name: 'default', label: 'Default Value', type: 'text', 
 const placeholderSetting = { name: 'placeholder', label: 'Placeholder Text', type: 'text', default: '', helpSetting: '' };
 const maxlengthSetting = { name: 'maxlength', label: 'Character Limit', type: 'number_non_negative', default: '', helpSetting: '' };
 
-const mockControls = {
-	email: {
-		label: 'Email',
-		locations: { editor: 'Editor', inspector: 'Inspector' },
-		name: 'email',
-		settings: [
-			locationSetting,
-			widthSetting,
-			helpSetting,
-			defaultSetting,
-			placeholderSetting,
-			maxlengthSetting,
-		],
-	},
+const emailField = {
+	label: 'Email',
+	locations: { editor: 'Editor', inspector: 'Inspector' },
+	name: 'email',
+	settings: [
+		locationSetting,
+		widthSetting,
+		helpSetting,
+		defaultSetting,
+		placeholderSetting,
+		maxlengthSetting,
+	],
 };
 
+const mockControls = {
+	email: emailField,
+};
+
+const getProps = () => ( {
+	setPanelDisplaying: jest.fn(),
+	selectedField: emailField.name,
+	setCurrentLocation: jest.fn(),
+	setSelectedField: jest.fn(),
+} );
+
 describe( 'Side', () => {
-	it( 'displays the panels with their sections', async () => {
-		const { getAllByText, getByLabelText, getByText } = render( <Side /> );
+	it( 'displays the block panel', async () => {
+		const { getAllByText, getByLabelText, getByText } = render(
+			<Side { ...getProps() } panelDisplaying={ BLOCK_PANEL } />
+		);
 
 		getAllByText( /block/i );
 		getAllByText( /field/i );
@@ -128,9 +149,16 @@ describe( 'Side', () => {
 		expect( getByLabelText( /category/i ) ).toBeInTheDocument();
 		expect( getByLabelText( /keywords/i ) ).toBeInTheDocument();
 		expect( getByText( /post types/i ) ).toBeInTheDocument();
+	} );
 
-		// Clicking the 'Field' button should show the field panel.
-		user.click( getByText( /field/i ) );
+	it( 'displays the field panel with its sections', async () => {
+		const { getAllByText, getByLabelText, getByText } = render(
+			<Side { ...getProps() } panelDisplaying={ FIELD_PANEL } />
+		);
+
+		getAllByText( /block/i );
+		getAllByText( /field/i );
+
 		expect( getByText( /field settings/i ) ).toBeInTheDocument();
 		expect( getByLabelText( /field label/i ) ).toBeInTheDocument();
 		expect( getByText( 'Field Name (slug)' ) ).toBeInTheDocument();
@@ -140,5 +168,6 @@ describe( 'Side', () => {
 		expect( getByText( defaultSetting.label ) ).toBeInTheDocument();
 		expect( getByText( placeholderSetting.label ) ).toBeInTheDocument();
 		expect( getByText( maxlengthSetting.label ) ).toBeInTheDocument();
+		user.click( getByText( /delete/i ) );
 	} );
 } );

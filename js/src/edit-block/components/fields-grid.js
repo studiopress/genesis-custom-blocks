@@ -7,20 +7,23 @@ import className from 'classnames';
 /**
  * WordPress dependencies
  */
-import { useCallback, useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import { ClipboardCopy } from './';
-import { useBlock } from '../hooks';
-import { getNewFieldNumber, getWidthClass } from '../helpers';
-import { getFieldsAsArray } from '../../common/helpers';
+import { ALTERNATE_LOCATION, DEFAULT_LOCATION, FIELD_PANEL } from '../constants';
+import { useField } from '../hooks';
+import { getWidthClass } from '../helpers';
 
 /**
  * @typedef {Object} FieldsGridProps The component props.
- * @property {Function} setSelectedFieldName Sets the name of the selected field.
+ * @property {string} currentLocation The currently selected location.
+ * @property {string|null} selectedField The currenetly selected field.
+ * @property {Function} setCurrentLocation Sets the currently selected location.
+ * @property {Function} setPanelDisplaying Sets the current panel displaying.
+ * @property {Function} setSelectedField Sets the name of the selected field.
  */
 
 /**
@@ -29,87 +32,42 @@ import { getFieldsAsArray } from '../../common/helpers';
  * @param {FieldsGridProps} props
  * @return {React.ReactElement} The main editing area.
  */
-const FieldsGrid = ( { setSelectedFieldName } ) => {
-	const { block, changeBlock } = useBlock();
-	const [ isEditorDisplay, setIsEditorDisplay ] = useState( true );
+const FieldsGrid = ( {
+	currentLocation,
+	selectedField,
+	setCurrentLocation,
+	setPanelDisplaying,
+	setSelectedField,
+} ) => {
+	const { addNewField, getFieldsForLocation, reorderFields } = useField();
 
-	/**
-	 * Adds a new field to the end of the existing fields.
-	 */
-	const addNewField = useCallback( () => {
-		const fields = block.fields ? { ...block.fields } : {};
-		const newFieldNumber = getNewFieldNumber( fields );
-		const name = newFieldNumber
-			? `new-field-${ newFieldNumber.toString() }`
-			: 'new-field';
-		const label = newFieldNumber
-			? sprintf(
-				// translators: %s: the field number
-				__( 'New Field %s', 'genesis-custom-blocks' ),
-				newFieldNumber.toString()
-			)
-			: __( 'New Field', 'genesis-custom-blocks' );
-
-		const newField = {
-			name,
-			label,
-			control: 'text',
-			type: 'string',
-			order: Object.values( fields ).length,
-		};
-
-		fields[ name ] = newField;
-		changeBlock( 'fields', fields );
-	}, [ block, changeBlock ] );
-
-	/**
-	 * Gets the fields for either the editor or inspector.
-	 *
-	 * @return {Array} The fields with the given location.
-	 */
-	const getFieldsForLocation = useCallback( () => {
-		if ( ! block || ! block.fields ) {
-			return null;
-		}
-
-		return getFieldsAsArray( block.fields ).filter( ( field ) => {
-			if ( isEditorDisplay ) {
-				return ! field.location || 'editor' === field.location;
-			}
-
-			return field.location === 'inspector';
-		} );
-	}, [ block, isEditorDisplay ] );
-
-	const fields = getFieldsForLocation();
-	const buttonClass = 'focus:outline-none h-12 px-4 text-sm';
+	const fields = getFieldsForLocation( currentLocation );
+	const locationButtonClass = 'h-12 px-4 text-sm focus:outline-none';
+	const moveButtonClass = 'flex items-center justify-center text-sm w-6 h-5 hover:text-blue-700 z-10';
+	const buttonDisabledClasses = 'opacity-50 cursor-not-allowed';
 
 	return (
 		<>
 			<div className="flex mt-6">
 				<button
-					className={ buttonClass }
-					onClick={ () => {
-						setIsEditorDisplay( true );
-					} }
+					className={ locationButtonClass }
+					onClick={ () => setCurrentLocation( DEFAULT_LOCATION ) }
 				>
 					<span
 						className={ className( {
-							'font-semibold': isEditorDisplay,
+							'font-semibold': DEFAULT_LOCATION === currentLocation,
 						} ) }
 					>
 						{ __( 'Editor Fields', 'genesis-custom-blocks' ) }
 					</span>
 				</button>
 				<button
-					className={ buttonClass }
-					onClick={ () => {
-						setIsEditorDisplay( false );
-					} }
+					className={ locationButtonClass }
+					onClick={ () => setCurrentLocation( ALTERNATE_LOCATION ) }
 				>
 					<span
 						className={ className( {
-							'font-semibold': ! isEditorDisplay,
+							'font-semibold': ALTERNATE_LOCATION === currentLocation,
 						} ) }
 					>
 						{ __( 'Inspector Fields', 'genesis-custom-blocks' ) }
@@ -124,25 +82,29 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 					fields && fields.length
 						? fields.map( ( field, index ) => {
 							const selectField = () => {
-								setSelectedFieldName( field.name );
+								setSelectedField( field.name );
+								setPanelDisplaying( FIELD_PANEL );
 							};
+							const shouldDisplayMoveButtons = fields.length > 1;
+							const isUpButtonDisabled = 0 === index;
+							const isDownButtonDisabled = index >= ( fields.length - 1 );
+							const isSelected = field.name === selectedField;
 
 							return (
 								<div
 									className={ className(
+										{ 'is-selected': isSelected },
 										'field w-full',
 										getWidthClass( field.width )
 									) }
 									key={ `field-item-${ index }` }
 									role="gridcell"
-									tabIndex="0"
-									aria-label={
-										sprintf(
-											// translators: %s: the label of the field
-											__( 'Field: %s', 'genesis-custom-blocks' ),
-											field.label
-										)
-									}
+									tabIndex={ 0 }
+									aria-label={ sprintf(
+										// translators: %s: the label of the field
+										__( 'Field: %s', 'genesis-custom-blocks' ),
+										field.label
+									) }
 									onClick={ selectField }
 									onKeyPress={ selectField }
 								>
@@ -150,16 +112,79 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 										className="relative flex items-center w-full p-4 bg-white border border-gray-400 rounded-sm hover:border-black"
 										id={ `field-item-${ index }` }
 									>
-										<button className="field-resize w-4 absolute -ml-2 left-0 top-0 bottom-0 focus:outline-none"></button>
-										<button>
-											<svg className="fill-current h-6 w-6" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M5 17v2h14v-2H5zm4.5-4.2h5l.9 2.2h2.1L12.75 4h-1.5L6.5 15h2.1l.9-2.2zM12 5.98L13.87 11h-3.74L12 5.98z" /></svg>
-										</button>
+										<div>
+											<svg className="fill-current h-6 w-6" viewBox="0 0 24 24">
+												<path d="M0 0h24v24H0z" fill="none" />
+												<path d="M5 17v2h14v-2H5zm4.5-4.2h5l.9 2.2h2.1L12.75 4h-1.5L6.5 15h2.1l.9-2.2zM12 5.98L13.87 11h-3.74L12 5.98z" />
+											</svg>
+										</div>
 										<span className=" ml-4 truncate">{ field.label }</span>
-										<button className="flex items-center h-6 px-2 bg-gray-200 rounded-sm ml-auto hover:bg-gray-400">
+										<div className="flex items-center h-6 px-2 bg-gray-200 rounded-sm ml-auto hover:bg-gray-400">
 											<span className="text-xs font-mono">{ field.name }</span>
 											<ClipboardCopy text={ field.name } />
-										</button>
-										<button className="field-resize w-4 absolute -mr-2 right-0 top-0 bottom-0 focus:outline-none"></button>
+										</div>
+										{ shouldDisplayMoveButtons
+											? (
+												<div
+													className={ className(
+														isSelected ? 'flex' : 'hidden',
+														'absolute top-0 left-0 flex-col justify-between top-0 left-0 -ml-8 mt-0 rounded-sm bg-white border border-black'
+													) }
+												>
+													<button
+														aria-describedby={ `move-up-button-${ index }` }
+														className={ className(
+															moveButtonClass,
+															{ [ buttonDisabledClasses ]: isUpButtonDisabled }
+														) }
+														onClick={ ( event ) => {
+															event.preventDefault();
+															reorderFields( index, index - 1, currentLocation );
+														} }
+														disabled={ isUpButtonDisabled }
+													>
+														<svg className="h-4 w-4 stroke-current" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+															<path d="M5 15l7-7 7 7" />
+														</svg>
+													</button>
+													<span id={ `move-up-button-${ index }` } className="hidden">
+														{ sprintf(
+															/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
+															__( 'Move %1$s field up from position %2$d to position %3$d', 'genesis-custom-blocks' ),
+															field.label,
+															index,
+															index - 1
+														) }
+													</span>
+													<button
+														aria-describedby={ `move-down-button-${ index }` }
+														className={ className(
+															moveButtonClass,
+															{ [ buttonDisabledClasses ]: isDownButtonDisabled }
+														) }
+														onClick={ ( event ) => {
+															event.preventDefault();
+															reorderFields( index, index + 1, currentLocation );
+														} }
+														disabled={ isDownButtonDisabled }
+													>
+														<svg className="h-4 w-4 stroke-current" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+															<path d="M19 9l-7 7-7-7" />
+														</svg>
+													</button>
+													<span id={ `move-down-button-${ index }` } className="hidden">
+														{ sprintf(
+															/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
+															__( 'Move %1$s field down from position %2$d to position %3$d', 'genesis-custom-blocks' ),
+															field.label,
+															index,
+															index + 1
+														) }
+													</span>
+												</div>
+											)
+											: null
+										}
 									</div>
 								</div>
 							);
@@ -169,7 +194,11 @@ const FieldsGrid = ( { setSelectedFieldName } ) => {
 			</div>
 			<button
 				className="flex items-center justify-center h-6 w-6 bg-black rounded-sm text-white mt-4 ml-auto"
-				onClick={ addNewField }
+				onClick={ () => {
+					const newFieldName = addNewField( currentLocation );
+					setSelectedField( newFieldName );
+					setPanelDisplaying( FIELD_PANEL );
+				} }
 			>
 				<svg
 					className="w-4 h-4 fill-current"

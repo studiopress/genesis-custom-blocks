@@ -10,6 +10,7 @@ import user from '@testing-library/user-event';
  * Internal dependencies
  */
 import { FieldsGrid } from '../../components';
+import { BLOCK_PANEL } from '../../constants';
 
 const mockUrlField = {
 	control: 'url',
@@ -42,11 +43,27 @@ jest.mock( '../../hooks/useBlock', () => {
 	} ) );
 } );
 
-window.fetch = jest.fn( () => Promise.resolve( {} ) );
+jest.mock( '../../hooks/useField', () => {
+	return jest.fn( () => ( {
+		getFieldsForLocation: () => [ mockUrlField ],
+		addNewField: jest.fn(),
+	} ) );
+} );
+
+global.gcbEditor = { controls: {} };
 
 describe( 'FieldsGrid', () => {
 	it( 'displays the main editor area', async () => {
-		const { getByText, getByTitle } = render( <FieldsGrid /> );
+		const { getByText, getByTitle } = render(
+			<FieldsGrid
+				currentLocation="editor"
+				panelDisplaying={ BLOCK_PANEL }
+				selectedField={ mockUrlField.name }
+				setCurrentLocation={ jest.fn() }
+				setPanelDisplaying={ jest.fn() }
+				setSelectedField={ jest.fn() }
+			/>
+		);
 
 		expect( getByText( mockUrlField.name ) ).toBeInTheDocument();
 		expect( getByText( mockUrlField.label ) ).toBeInTheDocument();

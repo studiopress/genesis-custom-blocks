@@ -29,7 +29,7 @@ const KeywordsSection = () => {
 	 * @param {Array} tokens The new tokens (keywords).
 	 */
 	const handleChange = ( tokens ) => {
-		changeBlock( 'keywords', tokens );
+		changeBlock( { keywords: tokens } );
 	};
 
 	return (

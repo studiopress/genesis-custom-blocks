@@ -12,13 +12,21 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { getSettingsComponent } from '../helpers';
+import { NO_FIELD_SELECTED } from '../constants';
+
+/**
+ * @callback onClickDelete Handler for deleting a field.
+ * @return {void}
+ */
 
 /**
  * @typedef {Object} FieldSettingsProps The component props.
  * @property {Object} controls All of the possible controls.
- * @property {Function} deleteField Deletes this field.
+ * @property {onClickDelete} deleteField Deletes this field.
  * @property {Object} field The current field.
- * @property {Function} changeFieldSetting Edits a given field's value.
+ * @property {Function} changeFieldSettings Edits a given field's value.
+ * @property {Function} setCurrentLocation Sets the current location, like 'editor'.
+ * @property {Function} setSelectedField Sets the current location, like 'editor'.
  */
 
 /**
@@ -27,13 +35,20 @@ import { getSettingsComponent } from '../helpers';
  * @param {FieldSettingsProps} props The component props.
  * @return {React.ReactElement} The field settings.
  */
-const FieldSettings = ( { controls, changeFieldSetting, deleteField, field } ) => {
+const FieldSettings = ( {
+	controls,
+	changeFieldSettings,
+	deleteField,
+	field,
+	setCurrentLocation,
+	setSelectedField,
+} ) => {
 	const control = controls[ field.control ];
 
 	return (
 		<>
-			{
-				control.settings.map( ( setting, index ) => {
+			{ control
+				? control.settings.map( ( setting, index ) => {
 					const SettingComponent = getSettingsComponent( setting.type );
 					const key = `field-setting-${ index }`;
 					const value = null === field[ setting.name ] ? setting.default : field[ setting.name ];
@@ -45,8 +60,12 @@ const FieldSettings = ( { controls, changeFieldSetting, deleteField, field } ) =
 									setting={ setting }
 									value={ value }
 									handleOnChange={ ( newSettingValue ) => {
-										changeFieldSetting( field.name, setting.name, newSettingValue );
+										changeFieldSettings(
+											field.name,
+											{ [ setting.name ]: newSettingValue }
+										);
 									} }
+									setCurrentLocation={ setCurrentLocation }
 								/>
 							</div>
 						);
@@ -54,11 +73,15 @@ const FieldSettings = ( { controls, changeFieldSetting, deleteField, field } ) =
 
 					return null;
 				} )
+				: null
 			}
 			<div className="flex justify-between mt-5 border-t border-gray-300 pt-3">
 				<button
 					className="flex items-center bg-red-200 text-sm h-6 px-2 rounded-sm leading-none text-red-700 hover:bg-red-500 hover:text-red-100"
-					onClick={ deleteField }
+					onClick={ () => {
+						deleteField();
+						setSelectedField( NO_FIELD_SELECTED );
+					} }
 				>
 					{ __( 'Delete', 'genesis-custom-blocks' ) }
 				</button>

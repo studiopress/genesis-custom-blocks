@@ -111,8 +111,11 @@ class EditBlock extends ComponentAbstract {
 					[
 						'postType'     => get_post_type(),
 						'postId'       => get_the_ID(),
-						'settings'     => [],
-						'initialEdits' => $this->get_initial_edits(),
+						'settings'     => [
+							'titlePlaceholder'   => __( 'Block title', 'genesis-custom-blocks' ),
+							'richEditingEnabled' => false,
+						],
+						'initialEdits' => null,
 						'controls'     => genesis_custom_blocks()->block_post->get_controls(),
 					]
 				)
@@ -120,11 +123,12 @@ class EditBlock extends ComponentAbstract {
 			'before'
 		);
 
+		$edit_block_style_path = 'css/edit-block.css';
 		wp_enqueue_style(
 			self::STYLE_SLUG,
-			$this->plugin->get_url( 'css/edit-block.css' ),
+			$this->plugin->get_url( $edit_block_style_path ),
 			[ 'wp-components' ],
-			$this->plugin->get_version()
+			filemtime( $this->plugin->get_path( $edit_block_style_path ) )
 		);
 
 		// @todo: get only the style rules that are needed, and add them to a CSS file in this plugin.
@@ -134,28 +138,5 @@ class EditBlock extends ComponentAbstract {
 			[],
 			$this->plugin->get_version()
 		);
-	}
-
-	/**
-	 * Gets the initial edits, forked from Core.
-	 *
-	 * @return array|null The initial edits.
-	 */
-	public function get_initial_edits() {
-		$post = get_post();
-		if ( ! $post ) {
-			return null;
-		}
-
-		if ( 'auto-draft' === $post->post_status ) {
-			// Override "(Auto Draft)" new post default title with empty string, or filtered value.
-			return [
-				'title'   => $post->post_title,
-				'content' => $post->post_content,
-				'excerpt' => $post->post_excerpt,
-			];
-		}
-
-		return null;
 	}
 }

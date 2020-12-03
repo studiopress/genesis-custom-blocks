@@ -18,6 +18,9 @@ import { StrictMode, useEffect, useState } from '@wordpress/element';
  * Internal dependencies
  */
 import { BrowserURL, Header, Main, Side } from './';
+import { BLOCK_PANEL, DEFAULT_LOCATION, NO_FIELD_SELECTED } from '../constants';
+import { getDefaultBlock } from '../helpers';
+import { useBlock } from '../hooks';
 
 /**
  * @callback onErrorType Handler for errors.
@@ -40,23 +43,37 @@ import { BrowserURL, Header, Main, Side } from './';
  * @return {React.ReactElement} The editor.
  */
 const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
-	const [ selectedFieldName, setSelectedFieldName ] = useState( '' );
+	const { block, changeBlockName } = useBlock();
+	const [ selectedField, setSelectedField ] = useState( NO_FIELD_SELECTED );
+	const [ currentLocation, setCurrentLocation ] = useState( DEFAULT_LOCATION );
+	const [ panelDisplaying, setPanelDisplaying ] = useState( BLOCK_PANEL );
+
 	const post = useSelect(
 		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
 		[ postId, postType ]
 	);
+	const isSavingPost = useSelect(
+		( select ) => select( 'core/editor' ).isSavingPost()
+	);
 	// @ts-ignore
 	const { editEntityRecord } = useDispatch( 'core' );
 
-	// A hack to remove blocks from the edited entity.
-	// The stores use getEditedPostContent(), which gets the blocks if the .blocks property exists.
-	// This change makes getEditedPostContent() return the post content, instead of
-	// parsing [] blocks and returning ''.
+	useEffect( () => {
+		if ( isSavingPost && ! block.name ) {
+			const defaultBlock = getDefaultBlock( postId );
+			changeBlockName( defaultBlock.name, defaultBlock );
+		}
+	}, [ block, changeBlockName, isSavingPost, postId ] );
+
 	useEffect( () => {
 		if ( ! post ) {
 			return;
 		}
 
+		// A hack to remove blocks from the edited entity.
+		// The stores use getEditedPostContent(), which gets the blocks if the .blocks property exists.
+		// This change makes getEditedPostContent() return the post content, instead of
+		// parsing [] blocks and returning ''.
 		editEntityRecord(
 			'postType',
 			postType,
@@ -74,12 +91,7 @@ const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 			<div className="h-screen flex flex-col items-center text-black">
 				<BrowserURL />
 				<EditorProvider
-					settings={
-						{
-							...settings,
-							richEditingEnabled: false,
-						}
-					}
+					settings={ settings }
 					post={ post }
 					initialEdits={ initialEdits }
 					useSubRegistry={ false }
@@ -88,8 +100,20 @@ const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 						<EditorNotices />
 						<Header />
 						<div className="flex w-full h-0 flex-grow">
-							<Main setSelectedFieldName={ setSelectedFieldName }	/>
-							<Side selectedFieldName={ selectedFieldName } />
+							<Main
+								currentLocation={ currentLocation }
+								selectedField={ selectedField }
+								setCurrentLocation={ setCurrentLocation }
+								setPanelDisplaying={ setPanelDisplaying }
+								setSelectedField={ setSelectedField }
+							/>
+							<Side
+								panelDisplaying={ panelDisplaying }
+								setPanelDisplaying={ setPanelDisplaying }
+								selectedField={ selectedField }
+								setCurrentLocation={ setCurrentLocation }
+								setSelectedField={ setSelectedField }
+							/>
 						</div>
 					</ErrorBoundary>
 				</EditorProvider>

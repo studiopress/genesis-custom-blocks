@@ -19,6 +19,7 @@ import { snakeCaseToPascalCase } from '../../common/helpers';
  * @property {Function} handleOnChange Handles a change in this setting.
  * @property {Object} setting This setting.
  * @property {boolean|undefined} value The setting value.
+ * @property {Function} setCurrentLocation Sets the current location, like 'editor'.
  */
 
 /**
