@@ -85,6 +85,7 @@
     "raw-loader": "4.0.1",
     "re-resizable": "6.5.4",
     "react": "16.13.1",
+    "react-autosize-textarea": "7.1.0",
     "sass-loader": "9.0.3",
     "style-loader": "1.2.1",
     "uglifyjs-webpack-plugin": "2.2.0",

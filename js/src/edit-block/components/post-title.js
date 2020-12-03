@@ -9,7 +9,6 @@ import classnames from 'classnames';
  */
 import { __ } from '@wordpress/i18n';
 import { useEffect, useRef, useState } from '@wordpress/element';
-import { decodeEntities } from '@wordpress/html-entities';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { VisuallyHidden } from '@wordpress/components';
 import { useInstanceId } from '@wordpress/compose';
@@ -21,7 +20,7 @@ import { useInstanceId } from '@wordpress/compose';
  */
 const PostTitle = () => {
 	const instanceId = useInstanceId( PostTitle );
-	const ref = useRef();
+	const ref = useRef( null );
 	const [ isSelected, setIsSelected ] = useState( false );
 	const { editPost } = useDispatch( 'core/editor' );
 
@@ -45,15 +44,14 @@ const PostTitle = () => {
 	} );
 
 	useEffect( () => {
-		const { ownerDocument } = ref.current;
+		const { ownerDocument: { activeElement, body } } = ref.current;
 
 		// Only autofocus the title when the post is entirely empty. This should
 		// only happen for a new post, which means we focus the title on new
 		// post so the author can start typing right away, without needing to
 		// click anything.
 		if ( isCleanNewPost &&
-			ownerDocument &&
-			( ! ownerDocument.activeElement || ownerDocument.body === ownerDocument.activeElement )
+			( ! activeElement || body === activeElement )
 		) {
 			ref.current.focus();
 		}
@@ -81,7 +79,6 @@ const PostTitle = () => {
 		'wp-block editor-post-title editor-post-title__block',
 		{ 'is-selected': isSelected }
 	);
-	const decodedPlaceholder = decodeEntities( placeholder );
 
 	return (
 		<div className={ className }>
@@ -89,7 +86,7 @@ const PostTitle = () => {
 				as="label"
 				htmlFor={ `post-title-${ instanceId }` }
 			>
-				{ decodedPlaceholder || __( 'Add title', 'genesis-custom-blocks' ) }
+				{ placeholder || __( 'Add title', 'genesis-custom-blocks' ) }
 			</VisuallyHidden>
 			<TextareaAutosize
 				ref={ ref }
@@ -97,7 +94,7 @@ const PostTitle = () => {
 				className="editor-post-title__input"
 				value={ title }
 				onChange={ onChange }
-				placeholder={ decodedPlaceholder || __( 'Add title', 'genesis-custom-blocks' ) }
+				placeholder={ placeholder || __( 'Add title', 'genesis-custom-blocks' ) }
 				onFocus={ onSelect }
 				onBlur={ onUnselect }
 				onKeyPress={ onUnselect }
