@@ -7,13 +7,12 @@ import * as React from 'react';
  * WordPress dependencies
  */
 import { useSelect } from '@wordpress/data';
-import { PostTitle } from '@wordpress/editor';
 import { useCallback, useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import { FieldsGrid } from './';
+import { FieldsGrid, PostTitle } from './';
 import { useBlock } from '../hooks';
 
 /**
