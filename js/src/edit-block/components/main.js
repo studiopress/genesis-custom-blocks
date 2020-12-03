@@ -4,16 +4,9 @@
 import * as React from 'react';
 
 /**
- * WordPress dependencies
- */
-import { useSelect } from '@wordpress/data';
-import { useCallback, useEffect } from '@wordpress/element';
-
-/**
  * Internal dependencies
  */
 import { FieldsGrid, PostTitle } from './';
-import { useBlock } from '../hooks';
 
 /**
  * @typedef {Object} MainProps The component props.
@@ -38,43 +31,21 @@ const Main = ( {
 	setCurrentLocation,
 	setPanelDisplaying,
 	setSelectedField,
-} ) => {
-	const { block, changeBlock } = useBlock();
-	const editedTitle = useSelect(
-		( select ) => select( 'core/editor' ).getEditedPostAttribute( 'title' ),
-		[]
-	);
-
-	// When the title is edited, update it in the block JSON.
-	const changeTitle = useCallback( () => {
-		if (
-			( editedTitle && editedTitle !== block.title ) ||
-			( ! editedTitle && block.title ) // If the user deletes the title.
-		) {
-			changeBlock( { title: editedTitle } );
-		}
-	}, [ block, changeBlock, editedTitle ] );
-
-	useEffect( () => {
-		changeTitle();
-	}, [ changeTitle ] );
-
-	return (
-		<div className="flex flex-col flex-grow items-start w-full overflow-scroll">
-			<div className="flex flex-col w-full max-w-2xl mx-auto pb-64">
-				<div className="block-title-field w-full mt-10 text-center focus:outline-none">
-					<PostTitle />
-				</div>
-				<FieldsGrid
-					currentLocation={ currentLocation }
-					selectedField={ selectedField }
-					setCurrentLocation={ setCurrentLocation }
-					setPanelDisplaying={ setPanelDisplaying }
-					setSelectedField={ setSelectedField }
-				/>
+} ) => (
+	<div className="flex flex-col flex-grow items-start w-full overflow-scroll">
+		<div className="flex flex-col w-full max-w-2xl mx-auto pb-64">
+			<div className="block-title-field w-full mt-10 text-center focus:outline-none">
+				<PostTitle />
 			</div>
+			<FieldsGrid
+				currentLocation={ currentLocation }
+				selectedField={ selectedField }
+				setCurrentLocation={ setCurrentLocation }
+				setPanelDisplaying={ setPanelDisplaying }
+				setSelectedField={ setSelectedField }
+			/>
 		</div>
-	);
-};
+	</div>
+);
 
 export default Main;

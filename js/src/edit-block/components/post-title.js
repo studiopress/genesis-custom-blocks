@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+import * as React from 'react';
 import TextareaAutosize from 'react-autosize-textarea';
 import classnames from 'classnames';
 
@@ -14,16 +15,23 @@ import { VisuallyHidden } from '@wordpress/components';
 import { useInstanceId } from '@wordpress/compose';
 
 /**
+ * Internal dependencies
+ */
+import { useBlock } from '../hooks';
+import { convertToSlug } from '../helpers';
+
+/**
  * Forked from Gutenberg, so this can have a prop of onBlur.
  *
  * @see https://github.com/WordPress/gutenberg/blob/d7e7561b7ea8128766f4f9f4150dc7c039c2cdeb/packages/editor/src/components/post-title/index.js
+ *
+ * @return {React.ReactElement} The post title editing area.
  */
 const PostTitle = () => {
+	const { block, changeBlock } = useBlock();
 	const instanceId = useInstanceId( PostTitle );
 	const ref = useRef( null );
-	const [ isSelected, setIsSelected ] = useState( false );
 	const { editPost } = useDispatch( 'core/editor' );
-
 	const {
 		isCleanNewPost,
 		title,
@@ -42,6 +50,8 @@ const PostTitle = () => {
 			placeholder: titlePlaceholder,
 		};
 	} );
+	const [ isAutoSlugging, setIsAutoSlugging ] = useState( isCleanNewPost );
+	const [ isSelected, setIsSelected ] = useState( false );
 
 	useEffect( () => {
 		const { ownerDocument: { activeElement, body } } = ref.current;
@@ -57,21 +67,34 @@ const PostTitle = () => {
 		}
 	}, [ isCleanNewPost ] );
 
-	function onUpdate( newTitle ) {
+	const onUpdate = ( newTitle ) => {
+		const newBlock = { title: newTitle };
+		if ( isAutoSlugging ) {
+			newBlock.name = convertToSlug( newTitle );
+		}
+
+		changeBlock( newBlock );
 		editPost( { title: newTitle } );
-	}
+	};
 
-	function onSelect() {
+	const onSelect = () => {
 		setIsSelected( true );
-	}
+	};
 
-	function onUnselect() {
+	const onUnselect = () => {
 		setIsSelected( false );
-	}
+	};
 
-	function onChange( event ) {
+	const onChange = ( event ) => {
 		onUpdate( event.target.value );
-	}
+	};
+
+	const onBlur = () => {
+		if ( block.name ) {
+			setIsAutoSlugging( false );
+		}
+		onUnselect();
+	};
 
 	// The wp-block className is important for editor styles.
 	// This same block is used in both the visual and the code editor.
@@ -96,7 +119,7 @@ const PostTitle = () => {
 				onChange={ onChange }
 				placeholder={ placeholder || __( 'Add title', 'genesis-custom-blocks' ) }
 				onFocus={ onSelect }
-				onBlur={ onUnselect }
+				onBlur={ onBlur }
 				onKeyPress={ onUnselect }
 			/>
 		</div>
