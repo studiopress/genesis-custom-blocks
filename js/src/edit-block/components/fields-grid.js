@@ -22,7 +22,7 @@ import { getWidthClass } from '../helpers';
  * @property {string} currentLocation The currently selected location.
  * @property {string|null} selectedField The currenetly selected field.
  * @property {Function} setCurrentLocation Sets the currently selected location.
- * @property {Function} setNewField Sets the new field, if any.
+ * @property {Function} setIsNewField Sets if there is a new field.
  * @property {Function} setPanelDisplaying Sets the current panel displaying.
  * @property {Function} setSelectedField Sets the name of the selected field.
  */
@@ -37,7 +37,7 @@ const FieldsGrid = ( {
 	currentLocation,
 	selectedField,
 	setCurrentLocation,
-	setNewField,
+	setIsNewField,
 	setPanelDisplaying,
 	setSelectedField,
 } ) => {
@@ -198,7 +198,7 @@ const FieldsGrid = ( {
 				onClick={ () => {
 					const newFieldName = addNewField( currentLocation );
 					setSelectedField( newFieldName );
-					setNewField( newFieldName );
+					setIsNewField( true );
 					setPanelDisplaying( FIELD_PANEL );
 				} }
 			>

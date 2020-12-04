@@ -20,5 +20,4 @@ export const LOCATIONS_WITH_LABEL = [
 	},
 ];
 export const NO_FIELD_SELECTED = null;
-export const NO_NEW_FIELD = null;
 export const TEXT_ARRAY_DELIMITER = ' : ';

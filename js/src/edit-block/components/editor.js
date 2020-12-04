@@ -22,7 +22,6 @@ import {
 	BLOCK_PANEL,
 	DEFAULT_LOCATION,
 	NO_FIELD_SELECTED,
-	NO_NEW_FIELD,
 } from '../constants';
 import { getDefaultBlock } from '../helpers';
 import { useBlock } from '../hooks';
@@ -49,10 +48,10 @@ import { useBlock } from '../hooks';
  */
 const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 	const { block, changeBlockName } = useBlock();
-	const [ newField, setNewField ] = useState( NO_NEW_FIELD );
-	const [ selectedField, setSelectedField ] = useState( NO_FIELD_SELECTED );
 	const [ currentLocation, setCurrentLocation ] = useState( DEFAULT_LOCATION );
 	const [ panelDisplaying, setPanelDisplaying ] = useState( BLOCK_PANEL );
+	const [ isNewField, setIsNewField ] = useState( false );
+	const [ selectedField, setSelectedField ] = useState( NO_FIELD_SELECTED );
 
 	const post = useSelect(
 		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
@@ -110,17 +109,17 @@ const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 								currentLocation={ currentLocation }
 								selectedField={ selectedField }
 								setCurrentLocation={ setCurrentLocation }
-								setNewField={ setNewField }
+								setIsNewField={ setIsNewField }
 								setPanelDisplaying={ setPanelDisplaying }
 								setSelectedField={ setSelectedField }
 							/>
 							<Side
-								newField={ newField }
+								isNewField={ isNewField }
 								panelDisplaying={ panelDisplaying }
 								setPanelDisplaying={ setPanelDisplaying }
 								selectedField={ selectedField }
 								setCurrentLocation={ setCurrentLocation }
-								setNewField={ setNewField }
+								setIsNewField={ setIsNewField }
 								setSelectedField={ setSelectedField }
 							/>
 						</div>

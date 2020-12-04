@@ -7,21 +7,22 @@ import React from 'react';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { useEffect, useMemo, useRef } from '@wordpress/element';
+import { useEffect, useRef } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import { FieldSettings } from './';
-import { NO_FIELD_SELECTED, NO_NEW_FIELD } from '../constants';
+import { NO_FIELD_SELECTED } from '../constants';
 import { useField } from '../hooks';
+import { convertToSlug } from '../helpers';
 
 /**
  * @typedef {Object} FieldPanelProps The component props.
- * @property {string|null} newField The new field name, or null if there is none.
+ * @property {boolean} isNewField Whether there is a new field.
  * @property {string|null} selectedField The name of the selected field.
  * @property {Function} setCurrentLocation Sets the current location, like 'editor'.
- * @property {Function} setNewField Sets the current new field, if any.
+ * @property {Function} setIsNewField Sets whether there is a new field.
  * @property {Function} setSelectedField Sets the currently selected field name.
  */
 
@@ -32,10 +33,10 @@ import { useField } from '../hooks';
  * @return {React.ReactElement} The field panel.
  */
 const FieldPanel = ( {
-	newField,
+	isNewField,
 	selectedField,
 	setCurrentLocation,
-	setNewField,
+	setIsNewField,
 	setSelectedField,
 } ) => {
 	const {
@@ -48,19 +49,17 @@ const FieldPanel = ( {
 
 	const controlValues = Object.values( controls );
 	const field = getField( selectedField );
-	const isNewField = useMemo(
-		() => newField && field && newField === field.name,
-		[ field, newField ]
-	);
-
 	const ref = useRef();
 
 	useEffect( () => {
 		if ( isNewField && ref.current ) {
-			//@ts-ignore
-			ref.current.select();
+			const { ownerDocument: { activeElement } } = ref.current;
+			if ( ( ! activeElement || ref.current !== activeElement ) ) {
+				//@ts-ignore
+				ref.current.select();
+			}
 		}
-	}, [ field, isNewField ] );
+	}, [ isNewField ] );
 
 	return (
 		<div className="p-4">
@@ -80,10 +79,20 @@ const FieldPanel = ( {
 							ref={ ref }
 							onChange={ ( event ) => {
 								if ( event.target ) {
-									changeFieldSettings( selectedField, { label: event.target.value } );
-									setNewField( NO_NEW_FIELD );
+									const changedField = { label: event.target.value };
+									const newName = convertToSlug( event.target.value );
+									if ( isNewField ) {
+										changedField.name = newName;
+									}
+
+									changeFieldSettings( selectedField, changedField );
+
+									if ( isNewField ) {
+										setSelectedField( newName );
+									}
 								}
 							} }
+							onBlur={ () => setIsNewField( false ) }
 						/>
 						<span className="block italic text-xs mt-1">{ __( 'A label or a title for this field.', 'genesis-custom-blocks' ) }</span>
 					</div>
