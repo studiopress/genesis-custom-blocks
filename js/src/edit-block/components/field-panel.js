@@ -7,7 +7,7 @@ import React from 'react';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { useEffect, useRef, useState } from '@wordpress/element';
+import { useEffect, useRef } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -46,10 +46,10 @@ const FieldPanel = ( {
 		deleteField,
 		getField,
 	} = useField();
-	const [ didAutoSlug, setDidAutoSlug ] = useState( false );
 
 	const controlValues = Object.values( controls );
 	const field = getField( selectedField );
+	const didAutoSlug = useRef( false );
 	const ref = useRef();
 
 	useEffect( () => {
@@ -58,9 +58,10 @@ const FieldPanel = ( {
 			if ( ( ! activeElement || ref.current !== activeElement ) ) {
 				//@ts-ignore
 				ref.current.select();
+				didAutoSlug.current = false;
 			}
 		}
-	}, [ isNewField ] );
+	}, [ isNewField, field ] );
 
 	return (
 		<div className="p-4">
@@ -79,23 +80,22 @@ const FieldPanel = ( {
 							value={ field.label }
 							ref={ ref }
 							onChange={ ( event ) => {
-								if ( event.target ) {
-									const changedField = { label: event.target.value };
-									const newName = convertToSlug( event.target.value );
-									if ( isNewField ) {
-										changedField.name = newName;
-										setDidAutoSlug( true );
-									}
-
-									changeFieldSettings( selectedField, changedField );
-
-									if ( isNewField ) {
-										setSelectedField( newName );
-									}
+								if ( ! event.target ) {
+									return;
 								}
+
+								const changedField = { label: event.target.value };
+								const newName = convertToSlug( event.target.value );
+								if ( isNewField ) {
+									changedField.name = newName;
+									didAutoSlug.current = true;
+									setSelectedField( newName );
+								}
+
+								changeFieldSettings( selectedField, changedField );
 							} }
 							onBlur={ () => {
-								if ( didAutoSlug ) {
+								if ( didAutoSlug.current ) {
 									setIsNewField( false );
 								}
 							} }
