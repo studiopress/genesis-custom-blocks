@@ -7,7 +7,7 @@ import React from 'react';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { useEffect, useRef } from '@wordpress/element';
+import { useEffect, useRef, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -46,6 +46,7 @@ const FieldPanel = ( {
 		deleteField,
 		getField,
 	} = useField();
+	const [ didAutoSlug, setDidAutoSlug ] = useState( false );
 
 	const controlValues = Object.values( controls );
 	const field = getField( selectedField );
@@ -83,6 +84,7 @@ const FieldPanel = ( {
 									const newName = convertToSlug( event.target.value );
 									if ( isNewField ) {
 										changedField.name = newName;
+										setDidAutoSlug( true );
 									}
 
 									changeFieldSettings( selectedField, changedField );
@@ -92,7 +94,11 @@ const FieldPanel = ( {
 									}
 								}
 							} }
-							onBlur={ () => setIsNewField( false ) }
+							onBlur={ () => {
+								if ( didAutoSlug ) {
+									setIsNewField( false );
+								}
+							} }
 						/>
 						<span className="block italic text-xs mt-1">{ __( 'A label or a title for this field.', 'genesis-custom-blocks' ) }</span>
 					</div>
@@ -105,8 +111,9 @@ const FieldPanel = ( {
 							value={ field.name }
 							onChange={ ( event ) => {
 								if ( event.target ) {
-									changeFieldSettings( selectedField, { name: event.target.value } );
-									setSelectedField( event.target.value );
+									const changedName = event.target.value;
+									changeFieldSettings( selectedField, { name: changedName } );
+									setSelectedField( changedName );
 								}
 							} }
 						/>
