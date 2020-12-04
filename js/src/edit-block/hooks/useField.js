@@ -242,7 +242,7 @@ const useField = () => {
 		fullBlock[ blockNameWithNameSpace ] = block;
 
 		editPost( { content: JSON.stringify( fullBlock ) } );
-	}, [ blockNameWithNameSpace, editPost, fullBlock ] );
+	}, [ blockNameWithNameSpace, editPost, fullBlock, block, getField ] );
 
 	/**
 	 * Gets a field, if it exists.
