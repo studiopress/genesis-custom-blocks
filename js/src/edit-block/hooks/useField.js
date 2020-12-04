@@ -228,29 +228,20 @@ const useField = () => {
 	 * Duplicates this field.
 	 */
 	const duplicateField = useCallback( ( fieldName ) => {
-		const currentField = getField(fieldName)
-		console.log(currentField);
+		const currentField = getField( fieldName );
 		const { fields = {} } = block;
 		const newFieldNumber = Object.values( fields ).length + 1;
 
-		const newFieldName = `duplicated-field-${ newFieldNumber.toString() }`
+		const newFieldName = `duplicated-field-${ newFieldNumber.toString() }`;
 
-		const label = sprintf(
-				// translators: %1$d: the field number
-				__( '%1$s', 'genesis-custom-blocks' ),
-				currentField.label
-		);
-			
-		let newField = {...currentField};
+		const newField = { ...currentField };
 		newField.name = newFieldName;
-		newField.label = label;
-		newField.order = Object.values( fields ).length,
+		newField.order = Object.values( fields ).length;
 		fields[ newFieldName ] = newField;
 		block.fields = fields;
 		fullBlock[ blockNameWithNameSpace ] = block;
 
 		editPost( { content: JSON.stringify( fullBlock ) } );
-
 	}, [ blockNameWithNameSpace, editPost, fullBlock ] );
 
 	/**

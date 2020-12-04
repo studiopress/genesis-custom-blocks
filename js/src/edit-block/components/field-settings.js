@@ -16,6 +16,7 @@ import { NO_FIELD_SELECTED } from '../constants';
 
 /**
  * @callback onClickDelete Handler for deleting a field.
+ * @callback onClickDuplicate Handler for duplicating a field.
  * @return {void}
  */
 
@@ -89,7 +90,7 @@ const FieldSettings = ( {
 				</button>
 				<button
 					className="flex items-center bg-blue-200 text-sm h-6 px-2 rounded-sm leading-none text-blue-700 hover:bg-blue-500 hover:text-blue-100"
-					onClick={ () => { duplicateField(); } }
+					onClick={ duplicateField() }
 				>
 					{ __( 'Duplicate', 'genesis-custom-blocks' ) }
 				</button>
