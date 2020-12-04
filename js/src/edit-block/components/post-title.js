@@ -51,7 +51,7 @@ const PostTitle = () => {
 			placeholder: titlePlaceholder,
 		};
 	} );
-	const [ isAutoSlugging, setIsAutoSlugging ] = useState( ! block || ! block.name );
+	const isAutoSlugging = useRef( ! block || ! block.name );
 	const [ isSelected, setIsSelected ] = useState( false );
 
 	useEffect( () => {
@@ -68,7 +68,7 @@ const PostTitle = () => {
 
 	const onUpdate = ( newTitle ) => {
 		if ( ! block.name ) {
-			setIsAutoSlugging( true );
+			isAutoSlugging.current = true;
 		}
 
 		const newBlock = { title: newTitle };
@@ -86,7 +86,7 @@ const PostTitle = () => {
 	const onChange = ( event ) => onUpdate( event.target.value );
 	const onBlur = () => {
 		if ( block.name ) {
-			setIsAutoSlugging( false );
+			isAutoSlugging.current = false;
 		}
 		onUnselect();
 	};
