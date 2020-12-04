@@ -55,11 +55,12 @@ const FieldPanel = ( {
 	useEffect( () => {
 		if ( isNewField && ref.current ) {
 			const { ownerDocument: { activeElement } } = ref.current;
-			if ( ( ! activeElement || ref.current !== activeElement ) ) {
+			if ( ! activeElement || ref.current !== activeElement ) {
 				//@ts-ignore
 				ref.current.select();
-				didAutoSlug.current = false;
 			}
+
+			didAutoSlug.current = false;
 		}
 	}, [ isNewField, field ] );
 
