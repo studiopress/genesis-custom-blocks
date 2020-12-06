@@ -15,7 +15,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { ClipboardCopy } from './';
 import { ALTERNATE_LOCATION, DEFAULT_LOCATION, FIELD_PANEL } from '../constants';
 import { useField } from '../hooks';
-import { getWidthClass } from '../helpers';
+import { getFieldIcon, getWidthClass } from '../helpers';
 
 /**
  * @typedef {Object} FieldsGridProps The component props.
@@ -90,6 +90,7 @@ const FieldsGrid = ( {
 							const isUpButtonDisabled = 0 === index;
 							const isDownButtonDisabled = index >= ( fields.length - 1 );
 							const isSelected = field.name === selectedField;
+							const FieldIcon = getFieldIcon( field.control );
 
 							return (
 								<div
@@ -113,12 +114,7 @@ const FieldsGrid = ( {
 										className="relative flex items-center w-full p-4 bg-white border border-gray-400 rounded-sm hover:border-black"
 										id={ `field-item-${ index }` }
 									>
-										<div>
-											<svg className="fill-current h-6 w-6" viewBox="0 0 24 24">
-												<path d="M0 0h24v24H0z" fill="none" />
-												<path d="M5 17v2h14v-2H5zm4.5-4.2h5l.9 2.2h2.1L12.75 4h-1.5L6.5 15h2.1l.9-2.2zM12 5.98L13.87 11h-3.74L12 5.98z" />
-											</svg>
-										</div>
+										<div>{ FieldIcon ? <FieldIcon /> : null }</div>
 										<span className=" ml-4 truncate">{ field.label }</span>
 										<div className="flex items-center h-6 px-2 bg-gray-200 rounded-sm ml-auto hover:bg-gray-400">
 											<span className="text-xs font-mono">{ field.name }</span>

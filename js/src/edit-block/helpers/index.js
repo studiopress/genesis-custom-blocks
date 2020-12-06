@@ -1,6 +1,7 @@
 export { default as convertSettingsStringToArray } from './convertSettingsStringToArray';
 export { default as convertSettingsArrayToString } from './convertSettingsArrayToString';
 export { default as convertToSlug } from './convertToSlug';
+export { default as getFieldIcon } from './getFieldIcon';
 export { default as getBlock } from './getBlock';
 export { default as getBlockNameWithNameSpace } from './getBlockNameWithNameSpace';
 export { default as getDefaultBlock } from './getDefaultBlock';
