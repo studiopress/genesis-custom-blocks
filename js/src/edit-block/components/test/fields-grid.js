@@ -59,7 +59,6 @@ describe( 'FieldsGrid', () => {
 				currentLocation="editor"
 				panelDisplaying={ BLOCK_PANEL }
 				selectedField={ mockUrlField.name }
-				setCurrentLocation={ jest.fn() }
 				setPanelDisplaying={ jest.fn() }
 				setIsNewField={ jest.fn() }
 				setSelectedField={ jest.fn() }

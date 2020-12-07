@@ -13,7 +13,7 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { ClipboardCopy } from './';
-import { ALTERNATE_LOCATION, DEFAULT_LOCATION, FIELD_PANEL } from '../constants';
+import { FIELD_PANEL } from '../constants';
 import { useField } from '../hooks';
 import { getFieldIcon, getWidthClass } from '../helpers';
 
@@ -21,7 +21,6 @@ import { getFieldIcon, getWidthClass } from '../helpers';
  * @typedef {Object} FieldsGridProps The component props.
  * @property {string} currentLocation The currently selected location.
  * @property {string|null} selectedField The currenetly selected field.
- * @property {Function} setCurrentLocation Sets the currently selected location.
  * @property {Function} setIsNewField Sets if there is a new field.
  * @property {Function} setPanelDisplaying Sets the current panel displaying.
  * @property {Function} setSelectedField Sets the name of the selected field.
@@ -39,50 +38,22 @@ import { getFieldIcon, getWidthClass } from '../helpers';
  * The main grid of fields.
  *
  * @param {FieldsGridProps} props
- * @return {React.ReactElement} The main editing area.
+ * @return {React.ReactElement} The fields displayed in a grid.
  */
 const FieldsGrid = ( {
 	currentLocation,
 	selectedField,
-	setCurrentLocation,
 	setIsNewField,
 	setPanelDisplaying,
 	setSelectedField,
 } ) => {
 	const { addNewField, getFieldsForLocation, reorderFields } = useField();
 	const fields = getFieldsForLocation( currentLocation );
-	const locationButtonClass = 'h-12 px-4 text-sm focus:outline-none';
 	const moveButtonClass = 'flex items-center justify-center text-sm w-6 h-5 hover:text-blue-700 z-10';
 	const buttonDisabledClasses = 'opacity-50 cursor-not-allowed';
 
 	return (
 		<>
-			<div className="flex mt-6">
-				<button
-					className={ locationButtonClass }
-					onClick={ () => setCurrentLocation( DEFAULT_LOCATION ) }
-				>
-					<span
-						className={ className( {
-							'font-semibold': DEFAULT_LOCATION === currentLocation,
-						} ) }
-					>
-						{ __( 'Editor Fields', 'genesis-custom-blocks' ) }
-					</span>
-				</button>
-				<button
-					className={ locationButtonClass }
-					onClick={ () => setCurrentLocation( ALTERNATE_LOCATION ) }
-				>
-					<span
-						className={ className( {
-							'font-semibold': ALTERNATE_LOCATION === currentLocation,
-						} ) }
-					>
-						{ __( 'Inspector Fields', 'genesis-custom-blocks' ) }
-					</span>
-				</button>
-			</div>
 			<div
 				role="grid"
 				className="grid grid-cols-4 gap-4 w-full items-start mt-2"
