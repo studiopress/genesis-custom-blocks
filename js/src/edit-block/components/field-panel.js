@@ -38,6 +38,7 @@ const FieldPanel = ( {
 		changeFieldSettings,
 		controls,
 		deleteField,
+		duplicateField,
 		getField,
 	} = useField();
 
@@ -105,6 +106,7 @@ const FieldPanel = ( {
 						controls={ controls }
 						changeFieldSettings={ changeFieldSettings }
 						deleteField={ () => deleteField( selectedField ) }
+						duplicateField={ () => duplicateField( selectedField ) }
 						field={ field }
 						setCurrentLocation={ setCurrentLocation }
 						setSelectedField={ setSelectedField }
