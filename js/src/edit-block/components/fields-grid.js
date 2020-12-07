@@ -24,6 +24,7 @@ import { getFieldIcon, getWidthClass } from '../helpers';
  * @property {Function} setIsNewField Sets if there is a new field.
  * @property {Function} setPanelDisplaying Sets the current panel displaying.
  * @property {Function} setSelectedField Sets the name of the selected field.
+ * @property {string} [parentField] The name of the parent field, if any.
  */
 
 /**
@@ -46,11 +47,12 @@ const FieldsGrid = ( {
 	setIsNewField,
 	setPanelDisplaying,
 	setSelectedField,
+	parentField = null,
 } ) => {
 	const { addNewField, getFieldsForLocation, reorderFields } = useField();
-	const fields = getFieldsForLocation( currentLocation );
 	const moveButtonClass = 'flex items-center justify-center text-sm w-6 h-5 hover:text-blue-700 z-10';
 	const buttonDisabledClasses = 'opacity-50 cursor-not-allowed';
+	const fields = getFieldsForLocation( currentLocation, parentField );
 
 	return (
 		<>
@@ -60,7 +62,7 @@ const FieldsGrid = ( {
 			>
 				{
 					/**
-					 * @param {Field[]} field
+					 * @param {Field} field
 					 * @param {number} index
 					 */
 					fields && fields.length
@@ -86,7 +88,7 @@ const FieldsGrid = ( {
 									role="gridcell"
 									tabIndex={ 0 }
 									aria-label={ sprintf(
-										// translators: %s: the label of the field
+									// translators: %s: the label of the field
 										__( 'Field: %s', 'genesis-custom-blocks' ),
 										field.label
 									) }
@@ -103,6 +105,19 @@ const FieldsGrid = ( {
 											<span className="text-xs font-mono">{ field.name }</span>
 											<ClipboardCopy text={ field.name } />
 										</div>
+										{ null === parentField
+											? (
+												<FieldsGrid
+													currentLocation={ currentLocation }
+													parentField={ field.name }
+													selectedField={ selectedField }
+													setIsNewField={ setIsNewField }
+													setPanelDisplaying={ setPanelDisplaying }
+													setSelectedField={ setSelectedField }
+												/>
+											)
+											: null
+										}
 										{ shouldDisplayMoveButtons
 											? (
 												<div
@@ -129,7 +144,7 @@ const FieldsGrid = ( {
 													</button>
 													<span id={ `move-up-button-${ index }` } className="hidden">
 														{ sprintf(
-															/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
+														/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
 															__( 'Move %1$s field up from position %2$d to position %3$d', 'genesis-custom-blocks' ),
 															field.label,
 															index,
@@ -154,7 +169,7 @@ const FieldsGrid = ( {
 													</button>
 													<span id={ `move-down-button-${ index }` } className="hidden">
 														{ sprintf(
-															/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
+														/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
 															__( 'Move %1$s field down from position %2$d to position %3$d', 'genesis-custom-blocks' ),
 															field.label,
 															index,

@@ -141,14 +141,20 @@ const useField = () => {
 	 * Gets the fields for either the editor or inspector.
 	 *
 	 * @param {string} location The location, like 'editor', or 'inspector'.
-	 * @return {Array} The fields with the given location.
+	 * @param {string|null} parentField The parent field, if any.
+	 * @return {Array|null} The fields with the given location.
 	 */
-	const getFieldsForLocation = useCallback( ( location ) => {
+	const getFieldsForLocation = useCallback( ( location, parentField = null ) => {
 		if ( ! block || ! block.fields ) {
 			return null;
 		}
 
-		return getFieldsAsArray( block.fields ).filter( ( field ) => {
+		const fields = null === parentField ? block.fields : block.fields[ parentField ].sub_fields;
+		if ( ! fields ) {
+			return null;
+		}
+
+		return getFieldsAsArray( fields ).filter( ( field ) => {
 			if ( 'editor' === location ) {
 				return ! field.location || 'editor' === field.location;
 			}
