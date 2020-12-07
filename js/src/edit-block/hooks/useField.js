@@ -230,14 +230,17 @@ const useField = () => {
 	const duplicateField = useCallback( ( fieldName ) => {
 		const currentField = getField( fieldName );
 		const { fields = {} } = block;
-		const newFieldNumber = Object.values( fields ).length + 1;
+		const newFieldNumber = getNewFieldNumber( fields, 'duplicated-field' );
+		const newFieldName = newFieldNumber
+			? `duplicated-field-${ newFieldNumber.toString() }`
+			: 'duplicated-field';
 
-		const newFieldName = `duplicated-field-${ newFieldNumber.toString() }`;
+		fields[ newFieldName ] = {
+			...currentField,
+			name: newFieldName,
+			order: Object.values( fields ).length,
+		};
 
-		const newField = { ...currentField };
-		newField.name = newFieldName;
-		newField.order = Object.values( fields ).length;
-		fields[ newFieldName ] = newField;
 		block.fields = fields;
 		fullBlock[ blockNameWithNameSpace ] = block;
 
