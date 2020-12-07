@@ -24,6 +24,7 @@ import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
  * @property {Function} addNewField Adds a new field.
  * @property {Object} controls All of the possible controls.
  * @property {Function} deleteField Deletes this field.
+ * @property {Function} duplicateField Deletes this field.
  * @property {Function} changeControl Changes the control of the field.
  * @property {Function} changeFieldSettings Changes field settings.
  * @property {Function} getField Gets the selected field.
@@ -230,6 +231,29 @@ const useField = () => {
 	}, [ blockNameWithNameSpace, editPost, fullBlock ] );
 
 	/**
+	 * Duplicates this field.
+	 */
+	const duplicateField = useCallback( ( fieldName ) => {
+		const currentField = getField( fieldName );
+		const { fields = {} } = block;
+		const newFieldNumber = getNewFieldNumber( fields, 'duplicated-field' );
+		const newFieldName = newFieldNumber
+			? `duplicated-field-${ newFieldNumber.toString() }`
+			: 'duplicated-field';
+
+		fields[ newFieldName ] = {
+			...currentField,
+			name: newFieldName,
+			order: Object.values( fields ).length,
+		};
+
+		block.fields = fields;
+		fullBlock[ blockNameWithNameSpace ] = block;
+
+		editPost( { content: JSON.stringify( fullBlock ) } );
+	}, [ blockNameWithNameSpace, editPost, fullBlock, block, getField ] );
+
+	/**
 	 * Gets a field, if it exists.
 	 *
 	 * @param {string} fieldName The name of the field.
@@ -268,6 +292,7 @@ const useField = () => {
 		changeControl,
 		changeFieldSettings,
 		deleteField,
+		duplicateField,
 		getField,
 		getFieldsForLocation,
 		reorderFields,
