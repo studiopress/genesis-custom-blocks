@@ -231,6 +231,16 @@ const useField = () => {
 	}, [ blockNameWithNameSpace, editPost, fullBlock ] );
 
 	/**
+	 * Gets a field, if it exists.
+	 *
+	 * @param {string} fieldName The name of the field.
+	 * @return {Object} The field, or {}.
+	 */
+	const getField = useCallback( ( fieldName ) => {
+		return block.fields && block.fields[ fieldName ] ? block.fields[ fieldName ] : {};
+	}, [ block ] );
+
+	/**
 	 * Duplicates this field.
 	 */
 	const duplicateField = useCallback( ( fieldName ) => {
@@ -252,16 +262,6 @@ const useField = () => {
 
 		editPost( { content: JSON.stringify( fullBlock ) } );
 	}, [ blockNameWithNameSpace, editPost, fullBlock, block, getField ] );
-
-	/**
-	 * Gets a field, if it exists.
-	 *
-	 * @param {string} fieldName The name of the field.
-	 * @return {Object} The field, or {}.
-	 */
-	const getField = useCallback( ( fieldName ) => {
-		return block.fields && block.fields[ fieldName ] ? block.fields[ fieldName ] : {};
-	}, [ block ] );
 
 	/**
 	 * Reorders fields, moving a single field to another position.
