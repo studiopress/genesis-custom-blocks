@@ -9,7 +9,7 @@ describe( 'getFieldIcon', () => {
 		'email',
 		'select',
 		'text',
-	] )( 'should have the field component',
+	] )( 'should have the field icon component',
 		( fieldName ) => {
 			expect( typeof getFieldIcon( fieldName ) ).toEqual( 'object' );
 		}

@@ -28,6 +28,14 @@ import { getFieldIcon, getWidthClass } from '../helpers';
  */
 
 /**
+ * @typedef {Object} Field A block field.
+ * @property {string} name The name of the field.
+ * @property {string} control The control, like 'text'.
+ * @property {string|number} width The width, like '25'.
+ * @property {string} label The label of the field.
+ */
+
+/**
  * The main grid of fields.
  *
  * @param {FieldsGridProps} props
@@ -80,6 +88,10 @@ const FieldsGrid = ( {
 				className="grid grid-cols-4 gap-4 w-full items-start mt-2"
 			>
 				{
+					/**
+					 * @param {Field[]} field
+					 * @param {number} index
+					 */
 					fields && fields.length
 						? fields.map( ( field, index ) => {
 							const selectField = () => {

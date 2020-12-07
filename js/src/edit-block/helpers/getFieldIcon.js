@@ -24,7 +24,7 @@ const getFieldIcon = ( control ) => {
 		return null;
 	}
 
-	const icon = fieldIcons[ control ];
+	const icon = fieldIcons[ control ]; /* eslint-disable-line import/namespace */
 	return applyFilters( 'genesisCustomBlocks.getFieldIcon', icon, control );
 };
 

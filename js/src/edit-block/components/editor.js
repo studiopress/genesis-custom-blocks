@@ -49,8 +49,8 @@ import { useBlock } from '../hooks';
 const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 	const { block, changeBlockName } = useBlock();
 	const [ currentLocation, setCurrentLocation ] = useState( DEFAULT_LOCATION );
-	const [ panelDisplaying, setPanelDisplaying ] = useState( BLOCK_PANEL );
 	const [ isNewField, setIsNewField ] = useState( false );
+	const [ panelDisplaying, setPanelDisplaying ] = useState( BLOCK_PANEL );
 	const [ selectedField, setSelectedField ] = useState( NO_FIELD_SELECTED );
 
 	const post = useSelect(
