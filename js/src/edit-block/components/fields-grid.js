@@ -20,7 +20,7 @@ import { getFieldIcon, getWidthClass } from '../helpers';
 /**
  * @typedef {Object} FieldsGridProps The component props.
  * @property {string} currentLocation The currently selected location.
- * @property {string|null} selectedField The currenetly selected field.
+ * @property {Object|null} selectedField The currenetly selected field.
  * @property {Function} setIsNewField Sets if there is a new field.
  * @property {Function} setPanelDisplaying Sets the current panel displaying.
  * @property {Function} setSelectedField Sets the name of the selected field.
@@ -68,13 +68,13 @@ const FieldsGrid = ( {
 					fields && fields.length
 						? fields.map( ( field, index ) => {
 							const selectField = () => {
-								setSelectedField( field.name );
+								setSelectedField( { name: field.name, parent: parentField } );
 								setPanelDisplaying( FIELD_PANEL );
 							};
 							const shouldDisplayMoveButtons = fields.length > 1;
 							const isUpButtonDisabled = 0 === index;
 							const isDownButtonDisabled = index >= ( fields.length - 1 );
-							const isSelected = field.name === selectedField;
+							const isSelected = selectedField && field.name === selectedField.name;
 							const FieldIcon = getFieldIcon( field.control );
 
 							return (
@@ -88,8 +88,8 @@ const FieldsGrid = ( {
 									role="gridcell"
 									tabIndex={ 0 }
 									aria-label={ sprintf(
-									// translators: %s: the label of the field
-										__( 'Field: %s', 'genesis-custom-blocks' ),
+									/* translators: %1$s: the label of the field */
+										__( 'Field: %1$s', 'genesis-custom-blocks' ),
 										field.label
 									) }
 									onClick={ selectField }
@@ -105,7 +105,7 @@ const FieldsGrid = ( {
 											<span className="text-xs font-mono">{ field.name }</span>
 											<ClipboardCopy text={ field.name } />
 										</div>
-										{ null === parentField
+										{ null === parentField && Boolean( field.sub_fields )
 											? (
 												<FieldsGrid
 													currentLocation={ currentLocation }
@@ -191,7 +191,7 @@ const FieldsGrid = ( {
 				className="flex items-center justify-center h-6 w-6 bg-black rounded-sm text-white mt-4 ml-auto"
 				onClick={ () => {
 					const newFieldName = addNewField( currentLocation );
-					setSelectedField( newFieldName );
+					setSelectedField( { name: newFieldName, parent: parentField } );
 					setIsNewField( true );
 					setPanelDisplaying( FIELD_PANEL );
 				} }

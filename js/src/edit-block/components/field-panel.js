@@ -20,7 +20,7 @@ import { convertToSlug } from '../helpers';
 /**
  * @typedef {Object} FieldPanelProps The component props.
  * @property {boolean} isNewField Whether there is a new field.
- * @property {string|null} selectedField The name of the selected field.
+ * @property {Object|null} selectedField The name of the selected field.
  * @property {Function} setCurrentLocation Sets the current location, like 'editor'.
  * @property {Function} setIsNewField Sets whether there is a new field.
  * @property {Function} setSelectedField Sets the currently selected field name.
@@ -91,10 +91,10 @@ const FieldPanel = ( {
 								if ( isNewField ) {
 									changedField.name = newName;
 									didAutoSlug.current = true;
-									setSelectedField( newName );
+									setSelectedField( { name: newName, parent: field.parent } );
 								}
 
-								changeFieldSettings( selectedField, changedField );
+								changeFieldSettings( { name: field.name, parent: field.parent }, changedField );
 							} }
 							onBlur={ () => {
 								if ( didAutoSlug.current ) {
@@ -115,7 +115,7 @@ const FieldPanel = ( {
 								if ( event.target ) {
 									const changedName = event.target.value;
 									changeFieldSettings( selectedField, { name: changedName } );
-									setSelectedField( changedName );
+									setSelectedField( { name: changedName } );
 								}
 							} }
 						/>

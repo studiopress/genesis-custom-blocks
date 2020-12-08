@@ -53,18 +53,18 @@ global.gcbEditor = { controls: {} };
 
 describe( 'FieldsGrid', () => {
 	it( 'displays the main editor area', async () => {
-		const { getAllByText } = render(
+		const { getByText } = render(
 			<FieldsGrid
 				currentLocation="editor"
 				panelDisplaying={ BLOCK_PANEL }
-				selectedField={ mockUrlField.name }
+				selectedField={ { name: mockUrlField.name } }
 				setPanelDisplaying={ jest.fn() }
 				setIsNewField={ jest.fn() }
 				setSelectedField={ jest.fn() }
 			/>
 		);
 
-		expect( getAllByText( mockUrlField.name ).length ).toEqual( 2 );
-		expect( getAllByText( mockUrlField.label ).length ).toEqual( 2 );
+		expect( getByText( mockUrlField.name ) ).toBeInTheDocument();
+		expect( getByText( mockUrlField.label ) ).toBeInTheDocument();
 	} );
 } );
