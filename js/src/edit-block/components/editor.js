@@ -11,6 +11,7 @@ import {
 	EditorNotices,
 	EditorProvider,
 	ErrorBoundary,
+	UnsavedChangesWarning,
 } from '@wordpress/editor';
 import { StrictMode, useEffect, useState } from '@wordpress/element';
 
@@ -93,6 +94,7 @@ const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 
 	return (
 		<StrictMode>
+			<UnsavedChangesWarning />
 			<div className="h-screen flex flex-col items-center text-black">
 				<BrowserURL />
 				<EditorProvider
