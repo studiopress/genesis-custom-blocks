@@ -67,7 +67,13 @@ const FieldsGrid = ( {
 					 */
 					fields && fields.length
 						? fields.map( ( field, index ) => {
-							const selectField = () => {
+							/**
+							 * Selects this field.
+							 *
+							 * @param {React.MouseEvent|React.TouchEvent} event The event to handle.
+							 */
+							const selectField = ( event ) => {
+								event.stopPropagation();
 								setSelectedField( { name: field.name, parent: parentField } );
 								setPanelDisplaying( FIELD_PANEL );
 							};

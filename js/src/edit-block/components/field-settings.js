@@ -64,7 +64,10 @@ const FieldSettings = ( {
 									value={ value }
 									handleOnChange={ ( newSettingValue ) => {
 										changeFieldSettings(
-											{ name: field.name },
+											{
+												name: field.name,
+												parent: field.parent,
+											},
 											{ [ setting.name ]: newSettingValue }
 										);
 									} }

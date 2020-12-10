@@ -33,7 +33,7 @@ import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
  */
 
 /**
- * @typedef {Object} FieldToChange A field to change.
+ * @typedef {Object} SelectedField A field to change.
  * @property {string} name The name of the field.
  * @property {string} [parent] The name of the field's parent, if any.
  */
@@ -74,7 +74,7 @@ const useField = () => {
 	const addNewField = useCallback( ( location, parentField ) => {
 		const { fields = {} } = block;
 		const newFieldNumber = getNewFieldNumber(
-			null === parentField || ! fields[ parentField ]
+			null === parentField
 				? fields
 				: fields[ parentField ].sub_fields
 		);
@@ -112,31 +112,34 @@ const useField = () => {
 		return newFieldName;
 	}, [ block, blockNameWithNameSpace, editPost, fullBlock ] );
 
-	/**
-	 * Changes the control of a field.
-	 *
-	 * @param {FieldToChange} fieldToChange The field to change.
-	 * @param {string} newControlName The name of the control to change to.
-	 */
-	const changeControl = useCallback( ( fieldToChange, newControlName ) => {
-		const newControl = controls[ newControlName ];
-		if ( ! newControl || ! fieldToChange.name ) {
-			return;
-		}
+	const changeControl = useCallback(
+		/**
+		 * Changes the control of a field.
+		 *
+		 * @param {SelectedField} fieldToChange The field to change.
+		 * @param {string} newControlName The name of the control to change to.
+		 */
+		( fieldToChange, newControlName ) => {
+			const newControl = controls[ newControlName ];
+			if ( ! newControl || ! fieldToChange.name ) {
+				return;
+			}
 
-		const previousField = fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.name ];
-		const newField = {
-			name: previousField.name,
-			label: previousField.label,
-			location: previousField.location,
-			order: previousField.order,
-			control: newControl.name,
-			type: newControl.type,
-		};
+			const previousField = fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.name ];
+			const newField = {
+				name: previousField.name,
+				label: previousField.label,
+				location: previousField.location,
+				order: previousField.order,
+				control: newControl.name,
+				type: newControl.type,
+			};
 
-		fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.name ] = newField;
-		editPost( { content: JSON.stringify( fullBlock ) } );
-	}, [ blockNameWithNameSpace, controls, editPost, fullBlock ] );
+			fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.name ] = newField;
+			editPost( { content: JSON.stringify( fullBlock ) } );
+		},
+		[ blockNameWithNameSpace, controls, editPost, fullBlock ]
+	);
 
 	/**
 	 * Changes a field name (slug), and returns the fields.
@@ -207,41 +210,51 @@ const useField = () => {
 		] );
 	}, [ getFieldsForLocation ] );
 
-	/**
-	 * Changes a field setting.
-	 *
-	 * @param {FieldToChange} field The field to change.
-	 * @param {any} newSettingValue The new setting value.
-	 */
-	const changeFieldSettings = useCallback( ( fieldToChange, newSettings ) => {
-		if ( newSettings.hasOwnProperty( 'location' ) ) {
-			fullBlock[ blockNameWithNameSpace ].fields = changeFieldLocation(
-				fullBlock[ blockNameWithNameSpace ].fields,
-				fieldToChange.name,
-				newSettings.location
-			);
-		}
+	const changeFieldSettings = useCallback(
+		/**
+		 * Changes a field setting.
+		 *
+		 * @param {SelectedField} fieldToChange The field to change.
+		 * @param {Object} newSettings The new settings of the field.
+		 */
+		( fieldToChange, newSettings ) => {
+			if ( newSettings.hasOwnProperty( 'location' ) ) {
+				fullBlock[ blockNameWithNameSpace ].fields = changeFieldLocation(
+					fullBlock[ blockNameWithNameSpace ].fields,
+					fieldToChange.name,
+					newSettings.location
+				);
+			}
 
-		if ( newSettings.hasOwnProperty( 'name' ) ) {
-			fullBlock[ blockNameWithNameSpace ].fields = changeFieldName(
-				fullBlock[ blockNameWithNameSpace ].fields,
-				fieldToChange.name,
-				newSettings.name
-			);
-		}
+			if ( newSettings.hasOwnProperty( 'name' ) ) {
+				fullBlock[ blockNameWithNameSpace ].fields = changeFieldName(
+					fullBlock[ blockNameWithNameSpace ].fields,
+					fieldToChange.name,
+					newSettings.name
+				);
+			}
 
-		const name = newSettings.hasOwnProperty( 'name' ) ? newSettings.name : fieldToChange.name;
-		const currentField = fieldToChange.parent
-			? fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ].sub_fields
-			: fullBlock[ blockNameWithNameSpace ].fields[ name ];
+			const name = newSettings.hasOwnProperty( 'name' ) ? newSettings.name : fieldToChange.name;
+			const currentField = fieldToChange.parent
+				? fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ]
+				: fullBlock[ blockNameWithNameSpace ].fields[ name ];
 
-		fullBlock[ blockNameWithNameSpace ].fields[ name ] = {
-			...currentField,
-			...newSettings,
-		};
+			const newField = {
+				...currentField,
+				...newSettings,
+			};
 
-		editPost( { content: JSON.stringify( fullBlock ) } );
-	}, [ blockNameWithNameSpace, changeFieldLocation, editPost, fullBlock ] );
+			if ( fieldToChange.parent ) {
+				fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ]
+					.sub_fields[ fieldToChange.name ] = newField;
+			} else {
+				fullBlock[ blockNameWithNameSpace ].fields[ name ] = newField;
+			}
+
+			editPost( { content: JSON.stringify( fullBlock ) } );
+		},
+		[ blockNameWithNameSpace, changeFieldLocation, editPost, fullBlock ]
+	);
 
 	/**
 	 * Deletes this field.
@@ -251,21 +264,24 @@ const useField = () => {
 		editPost( { content: JSON.stringify( fullBlock ) } );
 	}, [ blockNameWithNameSpace, editPost, fullBlock ] );
 
-	/**
-	 * Gets a field, if it exists.
-	 *
-	 * @param {string} fieldName The name of the field.
-	 * @return {Object} The field, or {}.
-	 */
-	const getField = useCallback( ( field ) => {
-		if ( ! field || ! block.fields || ! block.fields[ field.name ] ) {
-			return {};
-		}
+	const getField = useCallback(
+		/**
+		 * Gets a field, if it exists.
+		 *
+		 * @param {SelectedField} field The field to get.
+		 * @return {Object} The field, or {}.
+		 */
+		( field ) => {
+			if ( ! field || ! block.fields ) {
+				return {};
+			}
 
-		return field.parent
-			? block.fields[ field.parent ].sub_fields[ field.name ]
-			: block.fields[ field.name ];
-	}, [ block ] );
+			return field.parent
+				? block.fields[ field.parent ].sub_fields[ field.name ]
+				: block.fields[ field.name ];
+		},
+		[ block ]
+	);
 
 	/**
 	 * Duplicates this field.

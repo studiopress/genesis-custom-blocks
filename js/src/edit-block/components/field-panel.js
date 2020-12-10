@@ -6,8 +6,8 @@ import React from 'react';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
 import { useEffect, useRef } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies

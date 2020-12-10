@@ -37,7 +37,7 @@ const Header = () => {
 			</a>
 			<EditorHistoryUndo />
 			<EditorHistoryRedo />
-			<div id="save-and-publish" >
+			<div id="save-and-publish">
 				<PostSavedState
 					forceIsDirty={ false }
 					forceIsSaving={ false }

@@ -8,6 +8,7 @@ import * as React from 'react';
  */
 import { __, sprintf } from '@wordpress/i18n';
 import { FormTokenField } from '@wordpress/components';
+import { useCallback } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -32,6 +33,19 @@ const KeywordsSection = () => {
 		changeBlock( { keywords: tokens } );
 	};
 
+	/**
+	 * Gets the block keywords.
+	 *
+	 * @return {Array} The block keywords, if any.
+	 */
+	const getKeywords = useCallback( () => {
+		if ( ! Array.isArray( block.keywords ) ) {
+			return [];
+		}
+
+		return block.keywords.filter( ( keyword ) => Boolean( keyword ) );
+	}, [ block.keywords ] );
+
 	return (
 		<div className="mt-5">
 			<FormTokenField
@@ -41,7 +55,7 @@ const KeywordsSection = () => {
 					__( 'Keywords (max %1$d)', 'genesis-custom-blocks' ),
 					maxNumberOfKeywords
 				) }
-				value={ block.keywords }
+				value={ getKeywords() }
 				maxLength={ maxNumberOfKeywords }
 				onChange={ handleChange }
 				messages={ {
