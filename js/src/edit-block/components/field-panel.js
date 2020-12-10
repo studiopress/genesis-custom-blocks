@@ -57,7 +57,7 @@ const FieldPanel = ( {
 		if ( isNewField && ref.current ) {
 			const { ownerDocument: { activeElement } } = ref.current;
 			if ( ! activeElement || ref.current !== activeElement ) {
-				//@ts-ignore
+				// @ts-ignore
 				ref.current.select();
 			}
 

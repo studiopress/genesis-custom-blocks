@@ -105,7 +105,7 @@ const FieldsGrid = ( {
 											<span className="text-xs font-mono">{ field.name }</span>
 											<ClipboardCopy text={ field.name } />
 										</div>
-										{ null === parentField && Boolean( field.sub_fields )
+										{ null === parentField && 'repeater' === field.control
 											? (
 												<FieldsGrid
 													currentLocation={ currentLocation }
@@ -190,7 +190,7 @@ const FieldsGrid = ( {
 			<button
 				className="flex items-center justify-center h-6 w-6 bg-black rounded-sm text-white mt-4 ml-auto"
 				onClick={ () => {
-					const newFieldName = addNewField( currentLocation );
+					const newFieldName = addNewField( currentLocation, parentField );
 					setSelectedField( { name: newFieldName, parent: parentField } );
 					setIsNewField( true );
 					setPanelDisplaying( FIELD_PANEL );

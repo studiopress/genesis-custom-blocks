@@ -10,13 +10,13 @@
  * @return {number|null} The new field number as a string, or null.
  */
 const getNewFieldNumber = ( fields, fieldName = 'new-field' ) => {
-	const numberOfFields = Object.values( fields ).length;
-	if ( ! numberOfFields || ! fields.hasOwnProperty( fieldName ) ) {
+	const fieldKeys = Object.keys( fields );
+	if ( ! fieldKeys.length || ! fieldKeys.includes( fieldName ) ) {
 		return null;
 	}
 
-	for ( let i = 1; i <= numberOfFields; i++ ) {
-		if ( ! fields.hasOwnProperty( `${ fieldName }-${ i.toString() }` ) ) {
+	for ( let i = 1; i <= fieldKeys.length; i++ ) {
+		if ( ! fieldKeys.includes( `${ fieldName }-${ i.toString() }` ) ) {
 			return i;
 		}
 	}

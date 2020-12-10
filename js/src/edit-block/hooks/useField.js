@@ -68,11 +68,16 @@ const useField = () => {
 	 * Adds a new field to the end of the existing fields.
 	 *
 	 * @param {string} location The location to add the field to.
+	 * @param {string|null} parentField The parent field to add it to, if any.
 	 * @return {string} The name of the new field.
 	 */
-	const addNewField = useCallback( ( location ) => {
+	const addNewField = useCallback( ( location, parentField ) => {
 		const { fields = {} } = block;
-		const newFieldNumber = getNewFieldNumber( fields );
+		const newFieldNumber = getNewFieldNumber(
+			null === parentField || ! fields[ parentField ]
+				? fields
+				: fields[ parentField ].sub_fields
+		);
 		const newFieldName = newFieldNumber
 			? `new-field-${ newFieldNumber.toString() }`
 			: 'new-field';
@@ -93,7 +98,13 @@ const useField = () => {
 			order: Object.values( fields ).length,
 		};
 
-		fields[ newFieldName ] = newField;
+		if ( null === parentField ) {
+			fields[ newFieldName ] = newField;
+		} else {
+			newField.parent = parentField;
+			fields[ parentField ].sub_fields[ newFieldName ] = newField;
+		}
+
 		block.fields = fields;
 		fullBlock[ blockNameWithNameSpace ] = block;
 
@@ -258,14 +269,14 @@ const useField = () => {
 
 	/**
 	 * Duplicates this field.
+	 *
+	 * @param {string} fieldName The name of the field to duplicate.
 	 */
 	const duplicateField = useCallback( ( fieldName ) => {
 		const currentField = getField( fieldName );
 		const { fields = {} } = block;
-		const newFieldNumber = getNewFieldNumber( fields, 'duplicated-field' );
-		const newFieldName = newFieldNumber
-			? `duplicated-field-${ newFieldNumber.toString() }`
-			: 'duplicated-field';
+		const newFieldNumber = getNewFieldNumber( fields, fieldName );
+		const newFieldName = `${ fieldName }-${ newFieldNumber.toString() }`;
 
 		fields[ newFieldName ] = {
 			...currentField,
