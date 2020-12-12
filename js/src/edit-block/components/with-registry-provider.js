@@ -31,7 +31,7 @@ const withRegistryProvider = createHigherOrderComponent(
 			useEffect( () => {
 				createRegistry(
 					{
-						'core/editor': storeConfig
+						'core/editor': storeConfig,
 					},
 					registry
 				);

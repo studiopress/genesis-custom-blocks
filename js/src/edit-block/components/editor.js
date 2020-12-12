@@ -6,7 +6,7 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 import {
 	EditorNotices,
 	ErrorBoundary,
@@ -33,7 +33,6 @@ import { useBlock } from '../hooks';
 
 /**
  * @typedef {Object} EditorProps The component props.
- * @property {Object|null} initialEdits The initial edits, if any.
  * @property {onErrorType} onError Handler for errors.
  * @property {number} postId The current post ID.
  * @property {string} postType The current post type.
@@ -46,7 +45,7 @@ import { useBlock } from '../hooks';
  * @param {EditorProps} props The component props.
  * @return {React.ReactElement} The editor.
  */
-const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
+const Editor = ( { onError, postId, postType, settings } ) => {
 	const { block, changeBlockName } = useBlock();
 	const [ currentLocation, setCurrentLocation ] = useState( DEFAULT_LOCATION );
 	const [ isNewField, setIsNewField ] = useState( false );
@@ -60,26 +59,6 @@ const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 	const isSavingPost = useSelect(
 		( select ) => select( 'core/editor' ).isSavingPost()
 	);
-
-	// @ts-ignore
-	const { editEntityRecord } = useDispatch( 'core' );
-
-	useEffect( () => {
-		if ( ! post ) {
-			return;
-		}
-
-		// A hack to remove blocks from the edited entity.
-		// The stores use getEditedPostContent(), which gets the blocks if the .blocks property exists.
-		// This change makes getEditedPostContent() return the post content, instead of
-		// parsing [] blocks and returning ''.
-		editEntityRecord(
-			'postType',
-			postType,
-			postId,
-			{ blocks: null }
-		);
-	}, [ editEntityRecord, post, postId, postType ] );
 
 	useEffect( () => {
 		if ( isSavingPost && ! block.name ) {

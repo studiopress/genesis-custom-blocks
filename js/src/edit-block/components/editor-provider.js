@@ -15,6 +15,7 @@ import { store as noticesStore } from '@wordpress/notices';
 /**
  * Internal dependencies
  */
+import { useEditor } from '../hooks';
 import { default as withRegistryProvider } from './with-registry-provider';
 
 /**
@@ -43,9 +44,9 @@ const EditorProvider = ( {
 	initialEdits,
 	children,
 } ) => {
+	const { setupEditor } = useEditor();
 	const {
 		updatePostLock,
-		setupEditor,
 		updateEditorSettings,
 	} = useDispatch( 'core/editor' );
 	const { createWarningNotice } = useDispatch( noticesStore );
@@ -59,7 +60,7 @@ const EditorProvider = ( {
 		}
 
 		updatePostLock( settings.postLock );
-		setupEditor( post, initialEdits, settings.template );
+		setupEditor( post, initialEdits );
 		if ( settings.autosave ) {
 			createWarningNotice(
 				__(
@@ -76,7 +77,7 @@ const EditorProvider = ( {
 				}
 			);
 		}
-	}, [] );
+	}, [] ); /* eslint-disable-line react-hooks/exhaustive-deps */
 
 	// Synchronize the editor settings as they change
 	useEffect( () => {
