@@ -276,9 +276,11 @@ const useField = () => {
 				return {};
 			}
 
-			return field.parent
+			const currentField = field.parent
 				? block.fields[ field.parent ].sub_fields[ field.name ]
 				: block.fields[ field.name ];
+
+			return currentField || {};
 		},
 		[ block ]
 	);

@@ -65,6 +65,22 @@ const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 	const { editEntityRecord } = useDispatch( 'core' );
 
 	useEffect( () => {
+		if ( ! post ) {
+			return;
+		}
+
+		// A hack to remove blocks from the edited entity.
+		// The stores use getEditedPostContent(), which gets the blocks if the .blocks property exists.
+		// This change makes getEditedPostContent() return the post content, instead of
+		// parsing [] blocks and returning ''.
+		editEntityRecord(
+			'postType',
+			postType,
+			postId,
+			{ blocks: null }
+		);
+	}, [ editEntityRecord, post, postId, postType ] );
+	useEffect( () => {
 		if ( isSavingPost && ! block.name ) {
 			const defaultBlock = getDefaultBlock( postId );
 			changeBlockName( defaultBlock.name, defaultBlock );

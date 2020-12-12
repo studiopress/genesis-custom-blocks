@@ -48,5 +48,4 @@ const withRegistryProvider = createHigherOrderComponent(
 	'withRegistryProvider'
 );
 
-console.log( `about to export ${ withRegistryProvider }` );
 export default withRegistryProvider;
