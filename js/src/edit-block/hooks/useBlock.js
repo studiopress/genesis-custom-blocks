@@ -11,7 +11,6 @@ import { BLOCK_NAMESPACE } from '../constants';
 import {
 	getBlock,
 	getBlockNameWithNameSpace,
-	getEditedPostContent,
 } from '../helpers';
 
 /**
@@ -27,8 +26,26 @@ import {
  * @return {UseBlockReturn} The block and a function to change it.
  */
 const useBlock = () => {
-	const editedPostContent = useSelect( getEditedPostContent, [] );
-	const { editPost } = useDispatch( 'core/editor' );
+	const editedPostContent = useSelect(
+		( select ) => select( 'core/editor' ).getEditedPostContent(),
+		[]
+	);
+	const postId = useSelect(
+		( select ) => select( 'core/editor' ).getCurrentPostId(),
+		[]
+	);
+	const { editEntityRecord } = useDispatch( 'core' );
+	const editPost = useCallback( ( newEdits ) => {
+		editEntityRecord(
+			'postType',
+			'genesis_custom_block',
+			postId,
+			{
+				...newEdits,
+				blocks: null,
+			}
+		);
+	}, [ editEntityRecord, postId ] );
 
 	const getFullBlock = useCallback(
 		() => getBlock( editedPostContent ),

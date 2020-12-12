@@ -13,7 +13,6 @@ import { __, sprintf } from '@wordpress/i18n';
 import {
 	getBlock,
 	getBlockNameWithNameSpace,
-	getEditedPostContent,
 	getNewFieldNumber,
 	getOtherLocation,
 	setCorrectOrderForFields,
@@ -47,7 +46,10 @@ import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
 const useField = () => {
 	// @ts-ignore
 	const { controls } = gcbEditor;
-	const editedPostContent = useSelect( getEditedPostContent, [] );
+	const editedPostContent = useSelect(
+		( select ) => select( 'core/editor' ).getEditedPostContent(),
+		[]
+	);
 
 	const getFullBlock = useCallback(
 		() => getBlock( editedPostContent ),
@@ -55,7 +57,22 @@ const useField = () => {
 	);
 
 	const fullBlock = getFullBlock();
-	const { editPost } = useDispatch( 'core/editor' );
+	const postId = useSelect(
+		( select ) => select( 'core/editor' ).getCurrentPostId(),
+		[]
+	);
+	const { editEntityRecord } = useDispatch( 'core' );
+	const editPost = useCallback( ( newEdits ) => {
+		editEntityRecord(
+			'postType',
+			'genesis_custom_block',
+			postId,
+			{
+				...newEdits,
+				blocks: null,
+			}
+		);
+	}, [ editEntityRecord, postId ] );
 	const blockNameWithNameSpace = getBlockNameWithNameSpace( fullBlock );
 	const block = useMemo(
 		() => fullBlock[ blockNameWithNameSpace ] || {},
