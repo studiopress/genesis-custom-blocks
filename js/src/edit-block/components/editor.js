@@ -80,6 +80,7 @@ const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 			{ blocks: null }
 		);
 	}, [ editEntityRecord, post, postId, postType ] );
+
 	useEffect( () => {
 		if ( isSavingPost && ! block.name ) {
 			const defaultBlock = getDefaultBlock( postId );

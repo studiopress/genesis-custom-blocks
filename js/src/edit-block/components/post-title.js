@@ -35,19 +35,15 @@ const PostTitle = () => {
 	const {
 		isCleanNewPost,
 		title,
-		placeholder,
 	} = useSelect( ( select ) => {
 		const {
 			getEditedPostAttribute,
 			isCleanNewPost: _isCleanNewPost,
 		} = select( 'core/editor' );
-		const { getSettings } = select( 'core/block-editor' );
-		const {	titlePlaceholder } = getSettings();
 
 		return {
 			isCleanNewPost: _isCleanNewPost(),
 			title: getEditedPostAttribute( 'title' ),
-			placeholder: titlePlaceholder,
 		};
 	} );
 	const isAutoSlugging = useRef( ! block || ! block.name );
@@ -101,7 +97,7 @@ const PostTitle = () => {
 				as="label"
 				htmlFor={ `post-title-${ instanceId }` }
 			>
-				{ placeholder || __( 'Add title', 'genesis-custom-blocks' ) }
+				{ __( 'Add block', 'genesis-custom-blocks' ) }
 			</VisuallyHidden>
 			<TextareaAutosize
 				ref={ ref }
@@ -109,7 +105,7 @@ const PostTitle = () => {
 				className="editor-post-title__input"
 				value={ title }
 				onChange={ onChange }
-				placeholder={ placeholder || __( 'Add title', 'genesis-custom-blocks' ) }
+				placeholder={ __( 'Add block', 'genesis-custom-blocks' ) }
 				onFocus={ onSelect }
 				onBlur={ onBlur }
 				onKeyPress={ onUnselect }

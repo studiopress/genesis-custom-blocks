@@ -50,7 +50,7 @@ const EditorProvider = ( {
 	} = useDispatch( 'core/editor' );
 	const { createWarningNotice } = useDispatch( noticesStore );
 
-	// Iniitialize and tear down the editor.
+	// Iniitialize the editor.
 	// Ideally this should be synced on each change and not just something you do once.
 	useLayoutEffect( () => {
 		// Assume that we don't need to initialize in the case of an error recovery.
