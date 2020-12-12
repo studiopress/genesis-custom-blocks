@@ -72,7 +72,7 @@ const PostTitle = () => {
 		}
 
 		const newBlock = { title: newTitle };
-		if ( isAutoSlugging || ! block.name ) {
+		if ( isAutoSlugging.current ) {
 			changeBlockName( convertToSlug( newTitle ), newBlock );
 		} else {
 			changeBlock( newBlock );

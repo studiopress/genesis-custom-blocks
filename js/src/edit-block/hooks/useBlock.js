@@ -74,8 +74,8 @@ const useBlock = () => {
 
 		const newBlock = {
 			[ `${ BLOCK_NAMESPACE }/${ newName }` ]: {
-				...defaultValues,
 				...previousBlock[ previousBlockName ],
+				...defaultValues,
 				name: newName,
 			},
 		};

@@ -70,7 +70,7 @@ const FieldsGrid = ( {
 							/**
 							 * Selects this field.
 							 *
-							 * @param {React.MouseEvent|React.TouchEvent} event The event to handle.
+							 * @param {React.MouseEvent|React.KeyboardEvent<HTMLDivElement>} event The event to handle.
 							 */
 							const selectField = ( event ) => {
 								event.stopPropagation();
