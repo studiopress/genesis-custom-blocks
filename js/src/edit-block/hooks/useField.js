@@ -13,6 +13,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import {
 	getBlock,
 	getBlockNameWithNameSpace,
+	getEditedPostContent,
 	getNewFieldNumber,
 	getOtherLocation,
 	setCorrectOrderForFields,
@@ -46,10 +47,7 @@ import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
 const useField = () => {
 	// @ts-ignore
 	const { controls } = gcbEditor;
-	const editedPostContent = useSelect(
-		( select ) => select( 'core/editor' ).getEditedPostContent(),
-		[]
-	);
+	const editedPostContent = useSelect( getEditedPostContent, [] );
 
 	const getFullBlock = useCallback(
 		() => getBlock( editedPostContent ),

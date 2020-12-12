@@ -5,6 +5,7 @@ export { default as getFieldIcon } from './getFieldIcon';
 export { default as getBlock } from './getBlock';
 export { default as getBlockNameWithNameSpace } from './getBlockNameWithNameSpace';
 export { default as getDefaultBlock } from './getDefaultBlock';
+export { default as getEditedPostContent } from './getEditedPostContent';
 export { default as getNewFieldNumber } from './getNewFieldNumber';
 export { default as getOtherLocation } from './getOtherLocation';
 export { default as getSettingsComponent } from './getSettingsComponent';

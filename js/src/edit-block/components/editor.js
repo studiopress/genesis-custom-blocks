@@ -6,7 +6,7 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 import {
 	EditorNotices,
 	EditorProvider,
@@ -61,8 +61,6 @@ const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 	const isSavingPost = useSelect(
 		( select ) => select( 'core/editor' ).isSavingPost()
 	);
-	// @ts-ignore
-	const { editEntityRecord } = useDispatch( 'core' );
 
 	useEffect( () => {
 		if ( isSavingPost && ! block.name ) {
@@ -70,23 +68,6 @@ const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 			changeBlockName( defaultBlock.name, defaultBlock );
 		}
 	}, [ block, changeBlockName, isSavingPost, postId ] );
-
-	useEffect( () => {
-		if ( ! post ) {
-			return;
-		}
-
-		// A hack to remove blocks from the edited entity.
-		// The stores use getEditedPostContent(), which gets the blocks if the .blocks property exists.
-		// This change makes getEditedPostContent() return the post content, instead of
-		// parsing [] blocks and returning ''.
-		editEntityRecord(
-			'postType',
-			postType,
-			postId,
-			{ blocks: null }
-		);
-	}, [ editEntityRecord, post, postId, postType ] );
 
 	if ( ! post ) {
 		return null;

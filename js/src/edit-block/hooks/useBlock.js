@@ -8,7 +8,11 @@ import { useCallback, useMemo } from '@wordpress/element';
  * Internal dependencies
  */
 import { BLOCK_NAMESPACE } from '../constants';
-import { getBlock, getBlockNameWithNameSpace } from '../helpers';
+import {
+	getBlock,
+	getBlockNameWithNameSpace,
+	getEditedPostContent,
+} from '../helpers';
 
 /**
  * @typedef {Object} UseBlockReturn The return value of useBlock.
@@ -23,10 +27,7 @@ import { getBlock, getBlockNameWithNameSpace } from '../helpers';
  * @return {UseBlockReturn} The block and a function to change it.
  */
 const useBlock = () => {
-	const editedPostContent = useSelect(
-		( select ) => select( 'core/editor' ).getEditedPostContent(),
-		[]
-	);
+	const editedPostContent = useSelect( getEditedPostContent, [] );
 	const { editPost } = useDispatch( 'core/editor' );
 
 	const getFullBlock = useCallback(
