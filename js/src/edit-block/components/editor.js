@@ -9,7 +9,6 @@ import * as React from 'react';
 import { useDispatch, useSelect } from '@wordpress/data';
 import {
 	EditorNotices,
-	EditorProvider,
 	ErrorBoundary,
 	UnsavedChangesWarning,
 } from '@wordpress/editor';
@@ -18,7 +17,7 @@ import { StrictMode, useEffect, useState } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { BrowserURL, Header, Main, Side } from './';
+import { BrowserURL, EditorProvider, Header, Main, Side } from './';
 import {
 	BLOCK_PANEL,
 	DEFAULT_LOCATION,
@@ -64,24 +63,6 @@ const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 
 	// @ts-ignore
 	const { editEntityRecord } = useDispatch( 'core' );
-
-	useEffect( () => {
-		if ( ! post ) {
-			return;
-		}
-
-		// A hack to remove blocks from the edited entity.
-		// The stores use getEditedPostContent(), which gets the blocks if the .blocks property exists.
-		// This change makes getEditedPostContent() return the post content, instead of
-		// parsing [] blocks and returning ''.
-		console.log( 'editing it' );
-		editEntityRecord(
-			'postType',
-			postType,
-			postId,
-			{ blocks: null }
-		);
-	}, [ editEntityRecord, post, postId, postType ] );
 
 	useEffect( () => {
 		if ( isSavingPost && ! block.name ) {

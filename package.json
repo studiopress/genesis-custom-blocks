@@ -50,6 +50,7 @@
     "@wordpress/i18n": "3.16.0",
     "@wordpress/icons": "2.8.0",
     "@wordpress/keycodes": "2.16.0",
+    "@wordpress/notices": "2.11.0",
     "@wordpress/postcss-plugins-preset": "1.5.1",
     "@wordpress/scripts": "12.5.0",
     "@wordpress/server-side-render": "1.19.3",

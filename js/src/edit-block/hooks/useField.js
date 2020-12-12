@@ -57,22 +57,7 @@ const useField = () => {
 	);
 
 	const fullBlock = getFullBlock();
-	const postId = useSelect(
-		( select ) => select( 'core/editor' ).getCurrentPostId(),
-		[]
-	);
-	const { editEntityRecord } = useDispatch( 'core' );
-	const editPost = useCallback( ( newEdits ) => {
-		editEntityRecord(
-			'postType',
-			'genesis_custom_block',
-			postId,
-			{
-				...newEdits,
-				blocks: null, // Prevents getEditedPostContent() from parsing [] blocks.
-			}
-		);
-	}, [ editEntityRecord, postId ] );
+	const { editPost } = useDispatch( 'core/editor' );
 	const blockNameWithNameSpace = getBlockNameWithNameSpace( fullBlock );
 	const block = useMemo(
 		() => fullBlock[ blockNameWithNameSpace ] || {},

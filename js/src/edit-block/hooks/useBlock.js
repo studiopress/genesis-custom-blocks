@@ -30,22 +30,7 @@ const useBlock = () => {
 		( select ) => select( 'core/editor' ).getEditedPostContent(),
 		[]
 	);
-	const postId = useSelect(
-		( select ) => select( 'core/editor' ).getCurrentPostId(),
-		[]
-	);
-	const { editEntityRecord } = useDispatch( 'core' );
-	const editPost = useCallback( ( newEdits ) => {
-		editEntityRecord(
-			'postType',
-			'genesis_custom_block',
-			postId,
-			{
-				...newEdits,
-				blocks: null, // Prevents getEditedPostContent() from parsing [] blocks.
-			}
-		);
-	}, [ editEntityRecord, postId ] );
+	const { editPost } = useDispatch( 'core/editor' );
 
 	const getFullBlock = useCallback(
 		() => getBlock( editedPostContent ),
