@@ -100,7 +100,6 @@ const Editor = ( { initialEdits, onError, postId, postType, settings } ) => {
 				<EditorProvider
 					settings={ settings }
 					post={ post }
-					initialEdits={ initialEdits }
 					useSubRegistry={ false }
 				>
 					<ErrorBoundary onError={ onError }>

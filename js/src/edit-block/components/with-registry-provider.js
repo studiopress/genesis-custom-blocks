@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import * as React from 'react';
+
+/**
  * WordPress dependencies
  */
 import { useState, useEffect } from '@wordpress/element';
@@ -8,7 +13,6 @@ import {
 	RegistryProvider,
 } from '@wordpress/data';
 import { createHigherOrderComponent } from '@wordpress/compose';
-import { storeConfig as blockEditorStoreConfig } from '@wordpress/block-editor';
 import { storeConfig } from '@wordpress/editor';
 
 const withRegistryProvider = createHigherOrderComponent(
@@ -23,16 +27,14 @@ const withRegistryProvider = createHigherOrderComponent(
 				return <WrappedComponent { ...additionalProps } />;
 			}
 
-			const [ subRegistry, setSubRegistry ] = useState( null );
+			const [ subRegistry ] = useState( null );
 			useEffect( () => {
-				const newRegistry = createRegistry(
+				createRegistry(
 					{
-						'core/block-editor': blockEditorStoreConfig,
+						'core/editor': storeConfig
 					},
 					registry
 				);
-				newRegistry.registerStore( 'core/editor', storeConfig );
-				setSubRegistry( newRegistry );
 			}, [ registry ] );
 
 			if ( ! subRegistry ) {

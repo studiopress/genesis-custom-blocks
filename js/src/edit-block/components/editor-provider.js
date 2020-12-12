@@ -76,7 +76,7 @@ const EditorProvider = ( {
 				}
 			);
 		}
-	}, [ createWarningNotice, initialEdits, post, recovery, settings.autosave, settings.postLock, settings.template, setupEditor, updatePostLock ] );
+	}, [] );
 
 	// Synchronize the editor settings as they change
 	useEffect( () => {
