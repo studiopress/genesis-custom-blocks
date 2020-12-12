@@ -69,7 +69,7 @@ const useField = () => {
 			postId,
 			{
 				...newEdits,
-				blocks: null,
+				blocks: null, // Prevents getEditedPostContent() from parsing [] blocks.
 			}
 		);
 	}, [ editEntityRecord, postId ] );
