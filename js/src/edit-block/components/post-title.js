@@ -11,7 +11,7 @@ import classnames from 'classnames';
 // @ts-ignore
 import { VisuallyHidden } from '@wordpress/components';
 import { useInstanceId } from '@wordpress/compose';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 import { useEffect, useRef, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
@@ -32,7 +32,6 @@ const PostTitle = () => {
 	const { block, changeBlock, changeBlockName } = useBlock();
 	const instanceId = useInstanceId( PostTitle );
 	const ref = useRef( null );
-	const { editPost } = useDispatch( 'core/editor' );
 	const {
 		isCleanNewPost,
 		title,
@@ -77,8 +76,6 @@ const PostTitle = () => {
 		} else {
 			changeBlock( newBlock );
 		}
-
-		editPost( { title: newTitle } );
 	};
 
 	const onSelect = () => setIsSelected( true );

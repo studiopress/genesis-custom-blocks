@@ -53,13 +53,23 @@ const useBlock = () => {
 	 */
 	const changeBlock = useCallback( ( newValues ) => {
 		const newBlock = getFullBlock();
-		const previousBlockName = getBlockNameWithNameSpace( newBlock );
-
-		newBlock[ previousBlockName ] = {
-			...newBlock[ previousBlockName ],
-			...newValues,
+		const blockName = getBlockNameWithNameSpace( newBlock );
+		const editedPost = {
+			content: JSON.stringify(
+				{
+					[ blockName ]: {
+						...newBlock[ blockName ],
+						...newValues,
+					},
+				}
+			),
 		};
-		editPost( { content: JSON.stringify( newBlock ) } );
+
+		if ( newValues.hasOwnProperty( 'title' ) ) {
+			editedPost.title = newValues.title;
+		}
+
+		editPost( editedPost );
 	}, [ editPost, getFullBlock ] );
 
 	/**
@@ -71,15 +81,21 @@ const useBlock = () => {
 	const changeBlockName = useCallback( ( newName, defaultValues = {} ) => {
 		const previousBlock = getFullBlock();
 		const previousBlockName = getBlockNameWithNameSpace( previousBlock );
-
-		const newBlock = {
-			[ `${ BLOCK_NAMESPACE }/${ newName }` ]: {
-				...previousBlock[ previousBlockName ],
-				...defaultValues,
-				name: newName,
-			},
+		const editedPost = {
+			content: JSON.stringify( {
+				[ `${ BLOCK_NAMESPACE }/${ newName }` ]: {
+					...previousBlock[ previousBlockName ],
+					...defaultValues,
+					name: newName,
+				},
+			} ),
 		};
-		editPost( { content: JSON.stringify( newBlock ) } );
+
+		if ( defaultValues.hasOwnProperty( 'title' ) ) {
+			editedPost.title = defaultValues.title;
+		}
+
+		editPost( editedPost );
 	}, [ editPost, getFullBlock ] );
 
 	return {
