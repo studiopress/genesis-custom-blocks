@@ -7,6 +7,7 @@ import className from 'classnames';
 /**
  * WordPress dependencies
  */
+import { useCallback } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 
 /**
@@ -18,7 +19,7 @@ import { useField } from '../hooks';
 import { getFieldIcon, getWidthClass } from '../helpers';
 
 /**
- * @typedef {Object|null} SelectedField A field to change.
+ * @typedef {Object} SelectedField The selected field.
  * @property {string} name The name of the field.
  * @property {string} [parent] The name of the field's parent, if any.
  */
@@ -66,23 +67,25 @@ const FieldsGrid = ( {
 	const fields = getFieldsForLocation( currentLocation, parentField );
 
 	/**
-	 * Whether the passed field is selected.
-	 * 
+	 * Gets whether the passed field is selected.
+	 *
 	 * @param {Object} field The block field.
-	 * @param {SelectedField|null} selectedField The currently selected field.
 	 * @return {boolean} Whether it is selected.
 	 */
-	const isSelected = ( field, selectedField ) => {
-		if ( ! selectedField ) {
-			return false;
-		}
+	const getIsSelected = useCallback(
+		( field ) => {
+			if ( ! selectedField ) {
+				return false;
+			}
 
-		if ( selectedField.hasOwnProperty( 'parent' ) || field.hasOwnProperty( 'parent' ) ) {
-			return field.parent === selectedField.parent && field.name === selectedField.name;
-		}
+			if ( selectedField.hasOwnProperty( 'parent' ) || field.hasOwnProperty( 'parent' ) ) {
+				return field.parent === selectedField.parent && field.name === selectedField.name;
+			}
 
-		return selectedField && field.name === selectedField.name
-	};
+			return selectedField && field.name === selectedField.name;
+		},
+		[ selectedField ]
+	);
 
 	return (
 		<>
@@ -90,154 +93,144 @@ const FieldsGrid = ( {
 				role="grid"
 				className="grid grid-cols-4 gap-4 w-full items-start mt-2"
 			>
-				{
-					fields && fields.length
-						? fields.map(
-							/**
-							 * @param {Field} field The block field.
-							 * @param {number} index The index.
-							 */
-							( field, index ) => {
-								/**
-								 * Selects this field.
-								 *
-								 * @param {React.MouseEvent|React.KeyboardEvent<HTMLDivElement>} event The event to handle.
-								 */
-								const selectField = ( event ) => {
-									event.stopPropagation();
-									const selectedField = { name: field.name };
-									if ( field.hasOwnProperty( 'parent' ) ) {
-										selectedField.parent = field.parent;
-									}
+				{ fields && fields.length
+					? fields.map( ( field, index ) => {
+						/**
+						 * Selects this field.
+						 *
+						 * @param {React.MouseEvent|React.KeyboardEvent<HTMLDivElement>} event The event to handle.
+						 */
+						const selectField = ( event ) => {
+							event.stopPropagation();
+							const newSelectedField = { name: field.name };
+							if ( field.hasOwnProperty( 'parent' ) ) {
+								newSelectedField.parent = field.parent;
+							}
 
-									setSelectedField( selectedField );
-									setPanelDisplaying( FIELD_PANEL );
-								};
-								const shouldDisplayMoveButtons = fields.length > 1;
-								const isUpButtonDisabled = 0 === index;
-								const isDownButtonDisabled = index >= ( fields.length - 1 );
-								const FieldIcon = getFieldIcon( field.control );
+							setSelectedField( newSelectedField );
+							setPanelDisplaying( FIELD_PANEL );
+						};
+						const isSelected = getIsSelected( field );
+						const shouldDisplayMoveButtons = fields.length > 1;
+						const isUpButtonDisabled = 0 === index;
+						const isDownButtonDisabled = index >= ( fields.length - 1 );
+						const FieldIcon = getFieldIcon( field.control );
 
-								return (
-									<div
-										className={ className(
-											{ 'is-selected': isSelected( field, selectedField ) },
-											'field w-full',
-											getWidthClass( field.width )
-										) }
-										key={ `field-item-${ index }` }
-										role="gridcell"
-										tabIndex={ 0 }
-										aria-label={ sprintf(
-										/* translators: %1$s: the label of the field */
-											__( 'Field: %1$s', 'genesis-custom-blocks' ),
-											field.label
-										) }
-										onClick={ selectField }
-										onKeyPress={ selectField }
-									>
-										<div
-											className="relative flex items-center w-full p-4 bg-white border border-gray-400 rounded-sm hover:border-black"
-											id={ `field-item-${ index }` }
-										>
-											<div>{ FieldIcon ? <FieldIcon /> : null }</div>
-											<span className=" ml-4 truncate">{ field.label }</span>
-											<div className="flex items-center h-6 px-2 bg-gray-200 rounded-sm ml-auto hover:bg-gray-400">
-												<span className="text-xs font-mono">{ field.name }</span>
-												<ClipboardCopy text={ field.name } />
-											</div>
-											{ null === parentField && 'repeater' === field.control
-												? (
-													<FieldsGrid
-														currentLocation={ currentLocation }
-														parentField={ field.name }
-														selectedField={ selectedField }
-														setIsNewField={ setIsNewField }
-														setPanelDisplaying={ setPanelDisplaying }
-														setSelectedField={ setSelectedField }
-													/>
-												)
-												: null
-											}
-											{ shouldDisplayMoveButtons
-												? (
-													<div
-														className={ className(
-															isSelected( field, selectedField ) ? 'flex' : 'hidden',
-															'absolute top-0 left-0 flex-col justify-between top-0 left-0 -ml-8 mt-0 rounded-sm bg-white border border-black'
-														) }
-													>
-														<button
-															aria-describedby={ `move-up-button-${ index }` }
-															className={ className(
-																moveButtonClass,
-																{ [ buttonDisabledClasses ]: isUpButtonDisabled }
-															) }
-															onClick={ ( event ) => {
-																event.preventDefault();
-																reorderFields( index, index - 1, currentLocation );
-															} }
-															disabled={ isUpButtonDisabled }
-														>
-															<svg className="h-4 w-4 stroke-current" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-																<path d="M5 15l7-7 7 7" />
-															</svg>
-														</button>
-														<span id={ `move-up-button-${ index }` } className="hidden">
-															{ sprintf(
-															/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
-																__( 'Move %1$s field up from position %2$d to position %3$d', 'genesis-custom-blocks' ),
-																field.label,
-																index,
-																index - 1
-															) }
-														</span>
-														<button
-															aria-describedby={ `move-down-button-${ index }` }
-															className={ className(
-																moveButtonClass,
-																{ [ buttonDisabledClasses ]: isDownButtonDisabled }
-															) }
-															onClick={ ( event ) => {
-																event.preventDefault();
-																reorderFields( index, index + 1, currentLocation );
-															} }
-															disabled={ isDownButtonDisabled }
-														>
-															<svg className="h-4 w-4 stroke-current" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-																<path d="M19 9l-7 7-7-7" />
-															</svg>
-														</button>
-														<span id={ `move-down-button-${ index }` } className="hidden">
-															{ sprintf(
-															/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
-																__( 'Move %1$s field down from position %2$d to position %3$d', 'genesis-custom-blocks' ),
-																field.label,
-																index,
-																index + 1
-															) }
-														</span>
-													</div>
-												)
-												: null
-											}
-										</div>
+						return (
+							<div
+								className={ className(
+									{ 'is-selected': isSelected },
+									'field w-full',
+									getWidthClass( field.width )
+								) }
+								key={ `field-item-${ index }` }
+								role="gridcell"
+								tabIndex={ 0 }
+								aria-label={ sprintf(
+								/* translators: %1$s: the label of the field */
+									__( 'Field: %1$s', 'genesis-custom-blocks' ),
+									field.label
+								) }
+								onClick={ selectField }
+								onKeyPress={ selectField }
+							>
+								<div
+									className="relative flex items-center w-full p-4 bg-white border border-gray-400 rounded-sm hover:border-black"
+									id={ `field-item-${ index }` }
+								>
+									<div>{ FieldIcon ? <FieldIcon /> : null }</div>
+									<span className=" ml-4 truncate">{ field.label }</span>
+									<div className="flex items-center h-6 px-2 bg-gray-200 rounded-sm ml-auto hover:bg-gray-400">
+										<span className="text-xs font-mono">{ field.name }</span>
+										<ClipboardCopy text={ field.name } />
 									</div>
-								);
-						} )
-						: null
+									{ null === parentField && 'repeater' === field.control
+										? (
+											<FieldsGrid
+												currentLocation={ currentLocation }
+												parentField={ field.name }
+												selectedField={ selectedField }
+												setIsNewField={ setIsNewField }
+												setPanelDisplaying={ setPanelDisplaying }
+												setSelectedField={ setSelectedField }
+											/>
+										)
+										: null
+									}
+									{ isSelected && shouldDisplayMoveButtons
+										? (
+											<div className="flex absolute top-0 left-0 flex-col justify-between top-0 left-0 -ml-8 mt-0 rounded-sm bg-white border border-black">
+												<button
+													aria-describedby={ `move-up-button-${ index }` }
+													className={ className(
+														moveButtonClass,
+														{ [ buttonDisabledClasses ]: isUpButtonDisabled }
+													) }
+													onClick={ ( event ) => {
+														event.preventDefault();
+														reorderFields( index, index - 1, currentLocation );
+													} }
+													disabled={ isUpButtonDisabled }
+												>
+													<svg className="h-4 w-4 stroke-current" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+														<path d="M5 15l7-7 7 7" />
+													</svg>
+												</button>
+												<span id={ `move-up-button-${ index }` } className="hidden">
+													{ sprintf(
+													/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
+														__( 'Move %1$s field up from position %2$d to position %3$d', 'genesis-custom-blocks' ),
+														field.label,
+														index,
+														index - 1
+													) }
+												</span>
+												<button
+													aria-describedby={ `move-down-button-${ index }` }
+													className={ className(
+														moveButtonClass,
+														{ [ buttonDisabledClasses ]: isDownButtonDisabled }
+													) }
+													onClick={ ( event ) => {
+														event.preventDefault();
+														reorderFields( index, index + 1, currentLocation );
+													} }
+													disabled={ isDownButtonDisabled }
+												>
+													<svg className="h-4 w-4 stroke-current" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+														<path d="M19 9l-7 7-7-7" />
+													</svg>
+												</button>
+												<span id={ `move-down-button-${ index }` } className="hidden">
+													{ sprintf(
+													/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
+														__( 'Move %1$s field down from position %2$d to position %3$d', 'genesis-custom-blocks' ),
+														field.label,
+														index,
+														index + 1
+													) }
+												</span>
+											</div>
+										)
+										: null
+									}
+								</div>
+							</div>
+						);
+					} )
+					: null
 				}
 			</div>
 			<button
 				className="flex items-center justify-center h-6 w-6 bg-black rounded-sm text-white mt-4 ml-auto"
 				onClick={ () => {
 					const newFieldName = addNewField( currentLocation, parentField );
-					const selectedField = { name: newFieldName }
+					const newSelectedField = { name: newFieldName };
 					if ( null !== parentField ) {
-						selectedField.parent = parentField;
+						newSelectedField.parent = parentField;
 					}
 
-					setSelectedField( selectedField );
+					setSelectedField( newSelectedField );
 					setIsNewField( true );
 					setPanelDisplaying( FIELD_PANEL );
 				} }
