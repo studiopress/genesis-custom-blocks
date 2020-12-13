@@ -13,7 +13,7 @@ import { useCallback } from 'react';
  */
 
 /**
- * Gets the field context.
+ * Gets the editor context.
  *
  * @return {UseEditorReturn} The field context and functions to change it.
  */

@@ -129,7 +129,10 @@ const useField = () => {
 				return;
 			}
 
-			const previousField = fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.name ];
+			const hasParent = fieldToChange.hasOwnProperty( 'parent' );
+			const previousField = hasParent
+				? fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ]
+				: fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.name ];
 			const newField = {
 				name: previousField.name,
 				label: previousField.label,
@@ -139,7 +142,12 @@ const useField = () => {
 				type: newControl.type,
 			};
 
-			fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.name ] = newField;
+			if ( hasParent ) {
+				fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ] = newField;
+			} else {
+				fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.name ] = newField;
+			}
+
 			editPost( { content: JSON.stringify( fullBlock ) } );
 		},
 		[ blockNameWithNameSpace, controls, editPost, fullBlock ]

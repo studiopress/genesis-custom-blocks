@@ -46,13 +46,11 @@ const ClipboardCopy = ( { text } ) => {
 				ref={ ref }
 				onCopy={ ( event ) => {
 					event.stopPropagation();
-					speak(
-						sprintf(
-							/* translators: %1$s: the text that was copied */
-							__( 'Copied the text %1$s', 'genesis-custom-blocks' ),
-							text
-						)
-					);
+					speak( sprintf(
+						/* translators: %1$s: the text that was copied */
+						__( 'Copied the text %1$s', 'genesis-custom-blocks' ),
+						text
+					) );
 				} }
 				aria-describedby={ `clipboard-copy-${ text }` }
 			>
