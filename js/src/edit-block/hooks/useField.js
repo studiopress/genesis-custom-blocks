@@ -74,7 +74,7 @@ const useField = () => {
 	const addNewField = useCallback( ( location, parentField ) => {
 		const { fields = {} } = block;
 		if ( null !== parentField && fields[ parentField ] && ! fields[ parentField ].sub_fields ) {
-			fields[ parentField ].sub_fields = {}
+			fields[ parentField ].sub_fields = {};
 		}
 
 		const newFieldNumber = getNewFieldNumber(

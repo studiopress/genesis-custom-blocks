@@ -29,7 +29,7 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 const ClipboardCopy = ( { text } ) => {
 	const ref = useRef();
-	const hasCopied = useCopyOnClick( ref, text );
+	const hasCopied = useCopyOnClick ? useCopyOnClick( ref, text ) : false; /* eslint-disable-line react-hooks/rules-of-hooks */
 	const lastHasCopied = useRef( hasCopied );
 
 	useEffect( () => {
@@ -40,13 +40,20 @@ const ClipboardCopy = ( { text } ) => {
 		lastHasCopied.current = hasCopied;
 	}, [ hasCopied ] );
 
-	const handleCopy = () => speak( __( 'Copied the text', 'genesis-custom-blocks' ) );
-
 	return (
 		<>
 			<button
 				ref={ ref }
-				onCopy={ handleCopy }
+				onCopy={ ( event ) => {
+					event.stopPropagation();
+					speak(
+						sprintf(
+							/* translators: %1$s: the text that was copied */
+							__( 'Copied the text %1$s', 'genesis-custom-blocks' ),
+							text
+						)
+					);
+				} }
 				aria-describedby={ `clipboard-copy-${ text }` }
 			>
 				{ hasCopied
