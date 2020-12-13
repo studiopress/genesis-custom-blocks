@@ -9,7 +9,9 @@ import * as React from 'react';
 import { useEffect, useLayoutEffect } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
+// @ts-ignore type declaration not available
 import { EntityProvider } from '@wordpress/core-data';
+// @ts-ignore type declaration not available
 import { store as noticesStore } from '@wordpress/notices';
 
 /**
@@ -49,6 +51,7 @@ const EditorProvider = ( {
 		updatePostLock,
 		updateEditorSettings,
 	} = useDispatch( 'core/editor' );
+	// @ts-ignore type declaration not available
 	const { createWarningNotice } = useDispatch( noticesStore );
 
 	// Iniitialize the editor.
