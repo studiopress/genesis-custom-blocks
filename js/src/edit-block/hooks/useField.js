@@ -32,11 +32,7 @@ import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
  * @property {Function} reorderFields Reorders the fields for a given location.
  */
 
-/**
- * @typedef {Object} SelectedField A field to change.
- * @property {string} name The name of the field.
- * @property {string} [parent] The name of the field's parent, if any.
- */
+/** @typedef {import('../components/editor').SelectedField|import('../constants').NoFieldSelected} SelectedField The current field */
 
 /**
  * Gets the field context.

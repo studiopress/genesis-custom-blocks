@@ -20,7 +20,7 @@ import { convertToSlug } from '../helpers';
 /**
  * @typedef {Object} FieldPanelProps The component props.
  * @property {boolean} isNewField Whether there is a new field.
- * @property {Object|null} selectedField The name of the selected field.
+ * @property {import('./editor').SelectedField|import('../constants').NoFieldSelected} selectedField The name of the selected field.
  * @property {Function} setCurrentLocation Sets the current location, like 'editor'.
  * @property {Function} setIsNewField Sets whether there is a new field.
  * @property {Function} setSelectedField Sets the currently selected field name.

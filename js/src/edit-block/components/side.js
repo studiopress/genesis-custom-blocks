@@ -19,7 +19,7 @@ import { BLOCK_PANEL, FIELD_PANEL } from '../constants';
  * @typedef {Object} SideProps The component props.
  * @property {boolean} isNewField Whether there is a new field.
  * @property {string} panelDisplaying The panel currently displaying in the side, like 'block'.
- * @property {string|null} selectedField The name of the selected field.
+ * @property {import('./editor').SelectedField|import('../constants').NoFieldSelected} selectedField The name of the selected field.
  * @property {Function} setCurrentLocation Sets the current location, like 'editor'.
  * @property {Function} setIsNewField Sets if there is a new field.
  * @property {Function} setPanelDisplaying Sets the panel currently displaying in the side.

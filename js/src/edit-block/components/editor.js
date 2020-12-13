@@ -40,6 +40,12 @@ import { useBlock } from '../hooks';
  */
 
 /**
+ * @typedef {Object} SelectedField A field to change.
+ * @property {string} name The name of the field.
+ * @property {string} [parent] The name of the field's parent, if any.
+ */
+
+/**
  * The editor component.
  *
  * @param {EditorProps} props The component props.
