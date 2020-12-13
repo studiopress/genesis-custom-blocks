@@ -36,8 +36,8 @@ import { default as withRegistryProvider } from './with-registry-provider';
  * That adds .blocks to the editedEntityRecord,
  * which causes getEditedPostContent() to return ''.
  *
- * @param {EditorProviderProps} props
  * @see https://github.com/WordPress/gutenberg/blob/60ad1e320436a55e74fb41cc1735301da187f61e/packages/editor/src/components/provider/index.js
+ * @param {EditorProviderProps} props
  */
 const EditorProvider = ( {
 	post,

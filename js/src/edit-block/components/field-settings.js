@@ -50,7 +50,7 @@ const FieldSettings = ( {
 
 	return (
 		<>
-			{ control
+			{ control && control.settings
 				? control.settings.map( ( setting, index ) => {
 					const SettingComponent = getSettingsComponent( setting.type );
 					const key = `field-setting-${ index }`;

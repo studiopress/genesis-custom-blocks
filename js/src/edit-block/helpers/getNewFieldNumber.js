@@ -1,5 +1,5 @@
 /**
- * Gets the new field nuber, if any.
+ * Gets the new field number, if any.
  *
  * When new fields are added, if there is more than 1 field with
  * the name 'new-field', they have a number after.

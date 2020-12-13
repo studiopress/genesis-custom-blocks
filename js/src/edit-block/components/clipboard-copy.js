@@ -21,7 +21,6 @@ import { __, sprintf } from '@wordpress/i18n';
  * Copies text to the clipboard, and shows feedback on copying.
  *
  * Forked from the Gutenberg component ClipboardButton.
- *
  * https://github.com/WordPress/gutenberg/blob/50eaa95881ddc2f0f93045721f541a96bae5cfa8/packages/components/src/clipboard-button/index.js
  *
  * @param {ClipboardCopyProps} props The component props.
@@ -29,6 +28,7 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 const ClipboardCopy = ( { text } ) => {
 	const ref = useRef();
+	// Backwards compatibility for before useCopyOnClick() existed.
 	const hasCopied = useCopyOnClick ? useCopyOnClick( ref, text ) : false; /* eslint-disable-line react-hooks/rules-of-hooks */
 	const lastHasCopied = useRef( hasCopied );
 
