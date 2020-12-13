@@ -138,6 +138,10 @@ const useField = () => {
 				type: newControl.type,
 			};
 
+			if ( 'repeater' === newControl.name ) {
+				newField.sub_fields = {};
+			}
+
 			if ( hasParent ) {
 				fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ] = newField;
 			} else {
@@ -319,28 +323,39 @@ const useField = () => {
 		editPost( { content: JSON.stringify( fullBlock ) } );
 	}, [ blockNameWithNameSpace, editPost, fullBlock, block, getField ] );
 
-	/**
-	 * Reorders fields, moving a single field to another position.
-	 *
-	 * @param {number} moveFrom The index of the field to move.
-	 * @param {number} moveTo The index that the field should be moved to.
-	 * @param {string} currentLocation The current field's location, like 'editor'.
-	 */
-	const reorderFields = useCallback( ( moveFrom, moveTo, currentLocation ) => {
-		const fieldsToReorder = getFieldsForLocation( currentLocation );
-		if ( ! fieldsToReorder.length ) {
-			return;
-		}
+	const reorderFields = useCallback(
+		/**
+		 * Reorders fields, moving a single field to another position.
+		 *
+		 * @param {number} moveFrom The index of the field to move.
+		 * @param {number} moveTo The index that the field should be moved to.
+		 * @param {string} currentLocation The current field's location, like 'editor'.
+		 * @param {string|null} parentField The field's parent field, if any.
+		 */
+		( moveFrom, moveTo, currentLocation, parentField = null ) => {
+			const fieldsToReorder = getFieldsForLocation( currentLocation, parentField );
+			if ( ! fieldsToReorder.length ) {
+				return;
+			}
 
-		const newFields = [ ...fieldsToReorder ];
-		[ newFields[ moveFrom ], newFields[ moveTo ] ] = [ newFields[ moveTo ], newFields[ moveFrom ] ];
+			const newFields = [ ...fieldsToReorder ];
+			[ newFields[ moveFrom ], newFields[ moveTo ] ] = [ newFields[ moveTo ], newFields[ moveFrom ] ];
 
-		fullBlock[ blockNameWithNameSpace ].fields = getFieldsAsObject( [
-			...setCorrectOrderForFields( newFields ),
-			...getFieldsForLocation( getOtherLocation( currentLocation ) ),
-		] );
-		editPost( { content: JSON.stringify( fullBlock ) } );
-	}, [ blockNameWithNameSpace, editPost, fullBlock, getFieldsForLocation ] );
+			if ( null !== parentField ) {
+				fullBlock[ blockNameWithNameSpace ].fields[ parentField ].sub_fields = getFieldsAsObject( [
+					...setCorrectOrderForFields( newFields ),
+				] );
+			} else {
+				fullBlock[ blockNameWithNameSpace ].fields = getFieldsAsObject( [
+					...setCorrectOrderForFields( newFields ),
+					...getFieldsForLocation( getOtherLocation( currentLocation ) ),
+				] );
+			}
+
+			editPost( { content: JSON.stringify( fullBlock ) } );
+		},
+		[ blockNameWithNameSpace, editPost, fullBlock, getFieldsForLocation ]
+	);
 
 	return {
 		addNewField,

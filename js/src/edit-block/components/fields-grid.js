@@ -162,7 +162,7 @@ const FieldsGrid = ( {
 													) }
 													onClick={ ( event ) => {
 														event.preventDefault();
-														reorderFields( index, index - 1, currentLocation );
+														reorderFields( index, index - 1, currentLocation, parentField );
 													} }
 													disabled={ isUpButtonDisabled }
 												>
@@ -187,7 +187,7 @@ const FieldsGrid = ( {
 													) }
 													onClick={ ( event ) => {
 														event.preventDefault();
-														reorderFields( index, index + 1, currentLocation );
+														reorderFields( index, index + 1, currentLocation, parentField );
 													} }
 													disabled={ isDownButtonDisabled }
 												>
