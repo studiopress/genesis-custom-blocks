@@ -33,11 +33,7 @@ const Header = () => {
 				href={ backURL }
 				aria-label={ __( 'Go back to WordPress', 'genesis-custom-blocks' ) }
 			>
-				<Icon
-					className="fill-current"
-					icon={ wordpress }
-					size={ 36 }
-				/>
+				<Icon className="fill-current" icon={ wordpress } size={ 36 } />
 			</a>
 			<EditorHistoryUndo />
 			<EditorHistoryRedo />

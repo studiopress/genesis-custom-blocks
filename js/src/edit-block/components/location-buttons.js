@@ -24,7 +24,7 @@ import { ALTERNATE_LOCATION, DEFAULT_LOCATION } from '../constants';
  * Buttons that select which location is displaying.
  *
  * @param {LocationButtonProps} props
- * @return {React.ReactElement} The main editing area.
+ * @return {React.ReactElement} The location buttons.
  */
 const LocationButtons = ( {
 	currentLocation,

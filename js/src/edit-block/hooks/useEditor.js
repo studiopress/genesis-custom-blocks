@@ -2,6 +2,7 @@
  * WordPress dependencies
  */
 import { useDispatch } from '@wordpress/data';
+
 /**
  * External dependencies
  */
@@ -24,9 +25,10 @@ const useEditor = () => {
 		/**
 		 *  Initializes the editor with the specified post object and editor settings.
 		 *
-		 * Forked from setupEditor in Gutenberg.
+		 * Forked from setupEditor() in Gutenberg.
 		 * Removed the lines that parse the blocks,
-		 * as they can cause getEditedPostContent() to return '', when there is content.
+		 * as they can cause getEditedPostContent() to return '',
+		 * That function tries to parse blocks, but this doesn't have block comments like in Gutenberg.
 		 *
 		 * @see https://github.com/WordPress/gutenberg/blob/8d5fd89f573e00601b189b1a2f87d5bc7b862349/packages/editor/src/store/actions.js#L38
 		 *

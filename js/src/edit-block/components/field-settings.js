@@ -52,6 +52,10 @@ const FieldSettings = ( {
 		<>
 			{ control && control.settings
 				? control.settings.map( ( setting, index ) => {
+					if ( field.hasOwnProperty( 'parent' ) && 'location' === setting.name ) {
+						return null;
+					}
+
 					const SettingComponent = getSettingsComponent( setting.type );
 					const key = `field-setting-${ index }`;
 					const value = null === field[ setting.name ] ? setting.default : field[ setting.name ];

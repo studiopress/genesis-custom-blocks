@@ -33,18 +33,21 @@ const KeywordsSection = () => {
 		changeBlock( { keywords: tokens } );
 	};
 
-	/**
-	 * Gets the block keywords.
-	 *
-	 * @return {Array} The block keywords, if any.
-	 */
-	const getKeywords = useCallback( () => {
-		if ( ! Array.isArray( block.keywords ) ) {
-			return [];
-		}
+	const getKeywords = useCallback(
+		/**
+		 * Gets the block keywords.
+		 *
+		 * @return {Array} The block keywords, if any.
+		 */
+		() => {
+			if ( ! Array.isArray( block.keywords ) ) {
+				return [];
+			}
 
-		return block.keywords.filter( ( keyword ) => Boolean( keyword ) );
-	}, [ block.keywords ] );
+			return block.keywords.filter( ( keyword ) => Boolean( keyword ) );
+		},
+		[ block.keywords ]
+	);
 
 	return (
 		<div className="mt-5">

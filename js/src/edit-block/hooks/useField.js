@@ -282,16 +282,17 @@ const useField = () => {
 		/**
 		 * Deletes the field.
 		 *
-		 * @param {SelectedField} fieldName The field to delete.
+		 * @param {SelectedField} selectedField The field to delete.
 		 */
-		( fieldName ) => {
+		( selectedField ) => {
 			if (
-				fieldName.hasOwnProperty( 'parent' ) &&
-				fullBlock[ blockNameWithNameSpace ].fields[ fieldName.parent ].sub_fields
+				selectedField.hasOwnProperty( 'parent' ) &&
+				fullBlock[ blockNameWithNameSpace ].fields[ selectedField.parent ] &&
+				fullBlock[ blockNameWithNameSpace ].fields[ selectedField.parent ].sub_fields
 			) {
-				delete fullBlock[ blockNameWithNameSpace ].fields[ fieldName.parent ].sub_fields[ fieldName.name ];
+				delete fullBlock[ blockNameWithNameSpace ].fields[ selectedField.parent ].sub_fields[ selectedField.name ];
 			} else {
-				delete fullBlock[ blockNameWithNameSpace ].fields[ fieldName.name ];
+				delete fullBlock[ blockNameWithNameSpace ].fields[ selectedField.name ];
 			}
 
 			editPost( { content: JSON.stringify( fullBlock ) } );

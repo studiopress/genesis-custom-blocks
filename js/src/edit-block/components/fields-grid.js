@@ -60,13 +60,13 @@ const FieldsGrid = ( {
 	const buttonDisabledClasses = 'opacity-50 cursor-not-allowed';
 	const fields = getFieldsForLocation( currentLocation, parentField );
 
-	/**
-	 * Gets whether the passed field is selected.
-	 *
-	 * @param {Object} field The block field.
-	 * @return {boolean} Whether it is selected.
-	 */
 	const getIsSelected = useCallback(
+		/**
+		 * Gets whether the passed field is selected.
+		 *
+		 * @param {Object} field The block field.
+		 * @return {boolean} Whether it is selected.
+		 */
 		( field ) => {
 			if ( ! selectedField ) {
 				return false;
