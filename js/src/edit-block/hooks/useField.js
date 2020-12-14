@@ -243,7 +243,7 @@ const useField = () => {
 			if ( newSettings.hasOwnProperty( 'location' ) ) {
 				fullBlock[ blockNameWithNameSpace ].fields = changeFieldLocation(
 					fullBlock[ blockNameWithNameSpace ].fields,
-					fieldToChange.name,
+					fieldToChange,
 					newSettings.location
 				);
 			}

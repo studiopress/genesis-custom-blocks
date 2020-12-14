@@ -87,7 +87,7 @@ const FieldSettings = ( {
 			}
 			<div className="flex justify-between mt-5 border-t border-gray-300 pt-3">
 				<button
-					className="flex items-center bg-red-200 text-sm h-6 px-2 rounded-sm leading-none text-red-700 hover:bg-red-500 hover:text-red-100"
+					className="flex items-center bg-red-200 text-sm h-6 px-2 rounded-sm leading-none text-red-900 hover:bg-red-500 hover:text-red-100"
 					onClick={ () => {
 						deleteField();
 						setSelectedField( NO_FIELD_SELECTED );
@@ -96,7 +96,7 @@ const FieldSettings = ( {
 					{ __( 'Delete', 'genesis-custom-blocks' ) }
 				</button>
 				<button
-					className="flex items-center bg-blue-200 text-sm h-6 px-2 rounded-sm leading-none text-blue-700 hover:bg-blue-500 hover:text-blue-100"
+					className="flex items-center bg-blue-200 text-sm h-6 px-2 rounded-sm leading-none text-blue-900 hover:bg-blue-500 hover:text-blue-100"
 					onClick={ duplicateField }
 				>
 					{ __( 'Duplicate', 'genesis-custom-blocks' ) }

@@ -62,9 +62,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
 		[ postId, postType ]
 	);
-	const isSavingPost = useSelect(
-		( select ) => select( 'core/editor' ).isSavingPost()
-	);
+	const isSavingPost = useSelect( ( select ) => select( 'core/editor' ).isSavingPost() );
 
 	useEffect( () => {
 		if ( isSavingPost && ! block.name ) {
@@ -83,8 +81,8 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 			<div className="h-screen flex flex-col items-center text-black">
 				<BrowserURL />
 				<EditorProvider
-					settings={ settings }
 					post={ post }
+					settings={ settings }
 					useSubRegistry={ false }
 				>
 					<ErrorBoundary onError={ onError }>
