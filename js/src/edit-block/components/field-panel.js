@@ -50,8 +50,8 @@ const FieldPanel = ( {
 
 	const controlValues = Object.values( controls );
 	const field = getField( selectedField );
-	const didAutoSlug = useRef( false );
 	const ref = useRef();
+	const didAutoSlug = useRef( false );
 
 	useEffect( () => {
 		if ( isNewField && ref.current ) {
@@ -63,7 +63,7 @@ const FieldPanel = ( {
 
 			didAutoSlug.current = false;
 		}
-	}, [ isNewField, field ] );
+	}, [ didAutoSlug, isNewField ] );
 
 	return (
 		<div className="p-4">
@@ -88,13 +88,22 @@ const FieldPanel = ( {
 
 								const changedField = { label: event.target.value };
 								const newName = convertToSlug( event.target.value );
-								if ( isNewField ) {
-									changedField.name = newName;
-									didAutoSlug.current = true;
-									setSelectedField( { name: newName, parent: field.parent } );
+
+								const fieldToChange = { name: field.name };
+								if ( field.hasOwnProperty( 'parent' ) ) {
+									fieldToChange.parent = field.parent;
 								}
 
-								changeFieldSettings( { name: field.name, parent: field.parent }, changedField );
+								if ( isNewField ) {
+									didAutoSlug.current = true;
+									changedField.name = newName;
+									setSelectedField( {
+										...fieldToChange,
+										name: newName,
+									} );
+								}
+
+								changeFieldSettings( fieldToChange, changedField );
 							} }
 							onBlur={ () => {
 								if ( didAutoSlug.current ) {
