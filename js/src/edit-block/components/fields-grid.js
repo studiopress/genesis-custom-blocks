@@ -112,13 +112,13 @@ const FieldsGrid = ( {
 
 						return (
 							<div
+								role="row"
 								className={ className(
 									{ 'is-selected': isSelected },
 									'field w-full',
 									getWidthClass( field.width )
 								) }
 								key={ `field-item-${ index }` }
-								role="gridcell"
 								tabIndex={ 0 }
 								aria-label={ sprintf(
 								/* translators: %1$s: the label of the field */
@@ -129,6 +129,7 @@ const FieldsGrid = ( {
 								onKeyPress={ selectField }
 							>
 								<div
+									role="gridcell"
 									className="relative flex items-center w-full p-4 bg-white border border-gray-400 rounded-sm hover:border-black"
 									id={ `field-item-${ index }` }
 								>
