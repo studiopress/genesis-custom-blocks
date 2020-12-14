@@ -156,7 +156,13 @@ const FieldsGrid = ( {
 										? (
 											<div className="flex absolute top-0 left-0 flex-col justify-between top-0 left-0 -ml-8 mt-0 rounded-sm bg-white border border-black">
 												<button
-													aria-describedby={ `move-up-button-${ index }` }
+													aria-label={ sprintf(
+														/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
+														__( 'Move %1$s field up from position %2$d to position %3$d', 'genesis-custom-blocks' ),
+														field.label,
+														index,
+														index - 1
+													) }
 													className={ className(
 														moveButtonClass,
 														{ [ buttonDisabledClasses ]: isUpButtonDisabled }
@@ -171,17 +177,14 @@ const FieldsGrid = ( {
 														<path d="M5 15l7-7 7 7" />
 													</svg>
 												</button>
-												<span id={ `move-up-button-${ index }` } className="hidden">
-													{ sprintf(
-													/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
-														__( 'Move %1$s field up from position %2$d to position %3$d', 'genesis-custom-blocks' ),
+												<button
+													aria-label={ sprintf(
+														/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
+														__( 'Move %1$s field down from position %2$d to position %3$d', 'genesis-custom-blocks' ),
 														field.label,
 														index,
-														index - 1
+														index + 1
 													) }
-												</span>
-												<button
-													aria-describedby={ `move-down-button-${ index }` }
 													className={ className(
 														moveButtonClass,
 														{ [ buttonDisabledClasses ]: isDownButtonDisabled }
@@ -196,15 +199,6 @@ const FieldsGrid = ( {
 														<path d="M19 9l-7 7-7-7" />
 													</svg>
 												</button>
-												<span id={ `move-down-button-${ index }` } className="hidden">
-													{ sprintf(
-													/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
-														__( 'Move %1$s field down from position %2$d to position %3$d', 'genesis-custom-blocks' ),
-														field.label,
-														index,
-														index + 1
-													) }
-												</span>
 											</div>
 										)
 										: null
