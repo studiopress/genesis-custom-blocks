@@ -6,7 +6,7 @@ import React from 'react';
 /**
  * WordPress dependencies
  */
-import { useEffect, useRef } from '@wordpress/element';
+import { useEffect, useMemo, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -48,7 +48,22 @@ const FieldPanel = ( {
 		getField,
 	} = useField();
 
-	const controlValues = Object.values( controls );
+
+	const controlValues = useMemo(
+		/**
+		 * Gets the controls values, possibly excluding a control based on the selected field.
+		 *
+		 * @return {Object[]} The control values.
+		 */
+		() => {
+			return selectedField.hasOwnProperty( 'parent' )
+				? Object.values( controls )
+					.filter( ( control ) => control.name !== 'repeater' )
+				: Object.values( controls );
+		},
+		[ controls, selectedField ]
+	);
+
 	const field = getField( selectedField );
 	const ref = useRef();
 	const didAutoSlug = useRef( false );

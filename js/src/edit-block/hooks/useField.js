@@ -22,7 +22,7 @@ import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
 /**
  * @typedef {Object} UseFieldReturn The return value of useField.
  * @property {Function} addNewField Adds a new field.
- * @property {Object} controls All of the possible controls.
+ * @property {Object} controls All of the controls available.
  * @property {Function} deleteField Deletes this field.
  * @property {Function} duplicateField Deletes this field.
  * @property {Function} changeControl Changes the control of the field.
@@ -392,9 +392,9 @@ const useField = () => {
 
 	return {
 		addNewField,
-		controls,
 		changeControl,
 		changeFieldSettings,
+		controls,
 		deleteField,
 		duplicateField,
 		getField,
