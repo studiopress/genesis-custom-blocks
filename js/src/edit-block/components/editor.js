@@ -98,6 +98,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 								setSelectedField={ setSelectedField }
 							/>
 							<Side
+								currentLocation={ currentLocation }
 								isNewField={ isNewField }
 								panelDisplaying={ panelDisplaying }
 								setPanelDisplaying={ setPanelDisplaying }

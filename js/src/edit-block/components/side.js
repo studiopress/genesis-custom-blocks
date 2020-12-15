@@ -17,6 +17,7 @@ import { BLOCK_PANEL, FIELD_PANEL } from '../constants';
 
 /**
  * @typedef {Object} SideProps The component props.
+ * @property {string} currentLocation The currently selected location.
  * @property {boolean} isNewField Whether there is a new field.
  * @property {string} panelDisplaying The panel currently displaying in the side, like 'block'.
  * @property {import('./editor').SelectedField|import('../constants').NoFieldSelected} selectedField The name of the selected field.
@@ -33,6 +34,7 @@ import { BLOCK_PANEL, FIELD_PANEL } from '../constants';
  * @return {React.ReactElement} The side area.
  */
 const Side = ( {
+	currentLocation,
 	isNewField,
 	panelDisplaying,
 	selectedField,
@@ -71,6 +73,7 @@ const Side = ( {
 				? <BlockPanel />
 				: (
 					<FieldPanel
+						currentLocation={ currentLocation }
 						isNewField={ isNewField }
 						selectedField={ selectedField }
 						setCurrentLocation={ setCurrentLocation }

@@ -18,6 +18,7 @@ import {
 	setCorrectOrderForFields,
 } from '../helpers';
 import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
+import { DEFAULT_LOCATION } from '../constants';
 
 /**
  * @typedef {Object} UseFieldReturn The return value of useField.
@@ -194,11 +195,7 @@ const useField = () => {
 			}
 
 			return getFieldsAsArray( fields ).filter( ( field ) => {
-				if ( 'editor' === location ) {
-					return ! field.location || 'editor' === field.location;
-				}
-
-				return location === field.location;
+				return location === field.location || DEFAULT_LOCATION === location;
 			} );
 		},
 		[ block ]
@@ -257,7 +254,7 @@ const useField = () => {
 			}
 
 			const name = newSettings.hasOwnProperty( 'name' ) ? newSettings.name : fieldToChange.name;
-			const currentField = fieldToChange.parent
+			const currentField = fieldToChange.hasOwnProperty( 'parent' )
 				? fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ]
 				: fullBlock[ blockNameWithNameSpace ].fields[ name ];
 

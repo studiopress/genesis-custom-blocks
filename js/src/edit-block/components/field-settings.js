@@ -67,11 +67,13 @@ const FieldSettings = ( {
 									setting={ setting }
 									value={ value }
 									handleOnChange={ ( newSettingValue ) => {
+										const fieldToChange = {	name: field.name };
+										if ( field.hasOwnProperty( 'parent' ) ) {
+											fieldToChange.parent = field.parent;
+										}
+
 										changeFieldSettings(
-											{
-												name: field.name,
-												parent: field.parent,
-											},
+											fieldToChange,
 											{ [ setting.name ]: newSettingValue }
 										);
 									} }

@@ -19,6 +19,7 @@ import { convertToSlug } from '../helpers';
 
 /**
  * @typedef {Object} FieldPanelProps The component props.
+ * @property {string} currentLocation The currently selected location.
  * @property {boolean} isNewField Whether there is a new field.
  * @property {import('./editor').SelectedField|import('../constants').NoFieldSelected} selectedField The name of the selected field.
  * @property {Function} setCurrentLocation Sets the current location, like 'editor'.
@@ -33,6 +34,7 @@ import { convertToSlug } from '../helpers';
  * @return {React.ReactElement} The field panel.
  */
 const FieldPanel = ( {
+	currentLocation,
 	isNewField,
 	selectedField,
 	setCurrentLocation,
@@ -48,23 +50,25 @@ const FieldPanel = ( {
 		getField,
 	} = useField();
 
-
+	const field = getField( selectedField );
 	const controlValues = useMemo(
 		/**
-		 * Gets the controls values, possibly excluding a control based on the selected field.
+		 * Gets the control values, possibly excluding based on the selected field or the location.
 		 *
 		 * @return {Object[]} The control values.
 		 */
 		() => {
-			return selectedField.hasOwnProperty( 'parent' )
-				? Object.values( controls )
-					.filter( ( control ) => control.name !== 'repeater' )
-				: Object.values( controls );
+			return Object.values( controls ).filter( ( control ) => {
+				if ( selectedField && selectedField.hasOwnProperty( 'parent' ) ) {
+					return 'repeater' !== control.name; // Don't allow repeaters inside repeaters.
+				}
+
+				return ! currentLocation || control.locations.hasOwnProperty( currentLocation );
+			} );
 		},
-		[ controls, selectedField ]
+		[ controls, currentLocation, selectedField ]
 	);
 
-	const field = getField( selectedField );
 	const ref = useRef();
 	const didAutoSlug = useRef( false );
 
@@ -138,7 +142,12 @@ const FieldPanel = ( {
 								if ( event.target ) {
 									const changedName = event.target.value;
 									changeFieldSettings( selectedField, { name: changedName } );
-									setSelectedField( { name: changedName } );
+
+									const newSelectedField = { name: changedName };
+									if ( selectedField.hasOwnProperty( 'parent' ) ) {
+										newSelectedField.parent = selectedField.parent;
+									}
+									setSelectedField( newSelectedField );
 								}
 							} }
 						/>

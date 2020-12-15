@@ -3,7 +3,7 @@
  */
 import * as React from 'react';
 import TextareaAutosize from 'react-autosize-textarea';
-import classnames from 'classnames';
+import className from 'classnames';
 
 /**
  * WordPress dependencies
@@ -83,21 +83,20 @@ const PostTitle = () => {
 		}
 		onUnselect();
 	};
-
-	// The wp-block className is important for editor styles.
-	// This same block is used in both the visual and the code editor.
-	const className = classnames(
-		'wp-block editor-post-title editor-post-title__block',
-		{ 'is-selected': isSelected }
-	);
+	const placeholder = __( 'Block title', 'genesis-custom-blocks' );
 
 	return (
-		<div className={ className }>
+		<div
+			className={ className(
+				'wp-block editor-post-title editor-post-title__block',
+				{ 'is-selected': isSelected }
+			) }
+		>
 			<VisuallyHidden
 				as="label"
 				htmlFor={ `post-title-${ instanceId }` }
 			>
-				{ __( 'Add block', 'genesis-custom-blocks' ) }
+				{ placeholder }
 			</VisuallyHidden>
 			<TextareaAutosize
 				ref={ ref }
@@ -105,7 +104,7 @@ const PostTitle = () => {
 				className="editor-post-title__input"
 				value={ title }
 				onChange={ onChange }
-				placeholder={ __( 'Add block', 'genesis-custom-blocks' ) }
+				placeholder={ placeholder }
 				onFocus={ onSelect }
 				onBlur={ onBlur }
 				onKeyPress={ onUnselect }
