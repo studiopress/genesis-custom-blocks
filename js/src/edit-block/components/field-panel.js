@@ -87,8 +87,6 @@ const FieldPanel = ( {
 								}
 
 								const changedField = { label: event.target.value };
-								const newName = convertToSlug( event.target.value );
-
 								const fieldToChange = { name: field.name };
 								if ( field.hasOwnProperty( 'parent' ) ) {
 									fieldToChange.parent = field.parent;
@@ -96,6 +94,7 @@ const FieldPanel = ( {
 
 								if ( isNewField ) {
 									didAutoSlug.current = true;
+									const newName = convertToSlug( event.target.value );
 									changedField.name = newName;
 									setSelectedField( {
 										...fieldToChange,

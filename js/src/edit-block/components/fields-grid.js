@@ -130,14 +130,16 @@ const FieldsGrid = ( {
 							>
 								<div
 									role="gridcell"
-									className="relative flex items-center w-full p-4 bg-white border border-gray-400 rounded-sm hover:border-black"
+									className="relative flex flex-col items-center w-full p-4 bg-white border border-gray-400 rounded-sm hover:border-black"
 									id={ `field-item-${ index }` }
 								>
-									<div>{ FieldIcon ? <FieldIcon /> : null }</div>
-									<span className=" ml-4 truncate">{ field.label }</span>
-									<div className="flex items-center h-6 px-2 bg-gray-200 rounded-sm ml-auto hover:bg-gray-400">
-										<span className="text-xs font-mono">{ field.name }</span>
-										<ClipboardCopy text={ field.name } />
+									<div className="flex w-full items-center">
+										<div>{ FieldIcon ? <FieldIcon /> : null }</div>
+										<span className=" ml-4 truncate">{ field.label }</span>
+										<div className="flex items-center h-6 px-2 bg-gray-200 rounded-sm ml-auto hover:bg-gray-400">
+											<span className="text-xs font-mono">{ field.name }</span>
+											<ClipboardCopy text={ field.name } />
+										</div>
 									</div>
 									{ null === parentField && 'repeater' === field.control
 										? (
