@@ -18,15 +18,12 @@ import { store as noticesStore } from '@wordpress/notices';
  * Internal dependencies
  */
 import { useEditor } from '../hooks';
-import { default as withRegistryProvider } from './with-registry-provider';
 
 /**
  * @typedef {Object} EditorProviderProps The props of the component.
  * @property {Object} post The post for the editor.
  * @property {Object} settings The editor settings.
- * @property {boolean} recovery Whether this is a recovery.
- * @property {Object} initialEdits The initial edits, if any.
- * @property {React.ReactElement[]} children The component's children.
+ * @property {React.ReactElement} children The component's children.
  */
 
 /**
@@ -42,8 +39,6 @@ import { default as withRegistryProvider } from './with-registry-provider';
 const EditorProvider = ( {
 	post,
 	settings,
-	recovery,
-	initialEdits,
 	children,
 } ) => {
 	const { setupEditor } = useEditor();
@@ -57,13 +52,8 @@ const EditorProvider = ( {
 	// Iniitialize the editor.
 	// Ideally this should be synced on each change and not just something you do once.
 	useLayoutEffect( () => {
-		// Assume that we don't need to initialize in the case of an error recovery.
-		if ( recovery ) {
-			return;
-		}
-
 		updatePostLock( settings.postLock );
-		setupEditor( post, initialEdits );
+		setupEditor( post );
 		if ( settings.autosave ) {
 			createWarningNotice(
 				__( 'There is an autosave of this post that is more recent than the version below.', 'genesis-custom-blocks' ),
@@ -94,4 +84,4 @@ const EditorProvider = ( {
 	);
 };
 
-export default withRegistryProvider( EditorProvider );
+export default EditorProvider;

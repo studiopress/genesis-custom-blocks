@@ -15,8 +15,8 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 import { ClipboardCopy } from './';
 import { FIELD_PANEL } from '../constants';
-import { useField } from '../hooks';
 import { getFieldIcon, getWidthClass } from '../helpers';
+import { useField } from '../hooks';
 
 /**
  * @typedef {Object} FieldsGridProps The component props.
@@ -76,7 +76,7 @@ const FieldsGrid = ( {
 				return field.parent === selectedField.parent && field.name === selectedField.name;
 			}
 
-			return selectedField && field.name === selectedField.name;
+			return field.name === selectedField.name;
 		},
 		[ selectedField ]
 	);
@@ -92,7 +92,7 @@ const FieldsGrid = ( {
 						/**
 						 * Selects this field.
 						 *
-						 * @param {React.MouseEvent|React.KeyboardEvent<HTMLDivElement>} event The event to handle.
+						 * @param {React.MouseEvent<HTMLDivElement>|React.KeyboardEvent<HTMLDivElement>} event The event to handle.
 						 */
 						const selectField = ( event ) => {
 							event.stopPropagation();
@@ -214,6 +214,7 @@ const FieldsGrid = ( {
 			</div>
 			<button
 				className="flex items-center justify-center h-6 w-6 bg-black rounded-sm text-white mt-4 ml-auto"
+				aria-label={ __( 'Add a new field', 'genesis-custom-blocks' ) }
 				onClick={ () => {
 					const newFieldName = addNewField( currentLocation, parentField );
 					const newSelectedField = { name: newFieldName };

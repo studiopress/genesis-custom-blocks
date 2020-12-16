@@ -83,7 +83,6 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 				<EditorProvider
 					post={ post }
 					settings={ settings }
-					useSubRegistry={ false }
 				>
 					<ErrorBoundary onError={ onError }>
 						<EditorNotices />

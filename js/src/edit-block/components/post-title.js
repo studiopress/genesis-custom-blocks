@@ -18,8 +18,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useBlock } from '../hooks';
 import { convertToSlug } from '../helpers';
+import { useBlock } from '../hooks';
 
 /**
  * Forked from Gutenberg, so this can end autoslugging during onBlur.

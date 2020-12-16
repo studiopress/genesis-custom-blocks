@@ -18,4 +18,3 @@ export { default as PostTypesSection } from './post-types-section';
 export { default as Select } from './select';
 export { default as Side } from './side';
 export { default as SlugSection } from './slug-section';
-export { default as withRegistryProvider } from './with-registry-provider';
