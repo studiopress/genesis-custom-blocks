@@ -25,7 +25,7 @@ import { DEFAULT_LOCATION } from '../constants';
  * @property {function(string,string|null):string} addNewField Adds a new field.
  * @property {Object} controls All of the controls available.
  * @property {function(SelectedField):void} deleteField Deletes this field.
- * @property {function(SelectedField):void} duplicateField Deletes this field.
+ * @property {function(SelectedField):void} duplicateField Duplicates this field.
  * @property {function(SelectedField,string):void} changeControl Changes the control of the field.
  * @property {function(SelectedField,Object):void} changeFieldSettings Changes field settings.
  * @property {function(SelectedField):Object} getField Gets the selected field.
@@ -302,7 +302,7 @@ const useField = () => {
 		 * Gets a field, if it exists.
 		 *
 		 * @param {SelectedField} field The field to get.
-		 * @return {Object} The field, or {}.
+		 * @return {import('../components/editor').Field|{}} The field, or {}.
 		 */
 		( field ) => {
 			if ( ! field || ! block.fields ) {
