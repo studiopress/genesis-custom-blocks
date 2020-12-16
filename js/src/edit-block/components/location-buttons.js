@@ -16,8 +16,8 @@ import { ALTERNATE_LOCATION, DEFAULT_LOCATION } from '../constants';
 
 /**
  * @typedef {Object} LocationButtonProps The component props.
- * @property {string|null} currentLocation The currently selected location.
- * @property {Function} setCurrentLocation Sets the current location.
+ * @property {import('./editor').CurrentLocation} currentLocation The currently selected location.
+ * @property {import('./editor').SetCurrentLocation} setCurrentLocation Sets the current location.
  */
 
 /**

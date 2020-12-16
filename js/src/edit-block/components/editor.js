@@ -45,6 +45,27 @@ import { useBlock } from '../hooks';
  * @property {string} [parent] The name of the field's parent, if any.
  */
 
+/** @typedef {string} CurrentLocation The currently selected location. */
+/** @typedef {boolean} IsNewField Whether there is a new field. */
+/** @typedef {string} PanelDisplaying The panel currently displaying in the side, like 'block'. */
+/** @typedef {function(string):void} SetCurrentLocation Sets the currently selected location */
+/** @typedef {function(boolean):void} SetIsNewField Sets whether there is a new field. */
+/** @typedef {function(string):void} SetPanelDisplaying Sets the current panel displaying. */
+/** @typedef {function(SelectedField|import('../constants').NoFieldSelected):void} SetSelectedField Sets the selected field. */
+
+/**
+ * @typedef {Object} Field A block field, can have more properties depending on its settings.
+ * @property {string} name The name of the field.
+ * @property {string} label The label of the field.
+ * @property {string} control The control type, like 'text' or 'textarea'.
+ * @property {string} location The location, like 'editor'.
+ * @property {string} type The data type for its value, like string.
+ * @property {number} order Its order relative to other fields in its location, like 0, 1, 2...
+ * @property {string} [parent] The name of its parent field, like a Repeater control.
+ * @property {Object} [sub_fields] Fields that this field has, like for the Repeater control.
+ * @property {string|number} [width] The width, like '25'.
+ */
+
 /**
  * The editor component.
  *
@@ -100,8 +121,8 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 								currentLocation={ currentLocation }
 								isNewField={ isNewField }
 								panelDisplaying={ panelDisplaying }
-								setPanelDisplaying={ setPanelDisplaying }
 								selectedField={ selectedField }
+								setPanelDisplaying={ setPanelDisplaying }
 								setCurrentLocation={ setCurrentLocation }
 								setIsNewField={ setIsNewField }
 								setSelectedField={ setSelectedField }

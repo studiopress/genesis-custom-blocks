@@ -10,12 +10,12 @@ import { FieldsGrid, LocationButtons, PostTitle } from './';
 
 /**
  * @typedef {Object} MainProps The component props.
- * @property {string} currentLocation The currently selected location.
+ * @property {import('./editor').CurrentLocation} currentLocation The currently selected location.
  * @property {import('./editor').SelectedField|import('../constants').NoFieldSelected} selectedField The currently selected field.
- * @property {Function} setCurrentLocation Sets the currently selected location.
- * @property {Function} setIsNewField Sets whether there is a new field.
- * @property {Function} setPanelDisplaying Sets the current panel displaying.
- * @property {Function} setSelectedField Sets the name of the selected field.
+ * @property {import('./editor').SetCurrentLocation} setCurrentLocation Sets the currently selected location.
+ * @property {import('./editor').SetIsNewField} setIsNewField Sets whether there is a new field.
+ * @property {import('./editor').SetPanelDisplaying} setPanelDisplaying Sets the current panel displaying.
+ * @property {import('./editor').SetSelectedField} setSelectedField Sets the name of the selected field.
  */
 
 /**

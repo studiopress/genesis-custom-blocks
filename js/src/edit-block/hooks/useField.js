@@ -22,19 +22,18 @@ import { DEFAULT_LOCATION } from '../constants';
 
 /**
  * @typedef {Object} UseFieldReturn The return value of useField.
- * @property {Function} addNewField Adds a new field.
+ * @property {function(string,string|null):string} addNewField Adds a new field.
  * @property {Object} controls All of the controls available.
- * @property {Function} deleteField Deletes this field.
- * @property {Function} duplicateField Deletes this field.
- * @property {Function} changeControl Changes the control of the field.
- * @property {Function} changeFieldSettings Changes field settings.
- * @property {Function} getField Gets the selected field.
- * @property {Function} getFieldsForLocation Gets all of the fields for a given location.
- * @property {Function} reorderFields Reorders the fields for a given location.
+ * @property {function(SelectedField):void} deleteField Deletes this field.
+ * @property {function(SelectedField):void} duplicateField Deletes this field.
+ * @property {function(SelectedField,string):void} changeControl Changes the control of the field.
+ * @property {function(SelectedField,Object):void} changeFieldSettings Changes field settings.
+ * @property {function(SelectedField):Object} getField Gets the selected field.
+ * @property {function(string,string|null):import('../components/editor').Field[]|null} getFieldsForLocation Gets all of the fields for a given location.
+ * @property {function(number,number,string,string|null):void} reorderFields Reorders the fields for a given location.
  */
 
 /** @typedef {import('../components/editor').SelectedField|import('../constants').NoFieldSelected} SelectedField The current field */
-/** @typedef {import('../components/fields-grid').Field} Field A block's field */
 
 /**
  * Gets the field context.
@@ -182,7 +181,7 @@ const useField = () => {
 		 *
 		 * @param {string} location The location, like 'editor', or 'inspector'.
 		 * @param {string|null} parentField The parent field, if any.
-		 * @return {import('../components/fields-grid').Field[]|null} The fields with the given location.
+		 * @return {import('../components/editor').Field[]|null} The fields with the given location.
 		 */
 		( location, parentField = null ) => {
 			if ( ! block || ! block.fields ) {
@@ -206,7 +205,7 @@ const useField = () => {
 		/**
 		 * Moves a field to another location, and sets the correct order properties.
 		 *
-		 * @param {Field[]} fields The index of the field to move.
+		 * @param {import('../components/editor').Field[]} fields The index of the field to move.
 		 * @param {SelectedField} selectedField The index that the field should be moved to.
 		 * @param {string} newLocation The location to move this to.
 		 */

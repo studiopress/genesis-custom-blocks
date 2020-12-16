@@ -10,7 +10,7 @@ import { useCallback } from 'react';
 
 /**
  * @typedef {Object} UseEditorReturn The return value of useEditor.
- * @property {Function} setupEditor Sets up the editor.
+ * @property {function(Object):void} setupEditor Sets up the editor.
  */
 
 /**

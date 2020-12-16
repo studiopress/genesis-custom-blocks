@@ -20,25 +20,12 @@ import { useField } from '../hooks';
 
 /**
  * @typedef {Object} FieldsGridProps The component props.
- * @property {string} currentLocation The currently selected location.
+ * @property {import('./editor').CurrentLocation} currentLocation The currently selected location.
  * @property {import('./editor').SelectedField|import('../constants').NoFieldSelected} selectedField The currenetly selected field.
- * @property {Function} setIsNewField Sets if there is a new field.
- * @property {Function} setPanelDisplaying Sets the current panel displaying.
- * @property {Function} setSelectedField Sets the name of the selected field.
- * @property {string} [parentField] The name of the parent field, if any.
- */
-
-/**
- * @typedef {Object} Field A block field, can have more properties depending on its settings.
- * @property {string} name The name of the field.
- * @property {string} label The label of the field.
- * @property {string} control The control type, like 'text' or 'textarea'.
- * @property {string} location The location, like 'editor'.
- * @property {string} type The data type for its value, like string.
- * @property {number} order Its order relative to other fields, like 0, 1, 2...
- * @property {string} [parent] The name of its parent field, like a Repeater control.
- * @property {Object} [sub_fields] Fields that this field has, like for the Repeater control.
- * @property {string|number} [width] The width, like '25'.
+ * @property {import('./editor').SetIsNewField} setIsNewField Sets if there is a new field.
+ * @property {import('./editor').SetPanelDisplaying} setPanelDisplaying Sets the current panel displaying.
+ * @property {import('./editor').SetSelectedField} setSelectedField Sets the name of the selected field.
+ * @property {string|null} [parentField] The name of the parent field, if any.
  */
 
 /**
