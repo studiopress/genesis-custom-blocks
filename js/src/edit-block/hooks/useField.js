@@ -195,7 +195,8 @@ const useField = () => {
 			}
 
 			return getFieldsAsArray( fields ).filter( ( field ) => {
-				return location === field.location || DEFAULT_LOCATION === location;
+				return location === field.location ||
+					( ! field.location && DEFAULT_LOCATION === location );
 			} );
 		},
 		[ block ]
