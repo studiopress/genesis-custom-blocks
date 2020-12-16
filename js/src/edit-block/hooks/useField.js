@@ -206,8 +206,8 @@ const useField = () => {
 		 * Moves a field to another location, and sets the correct order properties.
 		 *
 		 * @param {import('../components/editor').Field[]} fields The index of the field to move.
-		 * @param {SelectedField} selectedField The index that the field should be moved to.
-		 * @param {string} newLocation The location to move this to.
+		 * @param {SelectedField} selectedField The field should be moved.
+		 * @param {string} newLocation The location to move it to, like 'editor'.
 		 */
 		( fields, selectedField, newLocation ) => {
 			const fieldToMove = fields[ selectedField.name ];

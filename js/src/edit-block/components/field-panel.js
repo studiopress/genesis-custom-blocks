@@ -21,7 +21,7 @@ import { useField } from '../hooks';
  * @typedef {Object} FieldPanelProps The component props.
  * @property {import('./editor').CurrentLocation} currentLocation The currently selected location.
  * @property {import('./editor').IsNewField} isNewField Whether there is a new field.
- * @property {import('./editor').SelectedField|import('../constants').NoFieldSelected} selectedField The name of the selected field.
+ * @property {import('./editor').SelectedField|import('../constants').NoFieldSelected} selectedField The name of the selected field, if any.
  * @property {import('./editor').SetCurrentLocation} setCurrentLocation Sets the current location, like 'editor'.
  * @property {import('./editor').SetIsNewField} setIsNewField Sets whether there is a new field.
  * @property {import('./editor').SetSelectedField} setSelectedField Sets the currently selected field name.

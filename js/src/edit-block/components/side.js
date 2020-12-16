@@ -20,7 +20,7 @@ import { BLOCK_PANEL, FIELD_PANEL } from '../constants';
  * @property {import('./editor').CurrentLocation} currentLocation The currently selected location.
  * @property {import('./editor').IsNewField} isNewField Whether there is a new field.
  * @property {import('./editor').PanelDisplaying} panelDisplaying The panel currently displaying in the side, like 'block'.
- * @property {import('./editor').SelectedField|import('../constants').NoFieldSelected} selectedField The name of the selected field.
+ * @property {import('./editor').SelectedField|import('../constants').NoFieldSelected} selectedField The name of the selected field, if any.
  * @property {import('./editor').SetCurrentLocation} setCurrentLocation Sets the current location, like 'editor'.
  * @property {import('./editor').SetIsNewField} setIsNewField Sets if there is a new field.
  * @property {import('./editor').SetPanelDisplaying} setPanelDisplaying Sets the panel currently displaying in the side.
