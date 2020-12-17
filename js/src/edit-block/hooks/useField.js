@@ -170,6 +170,18 @@ const useField = () => {
 	 * @return {Object} The fields with the field renamed.
 	 */
 	const changeFieldName = ( fields, previousName, newName ) => {
+		// If this is a repeater, rename the parent of its sub_fields.
+		if ( fields[ previousName ] && fields[ previousName ].hasOwnProperty( 'sub_fields' ) ) {
+			fields[ previousName ].sub_fields = getFieldsAsObject(
+				Object.values( fields[ previousName ].sub_fields ).map( ( subField ) => {
+					return {
+						...subField,
+						parent: newName,
+					};
+				} )
+			);
+		}
+
 		fields[ newName ] = { ...fields[ previousName ], name: newName };
 		delete fields[ previousName ];
 		return fields;
