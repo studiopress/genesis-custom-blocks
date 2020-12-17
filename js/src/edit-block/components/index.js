@@ -4,6 +4,7 @@ export { default as CategorySection } from './category-section';
 export { default as ClipboardCopy } from './clipboard-copy';
 export { default as Editor } from './editor';
 export { default as EditorProvider } from './editor-provider';
+export { default as Field } from './field';
 export { default as FieldPanel } from './field-panel';
 export { default as FieldsGrid } from './fields-grid';
 export { default as FieldSettings } from './field-settings';
