@@ -6,20 +6,25 @@ import React from 'react';
 /**
  * WordPress dependencies
  */
+import { useEffect, useMemo, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import { FieldSettings } from './';
-import { useField } from '../hooks';
 import { NO_FIELD_SELECTED } from '../constants';
+import { convertToSlug } from '../helpers';
+import { useField } from '../hooks';
 
 /**
  * @typedef {Object} FieldPanelProps The component props.
- * @property {string|null} selectedField The name of the selected field.
- * @property {Function} setCurrentLocation Sets the current location, like 'editor'.
- * @property {Function} setSelectedField Sets the currently selected field name.
+ * @property {import('./editor').CurrentLocation} currentLocation The currently selected location.
+ * @property {import('./editor').IsNewField} isNewField Whether there is a new field.
+ * @property {import('./editor').SelectedField|import('../constants').NoFieldSelected} selectedField The name of the selected field, if any.
+ * @property {import('./editor').SetCurrentLocation} setCurrentLocation Sets the current location, like 'editor'.
+ * @property {import('./editor').SetIsNewField} setIsNewField Sets whether there is a new field.
+ * @property {import('./editor').SetSelectedField} setSelectedField Sets the currently selected field name.
  */
 
 /**
@@ -29,8 +34,11 @@ import { NO_FIELD_SELECTED } from '../constants';
  * @return {React.ReactElement} The field panel.
  */
 const FieldPanel = ( {
+	currentLocation,
+	isNewField,
 	selectedField,
 	setCurrentLocation,
+	setIsNewField,
 	setSelectedField,
 } ) => {
 	const {
@@ -42,8 +50,39 @@ const FieldPanel = ( {
 		getField,
 	} = useField();
 
-	const controlValues = Object.values( controls );
 	const field = getField( selectedField );
+	const controlValues = useMemo(
+		/**
+		 * Gets the control values, possibly excluding based on the selected field or the location.
+		 *
+		 * @return {Object[]} The control values.
+		 */
+		() => {
+			return Object.values( controls ).filter( ( control ) => {
+				if ( selectedField && selectedField.hasOwnProperty( 'parent' ) ) {
+					return 'repeater' !== control.name; // Don't allow repeaters inside repeaters.
+				}
+
+				return ! currentLocation || control.locations.hasOwnProperty( currentLocation );
+			} );
+		},
+		[ controls, currentLocation, selectedField ]
+	);
+
+	const ref = useRef();
+	const didAutoSlug = useRef( false );
+
+	useEffect( () => {
+		if ( isNewField && ref.current ) {
+			const { ownerDocument: { activeElement } } = ref.current;
+			if ( ! activeElement || ref.current !== activeElement ) {
+				// @ts-ignore
+				ref.current.select();
+			}
+
+			didAutoSlug.current = false;
+		}
+	}, [ didAutoSlug, isNewField ] );
 
 	return (
 		<div className="p-4">
@@ -60,10 +99,33 @@ const FieldPanel = ( {
 							type="text"
 							id="field-label"
 							value={ field.label }
+							ref={ ref }
 							onChange={ ( event ) => {
-								if ( event.target ) {
-									// @ts-ignore
-									changeFieldSettings( selectedField, { label: event.target.value } );
+								if ( ! event.target ) {
+									return;
+								}
+
+								const changedField = { label: event.target.value };
+								const fieldToChange = { name: field.name };
+								if ( field.hasOwnProperty( 'parent' ) ) {
+									fieldToChange.parent = field.parent;
+								}
+
+								if ( isNewField ) {
+									didAutoSlug.current = true;
+									const newName = convertToSlug( event.target.value );
+									changedField.name = newName;
+									setSelectedField( {
+										...fieldToChange,
+										name: newName,
+									} );
+								}
+
+								changeFieldSettings( fieldToChange, changedField );
+							} }
+							onBlur={ () => {
+								if ( didAutoSlug.current ) {
+									setIsNewField( false );
 								}
 							} }
 						/>
@@ -78,8 +140,14 @@ const FieldPanel = ( {
 							value={ field.name }
 							onChange={ ( event ) => {
 								if ( event.target ) {
-									changeFieldSettings( selectedField, { name: event.target.value } );
-									setSelectedField( event.target.value );
+									const changedName = event.target.value;
+									changeFieldSettings( selectedField, { name: changedName } );
+
+									const newSelectedField = { name: changedName };
+									if ( selectedField.hasOwnProperty( 'parent' ) ) {
+										newSelectedField.parent = selectedField.parent;
+									}
+									setSelectedField( newSelectedField );
 								}
 							} }
 						/>

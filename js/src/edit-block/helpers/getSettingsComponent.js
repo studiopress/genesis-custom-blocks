@@ -39,9 +39,8 @@ const getSettingsComponent = ( settingType ) => {
 	}
 
 	const componentName = snakeCaseToPascalCase( settingType );
-
-	const filteredComponents = applyFilters( 'genesisCustomBlocks.settingsComponents', settingsComponents );
-	return filteredComponents[ componentName ] ? filteredComponents[ componentName ] : null; /* eslint-disable-line import/namespace */
+	const component = settingsComponents[ componentName ] ? settingsComponents[ componentName ] : null; /* eslint-disable-line import/namespace */
+	return applyFilters( 'genesisCustomBlocks.getSettingsComponent', component, componentName );
 };
 
 export default getSettingsComponent;

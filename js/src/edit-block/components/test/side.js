@@ -127,7 +127,7 @@ const mockControls = {
 
 const getProps = () => ( {
 	setPanelDisplaying: jest.fn(),
-	selectedField: emailField.name,
+	selectedField: { name: emailField.name },
 	setCurrentLocation: jest.fn(),
 	setSelectedField: jest.fn(),
 } );

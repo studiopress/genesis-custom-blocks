@@ -6,6 +6,7 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
+import { PostTrash } from '@wordpress/editor';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -34,6 +35,9 @@ const BlockPanel = () => (
 		<CategorySection />
 		<KeywordsSection />
 		<PostTypesSection />
+		<div className="mt-4">
+			<PostTrash />
+		</div>
 	</div>
 );
 

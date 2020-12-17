@@ -189,7 +189,7 @@ class Loader extends ComponentAbstract {
 		$block_name = str_replace( '_', '-', $block_name );
 
 		// register_block_type doesn't allow slugs starting with a number.
-		if ( is_numeric( $block_name[0] ) ) {
+		if ( isset( $block_name[0] ) && is_numeric( $block_name[0] ) ) {
 			$block_name = 'block-' . $block_name;
 		}
 

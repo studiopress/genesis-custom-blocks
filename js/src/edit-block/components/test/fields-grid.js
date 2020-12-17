@@ -4,7 +4,6 @@
 import * as React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render } from '@testing-library/react';
-import user from '@testing-library/user-event';
 
 /**
  * Internal dependencies
@@ -54,20 +53,18 @@ global.gcbEditor = { controls: {} };
 
 describe( 'FieldsGrid', () => {
 	it( 'displays the main editor area', async () => {
-		const { getByText, getByTitle } = render(
+		const { getByText } = render(
 			<FieldsGrid
 				currentLocation="editor"
 				panelDisplaying={ BLOCK_PANEL }
-				selectedField={ mockUrlField.name }
-				setCurrentLocation={ jest.fn() }
+				selectedField={ { name: mockUrlField.name } }
 				setPanelDisplaying={ jest.fn() }
+				setIsNewField={ jest.fn() }
 				setSelectedField={ jest.fn() }
 			/>
 		);
 
 		expect( getByText( mockUrlField.name ) ).toBeInTheDocument();
 		expect( getByText( mockUrlField.label ) ).toBeInTheDocument();
-
-		user.click( getByTitle( /new field/i ) );
 	} );
 } );

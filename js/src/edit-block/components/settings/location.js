@@ -27,17 +27,19 @@ const Location = ( props ) => {
 	const { handleOnChange, setCurrentLocation } = props;
 	const id = `setting-${ props.setting.name }`;
 
-	return <Select
-		{ ...props }
-		handleOnChange={ ( newValue ) => {
-			handleOnChange( newValue );
-			if ( LOCATIONS.includes( newValue ) ) {
-				setCurrentLocation( newValue );
-			}
-		} }
-		id={ id }
-		options={ LOCATIONS_WITH_LABEL }
-	/>;
+	return (
+		<Select
+			{ ...props }
+			handleOnChange={ ( newValue ) => {
+				handleOnChange( newValue );
+				if ( LOCATIONS.includes( newValue ) ) {
+					setCurrentLocation( newValue );
+				}
+			} }
+			id={ id }
+			options={ LOCATIONS_WITH_LABEL }
+		/>
+	);
 };
 
 export default Location;

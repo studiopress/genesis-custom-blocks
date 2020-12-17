@@ -5,7 +5,7 @@ import * as React from 'react';
 
 /**
  * @typedef {Object} SvgContainerProps The component props.
- * @property {React.children} children The children of this component.
+ * @property {React.ReactElement[]} children The children of this component.
  */
 
 /**

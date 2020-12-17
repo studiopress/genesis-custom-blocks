@@ -12,6 +12,11 @@
   "globals": {
     "wp": "readonly"
   },
+  "settings": {
+    "jsdoc": {
+      "mode": "typescript"
+    }
+  },
   "plugins": [
     "jsx-a11y",
     "testing-library",
