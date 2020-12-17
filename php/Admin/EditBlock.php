@@ -103,20 +103,22 @@ class EditBlock extends ComponentAbstract {
 			true
 		);
 
+		$post_id = filter_input( INPUT_GET, 'post', FILTER_SANITIZE_NUMBER_INT );
 		wp_add_inline_script(
 			self::SCRIPT_SLUG,
 			sprintf(
 				'const gcbEditor = %s;',
 				wp_json_encode(
 					[
-						'postType'     => get_post_type(),
-						'postId'       => get_the_ID(),
-						'settings'     => [
+						'controls'         => genesis_custom_blocks()->block_post->get_controls(),
+						'postType'         => get_post_type(),
+						'postId'           => get_the_ID(),
+						'settings'         => [
 							'titlePlaceholder'   => __( 'Block title', 'genesis-custom-blocks' ),
 							'richEditingEnabled' => false,
 						],
-						'initialEdits' => null,
-						'controls'     => genesis_custom_blocks()->block_post->get_controls(),
+						'initialEdits'     => null,
+						'isOnboardingPost' => $post_id && get_option( Onboarding::OPTION_NAME ) === $post_id,
 					]
 				)
 			),
