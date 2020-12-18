@@ -156,8 +156,8 @@ class EditBlock extends ComponentAbstract {
 			'template-file',
 			[
 				'callback'            => [ $this, 'get_template_file_response' ],
-				'permission_callback' => static function() {
-					current_user_can( 'edit_posts' );
+				'permission_callback' => function() {
+					return current_user_can( 'edit_posts' );
 				},
 				'args'                => [
 					'blockName' => [

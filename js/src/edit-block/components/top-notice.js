@@ -71,10 +71,10 @@ const TopNotice = () => {
 					{ __( 'To display this block, the plugin will look for this template file in your theme:', 'genesis-custom-blocks' ) }
 				</p>
 				<p className="flex items-center w-auto text-xs font-mono mt-2 ml-2 px-2 py-1 bg-blue-200 rounded-sm">
-					<span className="text-xs font-mono">{ template.templatePath }</span>
+					<span className="text-xs font-mono text-blue-800">{ template.templatePath }</span>
 					<ClipboardCopy text={ template.templatePath } />
 				</p>
-				<div className="flex items-center mt-5 text-xs text-blue-600">
+				<div className="flex items-center mt-5 text-xs text-blue-800">
 					<svg className="h-4 w-4 fill-current"
 						fill="currentColor"
 						viewBox="0 0 20 20"

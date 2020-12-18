@@ -6,7 +6,7 @@ import * as React from 'react';
 /**
  * Internal dependencies
  */
-import { FieldsGrid, LocationButtons, PostTitle, TopNotice } from './';
+import { BottomNotice, FieldsGrid, LocationButtons, PostTitle, TopNotice } from './';
 
 /**
  * @typedef {Object} MainProps The component props.
@@ -49,6 +49,7 @@ const Main = ( {
 				setPanelDisplaying={ setPanelDisplaying }
 				setSelectedField={ setSelectedField }
 			/>
+			<BottomNotice />
 		</div>
 	</div>
 );

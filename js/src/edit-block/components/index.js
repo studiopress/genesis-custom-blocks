@@ -1,3 +1,4 @@
+export { default as BottomNotice } from './bottom-notice';
 export { default as BlockPanel } from './block-panel';
 export { default as BrowserURL } from './browser-url';
 export { default as CategorySection } from './category-section';
