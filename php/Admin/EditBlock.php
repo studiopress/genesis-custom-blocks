@@ -9,6 +9,7 @@
 
 namespace Genesis\CustomBlocks\Admin;
 
+use WP_Error;
 use WP_Post;
 use Genesis\CustomBlocks\ComponentAbstract;
 
@@ -45,6 +46,7 @@ class EditBlock extends ComponentAbstract {
 		add_filter( 'replace_editor', [ $this, 'should_replace_editor' ], 10, 2 );
 		add_filter( 'use_block_editor_for_post_type', [ $this, 'should_use_block_editor_for_post_type' ], 10, 2 );
 		add_action( 'admin_footer', [ $this, 'enqueue_assets' ] );
+		add_action( 'rest_api_init', [ $this, 'register_route_template_file' ] );
 	}
 
 	/**
@@ -139,6 +141,63 @@ class EditBlock extends ComponentAbstract {
 			'https://unpkg.com/tailwindcss@1.9.6/dist/tailwind.min.css',
 			[],
 			$this->plugin->get_version()
+		);
+	}
+
+	/**
+	 * Registers a route to install and activate the plugin Genesis Custom Blocks.
+	 */
+	public function register_route_template_file() {
+		register_rest_route(
+			genesis_custom_blocks()->get_slug(),
+			'template-file',
+			[
+				'methods'             => 'GET',
+				'callback'            => [ $this, 'get_template_file_response' ],
+				'permission_callback' => static function() {
+					return current_user_can( 'edit_posts' );
+				},
+				'args'                => [
+					'blockName' => [
+						'description' => __( 'Block namespace.', 'genesis-custom-blocks' ),
+						'type'        => 'string',
+					],
+				],
+			]
+		);
+	}
+
+	/**
+	 * Gets the response for the `template-file` endpoint.
+	 *
+	 * @param array $data Data sent in the GET request.
+	 * @return WP_REST_Response|WP_Error Response to the request.
+	 */
+	public function get_template_file_response( $data ) {
+		if ( empty( $data['blockName'] ) ) {
+			return new WP_Error(
+				'no_block_name',
+				__( 'Please pass a block name', 'genesis-custom-blocks' )
+			);
+		}
+
+		$locations     = genesis_custom_blocks()->get_template_locations( $data['blockName'], 'block' );
+		$template_path = genesis_custom_blocks()->locate_template( $locations );
+
+		$template_exists = ! empty( $template_path );
+		if ( ! $template_exists ) {
+			$template_path = str_replace(
+				WP_CONTENT_DIR,
+				basename( WP_CONTENT_DIR ),
+				get_stylesheet_directory() . '/blocks/block-' . $data['blockName'] . '.php'
+			);
+		}
+
+		return rest_ensure_response(
+			[
+				'templateExists' => $template_exists,
+				'templatePath'   => $template_path,
+			]
 		);
 	}
 }

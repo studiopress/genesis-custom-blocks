@@ -34,7 +34,7 @@ import {
  * @typedef {Object} UseBlockReturn The return value of useBlock.
  * @property {Block} block The block, parsed into an object.
  * @property {function(Object):void} changeBlock Changes the block configuration.
- * @property {function(string,Object):void} changeBlockName Changes the block name.
+ * @property {function(string,Object?):void} changeBlockName Changes the block name.
  */
 
 /**
@@ -99,7 +99,7 @@ const useBlock = () => {
 		 * Changes a block name (slug).
 		 *
 		 * @param {string} newName The new bock name (slug).
-		 * @param {Object} defaultValues The new block values, if any.
+		 * @param {Object} [defaultValues] The new block values, if any.
 		 */
 		( newName, defaultValues = {} ) => {
 			const previousBlock = getFullBlock();

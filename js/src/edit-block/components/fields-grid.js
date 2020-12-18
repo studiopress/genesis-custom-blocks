@@ -64,11 +64,11 @@ const FieldsGrid = ( {
 								field={ field }
 								index={ index }
 								isDownButtonDisabled={ isDownButtonDisabled }
-								shouldDisplayMoveButtons={ shouldDisplayMoveButtons }
 								selectedField={ selectedField }
 								setIsNewField={ setIsNewField }
 								setPanelDisplaying={ setPanelDisplaying }
 								setSelectedField={ setSelectedField }
+								shouldDisplayMoveButtons={ shouldDisplayMoveButtons }
 								parentField={ parentField }
 							/>
 						);

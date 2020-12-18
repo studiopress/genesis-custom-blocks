@@ -6,6 +6,7 @@
  */
 
 use Genesis\CustomBlocks\Admin\EditBlock;
+use Brain\Monkey\Functions;
 
 /**
  * Tests for class EditBlock.
@@ -50,6 +51,7 @@ class TestEditBlock extends AbstractTemplate {
 		$this->assertEquals( 10, has_filter( 'replace_editor', [ $this->instance, 'should_replace_editor' ] ) );
 		$this->assertEquals( 10, has_filter( 'use_block_editor_for_post_type', [ $this->instance, 'should_use_block_editor_for_post_type' ] ) );
 		$this->assertEquals( 10, has_action( 'admin_footer', [ $this->instance, 'enqueue_assets' ] ) );
+		$this->assertEquals( 10, has_action( 'rest_api_init', [ $this->instance, 'register_route_template_file' ] ) );
 	}
 
 	/**
@@ -103,5 +105,50 @@ class TestEditBlock extends AbstractTemplate {
 		$this->assertTrue( wp_script_is( EditBlock::SCRIPT_SLUG ) );
 		$this->assertTrue( wp_style_is( EditBlock::STYLE_SLUG ) );
 		$this->assertTrue( wp_style_is( EditBlock::TAILWIND_SLUG ) );
+	}
+
+	/**
+	 * Test register_route_template_file.
+	 *
+	 * @covers Genesis\CustomBlocks\Admin\EditBlock::register_route_template_file()
+	 */
+	public function test_register_route_template_file() {
+		do_action( 'rest_api_init' );
+		$this->instance->register_route_template_file();
+
+		$this->assertArrayHasKey( '/genesis-custom-blocks/template-file', rest_get_server()->get_routes() );
+	}
+
+	/**
+	 * Test get_template_file response no block name.
+	 *
+	 * @covers Genesis\CustomBlocks\Admin\EditBlock::get_template_file_response()
+	 */
+	public function test_get_template_file_response_no_block_name() {
+		$response = $this->instance->get_template_file_response( [] );
+
+		$this->assertEquals(
+			'Please pass a block name',
+			$response->get_error_message()
+		);
+	}
+
+	/**
+	 * Test get_template_file response.
+	 *
+	 * @covers Genesis\CustomBlocks\Admin\EditBlock::get_template_file_response()
+	 */
+	public function test_get_template_file_response() {
+		$block_name = 'baz-example';
+		$response   = $this->instance->get_template_file_response( [ 'blockName' => $block_name ] );
+
+		$this->assertFalse( $response->get_data()['templateExists'] );
+		$this->assertEquals(
+			1,
+			preg_match(
+				"#blocks/block-{$block_name}\.php$#",
+				$response->get_data()['templatePath']
+			)
+		);
 	}
 }

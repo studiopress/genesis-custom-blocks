@@ -6,7 +6,7 @@ import * as React from 'react';
 /**
  * Internal dependencies
  */
-import { FieldsGrid, LocationButtons, PostTitle } from './';
+import { FieldsGrid, LocationButtons, PostTitle, TopNotice } from './';
 
 /**
  * @typedef {Object} MainProps The component props.
@@ -37,6 +37,7 @@ const Main = ( {
 			<div className="block-title-field w-full mt-10 text-center focus:outline-none">
 				<PostTitle />
 			</div>
+			<TopNotice />
 			<LocationButtons
 				currentLocation={ currentLocation }
 				setCurrentLocation={ setCurrentLocation }
