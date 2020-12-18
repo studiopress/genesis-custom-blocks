@@ -77,7 +77,7 @@ const Field = ( {
 		/**
 		 * Gets whether this field is selected.
 		 *
-		 * @return {boolean} Whether the passed field is selected.
+		 * @return {boolean} Whether the field is selected.
 		 */
 		() => {
 			if ( ! selectedField ) {
@@ -138,54 +138,52 @@ const Field = ( {
 					: null
 				}
 				{ isSelected && shouldDisplayMoveButtons
-					? (
-						<div className="flex absolute top-0 left-0 flex-col justify-between top-0 left-0 -ml-8 mt-0 rounded-sm bg-white border border-black">
-							<button
-								aria-label={ sprintf(
-									/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
-									__( 'Move %1$s field up from position %2$d to position %3$d', 'genesis-custom-blocks' ),
-									field.label,
-									index,
-									index - 1
-								) }
-								className={ className(
-									moveButtonClass,
-									{ [ buttonDisabledClasses ]: isUpButtonDisabled }
-								) }
-								onClick={ ( event ) => {
-									event.preventDefault();
-									reorderFields( index, index - 1, currentLocation, parentField );
-								} }
-								disabled={ isUpButtonDisabled }
-							>
-								<svg className="h-4 w-4 stroke-current" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-									<path d="M5 15l7-7 7 7" />
-								</svg>
-							</button>
-							<button
-								aria-label={ sprintf(
-									/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
-									__( 'Move %1$s field down from position %2$d to position %3$d', 'genesis-custom-blocks' ),
-									field.label,
-									index,
-									index + 1
-								) }
-								className={ className(
-									moveButtonClass,
-									{ [ buttonDisabledClasses ]: isDownButtonDisabled }
-								) }
-								onClick={ ( event ) => {
-									event.preventDefault();
-									reorderFields( index, index + 1, currentLocation, parentField );
-								} }
-								disabled={ isDownButtonDisabled }
-							>
-								<svg className="h-4 w-4 stroke-current" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-									<path d="M19 9l-7 7-7-7" />
-								</svg>
-							</button>
-						</div>
-					)
+					? <div className="flex absolute top-0 left-0 flex-col justify-between top-0 left-0 -ml-8 mt-0 rounded-sm bg-white border border-black">
+						<button
+							aria-label={ sprintf(
+								/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
+								__( 'Move %1$s field up from position %2$d to position %3$d', 'genesis-custom-blocks' ),
+								field.label,
+								index,
+								index - 1
+							) }
+							className={ className(
+								moveButtonClass,
+								{ [ buttonDisabledClasses ]: isUpButtonDisabled }
+							) }
+							onClick={ ( event ) => {
+								event.preventDefault();
+								reorderFields( index, index - 1, currentLocation, parentField );
+							} }
+							disabled={ isUpButtonDisabled }
+						>
+							<svg className="h-4 w-4 stroke-current" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+								<path d="M5 15l7-7 7 7" />
+							</svg>
+						</button>
+						<button
+							aria-label={ sprintf(
+								/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
+								__( 'Move %1$s field down from position %2$d to position %3$d', 'genesis-custom-blocks' ),
+								field.label,
+								index,
+								index + 1
+							) }
+							className={ className(
+								moveButtonClass,
+								{ [ buttonDisabledClasses ]: isDownButtonDisabled }
+							) }
+							onClick={ ( event ) => {
+								event.preventDefault();
+								reorderFields( index, index + 1, currentLocation, parentField );
+							} }
+							disabled={ isDownButtonDisabled }
+						>
+							<svg className="h-4 w-4 stroke-current" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+								<path d="M19 9l-7 7-7-7" />
+							</svg>
+						</button>
+					</div>
 					: null
 				}
 			</div>

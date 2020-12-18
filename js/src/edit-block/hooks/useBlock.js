@@ -34,7 +34,7 @@ import {
  * @typedef {Object} UseBlockReturn The return value of useBlock.
  * @property {Block} block The block, parsed into an object.
  * @property {function(Object):void} changeBlock Changes the block configuration.
- * @property {function(string,Object?):void} changeBlockName Changes the block name.
+ * @property {function(string,Object):void} changeBlockName Changes the block name.
  */
 
 /**
@@ -49,14 +49,16 @@ const useBlock = () => {
 	);
 	const { editPost } = useDispatch( 'core/editor' );
 
-	const getFullBlock = useCallback(
+	const fullBlock = useMemo(
 		() => getBlock( editedPostContent ),
 		[ editedPostContent ]
 	);
 
-	const fullBlock = getFullBlock();
+	const blockNameWithNameSpace = useMemo(
+		() => getBlockNameWithNameSpace( fullBlock ),
+		[ fullBlock ]
+	);
 
-	const blockNameWithNameSpace = getBlockNameWithNameSpace( fullBlock );
 	const block = useMemo(
 		() => fullBlock[ blockNameWithNameSpace ] || {},
 		[ fullBlock, blockNameWithNameSpace ]
@@ -72,13 +74,12 @@ const useBlock = () => {
 		 * @param {Object} newValues The new value(s) to set.
 		 */
 		( newValues ) => {
-			const newBlock = getFullBlock();
-			const blockName = getBlockNameWithNameSpace( newBlock );
+			const blockName = getBlockNameWithNameSpace( fullBlock );
 			const editedPost = {
 				content: JSON.stringify(
 					{
 						[ blockName ]: {
-							...newBlock[ blockName ],
+							...fullBlock[ blockName ],
 							...newValues,
 						},
 					}
@@ -91,7 +92,7 @@ const useBlock = () => {
 
 			editPost( editedPost );
 		},
-		[ editPost, getFullBlock ]
+		[ editPost, fullBlock ]
 	);
 
 	const changeBlockName = useCallback(
@@ -102,12 +103,11 @@ const useBlock = () => {
 		 * @param {Object} [defaultValues] The new block values, if any.
 		 */
 		( newName, defaultValues = {} ) => {
-			const previousBlock = getFullBlock();
-			const previousBlockName = getBlockNameWithNameSpace( previousBlock );
+			const previousBlockName = getBlockNameWithNameSpace( fullBlock );
 			const editedPost = {
 				content: JSON.stringify( {
 					[ `${ BLOCK_NAMESPACE }/${ newName }` ]: {
-						...previousBlock[ previousBlockName ],
+						...fullBlock[ previousBlockName ],
 						...defaultValues,
 						name: newName,
 					},
@@ -121,7 +121,7 @@ const useBlock = () => {
 
 			editPost( editedPost );
 		},
-		[ editPost, getFullBlock ]
+		[ editPost, fullBlock ]
 	);
 
 	return {
