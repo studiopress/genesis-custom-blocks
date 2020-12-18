@@ -17,7 +17,7 @@ import { StrictMode, useEffect, useState } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { EditorProvider, Header, Main, Side } from './';
+import { BrowserURL, EditorProvider, Header, Main, Side } from './';
 import {
 	BLOCK_PANEL,
 	DEFAULT_LOCATION,
@@ -99,6 +99,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 	return (
 		<StrictMode>
 			<div className="h-screen flex flex-col items-center text-black">
+				<BrowserURL />
 				<UnsavedChangesWarning />
 				<EditorProvider
 					post={ post }
