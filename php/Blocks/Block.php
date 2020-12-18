@@ -97,15 +97,17 @@ class Block {
 	 * @return void
 	 */
 	public function from_json( $json ) {
-		$json = json_decode( $json, true );
-
-		if ( ! isset( $json[ 'genesis-custom-blocks/' . $this->name ] ) ) {
+		$decoded_json = json_decode( $json, true );
+		if ( ! is_array( $decoded_json ) ) {
 			return;
 		}
 
-		$config = $json[ 'genesis-custom-blocks/' . $this->name ];
+		$json_values = array_values( $decoded_json );
+		if ( ! isset( $json_values[0] ) ) {
+			return;
+		}
 
-		$this->from_array( $config );
+		$this->from_array( $json_values[0] );
 	}
 
 	/**

@@ -11,6 +11,7 @@ namespace Genesis\CustomBlocks\Admin;
 
 use WP_Error;
 use WP_Post;
+use Genesis\CustomBlocks\Blocks\Block;
 use Genesis\CustomBlocks\ComponentAbstract;
 
 /**
@@ -106,6 +107,7 @@ class EditBlock extends ComponentAbstract {
 		);
 
 		$post_id = filter_input( INPUT_GET, 'post', FILTER_SANITIZE_NUMBER_INT );
+		$block   = new Block( $post_id );
 		wp_add_inline_script(
 			self::SCRIPT_SLUG,
 			sprintf(
@@ -114,11 +116,12 @@ class EditBlock extends ComponentAbstract {
 					[
 						'controls'         => genesis_custom_blocks()->block_post->get_controls(),
 						'postType'         => get_post_type(),
-						'postId'           => get_the_ID(),
+						'postId'           => $post_id,
 						'settings'         => [
 							'titlePlaceholder'   => __( 'Block title', 'genesis-custom-blocks' ),
 							'richEditingEnabled' => false,
 						],
+						'template'         => $this->get_template_file( $block->name ),
 						'initialEdits'     => null,
 						'isOnboardingPost' => $post_id && get_option( Onboarding::OPTION_NAME ) === $post_id,
 					]
@@ -152,14 +155,13 @@ class EditBlock extends ComponentAbstract {
 			genesis_custom_blocks()->get_slug(),
 			'template-file',
 			[
-				'methods'             => 'GET',
 				'callback'            => [ $this, 'get_template_file_response' ],
 				'permission_callback' => static function() {
-					return current_user_can( 'edit_posts' );
+					current_user_can( 'edit_posts' );
 				},
 				'args'                => [
 					'blockName' => [
-						'description' => __( 'Block namespace.', 'genesis-custom-blocks' ),
+						'description' => __( 'Block name', 'genesis-custom-blocks' ),
 						'type'        => 'string',
 					],
 				],
@@ -181,23 +183,32 @@ class EditBlock extends ComponentAbstract {
 			);
 		}
 
-		$locations     = genesis_custom_blocks()->get_template_locations( $data['blockName'], 'block' );
+		return rest_ensure_response( $this->get_template_file( $data['blockName'] ) );
+	}
+
+
+	/**
+	 * Gets the template path and whether it exists.
+	 *
+	 * @param string $block_name The block name (slug).
+	 * @return array Template file data.
+	 */
+	public function get_template_file( $block_name ) {
+		$locations     = genesis_custom_blocks()->get_template_locations( $block_name, 'block' );
 		$template_path = genesis_custom_blocks()->locate_template( $locations );
 
 		$template_exists = ! empty( $template_path );
 		if ( ! $template_exists ) {
-			$template_path = str_replace(
-				WP_CONTENT_DIR,
-				basename( WP_CONTENT_DIR ),
-				get_stylesheet_directory() . '/blocks/block-' . $data['blockName'] . '.php'
-			);
+			$template_path = get_stylesheet_directory() . "/blocks/block-{$block_name}.php";
 		}
 
-		return rest_ensure_response(
-			[
-				'templateExists' => $template_exists,
-				'templatePath'   => $template_path,
-			]
-		);
+		return [
+			'templateExists' => $template_exists,
+			'templatePath'   => str_replace(
+				WP_CONTENT_DIR,
+				basename( WP_CONTENT_DIR ),
+				$template_path
+			),
+		];
 	}
 }
