@@ -1,3 +1,4 @@
+export { default as addDefaults } from './addDefaults';
 export { default as convertSettingsStringToArray } from './convertSettingsStringToArray';
 export { default as convertSettingsArrayToString } from './convertSettingsArrayToString';
 export { default as convertToSlug } from './convertToSlug';

@@ -33,7 +33,6 @@ import {
 	DEFAULT_LOCATION,
 	NO_FIELD_SELECTED,
 } from '../constants';
-import { getDefaultBlock } from '../helpers';
 import { useBlock } from '../hooks';
 
 /**
@@ -83,7 +82,7 @@ import { useBlock } from '../hooks';
  * @return {React.ReactElement} The editor.
  */
 const Editor = ( { onError, postId, postType, settings } ) => {
-	const { block, changeBlockName } = useBlock();
+	const { setDefaults } = useBlock();
 	const [ currentLocation, setCurrentLocation ] = useState( DEFAULT_LOCATION );
 	const [ isNewField, setIsNewField ] = useState( false );
 	const [ panelDisplaying, setPanelDisplaying ] = useState( BLOCK_PANEL );
@@ -96,11 +95,10 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 	const isSavingPost = useSelect( ( select ) => select( 'core/editor' ).isSavingPost() );
 
 	useEffect( () => {
-		if ( isSavingPost && ! block.name ) {
-			const defaultBlock = getDefaultBlock( postId );
-			changeBlockName( defaultBlock.name, defaultBlock );
+		if ( isSavingPost ) {
+			setDefaults( postId );
 		}
-	}, [ block, changeBlockName, isSavingPost, postId ] );
+	}, [ isSavingPost, postId, setDefaults ] );
 
 	if ( ! post ) {
 		return null;

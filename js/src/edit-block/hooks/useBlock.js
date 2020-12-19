@@ -9,8 +9,10 @@ import { useCallback, useMemo } from '@wordpress/element';
  */
 import { BLOCK_NAMESPACE } from '../constants';
 import {
+	addDefaults,
 	getBlock,
 	getBlockNameWithNameSpace,
+	getDefaultBlock,
 } from '../helpers';
 
 /**
@@ -35,6 +37,7 @@ import {
  * @property {Block} block The block, parsed into an object.
  * @property {function(Object):void} changeBlock Changes the block configuration.
  * @property {function(string,Object):void} changeBlockName Changes the block name.
+ * @property {function(number):void} setDefaults Sets defaults for properties that don't exist.
  */
 
 /**
@@ -124,10 +127,31 @@ const useBlock = () => {
 		[ editPost, fullBlock ]
 	);
 
+	const setDefaults = useCallback(
+		/**
+		 * If a block property doesn't exist, add a default.
+		 *
+		 * @param {number} postId The current post ID.
+		 */
+		( postId ) => {
+			const defaultBlock = getDefaultBlock( postId );
+			const blockName = block.name ? block.name : defaultBlock.name;
+
+			editPost( {
+				content: JSON.stringify( {
+					[ `${ BLOCK_NAMESPACE }/${ blockName }` ]: addDefaults( block, defaultBlock ),
+				} ),
+				name: blockName,
+			} );
+		},
+		[ block, editPost ]
+	);
+
 	return {
 		block,
 		changeBlock,
 		changeBlockName,
+		setDefaults,
 	};
 };
 
