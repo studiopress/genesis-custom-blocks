@@ -106,7 +106,7 @@ class EditBlock extends ComponentAbstract {
 			true
 		);
 
-		$post_id = filter_input( INPUT_GET, 'post', FILTER_SANITIZE_NUMBER_INT );
+		$post_id = get_the_ID();
 		$block   = new Block( $post_id );
 		wp_add_inline_script(
 			self::SCRIPT_SLUG,
