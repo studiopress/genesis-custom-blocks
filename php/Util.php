@@ -157,6 +157,42 @@ class Util extends ComponentAbstract {
 	}
 
 	/**
+	 * Provides a list of allowed tags to be used by an <svg>.
+	 *
+	 * @return array
+	 */
+	public function allowed_svg_tags() {
+		$allowed_tags = [
+			'svg'    => [
+				'xmlns'   => true,
+				'width'   => true,
+				'height'  => true,
+				'viewbox' => true,
+			],
+			'g'      => [ 'fill' => true ],
+			'title'  => [ 'title' => true ],
+			'path'   => [
+				'd'       => true,
+				'fill'    => true,
+				'opacity' => true,
+			],
+			'circle' => [
+				'cx'   => true,
+				'cy'   => true,
+				'r'    => true,
+				'fill' => true,
+			],
+		];
+
+		/**
+		 * The tags that an <svg> allows.
+		 *
+		 * @param array $allowed_tags The allowed tags.
+		 */
+		return apply_filters( 'genesis_custom_blocks_allowed_svg_tags', $allowed_tags );
+	}
+
+	/**
 	 * Gets the slug of the post type that stores the blocks.
 	 *
 	 * @return string The slug.
