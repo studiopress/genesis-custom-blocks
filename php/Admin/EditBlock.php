@@ -53,12 +53,37 @@ class EditBlock extends ComponentAbstract {
 	/**
 	 * Gets whether this should replace the native editor.
 	 *
+	 * Forked from the Web Stories For WordPress plugin.
+	 * https://github.com/google/web-stories-wp/blob/a3648a06b57c1af90cd73a75d0b8448a9e5a3d2b/includes/Story_Post_Type.php#L399
+	 * Since the 'replace_editor' filter can be run multiple times, only load the
+	 * custom editor after the 'current_screen' action when we can be certain the
+	 * $post_type, $post_type_object, $post globals are all set by WordPress.
+	 *
 	 * @param bool    $replace Whether to replace the editor.
 	 * @param WP_Post $post    The current post.
 	 * @return bool Whether this should replace the editor.
 	 */
 	public function should_replace_editor( $replace, $post ) {
+		global $title;
+
 		if ( genesis_custom_blocks()->get_post_type_slug() === get_post_type( $post ) ) {
+			if ( did_action( 'current_screen' ) ) {
+				// Forked from wp-admin/admin-header.php.
+				header( 'Content-Type: ' . get_option( 'html_type' ) . '; charset=' . get_option( 'blog_charset' ) );
+
+				get_admin_page_title();
+				$stripped_title = wp_strip_all_tags( $title );
+				/* translators: Admin screen title. %s: Admin screen name. */
+				$admin_title = sprintf( __( '%s &#8212; WordPress', 'genesis-custom-blocks' ), $stripped_title );
+
+				/** This filter is documented in wp-admin/admin-header.php */
+				$admin_title = apply_filters( 'admin_title', $admin_title, $stripped_title );
+				_wp_admin_html_begin();
+				?>
+				<title><?php echo esc_html( $admin_title ); ?></title>
+				<?php
+			}
+
 			return true;
 		}
 

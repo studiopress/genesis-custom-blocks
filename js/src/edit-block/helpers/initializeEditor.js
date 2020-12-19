@@ -52,7 +52,6 @@ export function reinitializeEditor(
 			onError={ reboot }
 			postId={ postId }
 			postType={ postType }
-			initialEdits={ initialEdits }
 		/>,
 		target
 	);
@@ -129,7 +128,6 @@ const initializeEditor = (
 			onError={ reboot }
 			postId={ postId }
 			postType={ postType }
-			initialEdits={ initialEdits }
 		/>,
 		container
 	);
