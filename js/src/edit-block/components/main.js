@@ -17,17 +17,12 @@ import { addQueryArgs } from '@wordpress/url';
 /**
  * Internal dependencies
  */
-import { BottomNotice, FieldsGrid, LocationButtons, PostTitle, TopNotice } from './';
+import { BottomNotice, PostTitle, TopNotice } from './';
 import { useBlock } from '../hooks';
 
 /**
  * @typedef {Object} MainProps The component props.
- * @property {import('./editor').CurrentLocation} currentLocation The currently selected location.
- * @property {import('./editor').SelectedField|import('../constants').NoFieldSelected} selectedField The currently selected field.
- * @property {import('./editor').SetCurrentLocation} setCurrentLocation Sets the currently selected location.
- * @property {import('./editor').SetIsNewField} setIsNewField Sets whether there is a new field.
- * @property {import('./editor').SetPanelDisplaying} setPanelDisplaying Sets the current panel displaying.
- * @property {import('./editor').SetSelectedField} setSelectedField Sets the name of the selected field.
+ * @property {React.ReactElement[]} children THe component children.
  */
 
 /**
@@ -36,14 +31,7 @@ import { useBlock } from '../hooks';
  * @param {MainProps} props
  * @return {React.ReactElement} The main editing area.
  */
-const Main = ( {
-	currentLocation,
-	selectedField,
-	setCurrentLocation,
-	setIsNewField,
-	setPanelDisplaying,
-	setSelectedField,
-} ) => {
+const Main = ( { children } ) => {
 	// @ts-ignore
 	const { template: initialTemplate, isOnboardingPost: initialIsOnboarding } = gcbEditor;
 	const [ template, setTemplate ] = useState( initialTemplate );
@@ -101,21 +89,8 @@ const Main = ( {
 				<div className="block-title-field w-full mt-10 text-center focus:outline-none">
 					<PostTitle />
 				</div>
-				<TopNotice
-					isOnboarding={ isOnboarding }
-					template={ template }
-				/>
-				<LocationButtons
-					currentLocation={ currentLocation }
-					setCurrentLocation={ setCurrentLocation }
-				/>
-				<FieldsGrid
-					currentLocation={ currentLocation }
-					selectedField={ selectedField }
-					setIsNewField={ setIsNewField }
-					setPanelDisplaying={ setPanelDisplaying }
-					setSelectedField={ setSelectedField }
-				/>
+				<TopNotice isOnboarding={ isOnboarding } template={ template } />
+				{ children }
 				{ isOnboarding ? <BottomNotice /> : null }
 			</div>
 		</div>

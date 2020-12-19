@@ -17,7 +17,17 @@ import { StrictMode, useEffect, useState } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { BrowserURL, EditorProvider, Header, Main, Side } from './';
+import {
+	BlockPanel,
+	BrowserURL,
+	EditorProvider,
+	FieldPanel,
+	FieldsGrid,
+	Header,
+	LocationButtons,
+	Main,
+	Side,
+} from './';
 import {
 	BLOCK_PANEL,
 	DEFAULT_LOCATION,
@@ -109,24 +119,38 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 						<Header />
 						<EditorNotices />
 						<div className="flex w-full h-0 flex-grow">
-							<Main
-								currentLocation={ currentLocation }
-								selectedField={ selectedField }
-								setCurrentLocation={ setCurrentLocation }
-								setIsNewField={ setIsNewField }
-								setPanelDisplaying={ setPanelDisplaying }
-								setSelectedField={ setSelectedField }
-							/>
+							<Main>
+								<LocationButtons
+									currentLocation={ currentLocation }
+									setCurrentLocation={ setCurrentLocation }
+								/>
+								<FieldsGrid
+									currentLocation={ currentLocation }
+									selectedField={ selectedField }
+									setIsNewField={ setIsNewField }
+									setPanelDisplaying={ setPanelDisplaying }
+									setSelectedField={ setSelectedField }
+								/>
+							</Main>
 							<Side
-								currentLocation={ currentLocation }
-								isNewField={ isNewField }
 								panelDisplaying={ panelDisplaying }
-								selectedField={ selectedField }
 								setPanelDisplaying={ setPanelDisplaying }
-								setCurrentLocation={ setCurrentLocation }
-								setIsNewField={ setIsNewField }
-								setSelectedField={ setSelectedField }
-							/>
+							>
+								{
+									BLOCK_PANEL === panelDisplaying
+										? <BlockPanel />
+										: (
+											<FieldPanel
+												currentLocation={ currentLocation }
+												isNewField={ isNewField }
+												selectedField={ selectedField }
+												setCurrentLocation={ setCurrentLocation }
+												setIsNewField={ setIsNewField }
+												setSelectedField={ setSelectedField }
+											/>
+										)
+								}
+							</Side>
 						</div>
 					</ErrorBoundary>
 				</EditorProvider>
