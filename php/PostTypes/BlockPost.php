@@ -1110,7 +1110,6 @@ class BlockPost extends ComponentAbstract {
 		$new_columns = [
 			'cb'       => $columns['cb'],
 			'title'    => $columns['title'],
-			'icon'     => __( 'Icon', 'genesis-custom-blocks' ),
 			'template' => __( 'Template', 'genesis-custom-blocks' ),
 			'category' => __( 'Category', 'genesis-custom-blocks' ),
 			'keywords' => __( 'Keywords', 'genesis-custom-blocks' ),
@@ -1127,18 +1126,6 @@ class BlockPost extends ComponentAbstract {
 	 * @return void
 	 */
 	public function list_table_content( $column, $post_id ) {
-		if ( 'icon' === $column ) {
-			$block = new Block( $post_id );
-			$icons = [];
-
-			if ( isset( $icons[ $block->icon ] ) ) {
-				printf(
-					'<span class="icon %1$s">%2$s</span>',
-					esc_attr( $block->icon ),
-					wp_kses( $icons[ $block->icon ], genesis_custom_blocks()->allowed_svg_tags() )
-				);
-			}
-		}
 		if ( 'template' === $column ) {
 			$block     = new Block( $post_id );
 			$locations = genesis_custom_blocks()->get_template_locations( $block->name, 'block' );
