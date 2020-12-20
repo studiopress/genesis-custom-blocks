@@ -52,7 +52,6 @@ class TestBlockPost extends \WP_UnitTestCase {
 
 		$this->assertEquals( 10, has_action( 'init', [ $this->instance, 'register_post_type' ] ) );
 		$this->assertEquals( 10, has_action( 'plugins_loaded', [ $this->instance, 'add_caps' ] ) );
-		$this->assertEquals( 10, has_action( 'add_meta_boxes', [ $this->instance, 'remove_meta_boxes' ] ) );
 		$this->assertEquals( 10, has_action( 'edit_form_before_permalink', [ $this->instance, 'template_location' ] ) );
 
 		$this->assertEquals( 10, has_action( 'admin_enqueue_scripts', [ $this->instance, 'enqueue_scripts' ] ) );

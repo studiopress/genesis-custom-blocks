@@ -48,7 +48,6 @@ class BlockPost extends ComponentAbstract {
 	public function register_hooks() {
 		add_action( 'init', [ $this, 'register_post_type' ] );
 		add_action( 'plugins_loaded', [ $this, 'add_caps' ] );
-		add_action( 'add_meta_boxes', [ $this, 'remove_meta_boxes' ] );
 		add_action( 'edit_form_before_permalink', [ $this, 'template_location' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 		add_action( 'init', [ $this, 'register_controls' ] );
