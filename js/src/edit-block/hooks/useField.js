@@ -171,7 +171,7 @@ const useField = () => {
 	 * @return {Object} The fields with the field renamed.
 	 */
 	const changeFieldName = ( fields, previousName, newName ) => {
-		// If this is a repeater, rename the parent of its sub_fields.
+		// If this is a repeater, change the property of its sub_fields.
 		if ( fields[ previousName ] && fields[ previousName ].hasOwnProperty( 'sub_fields' ) ) {
 			fields[ previousName ].sub_fields = getFieldsAsObject(
 				Object.values( fields[ previousName ].sub_fields ).map( ( subField ) => {
@@ -251,26 +251,9 @@ const useField = () => {
 		 */
 		( fieldToChange, newSettings ) => {
 			const hasParent = fieldToChange.hasOwnProperty( 'parent' );
-			if ( newSettings.hasOwnProperty( 'location' ) ) {
-				fullBlock[ blockNameWithNameSpace ].fields = changeFieldLocation(
-					fullBlock[ blockNameWithNameSpace ].fields,
-					fieldToChange,
-					newSettings.location
-				);
-			}
-
-			if ( newSettings.hasOwnProperty( 'name' ) ) {
-				fullBlock[ blockNameWithNameSpace ].fields = changeFieldName(
-					fullBlock[ blockNameWithNameSpace ].fields,
-					fieldToChange.name,
-					newSettings.name
-				);
-			}
-
-			const name = newSettings.hasOwnProperty( 'name' ) ? newSettings.name : fieldToChange.name;
 			const currentField = hasParent
 				? fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ]
-				: fullBlock[ blockNameWithNameSpace ].fields[ name ];
+				: fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.name ];
 
 			const newField = {
 				...currentField,
@@ -281,7 +264,31 @@ const useField = () => {
 				fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ]
 					.sub_fields[ fieldToChange.name ] = newField;
 			} else {
-				fullBlock[ blockNameWithNameSpace ].fields[ name ] = newField;
+				fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.name ] = newField;
+			}
+
+			if ( newSettings.hasOwnProperty( 'name' ) ) {
+				if ( hasParent ) {
+					fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ].sub_fields = changeFieldName(
+						fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ].sub_fields,
+						fieldToChange.name,
+						newSettings.name
+					);
+				} else {
+					fullBlock[ blockNameWithNameSpace ].fields = changeFieldName(
+						fullBlock[ blockNameWithNameSpace ].fields,
+						fieldToChange.name,
+						newSettings.name
+					);
+				}
+			}
+
+			if ( newSettings.hasOwnProperty( 'location' ) ) {
+				fullBlock[ blockNameWithNameSpace ].fields = changeFieldLocation(
+					fullBlock[ blockNameWithNameSpace ].fields,
+					fieldToChange,
+					newSettings.location
+				);
 			}
 
 			editPost( { content: JSON.stringify( fullBlock ) } );
