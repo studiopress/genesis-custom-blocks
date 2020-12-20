@@ -87,6 +87,10 @@ input[type="radio"]:checked + div {
 	display: none;
 }
 
+.editor-post-saved-state > svg {
+	display: inline;
+}
+
 /* Forked from Gutenberg */
 .editor-post-title .editor-post-title__input:focus {
 	border: 1px solid transparent;

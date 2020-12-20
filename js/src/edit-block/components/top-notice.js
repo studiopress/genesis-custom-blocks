@@ -6,6 +6,7 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
+import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -38,6 +39,7 @@ const TopNotice = ( {
 	const urlBlockTemplates = 'https://developer.wpengine.com/genesis-custom-blocks/get-started/add-a-custom-block-to-your-website-content/';
 	const urlGetStarted = 'https://developer.wpengine.com/genesis-custom-blocks/get-started/';
 	const urlTemplateFunctions = 'https://developer.wpengine.com/genesis-custom-blocks/';
+	const isNewPost = useSelect( ( select ) => select( 'core/editor' ).isEditedPostNew() );
 
 	return (
 		<>
@@ -70,7 +72,7 @@ const TopNotice = ( {
 				</div>
 				: null
 			}
-			{ ! isOnboarding && template.templateExists
+			{ ! isOnboarding && ! isNewPost && template.templateExists
 				? <div className="flex items-center mt-4">
 					<span className="text-sm">{ __( 'Template:', 'genesis-custom-blocks' ) }</span>
 					&nbsp;
@@ -79,7 +81,7 @@ const TopNotice = ( {
 				</div>
 				: null
 			}
-			{ ! isOnboarding && ! template.templateExists
+			{ ! isOnboarding && ! isNewPost && ! template.templateExists
 				? <div className="mt-4 p-5 bg-blue-100 text-blue-700 border-l-4 border-blue-700 rounded-sm">
 					<div className="flex items-center">
 						<QuestionIcon />

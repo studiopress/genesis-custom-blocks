@@ -38,11 +38,15 @@ const Header = () => {
 			<EditorHistoryUndo />
 			<EditorHistoryRedo />
 			<div id="save-and-publish">
-				<PostSavedState
-					forceIsDirty={ false }
-					forceIsSaving={ false }
-				/>
-				<PostPublishButton />
+				<span className="mr-3">
+					<PostSavedState
+						forceIsDirty={ false }
+						forceIsSaving={ false }
+					/>
+				</span>
+				<span className="mr-3">
+					<PostPublishButton />
+				</span>
 			</div>
 		</div>
 	);
