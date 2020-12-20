@@ -26,8 +26,9 @@ import {
  * @typedef {Object} Block A block configuration.
  * @property {string} name The name (slug).
  * @property {string} title Often a pretty-printed version of the slug.
+ * @property {Array} excluded The post types that this block does not display on.
  * @property {Category} category The block category, including slug and title properties.
- * @property {import('../components/editor').Field[]} fields The fields, including their settings.
+ * @property {Object} fields Key/value pairs of Field objects.
  * @property {string} icon The block icon, like 'genesis_custom_block'.
  * @property {string[]} keywords The keywords, max 3.
  */
