@@ -33,7 +33,7 @@ import {
  * @property {string} name The name (slug).
  * @property {string} title Often a pretty-printed version of the slug.
  * @property {Category} category The block category, including slug and title properties.
- * @property {import('../components/editor').Field[]} fields The fields, including their settings.
+ * @property {Object} fields Key/value pairs of Field objects.
  * @property {string} icon The block icon, like 'genesis_custom_block'.
  * @property {string[]} keywords The keywords, max 3.
  * @property {string[]} [excluded] The excluded post tpes, if any.

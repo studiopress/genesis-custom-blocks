@@ -2,6 +2,7 @@
  * External dependencies
  */
 import * as React from 'react';
+import className from 'classnames';
 
 /**
  * WordPress dependencies
@@ -17,11 +18,23 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
 /**
+ * Internal dependencies
+ */
+import { BUILDER_EDITING_MODE, EDITOR_PREVIEW_EDITING_MODE } from '../constants';
+
+/**
+ * @typedef {Object} HeaderProps The header component props.
+ * @property {string} editorMode The display mode.
+ * @property {function(string):void} setEditorMode Sets the editor mode.
+ */
+
+/**
  * The header component.
  *
+ * @param {HeaderProps} props
  * @return {React.ReactElement} The header.
  */
-const Header = () => {
+const Header = ( { editorMode, setEditorMode } ) => {
 	const backURL = addQueryArgs( 'edit.php', {
 		post_type: 'genesis_custom_block',
 	} );
@@ -37,6 +50,28 @@ const Header = () => {
 			</a>
 			<EditorHistoryUndo />
 			<EditorHistoryRedo />
+			<button
+				className={ className(
+					'flex items-center h-12 px-4 text-sm',
+					{ 'font-semibold': BUILDER_EDITING_MODE === editorMode }
+				) }
+				onClick={ () => {
+					setEditorMode( BUILDER_EDITING_MODE );
+				} }
+			>
+				<span>{ __( 'Builder', 'genesis-custom-blocks' ) }</span>
+			</button>
+			<button
+				className={ className(
+					'flex items-center h-12 px-4 text-sm',
+					{ 'font-semibold': EDITOR_PREVIEW_EDITING_MODE === editorMode }
+				) }
+				onClick={ () => {
+					setEditorMode( EDITOR_PREVIEW_EDITING_MODE );
+				} }
+			>
+				<span>{ __( 'Editor Preview', 'genesis-custom-blocks' ) }</span>
+			</button>
 			<div id="save-and-publish">
 				<span className="mr-3 text-sm">
 					<PostSavedState

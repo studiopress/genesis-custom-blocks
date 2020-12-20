@@ -4,11 +4,13 @@
  * WordPress dependencies
  */
 import domReady from '@wordpress/dom-ready';
+import { addFilter } from '@wordpress/hooks';
 
 /**
  * Internal dependencies
  */
 import { initializeEditor } from './helpers';
+import { addControls } from '../block-editor/helpers';
 
 // Renders the app in the container.
 domReady( () => {
@@ -20,3 +22,5 @@ domReady( () => {
 	// @ts-ignore
 	initializeEditor( gcbEditor, container );
 } );
+
+addFilter( 'genesisCustomBlocks.controls', 'genesisCustomBlocks/addControls', addControls );
