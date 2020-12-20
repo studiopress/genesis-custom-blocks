@@ -13,7 +13,6 @@ import {
 	UnsavedChangesWarning,
 } from '@wordpress/editor';
 import { StrictMode, useEffect, useState } from '@wordpress/element';
-import { addFilter } from '@wordpress/hooks';
 
 /**
  * Internal dependencies
@@ -33,12 +32,8 @@ import {
 	BLOCK_PANEL,
 	DEFAULT_LOCATION,
 	NO_FIELD_SELECTED,
-	EDITOR_PREVIEW_EDITING_MODE,
-	BUILDER_EDITING_MODE,
 } from '../constants';
-import { useBlock, useField } from '../hooks';
-import { Fields } from '../../block-editor/components';
-import { addControls } from '../../block-editor/helpers';
+import { useBlock } from '../hooks';
 
 /**
  * @callback onErrorType Handler for errors.
@@ -87,9 +82,8 @@ import { addControls } from '../../block-editor/helpers';
  * @return {React.ReactElement} The editor.
  */
 const Editor = ( { onError, postId, postType, settings } ) => {
-	const { block, setDefaults } = useBlock();
+	const { setDefaults } = useBlock();
 	const [ currentLocation, setCurrentLocation ] = useState( DEFAULT_LOCATION );
-	const [ editorMode, setEditorMode ] = useState( BUILDER_EDITING_MODE );
 	const [ isNewField, setIsNewField ] = useState( false );
 	const [ panelDisplaying, setPanelDisplaying ] = useState( BLOCK_PANEL );
 	const [ selectedField, setSelectedField ] = useState( NO_FIELD_SELECTED );
@@ -99,12 +93,8 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 		[ postId, postType ]
 	);
 	const isSavingPost = useSelect( ( select ) => select( 'core/editor' ).isSavingPost() );
-	const { getFieldsForLocation } = useField();
 
 	useEffect( () => {
-		// Todo: remove the need to run this here.
-		addFilter( 'genesisCustomBlocks.controls', 'genesisCustomBlocks/addControls', addControls );
-
 		if ( isSavingPost ) {
 			setDefaults( postId );
 		}
@@ -124,7 +114,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 					settings={ settings }
 				>
 					<ErrorBoundary onError={ onError }>
-						<Header editorMode={ editorMode } setEditorMode={ setEditorMode } />
+						<Header />
 						<EditorNotices />
 						<div className="flex w-full h-0 flex-grow">
 							<Main>
@@ -132,24 +122,13 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 									currentLocation={ currentLocation }
 									setCurrentLocation={ setCurrentLocation }
 								/>
-								{ EDITOR_PREVIEW_EDITING_MODE === editorMode && block && block.fields
-									? (
-										<Fields
-											key="example-fields"
-											fields={ getFieldsForLocation( currentLocation ) }
-											parentBlockProps={ {} }
-											parentBlock={ {} }
-										/>
-									) : (
-										<FieldsGrid
-											currentLocation={ currentLocation }
-											selectedField={ selectedField }
-											setIsNewField={ setIsNewField }
-											setPanelDisplaying={ setPanelDisplaying }
-											setSelectedField={ setSelectedField }
-										/>
-									)
-								}
+								<FieldsGrid
+									currentLocation={ currentLocation }
+									selectedField={ selectedField }
+									setIsNewField={ setIsNewField }
+									setPanelDisplaying={ setPanelDisplaying }
+									setSelectedField={ setSelectedField }
+								/>
 							</Main>
 							<Side
 								panelDisplaying={ panelDisplaying }
