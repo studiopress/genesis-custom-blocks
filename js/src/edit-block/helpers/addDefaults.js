@@ -6,6 +6,10 @@
  * @return {Object} The object with defaults when properties don't exist.
  */
 const addDefaults = ( initial, defaults ) => {
+	if ( ! initial.name ) {
+		initial.name = defaults.name;
+	}
+
 	const defaultsToAdd = Object.keys( defaults ).reduce( ( accumulator, currentKey ) => {
 		if ( ! initial.hasOwnProperty( currentKey ) ) {
 			return {

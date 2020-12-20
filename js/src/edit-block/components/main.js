@@ -85,7 +85,7 @@ const Main = ( { children } ) => {
 
 	return (
 		<div className="flex flex-col flex-grow items-start w-full overflow-scroll">
-			<div className="flex flex-col w-full max-w-2xl mx-auto pb-64">
+			<div className="flex flex-col w-full max-w-2xl mx-auto pl-8 pr-8 pb-64">
 				<div className="block-title-field w-full mt-10 text-center focus:outline-none">
 					<PostTitle />
 				</div>

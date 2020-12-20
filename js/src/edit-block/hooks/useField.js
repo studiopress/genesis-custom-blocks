@@ -147,6 +147,7 @@ const useField = () => {
 			}
 
 			if ( hasParent ) {
+				newField.parent = fieldToChange.parent;
 				fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ] = newField;
 			} else {
 				fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.name ] = newField;
@@ -249,6 +250,7 @@ const useField = () => {
 		 * @param {Object} newSettings The new settings of the field.
 		 */
 		( fieldToChange, newSettings ) => {
+			const hasParent = fieldToChange.hasOwnProperty( 'parent' );
 			if ( newSettings.hasOwnProperty( 'location' ) ) {
 				fullBlock[ blockNameWithNameSpace ].fields = changeFieldLocation(
 					fullBlock[ blockNameWithNameSpace ].fields,
@@ -266,7 +268,7 @@ const useField = () => {
 			}
 
 			const name = newSettings.hasOwnProperty( 'name' ) ? newSettings.name : fieldToChange.name;
-			const currentField = fieldToChange.hasOwnProperty( 'parent' )
+			const currentField = hasParent
 				? fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ]
 				: fullBlock[ blockNameWithNameSpace ].fields[ name ];
 
@@ -275,7 +277,7 @@ const useField = () => {
 				...newSettings,
 			};
 
-			if ( fieldToChange.parent ) {
+			if ( hasParent ) {
 				fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ]
 					.sub_fields[ fieldToChange.name ] = newField;
 			} else {
