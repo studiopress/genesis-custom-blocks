@@ -6,7 +6,6 @@
  */
 
 use Genesis\CustomBlocks\Admin\EditBlock;
-use Brain\Monkey\Functions;
 
 /**
  * Tests for class EditBlock.

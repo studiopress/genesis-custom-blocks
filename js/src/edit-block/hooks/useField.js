@@ -15,6 +15,7 @@ import {
 	getBlockNameWithNameSpace,
 	getNewFieldNumber,
 	getOtherLocation,
+	getSettingsDefaults,
 	setCorrectOrderForFields,
 } from '../helpers';
 import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
@@ -91,11 +92,13 @@ const useField = () => {
 				)
 				: __( 'New Field', 'genesis-custom-blocks' );
 
+			const newControlName = 'text';
 			const newField = {
+				...getSettingsDefaults( newControlName, controls ),
 				name: newFieldName,
 				location,
 				label,
-				control: 'text',
+				control: newControlName,
 				type: 'string',
 				order: Object.values( currentFields ).length,
 			};
@@ -113,7 +116,7 @@ const useField = () => {
 			editPost( { content: JSON.stringify( fullBlock ) } );
 			return newFieldName;
 		},
-		[ block, blockNameWithNameSpace, editPost, fullBlock ]
+		[ block, blockNameWithNameSpace, controls, editPost, fullBlock ]
 	);
 
 	const changeControl = useCallback(
@@ -133,7 +136,9 @@ const useField = () => {
 			const previousField = hasParent
 				? fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ]
 				: fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.name ];
+
 			const newField = {
+				...getSettingsDefaults( newControl.name, controls ),
 				name: previousField.name,
 				label: previousField.label,
 				location: previousField.location,
@@ -141,10 +146,6 @@ const useField = () => {
 				control: newControl.name,
 				type: newControl.type,
 			};
-
-			if ( 'repeater' === newControl.name ) {
-				newField.sub_fields = {};
-			}
 
 			if ( hasParent ) {
 				newField.parent = fieldToChange.parent;
@@ -171,7 +172,7 @@ const useField = () => {
 	 * @return {Object} The fields with the field renamed.
 	 */
 	const changeFieldName = ( fields, previousName, newName ) => {
-		// If this is a repeater, change the property of its sub_fields.
+		// If this is a repeater, change the parent property of its sub_fields.
 		if ( fields[ previousName ] && fields[ previousName ].hasOwnProperty( 'sub_fields' ) ) {
 			fields[ previousName ].sub_fields = getFieldsAsObject(
 				Object.values( fields[ previousName ].sub_fields ).map( ( subField ) => {
