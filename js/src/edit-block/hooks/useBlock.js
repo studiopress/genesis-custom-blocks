@@ -9,7 +9,6 @@ import { useCallback, useMemo } from '@wordpress/element';
  */
 import { BLOCK_NAMESPACE } from '../constants';
 import {
-	addDefaults,
 	getBlock,
 	getBlockNameWithNameSpace,
 	getDefaultBlock,
@@ -139,7 +138,10 @@ const useBlock = () => {
 
 			editPost( {
 				content: JSON.stringify( {
-					[ `${ BLOCK_NAMESPACE }/${ blockName }` ]: addDefaults( block, defaultBlock ),
+					[ `${ BLOCK_NAMESPACE }/${ blockName }` ]: {
+						...defaultBlock,
+						...block,
+					},
 				} ),
 				name: blockName,
 			} );
