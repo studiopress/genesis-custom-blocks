@@ -34,13 +34,6 @@ class EditBlock extends ComponentAbstract {
 	const STYLE_SLUG = 'genesis-custom-blocks-edit-block-style';
 
 	/**
-	 * The slug of tailwind.
-	 *
-	 * @var string
-	 */
-	const TAILWIND_SLUG = 'genesis-custom-blocks-tailwind';
-
-	/**
 	 * Registers the hooks.
 	 */
 	public function register_hooks() {

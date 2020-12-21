@@ -103,7 +103,6 @@ class TestEditBlock extends AbstractTemplate {
 
 		$this->assertTrue( wp_script_is( EditBlock::SCRIPT_SLUG ) );
 		$this->assertTrue( wp_style_is( EditBlock::STYLE_SLUG ) );
-		$this->assertTrue( wp_style_is( EditBlock::TAILWIND_SLUG ) );
 	}
 
 	/**
