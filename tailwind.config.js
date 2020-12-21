@@ -1,8 +1,10 @@
 module.exports = {
-  purge: [
-    "./php/**.php",
-    "./js/src/**.js"
-  ],
+  purge: {
+    content: [
+      './js/src/edit-block/components/*.js',
+      './js/src/edit-block/components/settings/*.js',
+    ],
+  },
   darkMode: false,
   theme: {
     extend: {},
