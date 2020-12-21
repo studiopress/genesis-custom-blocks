@@ -1,3 +1,7 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
 body {
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
@@ -11,7 +15,7 @@ input[type="radio"]:checked + div {
 }
 
 .components-form-token-field__label {
-	font-size: .875rem;
+	font-size: 0.875rem;
 }
 
 .block-title-field {
@@ -26,14 +30,14 @@ input[type="radio"]:checked + div {
 	display: flex;
 }
 
-.repeater-row__move:after {
+.repeater-row__move::after {
 	content: "";
 	display: block;
 	position: absolute;
 	height: 300%;
 	width: 2.5rem;
-	top: -.5rem;
-	right: -.5rem;
+	top: -0.5rem;
+	right: -0.5rem;
 	/* border:1px solid red; */
 }
 
@@ -47,7 +51,7 @@ input[type="radio"]:checked + div {
 	display: flex;
 }
 
-.toggle-field:after {
+.toggle-field::after {
 	content: "";
 	display: block;
 	position: absolute;
@@ -64,7 +68,7 @@ input[type="radio"]:checked + div {
 	background-color: #3182ce;
 }
 
-.toggle-field:checked:after {
+.toggle-field:checked::after {
 	background-color: #fff;
 	left: auto;
 	right: 3px;
