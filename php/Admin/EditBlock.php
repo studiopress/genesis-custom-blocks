@@ -125,7 +125,7 @@ class EditBlock extends ComponentAbstract {
 						],
 						'template'         => $this->get_template_file( $block->name ),
 						'initialEdits'     => null,
-						'isOnboardingPost' => $post_id && get_option( Onboarding::OPTION_NAME ) === $post_id,
+						'isOnboardingPost' => $post_id && intval( get_option( Onboarding::OPTION_NAME ) ) === $post_id,
 					]
 				)
 			),
