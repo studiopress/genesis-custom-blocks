@@ -143,7 +143,7 @@ class EditBlock extends ComponentAbstract {
 	}
 
 	/**
-	 * Registers a route to install and activate the plugin Genesis Custom Blocks.
+	 * Registers a route to get the template file.
 	 */
 	public function register_route_template_file() {
 		register_rest_route(
