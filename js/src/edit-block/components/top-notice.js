@@ -12,7 +12,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ClipboardCopy, QuestionIcon } from './';
+import { QuestionIcon, TemplateFile } from './';
 
 /**
  * @typedef {Object} Template The current template.
@@ -75,9 +75,9 @@ const TopNotice = ( {
 			{ ! isOnboarding && ! isNewPost && template.templateExists
 				? <div className="flex items-center mt-4">
 					<span className="text-sm">{ __( 'Template:', 'genesis-custom-blocks' ) }</span>
-					&nbsp;
-					<span className="text-sm font-mono mr-1">{ template.templatePath }</span>
-					<ClipboardCopy text={ template.templatePath } />
+					<span className="flex items-center w-auto text-xs font-mono ml-1 px-2 py-1 bg-gray-200 rounded-sm">
+						<TemplateFile color="gray" templatePath={ template.templatePath } />
+					</span>
 				</div>
 				: null
 			}
@@ -93,8 +93,7 @@ const TopNotice = ( {
 						{ __( 'To display this block, the plugin will look for this template file in your theme:', 'genesis-custom-blocks' ) }
 					</p>
 					<p className="flex items-center w-auto text-xs font-mono mt-2 ml-2 px-2 py-1 bg-blue-200 rounded-sm">
-						<span className="text-xs font-mono text-blue-800 mr-1">{ template.templatePath }</span>
-						<ClipboardCopy text={ template.templatePath } />
+						<TemplateFile color="blue" templatePath={ template.templatePath } />
 					</p>
 					<div className="flex items-center mt-5 text-xs text-blue-800">
 						<QuestionIcon />
