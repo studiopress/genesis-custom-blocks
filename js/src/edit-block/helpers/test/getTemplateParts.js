@@ -31,7 +31,7 @@ describe( 'getTemplateParts', () => {
 			'',
 			[
 				'',
-				''
+				'',
 			],
 		],
 	] )( 'should get the template parts',

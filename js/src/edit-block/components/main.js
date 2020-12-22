@@ -33,8 +33,8 @@ import { useBlock } from '../hooks';
  */
 const Main = ( { children } ) => {
 	// @ts-ignore
-	const { template: initialTemplate, isOnboardingPost: initialIsOnboarding } = gcbEditor;
-	const [ template, setTemplate ] = useState( initialTemplate );
+	const { isOnboardingPost: initialIsOnboarding } = gcbEditor;
+	const [ template, setTemplate ] = useState( { templateExists: true, templatePath: '' } );
 	const { block } = useBlock();
 	const { createErrorNotice } = useDispatch( 'core/notices' );
 	const isSavingPost = useSelect( ( select ) => select( 'core/editor' ).isSavingPost() );
