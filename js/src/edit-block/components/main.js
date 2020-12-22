@@ -42,7 +42,7 @@ const Main = ( { children } ) => {
 	const isOnboarding = initialIsOnboarding && ! isPublished;
 
 	useEffect( () => {
-		if ( isSavingPost && Boolean( block.name ) ) {
+		if ( Boolean( block.name ) ) {
 			apiFetch( {
 				path: addQueryArgs(
 					'/genesis-custom-blocks/template-file',

@@ -40,7 +40,6 @@ const TopNotice = ( {
 	const urlGetStarted = 'https://developer.wpengine.com/genesis-custom-blocks/get-started/';
 	const urlTemplateFunctions = 'https://developer.wpengine.com/genesis-custom-blocks/';
 	const isNewPost = useSelect( ( select ) => select( 'core/editor' ).isEditedPostNew() );
-	const isSavingPost = useSelect( ( select ) => select( 'core/editor' ).isSavingPost() );
 
 	return (
 		<>
@@ -73,7 +72,7 @@ const TopNotice = ( {
 				</div>
 				: null
 			}
-			{ ! isOnboarding && template.templateExists && ! isNewPost && ! isSavingPost
+			{ ! isOnboarding && template.templateExists && ! isNewPost
 				? <div className="flex items-center mt-4">
 					<span className="text-sm">{ __( 'Template:', 'genesis-custom-blocks' ) }</span>
 					<span className="flex items-center w-auto text-xs font-mono ml-1 px-2 py-1 bg-gray-200 rounded-sm">
@@ -82,7 +81,7 @@ const TopNotice = ( {
 				</div>
 				: null
 			}
-			{ ! isOnboarding && ! template.templateExists && ! isNewPost && ! isSavingPost
+			{ ! isOnboarding && ! template.templateExists && ! isNewPost
 				? <div className="mt-4 p-5 bg-blue-100 text-blue-700 border-l-4 border-blue-700 rounded-sm">
 					<div className="flex items-center">
 						<QuestionIcon />
