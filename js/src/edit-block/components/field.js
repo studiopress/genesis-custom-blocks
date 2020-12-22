@@ -119,7 +119,7 @@ const Field = ( {
 				<div className="flex w-full items-center">
 					<div>{ FieldIcon ? <FieldIcon /> : null }</div>
 					<span className=" ml-4 truncate">{ field.label }</span>
-					<div className="flex items-center h-6 px-2 bg-gray-200 rounded-sm ml-auto hover:bg-gray-400">
+					<div className="flex items-center h-6 px-2 bg-gray-200 rounded-sm ml-auto hover:bg-gray-300">
 						<span className="text-xs font-mono">{ field.name }</span>
 						<ClipboardCopy text={ field.name } />
 					</div>

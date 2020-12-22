@@ -34,7 +34,7 @@ const TemplateFile = ( { templatePath, color = 'gray' } ) => {
 				{ basePath }
 				<span
 					className={ className(
-						'cursor-pointer bg-transparent border-b border-dashed',
+						'bg-transparent border-b border-dashed',
 						'gray' === color ? 'border-gray-700 hover:bg-gray-300' : 'border-blue-700 hover:bg-blue-300'
 					) }
 				>
