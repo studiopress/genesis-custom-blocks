@@ -251,6 +251,14 @@ const useField = () => {
 		 * @param {Object} newSettings The new settings of the field.
 		 */
 		( fieldToChange, newSettings ) => {
+			if ( newSettings.hasOwnProperty( 'location' ) ) {
+				fullBlock[ blockNameWithNameSpace ].fields = changeFieldLocation(
+					fullBlock[ blockNameWithNameSpace ].fields,
+					fieldToChange,
+					newSettings.location
+				);
+			}
+
 			const hasParent = fieldToChange.hasOwnProperty( 'parent' );
 			const currentField = hasParent
 				? fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ]
@@ -282,14 +290,6 @@ const useField = () => {
 						newSettings.name
 					);
 				}
-			}
-
-			if ( newSettings.hasOwnProperty( 'location' ) ) {
-				fullBlock[ blockNameWithNameSpace ].fields = changeFieldLocation(
-					fullBlock[ blockNameWithNameSpace ].fields,
-					fieldToChange,
-					newSettings.location
-				);
 			}
 
 			editPost( { content: JSON.stringify( fullBlock ) } );
