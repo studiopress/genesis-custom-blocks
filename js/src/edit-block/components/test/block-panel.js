@@ -58,6 +58,11 @@ const mockCategories = [
 	},
 ];
 
+jest.mock( '@wordpress/editor', () => ( {
+	...jest.requireActual( '@wordpress/editor' ),
+	PostTrash: () => <div>Trash</div>, // This makes a fetch request that causes an error.
+} ) );
+
 jest.mock( '../../hooks/useBlock', () => {
 	return jest.fn( () => ( {
 		block: mockBlock,
