@@ -52,7 +52,7 @@ const useBlock = () => {
 
 	const fullBlock = getBlock( editedPostContent );
 	const blockNameWithNameSpace = getBlockNameWithNameSpace( fullBlock );
-	const block = fullBlock[ blockNameWithNameSpace ];
+	const block = fullBlock[ blockNameWithNameSpace ] || {};
 
 	/**
 	 * Changes a block's values.
