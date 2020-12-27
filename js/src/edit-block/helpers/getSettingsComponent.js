@@ -31,7 +31,7 @@ import { snakeCaseToPascalCase } from '../../common/helpers';
  * a <NumberNonNegative> component.
  *
  * @param {string} settingType The type of setting, like 'text'
- * @return {React.FunctionComponent<SettingsComponentProps>} The settings component, if it exists.
+ * @return {React.FunctionComponent<SettingsComponentProps>|*} The settings component, if it exists.
  */
 const getSettingsComponent = ( settingType ) => {
 	if ( ! settingType || 'string' !== typeof settingType ) {
