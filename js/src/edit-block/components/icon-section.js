@@ -56,7 +56,7 @@ const IconSection = () => {
 								<button
 									key={ `block-icon-item-${ index }` }
 									className={ className(
-										'flex items-center justify-center h-8 w-8 border rounded-sm hover:border-black',
+										'flex items-center justify-center h-8 w-8 hover:border-black',
 										{
 											'border-transparent': ! isSelected,
 											'border-blue-700': isSelected,
