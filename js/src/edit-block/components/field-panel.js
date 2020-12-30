@@ -6,7 +6,7 @@ import React from 'react';
 /**
  * WordPress dependencies
  */
-import { useEffect, useMemo, useRef } from '@wordpress/element';
+import { useEffect, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -49,26 +49,6 @@ const FieldPanel = ( {
 		duplicateField,
 		getField,
 	} = useField();
-
-	const field = getField( selectedField );
-	const controlValues = useMemo(
-		/**
-		 * Gets the control values, possibly excluding based on the selected field or the location.
-		 *
-		 * @return {Object[]} The control values.
-		 */
-		() => {
-			return Object.values( controls ).filter( ( control ) => {
-				if ( selectedField && selectedField.hasOwnProperty( 'parent' ) ) {
-					return 'repeater' !== control.name; // Don't allow repeaters inside repeaters.
-				}
-
-				return ! currentLocation || control.locations.hasOwnProperty( currentLocation );
-			} );
-		},
-		[ controls, currentLocation, selectedField ]
-	);
-
 	const ref = useRef();
 	const didAutoSlug = useRef( false );
 
@@ -83,6 +63,24 @@ const FieldPanel = ( {
 			didAutoSlug.current = false;
 		}
 	}, [ didAutoSlug, isNewField ] );
+
+	/**
+	 * Gets the control values, possibly excluding based on the selected field or the location.
+	 *
+	 * @return {Object[]} The control values.
+	 */
+	const getControlValues = () => {
+		return Object.values( controls ).filter( ( control ) => {
+			if ( selectedField && selectedField.hasOwnProperty( 'parent' ) ) {
+				return 'repeater' !== control.name; // Don't allow repeaters inside repeaters.
+			}
+
+			return ! currentLocation || control.locations.hasOwnProperty( currentLocation );
+		} );
+	};
+
+	const controlValues = getControlValues();
+	const field = getField( selectedField );
 
 	return (
 		<div className="p-4">
