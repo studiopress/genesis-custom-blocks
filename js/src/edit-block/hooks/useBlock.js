@@ -21,6 +21,12 @@ import {
  */
 
 /**
+ * @callback ChangeBlockName Changes the name of a block.
+ * @param {string} newName The new bock name (slug).
+ * @param {Object} [defaultValues] The new block values, if any.
+ */
+
+ /**
  * @typedef {Object} Block A block configuration.
  * @property {string} name The name (slug).
  * @property {string} title Often a pretty-printed version of the slug.
@@ -34,7 +40,7 @@ import {
  * @typedef {Object} UseBlockReturn The return value of useBlock.
  * @property {Block} block The block, parsed into an object.
  * @property {function(Object):void} changeBlock Changes the block configuration.
- * @property {function(string,Object):void} changeBlockName Changes the block name.
+ * @property {ChangeBlockName} changeBlockName Changes the block name.
  * @property {function(number):void} setDefaults Sets defaults for properties that don't exist.
  */
 
