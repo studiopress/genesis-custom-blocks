@@ -26,7 +26,7 @@ import {
  * @param {Object} [defaultValues] The new block values, if any.
  */
 
- /**
+/**
  * @typedef {Object} Block A block configuration.
  * @property {string} name The name (slug).
  * @property {string} title Often a pretty-printed version of the slug.
