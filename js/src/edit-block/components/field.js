@@ -7,7 +7,6 @@ import className from 'classnames';
 /**
  * WordPress dependencies
  */
-import { useCallback, useMemo } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 
 /**
@@ -54,42 +53,38 @@ const Field = ( {
 	const moveButtonClass = 'flex items-center justify-center text-sm w-6 h-5 hover:text-blue-700 z-10';
 	const buttonDisabledClasses = 'opacity-50 cursor-not-allowed';
 
-	const selectField = useCallback(
-		/**
-		 * Selects this field.
-		 *
-		 * @param {React.MouseEvent<HTMLDivElement>|React.KeyboardEvent<HTMLDivElement>} event The event to handle.
-		 */
-		( event ) => {
-			event.stopPropagation();
-			const newSelectedField = { name: field.name };
-			if ( null !== parentField ) {
-				newSelectedField.parent = parentField;
-			}
+	/**
+	 * Selects this field.
+	 *
+	 * @param {React.MouseEvent<HTMLDivElement>|React.KeyboardEvent<HTMLDivElement>} event The event to handle.
+	 */
+	const selectField = ( event ) => {
+		event.stopPropagation();
+		const newSelectedField = { name: field.name };
+		if ( null !== parentField ) {
+			newSelectedField.parent = parentField;
+		}
 
-			setSelectedField( newSelectedField );
-			setPanelDisplaying( FIELD_PANEL );
-		},
-		[ field, parentField, setPanelDisplaying, setSelectedField ]
-	);
+		setSelectedField( newSelectedField );
+		setPanelDisplaying( FIELD_PANEL );
+	};
 
-	const isSelected = useMemo(
-		/**
-		 * Gets whether this field is selected.
-		 *
-		 * @return {boolean} Whether the field is selected.
-		 */
-		() => {
-			if ( ! selectedField ) {
-				return false;
-			}
-			if ( selectedField.hasOwnProperty( 'parent' ) || field.hasOwnProperty( 'parent' ) ) {
-				return field.parent === selectedField.parent && field.name === selectedField.name;
-			}
-			return field.name === selectedField.name;
-		},
-		[ field, selectedField ]
-	);
+	/**
+	 * Gets whether this field is selected.
+	 *
+	 * @return {boolean} Whether the field is selected.
+	 */
+	const getIsSelected = () => {
+		if ( ! selectedField ) {
+			return false;
+		}
+		if ( selectedField.hasOwnProperty( 'parent' ) || field.hasOwnProperty( 'parent' ) ) {
+			return field.parent === selectedField.parent && field.name === selectedField.name;
+		}
+		return field.name === selectedField.name;
+	};
+
+	const isSelected = getIsSelected();
 	const isUpButtonDisabled = 0 === index;
 	const FieldIcon = getFieldIcon( field.control );
 

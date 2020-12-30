@@ -56,7 +56,7 @@ const PostTypesSection = () => {
 		}
 
 		if ( ! isExcluded && newExcluded.includes( postType ) ) {
-			newExcluded.pop( newExcluded.indexOf( postType ) );
+			newExcluded.splice( newExcluded.indexOf( postType ), 1 );
 		}
 
 		changeBlock( { excluded: newExcluded } );
@@ -64,7 +64,7 @@ const PostTypesSection = () => {
 
 	return (
 		<div className="mt-5">
-			<span className="text-sm" htmlFor="block-categories">{ __( 'Post Types', 'genesis-custom-blocks' ) }</span>
+			<span className="text-sm">{ __( 'Post Types', 'genesis-custom-blocks' ) }</span>
 			{
 				Array.isArray( postTypes ) && postTypes.length
 					? postTypes.map( ( postType ) => {
