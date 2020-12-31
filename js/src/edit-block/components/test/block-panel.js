@@ -58,6 +58,8 @@ const mockCategories = [
 	},
 ];
 
+global.gcbEditor = { categories: mockCategories };
+
 jest.mock( '@wordpress/editor', () => ( {
 	...jest.requireActual( '@wordpress/editor' ),
 	PostTrash: () => <div>Trash</div>, // This makes a fetch request that causes an error.
@@ -67,13 +69,6 @@ jest.mock( '../../hooks/useBlock', () => {
 	return jest.fn( () => ( {
 		block: mockBlock,
 		changeBlock: jest.fn(),
-	} ) );
-} );
-
-jest.mock( '../../hooks/useCategories', () => {
-	return jest.fn( () => ( {
-		categories: mockCategories,
-		setCategories: jest.fn(),
 	} ) );
 } );
 

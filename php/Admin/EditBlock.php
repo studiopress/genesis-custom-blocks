@@ -48,7 +48,6 @@ class EditBlock extends ComponentAbstract {
 		add_filter( 'use_block_editor_for_post_type', [ $this, 'should_use_block_editor_for_post_type' ], 10, 2 );
 		add_action( 'admin_footer', [ $this, 'enqueue_assets' ] );
 		add_action( 'rest_api_init', [ $this, 'register_route_template_file' ] );
-		add_action( 'rest_api_init', [ $this, 'register_route_block_categories' ] );
 	}
 
 	/**
@@ -134,6 +133,7 @@ class EditBlock extends ComponentAbstract {
 						'template'         => $this->get_template_file( $block->name ),
 						'initialEdits'     => null,
 						'isOnboardingPost' => $post_id && intval( get_option( Onboarding::OPTION_NAME ) ) === $post_id,
+						'categories'       => get_block_categories( get_post() ),
 					]
 				)
 			),
@@ -213,35 +213,5 @@ class EditBlock extends ComponentAbstract {
 				$template_path
 			),
 		];
-	}
-
-	/**
-	 * Registers a route to get all of the categories for all registered blocks.
-	 */
-	public function register_route_block_categories() {
-		register_rest_route(
-			genesis_custom_blocks()->get_slug(),
-			'block-categories',
-			[
-				'callback'            => [ $this, 'get_block_categories_response' ],
-				'permission_callback' => function() {
-					return current_user_can( self::CABAPILITY );
-				},
-			]
-		);
-	}
-
-	/**
-	 * Gets all block categories.
-	 *
-	 * Needed because getCategories() from @wordpress/blocks gets the categories
-	 * from blocks registered via JS.
-	 * But in the GCB editor, no block is registered.
-	 *
-	 * @return array[] The block categories for all registered blocks, not just GCB blocks.
-	 */
-	public function get_block_categories_response() {
-		include_once ABSPATH . 'wp-admin/includes/post.php';
-		return get_block_categories( get_post() );
 	}
 }

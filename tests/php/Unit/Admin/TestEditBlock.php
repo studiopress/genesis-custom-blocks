@@ -51,7 +51,6 @@ class TestEditBlock extends AbstractTemplate {
 		$this->assertEquals( 10, has_filter( 'use_block_editor_for_post_type', [ $this->instance, 'should_use_block_editor_for_post_type' ] ) );
 		$this->assertEquals( 10, has_action( 'admin_footer', [ $this->instance, 'enqueue_assets' ] ) );
 		$this->assertEquals( 10, has_action( 'rest_api_init', [ $this->instance, 'register_route_template_file' ] ) );
-		$this->assertEquals( 10, has_action( 'rest_api_init', [ $this->instance, 'register_route_block_categories' ] ) );
 	}
 
 	/**
@@ -148,37 +147,6 @@ class TestEditBlock extends AbstractTemplate {
 				"#blocks/block-{$block_name}\.php$#",
 				$response->get_data()['templatePath']
 			)
-		);
-	}
-
-	/**
-	 * Test register_route_block_categories.
-	 *
-	 * @covers Genesis\CustomBlocks\Admin\EditBlock::register_route_block_categories()
-	 */
-	public function test_register_route_block_categories() {
-		do_action( 'rest_api_init' );
-		$this->instance->register_route_template_file();
-
-		$this->assertArrayHasKey( '/genesis-custom-blocks/block-categories', rest_get_server()->get_routes() );
-	}
-
-	/**
-	 * Test get_block_categories_response.
-	 *
-	 * @covers Genesis\CustomBlocks\Admin\EditBlock::get_block_categories_response()
-	 */
-	public function test_get_block_categories_response() {
-		$this->assertEquals(
-			[
-				'text',
-				'media',
-				'design',
-				'widgets',
-				'embed',
-				'reusable',
-			],
-			wp_list_pluck( $this->instance->get_block_categories_response(), 'slug' )
 		);
 	}
 }

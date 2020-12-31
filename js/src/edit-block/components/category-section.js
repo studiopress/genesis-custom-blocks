@@ -1,3 +1,5 @@
+/* global gcbEditor */
+
 /**
  * External dependencies
  */
@@ -13,7 +15,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { getDefaultBlock } from '../helpers';
-import { useBlock, useCategories } from '../hooks';
+import { useBlock } from '../hooks';
 
 /**
  * The category editor section.
@@ -21,8 +23,10 @@ import { useBlock, useCategories } from '../hooks';
  * @return {React.ReactElement} The section to edit the block category.
  */
 const CategorySection = () => {
+	// @ts-ignore
+	const { categories: initialCategories } = gcbEditor;
 	const { block, changeBlock } = useBlock();
-	const { categories, setCategories } = useCategories();
+	const [ categories, setCategories ] = useState( initialCategories );
 	const [ showNewCategoryForm, setShowNewCategoryForm ] = useState( false );
 	const newCategoryId = 'add-new-category';
 
