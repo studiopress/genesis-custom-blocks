@@ -62,7 +62,7 @@ global.gcbEditor = { categories: mockCategories };
 
 jest.mock( '@wordpress/editor', () => ( {
 	...jest.requireActual( '@wordpress/editor' ),
-	PostTrash: () => <div>Trash</div>, // This makes a fetch request that causes an error.
+	PostTrash: () => <div>Trash</div>, // The original of this component makes a fetch request that causes an error.
 } ) );
 
 jest.mock( '../../hooks/useBlock', () => {

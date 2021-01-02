@@ -32,10 +32,7 @@ const PostTitle = () => {
 	const { block, changeBlock, changeBlockName } = useBlock();
 	const instanceId = useInstanceId( PostTitle );
 	const ref = useRef( null );
-	const {
-		isCleanNewPost,
-		title,
-	} = useSelect( ( select ) => {
+	const { isCleanNewPost, title } = useSelect( ( select ) => {
 		const {
 			getEditedPostAttribute,
 			isCleanNewPost: _isCleanNewPost,
