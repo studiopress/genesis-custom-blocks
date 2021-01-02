@@ -97,6 +97,20 @@ jobs:
       - nodegit-workaround
       - run: HUSKY_SKIP_INSTALL=1 npm ci && npm run test:js -- --maxWorkers=2
 
+  e2e-tests:
+    machine:
+      image: ubuntu-1604:202004-01
+    steps:
+      - checkout
+      - run: sudo apt-get update && sudo apt-get install php php-xml
+      - install-composer
+      - node/install:
+          node-version: lts
+      - nodegit-workaround
+      - set-up-packages
+      - run: npm run env start && npm run test:e2e
+      - run: HUSKY_SKIP_INSTALL=1 npm ci && npm run test:js -- --maxWorkers=2
+
   svn-deploy:
     executor:
       name: php
@@ -131,6 +145,10 @@ workflows:
             parameters:
               php-version: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
       - js-tests:
+          filters:
+            tags:
+              only: /.*/
+      - e2e-tests:
           filters:
             tags:
               only: /.*/
