@@ -4,22 +4,18 @@
  * External dependencies
  */
 import * as React from 'react';
-import debounceFn from 'debounce-fn';
 
 /**
  * WordPress dependencies
  */
-import apiFetch from '@wordpress/api-fetch';
-import { useDispatch, useSelect } from '@wordpress/data';
-import { useEffect, useMemo, useState } from '@wordpress/element';
-import { __, sprintf } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
+import { useSelect } from '@wordpress/data';
+import { useEffect, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import { BottomNotice, PostTitle, TopNotice } from './';
-import { useBlock } from '../hooks';
+import { useBlock, useTemplate } from '../hooks';
 
 /**
  * @typedef {Object} MainProps The component props.
@@ -36,62 +32,16 @@ const Main = ( { children } ) => {
 	// @ts-ignore
 	const { isOnboardingPost: initialIsOnboarding } = gcbEditor;
 	const [ template, setTemplate ] = useState( { templateExists: true, templatePath: '' } );
+	const { fetchTemplate } = useTemplate( setTemplate );
 	const { block } = useBlock();
-	const { createErrorNotice } = useDispatch( 'core/notices' );
 	const isPublished = useSelect( ( select ) => select( 'core/editor' ).isCurrentPostPublished() );
 	const isOnboarding = initialIsOnboarding && ! isPublished;
 
-	const debouncedFetchTemplate = useMemo(
-		() => debounceFn(
-			( newBlockName ) => {
-				apiFetch( {
-					path: addQueryArgs(
-						'/genesis-custom-blocks/template-file',
-						{ blockName: newBlockName }
-					),
-				} ).then(
-					/**
-					 * Sets the template data, so there can be a notice about it.
-					 *
-					 * @param {Object} response The response from the REST request.
-					 * @param {string} response.templatePath The path of the template, if any.
-					 * @param {boolean} response.templateExists Whether the template exists.
-					 */
-					( response ) => {
-						if ( response && response.hasOwnProperty( 'templatePath' ) ) {
-							setTemplate( {
-								templatePath: response.templatePath,
-								templateExists: response.templateExists,
-							} );
-						}
-					}
-				).catch(
-					/**
-					 * Creates an error notice.
-					 *
-					 * @param {Error} error The error from the request.
-					 */
-					( error ) => {
-						createErrorNotice(
-							sprintf(
-								/* translators: %1$s: the error message from the request */
-								__( 'Failed to get the template file: %1$s', 'genesis-custom-blocks' ),
-								error.message
-							)
-						);
-					}
-				);
-			},
-			{ wait: 300 }
-		),
-		[ createErrorNotice ]
-	);
-
 	useEffect( () => {
 		if ( Boolean( block.name ) ) {
-			debouncedFetchTemplate( block.name );
+			fetchTemplate( block.name );
 		}
-	}, [ block.name, debouncedFetchTemplate ] );
+	}, [ block.name, fetchTemplate ] );
 
 	return (
 		<div className="flex flex-col flex-grow items-start w-full overflow-scroll">
