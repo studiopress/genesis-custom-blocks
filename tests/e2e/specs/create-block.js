@@ -26,7 +26,7 @@ describe( 'TextBlock', () => {
 		await page.keyboard.type( blockName );
 
 		const $editBlockDocument = await getDocument( page );
-		( await findByLabelText( $editBlockDocument, 'Add a new field' ) ).click()
+		( await findByLabelText( $editBlockDocument, 'Add a new field' ) ).click();
 		await findByLabelText( $editBlockDocument, 'Field Label' );
 		await page.keyboard.type( fieldName );
 
