@@ -44,7 +44,6 @@ import {
  * @property {Block} block The block, parsed into an object.
  * @property {function(Object):void} changeBlock Changes the block configuration.
  * @property {ChangeBlockName} changeBlockName Changes the block name.
- * @property {function(Object):void} changeBlockWithDefaults Changes the block and includes defaults.
  */
 
 /**
@@ -121,31 +120,10 @@ const useBlock = () => {
 		editPost( editedPost );
 	};
 
-	/**
-	 * Sets a block with defaults.
-	 *
-	 * @param {Object} newBlock The new block values, if any.
-	 */
-	const changeBlockWithDefaults = ( newBlock ) => {
-		const defaultBlock = getDefaultBlock( postId );
-		const newName = defaultBlock.name;
-
-		editPost( {
-			content: JSON.stringify( {
-				[ `${ BLOCK_NAMESPACE }/${ newName }` ]: {
-					...defaultBlock,
-					...newBlock,
-				},
-			} ),
-			name: newName,
-		} );
-	};
-
 	return {
 		block,
 		changeBlock,
 		changeBlockName,
-		changeBlockWithDefaults,
 	};
 };
 

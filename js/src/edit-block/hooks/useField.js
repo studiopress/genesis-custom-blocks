@@ -44,7 +44,7 @@ import { DEFAULT_LOCATION } from '../constants';
 const useField = () => {
 	// @ts-ignore
 	const { controls } = gcbEditor;
-	const { changeBlockWithDefaults } = useBlock();
+	const { changeBlock } = useBlock();
 	const editedPostContent = useSelect(
 		( select ) => select( 'core/editor' ).getEditedPostContent(),
 		[]
@@ -106,7 +106,7 @@ const useField = () => {
 		fullBlock[ blockNameWithNameSpace ] = block;
 
 		if ( ! block.name ) {
-			changeBlockWithDefaults( block );
+			changeBlock( block );
 		} else {
 			editPost( { content: JSON.stringify( fullBlock ) } );
 		}
