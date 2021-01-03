@@ -111,6 +111,7 @@ const useField = () => {
 		} else {
 			editBlock( fullBlock );
 		}
+
 		return newFieldName;
 	};
 

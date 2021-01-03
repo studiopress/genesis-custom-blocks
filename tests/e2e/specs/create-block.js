@@ -16,37 +16,35 @@ const customPostType = 'genesis_custom_block';
 
 describe( 'TextBlock', () => {
 	it( 'creates the block and makes it available in the block editor', async () => {
+		const { findByText, findByLabelText } = queries;
 		const blockName = 'Testing Example';
 		const fieldName = 'Testing Text';
 
 		// Create the custom block (a 'genesis_custom_block' post).
 		await visitAdminPage( 'post-new.php', `?post_type=${ customPostType }` );
-		await queries.findByLabelText( await getDocument( page ), 'Block title' );
+		await findByLabelText( await getDocument( page ), 'Block title' );
 		await page.keyboard.type( blockName );
 
 		const $editBlockDocument = await getDocument( page );
-		const addFieldButton = await queries.findByLabelText( $editBlockDocument, 'Add a new field' );
-		addFieldButton.click();
-
-		await queries.findByLabelText( $editBlockDocument, 'Field Label' );
+		( await findByLabelText( $editBlockDocument, 'Add a new field' ) ).click()
+		await findByLabelText( $editBlockDocument, 'Field Label' );
 		await page.keyboard.type( fieldName );
 
-		( await queries.findByText( $editBlockDocument, /publish/i ) ).click();
-		await queries.findByText( $editBlockDocument, /published/i );
+		( await findByText( $editBlockDocument, /publish/i ) ).click();
+		await findByText( $editBlockDocument, /published/i );
 
 		// Create a new post and add the new block.
 		await createNewPost();
 		await insertBlock( blockName );
-		await page.waitForSelector( '.wp-block' );
 
 		const fieldValue = 'this is some example text';
-		const fieldSelector = '.components-base-control__field';
+		const $blockEditorDocument = await getDocument( page );
 
 		// The block should have the Text field.
-		expect( await page.evaluate( () => document.querySelector( '.components-base-control__label' ).textContent ) ).toContain( fieldName );
+		await findByText( $blockEditorDocument, fieldName );
 
 		// Type into the text field.
-		await page.click( `${ fieldSelector } input` );
+		await page.click( '.components-base-control__field input' );
 		await page.keyboard.type( fieldValue );
 
 		// Click away from the block so the <ServerSideRender> displays.
