@@ -49,9 +49,10 @@ const useField = () => {
 		( select ) => select( 'core/editor' ).getEditedPostContent(),
 		[]
 	);
+	const { editPost } = useDispatch( 'core/editor' );
+	const editBlock = ( newBlock ) => editPost( { content: JSON.stringify( newBlock ) } );
 
 	const fullBlock = getBlock( editedPostContent );
-	const { editPost } = useDispatch( 'core/editor' );
 	const blockNameWithNameSpace = getBlockNameWithNameSpace( fullBlock );
 	const block = fullBlock[ blockNameWithNameSpace ] || {};
 
@@ -108,7 +109,7 @@ const useField = () => {
 		if ( ! block.name ) {
 			changeBlock( block );
 		} else {
-			editPost( { content: JSON.stringify( fullBlock ) } );
+			editBlock( fullBlock );
 		}
 		return newFieldName;
 	};
@@ -147,7 +148,7 @@ const useField = () => {
 			fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.name ] = newField;
 		}
 
-		editPost( { content: JSON.stringify( fullBlock ) } );
+		editBlock( fullBlock );
 	};
 
 	/**
@@ -276,7 +277,7 @@ const useField = () => {
 			}
 		}
 
-		editPost( { content: JSON.stringify( fullBlock ) } );
+		editBlock( fullBlock );
 	};
 
 	/**
@@ -295,7 +296,7 @@ const useField = () => {
 			delete fullBlock[ blockNameWithNameSpace ].fields[ selectedField.name ];
 		}
 
-		editPost( { content: JSON.stringify( fullBlock ) } );
+		editBlock( fullBlock );
 	};
 
 	/**
@@ -345,7 +346,7 @@ const useField = () => {
 		}
 		fullBlock[ blockNameWithNameSpace ] = block;
 
-		editPost( { content: JSON.stringify( fullBlock ) } );
+		editBlock( fullBlock );
 	};
 
 	/**
@@ -376,7 +377,7 @@ const useField = () => {
 			] );
 		}
 
-		editPost( { content: JSON.stringify( fullBlock ) } );
+		editBlock( fullBlock );
 	};
 
 	return {
