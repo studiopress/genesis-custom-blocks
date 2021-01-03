@@ -12,7 +12,7 @@ import {
 	ErrorBoundary,
 	UnsavedChangesWarning,
 } from '@wordpress/editor';
-import { StrictMode, useEffect, useState } from '@wordpress/element';
+import { StrictMode, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -33,7 +33,6 @@ import {
 	DEFAULT_LOCATION,
 	NO_FIELD_SELECTED,
 } from '../constants';
-import { useBlock } from '../hooks';
 
 /**
  * @callback onErrorType Handler for errors.
@@ -82,7 +81,6 @@ import { useBlock } from '../hooks';
  * @return {React.ReactElement} The editor.
  */
 const Editor = ( { onError, postId, postType, settings } ) => {
-	const { setDefaults } = useBlock();
 	const [ currentLocation, setCurrentLocation ] = useState( DEFAULT_LOCATION );
 	const [ isNewField, setIsNewField ] = useState( false );
 	const [ panelDisplaying, setPanelDisplaying ] = useState( BLOCK_PANEL );
@@ -92,13 +90,6 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
 		[ postId, postType ]
 	);
-	const isSavingPost = useSelect( ( select ) => select( 'core/editor' ).isSavingPost() );
-
-	useEffect( () => {
-		if ( isSavingPost ) {
-			setDefaults( postId );
-		}
-	}, [ isSavingPost, postId, setDefaults ] );
 
 	if ( ! post ) {
 		return null;

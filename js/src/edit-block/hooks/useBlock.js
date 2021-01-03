@@ -1,3 +1,5 @@
+/* global gcbEditor */
+
 /**
  * WordPress dependencies
  */
@@ -42,7 +44,6 @@ import {
  * @property {Block} block The block, parsed into an object.
  * @property {function(Object):void} changeBlock Changes the block configuration.
  * @property {ChangeBlockName} changeBlockName Changes the block name.
- * @property {function(number):void} setDefaults Sets defaults for properties that don't exist.
  */
 
 /**
@@ -51,6 +52,8 @@ import {
  * @return {UseBlockReturn} The block and a function to change it.
  */
 const useBlock = () => {
+	// @ts-ignore
+	const { postId } = gcbEditor;
 	const editedPostContent = useSelect(
 		( select ) => select( 'core/editor' ).getEditedPostContent(),
 		[]
@@ -70,11 +73,13 @@ const useBlock = () => {
 	 * @param {Object} newValues The new value(s) to set.
 	 */
 	const changeBlock = ( newValues ) => {
-		const blockName = getBlockNameWithNameSpace( fullBlock );
+		const defaultBlock = getDefaultBlock( postId );
+		const blockName = getBlockNameWithNameSpace( fullBlock ) || defaultBlock.name;
 		const editedPost = {
 			content: JSON.stringify(
 				{
 					[ blockName ]: {
+						...defaultBlock,
 						...fullBlock[ blockName ],
 						...newValues,
 					},
@@ -100,6 +105,7 @@ const useBlock = () => {
 		const editedPost = {
 			content: JSON.stringify( {
 				[ `${ BLOCK_NAMESPACE }/${ newName }` ]: {
+					...getDefaultBlock( postId ),
 					...fullBlock[ previousBlockName ],
 					...defaultValues,
 					name: newName,
@@ -115,31 +121,10 @@ const useBlock = () => {
 		editPost( editedPost );
 	};
 
-	/**
-	 * If a block property doesn't exist, add a default.
-	 *
-	 * @param {number} postId The current post ID.
-	 */
-	const setDefaults = ( postId ) => {
-		const defaultBlock = getDefaultBlock( postId );
-		const blockName = block.name ? block.name : defaultBlock.name;
-
-		editPost( {
-			content: JSON.stringify( {
-				[ `${ BLOCK_NAMESPACE }/${ blockName }` ]: {
-					...defaultBlock,
-					...block,
-				},
-			} ),
-			name: blockName,
-		} );
-	};
-
 	return {
 		block,
 		changeBlock,
 		changeBlockName,
-		setDefaults,
 	};
 };
 

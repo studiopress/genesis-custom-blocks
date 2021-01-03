@@ -1,10 +1,14 @@
 /**
+ * External dependencies
+ */
+import { getDocument, queries } from 'pptr-testing-library'
+
+/**
  * WordPress dependencies
  */
 import {
 	createNewPost,
 	insertBlock,
-	pressKeyWithModifier,
 	visitAdminPage,
 } from '@wordpress/e2e-test-utils';
 
@@ -17,18 +21,18 @@ describe( 'TextBlock', () => {
 
 		// Create the custom block (a 'genesis_custom_block' post).
 		await visitAdminPage( 'post-new.php', `?post_type=${ customPostType }` );
-		await page.click( '[name="post_title"]' );
-		await pressKeyWithModifier( 'primary', 'a' );
+		await queries.findByLabelText( await getDocument( page ), 'Block title' );
 		await page.keyboard.type( blockName );
 
-		// Add a Text field.
-		await page.click( '#block-add-field' );
-		await page.click( '.block-fields-edit-label input' );
-		await pressKeyWithModifier( 'primary', 'a' );
+		const $editBlockDocument = await getDocument( page );
+		const addFieldButton = await queries.findByLabelText( $editBlockDocument, 'Add a new field' );
+		addFieldButton.click();
+
+		await queries.findByLabelText( $editBlockDocument, 'Field Label' );
 		await page.keyboard.type( fieldName );
 
-		// Publish the block.
-		await page.click( '#publish' );
+		( await queries.findByText( $editBlockDocument, /publish/i ) ).click();
+		await queries.findByText( $editBlockDocument, /published/i )
 
 		// Create a new post and add the new block.
 		await createNewPost();
