@@ -18,6 +18,7 @@ import {
 	setCorrectOrderForFields,
 } from '../helpers';
 import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
+import { useBlock } from '../hooks';
 import { DEFAULT_LOCATION } from '../constants';
 
 /**
@@ -43,6 +44,7 @@ import { DEFAULT_LOCATION } from '../constants';
 const useField = () => {
 	// @ts-ignore
 	const { controls } = gcbEditor;
+	const { changeBlockWithDefaults } = useBlock();
 	const editedPostContent = useSelect(
 		( select ) => select( 'core/editor' ).getEditedPostContent(),
 		[]
@@ -103,7 +105,11 @@ const useField = () => {
 		block.fields = fields;
 		fullBlock[ blockNameWithNameSpace ] = block;
 
-		editPost( { content: JSON.stringify( fullBlock ) } );
+		if ( ! block.name ) {
+			changeBlockWithDefaults( block );
+		} else {
+			editPost( { content: JSON.stringify( fullBlock ) } );
+		}
 		return newFieldName;
 	};
 

@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { getDocument, queries } from 'pptr-testing-library'
+import { getDocument, queries } from 'pptr-testing-library';
 
 /**
  * WordPress dependencies
@@ -32,7 +32,7 @@ describe( 'TextBlock', () => {
 		await page.keyboard.type( fieldName );
 
 		( await queries.findByText( $editBlockDocument, /publish/i ) ).click();
-		await queries.findByText( $editBlockDocument, /published/i )
+		await queries.findByText( $editBlockDocument, /published/i );
 
 		// Create a new post and add the new block.
 		await createNewPost();
