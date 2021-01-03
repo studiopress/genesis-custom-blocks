@@ -105,6 +105,7 @@ const useBlock = () => {
 		const editedPost = {
 			content: JSON.stringify( {
 				[ `${ BLOCK_NAMESPACE }/${ newName }` ]: {
+					...getDefaultBlock( postId ),
 					...fullBlock[ previousBlockName ],
 					...defaultValues,
 					name: newName,
