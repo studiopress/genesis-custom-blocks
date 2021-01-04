@@ -111,7 +111,7 @@ const useBlock = () => {
 					name: newName,
 				},
 			} ),
-			name: newName,
+			slug: newName,
 		};
 
 		if ( defaultValues.hasOwnProperty( 'title' ) ) {

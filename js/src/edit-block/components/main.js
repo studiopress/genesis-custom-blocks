@@ -30,8 +30,8 @@ import { useBlock, useTemplate } from '../hooks';
  */
 const Main = ( { children } ) => {
 	// @ts-ignore
-	const { isOnboardingPost: initialIsOnboarding } = gcbEditor;
-	const [ template, setTemplate ] = useState( { templateExists: true, templatePath: '' } );
+	const { isOnboardingPost: initialIsOnboarding, template: initialTemplate } = gcbEditor;
+	const [ template, setTemplate ] = useState( initialTemplate );
 	const { fetchTemplate } = useTemplate( setTemplate );
 	const { block } = useBlock();
 	const isPublished = useSelect( ( select ) => select( 'core/editor' ).isCurrentPostPublished() );
