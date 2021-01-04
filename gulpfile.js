@@ -84,7 +84,7 @@ gulp.task( 'clean:bundle', function () {
 		'package/trunk/phpcs.xml',
 		'package/trunk/postcss.config.js',
 		'package/trunk/tailwind.config.js',
-		'package/trunk/tsconfig.js',
+		'package/trunk/tsconfig.json',
 		'package/trunk/README.md',
 		'package/trunk/CHANGELOG.md',
 		'package/trunk/CODE_OF_CONDUCT.md',
