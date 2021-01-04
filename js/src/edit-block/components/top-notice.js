@@ -75,7 +75,7 @@ const TopNotice = ( {
 			{ ! isOnboarding && template.templateExists && ! isNewPost
 				? <div className="flex items-center mt-4">
 					<span className="text-sm">{ __( 'Template:', 'genesis-custom-blocks' ) }</span>
-					<span className="flex items-center w-auto text-xs font-mono ml-1 px-2 py-1 bg-gray-200 rounded-sm">
+					<span className="flex items-center w-auto text-xs font-mono ml-1 px-2 py-1 bg-gray-200 rounded-sm truncate">
 						<TemplateFile color="gray" templatePath={ template.templatePath } />
 					</span>
 				</div>

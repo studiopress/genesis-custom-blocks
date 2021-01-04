@@ -28,7 +28,7 @@ const TemplateFile = ( { templatePath, color = 'gray' } ) => {
 	return (
 		<>
 			<span className={ className(
-				'text-xs font-mono mr-1',
+				'text-xs font-mono mr-1 truncate',
 				'gray' === color ? 'text-gray-800' : 'text-blue-800'
 			) }>
 				{ basePath }
