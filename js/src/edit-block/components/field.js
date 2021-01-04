@@ -133,7 +133,7 @@ const Field = ( {
 					: null
 				}
 				{ isSelected && shouldDisplayMoveButtons
-					? <div className="flex absolute top-0 left-0 flex-col justify-between top-0 left-0 -ml-8 mt-0 rounded-sm bg-white border border-black">
+					? <div className="flex absolute top-0 left-0 flex-col justify-between top-0 left-0 -ml-8 -mt-px rounded-sm bg-white border border-black">
 						<button
 							aria-label={ sprintf(
 								/* translators: %1$s: the field label, %2$d: the current position, %3$d: its new position on moving */
