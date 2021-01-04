@@ -2,6 +2,7 @@
  * External dependencies
  */
 import * as React from 'react';
+import className from 'classnames';
 
 /**
  * WordPress dependencies
@@ -50,7 +51,10 @@ const FieldsGrid = ( {
 		<>
 			<div
 				role="grid"
-				className="grid grid-cols-4 gap-4 w-full items-start mt-2"
+				className={ className(
+					'grid grid-cols-4 gap-4 w-full items-start',
+					parentField ? 'mt-4' : 'mt-2'
+				) }
 			>
 				{ fields && fields.length
 					? fields.map( ( field, index ) => {
