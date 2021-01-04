@@ -38,7 +38,7 @@ const TopNotice = ( {
 } ) => {
 	const urlBlockTemplates = 'https://developer.wpengine.com/genesis-custom-blocks/get-started/add-a-custom-block-to-your-website-content/';
 	const urlGetStarted = 'https://developer.wpengine.com/genesis-custom-blocks/get-started/';
-	const urlTemplateFunctions = 'https://developer.wpengine.com/genesis-custom-blocks/';
+	const urlTemplateFunctions = 'https://developer.wpengine.com/genesis-custom-blocks/functions';
 	const isNewPost = useSelect( ( select ) => select( 'core/editor' ).isEditedPostNew() );
 
 	return (
