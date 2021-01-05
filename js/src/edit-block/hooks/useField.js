@@ -50,11 +50,16 @@ const useField = () => {
 		[]
 	);
 	const { editPost } = useDispatch( 'core/editor' );
-	const editBlock = ( newBlock ) => editPost( { content: JSON.stringify( newBlock ) } );
 
 	const fullBlock = getBlock( editedPostContent );
 	const blockNameWithNameSpace = getBlockNameWithNameSpace( fullBlock );
 	const block = fullBlock[ blockNameWithNameSpace ] || {};
+
+	const editBlock = ( newBlock ) => editPost( {
+		content: JSON.stringify( {
+			[ blockNameWithNameSpace ]: newBlock,
+		} ),
+	} );
 
 	/**
 	 * Adds a new field to the end of the existing fields.
@@ -109,13 +114,11 @@ const useField = () => {
 			fields[ newFieldName ] = newField;
 		}
 
-		block.fields = fields;
-		fullBlock[ blockNameWithNameSpace ] = block;
-
-		if ( ! block.name ) {
-			changeBlock( block );
+		const newBlock = { ...block, fields	};
+		if ( ! newBlock.name ) {
+			changeBlock( newBlock );
 		} else {
-			editBlock( fullBlock );
+			editBlock( newBlock );
 		}
 
 		return newFieldName;
@@ -135,9 +138,10 @@ const useField = () => {
 
 		const hasParent = fieldToChange.hasOwnProperty( 'parent' );
 		const previousField = hasParent
-			? fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ]
-			: fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.name ];
+			? block.fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ]
+			: block.fields[ fieldToChange.name ];
 
+		const newBlock = { ...block };
 		const newField = {
 			...getSettingsDefaults( newControl.name, controls ),
 			name: previousField.name,
@@ -150,12 +154,12 @@ const useField = () => {
 
 		if ( hasParent ) {
 			newField.parent = fieldToChange.parent;
-			fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ] = newField;
+			newBlock.fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ] = newField;
 		} else {
-			fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.name ] = newField;
+			newBlock.fields[ fieldToChange.name ] = newField;
 		}
 
-		editBlock( fullBlock );
+		editBlock( newBlock );
 	};
 
 	/**
@@ -171,10 +175,11 @@ const useField = () => {
 	 * @return {Object} The fields with the field renamed.
 	 */
 	const changeFieldName = ( fields, previousName, newName ) => {
+		const newFields = { ...fields };
 		// If this is a repeater, change the parent property of its sub_fields.
-		if ( fields[ previousName ] && fields[ previousName ].hasOwnProperty( 'sub_fields' ) ) {
-			fields[ previousName ].sub_fields = getFieldsAsObject(
-				Object.values( fields[ previousName ].sub_fields ).map( ( subField ) => {
+		if ( newFields[ previousName ] && newFields[ previousName ].hasOwnProperty( 'sub_fields' ) ) {
+			newFields[ previousName ].sub_fields = getFieldsAsObject(
+				Object.values( newFields[ previousName ].sub_fields ).map( ( subField ) => {
 					return {
 						...subField,
 						parent: newName,
@@ -183,9 +188,10 @@ const useField = () => {
 			);
 		}
 
-		fields[ newName ] = { ...fields[ previousName ], name: newName };
-		delete fields[ previousName ];
-		return fields;
+		newFields[ newName ] = { ...newFields[ previousName ], name: newName };
+		delete newFields[ previousName ];
+
+		return newFields;
 	};
 
 	/**
@@ -206,8 +212,7 @@ const useField = () => {
 		}
 
 		return getFieldsAsArray( fields ).filter( ( field ) => {
-			return location === field.location ||
-				( ! field.location && DEFAULT_LOCATION === location );
+			return location === field.location || ( ! field.location && DEFAULT_LOCATION === location );
 		} );
 	};
 
@@ -243,9 +248,10 @@ const useField = () => {
 	 * @param {Object} newSettings The new settings of the field.
 	 */
 	const changeFieldSettings = ( fieldToChange, newSettings ) => {
+		const newBlock = { ...block };
 		if ( newSettings.hasOwnProperty( 'location' ) ) {
-			fullBlock[ blockNameWithNameSpace ].fields = changeFieldLocation(
-				fullBlock[ blockNameWithNameSpace ].fields,
+			newBlock.fields = changeFieldLocation(
+				newBlock.fields,
 				fieldToChange,
 				newSettings.location
 			);
@@ -253,8 +259,8 @@ const useField = () => {
 
 		const hasParent = fieldToChange.hasOwnProperty( 'parent' );
 		const currentField = hasParent
-			? fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ]
-			: fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.name ];
+			? newBlock.fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ]
+			: newBlock.fields[ fieldToChange.name ];
 
 		const newField = {
 			...currentField,
@@ -262,29 +268,29 @@ const useField = () => {
 		};
 
 		if ( hasParent ) {
-			fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ]
+			newBlock.fields[ fieldToChange.parent ]
 				.sub_fields[ fieldToChange.name ] = newField;
 		} else {
-			fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.name ] = newField;
+			newBlock.fields[ fieldToChange.name ] = newField;
 		}
 
 		if ( newSettings.hasOwnProperty( 'name' ) ) {
 			if ( hasParent ) {
-				fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ].sub_fields = changeFieldName(
-					fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ].sub_fields,
+				newBlock.fields[ fieldToChange.parent ].sub_fields = changeFieldName(
+					newBlock.fields[ fieldToChange.parent ].sub_fields,
 					fieldToChange.name,
 					newSettings.name
 				);
 			} else {
-				fullBlock[ blockNameWithNameSpace ].fields = changeFieldName(
-					fullBlock[ blockNameWithNameSpace ].fields,
+				newBlock.fields = changeFieldName(
+					newBlock.fields,
 					fieldToChange.name,
 					newSettings.name
 				);
 			}
 		}
 
-		editBlock( fullBlock );
+		editBlock( newBlock );
 	};
 
 	/**
@@ -293,17 +299,18 @@ const useField = () => {
 	 * @param {SelectedField} selectedField The field to delete.
 	 */
 	const deleteField = ( selectedField ) => {
+		const newBlock = { ...block };
 		if (
 			selectedField.hasOwnProperty( 'parent' ) &&
-			fullBlock[ blockNameWithNameSpace ].fields[ selectedField.parent ] &&
-			fullBlock[ blockNameWithNameSpace ].fields[ selectedField.parent ].sub_fields
+			newBlock.fields[ selectedField.parent ] &&
+			newBlock.fields[ selectedField.parent ].sub_fields
 		) {
-			delete fullBlock[ blockNameWithNameSpace ].fields[ selectedField.parent ].sub_fields[ selectedField.name ];
+			delete newBlock.fields[ selectedField.parent ].sub_fields[ selectedField.name ];
 		} else {
-			delete fullBlock[ blockNameWithNameSpace ].fields[ selectedField.name ];
+			delete newBlock.fields[ selectedField.name ];
 		}
 
-		editBlock( fullBlock );
+		editBlock( newBlock );
 	};
 
 	/**
@@ -346,14 +353,14 @@ const useField = () => {
 			order: Object.values( fields ).length,
 		};
 
+		const newBlock = { ...block };
 		if ( hasParent ) {
-			block.fields[ selectedField.parent ].sub_fields = currentFields;
+			newBlock.fields[ selectedField.parent ].sub_fields = currentFields;
 		} else {
-			block.fields = currentFields;
+			newBlock.fields = currentFields;
 		}
-		fullBlock[ blockNameWithNameSpace ] = block;
 
-		editBlock( fullBlock );
+		editBlock( newBlock );
 	};
 
 	/**
@@ -373,18 +380,19 @@ const useField = () => {
 		const newFields = [ ...fieldsToReorder ];
 		[ newFields[ moveFrom ], newFields[ moveTo ] ] = [ newFields[ moveTo ], newFields[ moveFrom ] ];
 
+		const newBlock = { ...block };
 		if ( null !== parentField ) {
-			fullBlock[ blockNameWithNameSpace ].fields[ parentField ].sub_fields = getFieldsAsObject( [
+			newBlock.fields[ parentField ].sub_fields = getFieldsAsObject( [
 				...setCorrectOrderForFields( newFields ),
 			] );
 		} else {
-			fullBlock[ blockNameWithNameSpace ].fields = getFieldsAsObject( [
+			newBlock.fields = getFieldsAsObject( [
 				...setCorrectOrderForFields( newFields ),
 				...getFieldsForLocation( getOtherLocation( currentLocation ) ),
 			] );
 		}
 
-		editBlock( fullBlock );
+		editBlock( newBlock );
 	};
 
 	return {
