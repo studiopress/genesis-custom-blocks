@@ -19,7 +19,7 @@ import { useBlock } from '../hooks';
  * @return {React.ReactElement} The slug editing section.
  */
 const SlugSection = () => {
-	const { block, changeBlockName } = useBlock();
+	const { block, changeBlock } = useBlock();
 
 	return (
 		<div className="mt-5">
@@ -31,7 +31,7 @@ const SlugSection = () => {
 				value={ block.name }
 				onChange={ ( event ) => {
 					if ( event.target ) {
-						changeBlockName( event.target.value );
+						changeBlock( { name: event.target.value } );
 					}
 				} }
 			/>

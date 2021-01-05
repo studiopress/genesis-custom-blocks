@@ -43,7 +43,6 @@ import {
  * @typedef {Object} UseBlockReturn The return value of useBlock.
  * @property {Block} block The block, parsed into an object.
  * @property {function(Object):void} changeBlock Changes the block configuration.
- * @property {ChangeBlockName} changeBlockName Changes the block name.
  */
 
 /**
@@ -73,11 +72,6 @@ const useBlock = () => {
 	 * @param {Object} newValues The new value(s) to set.
 	 */
 	const changeBlock = ( newValues ) => {
-		if ( ! block.hasOwnProperty( 'name' ) && ! newValues.hasOwnProperty( 'name' ) ) {
-			changeBlockName( getDefaultBlock( postId ).name, newValues );
-			return;
-		}
-
 		const newBlock = {
 			...getDefaultBlock( postId ),
 			...block,
@@ -85,38 +79,17 @@ const useBlock = () => {
 		};
 
 		editPost( {
-			content: JSON.stringify( { [ blockNameWithNameSpace ]: newBlock } ),
+			content: JSON.stringify( {
+				[ `${ BLOCK_NAMESPACE }/${ newBlock.name }` ]: newBlock,
+			} ),
 			slug: newBlock.name,
 			title: newBlock.title,
 		} );
 	};
 
-	/**
-	 * Changes a block name (slug).
-	 *
-	 * @param {string} newName The new bock name (slug).
-	 * @param {Object} [defaultValues] The new block values, if any.
-	 */
-	const changeBlockName = ( newName, defaultValues = {} ) => {
-		const newBlock = {
-			...getDefaultBlock( postId ),
-			...block,
-			...defaultValues,
-			name: newName,
-		};
-		const editedPost = {
-			content: JSON.stringify( { [ `${ BLOCK_NAMESPACE }/${ newName }` ]: newBlock } ),
-			slug: newName,
-			title: newBlock.title,
-		};
-
-		editPost( editedPost );
-	};
-
 	return {
 		block,
 		changeBlock,
-		changeBlockName,
 	};
 };
 

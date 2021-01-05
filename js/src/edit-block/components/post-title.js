@@ -29,7 +29,7 @@ import { useBlock } from '../hooks';
  * @return {React.ReactElement} The post title editing area.
  */
 const PostTitle = () => {
-	const { block, changeBlock, changeBlockName } = useBlock();
+	const { block, changeBlock } = useBlock();
 	const instanceId = useInstanceId( PostTitle );
 	const ref = useRef( null );
 	const { isCleanNewPost, title } = useSelect( ( select ) => {
@@ -65,10 +65,10 @@ const PostTitle = () => {
 
 		const newBlock = { title: newTitle };
 		if ( isAutoSlugging.current ) {
-			changeBlockName( convertToSlug( newTitle ), newBlock );
-		} else {
-			changeBlock( newBlock );
+			newBlock.name = convertToSlug( newTitle );
 		}
+
+		changeBlock( newBlock );
 	};
 
 	const onSelect = () => setIsSelected( true );
