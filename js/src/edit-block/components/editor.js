@@ -71,7 +71,7 @@ import {
  * @property {number} order Its order relative to other fields in its location, like 0, 1, 2...
  * @property {string} [parent] The name of its parent field, like a Repeater control.
  * @property {Object} [sub_fields] Fields that this field has, like for the Repeater control.
- * @property {string|number} [width] The width, like '25'.
+ * @property {string} [width] The width, like '25'.
  */
 
 /**

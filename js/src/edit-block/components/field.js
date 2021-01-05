@@ -87,6 +87,7 @@ const Field = ( {
 	const isSelected = getIsSelected();
 	const isUpButtonDisabled = 0 === index;
 	const FieldIcon = getFieldIcon( field.control );
+	const shouldDisplayFieldName = ! [ '25', '50' ].includes( field.width );
 
 	return (
 		<div
@@ -114,8 +115,11 @@ const Field = ( {
 				<div className="flex w-full items-center">
 					<div>{ FieldIcon ? <FieldIcon /> : null }</div>
 					<span className=" ml-4 truncate">{ field.label }</span>
-					<div className="flex items-center h-6 pl-2 pr-1 bg-gray-200 rounded-sm ml-auto hover:bg-gray-300">
-						<span className="text-xs font-mono mr-1">{ field.name }</span>
+					<div className="flex items-center h-6 pr-1 bg-gray-200 rounded-sm ml-auto hover:bg-gray-300">
+						{ shouldDisplayFieldName
+							? <span className="text-xs font-mono pl-2 mr-2">{ field.name }</span>
+							: null
+						}
 						<ClipboardCopy text={ field.name } />
 					</div>
 				</div>
