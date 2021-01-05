@@ -14,7 +14,7 @@ const getDefaultBlock = ( postId = null ) => {
 
 	return {
 		name,
-		title: '',
+		title: name,
 		excluded: [],
 		icon: 'genesis_custom_blocks',
 		category: {

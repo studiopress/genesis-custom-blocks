@@ -9,7 +9,7 @@ describe( 'getDefaultBlock', () => {
 			getDefaultBlock()
 		).toEqual( {
 			name: 'block',
-			title: '',
+			title: 'block',
 			excluded: [],
 			icon: 'genesis_custom_blocks',
 			category: {
@@ -27,7 +27,7 @@ describe( 'getDefaultBlock', () => {
 			getDefaultBlock( 923 )
 		).toEqual( {
 			name: 'block-923',
-			title: '',
+			title: 'block-923',
 			excluded: [],
 			icon: 'genesis_custom_blocks',
 			category: {

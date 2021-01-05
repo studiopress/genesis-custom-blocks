@@ -73,25 +73,22 @@ const useBlock = () => {
 	 * @param {Object} newValues The new value(s) to set.
 	 */
 	const changeBlock = ( newValues ) => {
-		const defaultBlock = getDefaultBlock( postId );
-		const blockName = getBlockNameWithNameSpace( fullBlock ) || defaultBlock.name;
-		const editedPost = {
-			content: JSON.stringify(
-				{
-					[ blockName ]: {
-						...defaultBlock,
-						...fullBlock[ blockName ],
-						...newValues,
-					},
-				}
-			),
-		};
-
-		if ( newValues.hasOwnProperty( 'title' ) ) {
-			editedPost.title = newValues.title;
+		if ( ! block.hasOwnProperty( 'name' ) && ! newValues.hasOwnProperty( 'name' ) ) {
+			changeBlockName( getDefaultBlock( postId ).name, newValues );
+			return;
 		}
 
-		editPost( editedPost );
+		const newBlock = {
+			...getDefaultBlock( postId ),
+			...block,
+			...newValues,
+		};
+
+		editPost( {
+			content: JSON.stringify( { [ blockNameWithNameSpace ]: newBlock } ),
+			slug: newBlock.name,
+			title: newBlock.title,
+		} );
 	};
 
 	/**
@@ -101,22 +98,17 @@ const useBlock = () => {
 	 * @param {Object} [defaultValues] The new block values, if any.
 	 */
 	const changeBlockName = ( newName, defaultValues = {} ) => {
-		const previousBlockName = getBlockNameWithNameSpace( fullBlock );
-		const editedPost = {
-			content: JSON.stringify( {
-				[ `${ BLOCK_NAMESPACE }/${ newName }` ]: {
-					...getDefaultBlock( postId ),
-					...fullBlock[ previousBlockName ],
-					...defaultValues,
-					name: newName,
-				},
-			} ),
-			slug: newName,
+		const newBlock = {
+			...getDefaultBlock( postId ),
+			...block,
+			...defaultValues,
+			name: newName,
 		};
-
-		if ( defaultValues.hasOwnProperty( 'title' ) ) {
-			editedPost.title = defaultValues.title;
-		}
+		const editedPost = {
+			content: JSON.stringify( { [ `${ BLOCK_NAMESPACE }/${ newName }` ]: newBlock } ),
+			slug: newName,
+			title: newBlock.title,
+		};
 
 		editPost( editedPost );
 	};
