@@ -64,7 +64,13 @@ const useField = () => {
 	 * @return {string} The name of the new field.
 	 */
 	const addNewField = ( location, parentField ) => {
-		const { fields = {} } = block;
+		let { fields = {} } = block;
+
+		// Backwards compatibility: the old editor used to store no fields as [], not {}.
+		if ( Array.isArray( fields ) ) {
+			fields = {};
+		}
+
 		const hasParent = null !== parentField;
 		if ( hasParent && fields[ parentField ] && ! fields[ parentField ].sub_fields ) {
 			fields[ parentField ].sub_fields = {};
