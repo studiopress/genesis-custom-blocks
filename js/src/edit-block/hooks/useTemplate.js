@@ -67,7 +67,8 @@ const useTemplate = ( setTemplate ) => {
 								/* translators: %1$s: the error message from the request */
 								__( 'Failed to get the template file: %1$s', 'genesis-custom-blocks' ),
 								error.message
-							)
+							),
+							{ isDismissible: true }
 						);
 					}
 				);
