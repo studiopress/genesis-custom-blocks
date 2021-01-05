@@ -38,7 +38,7 @@ const Header = () => {
 			<EditorHistoryUndo />
 			<EditorHistoryRedo />
 			<div id="save-and-publish">
-				<span className="mr-3">
+				<span className="mr-3 text-sm">
 					<PostSavedState
 						forceIsDirty={ false }
 						forceIsSaving={ false }
