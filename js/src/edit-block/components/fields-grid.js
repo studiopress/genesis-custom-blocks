@@ -83,7 +83,8 @@ const FieldsGrid = ( {
 			<button
 				className="flex items-center justify-center h-6 w-6 bg-black rounded-sm text-white mt-4 ml-auto"
 				aria-label={ __( 'Add a new field', 'genesis-custom-blocks' ) }
-				onClick={ () => {
+				onClick={ ( event ) => {
+					event.stopPropagation();
 					const newFieldName = addNewField( currentLocation, parentField );
 					const newSelectedField = { name: newFieldName };
 					if ( null !== parentField ) {
