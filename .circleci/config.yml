@@ -109,7 +109,6 @@ jobs:
       - nodegit-workaround
       - set-up-packages
       - run: npm run env start && npm run test:e2e
-      - run: HUSKY_SKIP_INSTALL=1 npm ci && npm run test:js -- --maxWorkers=2
 
   svn-deploy:
     executor:
