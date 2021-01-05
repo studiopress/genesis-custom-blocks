@@ -30,7 +30,7 @@ const LocationButtons = ( {
 	currentLocation,
 	setCurrentLocation,
 } ) => {
-	const buttonClass = 'h-12 px-4 text-sm focus:outline-none';
+	const buttonClass = 'w-40 h-12 px-4 text-sm focus:outline-none';
 
 	return (
 		<div className="flex mt-6">
