@@ -93,7 +93,6 @@ const Field = ( {
 		<div
 			role="row"
 			className={ className(
-				{ 'is-selected': isSelected },
 				'field w-full',
 				getWidthClass( field.width )
 			) }

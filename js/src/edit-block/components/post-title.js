@@ -3,7 +3,6 @@
  */
 import * as React from 'react';
 import TextareaAutosize from 'react-autosize-textarea';
-import className from 'classnames';
 
 /**
  * WordPress dependencies
@@ -12,7 +11,7 @@ import className from 'classnames';
 import { VisuallyHidden } from '@wordpress/components';
 import { useInstanceId } from '@wordpress/compose';
 import { useSelect } from '@wordpress/data';
-import { useEffect, useRef, useState } from '@wordpress/element';
+import { useEffect, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -44,7 +43,6 @@ const PostTitle = () => {
 		};
 	} );
 	const isAutoSlugging = useRef( ! block || ! block.name );
-	const [ isSelected, setIsSelected ] = useState( false );
 
 	useEffect( () => {
 		const { ownerDocument: { activeElement, body } } = ref.current;
@@ -71,28 +69,17 @@ const PostTitle = () => {
 		changeBlock( newBlock );
 	};
 
-	const onSelect = () => setIsSelected( true );
-	const onUnselect = () => setIsSelected( false );
 	const onChange = ( event ) => onUpdate( event.target.value );
 	const onBlur = () => {
 		if ( block.name ) {
 			isAutoSlugging.current = false;
 		}
-		onUnselect();
 	};
 	const placeholder = __( 'Block title', 'genesis-custom-blocks' );
 
 	return (
-		<div
-			className={ className(
-				'wp-block editor-post-title editor-post-title__block',
-				{ 'is-selected': isSelected }
-			) }
-		>
-			<VisuallyHidden
-				as="label"
-				htmlFor={ `post-title-${ instanceId }` }
-			>
+		<div className="wp-block editor-post-title editor-post-title__block">
+			<VisuallyHidden as="label" htmlFor={ `post-title-${ instanceId }` }	>
 				{ placeholder }
 			</VisuallyHidden>
 			<TextareaAutosize
@@ -102,9 +89,7 @@ const PostTitle = () => {
 				value={ title }
 				onChange={ onChange }
 				placeholder={ placeholder }
-				onFocus={ onSelect }
 				onBlur={ onBlur }
-				onKeyPress={ onUnselect }
 			/>
 		</div>
 	);
