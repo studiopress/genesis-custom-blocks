@@ -50,6 +50,8 @@ class TestEditBlock extends AbstractTemplate {
 		$this->assertEquals( 10, has_filter( 'replace_editor', [ $this->instance, 'should_replace_editor' ] ) );
 		$this->assertEquals( 10, has_filter( 'use_block_editor_for_post_type', [ $this->instance, 'should_use_block_editor_for_post_type' ] ) );
 		$this->assertEquals( 10, has_action( 'admin_footer', [ $this->instance, 'enqueue_assets' ] ) );
+		$this->assertEquals( 10, has_filter( 'admin_footer_text', [ $this->instance, 'conditionally_prevent_footer_text' ] ) );
+		$this->assertEquals( 11, has_filter( 'update_footer', [ $this->instance, 'conditionally_prevent_update_text' ] ) );
 		$this->assertEquals( 10, has_action( 'rest_api_init', [ $this->instance, 'register_route_template_file' ] ) );
 	}
 
@@ -88,21 +90,63 @@ class TestEditBlock extends AbstractTemplate {
 		$this->assertFalse( wp_script_is( EditBlock::SCRIPT_SLUG ) );
 	}
 
-
 	/**
 	 * Test enqueue_assets on the correct page.
 	 *
 	 * @covers \Genesis\CustomBlocks\Admin\EditBlock::enqueue_assets()
 	 */
 	public function test_enqueue_assets_correct_page() {
-		set_current_screen( 'edit-post' );
-		$wp_screen            = get_current_screen();
-		$wp_screen->base      = 'post';
-		$wp_screen->post_type = 'genesis_custom_block';
+		$this->set_is_gcb_editor();
 		$this->instance->enqueue_assets();
 
 		$this->assertTrue( wp_script_is( EditBlock::SCRIPT_SLUG ) );
 		$this->assertTrue( wp_style_is( EditBlock::STYLE_SLUG ) );
+	}
+
+	/**
+	 * Test conditionally_prevent_footer_text on a non-editor page.
+	 *
+	 * @covers \Genesis\CustomBlocks\Admin\EditBlock::conditionally_prevent_footer_text()
+	 */
+	public function test_conditionally_prevent_footer_text_wrong_page() {
+		set_current_screen( 'edit-post' );
+		$wp_screen            = get_current_screen();
+		$wp_screen->base      = 'post';
+		$wp_screen->post_type = 'wrong_custom_post_type';
+		$initial_footer_text  = 'Thank you for creating with WordPress';
+
+		$this->assertEquals( $initial_footer_text, $this->instance->conditionally_prevent_footer_text( $initial_footer_text ) );
+	}
+
+	/**
+	 * Test conditionally_prevent_footer_text on a GCB editor page.
+	 *
+	 * @covers \Genesis\CustomBlocks\Admin\EditBlock::conditionally_prevent_footer_text()
+	 */
+	public function test_conditionally_prevent_footer_text_correct_page() {
+		$this->set_is_gcb_editor();
+		$this->assertEquals( '', $this->instance->conditionally_prevent_footer_text( 'Thank you for creating with WordPress' ) );
+	}
+
+	/**
+	 * Test conditionally_prevent_update_text on a non-editor page.
+	 *
+	 * @covers \Genesis\CustomBlocks\Admin\EditBlock::conditionally_prevent_update_text()
+	 */
+	public function test_conditionally_prevent_update_text_wrong_page() {
+		set_current_screen( 'plugins' );
+		$initial_update_text = 'Please update WordPress';
+		$this->assertEquals( $initial_update_text, $this->instance->conditionally_prevent_update_text( $initial_update_text ) );
+	}
+
+	/**
+	 * Test conditionally_prevent_update_text on a GCB editor page.
+	 *
+	 * @covers \Genesis\CustomBlocks\Admin\EditBlock::conditionally_prevent_update_text()
+	 */
+	public function test_conditionally_prevent_update_text_correct_page() {
+		$this->set_is_gcb_editor();
+		$this->assertEquals( '', $this->instance->conditionally_prevent_update_text( 'Please update WordPress' ) );
 	}
 
 	/**
@@ -148,5 +192,15 @@ class TestEditBlock extends AbstractTemplate {
 				$response->get_data()['templatePath']
 			)
 		);
+	}
+
+	/**
+	 * Sets the current page to be the GCB editor.
+	 */
+	public function set_is_gcb_editor() {
+		set_current_screen( 'edit-post' );
+		$wp_screen            = get_current_screen();
+		$wp_screen->base      = 'post';
+		$wp_screen->post_type = 'genesis_custom_block';
 	}
 }

@@ -47,6 +47,8 @@ class EditBlock extends ComponentAbstract {
 		add_filter( 'replace_editor', [ $this, 'should_replace_editor' ], 10, 2 );
 		add_filter( 'use_block_editor_for_post_type', [ $this, 'should_use_block_editor_for_post_type' ], 10, 2 );
 		add_action( 'admin_footer', [ $this, 'enqueue_assets' ] );
+		add_filter( 'admin_footer_text', [ $this, 'conditionally_prevent_footer_text' ] );
+		add_filter( 'update_footer', [ $this, 'conditionally_prevent_update_text' ], 11 );
 		add_action( 'rest_api_init', [ $this, 'register_route_template_file' ] );
 	}
 
@@ -96,13 +98,7 @@ class EditBlock extends ComponentAbstract {
 	 * as the native editor is disabled.
 	 */
 	public function enqueue_assets() {
-		$screen = get_current_screen();
-
-		if (
-			! is_object( $screen ) ||
-			genesis_custom_blocks()->get_post_type_slug() !== $screen->post_type ||
-			'post' !== $screen->base
-		) {
+		if ( ! $this->is_gcb_editor() ) {
 			return;
 		}
 
@@ -148,6 +144,49 @@ class EditBlock extends ComponentAbstract {
 			[ 'wp-components' ],
 			$css_config['version']
 		);
+	}
+
+	/**
+	 * Gets whether the current screen is the GCB editor.
+	 *
+	 * @return bool Whether this is the GCB editor.
+	 */
+	public function is_gcb_editor() {
+		$screen = get_current_screen();
+
+		return (
+			is_object( $screen ) &&
+			genesis_custom_blocks()->get_post_type_slug() === $screen->post_type &&
+			'post' === $screen->base
+		);
+	}
+
+	/**
+	 * Conditionally prevents footer text, as the GCB editor is React-driven.
+	 *
+	 * @param string $text The text to display in the footer.
+	 * @return string The filtered footer text.
+	 */
+	public function conditionally_prevent_footer_text( $text ) {
+		if ( $this->is_gcb_editor() ) {
+			return '';
+		}
+
+		return $text;
+	}
+
+	/**
+	 * Conditionally prevents WP update text, as the GCB editor is React-driven.
+	 *
+	 * @param string $text The update text.
+	 * @return string The filtered update text.
+	 */
+	public function conditionally_prevent_update_text( $text ) {
+		if ( $this->is_gcb_editor() ) {
+			return '';
+		}
+
+		return $text;
 	}
 
 	/**
