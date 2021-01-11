@@ -14,12 +14,16 @@ const getDefaultBlock = ( postId = null ) => {
 
 	return {
 		name,
+		title: name,
+		excluded: [],
+		icon: 'genesis_custom_blocks',
 		category: {
 			icon: null,
 			slug: 'text',
 			title: __( 'Text', 'genesis-custom-blocks' ),
 		},
-		icon: 'genesis_custom_blocks',
+		keywords: [],
+		fields: {},
 	};
 };
 

@@ -9,8 +9,8 @@ import user from '@testing-library/user-event';
 /**
  * Internal dependencies
  */
-import { Side } from '../../components';
-import { BLOCK_PANEL, FIELD_PANEL } from '../../constants';
+import { FieldPanel } from '../../components';
+import { FIELD_PANEL } from '../../constants';
 
 const mockEmailField = {
 	control: 'email',
@@ -19,68 +19,6 @@ const mockEmailField = {
 	name: 'email-example',
 	type: 'string',
 };
-
-const mockBlock = {
-	name: 'test-email',
-	title: 'Test Email',
-	category: {
-		icon: null,
-		slug: 'text',
-		title: 'Text',
-	},
-	icon: 'genesis_custom_blocks',
-	keywords: [],
-	excluded: [],
-	fields: {
-		email: mockEmailField,
-	},
-};
-
-const mockCategories = [
-	{
-		slug: 'text',
-		title: 'Text',
-	},
-	{
-		slug: 'media',
-		title: 'Media',
-	},
-	{
-		slug: 'design',
-		title: 'Design',
-	},
-	{
-		slug: 'widgets',
-		title: 'Widgets',
-	},
-	{
-		slug: 'embed',
-		title: 'Embeds',
-	},
-	{
-		slug: 'reusable',
-		title: 'Reusable blocks',
-	},
-	{
-		icon: null,
-		slug: 'New',
-		title: 'New',
-	},
-];
-
-jest.mock( '../../hooks/useBlock', () => {
-	return jest.fn( () => ( {
-		block: mockBlock,
-		changeBlock: jest.fn(),
-	} ) );
-} );
-
-jest.mock( '../../hooks/useCategories', () => {
-	return jest.fn( () => ( {
-		categories: mockCategories,
-		setCategories: jest.fn(),
-	} ) );
-} );
 
 jest.mock( '../../hooks/useField', () => {
 	return jest.fn( () => ( {
@@ -126,39 +64,21 @@ const mockControls = {
 };
 
 const getProps = () => ( {
-	setPanelDisplaying: jest.fn(),
+	currentLocation: { name: emailField.name },
+	isNewField: false,
 	selectedField: { name: emailField.name },
 	setCurrentLocation: jest.fn(),
+	setIsNewField: jest.fn(),
 	setSelectedField: jest.fn(),
 } );
 
-describe( 'Side', () => {
-	it( 'displays the block panel', async () => {
-		const { getAllByText, getByLabelText, getByText } = render(
-			<Side { ...getProps() } panelDisplaying={ BLOCK_PANEL } />
-		);
-
-		getAllByText( /block/i );
-		getAllByText( /field/i );
-
-		// Initially, the 'Block' panel should display.
-		expect( getByText( /block settings/i ) ).toBeInTheDocument();
-		expect( getByText( /slug/i ) ).toBeInTheDocument();
-		expect( getByText( /keywords/i ) ).toBeInTheDocument();
-		expect( getByText( /icon/i ) ).toBeInTheDocument();
-		expect( getByLabelText( /category/i ) ).toBeInTheDocument();
-		expect( getByLabelText( /keywords/i ) ).toBeInTheDocument();
-		expect( getByText( /post types/i ) ).toBeInTheDocument();
-	} );
-
+describe( 'FieldPanel', () => {
 	it( 'displays the field panel with its sections', async () => {
 		const { getAllByText, getByLabelText, getByText } = render(
-			<Side { ...getProps() } panelDisplaying={ FIELD_PANEL } />
+			<FieldPanel { ...getProps() } panelDisplaying={ FIELD_PANEL } />
 		);
 
-		getAllByText( /block/i );
 		getAllByText( /field/i );
-
 		expect( getByText( /field settings/i ) ).toBeInTheDocument();
 		expect( getByLabelText( /field label/i ) ).toBeInTheDocument();
 		expect( getByText( 'Field Name (slug)' ) ).toBeInTheDocument();

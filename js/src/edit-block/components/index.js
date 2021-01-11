@@ -1,9 +1,11 @@
+export { default as BottomNotice } from './bottom-notice';
 export { default as BlockPanel } from './block-panel';
 export { default as BrowserURL } from './browser-url';
 export { default as CategorySection } from './category-section';
 export { default as ClipboardCopy } from './clipboard-copy';
 export { default as Editor } from './editor';
 export { default as EditorProvider } from './editor-provider';
+export { default as Field } from './field';
 export { default as FieldPanel } from './field-panel';
 export { default as FieldsGrid } from './fields-grid';
 export { default as FieldSettings } from './field-settings';
@@ -18,3 +20,6 @@ export { default as PostTypesSection } from './post-types-section';
 export { default as Select } from './select';
 export { default as Side } from './side';
 export { default as SlugSection } from './slug-section';
+export { default as TemplateFile } from './template-file';
+export { default as TopNotice } from './top-notice';
+export { default as QuestionIcon } from './question-icon';

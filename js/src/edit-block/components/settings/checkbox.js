@@ -26,6 +26,7 @@ const Checkbox = ( { handleOnChange, setting, value } ) => {
 			<label className="text-sm" htmlFor={ id }>{ setting.label }</label>
 			<input
 				id={ id }
+				className="ml-2"
 				type="checkbox"
 				value={ checked }
 				checked={ isChecked }

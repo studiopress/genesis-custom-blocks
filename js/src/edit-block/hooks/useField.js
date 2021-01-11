@@ -4,7 +4,6 @@
  * WordPress dependencies
  */
 import { useDispatch, useSelect } from '@wordpress/data';
-import { useCallback, useMemo } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 
 /**
@@ -15,9 +14,11 @@ import {
 	getBlockNameWithNameSpace,
 	getNewFieldNumber,
 	getOtherLocation,
+	getSettingsDefaults,
 	setCorrectOrderForFields,
 } from '../helpers';
 import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
+import { useBlock } from '../hooks';
 import { DEFAULT_LOCATION } from '../constants';
 
 /**
@@ -43,119 +44,123 @@ import { DEFAULT_LOCATION } from '../constants';
 const useField = () => {
 	// @ts-ignore
 	const { controls } = gcbEditor;
+	const { changeBlock } = useBlock();
 	const editedPostContent = useSelect(
 		( select ) => select( 'core/editor' ).getEditedPostContent(),
 		[]
 	);
-
-	const getFullBlock = useCallback(
-		() => getBlock( editedPostContent ),
-		[ editedPostContent ]
-	);
-
-	const fullBlock = getFullBlock();
 	const { editPost } = useDispatch( 'core/editor' );
+
+	const fullBlock = getBlock( editedPostContent );
 	const blockNameWithNameSpace = getBlockNameWithNameSpace( fullBlock );
-	const block = useMemo(
-		() => fullBlock[ blockNameWithNameSpace ] || {},
-		[ fullBlock, blockNameWithNameSpace ]
-	);
+	const block = fullBlock[ blockNameWithNameSpace ] || {};
 
-	const addNewField = useCallback(
-		/**
-		 * Adds a new field to the end of the existing fields.
-		 *
-		 * @param {string} location The location to add the field to.
-		 * @param {string|null} parentField The parent field to add it to, if any.
-		 * @return {string} The name of the new field.
-		 */
-		( location, parentField ) => {
-			const { fields = {} } = block;
-			const hasParent = null !== parentField;
-			if ( hasParent && fields[ parentField ] && ! fields[ parentField ].sub_fields ) {
-				fields[ parentField ].sub_fields = {};
-			}
+	const editBlock = ( newBlock ) => editPost( {
+		content: JSON.stringify( {
+			[ blockNameWithNameSpace ]: newBlock,
+		} ),
+	} );
 
-			const currentFields = hasParent
-				? fields[ parentField ].sub_fields
-				: fields;
-			const newFieldNumber = getNewFieldNumber( currentFields );
-			const newFieldName = newFieldNumber
-				? `new-field-${ newFieldNumber.toString() }`
-				: 'new-field';
-			const label = newFieldNumber
-				? sprintf(
-					// translators: %1$d: the field number
-					__( 'New Field %1$d', 'genesis-custom-blocks' ),
-					newFieldNumber
-				)
-				: __( 'New Field', 'genesis-custom-blocks' );
+	/**
+	 * Adds a new field to the end of the existing fields.
+	 *
+	 * @param {string} location The location to add the field to.
+	 * @param {string|null} parentField The parent field to add it to, if any.
+	 * @return {string} The name of the new field.
+	 */
+	const addNewField = ( location, parentField ) => {
+		let { fields = {} } = block;
 
-			const newField = {
-				name: newFieldName,
-				location,
-				label,
-				control: 'text',
-				type: 'string',
-				order: Object.values( currentFields ).length,
-			};
+		// Backwards compatibility: the old editor used to store no fields as [], not {}.
+		if ( Array.isArray( fields ) ) {
+			fields = {};
+		}
 
-			if ( hasParent ) {
-				newField.parent = parentField;
-				fields[ parentField ].sub_fields[ newFieldName ] = newField;
-			} else {
-				fields[ newFieldName ] = newField;
-			}
+		const hasParent = null !== parentField;
+		if ( hasParent && fields[ parentField ] && ! fields[ parentField ].sub_fields ) {
+			fields[ parentField ].sub_fields = {};
+		}
 
-			block.fields = fields;
-			fullBlock[ blockNameWithNameSpace ] = block;
+		const currentFields = hasParent
+			? fields[ parentField ].sub_fields
+			: fields;
+		const newFieldNumber = getNewFieldNumber( currentFields );
+		const newFieldName = newFieldNumber
+			? `new-field-${ newFieldNumber.toString() }`
+			: 'new-field';
+		const label = newFieldNumber
+			? sprintf(
+				// translators: %1$d: the field number
+				__( 'New Field %1$d', 'genesis-custom-blocks' ),
+				newFieldNumber
+			)
+			: __( 'New Field', 'genesis-custom-blocks' );
 
-			editPost( { content: JSON.stringify( fullBlock ) } );
-			return newFieldName;
-		},
-		[ block, blockNameWithNameSpace, editPost, fullBlock ]
-	);
+		const newControlName = 'text';
+		const newField = {
+			...getSettingsDefaults( newControlName, controls ),
+			name: newFieldName,
+			location,
+			label,
+			control: newControlName,
+			type: 'string',
+			order: Object.values( currentFields ).length,
+		};
 
-	const changeControl = useCallback(
-		/**
-		 * Changes the control of a field.
-		 *
-		 * @param {SelectedField} fieldToChange The field to change.
-		 * @param {string} newControlName The name of the control to change to.
-		 */
-		( fieldToChange, newControlName ) => {
-			const newControl = controls[ newControlName ];
-			if ( ! newControl || ! fieldToChange.name ) {
-				return;
-			}
+		if ( hasParent ) {
+			newField.parent = parentField;
+			fields[ parentField ].sub_fields[ newFieldName ] = newField;
+		} else {
+			fields[ newFieldName ] = newField;
+		}
 
-			const hasParent = fieldToChange.hasOwnProperty( 'parent' );
-			const previousField = hasParent
-				? fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ]
-				: fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.name ];
-			const newField = {
-				name: previousField.name,
-				label: previousField.label,
-				location: previousField.location,
-				order: previousField.order,
-				control: newControl.name,
-				type: newControl.type,
-			};
+		const newBlock = { ...block, fields	};
+		if ( ! newBlock.name ) {
+			changeBlock( newBlock );
+		} else {
+			editBlock( newBlock );
+		}
 
-			if ( 'repeater' === newControl.name ) {
-				newField.sub_fields = {};
-			}
+		return newFieldName;
+	};
 
-			if ( hasParent ) {
-				fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ] = newField;
-			} else {
-				fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.name ] = newField;
-			}
+	/**
+	 * Changes the control of a field.
+	 *
+	 * @param {SelectedField} fieldToChange The field to change.
+	 * @param {string} newControlName The name of the control to change to.
+	 */
+	const changeControl = ( fieldToChange, newControlName ) => {
+		const newControl = controls[ newControlName ];
+		if ( ! newControl || ! fieldToChange.name ) {
+			return;
+		}
 
-			editPost( { content: JSON.stringify( fullBlock ) } );
-		},
-		[ blockNameWithNameSpace, controls, editPost, fullBlock ]
-	);
+		const hasParent = fieldToChange.hasOwnProperty( 'parent' );
+		const previousField = hasParent
+			? block.fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ]
+			: block.fields[ fieldToChange.name ];
+
+		const newBlock = { ...block };
+		const newField = {
+			...getSettingsDefaults( newControl.name, controls ),
+			name: previousField.name,
+			label: previousField.label,
+			location: previousField.location,
+			order: previousField.order,
+			control: newControl.name,
+			type: newControl.type,
+		};
+
+		if ( hasParent ) {
+			newField.parent = fieldToChange.parent;
+			newBlock.fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ] = newField;
+		} else {
+			newBlock.fields[ fieldToChange.name ] = newField;
+		}
+
+		editBlock( newBlock );
+	};
 
 	/**
 	 * Changes a field name (slug), and returns the fields.
@@ -170,222 +175,225 @@ const useField = () => {
 	 * @return {Object} The fields with the field renamed.
 	 */
 	const changeFieldName = ( fields, previousName, newName ) => {
-		fields[ newName ] = { ...fields[ previousName ], name: newName };
-		delete fields[ previousName ];
-		return fields;
+		const newFields = { ...fields };
+		// If this is a repeater, change the parent property of its sub_fields.
+		if ( newFields[ previousName ] && newFields[ previousName ].hasOwnProperty( 'sub_fields' ) ) {
+			newFields[ previousName ].sub_fields = getFieldsAsObject(
+				Object.values( newFields[ previousName ].sub_fields ).map( ( subField ) => {
+					return {
+						...subField,
+						parent: newName,
+					};
+				} )
+			);
+		}
+
+		newFields[ newName ] = { ...newFields[ previousName ], name: newName };
+		delete newFields[ previousName ];
+
+		return newFields;
 	};
 
-	const getFieldsForLocation = useCallback(
-		/**
-		 * Gets the fields for either the editor or inspector.
-		 *
-		 * @param {string} location The location, like 'editor', or 'inspector'.
-		 * @param {string|null} parentField The parent field, if any.
-		 * @return {import('../components/editor').Field[]|null} The fields with the given location.
-		 */
-		( location, parentField = null ) => {
-			if ( ! block || ! block.fields ) {
-				return null;
-			}
+	/**
+	 * Gets the fields for either the editor or inspector.
+	 *
+	 * @param {string} location The location, like 'editor', or 'inspector'.
+	 * @param {string|null} parentField The parent field, if any.
+	 * @return {import('../components/editor').Field[]|null} The fields with the given location.
+	 */
+	const getFieldsForLocation = ( location, parentField = null ) => {
+		if ( ! block || ! block.fields ) {
+			return null;
+		}
 
-			const fields = null === parentField ? block.fields : block.fields[ parentField ].sub_fields;
-			if ( ! fields ) {
-				return null;
-			}
+		const fields = null === parentField ? block.fields : block.fields[ parentField ].sub_fields;
+		if ( ! fields ) {
+			return null;
+		}
 
-			return getFieldsAsArray( fields ).filter( ( field ) => {
-				return location === field.location ||
-					( ! field.location && DEFAULT_LOCATION === location );
-			} );
-		},
-		[ block ]
-	);
+		return getFieldsAsArray( fields ).filter( ( field ) => {
+			return location === field.location || ( ! field.location && DEFAULT_LOCATION === location );
+		} );
+	};
 
-	const changeFieldLocation = useCallback(
-		/**
-		 * Moves a field to another location, and sets the correct order properties.
-		 *
-		 * @param {import('../components/editor').Field[]} fields The index of the field to move.
-		 * @param {SelectedField} selectedField The field should be moved.
-		 * @param {string} newLocation The location to move it to, like 'editor'.
-		 */
-		( fields, selectedField, newLocation ) => {
-			const fieldToMove = fields[ selectedField.name ];
-			const previousLocation = fieldToMove.location;
+	/**
+	 * Moves a field to another location, and sets the correct order properties.
+	 *
+	 * @param {import('../components/editor').Field[]} fields The index of the field to move.
+	 * @param {SelectedField} selectedField The field should be moved.
+	 * @param {string} newLocation The location to move it to, like 'editor'.
+	 */
+	const changeFieldLocation = ( fields, selectedField, newLocation ) => {
+		const fieldToMove = fields[ selectedField.name ];
+		const previousLocation = fieldToMove.location;
 
-			const previousLocationFields = getFieldsForLocation( previousLocation );
-			const fieldsWithoutMovedField = previousLocationFields.filter( ( field ) => {
-				return field.name !== selectedField.name;
-			} );
+		const previousLocationFields = getFieldsForLocation( previousLocation );
+		const fieldsWithoutMovedField = previousLocationFields.filter( ( field ) => {
+			return field.name !== selectedField.name;
+		} );
 
-			const newLocationFields = getFieldsForLocation( newLocation );
-			newLocationFields.push( fieldToMove );
+		const newLocationFields = getFieldsForLocation( newLocation );
+		newLocationFields.push( fieldToMove );
 
-			return getFieldsAsObject( [
-				...setCorrectOrderForFields( fieldsWithoutMovedField ),
-				...setCorrectOrderForFields( newLocationFields ),
-			] );
-		},
-		[ getFieldsForLocation ]
-	);
+		return getFieldsAsObject( [
+			...setCorrectOrderForFields( fieldsWithoutMovedField ),
+			...setCorrectOrderForFields( newLocationFields ),
+		] );
+	};
 
-	const changeFieldSettings = useCallback(
-		/**
-		 * Changes a field setting.
-		 *
-		 * @param {SelectedField} fieldToChange The field to change.
-		 * @param {Object} newSettings The new settings of the field.
-		 */
-		( fieldToChange, newSettings ) => {
-			if ( newSettings.hasOwnProperty( 'location' ) ) {
-				fullBlock[ blockNameWithNameSpace ].fields = changeFieldLocation(
-					fullBlock[ blockNameWithNameSpace ].fields,
-					fieldToChange,
-					newSettings.location
+	/**
+	 * Changes a field setting.
+	 *
+	 * @param {SelectedField} fieldToChange The field to change.
+	 * @param {Object} newSettings The new settings of the field.
+	 */
+	const changeFieldSettings = ( fieldToChange, newSettings ) => {
+		const newBlock = { ...block };
+		if ( newSettings.hasOwnProperty( 'location' ) ) {
+			newBlock.fields = changeFieldLocation(
+				newBlock.fields,
+				fieldToChange,
+				newSettings.location
+			);
+		}
+
+		const hasParent = fieldToChange.hasOwnProperty( 'parent' );
+		const currentField = hasParent
+			? newBlock.fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ]
+			: newBlock.fields[ fieldToChange.name ];
+
+		const newField = {
+			...currentField,
+			...newSettings,
+		};
+
+		if ( hasParent ) {
+			newBlock.fields[ fieldToChange.parent ]
+				.sub_fields[ fieldToChange.name ] = newField;
+		} else {
+			newBlock.fields[ fieldToChange.name ] = newField;
+		}
+
+		if ( newSettings.hasOwnProperty( 'name' ) ) {
+			if ( hasParent ) {
+				newBlock.fields[ fieldToChange.parent ].sub_fields = changeFieldName(
+					newBlock.fields[ fieldToChange.parent ].sub_fields,
+					fieldToChange.name,
+					newSettings.name
 				);
-			}
-
-			if ( newSettings.hasOwnProperty( 'name' ) ) {
-				fullBlock[ blockNameWithNameSpace ].fields = changeFieldName(
-					fullBlock[ blockNameWithNameSpace ].fields,
+			} else {
+				newBlock.fields = changeFieldName(
+					newBlock.fields,
 					fieldToChange.name,
 					newSettings.name
 				);
 			}
+		}
 
-			const name = newSettings.hasOwnProperty( 'name' ) ? newSettings.name : fieldToChange.name;
-			const currentField = fieldToChange.hasOwnProperty( 'parent' )
-				? fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ]
-				: fullBlock[ blockNameWithNameSpace ].fields[ name ];
+		editBlock( newBlock );
+	};
 
-			const newField = {
-				...currentField,
-				...newSettings,
-			};
+	/**
+	 * Deletes the field.
+	 *
+	 * @param {SelectedField} selectedField The field to delete.
+	 */
+	const deleteField = ( selectedField ) => {
+		const newBlock = { ...block };
+		if (
+			selectedField.hasOwnProperty( 'parent' ) &&
+			newBlock.fields[ selectedField.parent ] &&
+			newBlock.fields[ selectedField.parent ].sub_fields
+		) {
+			delete newBlock.fields[ selectedField.parent ].sub_fields[ selectedField.name ];
+		} else {
+			delete newBlock.fields[ selectedField.name ];
+		}
 
-			if ( fieldToChange.parent ) {
-				fullBlock[ blockNameWithNameSpace ].fields[ fieldToChange.parent ]
-					.sub_fields[ fieldToChange.name ] = newField;
-			} else {
-				fullBlock[ blockNameWithNameSpace ].fields[ name ] = newField;
-			}
+		editBlock( newBlock );
+	};
 
-			editPost( { content: JSON.stringify( fullBlock ) } );
-		},
-		[ blockNameWithNameSpace, changeFieldLocation, editPost, fullBlock ]
-	);
+	/**
+	 * Gets a field, if it exists.
+	 *
+	 * @param {SelectedField} field The field to get.
+	 * @return {import('../components/editor').Field|{}} The field, or {}.
+	 */
+	const getField = ( field ) => {
+		if ( ! field || ! block.fields ) {
+			return {};
+		}
 
-	const deleteField = useCallback(
-		/**
-		 * Deletes the field.
-		 *
-		 * @param {SelectedField} selectedField The field to delete.
-		 */
-		( selectedField ) => {
-			if (
-				selectedField.hasOwnProperty( 'parent' ) &&
-				fullBlock[ blockNameWithNameSpace ].fields[ selectedField.parent ] &&
-				fullBlock[ blockNameWithNameSpace ].fields[ selectedField.parent ].sub_fields
-			) {
-				delete fullBlock[ blockNameWithNameSpace ].fields[ selectedField.parent ].sub_fields[ selectedField.name ];
-			} else {
-				delete fullBlock[ blockNameWithNameSpace ].fields[ selectedField.name ];
-			}
+		const currentField = field.parent
+			? block.fields[ field.parent ].sub_fields[ field.name ]
+			: block.fields[ field.name ];
 
-			editPost( { content: JSON.stringify( fullBlock ) } );
-		},
-		[ blockNameWithNameSpace, editPost, fullBlock ]
-	);
+		return currentField || {};
+	};
 
-	const getField = useCallback(
-		/**
-		 * Gets a field, if it exists.
-		 *
-		 * @param {SelectedField} field The field to get.
-		 * @return {import('../components/editor').Field|{}} The field, or {}.
-		 */
-		( field ) => {
-			if ( ! field || ! block.fields ) {
-				return {};
-			}
+	/**
+	 * Duplicates this field.
+	 *
+	 * @param {SelectedField} selectedField The name of the field to duplicate.
+	 */
+	const duplicateField = ( selectedField ) => {
+		const { fields = {} } = block;
+		const currentField = getField( selectedField );
+		const hasParent = selectedField.hasOwnProperty( 'parent' );
+		const currentFields = hasParent
+			? fields[ selectedField.parent ].sub_fields
+			: fields;
 
-			const currentField = field.parent
-				? block.fields[ field.parent ].sub_fields[ field.name ]
-				: block.fields[ field.name ];
+		const newFieldNumber = getNewFieldNumber( currentFields, selectedField.name );
+		const newFieldName = `${ selectedField.name }-${ newFieldNumber.toString() }`;
 
-			return currentField || {};
-		},
-		[ block ]
-	);
+		currentFields[ newFieldName ] = {
+			...currentField,
+			name: newFieldName,
+			order: Object.values( fields ).length,
+		};
 
-	const duplicateField = useCallback(
-		/**
-		 * Duplicates this field.
-		 *
-		 * @param {SelectedField} selectedField The name of the field to duplicate.
-		 */
-		( selectedField ) => {
-			const { fields = {} } = block;
-			const currentField = getField( selectedField );
-			const hasParent = selectedField.hasOwnProperty( 'parent' );
-			const currentFields = hasParent
-				? fields[ selectedField.parent ].sub_fields
-				: fields;
+		const newBlock = { ...block };
+		if ( hasParent ) {
+			newBlock.fields[ selectedField.parent ].sub_fields = currentFields;
+		} else {
+			newBlock.fields = currentFields;
+		}
 
-			const newFieldNumber = getNewFieldNumber( currentFields, selectedField.name );
-			const newFieldName = `${ selectedField.name }-${ newFieldNumber.toString() }`;
+		editBlock( newBlock );
+	};
 
-			currentFields[ newFieldName ] = {
-				...currentField,
-				name: newFieldName,
-				order: Object.values( fields ).length,
-			};
+	/**
+	 * Reorders fields, moving a single field to another position.
+	 *
+	 * @param {number} moveFrom The index of the field to move.
+	 * @param {number} moveTo The index that the field should be moved to.
+	 * @param {string} currentLocation The current field's location, like 'editor'.
+	 * @param {string|null} parentField The field's parent field, if any.
+	 */
+	const reorderFields = ( moveFrom, moveTo, currentLocation, parentField = null ) => {
+		const fieldsToReorder = getFieldsForLocation( currentLocation, parentField );
+		if ( ! fieldsToReorder.length ) {
+			return;
+		}
 
-			if ( hasParent ) {
-				block.fields[ selectedField.parent ].sub_fields = currentFields;
-			} else {
-				block.fields = currentFields;
-			}
-			fullBlock[ blockNameWithNameSpace ] = block;
+		const newFields = [ ...fieldsToReorder ];
+		[ newFields[ moveFrom ], newFields[ moveTo ] ] = [ newFields[ moveTo ], newFields[ moveFrom ] ];
 
-			editPost( { content: JSON.stringify( fullBlock ) } );
-		},
-		[ blockNameWithNameSpace, editPost, fullBlock, block, getField ]
-	);
+		const newBlock = { ...block };
+		if ( null !== parentField ) {
+			newBlock.fields[ parentField ].sub_fields = getFieldsAsObject( [
+				...setCorrectOrderForFields( newFields ),
+			] );
+		} else {
+			newBlock.fields = getFieldsAsObject( [
+				...setCorrectOrderForFields( newFields ),
+				...getFieldsForLocation( getOtherLocation( currentLocation ) ),
+			] );
+		}
 
-	const reorderFields = useCallback(
-		/**
-		 * Reorders fields, moving a single field to another position.
-		 *
-		 * @param {number} moveFrom The index of the field to move.
-		 * @param {number} moveTo The index that the field should be moved to.
-		 * @param {string} currentLocation The current field's location, like 'editor'.
-		 * @param {string|null} parentField The field's parent field, if any.
-		 */
-		( moveFrom, moveTo, currentLocation, parentField = null ) => {
-			const fieldsToReorder = getFieldsForLocation( currentLocation, parentField );
-			if ( ! fieldsToReorder.length ) {
-				return;
-			}
-
-			const newFields = [ ...fieldsToReorder ];
-			[ newFields[ moveFrom ], newFields[ moveTo ] ] = [ newFields[ moveTo ], newFields[ moveFrom ] ];
-
-			if ( null !== parentField ) {
-				fullBlock[ blockNameWithNameSpace ].fields[ parentField ].sub_fields = getFieldsAsObject( [
-					...setCorrectOrderForFields( newFields ),
-				] );
-			} else {
-				fullBlock[ blockNameWithNameSpace ].fields = getFieldsAsObject( [
-					...setCorrectOrderForFields( newFields ),
-					...getFieldsForLocation( getOtherLocation( currentLocation ) ),
-				] );
-			}
-
-			editPost( { content: JSON.stringify( fullBlock ) } );
-		},
-		[ blockNameWithNameSpace, editPost, fullBlock, getFieldsForLocation ]
-	);
+		editBlock( newBlock );
+	};
 
 	return {
 		addNewField,

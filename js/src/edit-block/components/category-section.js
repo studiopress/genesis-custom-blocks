@@ -1,3 +1,5 @@
+/* global gcbEditor */
+
 /**
  * External dependencies
  */
@@ -6,14 +8,14 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
-import { useCallback, useState } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import { getDefaultBlock } from '../helpers';
-import { useBlock, useCategories } from '../hooks';
+import { useBlock } from '../hooks';
 
 /**
  * The category editor section.
@@ -21,10 +23,12 @@ import { useBlock, useCategories } from '../hooks';
  * @return {React.ReactElement} The section to edit the block category.
  */
 const CategorySection = () => {
+	// @ts-ignore
+	const { categories: initialCategories } = gcbEditor;
 	const { block, changeBlock } = useBlock();
-	const { categories, setCategories } = useCategories();
+	const [ categories, setCategories ] = useState( initialCategories );
 	const [ showNewCategoryForm, setShowNewCategoryForm ] = useState( false );
-	const [ newCategorySlug, setNewCategorySlug ] = useState( '' );
+	const newCategoryId = 'add-new-category';
 
 	/**
 	 * Handles changing the category.
@@ -54,21 +58,14 @@ const CategorySection = () => {
 	};
 
 	/**
-	 * Handles changing the category name.
+	 * Handless adding a new category name.
 	 *
-	 * @param {{ target: { value: React.SetStateAction<string>; }; }} event The event on changing the name.
+	 * @param {React.FormEvent<HTMLFormElement>} event The form submission event.
 	 */
-	const handleChangeCategoryName = ( event ) => {
-		if ( event.target ) {
-			setNewCategorySlug( event.target.value );
-		}
-	};
-
-	const onSubmitCategoryName = useCallback( ( event ) => {
+	const onSubmitCategoryName = ( event ) => {
 		event.preventDefault();
-		if ( ! newCategorySlug ) {
-			return;
-		}
+		// @ts-ignore
+		const newCategorySlug = event.target.elements ? event.target.elements[ newCategoryId ].value : '';
 
 		const newCategory = {
 			icon: null,
@@ -84,14 +81,11 @@ const CategorySection = () => {
 		);
 		changeBlock( { category: newCategory } );
 		setShowNewCategoryForm( ( previousValue ) => ! previousValue );
-	}, [ categories, changeBlock, newCategorySlug, setCategories ] );
+	};
 
-	const isDefaultCategory = useCallback( () => {
-		const matchedCategories = categories.filter( ( cat ) => {
-			return block.category && ( block.category.slug === cat.slug );
-		} );
-		return matchedCategories.length > 0;
-	}, [ categories, block ] );
+	const isDefaultCategory = () => {
+		return categories.some( ( cat ) => block.category && ( block.category.slug === cat.slug ) );
+	};
 
 	return (
 		<div className="mt-5">
@@ -102,20 +96,23 @@ const CategorySection = () => {
 				value={ block.category && block.category.slug ? block.category.slug : getDefaultBlock().category }
 				onChange={ handleChangeCategory }
 			>
-				{ categories.map( ( category, index ) => {
-					const categoryWithDefault = category || {};
+				{ categories && Array.isArray( categories )
+					? categories.map( ( category, index ) => {
+						const categoryWithDefault = category || {};
 
-					return (
-						<option
-							value={ category.slug }
-							key={ `block-category-${ index }` }>
-							{ categoryWithDefault.title
-								? categoryWithDefault.title
-								: categoryWithDefault.slug
-							}
-						</option>
-					);
-				} ) }
+						return (
+							<option
+								value={ category.slug }
+								key={ `block-category-${ index }` }>
+								{ categoryWithDefault.title
+									? categoryWithDefault.title
+									: categoryWithDefault.slug
+								}
+							</option>
+						);
+					} )
+					: null
+				}
 				{ block.category && ! isDefaultCategory()
 					? (
 						<option
@@ -140,17 +137,15 @@ const CategorySection = () => {
 			{ showNewCategoryForm
 				? <form onSubmit={ onSubmitCategoryName } key="hierarchical-terms-form">
 					<label
-						htmlFor="add-new-category"
+						htmlFor={ newCategoryId }
 						className="text-sm"
 					>
 						{ __( 'New Category Name', 'genesis-custom-blocks' ) }
 					</label>
 					<input
 						type="text"
-						id="add-new-category"
+						id={ newCategoryId }
 						className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm"
-						value={ newCategorySlug }
-						onChange={ handleChangeCategoryName }
 						required
 					/>
 					<button className="flex border border-gray-600 rounded-sm mt-2" type="submit">

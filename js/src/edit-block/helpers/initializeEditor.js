@@ -52,7 +52,6 @@ export function reinitializeEditor(
 			onError={ reboot }
 			postId={ postId }
 			postType={ postType }
-			initialEdits={ initialEdits }
 		/>,
 		target
 	);
@@ -102,6 +101,7 @@ const initializeEditor = (
 	// But Mobile Safari forces the `html` element to scroll upwards, hiding the toolbar.
 	const isIphone = window.navigator.userAgent.indexOf( 'iPhone' ) !== -1;
 	if ( isIphone ) {
+		// eslint-disable-next-line @wordpress/no-global-event-listener
 		window.addEventListener( 'scroll', ( event ) => {
 			const editorScrollContainer = document.getElementsByClassName(
 				'interface-interface-skeleton__body'
@@ -129,7 +129,6 @@ const initializeEditor = (
 			onError={ reboot }
 			postId={ postId }
 			postType={ postType }
-			initialEdits={ initialEdits }
 		/>,
 		container
 	);

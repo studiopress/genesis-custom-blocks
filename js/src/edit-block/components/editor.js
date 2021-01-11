@@ -12,19 +12,27 @@ import {
 	ErrorBoundary,
 	UnsavedChangesWarning,
 } from '@wordpress/editor';
-import { StrictMode, useEffect, useState } from '@wordpress/element';
+import { StrictMode, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import { BrowserURL, EditorProvider, Header, Main, Side } from './';
+import {
+	BlockPanel,
+	BrowserURL,
+	EditorProvider,
+	FieldPanel,
+	FieldsGrid,
+	Header,
+	LocationButtons,
+	Main,
+	Side,
+} from './';
 import {
 	BLOCK_PANEL,
 	DEFAULT_LOCATION,
 	NO_FIELD_SELECTED,
 } from '../constants';
-import { getDefaultBlock } from '../helpers';
-import { useBlock } from '../hooks';
 
 /**
  * @callback onErrorType Handler for errors.
@@ -63,7 +71,7 @@ import { useBlock } from '../hooks';
  * @property {number} order Its order relative to other fields in its location, like 0, 1, 2...
  * @property {string} [parent] The name of its parent field, like a Repeater control.
  * @property {Object} [sub_fields] Fields that this field has, like for the Repeater control.
- * @property {string|number} [width] The width, like '25'.
+ * @property {string} [width] The width, like '25'.
  */
 
 /**
@@ -73,7 +81,6 @@ import { useBlock } from '../hooks';
  * @return {React.ReactElement} The editor.
  */
 const Editor = ( { onError, postId, postType, settings } ) => {
-	const { block, changeBlockName } = useBlock();
 	const [ currentLocation, setCurrentLocation ] = useState( DEFAULT_LOCATION );
 	const [ isNewField, setIsNewField ] = useState( false );
 	const [ panelDisplaying, setPanelDisplaying ] = useState( BLOCK_PANEL );
@@ -83,14 +90,6 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
 		[ postId, postType ]
 	);
-	const isSavingPost = useSelect( ( select ) => select( 'core/editor' ).isSavingPost() );
-
-	useEffect( () => {
-		if ( isSavingPost && ! block.name ) {
-			const defaultBlock = getDefaultBlock( postId );
-			changeBlockName( defaultBlock.name, defaultBlock );
-		}
-	}, [ block, changeBlockName, isSavingPost, postId ] );
 
 	if ( ! post ) {
 		return null;
@@ -98,35 +97,49 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 
 	return (
 		<StrictMode>
-			<UnsavedChangesWarning />
 			<div className="h-screen flex flex-col items-center text-black">
 				<BrowserURL />
+				<UnsavedChangesWarning />
 				<EditorProvider
 					post={ post }
 					settings={ settings }
 				>
 					<ErrorBoundary onError={ onError }>
-						<EditorNotices />
 						<Header />
+						<EditorNotices />
 						<div className="flex w-full h-0 flex-grow">
-							<Main
-								currentLocation={ currentLocation }
-								selectedField={ selectedField }
-								setCurrentLocation={ setCurrentLocation }
-								setIsNewField={ setIsNewField }
-								setPanelDisplaying={ setPanelDisplaying }
-								setSelectedField={ setSelectedField }
-							/>
+							<Main>
+								<LocationButtons
+									currentLocation={ currentLocation }
+									setCurrentLocation={ setCurrentLocation }
+								/>
+								<FieldsGrid
+									currentLocation={ currentLocation }
+									selectedField={ selectedField }
+									setIsNewField={ setIsNewField }
+									setPanelDisplaying={ setPanelDisplaying }
+									setSelectedField={ setSelectedField }
+								/>
+							</Main>
 							<Side
-								currentLocation={ currentLocation }
-								isNewField={ isNewField }
 								panelDisplaying={ panelDisplaying }
-								selectedField={ selectedField }
 								setPanelDisplaying={ setPanelDisplaying }
-								setCurrentLocation={ setCurrentLocation }
-								setIsNewField={ setIsNewField }
-								setSelectedField={ setSelectedField }
-							/>
+							>
+								{
+									BLOCK_PANEL === panelDisplaying
+										? <BlockPanel />
+										: (
+											<FieldPanel
+												currentLocation={ currentLocation }
+												isNewField={ isNewField }
+												selectedField={ selectedField }
+												setCurrentLocation={ setCurrentLocation }
+												setIsNewField={ setIsNewField }
+												setSelectedField={ setSelectedField }
+											/>
+										)
+								}
+							</Side>
 						</div>
 					</ErrorBoundary>
 				</EditorProvider>

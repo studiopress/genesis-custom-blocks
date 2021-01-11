@@ -9,12 +9,16 @@ describe( 'getDefaultBlock', () => {
 			getDefaultBlock()
 		).toEqual( {
 			name: 'block',
+			title: 'block',
+			excluded: [],
+			icon: 'genesis_custom_blocks',
 			category: {
 				icon: null,
 				slug: 'text',
 				title: 'Text',
 			},
-			icon: 'genesis_custom_blocks',
+			keywords: [],
+			fields: {},
 		} );
 	} );
 
@@ -23,12 +27,16 @@ describe( 'getDefaultBlock', () => {
 			getDefaultBlock( 923 )
 		).toEqual( {
 			name: 'block-923',
+			title: 'block-923',
+			excluded: [],
+			icon: 'genesis_custom_blocks',
 			category: {
 				icon: null,
 				slug: 'text',
 				title: 'Text',
 			},
-			icon: 'genesis_custom_blocks',
+			keywords: [],
+			fields: {},
 		} );
 	} );
 } );

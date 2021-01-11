@@ -17,5 +17,6 @@ domReady( () => {
 		container = document.querySelector( 'body' );
 	}
 
+	// @ts-ignore
 	initializeEditor( gcbEditor, container );
 } );

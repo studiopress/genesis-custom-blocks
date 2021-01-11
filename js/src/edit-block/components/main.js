@@ -1,21 +1,25 @@
+/* global gcbEditor */
+
 /**
  * External dependencies
  */
 import * as React from 'react';
 
 /**
+ * WordPress dependencies
+ */
+import { useSelect } from '@wordpress/data';
+import { useEffect, useState } from '@wordpress/element';
+
+/**
  * Internal dependencies
  */
-import { FieldsGrid, LocationButtons, PostTitle } from './';
+import { BottomNotice, PostTitle, TopNotice } from './';
+import { useBlock, useTemplate } from '../hooks';
 
 /**
  * @typedef {Object} MainProps The component props.
- * @property {import('./editor').CurrentLocation} currentLocation The currently selected location.
- * @property {import('./editor').SelectedField|import('../constants').NoFieldSelected} selectedField The currently selected field.
- * @property {import('./editor').SetCurrentLocation} setCurrentLocation Sets the currently selected location.
- * @property {import('./editor').SetIsNewField} setIsNewField Sets whether there is a new field.
- * @property {import('./editor').SetPanelDisplaying} setPanelDisplaying Sets the current panel displaying.
- * @property {import('./editor').SetSelectedField} setSelectedField Sets the name of the selected field.
+ * @property {React.ReactElement[]} children THe component children.
  */
 
 /**
@@ -24,32 +28,33 @@ import { FieldsGrid, LocationButtons, PostTitle } from './';
  * @param {MainProps} props
  * @return {React.ReactElement} The main editing area.
  */
-const Main = ( {
-	currentLocation,
-	selectedField,
-	setCurrentLocation,
-	setIsNewField,
-	setPanelDisplaying,
-	setSelectedField,
-} ) => (
-	<div className="flex flex-col flex-grow items-start w-full overflow-scroll">
-		<div className="flex flex-col w-full max-w-2xl mx-auto pb-64">
-			<div className="block-title-field w-full mt-10 text-center focus:outline-none">
-				<PostTitle />
+const Main = ( { children } ) => {
+	// @ts-ignore
+	const { isOnboardingPost: initialIsOnboarding, template: initialTemplate } = gcbEditor;
+	const [ template, setTemplate ] = useState( initialTemplate );
+	const { fetchTemplate } = useTemplate( setTemplate );
+	const { block } = useBlock();
+	const isPublished = useSelect( ( select ) => select( 'core/editor' ).isCurrentPostPublished() );
+	const isOnboarding = initialIsOnboarding && ! isPublished;
+
+	useEffect( () => {
+		if ( Boolean( block.name ) ) {
+			fetchTemplate( block.name );
+		}
+	}, [ block.name, fetchTemplate ] );
+
+	return (
+		<div className="flex flex-col flex-grow items-start w-full overflow-scroll">
+			<div className="flex flex-col w-full max-w-2xl mx-auto pl-8 pr-8 pb-64">
+				<div className="text-4xl w-full mt-10 text-center focus:outline-none">
+					<PostTitle />
+				</div>
+				<TopNotice isOnboarding={ isOnboarding } template={ template } />
+				{ children }
+				{ isOnboarding ? <BottomNotice /> : null }
 			</div>
-			<LocationButtons
-				currentLocation={ currentLocation }
-				setCurrentLocation={ setCurrentLocation }
-			/>
-			<FieldsGrid
-				currentLocation={ currentLocation }
-				selectedField={ selectedField }
-				setIsNewField={ setIsNewField }
-				setPanelDisplaying={ setPanelDisplaying }
-				setSelectedField={ setSelectedField }
-			/>
 		</div>
-	</div>
-);
+	);
+};
 
 export default Main;

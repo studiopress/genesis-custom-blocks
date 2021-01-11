@@ -6,7 +6,6 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
-import { useCallback } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -29,25 +28,26 @@ const PostTypesSection = () => {
 	 * @param {string} type The slug of the post type to check.
 	 * @return {boolean} Whether the post type is enabeld.
 	 */
-	const isEnabled = useCallback( ( type ) => {
+	const isEnabled = ( type ) => {
 		if ( ! Array.isArray( excluded ) ) {
 			return true;
 		}
 
 		return ! excluded.includes( type );
-	}, [ excluded ] );
+	};
 
 	/**
 	 * Handles changing whether a post type is enabled.
 	 *
-	 * @param {{ target: { value: React.SetStateAction<string>; }; }} event The event on changing the post type.
+	 * @param {React.ChangeEvent} event The event on changing the post type.
 	 * @param {string} postType The post type to change.
 	 */
-	const handleChangePostTypes = useCallback( ( event, postType ) => {
+	const handleChangePostTypes = ( event, postType ) => {
 		if ( ! event.target ) {
 			return;
 		}
 
+		// @ts-ignore
 		const isExcluded = ! event.target.checked;
 		const newExcluded = excluded && excluded.length ? [ ...excluded ] : [];
 
@@ -56,15 +56,15 @@ const PostTypesSection = () => {
 		}
 
 		if ( ! isExcluded && newExcluded.includes( postType ) ) {
-			newExcluded.pop( newExcluded.indexOf( postType ) );
+			newExcluded.splice( newExcluded.indexOf( postType ), 1 );
 		}
 
 		changeBlock( { excluded: newExcluded } );
-	}, [ changeBlock, excluded ] );
+	};
 
 	return (
 		<div className="mt-5">
-			<span className="text-sm" htmlFor="block-categories">{ __( 'Post Types', 'genesis-custom-blocks' ) }</span>
+			<span className="text-sm">{ __( 'Post Types', 'genesis-custom-blocks' ) }</span>
 			{
 				Array.isArray( postTypes ) && postTypes.length
 					? postTypes.map( ( postType ) => {

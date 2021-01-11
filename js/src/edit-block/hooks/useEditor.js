@@ -4,11 +4,6 @@
 import { useDispatch } from '@wordpress/data';
 
 /**
- * External dependencies
- */
-import { useCallback } from 'react';
-
-/**
  * @typedef {Object} UseEditorReturn The return value of useEditor.
  * @property {function(Object):void} setupEditor Sets up the editor.
  */
@@ -21,25 +16,22 @@ import { useCallback } from 'react';
 const useEditor = () => {
 	const { setupEditorState, resetPost } = useDispatch( 'core/editor' );
 
-	const setupEditor = useCallback(
-		/**
-		 * Initializes the editor with the specified post object and editor settings.
-		 *
-		 * Forked from setupEditor() in Gutenberg.
-		 * Removed the lines that parse the blocks,
-		 * as they can cause getEditedPostContent() to return ''.
-		 * That function tries to parse blocks, but this doesn't have block comments like in Gutenberg.
-		 *
-		 * @see https://github.com/WordPress/gutenberg/blob/8d5fd89f573e00601b189b1a2f87d5bc7b862349/packages/editor/src/store/actions.js#L38
-		 *
-		 * @param {Object} post Post object.
-		 */
-		( post ) => {
-			resetPost( post );
-			setupEditorState( post );
-		},
-		[ setupEditorState, resetPost ]
-	);
+	/**
+	 * Initializes the editor with the specified post object and editor settings.
+	 *
+	 * Forked from setupEditor() in Gutenberg.
+	 * Removed the lines that parse the blocks,
+	 * as they can cause getEditedPostContent() to return ''.
+	 * That function tries to parse blocks, but this doesn't have block comments like in Gutenberg.
+	 *
+	 * @see https://github.com/WordPress/gutenberg/blob/8d5fd89f573e00601b189b1a2f87d5bc7b862349/packages/editor/src/store/actions.js#L38
+	 *
+	 * @param {Object} post Post object.
+	 */
+	const setupEditor = ( post ) => {
+		resetPost( post );
+		setupEditorState( post );
+	};
 
 	return { setupEditor };
 };

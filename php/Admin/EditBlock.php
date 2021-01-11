@@ -3,13 +3,15 @@
  * The 'Edit Block' submenu page.
  *
  * @package   Genesis\CustomBlocks
- * @copyright Copyright(c) 2020, Genesis Custom Blocks
+ * @copyright Copyright(c) 2021, Genesis Custom Blocks
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
 namespace Genesis\CustomBlocks\Admin;
 
+use WP_Error;
 use WP_Post;
+use Genesis\CustomBlocks\Blocks\Block;
 use Genesis\CustomBlocks\ComponentAbstract;
 
 /**
@@ -32,11 +34,11 @@ class EditBlock extends ComponentAbstract {
 	const STYLE_SLUG = 'genesis-custom-blocks-edit-block-style';
 
 	/**
-	 * The slug of tailwind.
+	 * The REST API capability type.
 	 *
 	 * @var string
 	 */
-	const TAILWIND_SLUG = 'genesis-custom-blocks-tailwind';
+	const CABAPILITY = 'edit_posts';
 
 	/**
 	 * Registers the hooks.
@@ -45,10 +47,18 @@ class EditBlock extends ComponentAbstract {
 		add_filter( 'replace_editor', [ $this, 'should_replace_editor' ], 10, 2 );
 		add_filter( 'use_block_editor_for_post_type', [ $this, 'should_use_block_editor_for_post_type' ], 10, 2 );
 		add_action( 'admin_footer', [ $this, 'enqueue_assets' ] );
+		add_filter( 'admin_footer_text', [ $this, 'conditionally_prevent_footer_text' ] );
+		add_filter( 'update_footer', [ $this, 'conditionally_prevent_update_text' ], 11 );
+		add_action( 'rest_api_init', [ $this, 'register_route_template_file' ] );
 	}
 
 	/**
 	 * Gets whether this should replace the native editor.
+	 *
+	 * Forked from the Web Stories For WordPress plugin.
+	 * https://github.com/google/web-stories-wp/blob/a3648a06b57c1af90cd73a75d0b8448a9e5a3d2b/includes/Story_Post_Type.php#L399
+	 * Since the 'replace_editor' filter can be run multiple times, only run
+	 * some admin-header.php logic after the 'current_screen' action.
 	 *
 	 * @param bool    $replace Whether to replace the editor.
 	 * @param WP_Post $post    The current post.
@@ -56,6 +66,10 @@ class EditBlock extends ComponentAbstract {
 	 */
 	public function should_replace_editor( $replace, $post ) {
 		if ( genesis_custom_blocks()->get_post_type_slug() === get_post_type( $post ) ) {
+			if ( did_action( 'current_screen' ) ) {
+				require_once genesis_custom_blocks()->get_path() . 'php/Views/EditorHeader.php';
+			}
+
 			return true;
 		}
 
@@ -84,13 +98,7 @@ class EditBlock extends ComponentAbstract {
 	 * as the native editor is disabled.
 	 */
 	public function enqueue_assets() {
-		$screen = get_current_screen();
-
-		if (
-			! is_object( $screen ) ||
-			genesis_custom_blocks()->get_post_type_slug() !== $screen->post_type ||
-			'post' !== $screen->base
-		) {
+		if ( ! $this->is_gcb_editor() ) {
 			return;
 		}
 
@@ -103,40 +111,146 @@ class EditBlock extends ComponentAbstract {
 			true
 		);
 
+		$post_id = get_the_ID();
+		$block   = new Block( $post_id );
 		wp_add_inline_script(
 			self::SCRIPT_SLUG,
 			sprintf(
 				'const gcbEditor = %s;',
 				wp_json_encode(
 					[
-						'postType'     => get_post_type(),
-						'postId'       => get_the_ID(),
-						'settings'     => [
+						'controls'         => genesis_custom_blocks()->block_post->get_controls(),
+						'postType'         => get_post_type(),
+						'postId'           => $post_id,
+						'settings'         => [
 							'titlePlaceholder'   => __( 'Block title', 'genesis-custom-blocks' ),
 							'richEditingEnabled' => false,
 						],
-						'initialEdits' => null,
-						'controls'     => genesis_custom_blocks()->block_post->get_controls(),
+						'template'         => $this->get_template_file( $block->name ),
+						'initialEdits'     => null,
+						'isOnboardingPost' => $post_id && intval( get_option( Onboarding::OPTION_NAME ) ) === $post_id,
+						'categories'       => get_block_categories( get_post() ),
 					]
 				)
 			),
 			'before'
 		);
 
-		$edit_block_style_path = 'css/edit-block.css';
+		$edit_block_style_path = 'css/dist/edit-block.css';
+		$css_config            = require $this->plugin->get_path( 'css/dist/edit-block.asset.php' );
 		wp_enqueue_style(
 			self::STYLE_SLUG,
 			$this->plugin->get_url( $edit_block_style_path ),
 			[ 'wp-components' ],
-			filemtime( $this->plugin->get_path( $edit_block_style_path ) )
+			$css_config['version']
 		);
+	}
 
-		// @todo: get only the style rules that are needed, and add them to a CSS file in this plugin.
-		wp_enqueue_style(
-			self::TAILWIND_SLUG,
-			'https://unpkg.com/tailwindcss@1.9.6/dist/tailwind.min.css',
-			[],
-			$this->plugin->get_version()
+	/**
+	 * Gets whether the current screen is the GCB editor.
+	 *
+	 * @return bool Whether this is the GCB editor.
+	 */
+	public function is_gcb_editor() {
+		$screen = get_current_screen();
+
+		return (
+			is_object( $screen ) &&
+			genesis_custom_blocks()->get_post_type_slug() === $screen->post_type &&
+			'post' === $screen->base
 		);
+	}
+
+	/**
+	 * Conditionally prevents footer text, as the GCB editor is React-driven.
+	 *
+	 * @param string $text The text to display in the footer.
+	 * @return string The filtered footer text.
+	 */
+	public function conditionally_prevent_footer_text( $text ) {
+		if ( $this->is_gcb_editor() ) {
+			return '';
+		}
+
+		return $text;
+	}
+
+	/**
+	 * Conditionally prevents WP update text, as the GCB editor is React-driven.
+	 *
+	 * @param string $text The update text.
+	 * @return string The filtered update text.
+	 */
+	public function conditionally_prevent_update_text( $text ) {
+		if ( $this->is_gcb_editor() ) {
+			return '';
+		}
+
+		return $text;
+	}
+
+	/**
+	 * Registers a route to get the template file.
+	 */
+	public function register_route_template_file() {
+		register_rest_route(
+			genesis_custom_blocks()->get_slug(),
+			'template-file',
+			[
+				'callback'            => [ $this, 'get_template_file_response' ],
+				'permission_callback' => function() {
+					return current_user_can( self::CABAPILITY );
+				},
+				'args'                => [
+					'blockName' => [
+						'description' => __( 'Block name', 'genesis-custom-blocks' ),
+						'type'        => 'string',
+					],
+				],
+			]
+		);
+	}
+
+	/**
+	 * Gets the response for the `template-file` endpoint.
+	 *
+	 * @param array $data Data sent in the GET request.
+	 * @return WP_REST_Response|WP_Error Response to the request.
+	 */
+	public function get_template_file_response( $data ) {
+		if ( empty( $data['blockName'] ) ) {
+			return new WP_Error(
+				'no_block_name',
+				__( 'Please pass a block name', 'genesis-custom-blocks' )
+			);
+		}
+
+		return rest_ensure_response( $this->get_template_file( $data['blockName'] ) );
+	}
+
+
+	/**
+	 * Gets the template path and whether it exists.
+	 *
+	 * @param string $block_name The block name (slug).
+	 * @return array Template file data.
+	 */
+	public function get_template_file( $block_name ) {
+		$locations     = genesis_custom_blocks()->get_template_locations( $block_name, 'block' );
+		$template_path = genesis_custom_blocks()->locate_template( $locations );
+
+		$template_exists = ! empty( $template_path );
+		if ( ! $template_exists ) {
+			$template_path = get_stylesheet_directory() . "/blocks/block-{$block_name}.php";
+		}
+
+		return [
+			'templateExists' => $template_exists,
+			'templatePath'   => str_replace(
+				WP_CONTENT_DIR,
+				basename( WP_CONTENT_DIR ),
+				$template_path
+			),
+		];
 	}
 }

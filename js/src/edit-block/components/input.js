@@ -33,7 +33,8 @@ const Input = ( { handleOnChange, setting, type, value, min } ) => {
 				min={ min }
 				onChange={ ( event ) => {
 					if ( event.target ) {
-						handleOnChange( event.target.value );
+						const newValue = 'number' === type ? parseInt( event.target.value ) : event.target.value;
+						handleOnChange( newValue );
 					}
 				} }
 			/>

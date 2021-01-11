@@ -20,6 +20,7 @@ module.exports = {
 		'./js/dist/block-editor': './js/src/block-editor/index.js',
 		'./js/dist/edit-block': './js/src/edit-block/index.js',
 		'./css/dist/blocks.editor': './css/src/editor.scss',
+		'./css/dist/edit-block': './css/src/edit-block.scss',
 	},
 	output: {
 		path: path.resolve( __dirname ),
@@ -37,24 +38,13 @@ module.exports = {
 				},
 			},
 			{
-				test: /editor\.s?css$/,
+				test: /css\/src\/[^_].*\.scss$/,
 				use: [
 					{
 						loader: MiniCssExtractPlugin.loader,
-						options: {
-							// Only allow hot module reloading in development.
-							hmr: process.env.NODE_ENV === 'development',
-							// Force reloading if hot module reloading does not work.
-							reloadAll: true,
-						},
 					},
 					'css-loader',
-					{
-						loader: 'postcss-loader',
-						options: {
-							plugins: [ require( 'autoprefixer' ) ],
-						},
-					},
+					'postcss-loader',
 					{
 						loader: 'sass-loader',
 					},
@@ -67,7 +57,7 @@ module.exports = {
 			cleanOnceBeforeBuildPatterns: [ 'js/dist', 'css/dist' ],
 		} ),
 		new MiniCssExtractPlugin( {
-			filename: './css/dist/blocks.editor.css',
+			filename: '[name].css',
 		} ),
 		new DependencyExtractionWebpackPlugin( {
 			useDefaults: false,
