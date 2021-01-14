@@ -55,7 +55,7 @@ const Side = ( {
 						)
 					}
 				>
-					{ __( 'Field', 'genesis-custom-blocks' ) }
+					{ __( 'Field Type', 'genesis-custom-blocks' ) }
 				</button>
 			</div>
 			{ children }
