@@ -1,4 +1,5 @@
 export { default as Checkbox } from './checkbox';
+export { default as Email } from './email';
 export { default as Location } from './location';
 export { default as NewLineFormat } from './new-line-format';
 export { default as Number } from './number';
