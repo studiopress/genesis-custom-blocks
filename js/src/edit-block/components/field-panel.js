@@ -152,7 +152,7 @@ const FieldPanel = ( {
 						<span className="block italic text-xs mt-1">{ __( 'Single word, no spaces.', 'genesis-custom-blocks' ) }</span>
 					</div>
 					<div className="mt-5">
-						<label className="text-sm" htmlFor="field-control">{ __( 'Field ', 'genesis-custom-blocks' ) }</label>
+						<label className="text-sm" htmlFor="field-control">{ __( 'Field Type', 'genesis-custom-blocks' ) }</label>
 						<select /* eslint-disable-line jsx-a11y/no-onchange */
 							className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm"
 							id="field-control"
