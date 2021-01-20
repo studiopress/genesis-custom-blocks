@@ -49,7 +49,7 @@ import {
 
 /**
  * @typedef {Object} SelectedField A field to change.
- * @property {string} name The name of the field.
+ * @property {string} uniqueId The name of the field.
  * @property {string} [parent] The name of the field's parent, if any.
  */
 
@@ -63,7 +63,8 @@ import {
 
 /**
  * @typedef {Object} Field A block field, can have more properties depending on its settings.
- * @property {string} name The name of the field.
+ * @property {string} name The name of the field, which could be the same name as another field.
+ * @property {number} uniqueId An ID that can't be the same as another field.
  * @property {string} label The label of the field.
  * @property {string} control The control type, like 'text' or 'textarea'.
  * @property {string} location The location, like 'editor'.

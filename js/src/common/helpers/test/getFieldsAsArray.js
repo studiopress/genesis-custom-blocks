@@ -11,6 +11,7 @@ describe( 'getFieldsAsArray', () => {
 	it( 'should return fields as an array for a typical object of fields', () => {
 		expect( getFieldsAsArray( {
 			example_post: {
+				name: 'example_post',
 				type: 'post',
 				help: 'This is some example help text',
 				location: 'editor',
@@ -19,6 +20,7 @@ describe( 'getFieldsAsArray', () => {
 				order: 2,
 			},
 			example_classic_text: {
+				name: 'example_classic_text',
 				type: 'classic_text',
 				default: 'https://example.com/go-here',
 				help: 'Here is the help text',
@@ -26,6 +28,7 @@ describe( 'getFieldsAsArray', () => {
 				order: 1,
 			},
 			example_user: {
+				name: 'example_user',
 				type: 'user',
 				default: 'https://example.com/go-here',
 				help: 'Here is the help text',
@@ -64,6 +67,7 @@ describe( 'getFieldsAsArray', () => {
 	it( 'should still include falsy values in the simplified fields', () => {
 		expect( getFieldsAsArray( {
 			test_taxonomy: {
+				name: 'test_taxonomy',
 				default: '',
 			},
 		} ) ).toStrictEqual( [

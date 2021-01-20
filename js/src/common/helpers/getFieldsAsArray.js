@@ -21,19 +21,6 @@ const compare = ( a, b ) => {
  * @param {Object} fields The fields to simplify.
  * @return {Array} The simplified fields.
  */
-const getFieldsAsArray = ( fields ) => {
-	return Object.keys( fields )
-		.reduce( ( accumulator, fieldName ) => {
-			accumulator.push(
-				{
-					...fields[ fieldName ],
-					name: fieldName,
-				}
-			);
-
-			return accumulator;
-		}, [] )
-		.sort( compare );
-};
+const getFieldsAsArray = ( fields ) => Object.values( fields ).sort( compare );
 
 export default getFieldsAsArray;

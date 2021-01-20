@@ -17,7 +17,7 @@ import {
 	getSettingsDefaults,
 	setCorrectOrderForFields,
 } from '../helpers';
-import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
+import { getFieldsAsObject } from '../../common/helpers';
 import { useBlock } from '../hooks';
 import { DEFAULT_LOCATION } from '../constants';
 
@@ -66,7 +66,7 @@ const useField = () => {
 	 *
 	 * @param {string} location The location to add the field to.
 	 * @param {string|null} parentField The parent field to add it to, if any.
-	 * @return {string} The name of the new field.
+	 * @return {number} The uniqueId of the new field.
 	 */
 	const addNewField = ( location, parentField ) => {
 		let { fields = {} } = block;
@@ -121,7 +121,7 @@ const useField = () => {
 			editBlock( newBlock );
 		}
 
-		return newFieldName;
+		return Object.values( currentFields ).length;
 	};
 
 	/**
@@ -176,8 +176,12 @@ const useField = () => {
 	 */
 	const changeFieldName = ( fields, previousName, newName ) => {
 		const newFields = { ...fields };
+		const newFieldNumber = getNewFieldNumber( fields, newName );
+		const newFieldKey = newFieldNumber ? `${ newName }-${ newFieldNumber }` : newName;
+		const fieldToRename = newFields[ previousName ];
+
 		// If this is a repeater, change the parent property of its sub_fields.
-		if ( newFields[ previousName ] && newFields[ previousName ].hasOwnProperty( 'sub_fields' ) ) {
+		if ( fieldToRename && fieldToRename.hasOwnProperty( 'sub_fields' ) ) {
 			newFields[ previousName ].sub_fields = getFieldsAsObject(
 				Object.values( newFields[ previousName ].sub_fields ).map( ( subField ) => {
 					return {
@@ -188,7 +192,7 @@ const useField = () => {
 			);
 		}
 
-		newFields[ newName ] = { ...newFields[ previousName ], name: newName };
+		newFields[ newFieldKey ] = { ...fieldToRename, name: newName };
 		delete newFields[ previousName ];
 
 		return newFields;
@@ -211,7 +215,14 @@ const useField = () => {
 			return null;
 		}
 
-		return getFieldsAsArray( fields ).filter( ( field ) => {
+		const getFieldsAsArrayWithUniqueId = ( fieldsToGet ) => {
+			return Object.keys( fieldsToGet ).reduce( ( accumulator, fieldIndex ) => {
+				accumulator.push( { ...fieldsToGet[ fieldIndex ], uniqueId: fieldIndex } );
+				return accumulator;
+			}, [] );
+		};
+
+		return getFieldsAsArrayWithUniqueId( fields ).filter( ( field ) => {
 			return location === field.location || ( ! field.location && DEFAULT_LOCATION === location );
 		} );
 	};
