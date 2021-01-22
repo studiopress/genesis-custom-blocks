@@ -60,7 +60,7 @@ const Field = ( {
 	 */
 	const selectField = ( event ) => {
 		event.stopPropagation();
-		const newSelectedField = { uniqueId: field.uniqueId };
+		const newSelectedField = { name: field.name };
 		if ( null !== parentField ) {
 			newSelectedField.parent = parentField;
 		}
@@ -81,8 +81,7 @@ const Field = ( {
 		if ( selectedField.hasOwnProperty( 'parent' ) || field.hasOwnProperty( 'parent' ) ) {
 			return field.parent === selectedField.parent && field.name === selectedField.name;
 		}
-
-		return field.uniqueId === selectedField.name;
+		return field.name === selectedField.name;
 	};
 
 	const isSelected = getIsSelected();
