@@ -276,15 +276,21 @@ const useField = () => {
 		}
 
 		if ( newSettings.hasOwnProperty( 'name' ) ) {
-			// If the new name already exists like 'foo', append a space like 'foo '
-			newSettings.name = newBlock.fields[ newSettings.name ] ? `${ newSettings.name } ` : newSettings.name;
 			if ( hasParent ) {
+				// If the new name already exists like 'foo', append a space like 'foo '.
+				// The block.fields object is keyed by field.name, so it can't have duplicate names.
+				newSettings.name = newBlock.fields[ fieldToChange.parent ].sub_fields[ newSettings.name ]
+					? `${ newSettings.name } `
+					: newSettings.name;
 				newBlock.fields[ fieldToChange.parent ].sub_fields = changeFieldName(
 					newBlock.fields[ fieldToChange.parent ].sub_fields,
 					fieldToChange.name,
 					newSettings.name
 				);
 			} else {
+				newSettings.name = newBlock.fields[ newSettings.name ]
+					? `${ newSettings.name } `
+					: newSettings.name;
 				newBlock.fields = changeFieldName(
 					newBlock.fields,
 					fieldToChange.name,
