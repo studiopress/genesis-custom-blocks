@@ -81,8 +81,8 @@ const FieldsGrid = ( {
 				aria-label={ __( 'Add a new field', 'genesis-custom-blocks' ) }
 				onClick={ ( event ) => {
 					event.stopPropagation();
-					const newFieldUniqueId = addNewField( currentLocation, parentField );
-					const newSelectedField = { uniqueId: newFieldUniqueId };
+					const newFieldName = addNewField( currentLocation, parentField );
+					const newSelectedField = { name: newFieldName };
 					if ( null !== parentField ) {
 						newSelectedField.parent = parentField;
 					}

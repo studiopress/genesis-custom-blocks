@@ -17,7 +17,7 @@ import {
 	getSettingsDefaults,
 	setCorrectOrderForFields,
 } from '../helpers';
-import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
+import { getFieldsAsObject } from '../../common/helpers';
 import { useBlock } from '../hooks';
 import { DEFAULT_LOCATION } from '../constants';
 
@@ -66,7 +66,7 @@ const useField = () => {
 	 *
 	 * @param {string} location The location to add the field to.
 	 * @param {string|null} parentField The parent field to add it to, if any.
-	 * @return {string} The uniqueId of the new field.
+	 * @return {number} The uniqueId of the new field.
 	 */
 	const addNewField = ( location, parentField ) => {
 		let { fields = {} } = block;
@@ -121,7 +121,7 @@ const useField = () => {
 			editBlock( newBlock );
 		}
 
-		return newFieldName;
+		return Object.values( currentFields ).length;
 	};
 
 	/**
@@ -170,20 +170,20 @@ const useField = () => {
 	 * and the field's name property.
 	 *
 	 * @param {Object} fields The fields from which to rename a field.
-	 * @param {string} previousUniqueId The uniqueId of the field, as multiple fields can have the same name.
+	 * @param {string} previousName The previous field name (slug).
 	 * @param {string} newName The new field name (slug).
 	 * @return {Object} The fields with the field renamed.
 	 */
-	const changeFieldName = ( fields, previousUniqueId, newName ) => {
+	const changeFieldName = ( fields, previousName, newName ) => {
 		const newFields = { ...fields };
 		const newFieldNumber = getNewFieldNumber( fields, newName );
-		const newFieldUniqueId = newFieldNumber ? `${ newName }-${ newFieldNumber }` : newName;
-		const fieldToRename = newFields[ previousUniqueId ];
+		const newFieldKey = newFieldNumber ? `${ newName }-${ newFieldNumber }` : newName;
+		const fieldToRename = newFields[ previousName ];
 
 		// If this is a repeater, change the parent property of its sub_fields.
 		if ( fieldToRename && fieldToRename.hasOwnProperty( 'sub_fields' ) ) {
-			newFields[ previousUniqueId ].sub_fields = getFieldsAsObject(
-				Object.values( newFields[ previousUniqueId ].sub_fields ).map( ( subField ) => {
+			newFields[ previousName ].sub_fields = getFieldsAsObject(
+				Object.values( newFields[ previousName ].sub_fields ).map( ( subField ) => {
 					return {
 						...subField,
 						parent: newName,
@@ -192,8 +192,8 @@ const useField = () => {
 			);
 		}
 
-		newFields[ newFieldUniqueId ] = { ...fieldToRename, name: newName, uniqueId: newFieldUniqueId };
-		delete newFields[ previousUniqueId ];
+		newFields[ newFieldKey ] = { ...fieldToRename, name: newName };
+		delete newFields[ previousName ];
 
 		return newFields;
 	};
@@ -215,7 +215,14 @@ const useField = () => {
 			return null;
 		}
 
-		return getFieldsAsArray( fields ).filter( ( field ) => {
+		const getFieldsAsArrayWithUniqueId = ( fieldsToGet ) => {
+			return Object.keys( fieldsToGet ).reduce( ( accumulator, fieldIndex ) => {
+				accumulator.push( { ...fieldsToGet[ fieldIndex ], uniqueId: fieldIndex } );
+				return accumulator;
+			}, [] );
+		};
+
+		return getFieldsAsArrayWithUniqueId( fields ).filter( ( field ) => {
 			return location === field.location || ( ! field.location && DEFAULT_LOCATION === location );
 		} );
 	};
@@ -263,8 +270,8 @@ const useField = () => {
 
 		const hasParent = fieldToChange.hasOwnProperty( 'parent' );
 		const currentField = hasParent
-			? newBlock.fields[ fieldToChange.parent ].sub_fields[ fieldToChange.uniqueId ]
-			: newBlock.fields[ fieldToChange.uniqueId ];
+			? newBlock.fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ]
+			: newBlock.fields[ fieldToChange.name ];
 
 		const newField = {
 			...currentField,
@@ -273,22 +280,22 @@ const useField = () => {
 
 		if ( hasParent ) {
 			newBlock.fields[ fieldToChange.parent ]
-				.sub_fields[ fieldToChange.uniqueId ] = newField;
+				.sub_fields[ fieldToChange.name ] = newField;
 		} else {
-			newBlock.fields[ fieldToChange.uniqueId ] = newField;
+			newBlock.fields[ fieldToChange.name ] = newField;
 		}
 
 		if ( newSettings.hasOwnProperty( 'name' ) ) {
 			if ( hasParent ) {
 				newBlock.fields[ fieldToChange.parent ].sub_fields = changeFieldName(
 					newBlock.fields[ fieldToChange.parent ].sub_fields,
-					fieldToChange.uniqueId,
+					fieldToChange.name,
 					newSettings.name
 				);
 			} else {
 				newBlock.fields = changeFieldName(
 					newBlock.fields,
-					fieldToChange.uniqueId,
+					fieldToChange.name,
 					newSettings.name
 				);
 			}
@@ -320,19 +327,19 @@ const useField = () => {
 	/**
 	 * Gets a field, if it exists.
 	 *
-	 * @param {SelectedField} selectedField The field to get.
+	 * @param {SelectedField} field The field to get.
 	 * @return {import('../components/editor').Field|{}} The field, or {}.
 	 */
-	const getField = ( selectedField ) => {
-		if ( ! selectedField || ! selectedField.uniqueId || ! block.fields ) {
+	const getField = ( field ) => {
+		if ( ! field || ! block.fields ) {
 			return {};
 		}
 
-		const currentFields = selectedField.parent
-			? block.fields[ selectedField.parent ].sub_fields
-			: block.fields;
+		const currentField = field.parent
+			? block.fields[ field.parent ].sub_fields[ field.name ]
+			: block.fields[ field.name ];
 
-		return currentFields[ selectedField.uniqueId ];
+		return currentField || {};
 	};
 
 	/**
@@ -402,7 +409,6 @@ const useField = () => {
 	return {
 		addNewField,
 		changeControl,
-		changeFieldName,
 		changeFieldSettings,
 		controls,
 		deleteField,

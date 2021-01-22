@@ -82,7 +82,7 @@ const Field = ( {
 			return field.parent === selectedField.parent && field.name === selectedField.name;
 		}
 
-		return field.uniqueId === selectedField.uniqueId;
+		return field.uniqueId === selectedField.name;
 	};
 
 	const isSelected = getIsSelected();

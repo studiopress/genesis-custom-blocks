@@ -49,7 +49,7 @@ import {
 
 /**
  * @typedef {Object} SelectedField A field to change.
- * @property {number} uniqueId The name of the field.
+ * @property {string} uniqueId The name of the field.
  * @property {string} [parent] The name of the field's parent, if any.
  */
 
