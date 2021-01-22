@@ -93,7 +93,7 @@ const Field = ( {
 		<div
 			role="row"
 			className={ className(
-				'field w-full',
+				'relative w-full rounded-sm border border-gray-400 hover:border-black',
 				getWidthClass( field.width )
 			) }
 			key={ `field-item-${ index }` }
@@ -108,7 +108,7 @@ const Field = ( {
 		>
 			<div
 				role="gridcell"
-				className="relative flex flex-col items-center w-full p-4 bg-white border border-gray-400 rounded-sm"
+				className="flex flex-col items-center w-full p-4 bg-white rounded-sm"
 				id={ `field-item-${ index }` }
 			>
 				<div className="flex w-full items-center">
