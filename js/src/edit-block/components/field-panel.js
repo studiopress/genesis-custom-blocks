@@ -112,14 +112,15 @@ const FieldPanel = ( {
 								if ( isNewField ) {
 									didAutoSlug.current = true;
 									const newName = convertToSlug( event.target.value );
-									changedField.name = newName;
+									const newDeDuplicatedName = changeFieldSettings( fieldToChange, { ...changedField, name: newName } );
+
 									setSelectedField( {
 										...fieldToChange,
-										name: newName,
+										name: newDeDuplicatedName,
 									} );
+								} else {
+									changeFieldSettings( fieldToChange, changedField );
 								}
-
-								changeFieldSettings( fieldToChange, changedField );
 							} }
 							onBlur={ () => {
 								if ( didAutoSlug.current ) {
@@ -139,9 +140,9 @@ const FieldPanel = ( {
 							onChange={ ( event ) => {
 								if ( event.target ) {
 									const changedName = event.target.value;
-									changeFieldSettings( selectedField, { name: changedName } );
+									const deDuplicatedName = changeFieldSettings( selectedField, { name: changedName } );
 
-									const newSelectedField = { name: changedName };
+									const newSelectedField = { name: deDuplicatedName };
 									if ( selectedField.hasOwnProperty( 'parent' ) ) {
 										newSelectedField.parent = selectedField.parent;
 									}
