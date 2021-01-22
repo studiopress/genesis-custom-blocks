@@ -6,7 +6,9 @@
  */
 const getFieldsAsObject = ( fieldsArray ) => {
 	return fieldsArray.reduce( ( accumulator, field, index ) => {
-		accumulator[ field.name ] = {
+		const newField = { ...field };
+		delete newField.uniqueId;
+		accumulator[ newField.name ] = {
 			...field,
 			order: index,
 		};

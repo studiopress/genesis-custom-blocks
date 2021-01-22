@@ -43,10 +43,12 @@ const FieldPanel = ( {
 } ) => {
 	const {
 		changeControl,
+		changeFieldName,
 		changeFieldSettings,
 		controls,
 		deleteField,
 		duplicateField,
+		fields,
 		getField,
 	} = useField();
 	const ref = useRef();
@@ -111,12 +113,7 @@ const FieldPanel = ( {
 
 								if ( isNewField ) {
 									didAutoSlug.current = true;
-									const newName = convertToSlug( event.target.value );
-									changedField.name = newName;
-									setSelectedField( {
-										...fieldToChange,
-										name: newName,
-									} );
+									changedField.name = convertToSlug( event.target.value );
 								}
 
 								changeFieldSettings( fieldToChange, changedField );
@@ -138,13 +135,12 @@ const FieldPanel = ( {
 							value={ field.name }
 							onChange={ ( event ) => {
 								if ( event.target ) {
-									const changedName = event.target.value;
-									changeFieldSettings( selectedField, { name: changedName } );
-
-									const newSelectedField = { name: changedName };
-									if ( selectedField.hasOwnProperty( 'parent' ) ) {
-										newSelectedField.parent = selectedField.parent;
+									const uniqueId = changeFieldName( fields, selectedField.uniqueId, event.target.value );
+									const newSelectedField = { uniqueId };
+									if ( null !== field.parent ) {
+										newSelectedField.parent = field.parent;
 									}
+
 									setSelectedField( newSelectedField );
 								}
 							} }
