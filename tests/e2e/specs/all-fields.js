@@ -21,7 +21,7 @@ const customPostType = 'genesis_custom_block';
 
 describe( 'AllFields', () => {
 	it( 'creates the block and makes the fields available in the block editor', async () => {
-		const { findAllByText, findByText, findAllByLabelText, findByLabelText } = queries;
+		const { findAllByLabelText, findAllByText, findByRole, findByText, findByLabelText } = queries;
 		const blockName = 'Testing Example';
 		const fields = {
 			text: {
@@ -143,6 +143,7 @@ describe( 'AllFields', () => {
 		await typeIntoField( 'color' );
 
 		await clickButton( 'Media Library' );
+		await ( await findByLabelText( $blockEditorDocument, /media library/i ) ).click();
 		const inputSelector = '.media-modal input[type=file]';
 		await page.waitForSelector( inputSelector );
 		const input = await page.$( inputSelector );
@@ -153,9 +154,7 @@ describe( 'AllFields', () => {
 		fs.copyFileSync( testImagePath, tmpFileName );
 
 		await input.uploadFile( tmpFileName );
-		const buttonSelector = '.media-button-select:not([disabled])';
-		await page.waitForSelector( buttonSelector );
-		await page.click( buttonSelector );
+		await ( await findByRole( $blockEditorDocument, 'button', { name: 'Select' } ) ).click();
 
 		await ( await findByLabelText( $blockEditorDocument, fields.select.label ) ).select( fields.select.value );
 		await page.click( `[value=${ fields.multiselect.value }` );
