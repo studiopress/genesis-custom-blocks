@@ -122,8 +122,8 @@ describe( 'AllFields', () => {
 		await addNewField( 'radio' );
 		await ( await findByLabelText( $editBlockDocument, /choices/i ) ).type( fields.radio.choices );
 
-		( await findByText( $editBlockDocument, /publish/i ) ).click();
-		await findByText( $editBlockDocument, /published/i );
+		await ( await findByText( $editBlockDocument, /publish/i ) ).click();
+		await findAllByText( $editBlockDocument, /published/i );
 
 		// Create a new post and add the new block.
 		await createNewPost();
@@ -131,7 +131,8 @@ describe( 'AllFields', () => {
 
 		const $blockEditorDocument = await getDocument( page );
 		const typeIntoField = async ( fieldType ) => {
-			await ( await findByLabelText( $blockEditorDocument, fields[ fieldType ].label ) ).type( fields[ fieldType ].value );
+			const $field = await findByLabelText( $blockEditorDocument, fields[ fieldType ].label );
+			await $field.type( fields[ fieldType ].value );
 		};
 
 		await typeIntoField( 'text' );
@@ -141,19 +142,20 @@ describe( 'AllFields', () => {
 		await typeIntoField( 'number' );
 		await typeIntoField( 'color' );
 
-		await clickButton( 'Media Library' );
-		await ( await findByLabelText( $blockEditorDocument, /media library/i ) ).click();
+		await ( await findByRole( $blockEditorDocument, 'button', { name: /media library/i } ) ).click();
 		const inputSelector = '.media-modal input[type=file]';
 		await page.waitForSelector( inputSelector );
-		const input = await page.$( inputSelector );
+		const $input = await page.$( inputSelector );
 
 		const testImagePath = path.join( __dirname, '..', 'assets', 'trombone.jpg' );
 		const imageFileName = uuid();
 		const tmpFileName = path.join( os.tmpdir(), imageFileName + '.jpg' );
 		fs.copyFileSync( testImagePath, tmpFileName );
 
-		await input.uploadFile( tmpFileName );
-		await ( await findByRole( $blockEditorDocument, 'button', { name: 'Select' } ) ).click();
+		await $input.uploadFile( tmpFileName );
+		const buttonSelector = '.media-button-select:not([disabled])';
+		await page.waitForSelector( buttonSelector );
+		await page.click( buttonSelector );
 
 		await ( await findByLabelText( $blockEditorDocument, fields.select.label ) ).select( fields.select.value );
 		await page.click( `[value=${ fields.multiselect.value }` );
@@ -163,44 +165,41 @@ describe( 'AllFields', () => {
 		await page.click( `[value=${ fields.radio.value }` );
 
 		// Click away from the block so the <ServerSideRender> displays.
-		await page.click( '.editor-post-title__block' );
+		await ( await findByRole( $blockEditorDocument, 'button', { name: 'Document' } ) ).click();
 
 		const getExpectedText = ( templateFunction, fieldName ) => {
 			return `Here is the result of calling ${ templateFunction } for ${ fields[ fieldName ].name }: ${ fields[ fieldName ].value }`;
 		};
+		const options = { exact: false };
 
-		// Ensure the PHP template renders the right values for each field.
-		await findByText( $blockEditorDocument, getExpectedText( 'block_value', 'text' ) );
-		await findByText( $blockEditorDocument, getExpectedText( 'block_field', 'text' ) );
+		await findAllByText( $blockEditorDocument, fields.text.value, options );
+		await findAllByText( $blockEditorDocument, fields.textarea.value, options );
+		await findByText( $blockEditorDocument, getExpectedText( 'block_value', 'url' ), options );
+		await findByText( $blockEditorDocument, getExpectedText( 'block_field', 'url' ), options );
 
-		await findAllByText( $blockEditorDocument, fields.textarea.value );
+		await findByText( $blockEditorDocument, getExpectedText( 'block_value', 'email' ), options );
+		await findByText( $blockEditorDocument, getExpectedText( 'block_field', 'email' ), options );
 
-		await findByText( $blockEditorDocument, getExpectedText( 'block_value', 'url' ) );
-		await findByText( $blockEditorDocument, getExpectedText( 'block_field', 'url' ) );
+		await findByText( $blockEditorDocument, getExpectedText( 'block_value', 'number' ), options );
+		await findByText( $blockEditorDocument, getExpectedText( 'block_field', 'number' ), options );
 
-		await findByText( $blockEditorDocument, getExpectedText( 'block_value', 'email' ) );
-		await findByText( $blockEditorDocument, getExpectedText( 'block_field', 'email' ) );
+		await findByText( $blockEditorDocument, getExpectedText( 'block_value', 'color' ), options );
+		await findByText( $blockEditorDocument, getExpectedText( 'block_field', 'color' ), options );
 
-		await findByText( $blockEditorDocument, getExpectedText( 'block_value', 'number' ) );
-		await findByText( $blockEditorDocument, getExpectedText( 'block_field', 'number' ) );
+		await findByText( $blockEditorDocument, imageFileName, options );
 
-		await findByText( $blockEditorDocument, getExpectedText( 'block_value', 'color' ) );
-		await findByText( $blockEditorDocument, getExpectedText( 'block_field', 'color' ) );
+		await findByText( $blockEditorDocument, getExpectedText( 'block_value', 'select' ), options );
+		await findByText( $blockEditorDocument, getExpectedText( 'block_field', 'select' ), options );
 
-		await findByText( $blockEditorDocument, imageFileName, { exact: false } );
+		await findByText( $blockEditorDocument, getExpectedText( 'block_field', 'multiselect' ), options );
+		await findByText( $blockEditorDocument, getExpectedText( 'block_field', 'toggle' ), options );
 
-		await findByText( $blockEditorDocument, getExpectedText( 'block_value', 'select' ) );
-		await findByText( $blockEditorDocument, getExpectedText( 'block_field', 'select' ) );
+		await findByText( $blockEditorDocument, getExpectedText( 'block_value', 'range' ), options );
+		await findByText( $blockEditorDocument, getExpectedText( 'block_field', 'range' ), options );
 
-		await findByText( $blockEditorDocument, getExpectedText( 'block_field', 'multiselect' ) );
-		await findByText( $blockEditorDocument, getExpectedText( 'block_field', 'toggle' ) );
+		await findByText( $blockEditorDocument, getExpectedText( 'block_field', 'checkbox' ), options );
 
-		await findByText( $blockEditorDocument, getExpectedText( 'block_value', 'range' ) );
-		await findByText( $blockEditorDocument, getExpectedText( 'block_field', 'range' ) );
-
-		await findByText( $blockEditorDocument, getExpectedText( 'block_field', 'checkbox' ) );
-
-		await findByText( $blockEditorDocument, getExpectedText( 'block_value', 'radio' ) );
-		await findByText( $blockEditorDocument, getExpectedText( 'block_field', 'radio' ) );
+		await findByText( $blockEditorDocument, getExpectedText( 'block_value', 'radio' ), options );
+		await findByText( $blockEditorDocument, getExpectedText( 'block_field', 'radio' ), options );
 	} );
 } );

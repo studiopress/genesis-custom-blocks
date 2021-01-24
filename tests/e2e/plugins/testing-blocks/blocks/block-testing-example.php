@@ -24,28 +24,19 @@ $field_names = [
 ];
 
 foreach ( $field_names as $field_name ) :
-	?>
-	<p>
-		<?php
-		printf(
-			'Here is the result of calling block_value for %1$s: %2$s',
-			$field_name,
-			block_value( $field_name )
-		);
-		?>
-	</p>
-	<p>
-		<?php
-		ob_start();
-		block_field( $field_name );
-		$block_field = ob_get_clean();
+	printf(
+		'Here is the result of calling block_value for %1$s: %2$s',
+		$field_name,
+		block_value( $field_name )
+	);
 
-		printf(
-			'Here is the result of calling block_field for %1$s: %2$s',
-			$field_name,
-			$block_field
-		);
-		?>
-	</p>
-	<?php
+	ob_start();
+	block_field( $field_name );
+	$block_field = ob_get_clean();
+
+	printf(
+		'Here is the result of calling block_field for %1$s: %2$s',
+		$field_name,
+		$block_field
+	);
 endforeach;
