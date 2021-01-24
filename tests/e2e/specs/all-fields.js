@@ -11,7 +11,6 @@ import { getDocument, queries } from 'pptr-testing-library';
  * WordPress dependencies
  */
 import {
-	clickButton,
 	createNewPost,
 	insertBlock,
 	visitAdminPage,
