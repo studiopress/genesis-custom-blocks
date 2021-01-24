@@ -14,6 +14,7 @@ $field_names = [
 	'testing-email',
 	'testing-number',
 	'testing-color',
+	'testing-image',
 	'testing-select',
 	'testing-multiselect',
 	'testing-toggle',
