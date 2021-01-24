@@ -17,8 +17,6 @@ import {
 	visitAdminPage,
 } from '@wordpress/e2e-test-utils';
 
-const customPostType = 'genesis_custom_block';
-
 describe( 'AllFields', () => {
 	it( 'creates the block and makes the fields available in the block editor', async () => {
 		const { findAllByLabelText, findAllByText, findByRole, findByText, findByLabelText } = queries;
@@ -94,6 +92,7 @@ describe( 'AllFields', () => {
 		};
 
 		// Create the custom block (a 'genesis_custom_block' post).
+		const customPostType = 'genesis_custom_block';
 		await visitAdminPage( 'post-new.php', `?post_type=${ customPostType }` );
 		await findByLabelText( await getDocument( page ), 'Block title' );
 		await page.keyboard.type( blockName );
@@ -113,11 +112,11 @@ describe( 'AllFields', () => {
 		await addNewField( 'number' );
 		await addNewField( 'color' );
 		await addNewField( 'image' );
-		await addNewField( 'toggle' );
 		await addNewField( 'select' );
 		await ( await findByLabelText( $editBlockDocument, /choices/i ) ).type( fields.select.choices );
 		await addNewField( 'multiselect' );
 		await ( await findByLabelText( $editBlockDocument, /choices/i ) ).type( fields.multiselect.choices );
+		await addNewField( 'toggle' );
 		await addNewField( 'range' );
 		await addNewField( 'checkbox' );
 		await addNewField( 'radio' );
