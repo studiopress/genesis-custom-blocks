@@ -52,7 +52,7 @@ class Range extends ControlAbstract {
 				'name'     => 'min',
 				'label'    => __( 'Minimum Value', 'genesis-custom-blocks' ),
 				'type'     => 'number',
-				'default'  => '',
+				'default'  => 0,
 				'sanitize' => [ $this, 'sanitize_number' ],
 			]
 		);
@@ -61,7 +61,7 @@ class Range extends ControlAbstract {
 				'name'     => 'max',
 				'label'    => __( 'Maximum Value', 'genesis-custom-blocks' ),
 				'type'     => 'number',
-				'default'  => '',
+				'default'  => 100,
 				'sanitize' => [ $this, 'sanitize_number' ],
 			]
 		);
