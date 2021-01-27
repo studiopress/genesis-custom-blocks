@@ -3,7 +3,7 @@
  * WP Admin resources.
  *
  * @package   Genesis\CustomBlocks
- * @copyright Copyright(c) 2020, Genesis Custom Blocks
+ * @copyright Copyright(c) 2021, Genesis Custom Blocks
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
@@ -38,6 +38,13 @@ class Admin extends ComponentAbstract {
 	public $upgrade;
 
 	/**
+	 * The 'Edit Block' UI.
+	 *
+	 * @var EditBlock
+	 */
+	public $edit_block;
+
+	/**
 	 * JSON import.
 	 *
 	 * @var Import
@@ -56,6 +63,9 @@ class Admin extends ComponentAbstract {
 
 		$this->upgrade = new Upgrade();
 		genesis_custom_blocks()->register_component( $this->upgrade );
+
+		$this->edit_block = new EditBlock();
+		genesis_custom_blocks()->register_component( $this->edit_block );
 
 		if ( defined( 'WP_LOAD_IMPORTERS' ) && WP_LOAD_IMPORTERS ) {
 			$this->import = new Import();
