@@ -112,14 +112,15 @@ const FieldPanel = ( {
 								if ( isNewField ) {
 									didAutoSlug.current = true;
 									const newName = convertToSlug( event.target.value );
-									changedField.name = newName;
+									const newDeDuplicatedName = changeFieldSettings( fieldToChange, { ...changedField, name: newName } );
+
 									setSelectedField( {
 										...fieldToChange,
-										name: newName,
+										name: newDeDuplicatedName,
 									} );
+								} else {
+									changeFieldSettings( fieldToChange, changedField );
 								}
-
-								changeFieldSettings( fieldToChange, changedField );
 							} }
 							onBlur={ () => {
 								if ( didAutoSlug.current ) {
@@ -139,9 +140,9 @@ const FieldPanel = ( {
 							onChange={ ( event ) => {
 								if ( event.target ) {
 									const changedName = event.target.value;
-									changeFieldSettings( selectedField, { name: changedName } );
+									const deDuplicatedName = changeFieldSettings( selectedField, { name: changedName } );
 
-									const newSelectedField = { name: changedName };
+									const newSelectedField = { name: deDuplicatedName };
 									if ( selectedField.hasOwnProperty( 'parent' ) ) {
 										newSelectedField.parent = selectedField.parent;
 									}
@@ -152,7 +153,7 @@ const FieldPanel = ( {
 						<span className="block italic text-xs mt-1">{ __( 'Single word, no spaces.', 'genesis-custom-blocks' ) }</span>
 					</div>
 					<div className="mt-5">
-						<label className="text-sm" htmlFor="field-control">{ __( 'Field ', 'genesis-custom-blocks' ) }</label>
+						<label className="text-sm" htmlFor="field-control">{ __( 'Field Type', 'genesis-custom-blocks' ) }</label>
 						<select /* eslint-disable-line jsx-a11y/no-onchange */
 							className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm"
 							id="field-control"

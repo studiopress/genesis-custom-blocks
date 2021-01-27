@@ -36,7 +36,7 @@ const Side = ( {
 
 	return (
 		<div className="side flex-shrink-0 flex flex-col border-l border-gray-300 overflow-scroll">
-			<div className="flex w-full border-b border-gray-300">
+			<div className="flex flex-shrink-0 w-full border-b border-gray-300">
 				<button
 					onClick={ () => setPanelDisplaying( BLOCK_PANEL ) }
 					className={ classNames(

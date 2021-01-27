@@ -28,7 +28,7 @@ import { DEFAULT_LOCATION } from '../constants';
  * @property {function(SelectedField):void} deleteField Deletes this field.
  * @property {function(SelectedField):void} duplicateField Duplicates this field.
  * @property {function(SelectedField,string):void} changeControl Changes the control of the field.
- * @property {function(SelectedField,Object):void} changeFieldSettings Changes field settings.
+ * @property {function(SelectedField,Object):string} changeFieldSettings Changes field settings.
  * @property {function(SelectedField):Object} getField Gets the selected field.
  * @property {function(string,string|null):import('../components/editor').Field[]|null} getFieldsForLocation Gets all of the fields for a given location.
  * @property {function(number,number,string,string|null):void} reorderFields Reorders the fields for a given location.
@@ -246,6 +246,7 @@ const useField = () => {
 	 *
 	 * @param {SelectedField} fieldToChange The field to change.
 	 * @param {Object} newSettings The new settings of the field.
+	 * @return {string} The name of the field that was changed.
 	 */
 	const changeFieldSettings = ( fieldToChange, newSettings ) => {
 		const newBlock = { ...block };
@@ -276,12 +277,20 @@ const useField = () => {
 
 		if ( newSettings.hasOwnProperty( 'name' ) ) {
 			if ( hasParent ) {
+				// If the new name already exists like 'foo', append a space like 'foo '.
+				// The block.fields object is keyed by field.name, so it can't have duplicate names.
+				newSettings.name = newBlock.fields[ fieldToChange.parent ].sub_fields[ newSettings.name ]
+					? `${ newSettings.name } `
+					: newSettings.name;
 				newBlock.fields[ fieldToChange.parent ].sub_fields = changeFieldName(
 					newBlock.fields[ fieldToChange.parent ].sub_fields,
 					fieldToChange.name,
 					newSettings.name
 				);
 			} else {
+				newSettings.name = newBlock.fields[ newSettings.name ]
+					? `${ newSettings.name } `
+					: newSettings.name;
 				newBlock.fields = changeFieldName(
 					newBlock.fields,
 					fieldToChange.name,
@@ -291,6 +300,7 @@ const useField = () => {
 		}
 
 		editBlock( newBlock );
+		return newSettings.name;
 	};
 
 	/**

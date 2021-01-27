@@ -1,8 +1,14 @@
 /**
+ * External dependencies
+ */
+import * as React from 'react';
+
+/**
  * WordPress dependencies
  */
 import { BaseControl, TextControl, Popover, ColorIndicator, ColorPicker } from '@wordpress/components';
 import { withState } from '@wordpress/compose';
+import { __ } from '@wordpress/i18n';
 
 const GcbColorPopover = withState( {
 } )( ( { isVisible, color, onUpdate, setState } ) => {
@@ -19,7 +25,10 @@ const GcbColorPopover = withState( {
 	};
 
 	return (
-		<BaseControl className="genesis-custom-blocks-color-popover">
+		<BaseControl
+			className="genesis-custom-blocks-color-popover"
+			id={ __( 'Color control picker', 'genesis-custom-blocks' ) }
+		>
 			<ColorIndicator
 				colorValue={ color }
 				onMouseDown={ ( event ) => {
@@ -55,13 +64,15 @@ const GcbColorPopover = withState( {
 } );
 
 const GcbColorControl = ( props ) => {
-	const { field, getValue, instanceId, onChange } = props;
+	const { field, getValue, onChange } = props;
 	const initialValue = getValue( props );
 	const value = 'undefined' !== typeof initialValue ? initialValue : field.default;
+	const id = `gcb-color-${ field ? field.name : '' }`;
 
 	return (
-		<BaseControl label={ field.label } id={ `gcb-color-${ instanceId }` } className="genesis-custom-blocks-color-control" help={ field.help }>
+		<BaseControl label={ field.label } id={ id } className="genesis-custom-blocks-color-control" help={ field.help }>
 			<TextControl
+				id={ id }
 				value={ value }
 				onChange={ onChange }
 			/>

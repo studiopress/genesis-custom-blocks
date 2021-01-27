@@ -1,7 +1,7 @@
 {
   "name": "genesis-custom-blocks",
   "title": "Genesis Custom Blocks",
-  "version": "1.1.0-beta-1",
+  "version": "1.1.0",
   "description": "WordPress plugin with a simple templating system for building custom blocks.",
   "author": "Genesis Custom Blocks",
   "license": "GPL-2.0-or-later",
@@ -100,6 +100,7 @@
     "style-loader": "1.2.1",
     "tailwindcss": "2.0.2",
     "uglifyjs-webpack-plugin": "2.2.0",
+    "uuid": "8.3.2",
     "webpack": "4.44.1",
     "webpack-cli": "3.3.12"
   },
@@ -121,7 +122,7 @@
     "lint:php:fix": "vendor/bin/phpcbf",
     "packages-update": "wp-scripts packages-update",
     "precommit": "./bin/pre-commit.sh",
-    "test:e2e": "wp-scripts test-e2e --config=tests/e2e/jest.config.js --runInBand",
+    "test:e2e": "wp-scripts test-e2e --config=tests/e2e/jest.config.js",
     "test:e2e:interactive": "npm run test:e2e -- --puppeteer-interactive",
     "test:js": "wp-scripts test-unit-js --config=tests/js/jest.config.js",
     "test:js:coverage": "npm run test:js -- --coverage --coverageDirectory=tests/coverage/js",

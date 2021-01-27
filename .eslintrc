@@ -53,6 +53,7 @@
         "plugin:jest/all"
       ],
       "rules": {
+        "jest/expect-expect": "off",
         "jest/lowercase-name": [
           "error",
           {
