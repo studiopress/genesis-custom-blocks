@@ -52,7 +52,7 @@ class Checkbox extends ControlAbstract {
 				'name'    => 'default',
 				'label'   => __( 'Default Value', 'genesis-custom-blocks' ),
 				'type'    => 'checkbox',
-				'default' => 0,
+				'default' => false,
 			]
 		);
 	}

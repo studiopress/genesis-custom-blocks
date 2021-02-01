@@ -17,10 +17,10 @@ import * as React from 'react';
  * @return {React.ReactElement} The checkbox component.
  */
 const Checkbox = ( { handleOnChange, setting, value } ) => {
-	const checked = 1;
+	const checked = '1';
 	const isChecked = 'undefined' === typeof value
-		? Boolean( setting.default )
-		: checked === value;
+		? setting.default
+		: Boolean( value );
 	const id = `setting-input-${ setting.name }`;
 
 	return (
@@ -34,7 +34,7 @@ const Checkbox = ( { handleOnChange, setting, value } ) => {
 				checked={ isChecked }
 				onChange={ ( event ) => {
 					if ( event.target ) {
-						handleOnChange( Number( event.target.checked ) );
+						handleOnChange( event.target.checked );
 					}
 				} }
 			/>
