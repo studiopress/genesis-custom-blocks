@@ -10,10 +10,8 @@ import { ToggleControl } from '@wordpress/components';
 
 const GcbToggleControl = ( props ) => {
 	const { field, onChange, getValue } = props;
-	let value = getValue( props );
-	if ( 'undefined' === typeof value ) {
-		value = field.default;
-	}
+	const initialValue = getValue( props );
+	const value = 'undefined' !== typeof initialValue ? initialValue : field.default;
 
 	return (
 		<ToggleControl
