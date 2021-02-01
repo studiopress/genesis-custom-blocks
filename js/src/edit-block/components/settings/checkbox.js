@@ -17,7 +17,6 @@ import * as React from 'react';
  * @return {React.ReactElement} The checkbox component.
  */
 const Checkbox = ( { handleOnChange, setting, value } ) => {
-	const checked = '1';
 	const isChecked = 'undefined' === typeof value
 		? setting.default
 		: Boolean( value );
@@ -30,7 +29,6 @@ const Checkbox = ( { handleOnChange, setting, value } ) => {
 				id={ id }
 				className="ml-2"
 				type="checkbox"
-				value={ String( checked ) }
 				checked={ isChecked }
 				onChange={ ( event ) => {
 					if ( event.target ) {
