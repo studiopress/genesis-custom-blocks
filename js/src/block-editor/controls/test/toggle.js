@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 /**
  * Internal dependencies
@@ -12,7 +13,7 @@ test( 'toggle control', () => {
 	const field = {
 		label: 'Here is an example label',
 		help: 'And here is help text',
-		default: 1,
+		default: false,
 	};
 	const mockOnChange = jest.fn();
 
@@ -24,6 +25,11 @@ test( 'toggle control', () => {
 		/>
 	);
 
-	expect( getByLabelText( field.label ) ).toBeInTheDocument();
+	const toggle = getByLabelText( field.label );
+	expect( toggle ).toBeInTheDocument();
 	expect( getByText( field.help ) ).toBeInTheDocument();
+	expect( toggle ).not.toBeChecked();
+
+	userEvent.click( toggle );
+	expect( mockOnChange ).toHaveBeenCalledWith( true );
 } );

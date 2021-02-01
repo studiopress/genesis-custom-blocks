@@ -1,20 +1,25 @@
 /**
+ * External dependencies
+ */
+import * as React from 'react';
+
+/**
  * WordPress dependencies
  */
 import { ToggleControl } from '@wordpress/components';
 
 const GcbToggleControl = ( props ) => {
 	const { field, onChange, getValue } = props;
-	const attr = { ...props.attributes };
-	if ( 'undefined' === typeof attr[ field.name ] ) {
-		attr[ field.name ] = field.default;
+	let value = getValue( props );
+	if ( 'undefined' === typeof value ) {
+		value = field.default;
 	}
 
 	return (
 		<ToggleControl
 			label={ field.label }
 			help={ field.help }
-			checked={ getValue( props ) }
+			checked={ value }
 			onChange={ onChange }
 		/>
 	);

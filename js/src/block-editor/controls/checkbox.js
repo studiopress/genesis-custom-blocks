@@ -12,7 +12,7 @@ const GcbCheckboxControl = ( props ) => {
 	const { field, getValue, onChange } = props;
 	let value = getValue( props );
 	if ( 'undefined' === typeof value ) {
-		value = field.default || false;
+		value = field.default;
 	}
 
 	return (
