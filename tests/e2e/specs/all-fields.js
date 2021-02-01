@@ -80,7 +80,7 @@ describe( 'AllFields', () => {
 			checkbox: {
 				label: 'Testing Checkbox',
 				name: 'testing-checkbox',
-				value: 'No',
+				value: 'Yes',
 			},
 			radio: {
 				label: 'Testing Radio',

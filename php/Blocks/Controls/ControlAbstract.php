@@ -136,16 +136,7 @@ abstract class ControlAbstract implements JsonSerializable {
 	 */
 	public function jsonSerialize() {
 		$object = clone( $this );
-
 		unset( $object->settings_config );
-		$object->settings = array_map(
-			static function( $setting ) {
-				unset( $setting->sanitize, $setting->validate );
-				return $setting;
-			},
-			$object->settings
-		);
-
 		return get_object_vars( $object );
 	}
 }
