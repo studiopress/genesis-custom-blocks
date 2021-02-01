@@ -70,7 +70,7 @@ describe( 'AllFields', () => {
 			toggle: {
 				label: 'Testing Toggle',
 				name: 'testing-toggle',
-				value: 'No',
+				value: 'Yes',
 			},
 			range: {
 				label: 'Testing Range',
