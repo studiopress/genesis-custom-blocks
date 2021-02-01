@@ -143,49 +143,4 @@ class TestTextarea extends \WP_UnitTestCase {
 
 		$this->assert_correct_settings( $expected_settings, $this->instance->settings );
 	}
-
-	/**
-	 * Test render_settings_new_line_format.
-	 *
-	 * @covers \Genesis\CustomBlocks\Blocks\Controls\textarea::render_settings_new_line_format()
-	 * @covers \Genesis\CustomBlocks\Blocks\Controls\ControlAbstract::render_select()
-	 */
-	public function test_render_settings_new_line_format() {
-		$name = 'textarea';
-		$id   = 'bl_textarea';
-
-		ob_start();
-		$this->instance->render_settings_new_line_format( $this->setting, $name, $id );
-		$output = ob_get_clean();
-		$this->assertContains( 'autop', $output );
-		$this->assertContains( 'autobr', $output );
-		$this->assertContains( 'none', $output );
-	}
-
-	/**
-	 * Test get_new_line_formats.
-	 *
-	 * @covers \Genesis\CustomBlocks\Blocks\Controls\textarea::get_new_line_formats()
-	 */
-	public function test_get_new_line_formats() {
-		$formats = $this->instance->get_new_line_formats();
-		$this->assertArrayHasKey( 'autop', $formats );
-		$this->assertArrayHasKey( 'autobr', $formats );
-		$this->assertArrayHasKey( 'none', $formats );
-	}
-
-	/**
-	 * Test test_sanitize_new_line_format.
-	 *
-	 * @covers \Genesis\CustomBlocks\Blocks\Controls\Textarea::sanitize_new_line_format()
-	 */
-	public function test_sanitize_new_line_format() {
-		$this->assertEmpty( $this->instance->sanitize_new_line_format( 'foo' ) );
-		$this->assertEquals( 'autop', $this->instance->sanitize_new_line_format( 'autop' ) );
-		$this->assertEquals( 'autobr', $this->instance->sanitize_new_line_format( 'autobr' ) );
-		$this->assertEquals( 'none', $this->instance->sanitize_new_line_format( 'none' ) );
-
-		// If a non-string value is passed, this should return null.
-		$this->assertEquals( null, $this->instance->sanitize_new_line_format( false ) );
-	}
 }

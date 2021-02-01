@@ -49,13 +49,10 @@ class Number extends ControlAbstract {
 		$this->settings[] = new ControlSetting( $this->settings_config['help'] );
 		$this->settings[] = new ControlSetting(
 			[
-				'name'     => 'default',
-				'label'    => __( 'Default Value', 'genesis-custom-blocks' ),
-				'type'     => 'number',
-				'default'  => '',
-				'sanitize' => function ( $value ) {
-					return filter_var( $value, FILTER_SANITIZE_NUMBER_INT );
-				},
+				'name'    => 'default',
+				'label'   => __( 'Default Value', 'genesis-custom-blocks' ),
+				'type'    => 'number',
+				'default' => '',
 			]
 		);
 		$this->settings[] = new ControlSetting( $this->settings_config['placeholder'] );

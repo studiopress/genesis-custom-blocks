@@ -49,10 +49,10 @@ class Toggle extends ControlAbstract {
 		$this->settings[] = new ControlSetting( $this->settings_config['help'] );
 		$this->settings[] = new ControlSetting(
 			[
-				'name'     => 'default',
-				'label'    => __( 'Default Value', 'genesis-custom-blocks' ),
-				'type'     => 'checkbox',
-				'default'  => 0,
+				'name'    => 'default',
+				'label'   => __( 'Default Value', 'genesis-custom-blocks' ),
+				'type'    => 'checkbox',
+				'default' => 0,
 			]
 		);
 	}
