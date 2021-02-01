@@ -17,9 +17,7 @@ import * as React from 'react';
  * @return {React.ReactElement} The checkbox component.
  */
 const Checkbox = ( { handleOnChange, setting, value } ) => {
-	const isChecked = 'undefined' === typeof value
-		? setting.default
-		: Boolean( value );
+	const isChecked = Boolean( value );
 	const id = `setting-input-${ setting.name }`;
 
 	return (

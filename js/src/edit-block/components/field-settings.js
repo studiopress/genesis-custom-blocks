@@ -58,7 +58,7 @@ const FieldSettings = ( {
 
 					const SettingComponent = getSettingsComponent( setting.type );
 					const key = `field-setting-${ index }`;
-					const value = null === field[ setting.name ] ? setting.default : field[ setting.name ];
+					const value = 'undefined' === field[ setting.name ] ? setting.default : field[ setting.name ];
 
 					if ( SettingComponent ) {
 						return (
