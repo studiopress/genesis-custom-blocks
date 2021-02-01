@@ -85,7 +85,7 @@ class TestCheckbox extends \WP_UnitTestCase {
 				'name'     => 'default',
 				'label'    => 'Default Value',
 				'type'     => 'checkbox',
-				'default'  => '0',
+				'default'  => 0,
 				'help'     => '',
 				'sanitize' => [ $this->instance, 'sanitize_checkbox' ],
 				'validate' => '',

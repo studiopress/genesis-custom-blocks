@@ -52,8 +52,7 @@ class Toggle extends ControlAbstract {
 				'name'     => 'default',
 				'label'    => __( 'Default Value', 'genesis-custom-blocks' ),
 				'type'     => 'checkbox',
-				'default'  => '0',
-				'sanitize' => [ $this, 'sanitize_checkbox' ],
+				'default'  => 0,
 			]
 		);
 	}
