@@ -108,7 +108,7 @@
     "check-licenses": "wp-scripts check-licenses --prod --gpl2",
     "build": "wp-scripts build",
     "dev": "wp-scripts start",
-    "env": "wp-env",
+    "wp-env": "wp-env",
     "gulp": "gulp",
     "lint": "npm-run-all --parallel lint:*",
     "lint:css": "wp-scripts lint-style '**/*.scss'",
