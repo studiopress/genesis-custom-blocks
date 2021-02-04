@@ -85,7 +85,7 @@ class TestSelect extends \WP_UnitTestCase {
 				'label'    => 'Choices',
 				'type'     => 'textarea_array',
 				'default'  => '',
-				'help'     => 'Enter each choice on a new line. To specify the value and label separately, use this format:<br />foo : Foo<br />bar : Bar',
+				'help'     => '',
 				'sanitize' => [ $this->instance, 'sanitize_textarea_assoc_array' ],
 				'validate' => '',
 				'value'    => null,

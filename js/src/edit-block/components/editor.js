@@ -75,6 +75,16 @@ import {
  */
 
 /**
+ * @typedef {Object} Setting A field setting.
+ * @see PHP class Genesis\CustomBlocks\Blocks\Controls\ControlSetting
+ * @property {string} name The name of the setting.
+ * @property {string} label The label of the setting to display in the GCB editor.
+ * @property {string} help A help value that display in the GCB editor.
+ * @property {string} type The setting type, like 'width' or 'text', not a data type like boolean.
+ * @property {*} default The default value.
+ */
+
+/**
  * The editor component.
  *
  * @param {EditorProps} props The component props.
