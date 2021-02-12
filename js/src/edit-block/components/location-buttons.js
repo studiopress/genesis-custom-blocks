@@ -36,7 +36,7 @@ const LocationButtons = ( {
 
 	return BUILDER_EDITING_MODE === editorMode
 		? (
-			<div className="flex mt-6">
+			<div className="flex">
 				<button
 					className={ buttonClass }
 					onClick={ () => setCurrentLocation( DEFAULT_LOCATION ) }

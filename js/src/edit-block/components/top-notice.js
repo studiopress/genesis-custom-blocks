@@ -73,7 +73,7 @@ const TopNotice = ( {
 				: null
 			}
 			{ ! isOnboarding && template.templateExists && ! isNewPost
-				? <div className="flex items-center mt-4">
+				? <div className="flex items-center mt-4 mb-6">
 					<span className="text-sm">{ __( 'Template:', 'genesis-custom-blocks' ) }</span>
 					<span className="flex items-center w-auto text-xs font-mono ml-1 px-2 py-1 bg-gray-200 rounded-sm truncate">
 						<TemplateFile color="gray" templatePath={ template.templatePath } />
@@ -82,7 +82,7 @@ const TopNotice = ( {
 				: null
 			}
 			{ ! isOnboarding && ! template.templateExists && ! isNewPost
-				? <div className="mt-4 p-5 bg-blue-100 text-blue-700 border-l-4 border-blue-700 rounded-sm">
+				? <div className="mt-4 mb-6 p-5 bg-blue-100 text-blue-700 border-l-4 border-blue-700 rounded-sm">
 					<div className="flex items-center">
 						<QuestionIcon />
 						<h4 className="text-lg font-semibold text-blue-900 ml-2">

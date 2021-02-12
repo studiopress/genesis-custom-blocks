@@ -1,10 +1,23 @@
 /**
+ * External dependencies
+ */
+import * as React from 'react';
+
+/**
  * WordPress dependencies
  */
-import { BaseControl, Button, Placeholder, DropZone, FormFileUpload, Spinner } from '@wordpress/components';
+import {
+	BaseControl,
+	Button,
+	Placeholder,
+	DropZone,
+	DropZoneProvider,
+	FormFileUpload,
+	Spinner,
+} from '@wordpress/components';
 import { withState } from '@wordpress/compose';
 import { withSelect } from '@wordpress/data';
-import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
+import { MediaUpload } from '@wordpress/block-editor';
 import { mediaUpload } from '@wordpress/editor';
 import { __, sprintf } from '@wordpress/i18n';
 
@@ -76,6 +89,8 @@ const Image = withSelect( ( select, ownProps ) => {
 			onFileChange: ( image ) => {
 				onSelect( image[ 0 ] );
 			},
+			maxUploadFileSize: 0,
+			onError: () => {},
 		} );
 	};
 
@@ -87,7 +102,7 @@ const Image = withSelect( ( select, ownProps ) => {
 			) }
 			{ ! imageSrc && (
 				<Placeholder className="gcb-image__placeholder" icon="format-image" label={ __( 'Image', 'genesis-custom-blocks' ) } instructions={ __( 'Drag an image, upload a new one or select a file from your library.', 'genesis-custom-blocks' ) }>
-					<MediaUploadCheck>
+					<DropZoneProvider>
 						<DropZone
 							onFilesDrop={ ( files ) => {
 								if ( files.length ) {
@@ -95,45 +110,45 @@ const Image = withSelect( ( select, ownProps ) => {
 									uploadFiles( files );
 								}
 							} }
-						></DropZone>
-						{ isUploading && (
-							<Spinner />
-						) }
-						{ ! isUploading && (
-							<>
-								<FormFileUpload
-									disabled={ !! isUploading }
-									onChange={ ( event ) => {
-										const files = event.target.files;
-										uploadStart( files[ 0 ].name );
-										uploadFiles( files );
-									} }
-									accept="image/*"
-									multiple={ false }
-								>
-									{ __( 'Upload', 'genesis-custom-blocks' ) }
-								</FormFileUpload>
-								<MediaUpload
-									gallery={ false }
-									multiple={ false }
-									onSelect={ onSelect }
-									allowedTypes={ ALLOWED_TYPES }
-									value={ getValue( ownProps ) }
-									render={ ( { open } ) => (
-										<div className="components-media-library-button">
-											<Button
-												disabled={ !! isUploading }
-												className="editor-media-placeholder__button"
-												onClick={ open }
-											>
-												{ __( 'Media Library', 'genesis-custom-blocks' ) }
-											</Button>
-										</div>
-									) }
-								/>
-							</>
-						) }
-					</MediaUploadCheck>
+						/>
+					</DropZoneProvider>
+					{ isUploading && (
+						<Spinner />
+					) }
+					{ ! isUploading && (
+						<>
+							<FormFileUpload
+								disabled={ !! isUploading }
+								onChange={ ( event ) => {
+									const files = event.target.files;
+									uploadStart( files[ 0 ].name );
+									uploadFiles( files );
+								} }
+								accept="image/*"
+								multiple={ false }
+							>
+								{ __( 'Upload', 'genesis-custom-blocks' ) }
+							</FormFileUpload>
+							<MediaUpload
+								gallery={ false }
+								multiple={ false }
+								onSelect={ onSelect }
+								allowedTypes={ ALLOWED_TYPES }
+								value={ getValue( ownProps ) }
+								render={ ( { open } ) => (
+									<div className="components-media-library-button">
+										<Button
+											disabled={ !! isUploading }
+											className="editor-media-placeholder__button"
+											onClick={ open }
+										>
+											{ __( 'Media Library', 'genesis-custom-blocks' ) }
+										</Button>
+									</div>
+								) }
+							/>
+						</>
+					) }
 				</Placeholder>
 			) }
 			{ imageSrc && (
