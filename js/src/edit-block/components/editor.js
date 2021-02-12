@@ -63,7 +63,7 @@ import { Fields } from '../../block-editor/components';
 /** @typedef {function(string):void} SetCurrentLocation Sets the currently selected location */
 /** @typedef {function(boolean):void} SetIsNewField Sets whether there is a new field. */
 /** @typedef {function(string):void} SetPanelDisplaying Sets the current panel displaying. */
-/** @typedef {function(SelectedField|null):void} SetSelectedField Sets the selected field. */
+/** @typedef {function(SelectedField|import('../constants').NoFieldSelected):void} SetSelectedField Sets the selected field. */
 
 /**
  * @typedef {Object} Field A block field, can have more properties depending on its settings.
@@ -97,6 +97,13 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 		[ postId, postType ]
 	);
 
+	const changeEditorMode = ( newMode ) => {
+		setEditorMode( newMode );
+		if ( EDITOR_PREVIEW_EDITING_MODE === newMode ) {
+			setCurrentLocation( DEFAULT_LOCATION );
+		}
+	};
+
 	const { getFieldsForLocation } = useField();
 
 	if ( ! post ) {
@@ -113,7 +120,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 					settings={ settings }
 				>
 					<ErrorBoundary onError={ onError }>
-						<Header editorMode={ editorMode } setEditorMode={ setEditorMode } />
+						<Header editorMode={ editorMode } changeEditorMode={ changeEditorMode } />
 						<EditorNotices />
 						<div className="flex w-full h-0 flex-grow">
 							<Main>

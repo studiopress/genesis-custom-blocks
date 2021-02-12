@@ -25,7 +25,7 @@ import { BUILDER_EDITING_MODE, EDITOR_PREVIEW_EDITING_MODE } from '../constants'
 /**
  * @typedef {Object} HeaderProps The header component props.
  * @property {string} editorMode The display mode.
- * @property {function(string):void} setEditorMode Sets the editor mode.
+ * @property {function(string):void} changeEditorMode Changes the editor mode.
  */
 
 /**
@@ -34,7 +34,7 @@ import { BUILDER_EDITING_MODE, EDITOR_PREVIEW_EDITING_MODE } from '../constants'
  * @param {HeaderProps} props
  * @return {React.ReactElement} The header.
  */
-const Header = ( { editorMode, setEditorMode } ) => {
+const Header = ( { editorMode, changeEditorMode } ) => {
 	const backURL = addQueryArgs( 'edit.php', {
 		post_type: 'genesis_custom_block',
 	} );
@@ -56,7 +56,7 @@ const Header = ( { editorMode, setEditorMode } ) => {
 					{ 'font-semibold': BUILDER_EDITING_MODE === editorMode }
 				) }
 				onClick={ () => {
-					setEditorMode( BUILDER_EDITING_MODE );
+					changeEditorMode( BUILDER_EDITING_MODE );
 				} }
 			>
 				<span>{ __( 'Builder', 'genesis-custom-blocks' ) }</span>
@@ -67,7 +67,7 @@ const Header = ( { editorMode, setEditorMode } ) => {
 					{ 'font-semibold': EDITOR_PREVIEW_EDITING_MODE === editorMode }
 				) }
 				onClick={ () => {
-					setEditorMode( EDITOR_PREVIEW_EDITING_MODE );
+					changeEditorMode( EDITOR_PREVIEW_EDITING_MODE );
 				} }
 			>
 				<span>{ __( 'Editor Preview', 'genesis-custom-blocks' ) }</span>
