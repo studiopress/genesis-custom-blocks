@@ -39,6 +39,7 @@ import {
  * @return {React.ReactElement} The header.
  */
 const Header = ( { editorMode, setEditorMode } ) => {
+	const buttonClasses = 'flex items-center h-12 px-4 text-sm focus:outline-none';
 	const backURL = addQueryArgs( 'edit.php', {
 		post_type: 'genesis_custom_block',
 	} );
@@ -56,7 +57,7 @@ const Header = ( { editorMode, setEditorMode } ) => {
 			<EditorHistoryRedo />
 			<button
 				className={ className(
-					'flex items-center h-12 px-4 text-sm',
+					buttonClasses,
 					{ 'font-semibold': BUILDER_EDITING_MODE === editorMode }
 				) }
 				onClick={ () => {
@@ -67,7 +68,7 @@ const Header = ( { editorMode, setEditorMode } ) => {
 			</button>
 			<button
 				className={ className(
-					'flex items-center h-12 px-4 text-sm',
+					buttonClasses,
 					{ 'font-semibold': EDITOR_PREVIEW_EDITING_MODE === editorMode }
 				) }
 				onClick={ () => {
@@ -78,7 +79,7 @@ const Header = ( { editorMode, setEditorMode } ) => {
 			</button>
 			<button
 				className={ className(
-					'flex items-center h-12 px-4 text-sm',
+					buttonClasses,
 					{ 'font-semibold': FRONT_END_PREVIEW_EDITING_MODE === editorMode }
 				) }
 				onClick={ () => {
