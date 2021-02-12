@@ -108,7 +108,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 		} );
 	};
 
-	const { getFieldsForLocation } = useField();
+	const { getFields } = useField();
 
 	if ( ! post ) {
 		return null;
@@ -138,7 +138,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 										<div className="block-form">
 											<Fields
 												key="example-fields"
-												fields={ getFieldsForLocation( currentLocation ) }
+												fields={ getFields() }
 												parentBlockProps={ {
 													setAttributes,
 													attributes: previewAttributes,

@@ -30,6 +30,7 @@ import { DEFAULT_LOCATION } from '../constants';
  * @property {function(SelectedField,string):void} changeControl Changes the control of the field.
  * @property {function(SelectedField,Object):string} changeFieldSettings Changes field settings.
  * @property {function(SelectedField):Object} getField Gets the selected field.
+ * @property {function():import('../components/editor').Field[]|null} getFields Gets all of the fields.
  * @property {function(string,string|null):import('../components/editor').Field[]|null} getFieldsForLocation Gets all of the fields for a given location.
  * @property {function(number,number,string,string|null):void} reorderFields Reorders the fields for a given location.
  */
@@ -193,6 +194,15 @@ const useField = () => {
 
 		return newFields;
 	};
+
+	/**
+	 * Gets all of the fields.
+	 *
+	 * @return {import('../components/editor').Field[]|[]} The fields with the given location.
+	 */
+	const getFields = () => getFieldsAsArray(
+		block && block.fields ? block.fields : {}
+	);
 
 	/**
 	 * Gets the fields for either the editor or inspector.
@@ -413,6 +423,7 @@ const useField = () => {
 		deleteField,
 		duplicateField,
 		getField,
+		getFields,
 		getFieldsForLocation,
 		reorderFields,
 	};
