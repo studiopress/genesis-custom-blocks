@@ -87,7 +87,10 @@ class TestEditBlock extends AbstractTemplate {
 	public function test_enqueue_assets_wrong_page() {
 		set_current_screen( 'front' );
 		$this->instance->enqueue_assets();
+
 		$this->assertFalse( wp_script_is( EditBlock::SCRIPT_SLUG ) );
+		$this->assertFalse( wp_style_is( EditBlock::STYLE_SLUG ) );
+		$this->assertFalse( wp_style_is( 'genesis-custom-blocks-editor-css' ) );
 	}
 
 	/**
@@ -101,6 +104,7 @@ class TestEditBlock extends AbstractTemplate {
 
 		$this->assertTrue( wp_script_is( EditBlock::SCRIPT_SLUG ) );
 		$this->assertTrue( wp_style_is( EditBlock::STYLE_SLUG ) );
+		$this->assertTrue( wp_style_is( 'genesis-custom-blocks-editor-css' ) );
 	}
 
 	/**

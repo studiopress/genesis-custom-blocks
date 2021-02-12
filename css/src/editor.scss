@@ -20,7 +20,8 @@ $font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans
 
 /* Block form in editor & sidebar */
 div[class^="wp-block-genesis-custom-blocks-"],
-.edit-post-settings-sidebar__panel-block .components-panel__body {
+.edit-post-settings-sidebar__panel-block .components-panel__body,
+.gcb-editor {
 
 	:required:invalid {
 		border-color: #c00000;
@@ -108,7 +109,8 @@ div[class^="wp-block-genesis-custom-blocks-"],
 }
 
 /* Block form in editor */
-div[class^="wp-block-genesis-custom-blocks-"] {
+div[class^="wp-block-genesis-custom-blocks-"],
+.gcb-editor {
 	margin: 0;
 
 	.block-form {

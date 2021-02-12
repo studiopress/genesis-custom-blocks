@@ -136,14 +136,23 @@ class EditBlock extends ComponentAbstract {
 			'before'
 		);
 
-		$edit_block_style_path = 'css/dist/edit-block.css';
-		$css_config            = require $this->plugin->get_path( 'css/dist/edit-block.asset.php' );
+		$edit_block_style_path   = 'css/dist/edit-block.css';
+		$edit_block_style_config = require $this->plugin->get_path( 'css/dist/edit-block.asset.php' );
 		wp_enqueue_style(
 			self::STYLE_SLUG,
 			$this->plugin->get_url( $edit_block_style_path ),
 			[ 'wp-components' ],
-			$css_config['version']
+			$edit_block_style_config['version']
 		);
+
+		$editor_style_config = require $this->plugin->get_path( 'css/dist/blocks.editor.asset.php' );
+		wp_enqueue_style(
+			'genesis-custom-blocks-editor-css',
+			$this->plugin->get_url( 'css/dist/blocks.editor.css' ),
+			$editor_style_config['dependencies'],
+			$editor_style_config['version']
+		);
+
 	}
 
 	/**

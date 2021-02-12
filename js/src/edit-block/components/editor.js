@@ -122,7 +122,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 					<ErrorBoundary onError={ onError }>
 						<Header editorMode={ editorMode } changeEditorMode={ changeEditorMode } />
 						<EditorNotices />
-						<div className="flex w-full h-0 flex-grow">
+						<div className="gcb-editor flex w-full h-0 flex-grow">
 							<Main>
 								<LocationButtons
 									currentLocation={ currentLocation }
@@ -130,12 +130,14 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 								/>
 								{ EDITOR_PREVIEW_EDITING_MODE === editorMode && block && block.fields
 									? (
-										<Fields
-											key="example-fields"
-											fields={ getFieldsForLocation( currentLocation ) }
-											parentBlockProps={ {} }
-											parentBlock={ {} }
-										/>
+										<div className="block-form">
+											<Fields
+												key="example-fields"
+												fields={ getFieldsForLocation( currentLocation ) }
+												parentBlockProps={ {} }
+												parentBlock={ {} }
+											/>
+										</div>
 									) : (
 										<FieldsGrid
 											currentLocation={ currentLocation }
