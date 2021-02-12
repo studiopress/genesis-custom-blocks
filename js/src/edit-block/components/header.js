@@ -29,7 +29,7 @@ import {
 /**
  * @typedef {Object} HeaderProps The header component props.
  * @property {string} editorMode The display mode.
- * @property {function(string):void} changeEditorMode Changes the editor mode.
+ * @property {function(string):void} setEditorMode Changes the editor mode.
  */
 
 /**
@@ -38,7 +38,7 @@ import {
  * @param {HeaderProps} props
  * @return {React.ReactElement} The header.
  */
-const Header = ( { editorMode, changeEditorMode } ) => {
+const Header = ( { editorMode, setEditorMode } ) => {
 	const backURL = addQueryArgs( 'edit.php', {
 		post_type: 'genesis_custom_block',
 	} );
@@ -60,7 +60,7 @@ const Header = ( { editorMode, changeEditorMode } ) => {
 					{ 'font-semibold': BUILDER_EDITING_MODE === editorMode }
 				) }
 				onClick={ () => {
-					changeEditorMode( BUILDER_EDITING_MODE );
+					setEditorMode( BUILDER_EDITING_MODE );
 				} }
 			>
 				<span>{ __( 'Builder', 'genesis-custom-blocks' ) }</span>
@@ -71,7 +71,7 @@ const Header = ( { editorMode, changeEditorMode } ) => {
 					{ 'font-semibold': EDITOR_PREVIEW_EDITING_MODE === editorMode }
 				) }
 				onClick={ () => {
-					changeEditorMode( EDITOR_PREVIEW_EDITING_MODE );
+					setEditorMode( EDITOR_PREVIEW_EDITING_MODE );
 				} }
 			>
 				<span>{ __( 'Editor Preview', 'genesis-custom-blocks' ) }</span>
@@ -82,7 +82,7 @@ const Header = ( { editorMode, changeEditorMode } ) => {
 					{ 'font-semibold': FRONT_END_PREVIEW_EDITING_MODE === editorMode }
 				) }
 				onClick={ () => {
-					changeEditorMode( FRONT_END_PREVIEW_EDITING_MODE );
+					setEditorMode( FRONT_END_PREVIEW_EDITING_MODE );
 				} }
 			>
 				<span>{ __( 'Front-end Preview', 'genesis-custom-blocks' ) }</span>
