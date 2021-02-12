@@ -13,6 +13,7 @@ import {
 	UnsavedChangesWarning,
 } from '@wordpress/editor';
 import { useState, StrictMode } from '@wordpress/element';
+import ServerSideRender from '@wordpress/server-side-render';
 
 /**
  * Internal dependencies
@@ -30,10 +31,11 @@ import {
 } from './';
 import {
 	BLOCK_PANEL,
-	DEFAULT_LOCATION,
-	NO_FIELD_SELECTED,
-	EDITOR_PREVIEW_EDITING_MODE,
 	BUILDER_EDITING_MODE,
+	DEFAULT_LOCATION,
+	EDITOR_PREVIEW_EDITING_MODE,
+	FRONT_END_PREVIEW_EDITING_MODE,
+	NO_FIELD_SELECTED,
 } from '../constants';
 import { useBlock, useField } from '../hooks';
 import { Fields } from '../../block-editor/components';
@@ -91,11 +93,19 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 	const [ isNewField, setIsNewField ] = useState( false );
 	const [ panelDisplaying, setPanelDisplaying ] = useState( BLOCK_PANEL );
 	const [ selectedField, setSelectedField ] = useState( NO_FIELD_SELECTED );
+	const [ previewAttributes, setPreviewAttributes ] = useState( {} );
 
 	const post = useSelect(
 		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
 		[ postId, postType ]
 	);
+
+	const setAttributes = ( newAttributes ) => {
+		setPreviewAttributes( {
+			...previewAttributes,
+			...newAttributes,
+		} );
+	};
 
 	const changeEditorMode = ( newMode ) => {
 		setEditorMode( newMode );
@@ -134,11 +144,17 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 											<Fields
 												key="example-fields"
 												fields={ getFieldsForLocation( currentLocation ) }
-												parentBlockProps={ {} }
+												parentBlockProps={ {
+													setAttributes,
+													attributes: previewAttributes,
+												} }
 												parentBlock={ {} }
 											/>
 										</div>
-									) : (
+									) : null
+								}
+								{ BUILDER_EDITING_MODE === editorMode
+									? (
 										<FieldsGrid
 											currentLocation={ currentLocation }
 											selectedField={ selectedField }
@@ -146,7 +162,17 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 											setPanelDisplaying={ setPanelDisplaying }
 											setSelectedField={ setSelectedField }
 										/>
-									)
+									) : null
+								}
+								{ FRONT_END_PREVIEW_EDITING_MODE === editorMode
+									? (
+										<ServerSideRender
+											block={ `genesis-custom-blocks/${ block.name }` }
+											attributes={ previewAttributes }
+											className="genesis-custom-blocks-editor__ssr"
+											httpMethod="POST"
+										/>
+									) : null
 								}
 							</Main>
 							<Side

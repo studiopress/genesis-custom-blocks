@@ -20,7 +20,11 @@ import { addQueryArgs } from '@wordpress/url';
 /**
  * Internal dependencies
  */
-import { BUILDER_EDITING_MODE, EDITOR_PREVIEW_EDITING_MODE } from '../constants';
+import {
+	BUILDER_EDITING_MODE,
+	EDITOR_PREVIEW_EDITING_MODE,
+	FRONT_END_PREVIEW_EDITING_MODE,
+} from '../constants';
 
 /**
  * @typedef {Object} HeaderProps The header component props.
@@ -71,6 +75,17 @@ const Header = ( { editorMode, changeEditorMode } ) => {
 				} }
 			>
 				<span>{ __( 'Editor Preview', 'genesis-custom-blocks' ) }</span>
+			</button>
+			<button
+				className={ className(
+					'flex items-center h-12 px-4 text-sm',
+					{ 'font-semibold': FRONT_END_PREVIEW_EDITING_MODE === editorMode }
+				) }
+				onClick={ () => {
+					changeEditorMode( FRONT_END_PREVIEW_EDITING_MODE );
+				} }
+			>
+				<span>{ __( 'Front-end Preview', 'genesis-custom-blocks' ) }</span>
 			</button>
 			<div id="save-and-publish">
 				<span className="mr-3 text-sm">

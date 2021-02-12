@@ -10,8 +10,9 @@ export const BLOCK_NAMESPACE = 'genesis-custom-blocks';
 export const BLOCK_PANEL = 'block';
 export const BUILDER_EDITING_MODE = 'builderMode';
 export const DEFAULT_LOCATION = 'editor';
-export const EDITOR_PREVIEW_EDITING_MODE = 'editorMode';
+export const EDITOR_PREVIEW_EDITING_MODE = 'editorPreviewMode';
 export const FIELD_PANEL = 'field';
+export const FRONT_END_PREVIEW_EDITING_MODE = 'frontEndMode';
 export const LOCATIONS = [ DEFAULT_LOCATION, 'inspector' ];
 export const LOCATIONS_WITH_LABEL = [
 	{

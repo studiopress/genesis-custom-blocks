@@ -13,7 +13,7 @@ import ServerSideRender from '@wordpress/server-side-render';
  * Internal dependencies
  */
 import { Fields, GcbInspector } from './';
-import { getIconComponent } from '../../common/helpers';
+import { getFieldsAsArray, getIconComponent } from '../../common/helpers';
 
 /**
  * The editor component for the block.
@@ -38,7 +38,7 @@ const Edit = ( { blockProps, block } ) => {
 						</h3>
 						<Fields
 							key={ `${ block.name }-fields` }
-							fields={ block.fields }
+							fields={ getFieldsAsArray( block.fields ) }
 							parentBlockProps={ blockProps }
 							parentBlock={ blockProps }
 						/>
