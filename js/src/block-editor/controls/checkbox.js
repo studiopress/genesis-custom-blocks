@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import * as React from 'react';
+
+/**
  * WordPress dependencies
  */
 import { CheckboxControl } from '@wordpress/components';
@@ -15,7 +20,6 @@ const GcbCheckboxControl = ( props ) => {
 			label={ field.label }
 			help={ field.help }
 			checked={ value }
-			options={ field.options }
 			onChange={ onChange }
 		/>
 	);
