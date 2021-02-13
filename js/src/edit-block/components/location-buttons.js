@@ -2,7 +2,7 @@
  * External dependencies
  */
 import * as React from 'react';
-import className from 'classnames';
+import classNames from 'classnames';
 
 /**
  * WordPress dependencies
@@ -42,7 +42,7 @@ const LocationButtons = ( {
 					onClick={ () => setCurrentLocation( DEFAULT_LOCATION ) }
 				>
 					<span
-						className={ className( {
+						className={ classNames( {
 							'font-semibold': DEFAULT_LOCATION === currentLocation,
 						} ) }
 					>
@@ -54,7 +54,7 @@ const LocationButtons = ( {
 					onClick={ () => setCurrentLocation( ALTERNATE_LOCATION ) }
 				>
 					<span
-						className={ className( {
+						className={ classNames( {
 							'font-semibold': ALTERNATE_LOCATION === currentLocation,
 						} ) }
 					>

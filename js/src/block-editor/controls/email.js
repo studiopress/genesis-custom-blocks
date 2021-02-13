@@ -2,7 +2,7 @@
  * External dependencies
  */
 import * as React from 'react';
-import className from 'classnames';
+import classNames from 'classnames';
 
 /**
  * WordPress dependencies
@@ -18,7 +18,7 @@ const GcbEmailControl = ( props ) => {
 
 	return (
 		<TextControl
-			className={ className( {
+			className={ classNames( {
 				'text-control__error': isError,
 			} ) }
 			type="email"

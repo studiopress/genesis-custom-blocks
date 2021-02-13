@@ -2,7 +2,7 @@
  * External dependencies
  */
 import * as React from 'react';
-import className from 'classnames';
+import classNames from 'classnames';
 
 /**
  * WordPress dependencies
@@ -58,7 +58,7 @@ const Header = ( { editorMode, setEditorMode } ) => {
 			<EditorHistoryUndo />
 			<EditorHistoryRedo />
 			<button
-				className={ className(
+				className={ classNames(
 					buttonClasses,
 					{ 'font-semibold': BUILDER_EDITING_MODE === editorMode }
 				) }
@@ -69,7 +69,7 @@ const Header = ( { editorMode, setEditorMode } ) => {
 				<span>{ __( 'Builder', 'genesis-custom-blocks' ) }</span>
 			</button>
 			<button
-				className={ className(
+				className={ classNames(
 					buttonClasses,
 					{ 'font-semibold': EDITOR_PREVIEW_EDITING_MODE === editorMode }
 				) }
@@ -82,7 +82,7 @@ const Header = ( { editorMode, setEditorMode } ) => {
 			{ isPublished
 				? (
 					<button
-						className={ className(
+						className={ classNames(
 							buttonClasses,
 							{ 'font-semibold': FRONT_END_PREVIEW_EDITING_MODE === editorMode }
 						) }
