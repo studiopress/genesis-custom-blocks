@@ -6,7 +6,6 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
-import { Popover } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import {
 	EditorNotices,
@@ -193,7 +192,6 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 						</div>
 					</ErrorBoundary>
 				</EditorProvider>
-				<Popover.Slot />
 			</div>
 		</StrictMode>
 	);

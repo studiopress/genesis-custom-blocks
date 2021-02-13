@@ -6,62 +6,52 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
-import { BaseControl, TextControl, Popover, ColorIndicator, ColorPicker } from '@wordpress/components';
-import { withState } from '@wordpress/compose';
+import { BaseControl, ColorIndicator, ColorPicker, Popover, TextControl } from '@wordpress/components';
+import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
-const GcbColorPopover = withState( {
-} )( ( { isVisible, color, onUpdate, setState } ) => {
-	const toggleVisible = () => {
-		setState( ( state ) => ( { isVisible: ! state.isVisible } ) );
-	};
-	const colorChange = ( value ) => {
+const GcbColorPopover = ( { color, onUpdate } ) => {
+	const [ isVisible, setIsVisible ] = useState( false );
+	const handleColorChange = ( value ) => {
 		let newColor = value.hex;
 		if ( value.rgb.a < 1 ) {
 			newColor = 'rgba(' + value.rgb.r + ', ' + value.rgb.g + ', ' + value.rgb.b + ', ' + value.rgb.a + ')';
 		}
-		setState( () => ( { color: newColor } ) );
 		onUpdate( newColor );
 	};
 
 	return (
-		<BaseControl
-			className="genesis-custom-blocks-color-popover"
-			id={ __( 'Color control picker', 'genesis-custom-blocks' ) }
-		>
-			<ColorIndicator
-				colorValue={ color }
-				onMouseDown={ ( event ) => {
-					event.preventDefault(); // Prevent the popover blur.
-				} }
-				onClick={ toggleVisible }
+		<>
+			<BaseControl
+				className="genesis-custom-blocks-color-popover"
+				id={ __( 'Color control picker', 'genesis-custom-blocks' ) }
 			>
-				{ isVisible && (
+				<ColorIndicator
+					colorValue={ color }
+					onMouseDown={ ( event ) => {
+						event.preventDefault(); // Prevent the popover blur.
+					} }
+					onClick={ () => setIsVisible( true ) }
+				/>
+			</BaseControl>
+			{ isVisible
+				? (
 					<Popover
-						onClick={ ( event ) => {
-							event.stopPropagation();
-						} }
-						onBlur={ ( event ) => {
-							if ( null === event.relatedTarget ) {
-								return;
-							}
-							if ( event.relatedTarget.classList.contains( 'wp-block' ) ) {
-								toggleVisible();
-							}
-						} }
+						onClick={ ( event ) => event.stopPropagation() }
+						onClose={ () => setIsVisible( false ) }
 					>
 						<ColorPicker
 							color={ color }
 							onChangeComplete={ ( value ) => {
-								colorChange( value );
+								handleColorChange( value );
 							} }
 						/>
 					</Popover>
-				) }
-			</ColorIndicator>
-		</BaseControl>
+				) : null
+			}
+		</>
 	);
-} );
+};
 
 const GcbColorControl = ( props ) => {
 	const { field, getValue, onChange } = props;
@@ -77,7 +67,6 @@ const GcbColorControl = ( props ) => {
 				onChange={ onChange }
 			/>
 			<GcbColorPopover
-				isVisible={ false }
 				color={ value }
 				onUpdate={ onChange }
 			/>
