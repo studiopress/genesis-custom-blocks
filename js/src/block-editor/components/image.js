@@ -54,9 +54,7 @@ const Image = withSelect( ( select, ownProps ) => {
 	};
 } )( withState()( ( ownProps ) => {
 	const { field, getValue, imageAlt, imageSrc, instanceId, isUploading, onChange, setState } = ownProps;
-	const uploadStart = () => {
-		setState( { isUploading: true } );
-	};
+	const uploadStart = () => setState( { isUploading: true } );
 
 	const uploadComplete = ( image ) => {
 		if ( image.hasOwnProperty( 'id' ) ) {
@@ -121,7 +119,7 @@ const Image = withSelect( ( select, ownProps ) => {
 								disabled={ !! isUploading }
 								onChange={ ( event ) => {
 									const files = event.target.files;
-									uploadStart( files[ 0 ].name );
+									uploadStart();
 									uploadFiles( files );
 								} }
 								accept="image/*"
