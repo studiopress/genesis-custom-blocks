@@ -7,7 +7,6 @@ import classNames from 'classnames';
 /**
  * WordPress dependencies
  */
-import { useSelect } from '@wordpress/data';
 import {
 	PostPublishButton,
 	PostSavedState,
@@ -40,7 +39,6 @@ import {
  * @return {React.ReactElement} The header.
  */
 const Header = ( { editorMode, setEditorMode } ) => {
-	const isPublished = useSelect( ( select ) => select( 'core/editor' ).isCurrentPostPublished() );
 	const buttonClasses = 'flex items-center h-12 px-4 text-sm focus:outline-none';
 	const backURL = addQueryArgs( 'edit.php', {
 		post_type: 'genesis_custom_block',
@@ -79,21 +77,17 @@ const Header = ( { editorMode, setEditorMode } ) => {
 			>
 				<span>{ __( 'Editor Preview', 'genesis-custom-blocks' ) }</span>
 			</button>
-			{ isPublished
-				? (
-					<button
-						className={ classNames(
-							buttonClasses,
-							{ 'font-semibold': FRONT_END_PREVIEW_EDITING_MODE === editorMode }
-						) }
-						onClick={ () => {
-							setEditorMode( FRONT_END_PREVIEW_EDITING_MODE );
-						} }
-					>
-						<span>{ __( 'Front-end Preview', 'genesis-custom-blocks' ) }</span>
-					</button>
-				) : null
-			}
+			<button
+				className={ classNames(
+					buttonClasses,
+					{ 'font-semibold': FRONT_END_PREVIEW_EDITING_MODE === editorMode }
+				) }
+				onClick={ () => {
+					setEditorMode( FRONT_END_PREVIEW_EDITING_MODE );
+				} }
+			>
+				<span>{ __( 'Front-end Preview', 'genesis-custom-blocks' ) }</span>
+			</button>
 			<div id="save-and-publish">
 				<span className="mr-3 text-sm">
 					<PostSavedState
