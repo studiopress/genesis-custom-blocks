@@ -10,24 +10,35 @@ import { BaseControl, ColorIndicator, ColorPicker, Popover, TextControl } from '
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
-const GcbColorPopover = ( { color, onUpdate } ) => {
+const GcbColorControl = ( props ) => {
+	const { field, getValue, onChange } = props;
+	const initialValue = getValue( props );
 	const [ isVisible, setIsVisible ] = useState( false );
-	const handleColorChange = ( value ) => {
-		let newColor = value.hex;
-		if ( value.rgb.a < 1 ) {
-			newColor = 'rgba(' + value.rgb.r + ', ' + value.rgb.g + ', ' + value.rgb.b + ', ' + value.rgb.a + ')';
+	const handleColorChange = ( newValue ) => {
+		let newColor = newValue.hex;
+		if ( newValue.rgb.a < 1 ) {
+			newColor = 'rgba(' + newValue.rgb.r + ', ' + newValue.rgb.g + ', ' + newValue.rgb.b + ', ' + newValue.rgb.a + ')';
 		}
-		onUpdate( newColor );
+
+		onChange( newColor );
 	};
 
+	const value = 'undefined' !== typeof initialValue ? initialValue : field.default;
+	const id = `gcb-color-${ field ? field.name : '' }`;
+
 	return (
-		<>
+		<BaseControl label={ field.label } id={ id } className="genesis-custom-blocks-color-control" help={ field.help }>
+			<TextControl
+				id={ id }
+				value={ value }
+				onChange={ onChange }
+			/>
 			<BaseControl
 				className="genesis-custom-blocks-color-popover"
 				id={ __( 'Color control picker', 'genesis-custom-blocks' ) }
 			>
 				<ColorIndicator
-					colorValue={ color }
+					colorValue={ value }
 					onMouseDown={ ( event ) => {
 						event.preventDefault(); // Prevent the popover blur.
 					} }
@@ -41,35 +52,14 @@ const GcbColorPopover = ( { color, onUpdate } ) => {
 						onClose={ () => setIsVisible( false ) }
 					>
 						<ColorPicker
-							color={ color }
-							onChangeComplete={ ( value ) => {
-								handleColorChange( value );
+							color={ value }
+							onChangeComplete={ ( newValue ) => {
+								handleColorChange( newValue );
 							} }
 						/>
 					</Popover>
 				) : null
 			}
-		</>
-	);
-};
-
-const GcbColorControl = ( props ) => {
-	const { field, getValue, onChange } = props;
-	const initialValue = getValue( props );
-	const value = 'undefined' !== typeof initialValue ? initialValue : field.default;
-	const id = `gcb-color-${ field ? field.name : '' }`;
-
-	return (
-		<BaseControl label={ field.label } id={ id } className="genesis-custom-blocks-color-control" help={ field.help }>
-			<TextControl
-				id={ id }
-				value={ value }
-				onChange={ onChange }
-			/>
-			<GcbColorPopover
-				color={ value }
-				onUpdate={ onChange }
-			/>
 		</BaseControl>
 	);
 };
