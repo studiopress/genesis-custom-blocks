@@ -38,7 +38,7 @@ import { __, sprintf } from '@wordpress/i18n';
  * @param {number|string} fieldValue The current field value.
  * @param {(imageId: number) => void} onChange Handles changing the field value.
  * @param {string[]} allowedTypes The allowed media types.
- * @return {UseImageReturn} The return of this hook.
+ * @return {UseImageReturn} The return value of this hook.
  */
 const useImage = ( fieldValue, onChange, allowedTypes ) => {
 	const [ isUploading, setIsUploading ] = useState( false );
