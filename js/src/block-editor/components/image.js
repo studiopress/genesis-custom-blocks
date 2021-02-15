@@ -6,6 +6,7 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
+import { MediaUpload } from '@wordpress/block-editor';
 import {
 	BaseControl,
 	Button,
@@ -15,30 +16,37 @@ import {
 	FormFileUpload,
 	Spinner,
 } from '@wordpress/components';
-import { withState } from '@wordpress/compose';
-import { withSelect } from '@wordpress/data';
-import { MediaUpload } from '@wordpress/block-editor';
+import { useSelect } from '@wordpress/data';
 import { mediaUpload } from '@wordpress/editor';
+import { useEffect, useRef, useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 
 const ALLOWED_TYPES = [ 'image' ];
 const DEFAULT_IMG_ID = 0;
 
-const Image = withSelect( ( select, ownProps ) => {
-	const { getValue } = ownProps;
-	const fieldValue = getValue( ownProps );
-	let media, imageAlt,
-		imageSrc = '';
+const Image = ( props ) => {
+	const { field, getValue, instanceId, onChange } = props;
+	const fieldValue = getValue( props );
+	const [ isUploading, setIsUploading ] = useState( false );
 
-	if ( parseInt( fieldValue ) ) {
-		media = select( 'core' ).getMedia( fieldValue );
-		imageSrc = ( media && media.source_url ) ? media.source_url : '';
-	} else if ( 'string' === typeof fieldValue ) {
+	// @ts-ignore
+	const { getMedia } = useSelect( ( select ) => select( 'core' ) );
+
+	useEffect( () => {
+		if ( parseInt( fieldValue ) ) {
+			const media = getMedia( fieldValue );
+			imageSrc.current = media && media.source_url ? media.source_url : '';
+		}
+
 		// Backwards-compatibility: this used to save the URL as the fieldValue, not the ID as it does now.
-		imageSrc = fieldValue;
-	}
+		imageSrc.current = fieldValue;
+	}, [ fieldValue, getMedia ] );
+
+	const imageSrc = useRef();
 
 	// This alt logic is taken from the Gutenberg Image block's edit.js file.
+	const media = getMedia( fieldValue );
+	let imageAlt;
 	if ( media && media.alt ) {
 		imageAlt = media.alt;
 	} else if ( media && media.source_url ) {
@@ -48,19 +56,20 @@ const Image = withSelect( ( select, ownProps ) => {
 		imageAlt = __( 'This image has no alt attribute', 'genesis-custom-blocks' );
 	}
 
-	return {
-		imageAlt,
-		imageSrc,
-	};
-} )( withState()( ( ownProps ) => {
-	const { field, getValue, imageAlt, imageSrc, instanceId, isUploading, onChange, setState } = ownProps;
-	const uploadStart = () => setState( { isUploading: true } );
+	const uploadStart = () => setIsUploading( true );
 
 	const uploadComplete = ( image ) => {
 		if ( image.hasOwnProperty( 'id' ) ) {
-			onChange( parseInt( image.id ) );
+			const newId = parseInt( image.id );
+			onChange( newId );
 		}
-		setState( { isUploading: false } );
+
+		if ( image.hasOwnProperty( 'url' ) ) {
+			imageSrc.current = image.url;
+		}
+
+		// Backwards-compatibility: this used to save the URL as the fieldValue, not the ID as it does now.
+		setIsUploading( false );
 	};
 
 	const onSelect = ( image ) => {
@@ -94,72 +103,83 @@ const Image = withSelect( ( select, ownProps ) => {
 
 	return (
 		<BaseControl className="genesis-custom-blocks-media-controls" label={ field.label } id={ `gcb-image-${ instanceId }` }>
-			{ !! field.help && <p className="components-base-control__help">{ field.help }</p> }
-			{ ! isUploading && imageSrc && (
-				<img className="gcb-image__img" src={ imageSrc } alt={ imageAlt } />
-			) }
-			{ ! imageSrc && (
-				<Placeholder className="gcb-image__placeholder" icon="format-image" label={ __( 'Image', 'genesis-custom-blocks' ) } instructions={ __( 'Drag an image, upload a new one or select a file from your library.', 'genesis-custom-blocks' ) }>
-					<DropZoneProvider>
-						<DropZone
-							onFilesDrop={ ( files ) => {
-								if ( files.length ) {
-									uploadStart();
-									uploadFiles( files );
-								}
-							} }
-						/>
-					</DropZoneProvider>
-					{ isUploading && (
-						<Spinner />
-					) }
-					{ ! isUploading && (
-						<>
-							<FormFileUpload
-								disabled={ !! isUploading }
-								onChange={ ( event ) => {
-									const files = event.target.files;
-									uploadStart();
-									uploadFiles( files );
+			{ !! field.help
+				? <p className="components-base-control__help">{ field.help }</p>
+				: null
+			}
+			<img className="gcb-image__img" src={ imageSrc.current } alt={ imageAlt } />
+			{ ! imageSrc.current
+				? (
+					<Placeholder className="gcb-image__placeholder" icon="format-image" label={ __( 'Image', 'genesis-custom-blocks' ) } instructions={ __( 'Drag an image, upload a new one or select a file from your library.', 'genesis-custom-blocks' ) }>
+						<DropZoneProvider>
+							<DropZone
+								onFilesDrop={ ( files ) => {
+									if ( files.length ) {
+										uploadStart();
+										uploadFiles( files );
+									}
 								} }
-								accept="image/*"
-								multiple={ false }
-							>
-								{ __( 'Upload', 'genesis-custom-blocks' ) }
-							</FormFileUpload>
-							<MediaUpload
-								gallery={ false }
-								multiple={ false }
-								onSelect={ onSelect }
-								allowedTypes={ ALLOWED_TYPES }
-								value={ getValue( ownProps ) }
-								render={ ( { open } ) => (
-									<div className="components-media-library-button">
-										<Button
-											disabled={ !! isUploading }
-											className="editor-media-placeholder__button"
-											onClick={ open }
-										>
-											{ __( 'Media Library', 'genesis-custom-blocks' ) }
-										</Button>
-									</div>
-								) }
 							/>
-						</>
-					) }
-				</Placeholder>
-			) }
-			{ imageSrc && (
-				<Button
-					disabled={ !! isUploading }
-					className="gcb-image__remove"
-					onClick={ removeImage }
-				>
-					{ __( 'Remove', 'genesis-custom-blocks' ) }
-				</Button>
-			) }
+						</DropZoneProvider>
+						{ isUploading
+							? <Spinner />
+							: null
+						}
+						{ ! isUploading
+							? (
+								<>
+									<FormFileUpload
+										disabled={ !! isUploading }
+										onChange={ ( event ) => {
+											const files = event.target.files;
+											uploadStart();
+											uploadFiles( files );
+										} }
+										accept="image/*"
+										multiple={ false }
+									>
+										{ __( 'Upload', 'genesis-custom-blocks' ) }
+									</FormFileUpload>
+									<MediaUpload
+										gallery={ false }
+										multiple={ false }
+										onSelect={ onSelect }
+										allowedTypes={ ALLOWED_TYPES }
+										value={ getValue( props ) }
+										render={ ( { open } ) => (
+											<div className="components-media-library-button">
+												<Button
+													disabled={ !! isUploading }
+													className="editor-media-placeholder__button"
+													onClick={ open }
+												>
+													{ __( 'Media Library', 'genesis-custom-blocks' ) }
+												</Button>
+											</div>
+										) }
+									/>
+								</>
+							)
+							: null
+						}
+					</Placeholder>
+				)
+				: null
+			}
+			{ imageSrc.current
+				? (
+					<Button
+						disabled={ !! isUploading }
+						className="gcb-image__remove"
+						onClick={ removeImage }
+					>
+						{ __( 'Remove', 'genesis-custom-blocks' ) }
+					</Button>
+				)
+				: null
+			}
 		</BaseControl>
 	);
-} ) );
+};
 
 export default Image;
