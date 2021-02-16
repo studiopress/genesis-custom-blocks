@@ -196,6 +196,7 @@ class TestEditBlock extends AbstractTemplate {
 				$response->get_data()['templatePath']
 			)
 		);
+		$this->assertEquals( '', $response->get_data()['cssUrl'] );
 	}
 
 	/**

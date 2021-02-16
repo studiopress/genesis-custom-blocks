@@ -37,7 +37,7 @@ import {
 	FRONT_END_PREVIEW_EDITING_MODE,
 	NO_FIELD_SELECTED,
 } from '../constants';
-import { useBlock, useField } from '../hooks';
+import { useBlock, useField, useTemplate } from '../hooks';
 import { Fields } from '../../block-editor/components';
 
 /**
@@ -89,6 +89,7 @@ import { Fields } from '../../block-editor/components';
  */
 const Editor = ( { onError, postId, postType, settings } ) => {
 	const { block, changeBlock } = useBlock();
+	const { template } = useTemplate();
 	const { previewAttributes = {} } = block;
 	const { getFields } = useField();
 	const post = useSelect(
@@ -118,6 +119,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 	return (
 		<StrictMode>
 			<div className="h-screen flex flex-col items-center text-black">
+				{ template?.cssUrl ? <link rel="stylesheet" href={ template.cssUrl } type="text/css" /> : null }
 				<BrowserURL />
 				<UnsavedChangesWarning />
 				<EditorProvider

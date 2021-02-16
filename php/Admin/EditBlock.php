@@ -253,6 +253,10 @@ class EditBlock extends ComponentAbstract {
 			$template_path = get_stylesheet_directory() . "/blocks/block-{$block_name}.php";
 		}
 
+		$stylesheet_locations = genesis_custom_blocks()->get_stylesheet_locations( $block_name );
+		$stylesheet_path      = genesis_custom_blocks()->locate_template( $stylesheet_locations );
+		$stylesheet_url       = genesis_custom_blocks()->get_url_from_path( $stylesheet_path );
+
 		return [
 			'templateExists' => $template_exists,
 			'templatePath'   => str_replace(
@@ -260,6 +264,7 @@ class EditBlock extends ComponentAbstract {
 				basename( WP_CONTENT_DIR ),
 				$template_path
 			),
+			'cssUrl'         => $stylesheet_url,
 		];
 	}
 }

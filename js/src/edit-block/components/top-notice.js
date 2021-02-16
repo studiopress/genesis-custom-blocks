@@ -13,17 +13,11 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { QuestionIcon, TemplateFile } from './';
-
-/**
- * @typedef {Object} Template The current template.
- * @property {boolean} templateExists Whether the template was found.
- * @property {string} templatePath The path of the template.
- */
+import { useTemplate } from '../hooks';
 
 /**
  * @typedef {Object} TopNoticeProps The component props.
  * @property {boolean} isOnboarding Whether the onboarding should display now.
- * @property {Template} template The template data.
  */
 
 /**
@@ -32,14 +26,12 @@ import { QuestionIcon, TemplateFile } from './';
  * @param {TopNoticeProps} props
  * @return {React.ReactElement} The top notice.
  */
-const TopNotice = ( {
-	isOnboarding,
-	template,
-} ) => {
+const TopNotice = ( { isOnboarding } ) => {
 	const urlBlockTemplates = 'https://developer.wpengine.com/genesis-custom-blocks/get-started/add-a-custom-block-to-your-website-content/';
 	const urlGetStarted = 'https://developer.wpengine.com/genesis-custom-blocks/get-started/';
-	const urlTemplateFunctions = 'https://developer.wpengine.com/genesis-custom-blocks/functions';
+	const urlTemplateFunctions = 'https://developer.wpengine.com/genesis-custom-blocks/functions/';
 	const isNewPost = useSelect( ( select ) => select( 'core/editor' ).isEditedPostNew() );
+	const { template } = useTemplate();
 
 	return (
 		<>
