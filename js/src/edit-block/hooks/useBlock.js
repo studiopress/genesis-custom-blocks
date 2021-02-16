@@ -23,12 +23,6 @@ import {
  */
 
 /**
- * @callback ChangeBlockName Changes the name of a block.
- * @param {string} newName The new bock name (slug).
- * @param {Object} [defaultValues] The new block values, if any.
- */
-
-/**
  * @typedef {Object} Block A block configuration.
  * @property {string} name The name (slug).
  * @property {string} title Often a pretty-printed version of the slug.
@@ -41,9 +35,14 @@ import {
  */
 
 /**
+ * @callback ChangeBlock Changes only the values is newValue, not the entire block.
+ * @param {Object} newValues The new value(s) to set.
+ */
+
+/**
  * @typedef {Object} UseBlockReturn The return value of useBlock.
  * @property {Block} block The block, parsed into an object.
- * @property {function(Object):void} changeBlock Changes the block configuration.
+ * @property {ChangeBlock} changeBlock Changes the block configuration.
  */
 
 /**
@@ -64,14 +63,7 @@ const useBlock = () => {
 	const blockNameWithNameSpace = getBlockNameWithNameSpace( fullBlock );
 	const block = fullBlock[ blockNameWithNameSpace ] || {};
 
-	/**
-	 * Changes a block's values.
-	 *
-	 * Does not overwrite the whole block, only the values
-	 * passed in newValues.
-	 *
-	 * @param {Object} newValues The new value(s) to set.
-	 */
+	/** @type {ChangeBlock} */
 	const changeBlock = ( newValues ) => {
 		const newBlock = {
 			...getDefaultBlock( postId ),
