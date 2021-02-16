@@ -10,10 +10,8 @@ import { CheckboxControl } from '@wordpress/components';
 
 const GcbCheckboxControl = ( props ) => {
 	const { field, getValue, onChange } = props;
-	let value = getValue( props );
-	if ( 'undefined' === typeof value ) {
-		value = field.default || false;
-	}
+	const initialValue = getValue( props );
+	const value = 'undefined' !== typeof initialValue ? initialValue : field.default;
 
 	return (
 		<CheckboxControl
