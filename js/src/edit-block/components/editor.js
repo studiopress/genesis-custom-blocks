@@ -88,27 +88,28 @@ import { Fields } from '../../block-editor/components';
  * @return {React.ReactElement} The editor.
  */
 const Editor = ( { onError, postId, postType, settings } ) => {
-	const { block } = useBlock();
+	const { block, changeBlock } = useBlock();
+	const { previewAttributes = {} } = block;
+	const { getFields } = useField();
+	const post = useSelect(
+		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
+		[ postId, postType ]
+	);
 	const [ currentLocation, setCurrentLocation ] = useState( DEFAULT_LOCATION );
 	const [ editorMode, setEditorMode ] = useState( BUILDER_EDITING_MODE );
 	const [ isNewField, setIsNewField ] = useState( false );
 	const [ panelDisplaying, setPanelDisplaying ] = useState( BLOCK_PANEL );
 	const [ selectedField, setSelectedField ] = useState( NO_FIELD_SELECTED );
-	const [ previewAttributes, setPreviewAttributes ] = useState( {} );
 
-	const post = useSelect(
-		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
-		[ postId, postType ]
-	);
-
+	/** @param {Object} newAttributes Attribute (field) name and value. */
 	const setAttributes = ( newAttributes ) => {
-		setPreviewAttributes( {
-			...previewAttributes,
-			...newAttributes,
+		changeBlock( {
+			previewAttributes: {
+				...previewAttributes,
+				...newAttributes,
+			},
 		} );
 	};
-
-	const { getFields } = useField();
 
 	if ( ! post ) {
 		return null;

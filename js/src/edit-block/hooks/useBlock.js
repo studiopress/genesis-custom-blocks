@@ -37,6 +37,7 @@ import {
  * @property {string} icon The block icon, like 'genesis_custom_block'.
  * @property {string[]} keywords The keywords, max 3.
  * @property {string[]} [excluded] The excluded post tpes, if any.
+ * @property {Object} [previewAttributes] The block attributes to show in the GCB 'Editor Preview'.
  */
 
 /**
