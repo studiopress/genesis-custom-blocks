@@ -11,23 +11,25 @@ import GcbCheckboxControl from '../checkbox';
 
 test( 'checkbox control', async () => {
 	const field = {
+		label: 'This is an example label',
 		help: 'Here is help text for the checkbox field',
-		default: '1',
+		default: false,
 	};
 	const mockOnChange = jest.fn();
-	const { findByRole, findByText } = render(
+	const { findByLabelText, findByRole, findByText } = render(
 		<GcbCheckboxControl
 			field={ field }
 			getValue={ jest.fn() }
 			onChange={ mockOnChange }
 		/>
 	);
+
+	await findByLabelText( field.label );
 	const checkbox = await findByRole( 'checkbox' );
 
 	await findByText( field.help );
-	expect( checkbox ).toBeChecked( !! field.default );
+	expect( checkbox ).not.toBeChecked();
 
-	// Click the bock to uncheck it, and verify that false is sent to the onChange handler.
 	user.click( checkbox );
-	expect( mockOnChange ).toHaveBeenCalledWith( false );
+	expect( mockOnChange ).toHaveBeenCalledWith( true );
 } );

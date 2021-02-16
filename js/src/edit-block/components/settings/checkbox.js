@@ -7,7 +7,7 @@ import * as React from 'react';
  * @typedef {Object} CheckboxProps The component props.
  * @property {Function} handleOnChange Handles a change in this setting.
  * @property {Object} setting This setting.
- * @property {boolean|undefined} value The setting value.
+ * @property {boolean|number|undefined} value The setting value.
  */
 
 /**
@@ -17,8 +17,7 @@ import * as React from 'react';
  * @return {React.ReactElement} The checkbox component.
  */
 const Checkbox = ( { handleOnChange, setting, value } ) => {
-	const isChecked = undefined === value ? setting.default : value;
-	const checked = '1';
+	const isChecked = Boolean( value );
 	const id = `setting-input-${ setting.name }`;
 
 	return (
@@ -28,7 +27,6 @@ const Checkbox = ( { handleOnChange, setting, value } ) => {
 				id={ id }
 				className="ml-2"
 				type="checkbox"
-				value={ checked }
 				checked={ isChecked }
 				onChange={ ( event ) => {
 					if ( event.target ) {

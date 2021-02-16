@@ -42,11 +42,10 @@ class Email extends ControlAbstract {
 		$this->settings[] = new ControlSetting( $this->settings_config['help'] );
 		$this->settings[] = new ControlSetting(
 			[
-				'name'     => 'default',
-				'label'    => __( 'Default Value', 'genesis-custom-blocks' ),
-				'type'     => 'email',
-				'default'  => '',
-				'sanitize' => 'sanitize_email',
+				'name'    => 'default',
+				'label'   => __( 'Default Value', 'genesis-custom-blocks' ),
+				'type'    => 'email',
+				'default' => '',
 			]
 		);
 		$this->settings[] = new ControlSetting( $this->settings_config['placeholder'] );

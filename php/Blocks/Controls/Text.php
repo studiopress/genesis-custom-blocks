@@ -43,11 +43,10 @@ class Text extends ControlAbstract {
 
 		$this->settings[] = new ControlSetting(
 			[
-				'name'     => 'maxlength',
-				'label'    => __( 'Character Limit', 'genesis-custom-blocks' ),
-				'type'     => 'number_non_negative',
-				'default'  => '',
-				'sanitize' => [ $this, 'sanitize_number' ],
+				'name'    => 'maxlength',
+				'label'   => __( 'Character Limit', 'genesis-custom-blocks' ),
+				'type'    => 'number_non_negative',
+				'default' => '',
 			]
 		);
 	}

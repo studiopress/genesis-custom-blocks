@@ -42,11 +42,10 @@ class Url extends ControlAbstract {
 		$this->settings[] = new ControlSetting( $this->settings_config['help'] );
 		$this->settings[] = new ControlSetting(
 			[
-				'name'     => 'default',
-				'label'    => __( 'Default Value', 'genesis-custom-blocks' ),
-				'type'     => 'url',
-				'default'  => '',
-				'sanitize' => 'esc_url_raw',
+				'name'    => 'default',
+				'label'   => __( 'Default Value', 'genesis-custom-blocks' ),
+				'type'    => 'url',
+				'default' => '',
 			]
 		);
 		$this->settings[] = new ControlSetting( $this->settings_config['placeholder'] );

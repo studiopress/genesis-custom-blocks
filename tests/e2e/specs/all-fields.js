@@ -70,7 +70,7 @@ describe( 'AllFields', () => {
 			toggle: {
 				label: 'Testing Toggle',
 				name: 'testing-toggle',
-				value: 'No',
+				value: 'Yes',
 			},
 			range: {
 				label: 'Testing Range',
@@ -80,7 +80,7 @@ describe( 'AllFields', () => {
 			checkbox: {
 				label: 'Testing Checkbox',
 				name: 'testing-checkbox',
-				value: 'No',
+				value: 'Yes',
 			},
 			radio: {
 				label: 'Testing Radio',
