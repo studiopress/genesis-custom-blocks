@@ -27,17 +27,15 @@ import { DEFAULT_LOCATION } from '../../common/constants';
  */
 const Edit = ( { blockProps, block } ) => {
 	const { attributes, className, isSelected } = blockProps;
-	const hasEditorField = () => {
-		return getFieldsAsArray( block.fields ).some( ( field ) => {
-			return ! field.location || DEFAULT_LOCATION === field.location;
-		} );
-	};
+	const hasEditorField = getFieldsAsArray( block.fields ).some( ( field ) => {
+		return ! field.location || DEFAULT_LOCATION === field.location;
+	} );
 
 	return (
 		<>
 			<GcbInspector blockProps={ blockProps } block={ block } />
 			<div className={ className } key={ `form-controls-${ block.name }` }>
-				{ isSelected && hasEditorField() ? (
+				{ isSelected && hasEditorField ? (
 					<div
 						className="block-form"
 						aria-label={ __( 'GCB block form', 'genesis-custom-blocks' ) }
