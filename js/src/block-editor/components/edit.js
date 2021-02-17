@@ -29,7 +29,7 @@ const Edit = ( { blockProps, block } ) => {
 	const { attributes, className, isSelected } = blockProps;
 	const hasEditorField = () => {
 		return getFieldsAsArray( block.fields ).some( ( field ) => {
-			return DEFAULT_LOCATION === field.location;
+			return ! field.location || DEFAULT_LOCATION === field.location;
 		} );
 	};
 
