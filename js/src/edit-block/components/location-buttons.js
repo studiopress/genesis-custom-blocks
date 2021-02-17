@@ -12,8 +12,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ALTERNATE_LOCATION, BUILDER_EDITING_MODE, DEFAULT_LOCATION } from '../constants';
-
+import { BUILDER_EDITING_MODE } from '../constants';
+import { ALTERNATE_LOCATION, DEFAULT_LOCATION } from '../../common/constants';
 /**
  * @typedef {Object} LocationButtonProps The component props.
  * @property {import('./editor').CurrentLocation} currentLocation The currently selected location.

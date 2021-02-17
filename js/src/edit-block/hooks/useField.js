@@ -19,7 +19,7 @@ import {
 } from '../helpers';
 import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
 import { useBlock } from '../hooks';
-import { DEFAULT_LOCATION } from '../constants';
+import { DEFAULT_LOCATION } from '../../common/constants';
 
 /**
  * @typedef {Object} UseFieldReturn The return value of useField.

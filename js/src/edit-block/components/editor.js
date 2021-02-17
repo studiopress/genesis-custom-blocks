@@ -32,11 +32,11 @@ import {
 import {
 	BLOCK_PANEL,
 	BUILDER_EDITING_MODE,
-	DEFAULT_LOCATION,
 	EDITOR_PREVIEW_EDITING_MODE,
 	FRONT_END_PREVIEW_EDITING_MODE,
 	NO_FIELD_SELECTED,
 } from '../constants';
+import { DEFAULT_LOCATION } from '../../common/constants';
 import { useBlock, useField, useTemplate } from '../hooks';
 import { Fields } from '../../block-editor/components';
 

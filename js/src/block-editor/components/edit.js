@@ -7,6 +7,7 @@ import * as React from 'react';
  * WordPress dependencies
  */
 import { Icon } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
 import ServerSideRender from '@wordpress/server-side-render';
 
 /**
@@ -14,6 +15,7 @@ import ServerSideRender from '@wordpress/server-side-render';
  */
 import { Fields, GcbInspector } from './';
 import { getFieldsAsArray, getIconComponent } from '../../common/helpers';
+import { DEFAULT_LOCATION } from '../../common/constants';
 
 /**
  * The editor component for the block.
@@ -25,13 +27,21 @@ import { getFieldsAsArray, getIconComponent } from '../../common/helpers';
  */
 const Edit = ( { blockProps, block } ) => {
 	const { attributes, className, isSelected } = blockProps;
+	const hasEditorField = () => {
+		return getFieldsAsArray( block.fields ).some( ( field ) => {
+			return DEFAULT_LOCATION === field.location;
+		} );
+	};
 
 	return (
 		<>
 			<GcbInspector blockProps={ blockProps } block={ block } />
-			<div className={ className } key={ `form-controls-${ block.name }` } >
-				{ isSelected ? (
-					<div className="block-form">
+			<div className={ className } key={ `form-controls-${ block.name }` }>
+				{ isSelected && hasEditorField() ? (
+					<div
+						className="block-form"
+						aria-label={ __( 'GCB block form', 'genesis-custom-blocks' ) }
+					>
 						<h3>
 							<Icon size={ 24 } icon={ getIconComponent( block.icon ) } />
 							{ block.title }
