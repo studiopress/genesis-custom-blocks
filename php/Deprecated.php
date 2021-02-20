@@ -7,7 +7,7 @@
  * @see Genesis\CustomBlocks\ComponentAbstract->_call()
  *
  * @package   Genesis\CustomBlocks
- * @copyright Copyright(c) 2020, Genesis Custom Blocks
+ * @copyright Copyright(c) 2021, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
@@ -46,7 +46,7 @@ function genesis_custom_blocks_deprecated_function( $function, $version, $replac
  */
 function block_lab_get_icons() {
 	genesis_custom_blocks_deprecated_function( 'block_lab_get_icons', '1.3.5', 'genesis_custom_blocks()->get_icons()' );
-	return genesis_custom_blocks()->get_icons();
+	return [];
 }
 
 /**

@@ -3,7 +3,7 @@
  * Number control.
  *
  * @package   Genesis\CustomBlocks
- * @copyright Copyright(c) 2020, Genesis Custom Blocks
+ * @copyright Copyright(c) 2021, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
@@ -49,13 +49,10 @@ class Number extends ControlAbstract {
 		$this->settings[] = new ControlSetting( $this->settings_config['help'] );
 		$this->settings[] = new ControlSetting(
 			[
-				'name'     => 'default',
-				'label'    => __( 'Default Value', 'genesis-custom-blocks' ),
-				'type'     => 'number',
-				'default'  => '',
-				'sanitize' => function ( $value ) {
-					return filter_var( $value, FILTER_SANITIZE_NUMBER_INT );
-				},
+				'name'    => 'default',
+				'label'   => __( 'Default Value', 'genesis-custom-blocks' ),
+				'type'    => 'number',
+				'default' => '',
 			]
 		);
 		$this->settings[] = new ControlSetting( $this->settings_config['placeholder'] );

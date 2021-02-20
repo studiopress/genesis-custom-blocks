@@ -3,7 +3,7 @@
  * ControlSetting.
  *
  * @package   Genesis\CustomBlocks
- * @copyright Copyright(c) 2020, Genesis Custom Blocks
+ * @copyright Copyright(c) 2021, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
@@ -50,20 +50,6 @@ class ControlSetting {
 	public $help = '';
 
 	/**
-	 * Sanitizing function.
-	 *
-	 * @var mixed
-	 */
-	public $sanitize = '';
-
-	/**
-	 * Validating function.
-	 *
-	 * @var mixed
-	 */
-	public $validate = '';
-
-	/**
 	 * Current value. Null for unset.
 	 *
 	 * @var mixed
@@ -92,12 +78,6 @@ class ControlSetting {
 		}
 		if ( isset( $args['help'] ) ) {
 			$this->help = $args['help'];
-		}
-		if ( isset( $args['sanitize'] ) ) {
-			$this->sanitize = $args['sanitize'];
-		}
-		if ( isset( $args['validate'] ) ) {
-			$this->validate = $args['validate'];
 		}
 		if ( isset( $args['value'] ) ) {
 			$this->value = $args['value'];

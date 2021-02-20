@@ -163,38 +163,6 @@ class TestUtil extends AbstractTemplate {
 	}
 
 	/**
-	 * Test get_icons.
-	 *
-	 * @covers \Genesis\CustomBlocks\Util::get_icons()
-	 */
-	public function test_get_icons() {
-		$icons = $this->instance->get_icons();
-		$this->assertEquals(
-			'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M6.5 10h-2v7h2v-7zm6 0h-2v7h2v-7zm8.5 9H2v2h19v-2zm-2.5-9h-2v7h2v-7zm-7-6.74L16.71 6H6.29l5.21-2.74m0-2.26L2 6v2h19V6l-9.5-5z"/></svg>',
-			$icons['account_balance']
-		);
-		$this->assertEquals(
-			'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M18 9v4H6V9H4v6h16V9h-2z"/></svg>',
-			$icons['space_bar']
-		);
-
-		$additional_icon = '<svg></svg>';
-		$icon_name       = 'additional_icon';
-
-		add_filter(
-			'genesis_custom_blocks_icons',
-			function( $icons ) use ( $additional_icon, $icon_name ) {
-				$icons[ $icon_name ] = $additional_icon;
-				return $icons;
-			}
-		);
-
-		// The filter should add the additional icon.
-		$icons = $this->instance->get_icons();
-		$this->assertEquals( $additional_icon, $icons[ $icon_name ] );
-	}
-
-	/**
 	 * Test allowed_svg_tags.
 	 *
 	 * @covers \Genesis\CustomBlocks\Util::allowed_svg_tags()

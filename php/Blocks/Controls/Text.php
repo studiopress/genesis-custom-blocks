@@ -3,7 +3,7 @@
  * Text control.
  *
  * @package   Genesis\CustomBlocks
- * @copyright Copyright(c) 2020, Genesis Custom Blocks
+ * @copyright Copyright(c) 2021, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
@@ -43,11 +43,10 @@ class Text extends ControlAbstract {
 
 		$this->settings[] = new ControlSetting(
 			[
-				'name'     => 'maxlength',
-				'label'    => __( 'Character Limit', 'genesis-custom-blocks' ),
-				'type'     => 'number_non_negative',
-				'default'  => '',
-				'sanitize' => [ $this, 'sanitize_number' ],
+				'name'    => 'maxlength',
+				'label'   => __( 'Character Limit', 'genesis-custom-blocks' ),
+				'type'    => 'number_non_negative',
+				'default' => '',
 			]
 		);
 	}

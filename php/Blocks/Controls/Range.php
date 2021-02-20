@@ -3,7 +3,7 @@
  * Range control.
  *
  * @package   Genesis\CustomBlocks
- * @copyright Copyright(c) 2020, Genesis Custom Blocks
+ * @copyright Copyright(c) 2021, Genesis Custom Blocks
  * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 
@@ -49,38 +49,34 @@ class Range extends ControlAbstract {
 		$this->settings[] = new ControlSetting( $this->settings_config['help'] );
 		$this->settings[] = new ControlSetting(
 			[
-				'name'     => 'min',
-				'label'    => __( 'Minimum Value', 'genesis-custom-blocks' ),
-				'type'     => 'number',
-				'default'  => '',
-				'sanitize' => [ $this, 'sanitize_number' ],
+				'name'    => 'min',
+				'label'   => __( 'Minimum Value', 'genesis-custom-blocks' ),
+				'type'    => 'number',
+				'default' => 0,
 			]
 		);
 		$this->settings[] = new ControlSetting(
 			[
-				'name'     => 'max',
-				'label'    => __( 'Maximum Value', 'genesis-custom-blocks' ),
-				'type'     => 'number',
-				'default'  => '',
-				'sanitize' => [ $this, 'sanitize_number' ],
+				'name'    => 'max',
+				'label'   => __( 'Maximum Value', 'genesis-custom-blocks' ),
+				'type'    => 'number',
+				'default' => 100,
 			]
 		);
 		$this->settings[] = new ControlSetting(
 			[
-				'name'     => 'step',
-				'label'    => __( 'Step Size', 'genesis-custom-blocks' ),
-				'type'     => 'number_non_negative',
-				'default'  => 1,
-				'sanitize' => [ $this, 'sanitize_number' ],
+				'name'    => 'step',
+				'label'   => __( 'Step Size', 'genesis-custom-blocks' ),
+				'type'    => 'number_non_negative',
+				'default' => 1,
 			]
 		);
 		$this->settings[] = new ControlSetting(
 			[
-				'name'     => 'default',
-				'label'    => __( 'Default Value', 'genesis-custom-blocks' ),
-				'type'     => 'number',
-				'default'  => '',
-				'sanitize' => [ $this, 'sanitize_number' ],
+				'name'    => 'default',
+				'label'   => __( 'Default Value', 'genesis-custom-blocks' ),
+				'type'    => 'number',
+				'default' => '',
 			]
 		);
 	}
