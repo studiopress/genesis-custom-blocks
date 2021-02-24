@@ -495,11 +495,8 @@ class Loader extends ComponentAbstract {
 	 * Load all the published blocks and blocks/block.json files.
 	 */
 	public function retrieve_blocks() {
-		/**
-		 * Retrieve blocks from blocks.json.
-		 * Reverse to preserve order of preference when using array_merge.
-		 */
-		$blocks_files = array_reverse( (array) genesis_custom_blocks()->locate_template( 'blocks/blocks.json', '', false ) );
+		// Reverse to preserve order of preference when using array_merge.
+		$blocks_files = array_reverse( genesis_custom_blocks()->locate_template( 'blocks/blocks.json', '', false ) );
 		foreach ( $blocks_files as $blocks_file ) {
 			// This is expected to be on the local filesystem, so file_get_contents() is ok to use here.
 			$json       = file_get_contents( $blocks_file ); // @codingStandardsIgnoreLine
@@ -511,18 +508,16 @@ class Loader extends ComponentAbstract {
 			}
 		}
 
-		/**
-		 * Retrieve blocks stored as posts in the WordPress database.
-		 */
-		$block_posts = new WP_Query(
+		$is_edit_context = 'edit' === filter_input( INPUT_GET, 'context', FILTER_SANITIZE_STRING );
+		$block_posts     = new WP_Query(
 			[
 				'post_type'      => genesis_custom_blocks()->get_post_type_slug(),
-				'post_status'    => 'publish',
-				'posts_per_page' => 100, // This has to have a limit for this plugin to be scalable.
+				'post_status'    => $is_edit_context ? 'any' : 'publish',
+				'posts_per_page' => 100,
 			]
 		);
 
-		if ( 0 < $block_posts->post_count ) {
+		if ( $block_posts->post_count > 0 ) {
 			foreach ( $block_posts->posts as $post ) {
 				$block_data = json_decode( $post->post_content, true );
 

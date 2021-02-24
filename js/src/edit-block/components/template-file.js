@@ -2,7 +2,7 @@
  * External dependencies
  */
 import * as React from 'react';
-import className from 'classnames';
+import classNames from 'classnames';
 
 /**
  * Internal dependencies
@@ -27,13 +27,13 @@ const TemplateFile = ( { templatePath, color = 'gray' } ) => {
 
 	return (
 		<>
-			<span className={ className(
+			<span className={ classNames(
 				'text-xs font-mono mr-1 truncate direction-rtl',
 				'gray' === color ? 'text-gray-800' : 'text-blue-800'
 			) }>
 				{ basePath }
 				<span
-					className={ className(
+					className={ classNames(
 						'bg-transparent border-b border-dashed',
 						'gray' === color ? 'border-gray-700 hover:bg-gray-300' : 'border-blue-700 hover:bg-blue-300'
 					) }

@@ -2,7 +2,7 @@
  * External dependencies
  */
 import * as React from 'react';
-import className from 'classnames';
+import classNames from 'classnames';
 
 /**
  * WordPress dependencies
@@ -51,7 +51,7 @@ const FieldsGrid = ( {
 		<>
 			<div
 				role="grid"
-				className={ className(
+				className={ classNames(
 					'grid grid-cols-4 gap-4 w-full items-start',
 					parentField ? 'mt-4' : 'mt-2'
 				) }

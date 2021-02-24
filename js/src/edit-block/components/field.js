@@ -2,7 +2,7 @@
  * External dependencies
  */
 import * as React from 'react';
-import className from 'classnames';
+import classNames from 'classnames';
 
 /**
  * WordPress dependencies
@@ -92,7 +92,7 @@ const Field = ( {
 	return (
 		<div
 			role="row"
-			className={ className(
+			className={ classNames(
 				'relative w-full rounded-sm border border-gray-400 hover:border-black',
 				getWidthClass( field.width )
 			) }
@@ -145,7 +145,7 @@ const Field = ( {
 								index,
 								index - 1
 							) }
-							className={ className(
+							className={ classNames(
 								moveButtonClass,
 								{ [ buttonDisabledClasses ]: isUpButtonDisabled }
 							) }
@@ -167,7 +167,7 @@ const Field = ( {
 								index,
 								index + 1
 							) }
-							className={ className(
+							className={ classNames(
 								moveButtonClass,
 								{ [ buttonDisabledClasses ]: isDownButtonDisabled }
 							) }

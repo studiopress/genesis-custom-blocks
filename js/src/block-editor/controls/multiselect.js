@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import * as React from 'react';
+
+/**
  * WordPress dependencies
  */
 import { SelectControl } from '@wordpress/components';
@@ -8,7 +13,7 @@ const GcbMultiselectControl = ( props ) => {
 
 	return (
 		<SelectControl
-			multiple="multiple"
+			multiple
 			label={ field.label }
 			help={ field.help }
 			value={ getValue( props ) || field.default }
