@@ -15,7 +15,7 @@ import ServerSideRender from '@wordpress/server-side-render';
  */
 import { Fields, GcbInspector } from './';
 import { getFieldsAsArray, getIconComponent } from '../../common/helpers';
-import { DEFAULT_LOCATION } from '../../common/constants';
+import { EDITOR_LOCATION } from '../../common/constants';
 
 /**
  * The editor component for the block.
@@ -28,7 +28,7 @@ import { DEFAULT_LOCATION } from '../../common/constants';
 const Edit = ( { blockProps, block } ) => {
 	const { attributes, className, isSelected } = blockProps;
 	const hasEditorField = getFieldsAsArray( block.fields ).some( ( field ) => {
-		return ! field.location || DEFAULT_LOCATION === field.location;
+		return ! field.location || EDITOR_LOCATION === field.location;
 	} );
 
 	return (

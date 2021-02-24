@@ -13,7 +13,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { BUILDER_EDITING_MODE } from '../constants';
-import { ALTERNATE_LOCATION, DEFAULT_LOCATION } from '../../common/constants';
+import { EDITOR_LOCATION, INSPECTOR_LOCATION } from '../../common/constants';
 /**
  * @typedef {Object} LocationButtonProps The component props.
  * @property {import('./editor').CurrentLocation} currentLocation The currently selected location.
@@ -39,11 +39,11 @@ const LocationButtons = ( {
 			<div className="flex">
 				<button
 					className={ buttonClass }
-					onClick={ () => setCurrentLocation( DEFAULT_LOCATION ) }
+					onClick={ () => setCurrentLocation( EDITOR_LOCATION ) }
 				>
 					<span
 						className={ classNames( {
-							'font-semibold': DEFAULT_LOCATION === currentLocation,
+							'font-semibold': EDITOR_LOCATION === currentLocation,
 						} ) }
 					>
 						{ __( 'Editor Fields', 'genesis-custom-blocks' ) }
@@ -51,11 +51,11 @@ const LocationButtons = ( {
 				</button>
 				<button
 					className={ buttonClass }
-					onClick={ () => setCurrentLocation( ALTERNATE_LOCATION ) }
+					onClick={ () => setCurrentLocation( INSPECTOR_LOCATION ) }
 				>
 					<span
 						className={ classNames( {
-							'font-semibold': ALTERNATE_LOCATION === currentLocation,
+							'font-semibold': INSPECTOR_LOCATION === currentLocation,
 						} ) }
 					>
 						{ __( 'Inspector Fields', 'genesis-custom-blocks' ) }
