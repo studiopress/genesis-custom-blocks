@@ -28,12 +28,8 @@ import { applyFilters } from '@wordpress/hooks';
  * @return {React.ReactElement} The preview of the block.
  */
 const Preview = ( { blockName, attributes } ) => {
-	/**
-	 * The alternate preview component, if any.
-	 *
-	 * @param {AlternatePreviewProps} props The props for the alternate preview.
-	 * @return {React.FunctionComponent|null} The alternate preview, if any.
-	 */
+	/** @type {React.FunctionComponent<AlternatePreviewProps>| null} */
+	// @ts-ignore The type of applyFilters() is unknown.
 	const AlternatePreview = applyFilters(
 		'genesisCustomBlocks.alternatePreview',
 		null,
