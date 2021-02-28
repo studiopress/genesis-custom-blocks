@@ -7,30 +7,40 @@ import debounceFn from 'debounce-fn';
  * WordPress dependencies
  */
 import { useDispatch } from '@wordpress/data';
-import { useMemo } from '@wordpress/element';
+import { useEffect, useMemo, useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { __, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
 /**
+ * Internal dependencies
+ */
+import { useBlock } from './';
+
+/**
  * @typedef {Object} Template A template as returned from the request.
  * @property {string} templatePath The path to the template.
  * @property {boolean} templateExists Whether there is a template at that path.
+ * @property {string} cssUrl The URL to the CSS file for the template, if one exists.
  */
 
 /**
  * @typedef {Object} UseTemplateReturn The return value of useBlock.
- * @property {function(string):void} fetchTemplate Fetches and updates the template.
+ * @property {Template} template The template for the block.
  */
 
 /**
- * Gets the post types context.
+ * Gets the template context.
  *
- * @param {function(Template):void} setTemplate Sets the template if it's fetched.
- * @return {UseTemplateReturn} The post types.
+ * @return {UseTemplateReturn} The template context.
  */
-const useTemplate = ( setTemplate ) => {
+const useTemplate = () => {
+	// @ts-ignore
+	const { template: initialTemplate } = gcbEditor; // eslint-disable-line no-undef
+	const [ template, setTemplate ] = useState( initialTemplate );
+	const { block } = useBlock();
 	const { createErrorNotice } = useDispatch( 'core/notices' );
+
 	const fetchTemplate = useMemo(
 		() => debounceFn(
 			( newBlockName ) => {
@@ -46,12 +56,14 @@ const useTemplate = ( setTemplate ) => {
 					 * @param {Object} response The response from the REST request.
 					 * @param {string} response.templatePath The path of the template, if any.
 					 * @param {boolean} response.templateExists Whether the template exists.
+					 * @param {string} response.cssUrl The URL of the CSS file, if any.
 					 */
 					( response ) => {
 						if ( response && response.hasOwnProperty( 'templatePath' ) ) {
 							setTemplate( {
 								templatePath: response.templatePath,
 								templateExists: response.templateExists,
+								cssUrl: response.cssUrl,
 							} );
 						}
 					}
@@ -78,7 +90,13 @@ const useTemplate = ( setTemplate ) => {
 		[ createErrorNotice, setTemplate ]
 	);
 
-	return { fetchTemplate };
+	useEffect( () => {
+		if ( Boolean( block.name ) ) {
+			fetchTemplate( block.name );
+		}
+	}, [ block.name, fetchTemplate ] );
+
+	return { template };
 };
 
 export default useTemplate;

@@ -38,19 +38,4 @@ describe( 'url control', () => {
 
 		expect( props.onChange ).toHaveBeenCalledWith( enteredUrl );
 	} );
-
-	it.each( [
-		true,
-		false,
-	] )( 'should have an invalid class if the event object finds it is invalid',
-		( isInputValid ) => {
-			const props = getProps();
-			const { control } = setupControl( GcbURLControl, props );
-			const mockEvent = { target: { checkValidity: jest.fn() } };
-			mockEvent.target.checkValidity.mockReturnValueOnce( isInputValid );
-			fireEvent.blur( control, mockEvent );
-
-			expect( control.classList.contains( 'text-control__error' ) ).toStrictEqual( ! isInputValid );
-		}
-	);
 } );

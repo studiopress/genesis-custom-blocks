@@ -7,7 +7,7 @@ import React from 'react';
  * Internal dependencies
  */
 import { Select } from '../';
-import { LOCATIONS_WITH_LABEL, LOCATIONS } from '../../constants';
+import { LOCATIONS_WITH_LABEL, LOCATIONS } from '../../../common/constants';
 
 /**
  * @typedef {Object} LocationProps The component props.

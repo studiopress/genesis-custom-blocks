@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { LOCATIONS } from '../constants';
+import { LOCATIONS } from '../../common/constants';
 
 /**
  * Gets the other location from the current one, if the current one is valid.
