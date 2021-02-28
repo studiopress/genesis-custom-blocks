@@ -164,7 +164,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 								{ FRONT_END_PREVIEW_EDITING_MODE === editorMode
 									? (
 										<Preview
-											blockName={ `genesis-custom-blocks/${ block.name }` }
+											blockName={ block.name }
 											attributes={ previewAttributes }
 										/>
 									) : null
