@@ -33,7 +33,7 @@ const Preview = ( { blockName, attributes } ) => {
 	/** @type {React.FunctionComponent<AlternatePreviewProps>| null} */
 	// @ts-ignore The type of applyFilters() is unknown.
 	const AlternatePreview = applyFilters(
-		'genesisCustomBlocks.alternatePreview',
+		'genesisCustomBlocks.reactPreview',
 		null,
 		blockNameWithNamespace,
 		attributes
