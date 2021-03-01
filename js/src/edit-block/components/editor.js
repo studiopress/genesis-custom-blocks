@@ -13,7 +13,6 @@ import {
 	UnsavedChangesWarning,
 } from '@wordpress/editor';
 import { useState, StrictMode } from '@wordpress/element';
-import ServerSideRender from '@wordpress/server-side-render';
 
 /**
  * Internal dependencies
@@ -38,7 +37,7 @@ import {
 } from '../constants';
 import { DEFAULT_LOCATION } from '../../common/constants';
 import { useBlock, useField, useTemplate } from '../hooks';
-import { Fields } from '../../block-editor/components';
+import { Fields, Preview } from '../../block-editor/components';
 
 /**
  * @callback onErrorType Handler for errors.
@@ -164,11 +163,9 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 								}
 								{ FRONT_END_PREVIEW_EDITING_MODE === editorMode
 									? (
-										<ServerSideRender
-											block={ `genesis-custom-blocks/${ block.name }` }
+										<Preview
+											blockName={ block.name }
 											attributes={ previewAttributes }
-											className="genesis-custom-blocks-editor__ssr"
-											httpMethod="POST"
 										/>
 									) : null
 								}

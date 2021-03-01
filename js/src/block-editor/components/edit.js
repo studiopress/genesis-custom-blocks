@@ -8,12 +8,11 @@ import * as React from 'react';
  */
 import { Icon } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import ServerSideRender from '@wordpress/server-side-render';
 
 /**
  * Internal dependencies
  */
-import { Fields, GcbInspector } from './';
+import { Fields, GcbInspector, Preview } from './';
 import { getFieldsAsArray, getIconComponent } from '../../common/helpers';
 import { EDITOR_LOCATION } from '../../common/constants';
 
@@ -52,11 +51,9 @@ const Edit = ( { blockProps, block } ) => {
 						/>
 					</div>
 				) : (
-					<ServerSideRender
-						block={ `genesis-custom-blocks/${ block.name }` }
+					<Preview
+						blockName={ block.name }
 						attributes={ attributes }
-						className="genesis-custom-blocks-editor__ssr"
-						httpMethod="POST"
 					/>
 				) }
 			</div>
