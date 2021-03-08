@@ -24,6 +24,7 @@ import {
 	BUILDER_EDITING_MODE,
 	EDITOR_PREVIEW_EDITING_MODE,
 	FRONT_END_PREVIEW_EDITING_MODE,
+	TEMPLATE_EDITOR_EDITING_MODE,
 } from '../constants';
 
 /**
@@ -87,6 +88,17 @@ const Header = ( { editorMode, setEditorMode } ) => {
 				} }
 			>
 				<span>{ __( 'Front-end Preview', 'genesis-custom-blocks' ) }</span>
+			</button>
+			<button
+				className={ classNames(
+					buttonClasses,
+					{ 'font-semibold': TEMPLATE_EDITOR_EDITING_MODE === editorMode }
+				) }
+				onClick={ () => {
+					setEditorMode( TEMPLATE_EDITOR_EDITING_MODE );
+				} }
+			>
+				<span>{ __( 'Template Editor', 'genesis-custom-blocks' ) }</span>
 			</button>
 			<div id="save-and-publish">
 				<span className="mr-3 text-sm">

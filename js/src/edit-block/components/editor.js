@@ -2,6 +2,9 @@
  * External dependencies
  */
 import * as React from 'react';
+import CodeMirror from '@uiw/react-codemirror';
+import 'codemirror/keymap/sublime';
+import 'codemirror/theme/yeti.css';
 
 /**
  * WordPress dependencies
@@ -35,6 +38,7 @@ import {
 	EDITOR_PREVIEW_EDITING_MODE,
 	FRONT_END_PREVIEW_EDITING_MODE,
 	NO_FIELD_SELECTED,
+	TEMPLATE_EDITOR_EDITING_MODE,
 } from '../constants';
 import { DEFAULT_LOCATION } from '../../common/constants';
 import { useBlock, useField, useTemplate } from '../hooks';
@@ -90,7 +94,7 @@ import { Fields } from '../../block-editor/components';
 const Editor = ( { onError, postId, postType, settings } ) => {
 	const { block, changeBlock } = useBlock();
 	const { template } = useTemplate();
-	const { previewAttributes = {} } = block;
+	const { previewAttributes = {}, templateCode = '' } = block;
 	const { getFields } = useField();
 	const post = useSelect(
 		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
@@ -109,6 +113,12 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 				...previewAttributes,
 				...newAttributes,
 			},
+		} );
+	};
+
+	const setTemplateCode = ( newTemplateCode ) => {
+		changeBlock( {
+			templateCode: newTemplateCode,
 		} );
 	};
 
@@ -169,6 +179,21 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 											attributes={ previewAttributes }
 											className="genesis-custom-blocks-editor__ssr"
 											httpMethod="POST"
+										/>
+									) : null
+								}
+								{ TEMPLATE_EDITOR_EDITING_MODE === editorMode
+									? (
+										<CodeMirror
+											value={ templateCode }
+											options={ {
+												theme: 'material',
+												keyMap: 'sublime',
+												mode: 'mustache',
+											} }
+											onChange={ ( ( newTemplateCode ) => {
+												setTemplateCode( newTemplateCode.getValue() );
+											} ) }
 										/>
 									) : null
 								}
