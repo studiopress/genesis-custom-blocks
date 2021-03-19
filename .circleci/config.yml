@@ -108,7 +108,7 @@ jobs:
           node-version: lts
       - nodegit-workaround
       - set-up-packages
-      - run: npm run wp-env start && npm run test:e2e
+      - run: PUPPETEER_PRODUCT=firefox npm install && npm run wp-env start && npm run test:e2e
 
   svn-deploy:
     executor:
