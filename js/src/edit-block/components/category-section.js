@@ -8,7 +8,6 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
-import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -26,8 +25,8 @@ const CategorySection = () => {
 	// @ts-ignore
 	const { categories: initialCategories } = gcbEditor;
 	const { block, changeBlock } = useBlock();
-	const [ categories, setCategories ] = useState( initialCategories );
-	const [ showNewCategoryForm, setShowNewCategoryForm ] = useState( false );
+	const [ categories, setCategories ] = React.useState( initialCategories );
+	const [ showNewCategoryForm, setShowNewCategoryForm ] = React.useState( false );
 	const newCategoryId = 'add-new-category';
 
 	/**

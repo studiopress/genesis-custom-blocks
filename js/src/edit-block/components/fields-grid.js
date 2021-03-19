@@ -7,7 +7,6 @@ import classNames from 'classnames';
 /**
  * WordPress dependencies
  */
-import { useMemo } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -42,7 +41,7 @@ const FieldsGrid = ( {
 	parentField = null,
 } ) => {
 	const { addNewField, getFieldsForLocation } = useField();
-	const fields = useMemo(
+	const fields = React.useMemo(
 		() => getFieldsForLocation( currentLocation, parentField ),
 		[ currentLocation, getFieldsForLocation, parentField ]
 	);

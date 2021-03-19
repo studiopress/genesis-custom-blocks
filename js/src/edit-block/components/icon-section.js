@@ -8,7 +8,6 @@ import classNames from 'classnames';
  * WordPress dependencies
  */
 import { Icon } from '@wordpress/components';
-import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -26,7 +25,7 @@ import { getDefaultBlock } from '../helpers';
  */
 const IconSection = () => {
 	const { block, changeBlock } = useBlock();
-	const [ showIcons, setShowIcons ] = useState( false );
+	const [ showIcons, setShowIcons ] = React.useState( false );
 	const currentIcon = block.icon || getDefaultBlock().icon;
 
 	return (

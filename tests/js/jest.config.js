@@ -4,7 +4,6 @@ module.exports = {
 	transform: {
 		'^.+\\.[jt]sx?$': '<rootDir>/node_modules/@wordpress/scripts/config/babel-transform',
 	},
-	testEnvironment: 'jest-environment-jsdom-sixteen',
 	testPathIgnorePatterns: [
 		'<rootDir>/.git',
 		'<rootDir>/node_modules',

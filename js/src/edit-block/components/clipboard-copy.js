@@ -8,7 +8,6 @@ import React from 'react';
  */
 import { speak } from '@wordpress/a11y';
 import { useCopyOnClick } from '@wordpress/compose';
-import { useEffect, useRef } from '@wordpress/element';
 import { Icon, check } from '@wordpress/icons';
 import { __, sprintf } from '@wordpress/i18n';
 
@@ -27,17 +26,17 @@ import { __, sprintf } from '@wordpress/i18n';
  * @return {React.ReactElement} Copies text to the clipboard.
  */
 const ClipboardCopy = ( { text } ) => {
-	const ref = useRef();
+	const ref = React.useRef();
 	// Backwards compatibility for before useCopyOnClick() existed.
 	const hasCopied = useCopyOnClick ? useCopyOnClick( ref, text ) : false; /* eslint-disable-line react-hooks/rules-of-hooks */
-	const lastHasCopied = useRef( hasCopied );
+	const lastHasCopied = React.useRef( hasCopied );
 	const label = sprintf(
 		/* translators: %1$s: the field name */
 		__( 'Copy the field name of %1$s', 'genesis-custom-blocks' ),
 		text
 	);
 
-	useEffect( () => {
+	React.useEffect( () => {
 		if ( lastHasCopied.current === hasCopied ) {
 			return;
 		}

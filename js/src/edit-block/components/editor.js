@@ -2,9 +2,6 @@
  * External dependencies
  */
 import * as React from 'react';
-import CodeMirror from '@uiw/react-codemirror';
-import 'codemirror/keymap/sublime';
-import 'codemirror/theme/yeti.css';
 
 /**
  * WordPress dependencies
@@ -15,7 +12,7 @@ import {
 	ErrorBoundary,
 	UnsavedChangesWarning,
 } from '@wordpress/editor';
-import { useState, StrictMode } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 import ServerSideRender from '@wordpress/server-side-render';
 
 /**
@@ -94,17 +91,17 @@ import { Fields } from '../../block-editor/components';
 const Editor = ( { onError, postId, postType, settings } ) => {
 	const { block, changeBlock } = useBlock();
 	const { template } = useTemplate();
-	const { previewAttributes = {}, templateCode = '' } = block;
+	const { previewAttributes = {} } = block;
 	const { getFields } = useField();
 	const post = useSelect(
 		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
 		[ postId, postType ]
 	);
-	const [ currentLocation, setCurrentLocation ] = useState( DEFAULT_LOCATION );
-	const [ editorMode, setEditorMode ] = useState( BUILDER_EDITING_MODE );
-	const [ isNewField, setIsNewField ] = useState( false );
-	const [ panelDisplaying, setPanelDisplaying ] = useState( BLOCK_PANEL );
-	const [ selectedField, setSelectedField ] = useState( NO_FIELD_SELECTED );
+	const [ currentLocation, setCurrentLocation ] = React.useState( DEFAULT_LOCATION );
+	const [ editorMode, setEditorMode ] = React.useState( BUILDER_EDITING_MODE );
+	const [ isNewField, setIsNewField ] = React.useState( false );
+	const [ panelDisplaying, setPanelDisplaying ] = React.useState( BLOCK_PANEL );
+	const [ selectedField, setSelectedField ] = React.useState( NO_FIELD_SELECTED );
 
 	/** @param {Object} newAttributes Attribute (field) name and value. */
 	const setAttributes = ( newAttributes ) => {
@@ -116,18 +113,12 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 		} );
 	};
 
-	const setTemplateCode = ( newTemplateCode ) => {
-		changeBlock( {
-			templateCode: newTemplateCode,
-		} );
-	};
-
 	if ( ! post ) {
 		return null;
 	}
 
 	return (
-		<StrictMode>
+		<React.StrictMode>
 			<div className="h-screen flex flex-col items-center text-black">
 				{ template?.cssUrl ? <link rel="stylesheet" href={ template.cssUrl } type="text/css" /> : null }
 				<BrowserURL />
@@ -184,17 +175,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 								}
 								{ TEMPLATE_EDITOR_EDITING_MODE === editorMode
 									? (
-										<CodeMirror
-											value={ templateCode }
-											options={ {
-												theme: 'material',
-												keyMap: 'sublime',
-												mode: 'mustache',
-											} }
-											onChange={ ( ( newTemplateCode ) => {
-												setTemplateCode( newTemplateCode.getValue() );
-											} ) }
-										/>
+										<div>{ __( 'Here is the editor', 'genesis-custom-blocks' ) }</div>
 									) : null
 								}
 							</Main>
@@ -221,7 +202,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 					</ErrorBoundary>
 				</EditorProvider>
 			</div>
-		</StrictMode>
+		</React.StrictMode>
 	);
 };
 
