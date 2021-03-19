@@ -82,7 +82,6 @@
     "husky": "4.3.0",
     "ignore-emit-webpack-plugin": "2.0.2",
     "jest-axe": "3.5.0",
-    "jest-environment-jsdom-sixteen": "1.0.3",
     "jest-silent-reporter": "0.2.1",
     "lodash": "4.17.20",
     "merge-stream": "2.0.0",
