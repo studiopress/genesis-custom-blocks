@@ -92,7 +92,6 @@
     "postcss": "8.2.1",
     "postcss-loader": "4.1.0",
     "pptr-testing-library": "0.6.4",
-    "puppeteer": "npm:puppeteer-core@5.5.0",
     "raw-loader": "4.0.1",
     "re-resizable": "6.5.4",
     "react": "16.14.0",
