@@ -29,6 +29,7 @@
     "@types/wordpress__data": "4.6.9",
     "@types/wordpress__editor": "9.4.5",
     "@types/wordpress__notices": "1.5.4",
+    "@wordpress/a11y": "2.15.0",
     "@wordpress/api-fetch": "3.22.0",
     "@wordpress/babel-preset-default": "5.1.0",
     "@wordpress/block-editor": "5.3.0",

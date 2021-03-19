@@ -11,6 +11,7 @@ import TextareaAutosize from 'react-autosize-textarea';
 import { VisuallyHidden } from '@wordpress/components';
 import { useInstanceId } from '@wordpress/compose';
 import { useSelect } from '@wordpress/data';
+import { useEffect, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -29,7 +30,7 @@ import { useBlock } from '../hooks';
 const PostTitle = () => {
 	const { block, changeBlock } = useBlock();
 	const instanceId = useInstanceId( PostTitle );
-	const ref = React.useRef( null );
+	const ref = useRef( null );
 	const { isCleanNewPost, title } = useSelect( ( select ) => {
 		const {
 			getEditedPostAttribute,
@@ -41,9 +42,9 @@ const PostTitle = () => {
 			title: getEditedPostAttribute( 'title' ),
 		};
 	} );
-	const isAutoSlugging = React.useRef( ! block || ! block.name );
+	const isAutoSlugging = useRef( ! block || ! block.name );
 
-	React.useEffect( () => {
+	useEffect( () => {
 		const { ownerDocument: { activeElement, body } } = ref.current;
 
 		// Only autofocus the title when the post is entirely empty. This should

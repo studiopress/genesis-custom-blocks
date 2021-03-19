@@ -6,6 +6,7 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
+import { useEffect, useLayoutEffect } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 // @ts-ignore type declaration not available
@@ -50,7 +51,7 @@ const EditorProvider = ( {
 
 	// Iniitialize the editor.
 	// Ideally this should be synced on each change and not just something you do once.
-	React.useLayoutEffect( () => {
+	useLayoutEffect( () => {
 		updatePostLock( settings.postLock );
 		setupEditor( post );
 		if ( settings.autosave ) {
@@ -70,7 +71,7 @@ const EditorProvider = ( {
 	}, [] ); /* eslint-disable-line react-hooks/exhaustive-deps */
 
 	// Synchronize the editor settings as they change
-	React.useEffect( () => {
+	useEffect( () => {
 		updateEditorSettings( settings );
 	}, [ settings, updateEditorSettings ] );
 

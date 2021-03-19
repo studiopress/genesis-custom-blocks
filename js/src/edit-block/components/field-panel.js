@@ -1,11 +1,12 @@
 /**
  * External dependencies
  */
-import * as React from 'react';
+import React from 'react';
 
 /**
  * WordPress dependencies
  */
+import { useEffect, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -32,14 +33,14 @@ import { useField } from '../hooks';
  * @param {FieldPanelProps} props
  * @return {React.ReactElement} The field panel.
  */
-function FieldPanel( {
+const FieldPanel = ( {
 	currentLocation,
 	isNewField,
 	selectedField,
 	setCurrentLocation,
 	setIsNewField,
 	setSelectedField,
-} ) {
+} ) => {
 	const {
 		changeControl,
 		changeFieldSettings,
@@ -48,10 +49,10 @@ function FieldPanel( {
 		duplicateField,
 		getField,
 	} = useField();
-	const ref = React.useRef();
-	const didAutoSlug = React.useRef( false );
+	const ref = useRef();
+	const didAutoSlug = useRef( false );
 
-	React.useEffect( () => {
+	useEffect( () => {
 		if ( isNewField && ref.current ) {
 			const { ownerDocument: { activeElement } } = ref.current;
 			if ( ! activeElement || ref.current !== activeElement ) {
@@ -181,6 +182,6 @@ function FieldPanel( {
 			}
 		</div>
 	);
-}
+};
 
 export default FieldPanel;
