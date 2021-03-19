@@ -21,5 +21,7 @@ export { default as Select } from './select';
 export { default as Side } from './side';
 export { default as SlugSection } from './slug-section';
 export { default as TemplateFile } from './template-file';
+export { default as TemplateGrid } from './template-grid';
+export { default as TemplatePanel } from './template-panel';
 export { default as TopNotice } from './top-notice';
 export { default as QuestionIcon } from './question-icon';

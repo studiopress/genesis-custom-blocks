@@ -13,7 +13,6 @@ import {
 	UnsavedChangesWarning,
 } from '@wordpress/editor';
 import { StrictMode, useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
 import ServerSideRender from '@wordpress/server-side-render';
 
 /**
@@ -29,6 +28,7 @@ import {
 	LocationButtons,
 	Main,
 	Side,
+	TemplateGrid,
 } from './';
 import {
 	BLOCK_PANEL,
@@ -176,7 +176,13 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 								}
 								{ TEMPLATE_EDITOR_EDITING_MODE === editorMode
 									? (
-										<div>{ __( 'Here is the editor', 'genesis-custom-blocks' ) }</div>
+										<TemplateGrid
+											currentLocation={ currentLocation }
+											selectedField={ selectedField }
+											setIsNewField={ setIsNewField }
+											setPanelDisplaying={ setPanelDisplaying }
+											setSelectedField={ setSelectedField }
+										/>
 									) : null
 								}
 							</Main>
@@ -187,7 +193,11 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 								{
 									BLOCK_PANEL === panelDisplaying
 										? <BlockPanel />
-										: (
+										: null
+								}
+								{
+									BLOCK_PANEL !== panelDisplaying && BUILDER_EDITING_MODE === editorMode
+										? (
 											<FieldPanel
 												currentLocation={ currentLocation }
 												isNewField={ isNewField }
@@ -196,7 +206,20 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 												setIsNewField={ setIsNewField }
 												setSelectedField={ setSelectedField }
 											/>
-										)
+										) : null
+								}
+								{
+									BLOCK_PANEL !== panelDisplaying && TEMPLATE_EDITOR_EDITING_MODE === editorMode
+										? (
+											<TemplatePanel
+												currentLocation={ currentLocation }
+												isNewField={ isNewField }
+												selectedField={ selectedField }
+												setCurrentLocation={ setCurrentLocation }
+												setIsNewField={ setIsNewField }
+												setSelectedField={ setSelectedField }
+											/>
+										) : null
 								}
 							</Side>
 						</div>
