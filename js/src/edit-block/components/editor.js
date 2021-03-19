@@ -16,6 +16,25 @@ import { StrictMode, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import ServerSideRender from '@wordpress/server-side-render';
 
+import {
+	BlockEditorProvider,
+	BlockList,
+	WritingFlow,
+	ObserveTyping,
+	BlockEditorKeyboardShortcuts,
+	storeConfig as blockEditorStoreConfig,
+	BlockInspector,
+	BlockBreadcrumb,
+	MediaUpload,
+	MediaUploadCheck,
+	MediaPlaceholder,
+	MediaReplaceFlow,
+} from '@wordpress/block-editor';
+import { DropZoneProvider, SlotFillProvider, Slot, Popover, FormTokenField, Snackbar } from '@wordpress/components';
+import { registerBlockType, parse } from '@wordpress/blocks';
+import { registerCoreBlocks } from '@wordpress/block-library';
+registerCoreBlocks();
+
 /**
  * Internal dependencies
  */
@@ -176,7 +195,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 								}
 								{ TEMPLATE_EDITOR_EDITING_MODE === editorMode
 									? (
-										<div>{ __( 'Here is the editor', 'genesis-custom-blocks' ) }</div>
+										<FrontendTemplateEditor />
 									) : null
 								}
 							</Main>
@@ -206,5 +225,220 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 		</StrictMode>
 	);
 };
+
+function FrontendTemplateEditor( props ) {
+	
+	const [blocks, updateBlocks] = useState( parse( '' ) );
+
+	return(
+		<div style={{
+			width:'100%',
+		}}>
+			<style>
+			{`
+				.max-w-2xl{
+					max-width:100%!important;
+				}
+				.text-blue-700{
+					display:none;
+				}
+				.wp-block{
+					max-width:100%!important;
+				}
+			`}
+			</style>
+			<SlotFillProvider>
+				<DropZoneProvider>
+					<BlockEditorProvider
+						value={ blocks }
+						onChange={ updateBlocks }
+						onInput={ updateBlocks }
+						settings={{
+							mediaUploadCheck: MediaUploadCheck,
+							mediaUpload: MediaUpload,
+							mediaPlaceholder: MediaPlaceholder,
+							mediaReplaceFlow: MediaReplaceFlow,
+						}}
+					>
+						<BlockEditorKeyboardShortcuts />
+						<WritingFlow>
+							<ObserveTyping>
+								<Popover.Slot name="block-toolbar" />
+								<div className="block-editor-columns">
+									<div
+										className={'column'}
+										style={{
+											position:'relative',
+										}}
+									>
+										<div className="edit-post-visual-editor editor-styles-wrapper">
+											<BlockList />
+										</div>
+										<div style={{
+											position:'fixed',
+											bottom:'0px',
+											right:'0px',
+											left: '0px',
+											width:'100%',
+											backgroundColor: '#fff',
+											padding:'4px',
+											zIndex: '999',
+										}}><BlockBreadcrumb /></div>
+									</div>
+									<div
+										hidden
+										className={'column'}
+										style={{
+											width:'300px',
+											height:'100%',
+											position:'fixed',
+											right:'0px',
+											top:'0px',
+											backgroundColor: '#fff',
+											borderLeft: '1px solid #000',
+											zIndex: '999999999999',
+											overflowY: 'scroll',
+										}}
+									>
+										<BlockInspector />
+									</div>
+								</div>
+							</ObserveTyping>
+						</WritingFlow>
+					</BlockEditorProvider>
+				</DropZoneProvider>
+				<Popover.Slot />
+			</SlotFillProvider>
+		</div>
+	)
+}
+
+
+registerBlockType( 'gcb/frontend-element', {
+	title: __( 'GCB Frontend Element', 'genesis-custom-blocks' ),
+	category: 'common',
+
+	attributes: {},
+
+	edit( props ) {
+		const { getFields } = useField();
+		const availableFields = getFields();
+		const [tagType, setTagType] = useState();
+		const [imgSrc, setImgSrc] = useState();
+		const [imgAltText, setImgAltText] = useState();
+		const [h1, setH1] = useState();
+		
+		console.log( 'Available fields: ', availableFields );
+		
+		function renderFieldList() {
+			const renderedFields = availableFields.map( (field) => {
+				return <option value={field.name}>{ field.label }</option>
+			});
+			
+			renderedFields.unshift( <option>Pick a field to use</option> );
+			return renderedFields;
+		}
+
+		function renderImageControls() {
+			if ( 'img' !== tagType ) {
+				return '';
+			}
+			
+			return <div style={{
+				boxSizing: 'border-box',
+				border: '1px solid #b7b7b7',
+				padding: '20px',
+				backgroundColor: '#eaeaea1a',
+			}}>
+				<div style={{marginBottom:'10px'}}>
+					<label style={{marginRight: '10px'}} htmlFor="fieldPicker">
+						Which field is the Image URL?
+					</label>
+					<div>
+						<select name="fieldPicker" onChange={(event) => {
+							setImgSrc( event.target.value );
+						}}>
+							{renderFieldList()}
+						</select>
+					</div>
+				</div>
+				<div style={{marginBottom:'10px'}}>
+					<label style={{marginRight: '10px'}} htmlFor="fieldPicker">
+						Which field is the Image Alt Text (for vision-impaired people with screenreaders)
+					</label>
+					<div>
+						<select name="fieldPicker" onChange={(event) => {
+							setImgAltText( event.target.value );
+						}}>
+							{renderFieldList()}
+						</select>
+					</div>
+				</div>
+			</div>
+		}
+		
+		function renderH1Controls() {
+			if ( 'h1' !== tagType ) {
+				return '';
+			}
+			
+			return <div style={{
+				boxSizing: 'border-box',
+				border: '1px solid #b7b7b7',
+				padding: '20px',
+				backgroundColor: '#eaeaea1a',
+			}}>
+				<div style={{marginBottom:'10px'}}>
+					<label style={{marginRight: '10px'}} htmlFor="fieldPicker">
+						Which field will be used for the title?
+					</label>
+					<div>
+						<select name="fieldPicker" onChange={(event) => {
+							setH1( event.target.value );
+						}}>
+							{renderFieldList()}
+						</select>
+					</div>
+				</div>
+			</div>
+		}
+
+		return [
+			<>
+				<div style={{
+					boxSizing: 'border-box',
+					border: '1px solid #b7b7b7',
+					padding: '20px',
+					backgroundColor: '#eaeaea1a',
+				}}>
+					<label style={{
+							marginRight: '10px',
+						}}
+						htmlFor="elementType"
+					>
+							What do you want to add to your front-end template?
+					</label>
+					<select name="elementType" id="elementType" onChange={(event) => {
+						setTagType( event.target.value );
+					}}>
+						<option value="img">Choose something to show</option>
+						<option value="img">An image (img)</option>
+						<option value="h1">A main title (h1)</option>
+						<option value="h2">A sub-title (h2)</option>
+						<option value="p">Just some text (p)</option>
+					</select>
+					{renderImageControls()}
+					{renderH1Controls()}
+				</div>
+			</>
+		]
+	},
+
+	save( props ) {
+		return <InnerBlocks.Content />;
+	}
+
+} );
+
 
 export default Editor;

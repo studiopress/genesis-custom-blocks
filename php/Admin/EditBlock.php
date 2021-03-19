@@ -152,7 +152,98 @@ class EditBlock extends ComponentAbstract {
 			$editor_style_config['dependencies'],
 			$editor_style_config['version']
 		);
+		
+		$this->enqueue_registered_block_scripts_and_styles();
 
+	}
+	
+	/**
+	 * Enqueues things required for the block-editor package.
+	 *
+	 */
+	private function enqueue_registered_block_scripts_and_styles() {
+
+		$block_registry = \WP_Block_Type_Registry::get_instance();
+	
+		foreach ( $block_registry->get_all_registered() as $block_name => $block_type ) {		
+			// Front-end styles.
+			if ( ! empty( $block_type->style ) ) {
+				wp_enqueue_style( $block_type->style );
+			}
+	
+			// Front-end script.
+			if ( ! empty( $block_type->script ) ) {
+				wp_enqueue_script( $block_type->script );
+			}
+	
+			// Editor styles.
+			if ( ! empty( $block_type->editor_style ) ) {
+				wp_enqueue_style( $block_type->editor_style );
+			}
+	
+			// Editor script.
+			if ( ! empty( $block_type->editor_script ) ) {
+				wp_enqueue_script( $block_type->editor_script );
+			}
+		}
+		
+		wp_enqueue_media();
+		wp_enqueue_style( 'wp-format-library' );
+		wp_print_media_templates();
+		
+		do_action( 'enqueue_block_editor_assets' );
+	
+		wp_add_inline_script(
+			'wp-blocks',
+			sprintf( 'wp.blocks.setCategories( %s );', wp_json_encode( $this->get_block_categories() ) ),
+			'after'
+		);
+	}
+	
+	
+	private function get_block_categories() {
+		$default_categories = array(
+			array(
+				'slug'  => 'text',
+				'title' => _x( 'Text', 'block category' ),
+				'icon'  => null,
+			),
+			array(
+				'slug'  => 'media',
+				'title' => _x( 'Media', 'block category' ),
+				'icon'  => null,
+			),
+			array(
+				'slug'  => 'design',
+				'title' => _x( 'Design', 'block category' ),
+				'icon'  => null,
+			),
+			array(
+				'slug'  => 'widgets',
+				'title' => _x( 'Widgets', 'block category' ),
+				'icon'  => null,
+			),
+			array(
+				'slug'  => 'embed',
+				'title' => _x( 'Embeds', 'block category' ),
+				'icon'  => null,
+			),
+			array(
+				'slug'  => 'reusable',
+				'title' => _x( 'Reusable Blocks', 'block category' ),
+				'icon'  => null,
+			),
+		);
+
+		/**
+		 * Filter the default array of block categories.
+		 *
+		 * @since 5.0.0
+		 *
+		 * @param array[] $default_categories Array of block categories.
+		 * @param WP_Post $post               Post being loaded.
+		 */
+		return apply_filters( 'block_categories', $default_categories );
 	}
 
 	/**
