@@ -12,6 +12,7 @@ import {
 	ErrorBoundary,
 	UnsavedChangesWarning,
 } from '@wordpress/editor';
+import { StrictMode, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import ServerSideRender from '@wordpress/server-side-render';
 
@@ -97,11 +98,11 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
 		[ postId, postType ]
 	);
-	const [ currentLocation, setCurrentLocation ] = React.useState( DEFAULT_LOCATION );
-	const [ editorMode, setEditorMode ] = React.useState( BUILDER_EDITING_MODE );
-	const [ isNewField, setIsNewField ] = React.useState( false );
-	const [ panelDisplaying, setPanelDisplaying ] = React.useState( BLOCK_PANEL );
-	const [ selectedField, setSelectedField ] = React.useState( NO_FIELD_SELECTED );
+	const [ currentLocation, setCurrentLocation ] = useState( DEFAULT_LOCATION );
+	const [ editorMode, setEditorMode ] = useState( BUILDER_EDITING_MODE );
+	const [ isNewField, setIsNewField ] = useState( false );
+	const [ panelDisplaying, setPanelDisplaying ] = useState( BLOCK_PANEL );
+	const [ selectedField, setSelectedField ] = useState( NO_FIELD_SELECTED );
 
 	/** @param {Object} newAttributes Attribute (field) name and value. */
 	const setAttributes = ( newAttributes ) => {
@@ -118,7 +119,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 	}
 
 	return (
-		<React.StrictMode>
+		<StrictMode>
 			<div className="h-screen flex flex-col items-center text-black">
 				{ template?.cssUrl ? <link rel="stylesheet" href={ template.cssUrl } type="text/css" /> : null }
 				<BrowserURL />
@@ -202,7 +203,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 					</ErrorBoundary>
 				</EditorProvider>
 			</div>
-		</React.StrictMode>
+		</StrictMode>
 	);
 };
 
