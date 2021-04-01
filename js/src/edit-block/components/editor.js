@@ -28,7 +28,6 @@ import {
 	LocationButtons,
 	Main,
 	Side,
-	TemplateGrid,
 } from './';
 import {
 	BLOCK_PANEL,
@@ -176,13 +175,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 								}
 								{ TEMPLATE_EDITOR_EDITING_MODE === editorMode
 									? (
-										<TemplateGrid
-											currentLocation={ currentLocation }
-											selectedField={ selectedField }
-											setIsNewField={ setIsNewField }
-											setPanelDisplaying={ setPanelDisplaying }
-											setSelectedField={ setSelectedField }
-										/>
+										<div></div>
 									) : null
 								}
 							</Main>
@@ -199,19 +192,6 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 									BLOCK_PANEL !== panelDisplaying && BUILDER_EDITING_MODE === editorMode
 										? (
 											<FieldPanel
-												currentLocation={ currentLocation }
-												isNewField={ isNewField }
-												selectedField={ selectedField }
-												setCurrentLocation={ setCurrentLocation }
-												setIsNewField={ setIsNewField }
-												setSelectedField={ setSelectedField }
-											/>
-										) : null
-								}
-								{
-									BLOCK_PANEL !== panelDisplaying && TEMPLATE_EDITOR_EDITING_MODE === editorMode
-										? (
-											<TemplatePanel
 												currentLocation={ currentLocation }
 												isNewField={ isNewField }
 												selectedField={ selectedField }
