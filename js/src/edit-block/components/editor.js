@@ -2,6 +2,8 @@
  * External dependencies
  */
 import * as React from 'react';
+import AceEditor from 'react-ace';
+import 'ace-builds/src-noconflict/mode-html';
 
 /**
  * WordPress dependencies
@@ -175,7 +177,19 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 								}
 								{ TEMPLATE_EDITOR_EDITING_MODE === editorMode
 									? (
-										<div></div>
+										<AceEditor
+											mode="html"
+											theme="github"
+											height="40rem"
+											onChange={ () => {} }
+											name="gcb-template-editor"
+											editorProps={ { $blockScrolling: true } }
+											setOptions={ {
+												enableBasicAutocompletion: true,
+												enableLiveAutocompletion: true,
+												enableSnippets: true,
+											} }
+										/>
 									) : null
 								}
 							</Main>
