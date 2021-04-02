@@ -76,7 +76,7 @@
     "eslint-plugin-jsdoc": "30.2.4",
     "eslint-plugin-jsx-a11y": "6.3.1",
     "eslint-plugin-react-hooks": "4.1.0",
-    "eslint-plugin-testing-library": "3.7.0",
+    "eslint-plugin-testing-library": "3.10.2",
     "gulp": "4.0.2",
     "gulp-run": "1.7.1",
     "gulp-string-replace": "1.1.2",
