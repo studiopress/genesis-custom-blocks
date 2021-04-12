@@ -93,7 +93,7 @@ import { Fields } from '../../block-editor/components';
 const Editor = ( { onError, postId, postType, settings } ) => {
 	const { block, changeBlock } = useBlock();
 	const { template } = useTemplate();
-	const { previewAttributes = {} } = block;
+	const { previewAttributes = {}, templateMarkup = '' } = block;
 	const { getFields } = useField();
 	const post = useSelect(
 		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
@@ -178,10 +178,15 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 								{ TEMPLATE_EDITOR_EDITING_MODE === editorMode
 									? (
 										<AceEditor
+											value={ templateMarkup }
 											mode="html"
 											theme="github"
 											height="40rem"
-											onChange={ () => {} }
+											onChange={ ( newTemplateMarkup ) => {
+												changeBlock( {
+													templateMarkup: newTemplateMarkup,
+												} );
+											} }
 											name="gcb-template-editor"
 											editorProps={ { $blockScrolling: true } }
 											setOptions={ {
