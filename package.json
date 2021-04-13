@@ -108,8 +108,8 @@
   },
   "scripts": {
     "check-licenses": "wp-scripts check-licenses --prod --gpl2",
-    "build": "wp-scripts build",
-    "dev": "wp-scripts start",
+    "build": "wp-scripts build --webpack-no-externals",
+    "dev": "wp-scripts start --webpack-no-externals",
     "wp-env": "wp-env",
     "gulp": "gulp",
     "lint": "npm-run-all --parallel lint:*",
