@@ -4,6 +4,7 @@
 import * as React from 'react';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-html';
+import 'ace-builds/src-noconflict/theme-github';
 
 /**
  * WordPress dependencies
@@ -189,11 +190,6 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 											} }
 											name="gcb-template-editor"
 											editorProps={ { $blockScrolling: true } }
-											setOptions={ {
-												enableBasicAutocompletion: true,
-												enableLiveAutocompletion: true,
-												enableSnippets: true,
-											} }
 										/>
 									) : null
 								}
