@@ -26,10 +26,11 @@ import {
 	FRONT_END_PREVIEW_EDITING_MODE,
 	TEMPLATE_EDITOR_EDITING_MODE,
 } from '../constants';
+import { useTemplate } from '../hooks';
 
 /**
  * @typedef {Object} HeaderProps The header component props.
- * @property {string} editorMode The display mode.
+ * @property {import('./editor').EditorMode} editorMode The current editor mode.
  * @property {function(string):void} setEditorMode Changes the editor mode.
  */
 
@@ -40,6 +41,7 @@ import {
  * @return {React.ReactElement} The header.
  */
 const Header = ( { editorMode, setEditorMode } ) => {
+	const { template } = useTemplate();
 	const buttonClasses = 'flex items-center h-12 px-4 text-sm focus:outline-none';
 	const backURL = addQueryArgs( 'edit.php', {
 		post_type: 'genesis_custom_block',
@@ -67,17 +69,22 @@ const Header = ( { editorMode, setEditorMode } ) => {
 			>
 				<span>{ __( 'Builder', 'genesis-custom-blocks' ) }</span>
 			</button>
-			<button
-				className={ classNames(
-					buttonClasses,
-					{ 'font-semibold': TEMPLATE_EDITOR_EDITING_MODE === editorMode }
-				) }
-				onClick={ () => {
-					setEditorMode( TEMPLATE_EDITOR_EDITING_MODE );
-				} }
-			>
-				<span>{ __( 'Template Editor', 'genesis-custom-blocks' ) }</span>
-			</button>
+			{ template.templateExists
+				? null
+				: (
+					<button
+						className={ classNames(
+							buttonClasses,
+							{ 'font-semibold': TEMPLATE_EDITOR_EDITING_MODE === editorMode }
+						) }
+						onClick={ () => {
+							setEditorMode( TEMPLATE_EDITOR_EDITING_MODE );
+						} }
+					>
+						<span>{ __( 'Template Editor', 'genesis-custom-blocks' ) }</span>
+					</button>
+				)
+			}
 			<button
 				className={ classNames(
 					buttonClasses,

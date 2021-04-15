@@ -13,10 +13,12 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { QuestionIcon, TemplateFile } from './';
-import { useTemplate } from '../hooks';
+import { TEMPLATE_EDITOR_EDITING_MODE } from '../constants';
+import { useBlock, useTemplate } from '../hooks';
 
 /**
  * @typedef {Object} TopNoticeProps The component props.
+ * @property {import('./editor').EditorMode} editorMode The current editor mode.
  * @property {boolean} isOnboarding Whether the onboarding should display now.
  */
 
@@ -26,11 +28,12 @@ import { useTemplate } from '../hooks';
  * @param {TopNoticeProps} props
  * @return {React.ReactElement} The top notice.
  */
-const TopNotice = ( { isOnboarding } ) => {
+const TopNotice = ( { editorMode, isOnboarding } ) => {
 	const urlBlockTemplates = 'https://developer.wpengine.com/genesis-custom-blocks/get-started/add-a-custom-block-to-your-website-content/';
 	const urlGetStarted = 'https://developer.wpengine.com/genesis-custom-blocks/get-started/';
 	const urlTemplateFunctions = 'https://developer.wpengine.com/genesis-custom-blocks/functions/';
 	const isNewPost = useSelect( ( select ) => select( 'core/editor' ).isEditedPostNew() );
+	const { block } = useBlock();
 	const { template } = useTemplate();
 
 	return (
@@ -73,7 +76,7 @@ const TopNotice = ( { isOnboarding } ) => {
 				</div>
 				: null
 			}
-			{ ! isOnboarding && ! template.templateExists && ! isNewPost
+			{ ! isOnboarding && ! template.templateExists && ! isNewPost && ! block.templateMarkup && TEMPLATE_EDITOR_EDITING_MODE !== editorMode
 				? <div className="mt-4 mb-6 p-5 bg-blue-100 text-blue-700 border-l-4 border-blue-700 rounded-sm">
 					<div className="flex items-center">
 						<QuestionIcon />

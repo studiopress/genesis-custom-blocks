@@ -32,6 +32,7 @@ import {
  * @property {string[]} keywords The keywords, max 3.
  * @property {string[]} [excluded] The excluded post tpes, if any.
  * @property {Object} [previewAttributes] The block attributes to show in the GCB 'Editor Preview'.
+ * @property {string} [templateMarkup] The template editor markup.
  */
 
 /**
