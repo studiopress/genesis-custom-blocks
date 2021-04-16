@@ -60,7 +60,7 @@ function add_block( $block_name, $block_config = [] ) {
  *     @type int    $order   The order that the field appears in. Default: 0.
  *     @type array  $settings {
  *         An associative array of settings for the field. Each field has a different set of possible settings.
- *         Check the register_settings method for the field, found in php/blocks/controls/class-{field name}.php.
+ *         Check the register_settings method for the field, found in php/Blocks/Controls/{field name}.php.
  *     }
  * }
  */
