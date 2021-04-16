@@ -81,11 +81,11 @@ const TopNotice = ( { editorMode, isOnboarding } ) => {
 					<div className="flex items-center">
 						<QuestionIcon />
 						<h4 className="text-lg font-semibold text-blue-900 ml-2">
-							{ __( 'Next step: Build your block template.', 'genesis-custom-blocks' ) }
+							{ __( 'Next step: Create your block template.', 'genesis-custom-blocks' ) }
 						</h4>
 					</div>
 					<p className="text-sm mt-2 ml-2">
-						{ __( 'To display this block, the plugin will look for this template file in your theme:', 'genesis-custom-blocks' ) }
+						{ __( 'To display this block, you can use the Template Editor here or add this template file to your theme:', 'genesis-custom-blocks' ) }
 					</p>
 					<p className="flex items-center w-auto text-xs font-mono mt-2 ml-2 px-2 py-1 bg-blue-200 rounded-sm">
 						<TemplateFile color="blue" templatePath={ template.templatePath } />
