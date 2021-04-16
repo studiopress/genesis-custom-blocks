@@ -38,7 +38,7 @@ class TestInnerBlocks extends \WP_UnitTestCase {
 	 */
 	public function test_construct() {
 		$this->assertEquals( 'Inner Blocks', $this->instance->label );
-		$this->assertEquals( 'innerblocks', $this->instance->name );
+		$this->assertEquals( 'inner_blocks', $this->instance->name );
 	}
 
 	/**

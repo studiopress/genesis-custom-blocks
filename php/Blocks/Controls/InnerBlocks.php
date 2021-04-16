@@ -19,7 +19,7 @@ class InnerBlocks extends ControlAbstract {
 	 *
 	 * @var string
 	 */
-	public $name = 'innerblocks';
+	public $name = 'inner_blocks';
 
 	/**
 	 * Text constructor.
