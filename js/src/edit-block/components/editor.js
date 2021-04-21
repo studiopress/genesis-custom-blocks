@@ -4,7 +4,7 @@
 import * as React from 'react';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-html';
-import 'ace-builds/src-noconflict/theme-github';
+import 'ace-builds/src-noconflict/theme-textmate';
 
 /**
  * WordPress dependencies
@@ -181,7 +181,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 										<AceEditor
 											value={ templateMarkup }
 											mode="html"
-											theme="github"
+											theme="textmate"
 											height="40rem"
 											onChange={ ( newTemplateMarkup ) => {
 												changeBlock( {
@@ -190,6 +190,9 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 											} }
 											name="gcb-template-editor"
 											editorProps={ { $blockScrolling: true } }
+											setOptions={ {
+												highlightActiveLine: true,
+											} }
 										/>
 									) : null
 								}
