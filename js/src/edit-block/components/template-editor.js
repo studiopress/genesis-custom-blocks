@@ -56,27 +56,30 @@ const TemplateEditor = () => {
 					? (
 						<>
 							<p className="text-sm mt-1 mb-2">
-								{ __( 'To render a field, enter the field name (slug) enclosed in 2 brackets', 'genesis-custom-blocks' ) }
+								{ __( 'To render a field, enter the field name (slug) enclosed in 2 brackets.', 'genesis-custom-blocks' ) }
 							</p>
-							<p className="block text-sm mt-1 mb-2">
+							<p className="flex items-center w-full text-sm mt-1 mb-2">
 								{
 									sprintf(
 										/* translators: %1$s: the field name (slug). */
-										__( 'For example, the field %1$s would be %2$s', 'genesis-custom-blocks' ),
-										exampleFieldName,
-										`{{${ exampleFieldName }}}`
+										__( 'For example, the field %1$s would be', 'genesis-custom-blocks' ),
+										exampleFieldName
 									)
 								}
+								&nbsp;
+								<div className="flex items-center h-6 pl-1 pr-1 bg-gray-200 rounded-sm hover:bg-gray-300">
+									<span className="text-xs truncate font-mono">
+										{ `{{${ exampleFieldName }}}` }
+									</span>
+								</div>
 							</p>
 							<a
 								href={ urlTemplateDocumentation }
 								target="_blank"
 								rel="noopener noreferrer"
-								className="text-sm mt-1 mb-5"
+								className="text-sm text-blue-700 mt-1 mb-5 focus:outline-none md:underline"
 							>
-								<span>
-									{ __( 'Learn more', 'genesis-custom-blocks' ) }
-								</span>
+								{ __( 'Learn more', 'genesis-custom-blocks' ) }
 							</a>
 						</>
 					)
