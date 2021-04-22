@@ -31,6 +31,7 @@ import {
 	LocationButtons,
 	Main,
 	Side,
+	TemplateButtons,
 } from './';
 import {
 	BLOCK_PANEL,
@@ -39,6 +40,7 @@ import {
 	FRONT_END_PREVIEW_EDITING_MODE,
 	NO_FIELD_SELECTED,
 	TEMPLATE_EDITOR_EDITING_MODE,
+	MARKUP_TEMPLATE_MODE,
 } from '../constants';
 import { DEFAULT_LOCATION } from '../../common/constants';
 import { useBlock, useField, useTemplate } from '../hooks';
@@ -105,6 +107,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 	const [ isNewField, setIsNewField ] = useState( false );
 	const [ panelDisplaying, setPanelDisplaying ] = useState( BLOCK_PANEL );
 	const [ selectedField, setSelectedField ] = useState( NO_FIELD_SELECTED );
+	const [ templateMode, setTemplateMode ] = useState( MARKUP_TEMPLATE_MODE );
 
 	/** @param {Object} newAttributes Attribute (field) name and value. */
 	const setAttributes = ( newAttributes ) => {
@@ -178,22 +181,28 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 								}
 								{ TEMPLATE_EDITOR_EDITING_MODE === editorMode
 									? (
-										<AceEditor
-											value={ templateMarkup }
-											mode="html"
-											theme="textmate"
-											height="40rem"
-											onChange={ ( newTemplateMarkup ) => {
-												changeBlock( {
-													templateMarkup: newTemplateMarkup,
-												} );
-											} }
-											name="gcb-template-editor"
-											editorProps={ { $blockScrolling: true } }
-											setOptions={ {
-												highlightActiveLine: true,
-											} }
-										/>
+										<>
+											<TemplateButtons
+												templateMode={ templateMode }
+												setTemplateMode={ setTemplateMode }
+											/>
+											<AceEditor
+												value={ templateMarkup }
+												mode="html"
+												theme="textmate"
+												height="40rem"
+												onChange={ ( newTemplateMarkup ) => {
+													changeBlock( {
+														templateMarkup: newTemplateMarkup,
+													} );
+												} }
+												name="gcb-template-editor"
+												editorProps={ { $blockScrolling: true } }
+												setOptions={ {
+													highlightActiveLine: true,
+												} }
+											/>
+										</>
 									) : null
 								}
 							</Main>
