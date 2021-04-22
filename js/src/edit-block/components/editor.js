@@ -96,7 +96,11 @@ import { Fields } from '../../block-editor/components';
 const Editor = ( { onError, postId, postType, settings } ) => {
 	const { block, changeBlock } = useBlock();
 	const { template } = useTemplate();
-	const { previewAttributes = {}, templateMarkup = '' } = block;
+	const {
+		previewAttributes = {},
+		templateCss = '',
+		templateMarkup = '',
+	} = block;
 	const { getFields } = useField();
 	const post = useSelect(
 		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
@@ -187,13 +191,14 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 												setTemplateMode={ setTemplateMode }
 											/>
 											<AceEditor
-												value={ templateMarkup }
-												mode="html"
+												value={ MARKUP_TEMPLATE_MODE === templateMode ? templateMarkup : templateCss }
+												mode={ MARKUP_TEMPLATE_MODE === templateMode ? 'html' : 'css' }
 												theme="textmate"
 												height="40rem"
-												onChange={ ( newTemplateMarkup ) => {
+												onChange={ ( newEditorValue ) => {
+													const blockProperty = MARKUP_TEMPLATE_MODE === templateMode ? 'templateMarkup' : 'templateCss';
 													changeBlock( {
-														templateMarkup: newTemplateMarkup,
+														[ blockProperty ]: newEditorValue,
 													} );
 												} }
 												name="gcb-template-editor"
