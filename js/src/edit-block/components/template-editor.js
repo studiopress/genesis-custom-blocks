@@ -77,7 +77,7 @@ const TemplateEditor = () => {
 								href={ urlTemplateDocumentation }
 								target="_blank"
 								rel="noopener noreferrer"
-								className="text-sm text-blue-700 mt-1 mb-5 focus:outline-none md:underline"
+								className="text-sm text-blue-700 mt-1 mb-6 focus:outline-none md:underline"
 							>
 								{ __( 'Learn more', 'genesis-custom-blocks' ) }
 							</a>
