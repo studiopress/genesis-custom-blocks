@@ -21,7 +21,7 @@ import { CSS_TEMPLATE_MODE, MARKUP_TEMPLATE_MODE } from '../constants';
  */
 
 /**
- * Buttons that select which the template editor that is displaying.
+ * Buttons that select which of the template editors displays.
  *
  * @param {TemplateButtonsProps} props
  * @return {React.ReactElement} The Template buttons.

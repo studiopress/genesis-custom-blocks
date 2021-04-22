@@ -2,9 +2,6 @@
  * External dependencies
  */
 import * as React from 'react';
-import AceEditor from 'react-ace';
-import 'ace-builds/src-noconflict/mode-html';
-import 'ace-builds/src-noconflict/theme-textmate';
 
 /**
  * WordPress dependencies
@@ -16,7 +13,6 @@ import {
 	UnsavedChangesWarning,
 } from '@wordpress/editor';
 import { StrictMode, useState } from '@wordpress/element';
-import { __, sprintf } from '@wordpress/i18n';
 import ServerSideRender from '@wordpress/server-side-render';
 
 /**
@@ -32,7 +28,7 @@ import {
 	LocationButtons,
 	Main,
 	Side,
-	TemplateButtons,
+	TemplateEditor,
 } from './';
 import {
 	BLOCK_PANEL,
@@ -41,7 +37,6 @@ import {
 	FRONT_END_PREVIEW_EDITING_MODE,
 	NO_FIELD_SELECTED,
 	TEMPLATE_EDITOR_EDITING_MODE,
-	MARKUP_TEMPLATE_MODE,
 } from '../constants';
 import { DEFAULT_LOCATION } from '../../common/constants';
 import { useBlock, useField, useTemplate } from '../hooks';
@@ -97,11 +92,7 @@ import { Fields } from '../../block-editor/components';
 const Editor = ( { onError, postId, postType, settings } ) => {
 	const { block, changeBlock } = useBlock();
 	const { template } = useTemplate();
-	const {
-		previewAttributes = {},
-		templateCss = '',
-		templateMarkup = '',
-	} = block;
+	const { previewAttributes = {} } = block;
 	const { getFields } = useField();
 	const post = useSelect(
 		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
@@ -112,9 +103,6 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 	const [ isNewField, setIsNewField ] = useState( false );
 	const [ panelDisplaying, setPanelDisplaying ] = useState( BLOCK_PANEL );
 	const [ selectedField, setSelectedField ] = useState( NO_FIELD_SELECTED );
-	const [ templateMode, setTemplateMode ] = useState( MARKUP_TEMPLATE_MODE );
-
-	const urlTemplateDocumentation = 'https://developer.wpengine.com/genesis-custom-blocks/get-started/add-a-custom-block-to-your-website-content/';
 
 	/** @param {Object} newAttributes Attribute (field) name and value. */
 	const setAttributes = ( newAttributes ) => {
@@ -187,54 +175,8 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 									) : null
 								}
 								{ TEMPLATE_EDITOR_EDITING_MODE === editorMode
-									? (
-										<>
-											<TemplateButtons
-												templateMode={ templateMode }
-												setTemplateMode={ setTemplateMode }
-											/>
-											{
-												MARKUP_TEMPLATE_MODE === templateMode
-													? (
-														<>
-															<span className="block text-sm mt-1 mb-2">
-																{ __( 'To render a field, enter the field name (slug) enclosed in 2 brackets', 'genesis-custom-blocks' ) }
-															</span>
-															<span className="block text-sm mt-1 mb-2">
-																{
-																	sprintf(
-																		/* translators: %1$s: the field name (slug). */
-																		__( 'For example, the field example-text would be %1$s', 'genesis-custom-blocks' ),
-																		'{{example-text}}'
-																	)
-																}
-															</span>
-															<a href={ urlTemplateDocumentation } className="block text-sm mt-1 mb-5">
-																{ __( 'Learn more', 'genesis-custom-blocks' ) }
-															</a>
-														</>
-													)
-													: null
-											}
-											<AceEditor
-												value={ MARKUP_TEMPLATE_MODE === templateMode ? templateMarkup : templateCss }
-												mode={ MARKUP_TEMPLATE_MODE === templateMode ? 'html' : 'css' }
-												theme="textmate"
-												height="40rem"
-												onChange={ ( newEditorValue ) => {
-													const blockProperty = MARKUP_TEMPLATE_MODE === templateMode ? 'templateMarkup' : 'templateCss';
-													changeBlock( {
-														[ blockProperty ]: newEditorValue,
-													} );
-												} }
-												name="gcb-template-editor"
-												editorProps={ { $blockScrolling: true } }
-												setOptions={ {
-													highlightActiveLine: true,
-												} }
-											/>
-										</>
-									) : null
+									? <TemplateEditor />
+									: null
 								}
 							</Main>
 							<Side
