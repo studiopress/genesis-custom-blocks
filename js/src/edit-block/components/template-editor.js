@@ -17,7 +17,7 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 import { TemplateButtons } from './';
 import { MARKUP_TEMPLATE_MODE } from '../constants';
-import { useBlock } from '../hooks';
+import { useBlock, useField } from '../hooks';
 
 /**
  * @typedef {Object} TemplateEditorProps The component props.
@@ -37,10 +37,12 @@ import { useBlock } from '../hooks';
 const TemplateEditor = () => {
 	const [ templateMode, setTemplateMode ] = useState( MARKUP_TEMPLATE_MODE );
 	const { block, changeBlock } = useBlock();
+	const { getFields } = useField();
 	const {
 		templateCss = '',
 		templateMarkup = '',
 	} = block;
+	const exampleFieldName = getFields()?.shift()?.name ?? 'foo-baz';
 	const urlTemplateDocumentation = 'https://developer.wpengine.com/genesis-custom-blocks/get-started/add-a-custom-block-to-your-website-content/';
 
 	return (
@@ -53,20 +55,28 @@ const TemplateEditor = () => {
 				MARKUP_TEMPLATE_MODE === templateMode
 					? (
 						<>
-							<span className="block text-sm mt-1 mb-2">
+							<p className="text-sm mt-1 mb-2">
 								{ __( 'To render a field, enter the field name (slug) enclosed in 2 brackets', 'genesis-custom-blocks' ) }
-							</span>
-							<span className="block text-sm mt-1 mb-2">
+							</p>
+							<p className="block text-sm mt-1 mb-2">
 								{
 									sprintf(
 										/* translators: %1$s: the field name (slug). */
-										__( 'For example, the field example-text would be %1$s', 'genesis-custom-blocks' ),
-										'{{example-text}}'
+										__( 'For example, the field %1$s would be %2$s', 'genesis-custom-blocks' ),
+										exampleFieldName,
+										`{{${ exampleFieldName }}}`
 									)
 								}
-							</span>
-							<a href={ urlTemplateDocumentation } className="block text-sm mt-1 mb-5">
-								{ __( 'Learn more', 'genesis-custom-blocks' ) }
+							</p>
+							<a
+								href={ urlTemplateDocumentation }
+								target="_blank"
+								rel="noopener noreferrer"
+								className="text-sm mt-1 mb-5"
+							>
+								<span>
+									{ __( 'Learn more', 'genesis-custom-blocks' ) }
+								</span>
 							</a>
 						</>
 					)
