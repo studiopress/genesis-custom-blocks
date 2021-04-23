@@ -54,11 +54,11 @@ const TemplateEditor = () => {
 									)
 								}
 								&nbsp;
-								<div className="flex items-center h-6 pl-1 pr-1 bg-gray-200 rounded-sm hover:bg-gray-300">
+								<span className="flex items-center h-6 pl-1 pr-1 bg-gray-200 rounded-sm hover:bg-gray-300">
 									<span className="text-xs truncate font-mono">
 										{ `{{${ exampleFieldName }}}` }
 									</span>
-								</div>
+								</span>
 							</p>
 							<a
 								href={ urlTemplateDocumentation }
