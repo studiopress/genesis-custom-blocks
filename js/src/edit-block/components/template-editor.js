@@ -20,16 +20,6 @@ import { MARKUP_TEMPLATE_MODE } from '../constants';
 import { useBlock, useField } from '../hooks';
 
 /**
- * @typedef {Object} TemplateEditorProps The component props.
- * @property {import('./editor').CurrentLocation} currentLocation The currently selected location.
- * @property {import('./editor').SelectedField|import('../constants').NoFieldSelected} selectedField The currenetly selected field.
- * @property {import('./editor').SetIsNewField} setIsNewField Sets if there is a new field.
- * @property {import('./editor').SetPanelDisplaying} setPanelDisplaying Sets the current panel displaying.
- * @property {import('./editor').SetSelectedField} setSelectedField Sets the name of the selected field.
- * @property {string|null} [parentField] The name of the parent field, if any.
- */
-
-/**
  * The editor for the template markup and CSS.
  *
  * @return {React.ReactElement} The fields displayed in a grid.
@@ -38,10 +28,7 @@ const TemplateEditor = () => {
 	const [ templateMode, setTemplateMode ] = useState( MARKUP_TEMPLATE_MODE );
 	const { block, changeBlock } = useBlock();
 	const { getFields } = useField();
-	const {
-		templateCss = '',
-		templateMarkup = '',
-	} = block;
+	const { templateCss = '', templateMarkup = '' } = block;
 	const exampleFieldName = getFields()?.shift()?.name ?? 'foo-baz';
 	const urlTemplateDocumentation = 'https://developer.wpengine.com/genesis-custom-blocks/get-started/add-a-custom-block-to-your-website-content/';
 
