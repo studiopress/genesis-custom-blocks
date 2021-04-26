@@ -32,7 +32,7 @@ const Side = ( {
 	panelDisplaying,
 	setPanelDisplaying,
 } ) => {
-	const buttonClass = 'flex items-center h-12 px-5 text-sm focus:outline-none';
+	const buttonClass = 'flex items-center h-12 px-5 text-sm';
 
 	return (
 		<div className="side flex-shrink-0 flex flex-col border-l border-gray-300 overflow-scroll">

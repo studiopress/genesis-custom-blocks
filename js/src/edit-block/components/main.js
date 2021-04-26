@@ -36,7 +36,7 @@ const Main = ( { children, editorMode } ) => {
 	return (
 		<div className="flex flex-col flex-grow items-start w-full overflow-scroll">
 			<div className="flex flex-col w-full max-w-2xl mx-auto pl-8 pr-8 pb-64">
-				<div className="text-4xl w-full mt-10 text-center focus:outline-none">
+				<div className="text-4xl w-full mt-10 text-center">
 					<PostTitle />
 				</div>
 				<TopNotice editorMode={ editorMode } isOnboarding={ isOnboarding } />

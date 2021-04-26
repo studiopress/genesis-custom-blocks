@@ -32,7 +32,7 @@ const LocationButtons = ( {
 	editorMode,
 	setCurrentLocation,
 } ) => {
-	const buttonClass = 'w-40 h-12 px-4 text-sm focus:outline-none';
+	const buttonClass = 'w-40 h-12 px-4 text-sm';
 
 	return BUILDER_EDITING_MODE === editorMode
 		? (

@@ -64,7 +64,7 @@ const TemplateEditor = () => {
 								href={ urlTemplateDocumentation }
 								target="_blank"
 								rel="noopener noreferrer"
-								className="max-w-max text-sm text-blue-700 mt-1 mb-6 focus:outline-none md:underline"
+								className="max-w-max text-sm text-blue-700 mt-1 mb-6 md:underline"
 							>
 								{ __( 'Learn more', 'genesis-custom-blocks' ) }
 							</a>

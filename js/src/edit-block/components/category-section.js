@@ -126,7 +126,7 @@ const CategorySection = () => {
 				}
 			</select>
 			<button
-				className="text-sm text-blue-700 focus:outline-none md:underline mt-2"
+				className="text-sm text-blue-700 md:underline mt-2"
 				onClick={ () => {
 					setShowNewCategoryForm( ( previousValue ) => ! previousValue );
 				} }
