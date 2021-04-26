@@ -93,7 +93,7 @@ const CategorySection = () => {
 			<select /* eslint-disable-line jsx-a11y/no-onchange */
 				className="flex items-center w-full h-8 rounded-sm border border-gray-600 mt-2 px-2 text-sm"
 				id="block-categories"
-				value={ block.category && block.category.slug ? block.category.slug : getDefaultBlock().category }
+				value={ block.category && block.category.slug ? block.category.slug : getDefaultBlock().category.slug }
 				onChange={ handleChangeCategory }
 			>
 				{ categories && Array.isArray( categories )
@@ -126,7 +126,7 @@ const CategorySection = () => {
 				}
 			</select>
 			<button
-				className="text-sm text-blue-700 focus:outline-none md:underline mt-2"
+				className="text-sm text-blue-700 md:underline mt-2"
 				onClick={ () => {
 					setShowNewCategoryForm( ( previousValue ) => ! previousValue );
 				} }

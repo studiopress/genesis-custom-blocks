@@ -24,6 +24,7 @@
   ],
   "rules": {
     "@wordpress/dependency-group": "error",
+    "@wordpress/no-unused-vars-before-return": "off",
     "@wordpress/react-no-unsafe-timeout": "error",
     "comma-dangle": [
       "error",

@@ -16,7 +16,7 @@ import { BLOCK_PANEL, FIELD_PANEL } from '../constants';
 
 /**
  * @typedef {Object} SideProps The component props.
- * @property {React.ReactElement} children The component children.
+ * @property {React.ReactElement[]} children The component children.
  * @property {import('./editor').PanelDisplaying} panelDisplaying The panel currently displaying in the side, like 'block'.
  * @property {import('./editor').SetPanelDisplaying} setPanelDisplaying Sets the panel currently displaying in the side.
  */
@@ -32,7 +32,7 @@ const Side = ( {
 	panelDisplaying,
 	setPanelDisplaying,
 } ) => {
-	const buttonClass = 'flex items-center h-12 px-5 text-sm focus:outline-none';
+	const buttonClass = 'flex items-center h-12 px-5 text-sm';
 
 	return (
 		<div className="side flex-shrink-0 flex flex-col border-l border-gray-300 overflow-scroll">

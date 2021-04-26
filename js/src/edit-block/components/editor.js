@@ -12,7 +12,7 @@ import {
 	ErrorBoundary,
 	UnsavedChangesWarning,
 } from '@wordpress/editor';
-import { useState, StrictMode } from '@wordpress/element';
+import { StrictMode, useState } from '@wordpress/element';
 import ServerSideRender from '@wordpress/server-side-render';
 
 /**
@@ -28,6 +28,7 @@ import {
 	LocationButtons,
 	Main,
 	Side,
+	TemplateEditor,
 } from './';
 import {
 	BLOCK_PANEL,
@@ -35,6 +36,7 @@ import {
 	EDITOR_PREVIEW_EDITING_MODE,
 	FRONT_END_PREVIEW_EDITING_MODE,
 	NO_FIELD_SELECTED,
+	TEMPLATE_EDITOR_EDITING_MODE,
 } from '../constants';
 import { DEFAULT_LOCATION } from '../../common/constants';
 import { useBlock, useField, useTemplate } from '../hooks';
@@ -130,7 +132,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 						<Header editorMode={ editorMode } setEditorMode={ setEditorMode } />
 						<EditorNotices />
 						<div className="gcb-editor flex w-full h-0 flex-grow">
-							<Main>
+							<Main editorMode={ editorMode }>
 								<LocationButtons
 									currentLocation={ currentLocation }
 									editorMode={ editorMode }
@@ -172,6 +174,10 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 										/>
 									) : null
 								}
+								{ TEMPLATE_EDITOR_EDITING_MODE === editorMode
+									? <TemplateEditor />
+									: null
+								}
 							</Main>
 							<Side
 								panelDisplaying={ panelDisplaying }
@@ -180,7 +186,11 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 								{
 									BLOCK_PANEL === panelDisplaying
 										? <BlockPanel />
-										: (
+										: null
+								}
+								{
+									BLOCK_PANEL !== panelDisplaying && BUILDER_EDITING_MODE === editorMode
+										? (
 											<FieldPanel
 												currentLocation={ currentLocation }
 												isNewField={ isNewField }
@@ -189,7 +199,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 												setIsNewField={ setIsNewField }
 												setSelectedField={ setSelectedField }
 											/>
-										)
+										) : null
 								}
 							</Side>
 						</div>
