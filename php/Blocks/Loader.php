@@ -471,7 +471,7 @@ class Loader extends ComponentAbstract {
 			load_template( $theme_template, false );
 		} else {
 			if ( ! empty( $this->blocks[ "genesis-custom-blocks/{$name}" ]['templateMarkup'] ) ) {
-				// Render it.
+				( new TemplateEditor() )->render( $this->blocks[ "genesis-custom-blocks/{$name}" ]['templateMarkup'] );
 				return;
 			}
 
