@@ -315,10 +315,8 @@ class Loader extends ComponentAbstract {
 		}
 
 		if ( ! is_admin() ) {
-			/**
-			 * The block has been added, but its values weren't saved (not even the defaults). This is a phenomenon
-			 * unique to frontend output, as the editor fetches its attributes from the form fields themselves.
-			 */
+			// The block has been added, but its values weren't saved (not even the defaults).
+			// This is unique to frontend output, as the editor fetches its attributes from the form fields themselves.
 			$missing_schema_attributes = array_diff_key( $block->fields, $attributes );
 			foreach ( $missing_schema_attributes as $attribute_name => $schema ) {
 				if ( isset( $schema->settings['default'] ) ) {
@@ -328,10 +326,8 @@ class Loader extends ComponentAbstract {
 
 			$this->enqueue_block_styles( $block->name, 'block' );
 
-			/**
-			 * The wp_enqueue_style function handles duplicates, so we don't need to worry about multiple blocks
-			 * loading the global styles more than once.
-			 */
+			// The wp_enqueue_style function handles duplicates, so we don't need to worry about multiple blocks
+			// loading the global styles more than once.
 			$this->enqueue_global_styles();
 		}
 
@@ -474,20 +470,15 @@ class Loader extends ComponentAbstract {
 			// This is not a load once template, so require_once is false.
 			load_template( $theme_template, false );
 		} else {
-			if ( ! current_user_can( 'edit_posts' ) || ! isset( $templates[0] ) ) {
-				return;
+			if ( current_user_can( 'edit_posts' ) && isset( $templates[0] ) && is_admin() && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				printf(
+					'<div class="notice notice-warning">%s</div>',
+					wp_kses_post(
+						/* translators: %1$s: a file path. */
+						sprintf( __( 'Template file %s not found.', 'genesis-custom-blocks' ), '<code>' . esc_html( $templates[0] ) . '</code>' )
+					)
+				);
 			}
-			// Hide the template not found notice on the frontend, unless WP_DEBUG is enabled.
-			if ( ! is_admin() && ! ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ) {
-				return;
-			}
-			printf(
-				'<div class="notice notice-warning">%s</div>',
-				wp_kses_post(
-					// Translators: Placeholder is a file path.
-					sprintf( __( 'Template file %s not found.', 'genesis-custom-blocks' ), '<code>' . esc_html( $templates[0] ) . '</code>' )
-				)
-			);
 		}
 	}
 
