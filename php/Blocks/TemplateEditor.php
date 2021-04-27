@@ -20,9 +20,9 @@ class TemplateEditor {
 	 * @param string $markup The markup to render.
 	 */
 	public function render( $markup ) {
-		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo preg_replace_callback(
-			'#{{([^}]*)}}#',
+			'#{{(\S+?)}}#',
 			static function( $matches ) {
 				ob_start();
 				block_field( $matches[1] );

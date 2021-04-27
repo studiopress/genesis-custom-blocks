@@ -125,7 +125,7 @@ class TestTemplateEditorOutput extends AbstractAttribute {
 			'icon'           => 'genesis_custom_blocks',
 			'keywords'       => [ '' ],
 			'name'           => $this->block_name,
-			'title'          => 'All Fields',
+			'title'          => 'Template Editor Rendered',
 			'templateMarkup' => require __DIR__ . '/Fixtures/template-editor.php',
 		];
 	}
@@ -139,8 +139,7 @@ class TestTemplateEditorOutput extends AbstractAttribute {
 	 * and ensures that all of these fields appear correctly in it.
 	 *
 	 * @covers \Genesis\CustomBlocks\Blocks\TemplateEditor::render()
-	 * @covers \block_field()
-	 * @covers \block_value()
+	 * @covers \Genesis\CustomBlocks\Blocks\Loader::render_block_template()
 	 */
 	public function test_block_template() {
 		$block        = new Block();
