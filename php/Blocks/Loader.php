@@ -469,26 +469,27 @@ class Loader extends ComponentAbstract {
 
 			// This is not a load once template, so require_once is false.
 			load_template( $theme_template, false );
-		} else {
-			if ( ! empty( $this->blocks[ "genesis-custom-blocks/{$name}" ]['templateMarkup'] ) ) {
-				( new TemplateEditor() )->render( $this->blocks[ "genesis-custom-blocks/{$name}" ]['templateMarkup'] );
-				return;
-			}
+			return;
+		}
 
-			if ( ! current_user_can( 'edit_posts' ) || ! isset( $templates[0] ) ) {
-				return;
-			}
+		if ( ! empty( $this->blocks[ "genesis-custom-blocks/{$name}" ]['templateMarkup'] ) ) {
+			( new TemplateEditor() )->render( $this->blocks[ "genesis-custom-blocks/{$name}" ]['templateMarkup'] );
+			return;
+		}
 
-			// Only show the template not found notice on the frontend if WP_DEBUG is enabled.
-			if ( is_admin() || defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-				printf(
-					'<div class="notice notice-warning">%s</div>',
-					wp_kses_post(
-					// Translators: Placeholder is a file path.
-						sprintf( __( 'Template file %s not found.', 'genesis-custom-blocks' ), '<code>' . esc_html( $templates[0] ) . '</code>' )
-					)
-				);
-			}
+		if ( ! current_user_can( 'edit_posts' ) || ! isset( $templates[0] ) ) {
+			return;
+		}
+
+		// Only show the template not found notice on the frontend if WP_DEBUG is enabled.
+		if ( is_admin() || defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			printf(
+				'<div class="notice notice-warning">%s</div>',
+				wp_kses_post(
+				// Translators: Placeholder is a file path.
+					sprintf( __( 'Template file %s not found.', 'genesis-custom-blocks' ), '<code>' . esc_html( $templates[0] ) . '</code>' )
+				)
+			);
 		}
 	}
 
