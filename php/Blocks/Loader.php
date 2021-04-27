@@ -315,10 +315,8 @@ class Loader extends ComponentAbstract {
 		}
 
 		if ( ! is_admin() ) {
-			/**
-			 * The block has been added, but its values weren't saved (not even the defaults). This is a phenomenon
-			 * unique to frontend output, as the editor fetches its attributes from the form fields themselves.
-			 */
+			// The block has been added, but its values weren't saved (not even the defaults).
+			// This is unique to frontend output, as the editor fetches its attributes from the form fields themselves.
 			$missing_schema_attributes = array_diff_key( $block->fields, $attributes );
 			foreach ( $missing_schema_attributes as $attribute_name => $schema ) {
 				if ( isset( $schema->settings['default'] ) ) {
@@ -328,10 +326,8 @@ class Loader extends ComponentAbstract {
 
 			$this->enqueue_block_styles( $block->name, 'block' );
 
-			/**
-			 * The wp_enqueue_style function handles duplicates, so we don't need to worry about multiple blocks
-			 * loading the global styles more than once.
-			 */
+			// The wp_enqueue_style function handles duplicates, so we don't need to worry about multiple blocks
+			// loading the global styles more than once.
 			$this->enqueue_global_styles();
 		}
 
