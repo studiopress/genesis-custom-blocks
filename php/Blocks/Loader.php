@@ -470,8 +470,8 @@ class Loader extends ComponentAbstract {
 			// This is not a load once template, so require_once is false.
 			load_template( $theme_template, false );
 		} else {
-			if ( ! empty( $this->blocks[ "genesis-custom-blocks/{$name}" ]->template_markup ) ) {
-				( new TemplateEditor() )->render( $this->blocks[ "genesis-custom-blocks/{$name}" ]->template_markup );
+			if ( ! empty( $this->blocks[ "genesis-custom-blocks/{$name}" ]['templateMarkup'] ) ) {
+				( new TemplateEditor() )->render( $this->blocks[ "genesis-custom-blocks/{$name}" ]['templateMarkup'] );
 				return;
 			}
 

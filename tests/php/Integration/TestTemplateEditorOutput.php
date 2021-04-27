@@ -143,15 +143,16 @@ class TestTemplateEditorOutput extends AbstractAttribute {
 	 * @covers \block_value()
 	 */
 	public function test_block_template() {
-		$block = new Block();
-		$block->from_array( $this->get_block_config() );
+		$block        = new Block();
+		$block_config = $this->get_block_config();
+		$block->from_array( $block_config );
 
 		add_filter(
 			'genesis_custom_blocks_available_blocks',
-			static function( $blocks ) use ( $block ) {
+			static function( $blocks ) use ( $block, $block_config ) {
 				return array_merge(
 					$blocks,
-					[ "genesis-custom-blocks/{$block->name}" => $block ]
+					[ "genesis-custom-blocks/{$block->name}" => $block_config ]
 				);
 			}
 		);
