@@ -68,6 +68,13 @@ class Block {
 	public $fields = [];
 
 	/**
+	 * Template editor markup.
+	 *
+	 * @var string
+	 */
+	public $template_markup = '';
+
+	/**
 	 * Block constructor.
 	 *
 	 * @param int|bool $post_id Post ID.
@@ -143,6 +150,10 @@ class Block {
 			$this->keywords = $config['keywords'];
 		}
 
+		if ( isset( $config['templateMarkup'] ) ) {
+			$this->template_markup = $config['templateMarkup'];
+		}
+
 		if ( isset( $config['fields'] ) ) {
 			foreach ( $config['fields'] as $key => $field ) {
 				$this->fields[ $key ] = new Field( $field );
@@ -156,12 +167,13 @@ class Block {
 	 * @return string
 	 */
 	public function to_json() {
-		$config['name']     = $this->name;
-		$config['title']    = $this->title;
-		$config['excluded'] = $this->excluded;
-		$config['icon']     = $this->icon;
-		$config['category'] = $this->category;
-		$config['keywords'] = $this->keywords;
+		$config['name']           = $this->name;
+		$config['title']          = $this->title;
+		$config['excluded']       = $this->excluded;
+		$config['icon']           = $this->icon;
+		$config['category']       = $this->category;
+		$config['keywords']       = $this->keywords;
+		$config['templateMarkup'] = $this->template_markup;
 
 		$config['fields'] = [];
 		foreach ( $this->fields as $key => $field ) {
