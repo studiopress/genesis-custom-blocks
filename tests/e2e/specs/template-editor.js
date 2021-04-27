@@ -42,6 +42,6 @@ describe( 'TemplateEditor', () => {
 		await ( await findByRole( $editBlockDocument, 'button', { name: /save draft/i } ) ).click();
 
 		await ( await findByText( $editBlockDocument, 'Front-end Preview' ) ).click();
-		await findByText( $editBlockDocument, `Here is the text field: ${ field.value }` )
+		await findByText( $editBlockDocument, `Here is the text field: ${ field.value }` );
 	} );
 } );
