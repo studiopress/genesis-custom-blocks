@@ -32,6 +32,18 @@ class TestDefaults extends AbstractAttribute {
 	public $special_case_fields;
 
 	/**
+	 * Sets up before each test.
+	 *
+	 * @inheritdoc
+	 */
+	public function setUp() {
+		parent::setUp();
+
+		$this->set_properties();
+		$this->create_block_template();
+	}
+
+	/**
 	 * Sets class properties.
 	 */
 	public function set_properties() {

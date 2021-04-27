@@ -1,6 +1,6 @@
 <?php
 /**
- * TestTemplateOutput
+ * TestTemplateEditorOutput
  *
  * @package Genesis\CustomBlocks
  */
@@ -9,11 +9,11 @@ use Genesis\CustomBlocks\Blocks\Block;
 use Genesis\CustomBlocks\PostTypes\BlockPost;
 
 /**
- * Class TestTemplateOutput
+ * Class TestTemplateEditorOutput
  *
  * @package Genesis\CustomBlocks
  */
-class TestTemplateOutput extends AbstractAttribute {
+class TestTemplateEditorOutput extends AbstractAttribute {
 
 	/**
 	 * Fields that don't fit well into the other test groups.
@@ -31,7 +31,6 @@ class TestTemplateOutput extends AbstractAttribute {
 		parent::setUp();
 
 		$this->set_properties();
-		$this->create_block_template();
 	}
 
 	/**
@@ -116,17 +115,18 @@ class TestTemplateOutput extends AbstractAttribute {
 		}
 
 		return [
-			'category' => [
+			'category'       => [
 				'icon'  => null,
 				'slug'  => '',
 				'title' => '',
 			],
-			'excluded' => [],
-			'fields'   => $fields,
-			'icon'     => 'genesis_custom_blocks',
-			'keywords' => [ '' ],
-			'name'     => $this->block_name,
-			'title'    => 'All Fields',
+			'excluded'       => [],
+			'fields'         => $fields,
+			'icon'           => 'genesis_custom_blocks',
+			'keywords'       => [ '' ],
+			'name'           => $this->block_name,
+			'title'          => 'All Fields',
+			'templateMarkup' => require __DIR__ . '/Fixtures/template-editor.php',
 		];
 	}
 
@@ -157,16 +157,7 @@ class TestTemplateOutput extends AbstractAttribute {
 		foreach ( $this->string_fields as $field ) {
 			$this->assertContains(
 				sprintf(
-					'Here is the result of calling block_value() for %s: %s',
-					$field,
-					$this->attributes[ $field ]
-				),
-				$actual_template
-			);
-
-			$this->assertContains(
-				sprintf(
-					'Here is the result of block_field() for %s: %s',
+					'Here is the result of %1$s: %2$s',
 					$field,
 					$this->attributes[ $field ]
 				),
@@ -178,18 +169,9 @@ class TestTemplateOutput extends AbstractAttribute {
 		foreach ( $this->special_case_fields as $field_name => $expected ) {
 			$this->assertContains(
 				sprintf(
-					'Here is the result of block_field() for %s: %s',
+					'Here is the result for %1$s: %2$s',
 					$field_name,
 					$expected['block_field']
-				),
-				$actual_template
-			);
-
-			$this->assertContains(
-				sprintf(
-					'Here is the result of calling block_value() for %s: %s',
-					$field_name,
-					$expected['block_value']
 				),
 				$actual_template
 			);

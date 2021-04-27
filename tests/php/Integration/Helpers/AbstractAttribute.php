@@ -72,18 +72,6 @@ abstract class AbstractAttribute extends \WP_UnitTestCase {
 	];
 
 	/**
-	 * Setup.
-	 *
-	 * @inheritdoc
-	 */
-	public function setUp() {
-		parent::setUp();
-
-		$this->set_properties();
-		$this->create_block_template();
-	}
-
-	/**
 	 * Invokes a protected method.
 	 *
 	 * @param object $instance The instance to invoke the method on.
@@ -97,11 +85,6 @@ abstract class AbstractAttribute extends \WP_UnitTestCase {
 		$method->setAccessible( true );
 		return $method->invokeArgs( $instance, $args );
 	}
-
-	/**
-	 * Sets class properties.
-	 */
-	public function set_properties() {}
 
 	/**
 	 * Creates the block template.
