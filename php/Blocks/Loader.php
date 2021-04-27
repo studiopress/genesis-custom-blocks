@@ -486,8 +486,8 @@ class Loader extends ComponentAbstract {
 			printf(
 				'<div class="notice notice-warning">%s</div>',
 				wp_kses_post(
-				// Translators: Placeholder is a file path.
-					sprintf( __( 'Template file %s not found.', 'genesis-custom-blocks' ), '<code>' . esc_html( $templates[0] ) . '</code>' )
+					/* translators: %1$s: file path */
+					sprintf( __( 'Template file %1$s not found.', 'genesis-custom-blocks' ), '<code>' . esc_html( $templates[0] ) . '</code>' )
 				)
 			);
 		}
