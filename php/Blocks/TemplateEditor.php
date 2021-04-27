@@ -20,6 +20,15 @@ class TemplateEditor {
 	 * @param string $markup The markup to render.
 	 */
 	public function render( $markup ) {
-		echo $markup; // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo preg_replace_callback(
+			'#{{([^}]*)}}#',
+			static function( $matches ) {
+				ob_start();
+				block_field( $matches[1] );
+				return ob_get_clean();
+			},
+			$markup
+		);
 	}
 }

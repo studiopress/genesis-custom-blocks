@@ -37,7 +37,7 @@ class TestTemplateEditorOutput extends AbstractAttribute {
 	 * Sets class properties.
 	 */
 	public function set_properties() {
-		$this->block_name = 'all-fields';
+		$this->block_name = 'template-editor-rendered';
 
 		$this->attributes = [
 			'className'   => $this->class_name,
@@ -138,26 +138,33 @@ class TestTemplateEditorOutput extends AbstractAttribute {
 	 * Then, it loads the mock template in the theme's blocks/ directory,
 	 * and ensures that all of these fields appear correctly in it.
 	 *
+	 * @covers \Genesis\CustomBlocks\Blocks\TemplateEditor::render()
 	 * @covers \block_field()
 	 * @covers \block_value()
 	 */
 	public function test_block_template() {
 		$block = new Block();
 		$block->from_array( $this->get_block_config() );
+
+		add_filter(
+			'genesis_custom_blocks_available_blocks',
+			static function( $blocks ) use ( $block ) {
+				return array_merge(
+					$blocks,
+					[ "genesis-custom-blocks/{$block->name}" => $block ]
+				);
+			}
+		);
+
+		genesis_custom_blocks()->loader->retrieve_blocks();
 		$rendered_template = $this->invoke_protected_method( genesis_custom_blocks()->loader, 'render_block_template', [ $block, $this->attributes ] );
 		$actual_template   = str_replace( [ "\t", "\n" ], '', $rendered_template );
-
-		// The 'className' should be present.
-		$this->assertContains(
-			sprintf( '<p class="%s">', $this->class_name ),
-			$actual_template
-		);
 
 		// Test the fields that return a string for block_value().
 		foreach ( $this->string_fields as $field ) {
 			$this->assertContains(
 				sprintf(
-					'Here is the result of %1$s: %2$s',
+					'Here is the result for %1$s: %2$s',
 					$field,
 					$this->attributes[ $field ]
 				),
