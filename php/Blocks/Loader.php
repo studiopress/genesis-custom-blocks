@@ -482,7 +482,7 @@ class Loader extends ComponentAbstract {
 		}
 
 		// Only show the template not found notice on the frontend if WP_DEBUG is enabled.
-		if ( is_admin() || defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+		if ( is_admin() || ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ) {
 			printf(
 				'<div class="notice notice-warning">%s</div>',
 				wp_kses_post(

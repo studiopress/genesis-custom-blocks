@@ -39,4 +39,6 @@ foreach ( $fields as $field ) :
 	<?php
 endforeach;
 
+echo 'Here are escaped brackets: \{\{example\}\}';
+
 return ob_get_clean();

@@ -20,8 +20,7 @@ class TemplateEditor {
 	 * @param string $markup The markup to render.
 	 */
 	public function render( $markup ) {
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo preg_replace_callback(
+		$rendered = preg_replace_callback(
 			'#{{(\S+?)}}#',
 			static function( $matches ) {
 				ob_start();
@@ -30,5 +29,9 @@ class TemplateEditor {
 			},
 			$markup
 		);
+
+		// Escape characters before { should be stripped, like \{\{example\}\}.
+		// Like if they have a tutorial on Mustache and need the template to render {{example}}.
+		echo preg_replace( '#\\\{\\\{(\S+?)\\\}\\\}#', '{{\1}}', $rendered ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

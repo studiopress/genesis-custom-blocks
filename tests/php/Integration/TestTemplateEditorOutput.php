@@ -183,5 +183,10 @@ class TestTemplateEditorOutput extends AbstractAttribute {
 				$actual_template
 			);
 		}
+
+		$this->assertContains(
+			'Here are escaped brackets: {{example}}',
+			$actual_template
+		);
 	}
 }
