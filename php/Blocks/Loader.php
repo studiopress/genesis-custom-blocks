@@ -40,12 +40,20 @@ class Loader extends ComponentAbstract {
 	protected $data = [];
 
 	/**
+	 * The template editor.
+	 *
+	 * @var TemplateEditor
+	 */
+	protected $template_editor;
+
+	/**
 	 * Load the Loader.
 	 *
 	 * @return $this
 	 */
 	public function init() {
-		$this->assets = [
+		$this->template_editor = new TemplateEditor();
+		$this->assets          = [
 			'path' => [
 				'entry'        => $this->plugin->get_path( 'js/dist/block-editor.js' ),
 				'editor_style' => $this->plugin->get_path( 'css/dist/blocks.editor.css' ),
@@ -393,16 +401,19 @@ class Loader extends ComponentAbstract {
 		$stylesheet_path = genesis_custom_blocks()->locate_template( $locations );
 		$stylesheet_url  = genesis_custom_blocks()->get_url_from_path( $stylesheet_path );
 
-		/**
-		 * Enqueue the stylesheet, if it exists. The wp_enqueue_style function handles duplicates, so we don't need
-		 * to worry about the same block loading its stylesheets more than once.
-		 */
 		if ( ! empty( $stylesheet_url ) ) {
 			wp_enqueue_style(
 				"genesis-custom-blocks__block-{$name}",
 				$stylesheet_url,
 				[],
 				wp_get_theme()->get( 'Version' )
+			);
+		} else {
+			$this->template_editor->render_css(
+				isset( $this->blocks[ "genesis-custom-blocks/{$name}" ]['templateCss'] )
+					? $this->blocks[ "genesis-custom-blocks/{$name}" ]['templateCss']
+					: '',
+				$name
 			);
 		}
 	}
@@ -473,7 +484,7 @@ class Loader extends ComponentAbstract {
 		}
 
 		if ( ! empty( $this->blocks[ "genesis-custom-blocks/{$name}" ]['templateMarkup'] ) ) {
-			( new TemplateEditor() )->render( $this->blocks[ "genesis-custom-blocks/{$name}" ]['templateMarkup'] );
+			$this->template_editor->render_markup( $this->blocks[ "genesis-custom-blocks/{$name}" ]['templateMarkup'] );
 			return;
 		}
 
