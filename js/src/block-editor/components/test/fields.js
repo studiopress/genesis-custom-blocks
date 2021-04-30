@@ -13,7 +13,7 @@ import { addFilter } from '@wordpress/hooks';
 /**
  * Internal dependencies
  */
-import Fields from '../fields';
+import { Fields } from '../';
 import { addControls } from '../../helpers';
 
 const helpText = 'This is help text';

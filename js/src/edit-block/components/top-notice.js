@@ -13,17 +13,13 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { QuestionIcon, TemplateFile } from './';
-
-/**
- * @typedef {Object} Template The current template.
- * @property {boolean} templateExists Whether the template was found.
- * @property {string} templatePath The path of the template.
- */
+import { TEMPLATE_EDITOR_EDITING_MODE } from '../constants';
+import { useBlock, useTemplate } from '../hooks';
 
 /**
  * @typedef {Object} TopNoticeProps The component props.
+ * @property {import('./editor').EditorMode} editorMode The current editor mode.
  * @property {boolean} isOnboarding Whether the onboarding should display now.
- * @property {Template} template The template data.
  */
 
 /**
@@ -32,14 +28,13 @@ import { QuestionIcon, TemplateFile } from './';
  * @param {TopNoticeProps} props
  * @return {React.ReactElement} The top notice.
  */
-const TopNotice = ( {
-	isOnboarding,
-	template,
-} ) => {
+const TopNotice = ( { editorMode, isOnboarding } ) => {
 	const urlBlockTemplates = 'https://developer.wpengine.com/genesis-custom-blocks/get-started/add-a-custom-block-to-your-website-content/';
 	const urlGetStarted = 'https://developer.wpengine.com/genesis-custom-blocks/get-started/';
-	const urlTemplateFunctions = 'https://developer.wpengine.com/genesis-custom-blocks/functions';
+	const urlTemplateFunctions = 'https://developer.wpengine.com/genesis-custom-blocks/functions/';
 	const isNewPost = useSelect( ( select ) => select( 'core/editor' ).isEditedPostNew() );
+	const { block } = useBlock();
+	const { template } = useTemplate();
 
 	return (
 		<>
@@ -73,7 +68,7 @@ const TopNotice = ( {
 				: null
 			}
 			{ ! isOnboarding && template.templateExists && ! isNewPost
-				? <div className="flex items-center mt-4">
+				? <div className="flex items-center mt-4 mb-6">
 					<span className="text-sm">{ __( 'Template:', 'genesis-custom-blocks' ) }</span>
 					<span className="flex items-center w-auto text-xs font-mono ml-1 px-2 py-1 bg-gray-200 rounded-sm truncate">
 						<TemplateFile color="gray" templatePath={ template.templatePath } />
@@ -81,16 +76,16 @@ const TopNotice = ( {
 				</div>
 				: null
 			}
-			{ ! isOnboarding && ! template.templateExists && ! isNewPost
-				? <div className="mt-4 p-5 bg-blue-100 text-blue-700 border-l-4 border-blue-700 rounded-sm">
+			{ ! isOnboarding && ! template.templateExists && ! isNewPost && ! block.templateMarkup && TEMPLATE_EDITOR_EDITING_MODE !== editorMode
+				? <div className="mt-4 mb-6 p-5 bg-blue-100 text-blue-700 border-l-4 border-blue-700 rounded-sm">
 					<div className="flex items-center">
 						<QuestionIcon />
 						<h4 className="text-lg font-semibold text-blue-900 ml-2">
-							{ __( 'Next step: Build your block template.', 'genesis-custom-blocks' ) }
+							{ __( 'Next step: Create your block template.', 'genesis-custom-blocks' ) }
 						</h4>
 					</div>
 					<p className="text-sm mt-2 ml-2">
-						{ __( 'To display this block, the plugin will look for this template file in your theme:', 'genesis-custom-blocks' ) }
+						{ __( 'To display this block, you can use the Template Editor here or add this template file to your theme:', 'genesis-custom-blocks' ) }
 					</p>
 					<p className="flex items-center w-auto text-xs font-mono mt-2 ml-2 px-2 py-1 bg-blue-200 rounded-sm">
 						<TemplateFile color="blue" templatePath={ template.templatePath } />

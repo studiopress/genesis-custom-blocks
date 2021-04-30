@@ -52,12 +52,10 @@ class Select extends ControlAbstract {
 		);
 		$this->settings[] = new ControlSetting(
 			[
-				'name'     => 'default',
-				'label'    => __( 'Default Value', 'genesis-custom-blocks' ),
-				'type'     => 'text',
-				'default'  => '',
-				'sanitize' => 'sanitize_text_field',
-				'validate' => [ $this, 'validate_options' ],
+				'name'    => 'default',
+				'label'   => __( 'Default Value', 'genesis-custom-blocks' ),
+				'type'    => 'text',
+				'default' => '',
 			]
 		);
 	}

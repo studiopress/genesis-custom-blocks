@@ -27,14 +27,12 @@ class TestControlSetting extends \WP_UnitTestCase {
 	public function test_construct() {
 		$this->instance          = new ControlSetting( [] );
 		$initial_property_values = [
-			'name'     => '',
-			'label'    => '',
-			'type'     => '',
-			'default'  => '',
-			'help'     => '',
-			'sanitize' => '',
-			'validate' => '',
-			'value'    => null,
+			'name'    => '',
+			'label'   => '',
+			'type'    => '',
+			'default' => '',
+			'help'    => '',
+			'value'   => null,
 		];
 
 		// When an empty array is passed to the constructor, it should have the initial property values.
@@ -45,14 +43,12 @@ class TestControlSetting extends \WP_UnitTestCase {
 
 		// Each of the properties below passed in the constructor should be added as properties.
 		$expected_properties = [
-			'name'     => 'help',
-			'label'    => 'Help Text',
-			'type'     => 'text',
-			'default'  => '',
-			'help'     => '',
-			'sanitize' => 'sanitize_text_field',
-			'validate' => '',
-			'value'    => null,
+			'name'    => 'help',
+			'label'   => 'Help Text',
+			'type'    => 'text',
+			'default' => '',
+			'help'    => '',
+			'value'   => null,
 		];
 
 		$this->instance = new ControlSetting( $expected_properties );
@@ -62,9 +58,8 @@ class TestControlSetting extends \WP_UnitTestCase {
 
 		// A property should be set as long isset(), so test that empty properties are set.
 		$empty_properties = [
-			'default'  => 0,
-			'validate' => [],
-			'value'    => 0,
+			'default' => 0,
+			'value'   => 0,
 		];
 
 		$this->instance = new ControlSetting( $empty_properties );

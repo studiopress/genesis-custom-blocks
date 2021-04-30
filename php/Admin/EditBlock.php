@@ -136,14 +136,23 @@ class EditBlock extends ComponentAbstract {
 			'before'
 		);
 
-		$edit_block_style_path = 'css/dist/edit-block.css';
-		$css_config            = require $this->plugin->get_path( 'css/dist/edit-block.asset.php' );
+		$edit_block_style_path   = 'css/dist/edit-block.css';
+		$edit_block_style_config = require $this->plugin->get_path( 'css/dist/edit-block.asset.php' );
 		wp_enqueue_style(
 			self::STYLE_SLUG,
 			$this->plugin->get_url( $edit_block_style_path ),
 			[ 'wp-components' ],
-			$css_config['version']
+			$edit_block_style_config['version']
 		);
+
+		$editor_style_config = require $this->plugin->get_path( 'css/dist/blocks.editor.asset.php' );
+		wp_enqueue_style(
+			'genesis-custom-blocks-editor-css',
+			$this->plugin->get_url( 'css/dist/blocks.editor.css' ),
+			$editor_style_config['dependencies'],
+			$editor_style_config['version']
+		);
+
 	}
 
 	/**
@@ -244,6 +253,10 @@ class EditBlock extends ComponentAbstract {
 			$template_path = get_stylesheet_directory() . "/blocks/block-{$block_name}.php";
 		}
 
+		$stylesheet_locations = genesis_custom_blocks()->get_stylesheet_locations( $block_name );
+		$stylesheet_path      = genesis_custom_blocks()->locate_template( $stylesheet_locations );
+		$stylesheet_url       = genesis_custom_blocks()->get_url_from_path( $stylesheet_path );
+
 		return [
 			'templateExists' => $template_exists,
 			'templatePath'   => str_replace(
@@ -251,6 +264,7 @@ class EditBlock extends ComponentAbstract {
 				basename( WP_CONTENT_DIR ),
 				$template_path
 			),
+			'cssUrl'         => $stylesheet_url,
 		];
 	}
 }

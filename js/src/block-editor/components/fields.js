@@ -10,11 +10,6 @@ import { applyFilters } from '@wordpress/hooks';
 import { select } from '@wordpress/data';
 
 /**
- * Internal dependencies
- */
-import { getFieldsAsArray } from '../../common/helpers';
-
-/**
  * Gets the control function for the field.
  *
  * @param {Object} field The field to get the control function of.
@@ -58,7 +53,7 @@ const getClassName = ( field ) => {
 const Fields = ( { fields, parentBlock, parentBlockProps, rowIndex } ) => (
 	<>
 		{
-			getFieldsAsArray( fields ).map( ( field ) => {
+			fields.map( ( field ) => {
 				if ( field.location && ! field.location.includes( 'editor' ) ) {
 					return null; // This is not meant for the editor.
 				}

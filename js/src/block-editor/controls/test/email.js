@@ -43,19 +43,4 @@ describe( 'email control', () => {
 			expect( props.onChange ).toHaveBeenLastCalledWith( enteredText );
 		}
 	);
-
-	it.each( [
-		true,
-		false,
-	] )( 'should have an invalid class if the event object finds it is invalid',
-		( isInputValid ) => {
-			const props = getProps();
-			const { control } = setupControl( GcbEmailControl, props );
-			const mockCheckValidity = jest.fn();
-			mockCheckValidity.mockReturnValueOnce( isInputValid );
-
-			fireEvent.blur( control, { target: { checkValidity: mockCheckValidity } } );
-			expect( control.classList.contains( 'text-control__error' ) ).toStrictEqual( ! isInputValid );
-		}
-	);
 } );

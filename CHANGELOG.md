@@ -1,6 +1,6 @@
 ## Changelog ##
 
-### 1.1.0 - 2020-01-27 ###
+### 1.1.0 - 2021-01-27 ###
 
 New, more effortless editor, with undo/redo and separate editor/inspector
 

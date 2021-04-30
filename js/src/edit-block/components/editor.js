@@ -13,6 +13,7 @@ import {
 	UnsavedChangesWarning,
 } from '@wordpress/editor';
 import { StrictMode, useState } from '@wordpress/element';
+import ServerSideRender from '@wordpress/server-side-render';
 
 /**
  * Internal dependencies
@@ -27,12 +28,19 @@ import {
 	LocationButtons,
 	Main,
 	Side,
+	TemplateEditor,
 } from './';
 import {
 	BLOCK_PANEL,
-	DEFAULT_LOCATION,
+	BUILDER_EDITING_MODE,
+	EDITOR_PREVIEW_EDITING_MODE,
+	FRONT_END_PREVIEW_EDITING_MODE,
 	NO_FIELD_SELECTED,
+	TEMPLATE_EDITOR_EDITING_MODE,
 } from '../constants';
+import { DEFAULT_LOCATION } from '../../common/constants';
+import { useBlock, useField, useTemplate } from '../hooks';
+import { Fields } from '../../block-editor/components';
 
 /**
  * @callback onErrorType Handler for errors.
@@ -60,6 +68,7 @@ import {
 /** @typedef {function(boolean):void} SetIsNewField Sets whether there is a new field. */
 /** @typedef {function(string):void} SetPanelDisplaying Sets the current panel displaying. */
 /** @typedef {function(SelectedField|import('../constants').NoFieldSelected):void} SetSelectedField Sets the selected field. */
+/** @typedef {string} EditorMode The current editing mode. */
 
 /**
  * @typedef {Object} Field A block field, can have more properties depending on its settings.
@@ -91,15 +100,29 @@ import {
  * @return {React.ReactElement} The editor.
  */
 const Editor = ( { onError, postId, postType, settings } ) => {
-	const [ currentLocation, setCurrentLocation ] = useState( DEFAULT_LOCATION );
-	const [ isNewField, setIsNewField ] = useState( false );
-	const [ panelDisplaying, setPanelDisplaying ] = useState( BLOCK_PANEL );
-	const [ selectedField, setSelectedField ] = useState( NO_FIELD_SELECTED );
-
+	const { block, changeBlock } = useBlock();
+	const { template } = useTemplate();
+	const { previewAttributes = {} } = block;
+	const { getFields } = useField();
 	const post = useSelect(
 		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
 		[ postId, postType ]
 	);
+	const [ currentLocation, setCurrentLocation ] = useState( DEFAULT_LOCATION );
+	const [ editorMode, setEditorMode ] = useState( BUILDER_EDITING_MODE );
+	const [ isNewField, setIsNewField ] = useState( false );
+	const [ panelDisplaying, setPanelDisplaying ] = useState( BLOCK_PANEL );
+	const [ selectedField, setSelectedField ] = useState( NO_FIELD_SELECTED );
+
+	/** @param {Object} newAttributes Attribute (field) name and value. */
+	const setAttributes = ( newAttributes ) => {
+		changeBlock( {
+			previewAttributes: {
+				...previewAttributes,
+				...newAttributes,
+			},
+		} );
+	};
 
 	if ( ! post ) {
 		return null;
@@ -108,6 +131,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 	return (
 		<StrictMode>
 			<div className="h-screen flex flex-col items-center text-black">
+				{ template?.cssUrl ? <link rel="stylesheet" href={ template.cssUrl } type="text/css" /> : null }
 				<BrowserURL />
 				<UnsavedChangesWarning />
 				<EditorProvider
@@ -115,21 +139,55 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 					settings={ settings }
 				>
 					<ErrorBoundary onError={ onError }>
-						<Header />
+						<Header editorMode={ editorMode } setEditorMode={ setEditorMode } />
 						<EditorNotices />
-						<div className="flex w-full h-0 flex-grow">
-							<Main>
+						<div className="gcb-editor flex w-full h-0 flex-grow">
+							<Main editorMode={ editorMode }>
 								<LocationButtons
 									currentLocation={ currentLocation }
+									editorMode={ editorMode }
 									setCurrentLocation={ setCurrentLocation }
 								/>
-								<FieldsGrid
-									currentLocation={ currentLocation }
-									selectedField={ selectedField }
-									setIsNewField={ setIsNewField }
-									setPanelDisplaying={ setPanelDisplaying }
-									setSelectedField={ setSelectedField }
-								/>
+								{ EDITOR_PREVIEW_EDITING_MODE === editorMode && block && block.fields
+									? (
+										<div className="block-form">
+											<Fields
+												key="example-fields"
+												fields={ getFields() }
+												parentBlockProps={ {
+													setAttributes,
+													attributes: previewAttributes,
+												} }
+												parentBlock={ {} }
+											/>
+										</div>
+									) : null
+								}
+								{ BUILDER_EDITING_MODE === editorMode
+									? (
+										<FieldsGrid
+											currentLocation={ currentLocation }
+											selectedField={ selectedField }
+											setIsNewField={ setIsNewField }
+											setPanelDisplaying={ setPanelDisplaying }
+											setSelectedField={ setSelectedField }
+										/>
+									) : null
+								}
+								{ FRONT_END_PREVIEW_EDITING_MODE === editorMode
+									? (
+										<ServerSideRender
+											block={ `genesis-custom-blocks/${ block.name }` }
+											attributes={ previewAttributes }
+											className="genesis-custom-blocks-editor__ssr"
+											httpMethod="POST"
+										/>
+									) : null
+								}
+								{ TEMPLATE_EDITOR_EDITING_MODE === editorMode
+									? <TemplateEditor />
+									: null
+								}
 							</Main>
 							<Side
 								panelDisplaying={ panelDisplaying }
@@ -138,7 +196,11 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 								{
 									BLOCK_PANEL === panelDisplaying
 										? <BlockPanel />
-										: (
+										: null
+								}
+								{
+									BLOCK_PANEL !== panelDisplaying && BUILDER_EDITING_MODE === editorMode
+										? (
 											<FieldPanel
 												currentLocation={ currentLocation }
 												isNewField={ isNewField }
@@ -147,7 +209,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 												setIsNewField={ setIsNewField }
 												setSelectedField={ setSelectedField }
 											/>
-										)
+										) : null
 								}
 							</Side>
 						</div>

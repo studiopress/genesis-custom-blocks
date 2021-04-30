@@ -1,33 +1,26 @@
 /**
  * External dependencies
  */
+import * as React from 'react';
 import classNames from 'classnames';
 
 /**
  * WordPress dependencies
  */
 import { TextControl } from '@wordpress/components';
+import { useState } from '@wordpress/element';
 
 const GcbNumberControl = ( props ) => {
 	const { field, getValue, onChange } = props;
 	const initialValue = getValue( props );
 	const value = 'undefined' !== typeof initialValue ? initialValue : field.default;
-
-	/**
-	 * Sets the Error Class for the Text Control.
-	 *
-	 * @param {string} element The HTML element.
-	 * @param {boolean} valid Whether the value is valid.
-	 * @return {void}
-	 */
-	const setErrorClass = ( element, valid ) => {
-		element.className = classNames( 'components-text-control__input', {
-			'text-control__error': valid,
-		} );
-	};
+	const [ isError, setIsError ] = useState( false );
 
 	return (
 		<TextControl
+			className={ classNames( {
+				'text-control__error': isError,
+			} ) }
 			type="number"
 			label={ field.label }
 			placeholder={ field.placeholder || '' }
@@ -37,11 +30,10 @@ const GcbNumberControl = ( props ) => {
 				onChange( Number( numberControl ) );
 			} }
 			onFocus={ ( event ) => {
-				setErrorClass( document.activeElement, false ); // eslint-disable-line @wordpress/no-global-active-element
-				event.target.reportValidity();
+				setIsError( ! event.target.reportValidity() );
 			} }
 			onBlur={ ( event ) => {
-				setErrorClass( event.target, ! event.target.checkValidity() );
+				setIsError( ! event.target.checkValidity() );
 			} }
 		/>
 	);
