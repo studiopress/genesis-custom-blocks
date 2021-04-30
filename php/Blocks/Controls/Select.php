@@ -42,12 +42,11 @@ class Select extends ControlAbstract {
 		$this->settings[] = new ControlSetting( $this->settings_config['help'] );
 		$this->settings[] = new ControlSetting(
 			[
-				'name'     => 'options',
-				'label'    => __( 'Choices', 'genesis-custom-blocks' ),
-				'type'     => 'textarea_array',
-				'default'  => '',
-				'help'     => '',
-				'sanitize' => [ $this, 'sanitize_textarea_assoc_array' ],
+				'name'    => 'options',
+				'label'   => __( 'Choices', 'genesis-custom-blocks' ),
+				'type'    => 'textarea_array',
+				'default' => '',
+				'help'    => '',
 			]
 		);
 		$this->settings[] = new ControlSetting(
