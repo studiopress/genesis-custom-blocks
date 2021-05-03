@@ -175,12 +175,8 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 									) : null
 								}
 								{ FRONT_END_PREVIEW_EDITING_MODE === editorMode
-									? (
-										<FrontEndPreview
-											blockName={ block.name }
-											previewAttributes={ previewAttributes }
-										/>
-									) : null
+									? <FrontEndPreview />
+									: null
 								}
 								{ TEMPLATE_EDITOR_EDITING_MODE === editorMode
 									? <TemplateEditor />
