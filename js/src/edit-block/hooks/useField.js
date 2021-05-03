@@ -177,6 +177,8 @@ const useField = () => {
 	 */
 	const changeFieldName = ( fields, previousName, newName ) => {
 		const newFields = { ...fields };
+		const newBlock = { ...block };
+
 		// If this is a repeater, change the parent property of its sub_fields.
 		if ( newFields[ previousName ] && newFields[ previousName ].hasOwnProperty( 'sub_fields' ) ) {
 			newFields[ previousName ].sub_fields = getFieldsAsObject(
@@ -191,6 +193,13 @@ const useField = () => {
 
 		newFields[ newName ] = { ...newFields[ previousName ], name: newName };
 		delete newFields[ previousName ];
+
+		if ( newBlock?.previewAttributes?.hasOwnProperty( previousName ) ) {
+			newBlock.previewAttributes[ newName ] = newBlock.previewAttributes[ previousName ];
+			delete newBlock?.previewAttributes[ previousName ];
+		}
+
+		editBlock( newBlock );
 
 		return newFields;
 	};

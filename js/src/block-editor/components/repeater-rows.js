@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import * as React from 'react';
+
+/**
  * WordPress dependencies
  */
 import { BaseControl, Button } from '@wordpress/components';
@@ -135,10 +140,8 @@ class RepeaterRows extends Component {
 			const attribute = attr[ parentName ];
 			const repeaterRows = this.getRows( attribute );
 
-			/*
-			 * Calling slice() essentially creates a copy of repeaterRows.
-			 * Without this, it looks like setAttributes() doesn't recognize a change to the array, and the component doesn't re-render.
-			 */
+			// Calling slice() essentially creates a copy of repeaterRows.
+			// Without this, it looks like setAttributes() doesn't recognize a change to the array, and the component doesn't re-render.
 			const rows = repeaterRows.slice();
 			[ rows[ from ], rows[ to ] ] = [ rows[ to ], rows[ from ] ];
 
