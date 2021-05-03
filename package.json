@@ -56,7 +56,7 @@
     "@wordpress/notices": "2.13.0",
     "@wordpress/postcss-plugins-preset": "2.1.0",
     "@wordpress/scripts": "14.1.0",
-    "@wordpress/server-side-render": "1.19.5",
+    "@wordpress/server-side-render": "1.21.3",
     "@wordpress/url": "2.22.0",
     "ace-builds": "1.4.12",
     "autoprefixer": "10.1.0",
