@@ -13,7 +13,6 @@ import {
 	UnsavedChangesWarning,
 } from '@wordpress/editor';
 import { StrictMode, useState } from '@wordpress/element';
-import ServerSideRender from '@wordpress/server-side-render';
 
 /**
  * Internal dependencies
@@ -24,6 +23,7 @@ import {
 	EditorProvider,
 	FieldPanel,
 	FieldsGrid,
+	FrontEndPreview,
 	Header,
 	LocationButtons,
 	Main,
@@ -176,11 +176,9 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 								}
 								{ FRONT_END_PREVIEW_EDITING_MODE === editorMode
 									? (
-										<ServerSideRender
-											block={ `genesis-custom-blocks/${ block.name }` }
-											attributes={ previewAttributes }
-											className="genesis-custom-blocks-editor__ssr"
-											httpMethod="POST"
+										<FrontEndPreview
+											blockName={ block.name }
+											previewAttributes={ previewAttributes }
 										/>
 									) : null
 								}

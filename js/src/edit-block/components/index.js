@@ -9,6 +9,7 @@ export { default as Field } from './field';
 export { default as FieldPanel } from './field-panel';
 export { default as FieldsGrid } from './fields-grid';
 export { default as FieldSettings } from './field-settings';
+export { default as FrontEndPreview } from './front-end-preview';
 export { default as Header } from './header';
 export { default as IconSection } from './icon-section';
 export { default as Input } from './input';
