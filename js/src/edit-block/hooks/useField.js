@@ -320,6 +320,7 @@ const useField = () => {
 	 */
 	const deleteField = ( selectedField ) => {
 		const newBlock = { ...block };
+
 		if (
 			selectedField.hasOwnProperty( 'parent' ) &&
 			newBlock.fields[ selectedField.parent ] &&
@@ -328,6 +329,7 @@ const useField = () => {
 			delete newBlock.fields[ selectedField.parent ].sub_fields[ selectedField.name ];
 		} else {
 			delete newBlock.fields[ selectedField.name ];
+			delete newBlock?.previewAttributes[ selectedField.name ];
 		}
 
 		editBlock( newBlock );
