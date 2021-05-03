@@ -40,7 +40,7 @@ const FrontEndPreview = () => {
 	if ( isPostNew && ! isPostDirty ) {
 		return (
 			<p className="mt-4">
-				{ __( 'Please add fields to the block to preview it.', 'genesis-custom-blocks' ) }
+				{ __( 'Please edit the block to preview it.', 'genesis-custom-blocks' ) }
 			</p>
 		);
 	}
