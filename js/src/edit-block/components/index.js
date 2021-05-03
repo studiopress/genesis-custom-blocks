@@ -4,6 +4,7 @@ export { default as BrowserURL } from './browser-url';
 export { default as CategorySection } from './category-section';
 export { default as ClipboardCopy } from './clipboard-copy';
 export { default as Editor } from './editor';
+export { default as EditorPreview } from './editor-preview';
 export { default as EditorProvider } from './editor-provider';
 export { default as Field } from './field';
 export { default as FieldPanel } from './field-panel';

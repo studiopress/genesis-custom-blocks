@@ -20,6 +20,7 @@ import { StrictMode, useState } from '@wordpress/element';
 import {
 	BlockPanel,
 	BrowserURL,
+	EditorPreview,
 	EditorProvider,
 	FieldPanel,
 	FieldsGrid,
@@ -39,8 +40,7 @@ import {
 	TEMPLATE_EDITOR_EDITING_MODE,
 } from '../constants';
 import { DEFAULT_LOCATION } from '../../common/constants';
-import { useBlock, useField, useTemplate } from '../hooks';
-import { Fields } from '../../block-editor/components';
+import { useBlock, useTemplate } from '../hooks';
 
 /**
  * @callback onErrorType Handler for errors.
@@ -100,10 +100,8 @@ import { Fields } from '../../block-editor/components';
  * @return {React.ReactElement} The editor.
  */
 const Editor = ( { onError, postId, postType, settings } ) => {
-	const { block, changeBlock } = useBlock();
+	const { block } = useBlock();
 	const { template } = useTemplate();
-	const { previewAttributes = {} } = block;
-	const { getFields } = useField();
 	const post = useSelect(
 		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
 		[ postId, postType ]
@@ -113,16 +111,6 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 	const [ isNewField, setIsNewField ] = useState( false );
 	const [ panelDisplaying, setPanelDisplaying ] = useState( BLOCK_PANEL );
 	const [ selectedField, setSelectedField ] = useState( NO_FIELD_SELECTED );
-
-	/** @param {Object} newAttributes Attribute (field) name and value. */
-	const setAttributes = ( newAttributes ) => {
-		changeBlock( {
-			previewAttributes: {
-				...previewAttributes,
-				...newAttributes,
-			},
-		} );
-	};
 
 	if ( ! post ) {
 		return null;
@@ -149,19 +137,8 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 									setCurrentLocation={ setCurrentLocation }
 								/>
 								{ EDITOR_PREVIEW_EDITING_MODE === editorMode && block && block.fields
-									? (
-										<div className="block-form">
-											<Fields
-												key="example-fields"
-												fields={ getFields() }
-												parentBlockProps={ {
-													setAttributes,
-													attributes: previewAttributes,
-												} }
-												parentBlock={ {} }
-											/>
-										</div>
-									) : null
+									? <EditorPreview />
+									: null
 								}
 								{ BUILDER_EDITING_MODE === editorMode
 									? (

@@ -339,7 +339,9 @@ const useField = () => {
 			delete newBlock.fields[ selectedField.parent ].sub_fields[ selectedField.name ];
 		} else {
 			delete newBlock.fields[ selectedField.name ];
-			delete newBlock?.previewAttributes[ selectedField.name ];
+			if ( newBlock?.previewAttributes?.hasOwnProperty( selectedField.name ) ) {
+				delete newBlock?.previewAttributes[ selectedField.name ];
+			}
 		}
 
 		editBlock( newBlock );
