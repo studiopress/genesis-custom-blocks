@@ -31,7 +31,6 @@ describe( 'TemplateEditor', () => {
 		await findByLabelText( $editBlockDocument, 'Field Label' );
 
 		await page.keyboard.type( field.label );
-		await page.select( '#field-control', field.type );
 		await ( await findByText( $editBlockDocument, 'Template Editor' ) ).click();
 		( await page.waitForSelector( '#gcb-template-editor' ) ).type( templateMarkup );
 	} );
