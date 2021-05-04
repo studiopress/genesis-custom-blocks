@@ -158,7 +158,9 @@ const useField = () => {
 			newBlock.fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ] = newField;
 		} else {
 			newBlock.fields[ fieldToChange.name ] = newField;
-			delete newBlock?.previewAttributes[ fieldToChange.name ];
+			if ( newBlock.hasOwnProperty( 'previewAttributes' ) ) {
+				delete newBlock.previewAttributes[ fieldToChange.name ];
+			}
 		}
 
 		editBlock( newBlock );
