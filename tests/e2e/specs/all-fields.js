@@ -102,6 +102,8 @@ describe( 'AllFields', () => {
 			await findByLabelText( $editBlockDocument, 'Field Label' );
 			await page.keyboard.type( fields[ fieldType ].label );
 			await page.select( '#field-control', fieldType );
+			await ( await findByRole( $editBlockDocument, 'combobox', { name: /field type/i } ) )
+				.select( fieldType );
 		};
 
 		await addNewField( 'text' );
