@@ -68,6 +68,13 @@ class Block {
 	public $fields = [];
 
 	/**
+	 * Template editor CSS.
+	 *
+	 * @var string
+	 */
+	public $template_css = '';
+
+	/**
 	 * Template editor markup.
 	 *
 	 * @var string
@@ -150,6 +157,10 @@ class Block {
 			$this->keywords = $config['keywords'];
 		}
 
+		if ( isset( $config['templateCss'] ) ) {
+			$this->template_markup = $config['templateCss'];
+		}
+
 		if ( isset( $config['templateMarkup'] ) ) {
 			$this->template_markup = $config['templateMarkup'];
 		}
@@ -173,6 +184,7 @@ class Block {
 		$config['icon']           = $this->icon;
 		$config['category']       = $this->category;
 		$config['keywords']       = $this->keywords;
+		$config['templateCss']    = $this->template_css;
 		$config['templateMarkup'] = $this->template_markup;
 
 		$config['fields'] = [];
