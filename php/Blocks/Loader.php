@@ -332,7 +332,7 @@ class Loader extends ComponentAbstract {
 				}
 			}
 
-			$this->enqueue_block_styles( $block->name, 'block' );
+			$did_enqueue_styles = $this->enqueue_block_styles( $block->name, 'block' );
 
 			// The wp_enqueue_style function handles duplicates, so we don't need to worry about multiple blocks
 			// loading the global styles more than once.
@@ -376,9 +376,17 @@ class Loader extends ComponentAbstract {
 
 		ob_start();
 		$this->block_template( $block->name, $type );
-		$output = ob_get_clean();
 
-		return $output;
+		if ( empty( $did_enqueue_styles ) ) {
+			$this->template_editor->render_css(
+				isset( $this->blocks[ "genesis-custom-blocks/{$block->name}" ]['templateCss'] )
+					? $this->blocks[ "genesis-custom-blocks/{$block->name}" ]['templateCss']
+					: '',
+				$block->name
+			);
+		}
+
+		return ob_get_clean();
 	}
 
 	/**
@@ -386,6 +394,7 @@ class Loader extends ComponentAbstract {
 	 *
 	 * @param string       $name The name of the block (slug as defined in UI).
 	 * @param string|array $type The type of template to load.
+	 * @return bool Whether this found styles and enqueued them.
 	 */
 	protected function enqueue_block_styles( $name, $type = 'block' ) {
 		$locations = [];
@@ -408,14 +417,11 @@ class Loader extends ComponentAbstract {
 				[],
 				wp_get_theme()->get( 'Version' )
 			);
-		} else {
-			$this->template_editor->render_css(
-				isset( $this->blocks[ "genesis-custom-blocks/{$name}" ]['templateCss'] )
-					? $this->blocks[ "genesis-custom-blocks/{$name}" ]['templateCss']
-					: '',
-				$name
-			);
+
+			return true;
 		}
+
+		return false;
 	}
 
 	/**
