@@ -122,6 +122,10 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 		<StrictMode>
 			<div className="h-screen flex flex-col items-center text-black">
 				{ template?.cssUrl ? <link rel="stylesheet" href={ template.cssUrl } type="text/css" /> : null }
+				{ ! template?.cssUrl && Boolean( block.templateCss )
+					? <style>{ block.templateCss }</style>
+					: null
+				}
 				<BrowserURL />
 				<UnsavedChangesWarning />
 				<EditorProvider
