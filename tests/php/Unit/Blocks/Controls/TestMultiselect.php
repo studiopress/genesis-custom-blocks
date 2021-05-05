@@ -85,8 +85,8 @@ class TestMultiselect extends \WP_UnitTestCase {
 			[
 				'name'    => 'default',
 				'label'   => 'Default Value',
-				'type'    => 'textarea_array',
-				'default' => '',
+				'type'    => 'textarea_default',
+				'default' => [],
 				'help'    => 'Each default value on a new line.',
 				'value'   => null,
 			],
