@@ -25,7 +25,7 @@ const EditorPreview = () => {
 	const { previewAttributes = {} } = block;
 	const fields = getFields();
 
-	/** @param {Object} newAttributes Attribute (field) name and value. */
+	/** @param {Object} newAttributes Attribute (field) names and values. */
 	const setAttributes = ( newAttributes ) => {
 		changeBlock( {
 			previewAttributes: {
