@@ -5,7 +5,7 @@
  * @package Genesis\CustomBlocks
  */
 
-// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaping could interfere with testing block_value().
+// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaping could interfere with testing this template output.
 
 $fields = [
 	'textarea',

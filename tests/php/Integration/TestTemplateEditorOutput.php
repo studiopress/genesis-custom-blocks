@@ -29,7 +29,6 @@ class TestTemplateEditorOutput extends AbstractAttribute {
 	 */
 	public function setUp() {
 		parent::setUp();
-
 		$this->set_properties();
 	}
 
@@ -133,11 +132,6 @@ class TestTemplateEditorOutput extends AbstractAttribute {
 	/**
 	 * Tests whether the rendered block template has the expected values.
 	 *
-	 * Every field is tested.
-	 * This sets mock block attributes, like those that would be saved from a block.
-	 * Then, it loads the mock template in the theme's blocks/ directory,
-	 * and ensures that all of these fields appear correctly in it.
-	 *
 	 * @covers \Genesis\CustomBlocks\Blocks\TemplateEditor::render()
 	 * @covers \Genesis\CustomBlocks\Blocks\Loader::render_block_template()
 	 */
@@ -160,7 +154,6 @@ class TestTemplateEditorOutput extends AbstractAttribute {
 		$rendered_template = $this->invoke_protected_method( genesis_custom_blocks()->loader, 'render_block_template', [ $block, $this->attributes ] );
 		$actual_template   = str_replace( [ "\t", "\n" ], '', $rendered_template );
 
-		// Test the fields that return a string for block_value().
 		foreach ( $this->string_fields as $field ) {
 			$this->assertContains(
 				sprintf(
@@ -172,7 +165,6 @@ class TestTemplateEditorOutput extends AbstractAttribute {
 			);
 		}
 
-		// Test the fields that don't fit well into the tests above.
 		foreach ( $this->special_case_fields as $field_name => $expected ) {
 			$this->assertContains(
 				sprintf(
