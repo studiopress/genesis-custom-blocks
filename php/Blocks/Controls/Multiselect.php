@@ -60,8 +60,8 @@ class Multiselect extends ControlAbstract {
 			[
 				'name'    => 'default',
 				'label'   => __( 'Default Value', 'genesis-custom-blocks' ),
-				'type'    => 'textarea_array',
-				'default' => '',
+				'type'    => 'textarea_default',
+				'default' => [],
 				'help'    => __( 'Each default value on a new line.', 'genesis-custom-blocks' ),
 			]
 		);
