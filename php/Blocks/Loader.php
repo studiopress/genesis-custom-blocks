@@ -40,12 +40,20 @@ class Loader extends ComponentAbstract {
 	protected $data = [];
 
 	/**
+	 * The template editor.
+	 *
+	 * @var TemplateEditor
+	 */
+	protected $template_editor;
+
+	/**
 	 * Load the Loader.
 	 *
 	 * @return $this
 	 */
 	public function init() {
-		$this->assets = [
+		$this->template_editor = new TemplateEditor();
+		$this->assets          = [
 			'path' => [
 				'entry'        => $this->plugin->get_path( 'js/dist/block-editor.js' ),
 				'editor_style' => $this->plugin->get_path( 'css/dist/blocks.editor.css' ),
@@ -315,10 +323,8 @@ class Loader extends ComponentAbstract {
 		}
 
 		if ( ! is_admin() ) {
-			/**
-			 * The block has been added, but its values weren't saved (not even the defaults). This is a phenomenon
-			 * unique to frontend output, as the editor fetches its attributes from the form fields themselves.
-			 */
+			// The block has been added, but its values weren't saved (not even the defaults).
+			// This is unique to frontend output, as the editor fetches its attributes from the form fields themselves.
 			$missing_schema_attributes = array_diff_key( $block->fields, $attributes );
 			foreach ( $missing_schema_attributes as $attribute_name => $schema ) {
 				if ( isset( $schema->settings['default'] ) ) {
@@ -326,12 +332,10 @@ class Loader extends ComponentAbstract {
 				}
 			}
 
-			$this->enqueue_block_styles( $block->name, 'block' );
+			$did_enqueue_styles = $this->enqueue_block_styles( $block->name, 'block' );
 
-			/**
-			 * The wp_enqueue_style function handles duplicates, so we don't need to worry about multiple blocks
-			 * loading the global styles more than once.
-			 */
+			// The wp_enqueue_style function handles duplicates, so we don't need to worry about multiple blocks
+			// loading the global styles more than once.
 			$this->enqueue_global_styles();
 		}
 
@@ -372,9 +376,17 @@ class Loader extends ComponentAbstract {
 
 		ob_start();
 		$this->block_template( $block->name, $type );
-		$output = ob_get_clean();
 
-		return $output;
+		if ( empty( $did_enqueue_styles ) ) {
+			$this->template_editor->render_css(
+				isset( $this->blocks[ "genesis-custom-blocks/{$block->name}" ]['templateCss'] )
+					? $this->blocks[ "genesis-custom-blocks/{$block->name}" ]['templateCss']
+					: '',
+				$block->name
+			);
+		}
+
+		return ob_get_clean();
 	}
 
 	/**
@@ -382,6 +394,7 @@ class Loader extends ComponentAbstract {
 	 *
 	 * @param string       $name The name of the block (slug as defined in UI).
 	 * @param string|array $type The type of template to load.
+	 * @return bool Whether this found styles and enqueued them.
 	 */
 	protected function enqueue_block_styles( $name, $type = 'block' ) {
 		$locations = [];
@@ -397,10 +410,6 @@ class Loader extends ComponentAbstract {
 		$stylesheet_path = genesis_custom_blocks()->locate_template( $locations );
 		$stylesheet_url  = genesis_custom_blocks()->get_url_from_path( $stylesheet_path );
 
-		/**
-		 * Enqueue the stylesheet, if it exists. The wp_enqueue_style function handles duplicates, so we don't need
-		 * to worry about the same block loading its stylesheets more than once.
-		 */
 		if ( ! empty( $stylesheet_url ) ) {
 			wp_enqueue_style(
 				"genesis-custom-blocks__block-{$name}",
@@ -408,7 +417,11 @@ class Loader extends ComponentAbstract {
 				[],
 				wp_get_theme()->get( 'Version' )
 			);
+
+			return true;
 		}
+
+		return false;
 	}
 
 	/**
@@ -473,19 +486,25 @@ class Loader extends ComponentAbstract {
 
 			// This is not a load once template, so require_once is false.
 			load_template( $theme_template, false );
-		} else {
-			if ( ! current_user_can( 'edit_posts' ) || ! isset( $templates[0] ) ) {
-				return;
-			}
-			// Hide the template not found notice on the frontend, unless WP_DEBUG is enabled.
-			if ( ! is_admin() && ! ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ) {
-				return;
-			}
+			return;
+		}
+
+		if ( ! empty( $this->blocks[ "genesis-custom-blocks/{$name}" ]['templateMarkup'] ) ) {
+			$this->template_editor->render_markup( $this->blocks[ "genesis-custom-blocks/{$name}" ]['templateMarkup'] );
+			return;
+		}
+
+		if ( ! current_user_can( 'edit_posts' ) || ! isset( $templates[0] ) ) {
+			return;
+		}
+
+		// Only show the template not found notice on the frontend if WP_DEBUG is enabled.
+		if ( is_admin() || ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ) {
 			printf(
 				'<div class="notice notice-warning">%s</div>',
 				wp_kses_post(
-					// Translators: Placeholder is a file path.
-					sprintf( __( 'Template file %s not found.', 'genesis-custom-blocks' ), '<code>' . esc_html( $templates[0] ) . '</code>' )
+					/* translators: %1$s: file path */
+					sprintf( __( 'Template file %1$s not found.', 'genesis-custom-blocks' ), '<code>' . esc_html( $templates[0] ) . '</code>' )
 				)
 			);
 		}

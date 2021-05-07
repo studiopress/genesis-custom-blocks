@@ -5,6 +5,7 @@
  * @package Genesis\CustomBlocks
  */
 
+use Genesis\CustomBlocks\Plugin;
 use Genesis\CustomBlocks\Blocks\Block;
 use Genesis\CustomBlocks\PostTypes\BlockPost;
 
@@ -30,6 +31,18 @@ class TestDefaults extends AbstractAttribute {
 	 * @var array
 	 */
 	public $special_case_fields;
+
+	/**
+	 * Sets up before each test.
+	 *
+	 * @inheritdoc
+	 */
+	public function setUp() {
+		parent::setUp();
+
+		$this->set_properties();
+		$this->create_block_template();
+	}
 
 	/**
 	 * Sets class properties.
@@ -129,6 +142,8 @@ class TestDefaults extends AbstractAttribute {
 	public function test_block_template() {
 		$block = new Block();
 		$block->from_array( $this->get_block_config() );
+		genesis_custom_blocks()->loader->set_plugin( new Plugin() );
+		genesis_custom_blocks()->loader->init();
 		$rendered_template = $this->invoke_protected_method( genesis_custom_blocks()->loader, 'render_block_template', [ $block, $this->attributes ] );
 		$actual_template   = str_replace( [ "\t", "\n" ], '', $rendered_template );
 

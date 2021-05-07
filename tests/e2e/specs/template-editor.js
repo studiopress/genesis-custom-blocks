@@ -12,14 +12,15 @@ const customPostType = 'genesis_custom_block';
 
 describe( 'TemplateEditor', () => {
 	it( 'creates a block with the template editor', async () => {
-		const { findByText, findByLabelText } = queries;
+		const { findByLabelText, findByRole, findByText } = queries;
 
 		const field = {
 			label: 'Text',
 			name: 'text',
 			type: 'text',
+			value: 'Here is an example value for this',
 		};
-		const blockName = 'Test Text';
+		const blockName = 'Test Template Editor';
 		const templateMarkup = `Here is the text field: {{${ field.name }}}`;
 
 		await visitAdminPage( 'post-new.php', `?post_type=${ customPostType }` );
@@ -32,6 +33,14 @@ describe( 'TemplateEditor', () => {
 
 		await page.keyboard.type( field.label );
 		await ( await findByText( $editBlockDocument, 'Template Editor' ) ).click();
-		( await page.waitForSelector( '#gcb-template-editor' ) ).type( templateMarkup );
+		await ( await page.waitForSelector( '#gcb-template-editor' ) ).click();
+		await page.keyboard.type( templateMarkup );
+
+		await ( await findByText( $editBlockDocument, 'Editor Preview' ) ).click();
+		await ( await findByLabelText( $editBlockDocument, field.label ) ).type( field.value );
+		await ( await findByRole( $editBlockDocument, 'button', { name: /save draft/i } ) ).click();
+
+		await ( await findByText( $editBlockDocument, 'Front-end Preview' ) ).click();
+		await findByText( $editBlockDocument, `Here is the text field: ${ field.value }` );
 	} );
 } );

@@ -3,6 +3,7 @@
  */
 import * as React from 'react';
 import AceEditor from 'react-ace';
+import 'ace-builds/src-noconflict/ext-language_tools';
 import 'ace-builds/src-noconflict/mode-html';
 import 'ace-builds/src-noconflict/theme-textmate';
 
@@ -84,8 +85,12 @@ const TemplateEditor = () => {
 					} );
 				} }
 				name="gcb-template-editor"
-				editorProps={ { $blockScrolling: true } }
+				editorProps={ {
+					$blockScrolling: true,
+				} }
 				setOptions={ {
+					enableBasicAutocompletion: true,
+					enableLiveAutocompletion: true,
 					highlightActiveLine: true,
 					useWorker: false,
 				} }
