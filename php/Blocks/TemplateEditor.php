@@ -58,7 +58,7 @@ class TemplateEditor {
 		$this->blocks_with_rendered_css[] = $block_name;
 
 		?>
-		<style><?php echo $css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></style>
+		<style><?php echo wp_strip_all_tags( $css ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></style>
 		<?php
 	}
 }
