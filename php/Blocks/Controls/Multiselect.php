@@ -53,22 +53,16 @@ class Multiselect extends ControlAbstract {
 				'label'   => __( 'Choices', 'genesis-custom-blocks' ),
 				'type'    => 'textarea_array',
 				'default' => '',
-				'help'    => sprintf(
-					'%s %s<br />%s<br />%s',
-					__( 'Enter each choice on a new line.', 'genesis-custom-blocks' ),
-					__( 'To specify the value and label separately, use this format:', 'genesis-custom-blocks' ),
-					_x( 'foo : Foo', 'Format for the menu values. option_value : Option Name', 'genesis-custom-blocks' ),
-					_x( 'bar : Bar', 'Format for the menu values. option_value : Option Name', 'genesis-custom-blocks' )
-				),
+				'help'    => '',
 			]
 		);
 		$this->settings[] = new ControlSetting(
 			[
 				'name'    => 'default',
 				'label'   => __( 'Default Value', 'genesis-custom-blocks' ),
-				'type'    => 'textarea_array',
-				'default' => '',
-				'help'    => __( 'Enter each default value on a new line.', 'genesis-custom-blocks' ),
+				'type'    => 'textarea_default',
+				'default' => [],
+				'help'    => __( 'Each default value on a new line.', 'genesis-custom-blocks' ),
 			]
 		);
 	}

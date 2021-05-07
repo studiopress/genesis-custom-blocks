@@ -4,6 +4,11 @@
 import * as React from 'react';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { convertSettingsStringToArray, convertSettingsArrayToString } from '../../helpers';
@@ -11,7 +16,7 @@ import { convertSettingsStringToArray, convertSettingsArrayToString } from '../.
 /**
  * @typedef {Object} TextareaArrayProps The component props.
  * @property {Function} handleOnChange Handles a change in this setting.
- * @property {Object} setting This setting.
+ * @property {import('../editor').Setting} setting This setting.
  * @property {Array|undefined} value The setting value.
  */
 
@@ -25,6 +30,7 @@ const TextareaArray = ( { handleOnChange, setting, value } ) => {
 	const id = `setting-textarea-array-${ setting.name }`;
 	const stringValue = convertSettingsArrayToString( value );
 	const textAreaValue = undefined === stringValue ? setting.default : stringValue;
+	const helpClass = 'block italic text-xs mt-1';
 
 	return (
 		<>
@@ -40,6 +46,28 @@ const TextareaArray = ( { handleOnChange, setting, value } ) => {
 				} }
 				value={ textAreaValue }
 			/>
+			{ Boolean( setting.help )
+				? (
+					<p className={ helpClass }>
+						{ setting.help }
+					</p>
+				) : (
+					<>
+						<p className={ helpClass }>
+							{ __(
+								'Each choice on a new line. To specify the value and label separately, use this format:',
+								'genesis-custom-blocks'
+							) }
+						</p>
+						<p className={ helpClass }>
+							foo : Foo
+						</p>
+						<p className={ helpClass }>
+							bar : Bar
+						</p>
+					</>
+				)
+			}
 		</>
 	);
 };

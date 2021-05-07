@@ -109,10 +109,7 @@ const Header = ( { editorMode, setEditorMode } ) => {
 			</button>
 			<div id="save-and-publish">
 				<span className="mr-3 text-sm">
-					<PostSavedState
-						forceIsDirty={ false }
-						forceIsSaving={ false }
-					/>
+					<PostSavedState	/>
 				</span>
 				<span className="mr-3">
 					<PostPublishButton />

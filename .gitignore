@@ -106,6 +106,7 @@ node_modules
 vendor
 
 # Tests
+artifacts/
 tests/data/
 tests/includes/
 coverage/
