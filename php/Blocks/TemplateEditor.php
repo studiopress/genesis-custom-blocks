@@ -39,7 +39,9 @@ class TemplateEditor {
 
 		// Escape characters before { should be stripped, like \{\{example\}\}.
 		// Like if they have a tutorial on Mustache and need the template to render {{example}}.
-		echo preg_replace( '#\\\{\\\{(\S+?)\\\}\\\}#', '{{\1}}', $rendered ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		$rendered = preg_replace( '#\\\{\\\{(\S+?)\\\}\\\}#', '{{\1}}', $rendered );
+
+		echo wp_kses_post( $rendered );
 	}
 
 	/**
