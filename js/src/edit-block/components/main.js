@@ -18,6 +18,7 @@ import { BottomNotice, PostTitle, TopNotice } from './';
 /**
  * @typedef {Object} MainProps The component props.
  * @property {React.ReactElement[]} children THe component children.
+ * @property {import('./editor').EditorMode} editorMode The current editor mode.
  */
 
 /**
@@ -26,7 +27,7 @@ import { BottomNotice, PostTitle, TopNotice } from './';
  * @param {MainProps} props
  * @return {React.ReactElement} The main editing area.
  */
-const Main = ( { children } ) => {
+const Main = ( { children, editorMode } ) => {
 	// @ts-ignore
 	const { isOnboardingPost: initialIsOnboarding } = gcbEditor;
 	const isPublished = useSelect( ( select ) => select( 'core/editor' ).isCurrentPostPublished() );
@@ -38,7 +39,7 @@ const Main = ( { children } ) => {
 				<div className="text-4xl w-full mt-10 text-center">
 					<PostTitle />
 				</div>
-				<TopNotice isOnboarding={ isOnboarding } />
+				<TopNotice editorMode={ editorMode } isOnboarding={ isOnboarding } />
 				{ children }
 				{ isOnboarding ? <BottomNotice /> : null }
 			</div>
