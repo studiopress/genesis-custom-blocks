@@ -504,7 +504,7 @@ class Loader extends ComponentAbstract {
 				'<div class="notice notice-warning">%s</div>',
 				wp_kses_post(
 					/* translators: %1$s: file path */
-					sprintf( __( 'Template file %1$s not found.', 'genesis-custom-blocks' ), '<code>' . esc_html( $templates[0] ) . '</code>' )
+					sprintf( __( 'No Template Editor markup or template file was found: %1$s', 'genesis-custom-blocks' ), '<code>' . esc_html( $templates[0] ) . '</code>' )
 				)
 			);
 		}
