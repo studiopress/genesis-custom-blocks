@@ -69,6 +69,7 @@ import { useBlock, useTemplate } from '../hooks';
 /** @typedef {function(string):void} SetPanelDisplaying Sets the current panel displaying. */
 /** @typedef {function(SelectedField|import('../constants').NoFieldSelected):void} SetSelectedField Sets the selected field. */
 /** @typedef {string} EditorMode The current editing mode. */
+/** @typedef {function(EditorMode):void} SetEditorMode Sets the current editing mode. */
 
 /**
  * @typedef {Object} Field A block field, can have more properties depending on its settings.
@@ -134,7 +135,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 						<Header editorMode={ editorMode } setEditorMode={ setEditorMode } />
 						<EditorNotices />
 						<div className="gcb-editor flex w-full h-0 flex-grow">
-							<Main editorMode={ editorMode }>
+							<Main editorMode={ editorMode } setEditorMode={ setEditorMode }>
 								<LocationButtons
 									currentLocation={ currentLocation }
 									editorMode={ editorMode }
