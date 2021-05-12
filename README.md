@@ -32,10 +32,10 @@ Work within the WordPress admin with an interface you already know.
 Add from a growing list of available fields to your custom blocks.
 
 ### Simple Templating ###
-Let the plugin do the heavy lifting so you can use familiar WordPress development practices to build block templates.
+Let the plugin do the heavy lifting so you can use the built-in editor, or familiar WordPress development practices to build block templates.
 
 ### Developer Friendly Functions ###
-Simple to use functions, ready to render and work with the data stored through your custom block fields.
+As an alternative to the built-in editor, there are simple functions, ready to render and work with the data stored through your custom block fields.
 
 ## Currently available block fields ##
 * Text Field
