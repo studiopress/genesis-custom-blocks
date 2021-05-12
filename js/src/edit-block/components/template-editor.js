@@ -65,7 +65,7 @@ const TemplateEditor = () => {
 								href={ urlTemplateDocumentation }
 								target="_blank"
 								rel="noopener noreferrer"
-								className="max-w-max text-sm text-blue-700 mt-1 mb-6 md:underline"
+								className="max-w-max text-sm text-blue-700 mt-1 md:underline"
 							>
 								{ __( 'Learn more', 'genesis-custom-blocks' ) }
 							</a>
@@ -74,6 +74,7 @@ const TemplateEditor = () => {
 					: null
 			}
 			<AceEditor
+				className="mt-8"
 				value={ MARKUP_TEMPLATE_MODE === templateMode ? templateMarkup : templateCss }
 				mode={ MARKUP_TEMPLATE_MODE === templateMode ? 'html' : 'css' }
 				theme="textmate"
