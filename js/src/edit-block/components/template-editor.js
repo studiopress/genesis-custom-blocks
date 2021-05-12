@@ -75,6 +75,7 @@ const TemplateEditor = () => {
 			}
 			<AceEditor
 				className="mt-8"
+				style={ { width: '700px' } }
 				value={ MARKUP_TEMPLATE_MODE === templateMode ? templateMarkup : templateCss }
 				mode={ MARKUP_TEMPLATE_MODE === templateMode ? 'html' : 'css' }
 				theme="textmate"
