@@ -92,6 +92,9 @@ It can also be installed manually.
 **Q: Do I need to work with the Genesis Framework or any of the other Genesis plugins/themes to use this plugin?**
 A: No. You can use this plugin completely independently. All you need is to have the block editor enabled on your WordPress site.
 
+**Q: Do I need to change to the new built-in Template Editor in /wp-admin? **
+A: No. You can keep using your PHP block templates like block-example.php.
+
 ## Links ##
 * [WordPress.org](https://wordpress.org/plugins/genesis-custom-blocks)
 * [GitHub](https://github.com/studiopress/genesis-custom-blocks)
