@@ -86,9 +86,10 @@ const TopNotice = ( { editorMode, isOnboarding, setEditorMode } ) => {
 						</h4>
 					</div>
 					<p className="text-sm mt-2 ml-2">
-						{ __( 'To display this block, go to the', 'genesis-custom-blocks' ) }
+						{ __( 'Edit the template in the', 'genesis-custom-blocks' ) }
 						&nbsp;
 						<button
+							className="underline"
 							onClick={ () => setEditorMode( TEMPLATE_EDITOR_EDITING_MODE ) }
 						>
 							{ __( 'Template Editor', 'genesis-custom-blocks' ) }
