@@ -18,6 +18,16 @@ use Genesis\CustomBlocks\Blocks\Field;
  * @return mixed
  */
 function block_field( $name, $echo = true ) {
+	if ( 'innerBlocks' === $name ) {
+		$inner_blocks = genesis_custom_blocks()->loader->get_data( 'content' );
+		if ( $echo ) {
+			echo wp_kses_post( $inner_blocks );
+			return null;
+		}
+
+		return $inner_blocks;
+	}
+
 	$attributes = genesis_custom_blocks()->loader->get_data( 'attributes' );
 
 	if ( ! $attributes ) {
