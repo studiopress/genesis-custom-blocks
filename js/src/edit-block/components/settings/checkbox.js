@@ -6,8 +6,8 @@ import * as React from 'react';
 /**
  * @typedef {Object} CheckboxProps The component props.
  * @property {Function} handleOnChange Handles a change in this setting.
- * @property {Object} setting This setting.
- * @property {boolean|number|undefined} value The setting value.
+ * @property {import('../editor').Setting} setting This setting.
+ * @property {boolean|undefined} value The setting value.
  */
 
 /**

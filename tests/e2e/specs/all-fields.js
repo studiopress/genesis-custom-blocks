@@ -18,7 +18,7 @@ import {
 
 describe( 'AllFields', () => {
 	it( 'creates the block and makes the fields available in the block editor', async () => {
-		const { findAllByLabelText, findAllByText, findByRole, findByText, findByLabelText } = queries;
+		const { findAllByLabelText, findAllByText, findByLabelText, findByRole, findByText } = queries;
 		const blockName = 'Testing Example';
 		const fields = {
 			text: {
@@ -102,6 +102,8 @@ describe( 'AllFields', () => {
 			await findByLabelText( $editBlockDocument, 'Field Label' );
 			await page.keyboard.type( fields[ fieldType ].label );
 			await page.select( '#field-control', fieldType );
+			await ( await findByRole( $editBlockDocument, 'combobox', { name: /field type/i } ) )
+				.select( fieldType );
 		};
 
 		await addNewField( 'text' );
