@@ -346,8 +346,8 @@ class Loader extends ComponentAbstract {
 		 * @param Field[] $fields     The block fields.
 		 */
 		$this->data['attributes'] = apply_filters( 'genesis_custom_blocks_template_attributes', $attributes, $block->fields );
-		$this->data['content']    = $content;
 		$this->data['config']     = $block;
+		$this->data['content']    = $content;
 
 		if ( ! is_admin() && ( ! defined( 'REST_REQUEST' ) || ! REST_REQUEST ) && ! wp_doing_ajax() ) {
 
