@@ -39,4 +39,16 @@ class InnerBlocks extends ControlAbstract {
 	public function register_settings() {
 		$this->settings[] = new ControlSetting( $this->settings_config['help'] );
 	}
+
+	/**
+	 * Validates the value to be made available to the front-end template.
+	 *
+	 * @param string $value The value to either make available as a variable or echoed on the front-end template.
+	 * @param bool   $echo Whether this value will be echoed.
+	 * @return string The InnerBlocks.
+	 */
+	public function validate( $value, $echo ) {
+		unset( $value, $echo );
+		return genesis_custom_blocks()->loader->get_data( 'content' );
+	}
 }
