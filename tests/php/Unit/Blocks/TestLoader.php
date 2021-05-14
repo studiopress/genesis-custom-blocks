@@ -203,7 +203,7 @@ class TestLoader extends AbstractTemplate {
 			}
 		);
 
-		$this->invoke_protected_method( 'render_block_template', [ $block, [] ] );
+		$this->invoke_protected_method( 'render_block_template', [ $block, [], '' ] );
 		$scripts = wp_scripts();
 		$script  = $scripts->registered[ $slug ];
 
@@ -222,7 +222,7 @@ class TestLoader extends AbstractTemplate {
 			}
 		);
 
-		$this->invoke_protected_method( 'render_block_template', [ $block, [] ] );
+		$this->invoke_protected_method( 'render_block_template', [ $block, [], '' ] );
 		$scripts = wp_scripts();
 		$script  = $scripts->registered[ $slug ];
 
