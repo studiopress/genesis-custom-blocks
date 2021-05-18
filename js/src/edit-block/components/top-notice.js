@@ -12,7 +12,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { QuestionIcon, TemplateFile } from './';
+import { Notice, QuestionIcon, TemplateFile } from './';
 import { TEMPLATE_EDITOR_EDITING_MODE } from '../constants';
 import { hasRepeaterField } from '../helpers';
 import { useBlock, useField, useTemplate } from '../hooks';
@@ -128,20 +128,18 @@ const TopNotice = ( { editorMode, isOnboarding, setEditorMode } ) => {
 			{
 				TEMPLATE_EDITOR_EDITING_MODE === editorMode && hasRepeaterField( getFields() )
 					? (
-						<div className="p-5 mb-2 bg-blue-100 text-blue-700 border-l-4 border-blue-700 rounded-sm">
-							<p className="text-sm ml-2">
-								{ __( 'There is a repeater field, which will only display with', 'genesis-custom-blocks' ) }
-								&nbsp;
-								<a
-									className="underline"
-									href={ urlBlockTemplates }
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									{ __( 'PHP block templates', 'genesis-custom-blocks' ) }
-								</a>
-							</p>
-						</div>
+						<Notice>
+							{ __( 'There is a repeater field, which will only display with', 'genesis-custom-blocks' ) }
+							&nbsp;
+							<a
+								className="underline"
+								href={ urlBlockTemplates }
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								{ __( 'PHP block templates', 'genesis-custom-blocks' ) }
+							</a>
+						</Notice>
 					)
 					: null
 			}

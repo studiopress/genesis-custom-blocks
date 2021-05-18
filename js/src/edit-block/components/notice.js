@@ -7,7 +7,7 @@ import classNames from 'classnames';
 /**
  * @typedef {Object} NoticeProps The component props.
  * @property {React.ReactChild[]} children The component's children.
- * @property {string} className Additional class(es).
+ * @property {string} [className] Additional class(es).
  */
 
 /**
