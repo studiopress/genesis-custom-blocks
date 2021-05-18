@@ -14,7 +14,8 @@ import { __ } from '@wordpress/i18n';
  */
 import { QuestionIcon, TemplateFile } from './';
 import { TEMPLATE_EDITOR_EDITING_MODE } from '../constants';
-import { useBlock, useTemplate } from '../hooks';
+import { hasRepeaterField } from '../helpers';
+import { useBlock, useField, useTemplate } from '../hooks';
 
 /**
  * @typedef {Object} TopNoticeProps The component props.
@@ -35,6 +36,7 @@ const TopNotice = ( { editorMode, isOnboarding, setEditorMode } ) => {
 	const urlTemplateFunctions = 'https://developer.wpengine.com/genesis-custom-blocks/functions/';
 	const isNewPost = useSelect( ( select ) => select( 'core/editor' ).isEditedPostNew() );
 	const { block } = useBlock();
+	const { getFields } = useField();
 	const { template } = useTemplate();
 
 	return (
@@ -122,6 +124,26 @@ const TopNotice = ( { editorMode, isOnboarding, setEditorMode } ) => {
 					</div>
 				</div>
 				: null
+			}
+			{
+				TEMPLATE_EDITOR_EDITING_MODE === editorMode && hasRepeaterField( getFields() )
+					? (
+						<div className="p-5 bg-blue-100 text-blue-700 border-l-4 border-blue-700 rounded-sm">
+							<p className="text-sm ml-2">
+								{ __( 'There is a repeater field, which will only display with', 'genesis-custom-blocks' ) }
+								&nbsp;
+								<a
+									className="underline"
+									href={ urlBlockTemplates }
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									{ __( 'PHP block templates', 'genesis-custom-blocks' ) }
+								</a>
+							</p>
+						</div>
+					)
+					: null
 			}
 		</>
 	);
