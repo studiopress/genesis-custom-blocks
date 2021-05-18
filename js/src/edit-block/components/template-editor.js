@@ -80,6 +80,7 @@ const TemplateEditor = () => {
 				mode={ MARKUP_TEMPLATE_MODE === templateMode ? 'html' : 'css' }
 				theme="textmate"
 				height="40rem"
+				showPrintMargin={ false }
 				onChange={ ( newEditorValue ) => {
 					const blockProperty = MARKUP_TEMPLATE_MODE === templateMode ? 'templateMarkup' : 'templateCss';
 					changeBlock( {

@@ -14,7 +14,14 @@ import ServerSideRender from '@wordpress/server-side-render';
 /**
  * Internal dependencies
  */
+import { Notice } from './';
+import { BUILDER_EDITING_MODE, EDITOR_PREVIEW_EDITING_MODE } from '../constants';
 import { getBlock, getBlockNameWithNameSpace } from '../helpers';
+
+/**
+ * @typedef {Object} FrontEndPreviewProps The component props.
+ * @property {import('./editor').SetEditorMode} setEditorMode Sets the editor mode.
+ */
 
 /**
  * The front-end preview of the block.
@@ -25,9 +32,10 @@ import { getBlock, getBlockNameWithNameSpace } from '../helpers';
  * So there can be an error in <ServerSideRender>
  * if it passes attributes that aren't yet saved.
  *
+ * @param {FrontEndPreviewProps} props
  * @return {React.ReactElement} The front-end preview.
  */
-const FrontEndPreview = () => {
+const FrontEndPreview = ( { setEditorMode } ) => {
 	const currentPost = useSelect( ( select ) => select( 'core/editor' ).getCurrentPost() );
 	const isPostNew = useSelect( ( select ) => select( 'core/editor' ).isEditedPostNew() );
 	const isPostDirty = useSelect( ( select ) => select( 'core/editor' ).isEditedPostDirty() );
@@ -39,9 +47,31 @@ const FrontEndPreview = () => {
 	// There's nothing entered or saved, so <ServerSideRender> would have an error.
 	if ( isPostNew && ! isPostDirty ) {
 		return (
-			<p className="mt-4">
-				{ __( 'Please edit the block to preview it.', 'genesis-custom-blocks' ) }
-			</p>
+			<Notice className="mt-2">
+				{ __( 'To preview this, please edit the block in the', 'genesis-custom-blocks' ) }
+				&nbsp;
+				<button
+					className="underline"
+					onClick={ () => setEditorMode( BUILDER_EDITING_MODE ) }
+				>
+					{ __( 'Builder', 'genesis-custom-blocks' ) }
+				</button>
+			</Notice>
+		);
+	}
+
+	if ( ! block.previewAttributes ) {
+		return (
+			<Notice className="mt-2">
+				{ __( 'To preview this, please edit the block in the', 'genesis-custom-blocks' ) }
+				&nbsp;
+				<button
+					className="underline"
+					onClick={ () => setEditorMode( EDITOR_PREVIEW_EDITING_MODE ) }
+				>
+					{ __( 'Editor Preview', 'genesis-custom-blocks' ) }
+				</button>
+			</Notice>
 		);
 	}
 

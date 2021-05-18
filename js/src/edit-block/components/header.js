@@ -31,7 +31,7 @@ import { useTemplate } from '../hooks';
 /**
  * @typedef {Object} HeaderProps The header component props.
  * @property {import('./editor').EditorMode} editorMode The current editor mode.
- * @property {function(string):void} setEditorMode Changes the editor mode.
+ * @property {import('./editor').SetEditorMode} setEditorMode Changes the editor mode.
  */
 
 /**

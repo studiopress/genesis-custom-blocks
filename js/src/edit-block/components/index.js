@@ -17,6 +17,7 @@ export { default as Input } from './input';
 export { default as KeywordsSection } from './keywords-section';
 export { default as LocationButtons } from './location-buttons';
 export { default as Main } from './main';
+export { default as Notice } from './notice';
 export { default as PostTitle } from './post-title';
 export { default as PostTypesSection } from './post-types-section';
 export { default as Select } from './select';

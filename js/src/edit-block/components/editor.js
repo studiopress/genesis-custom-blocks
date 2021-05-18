@@ -157,7 +157,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 									) : null
 								}
 								{ FRONT_END_PREVIEW_EDITING_MODE === editorMode
-									? <FrontEndPreview />
+									? <FrontEndPreview setEditorMode={ setEditorMode } />
 									: null
 								}
 								{ TEMPLATE_EDITOR_EDITING_MODE === editorMode
