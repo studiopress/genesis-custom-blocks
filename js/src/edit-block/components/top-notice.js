@@ -128,7 +128,7 @@ const TopNotice = ( { editorMode, isOnboarding, setEditorMode } ) => {
 			{
 				TEMPLATE_EDITOR_EDITING_MODE === editorMode && hasRepeaterField( getFields() )
 					? (
-						<div className="p-5 bg-blue-100 text-blue-700 border-l-4 border-blue-700 rounded-sm">
+						<div className="p-5 mb-2 bg-blue-100 text-blue-700 border-l-4 border-blue-700 rounded-sm">
 							<p className="text-sm ml-2">
 								{ __( 'There is a repeater field, which will only display with', 'genesis-custom-blocks' ) }
 								&nbsp;
