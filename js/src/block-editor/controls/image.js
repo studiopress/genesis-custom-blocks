@@ -12,7 +12,6 @@ import {
 	Button,
 	Placeholder,
 	DropZone,
-	DropZoneProvider,
 	FormFileUpload,
 	Spinner,
 } from '@wordpress/components';
@@ -62,16 +61,14 @@ const GcbImageControl = ( props ) => {
 					</>
 				) : (
 					<Placeholder className="gcb-image__placeholder" icon="format-image" label={ __( 'Image', 'genesis-custom-blocks' ) } instructions={ __( 'Drag an image, upload a new one or select a file from your library.', 'genesis-custom-blocks' ) }>
-						<DropZoneProvider>
-							<DropZone
-								onFilesDrop={ ( files ) => {
-									if ( files.length ) {
-										setIsUploading( true );
-										uploadFiles( files );
-									}
-								} }
-							/>
-						</DropZoneProvider>
+						<DropZone
+							onFilesDrop={ ( files ) => {
+								if ( files.length ) {
+									setIsUploading( true );
+									uploadFiles( files );
+								}
+							} }
+						/>
 						{ isUploading
 							? <Spinner />
 							: (

@@ -7,7 +7,7 @@ import * as React from 'react';
  * WordPress dependencies
  */
 import { speak } from '@wordpress/a11y';
-import { useCopyOnClick } from '@wordpress/compose';
+import { useCopyToClipboard } from '@wordpress/compose';
 import { useEffect, useRef } from '@wordpress/element';
 import { Icon, check } from '@wordpress/icons';
 import { __, sprintf } from '@wordpress/i18n';
@@ -28,8 +28,8 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 const ClipboardCopy = ( { text } ) => {
 	const ref = useRef();
-	// Backwards compatibility for before useCopyOnClick() existed.
-	const hasCopied = useCopyOnClick ? useCopyOnClick( ref, text ) : false; /* eslint-disable-line react-hooks/rules-of-hooks */
+	// Backwards compatibility for before useCopyToClipboard() existed.
+	const hasCopied = useCopyToClipboard ? useCopyToClipboard( ref, text ) : false; /* eslint-disable-line react-hooks/rules-of-hooks */
 	const lastHasCopied = useRef( hasCopied );
 	const label = sprintf(
 		/* translators: %1$s: the field name */
