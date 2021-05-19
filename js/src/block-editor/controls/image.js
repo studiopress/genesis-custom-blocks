@@ -10,6 +10,7 @@ import { MediaUpload } from '@wordpress/block-editor';
 import {
 	BaseControl,
 	Button,
+	DropZoneProvider,
 	Placeholder,
 	DropZone,
 	FormFileUpload,
@@ -61,14 +62,16 @@ const GcbImageControl = ( props ) => {
 					</>
 				) : (
 					<Placeholder className="gcb-image__placeholder" icon="format-image" label={ __( 'Image', 'genesis-custom-blocks' ) } instructions={ __( 'Drag an image, upload a new one or select a file from your library.', 'genesis-custom-blocks' ) }>
-						<DropZone
-							onFilesDrop={ ( files ) => {
-								if ( files.length ) {
-									setIsUploading( true );
-									uploadFiles( files );
-								}
-							} }
-						/>
+						<DropZoneProvider>
+							<DropZone
+								onFilesDrop={ ( files ) => {
+									if ( files.length ) {
+										setIsUploading( true );
+										uploadFiles( files );
+									}
+								} }
+							/>
+						</DropZoneProvider>
 						{ isUploading
 							? <Spinner />
 							: (
