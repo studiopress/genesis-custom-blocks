@@ -38,7 +38,6 @@ const ClipboardCopy = ( { text } ) => {
 		return () => clearTimeout( timer );
 	}, [ timer ] );
 
-	// Backwards compatibility for before useCopyToClipboard() existed.
 	const ref = useCopyToClipboard(
 		text,
 		() => {
@@ -63,10 +62,7 @@ const ClipboardCopy = ( { text } ) => {
 	);
 
 	return (
-		<button
-			aria-label={ label }
-			ref={ ref }
-		>
+		<button aria-label={ label } ref={ ref }>
 			{ hasCopied
 				? <Icon size={ 20 } icon={ check } />
 				: <svg className="h-4 w-4 fill-current ml-1" fill="currentColor" viewBox="0 0 20 20">

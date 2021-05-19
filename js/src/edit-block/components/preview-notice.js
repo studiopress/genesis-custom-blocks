@@ -22,7 +22,7 @@ import { Notice } from './';
  * A notice to add blocks in order to preview them.
  *
  * @param {PreviewNoticeProps} props
- * @return {React.ReactElement} The front-end preview.
+ * @return {React.ReactElement} The preview notice.
  */
 const PreviewNotice = ( { children } ) => (
 	<Notice className="mt-2">

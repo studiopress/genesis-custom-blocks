@@ -14,7 +14,7 @@ import classNames from 'classnames';
  * A simple notice.
  *
  * @param {NoticeProps} props
- * @return {React.ReactElement} The front-end preview.
+ * @return {React.ReactElement} The notice.
  */
 const Notice = ( { children, className } ) => (
 	<div
