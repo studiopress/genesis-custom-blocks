@@ -74,27 +74,23 @@ const FrontEndPreview = ( { setEditorMode } ) => {
 		);
 	}
 
+	if ( isPostNew && isPostDirty ) {
+		return (
+			<div className="mt-4 flex flex-row items-center">
+				{ __( 'Please save your block to preview it:', 'genesis-custom-blocks' ) }
+				&nbsp;
+				<PostSavedState />
+			</div>
+		);
+	}
+
 	return (
-		<>
-			{
-				isPostNew && isPostDirty
-					? (
-						<div className="mt-4 flex flex-row items-center">
-							{ __( 'Please save your block to preview it:', 'genesis-custom-blocks' ) }
-							&nbsp;
-							<PostSavedState />
-						</div>
-					)
-					: (
-						<ServerSideRender
-							block={ `genesis-custom-blocks/${ block?.name }` }
-							attributes={ block?.previewAttributes }
-							className="genesis-custom-blocks-editor__ssr"
-							httpMethod="POST"
-						/>
-					)
-			}
-		</>
+		<ServerSideRender
+			block={ `genesis-custom-blocks/${ block?.name }` }
+			attributes={ block?.previewAttributes }
+			className="genesis-custom-blocks-editor__ssr"
+			httpMethod="POST"
+		/>
 	);
 };
 
