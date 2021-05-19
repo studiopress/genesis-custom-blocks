@@ -349,7 +349,7 @@ class BlockPost extends ComponentAbstract {
 			} elseif ( ! empty( $block->template_markup ) ) {
 				esc_html_e( 'Template Editor markup found', 'genesis-custom-blocks' );
 			} else {
-				esc_html_e( 'No template editor markup or template found', 'genesis-custom-blocks' );
+				esc_html_e( 'No Template Editor markup or template found', 'genesis-custom-blocks' );
 			}
 		}
 
