@@ -10,9 +10,9 @@ import { MediaUpload } from '@wordpress/block-editor';
 import {
 	BaseControl,
 	Button,
-	DropZoneProvider,
 	Placeholder,
 	DropZone,
+	DropZoneProvider,
 	FormFileUpload,
 	Spinner,
 } from '@wordpress/components';
