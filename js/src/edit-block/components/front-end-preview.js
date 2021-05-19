@@ -14,9 +14,11 @@ import ServerSideRender from '@wordpress/server-side-render';
 /**
  * Internal dependencies
  */
-import { Notice } from './';
+import { PreviewNotice } from './';
 import { BUILDER_EDITING_MODE, EDITOR_PREVIEW_EDITING_MODE } from '../constants';
 import { getBlock, getBlockNameWithNameSpace } from '../helpers';
+import { useField } from '../hooks';
+import { getFieldsAsArray } from '../../common/helpers';
 
 /**
  * @typedef {Object} FrontEndPreviewProps The component props.
@@ -39,39 +41,36 @@ const FrontEndPreview = ( { setEditorMode } ) => {
 	const currentPost = useSelect( ( select ) => select( 'core/editor' ).getCurrentPost() );
 	const isPostNew = useSelect( ( select ) => select( 'core/editor' ).isEditedPostNew() );
 	const isPostDirty = useSelect( ( select ) => select( 'core/editor' ).isEditedPostDirty() );
+	const { getFields } = useField();
 
 	const fullBlock = getBlock( currentPost?.content );
 	const blockNameWithNameSpace = getBlockNameWithNameSpace( fullBlock );
 	const block = fullBlock[ blockNameWithNameSpace ] || {};
+	const fields = getFields();
 
-	// There's nothing entered or saved, so <ServerSideRender> would have an error.
-	if ( isPostNew && ! isPostDirty ) {
+	if ( ! getFieldsAsArray( fields ).length ) {
 		return (
-			<Notice className="mt-2">
-				{ __( 'To preview this, please edit the block in the', 'genesis-custom-blocks' ) }
-				&nbsp;
+			<PreviewNotice>
 				<button
 					className="underline"
 					onClick={ () => setEditorMode( BUILDER_EDITING_MODE ) }
 				>
 					{ __( 'Builder', 'genesis-custom-blocks' ) }
 				</button>
-			</Notice>
+			</PreviewNotice>
 		);
 	}
 
 	if ( ! block.previewAttributes ) {
 		return (
-			<Notice className="mt-2">
-				{ __( 'To preview this, please edit the block in the', 'genesis-custom-blocks' ) }
-				&nbsp;
+			<PreviewNotice>
 				<button
 					className="underline"
 					onClick={ () => setEditorMode( EDITOR_PREVIEW_EDITING_MODE ) }
 				>
 					{ __( 'Editor Preview', 'genesis-custom-blocks' ) }
 				</button>
-			</Notice>
+			</PreviewNotice>
 		);
 	}
 

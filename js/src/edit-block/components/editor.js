@@ -141,8 +141,8 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 									editorMode={ editorMode }
 									setCurrentLocation={ setCurrentLocation }
 								/>
-								{ EDITOR_PREVIEW_EDITING_MODE === editorMode && block && block.fields
-									? <EditorPreview />
+								{ EDITOR_PREVIEW_EDITING_MODE === editorMode && block
+									? <EditorPreview setEditorMode={ setEditorMode } />
 									: null
 								}
 								{ BUILDER_EDITING_MODE === editorMode

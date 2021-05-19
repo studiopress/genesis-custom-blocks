@@ -185,7 +185,7 @@ function observeConsoleLogging() {
 		// internal object shape of the JSHandle to find the error text. If it
 		// cannot be found, the default text value is used instead.
 		text = message.args() && message.args().length
-			? message.args()[0]?._remoteObject?.description
+			? message.args()[ 0 ]?._remoteObject?.description
 			: text;
 
 		// Disable reason: We intentionally bubble up the console message

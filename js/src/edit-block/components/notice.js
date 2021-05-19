@@ -11,13 +11,7 @@ import classNames from 'classnames';
  */
 
 /**
- * The front-end preview of the block.
- *
- * Gets the saved post with .getCurrentPost(),
- * not the edited post.
- * The server side only has access to the saved post.
- * So there can be an error in <ServerSideRender>
- * if it passes attributes that aren't yet saved.
+ * A simple notice.
  *
  * @param {NoticeProps} props
  * @return {React.ReactElement} The front-end preview.
