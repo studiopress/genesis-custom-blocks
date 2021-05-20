@@ -6,6 +6,7 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
+import { SlotFillProvider } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import {
 	EditorNotices,
@@ -127,70 +128,72 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 				}
 				<BrowserURL />
 				<UnsavedChangesWarning />
-				<EditorProvider
-					post={ post }
-					settings={ settings }
-				>
-					<ErrorBoundary onError={ onError }>
-						<Header editorMode={ editorMode } setEditorMode={ setEditorMode } />
-						<EditorNotices />
-						<div className="gcb-editor flex w-full h-0 flex-grow">
-							<Main editorMode={ editorMode } setEditorMode={ setEditorMode }>
-								<LocationButtons
-									currentLocation={ currentLocation }
-									editorMode={ editorMode }
-									setCurrentLocation={ setCurrentLocation }
-								/>
-								{ EDITOR_PREVIEW_EDITING_MODE === editorMode && block
-									? <EditorPreview setEditorMode={ setEditorMode } />
-									: null
-								}
-								{ BUILDER_EDITING_MODE === editorMode
-									? (
-										<FieldsGrid
-											currentLocation={ currentLocation }
-											selectedField={ selectedField }
-											setIsNewField={ setIsNewField }
-											setPanelDisplaying={ setPanelDisplaying }
-											setSelectedField={ setSelectedField }
-										/>
-									) : null
-								}
-								{ FRONT_END_PREVIEW_EDITING_MODE === editorMode
-									? <FrontEndPreview setEditorMode={ setEditorMode } />
-									: null
-								}
-								{ TEMPLATE_EDITOR_EDITING_MODE === editorMode
-									? <TemplateEditor />
-									: null
-								}
-							</Main>
-							<Side
-								panelDisplaying={ panelDisplaying }
-								setPanelDisplaying={ setPanelDisplaying }
-							>
-								{
-									BLOCK_PANEL === panelDisplaying
-										? <BlockPanel />
+				<SlotFillProvider>
+					<EditorProvider
+						post={ post }
+						settings={ settings }
+					>
+						<ErrorBoundary onError={ onError }>
+							<Header editorMode={ editorMode } setEditorMode={ setEditorMode } />
+							<EditorNotices />
+							<div className="gcb-editor flex w-full h-0 flex-grow">
+								<Main editorMode={ editorMode } setEditorMode={ setEditorMode }>
+									<LocationButtons
+										currentLocation={ currentLocation }
+										editorMode={ editorMode }
+										setCurrentLocation={ setCurrentLocation }
+									/>
+									{ EDITOR_PREVIEW_EDITING_MODE === editorMode && block
+										? <EditorPreview setEditorMode={ setEditorMode } />
 										: null
-								}
-								{
-									BLOCK_PANEL !== panelDisplaying && BUILDER_EDITING_MODE === editorMode
+									}
+									{ BUILDER_EDITING_MODE === editorMode
 										? (
-											<FieldPanel
+											<FieldsGrid
 												currentLocation={ currentLocation }
-												isNewField={ isNewField }
 												selectedField={ selectedField }
-												setCurrentLocation={ setCurrentLocation }
 												setIsNewField={ setIsNewField }
+												setPanelDisplaying={ setPanelDisplaying }
 												setSelectedField={ setSelectedField }
 											/>
 										) : null
-								}
-							</Side>
-						</div>
-					</ErrorBoundary>
-				</EditorProvider>
+									}
+									{ FRONT_END_PREVIEW_EDITING_MODE === editorMode
+										? <FrontEndPreview setEditorMode={ setEditorMode } />
+										: null
+									}
+									{ TEMPLATE_EDITOR_EDITING_MODE === editorMode
+										? <TemplateEditor />
+										: null
+									}
+								</Main>
+								<Side
+									panelDisplaying={ panelDisplaying }
+									setPanelDisplaying={ setPanelDisplaying }
+								>
+									{
+										BLOCK_PANEL === panelDisplaying
+											? <BlockPanel />
+											: null
+									}
+									{
+										BLOCK_PANEL !== panelDisplaying && BUILDER_EDITING_MODE === editorMode
+											? (
+												<FieldPanel
+													currentLocation={ currentLocation }
+													isNewField={ isNewField }
+													selectedField={ selectedField }
+													setCurrentLocation={ setCurrentLocation }
+													setIsNewField={ setIsNewField }
+													setSelectedField={ setSelectedField }
+												/>
+											) : null
+									}
+								</Side>
+							</div>
+						</ErrorBoundary>
+					</EditorProvider>
+				</SlotFillProvider>
 			</div>
 		</StrictMode>
 	);
