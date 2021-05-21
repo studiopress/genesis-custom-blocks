@@ -34,13 +34,10 @@ const GcbImageControl = ( props ) => {
 		imageSrc,
 		isUploading,
 		onSelect,
+		removeImage,
 		setIsUploading,
 		uploadFiles,
 	} = useImage( fieldValue, onChange, allowedTypes );
-
-	const removeImage = () => {
-		onChange( defaultImgId );
-	};
 
 	return (
 		<BaseControl className="genesis-custom-blocks-media-controls" label={ field.label } id={ `gcb-image-${ instanceId }` }>
@@ -55,7 +52,10 @@ const GcbImageControl = ( props ) => {
 						<Button
 							disabled={ !! isUploading }
 							className="gcb-image__remove"
-							onClick={ removeImage }
+							onClick={ () => {
+								onChange( defaultImgId );
+								removeImage();
+							} }
 						>
 							{ __( 'Remove', 'genesis-custom-blocks' ) }
 						</Button>

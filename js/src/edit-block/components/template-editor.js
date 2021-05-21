@@ -3,14 +3,14 @@
  */
 import * as React from 'react';
 import AceEditor from 'react-ace';
-import 'ace-builds/src-noconflict/ext-language_tools';
 import 'ace-builds/src-noconflict/mode-html';
 import 'ace-builds/src-noconflict/theme-textmate';
+import { addCompleter } from 'ace-builds/src-noconflict/ext-language_tools';
 
 /**
  * WordPress dependencies
  */
-import { useState } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 
 /**
@@ -32,6 +32,27 @@ const TemplateEditor = () => {
 	const { templateCss = '', templateMarkup = '' } = block;
 	const exampleFieldName = getFields()?.shift()?.name ?? 'foo-baz';
 	const urlTemplateDocumentation = 'https://developer.wpengine.com/genesis-custom-blocks/get-started/add-a-custom-block-to-your-website-content/';
+
+	useEffect( () => {
+		addCompleter( {
+			getCompletions: ( editor, session, pos, prefix, callback ) => {
+				callback(
+					null,
+					getFields()
+						.map(
+							/** @param {import('./editor').Field} field The block field. */
+							( field ) => ( {
+								caption: `{{${ field.name }}}`,
+								value: `{{${ field.name }}}`,
+								/* translators: %1$s: the field label */
+								meta: sprintf( __( 'GCB field %1$s', 'genesis-custom-blocks' ), field.label ),
+							} )
+						)
+				);
+			},
+			identifierRegexps: [ /\{/ ],
+		} );
+	}, [] ); /* eslint-disable-line react-hooks/exhaustive-deps -- getFields() is called within a callback and does not need to trigger a re-run */
 
 	return (
 		<>
@@ -65,7 +86,7 @@ const TemplateEditor = () => {
 								href={ urlTemplateDocumentation }
 								target="_blank"
 								rel="noopener noreferrer"
-								className="max-w-max text-sm text-blue-700 mt-1 mb-6 md:underline"
+								className="max-w-max text-sm text-blue-700 mt-1 md:underline"
 							>
 								{ __( 'Learn more', 'genesis-custom-blocks' ) }
 							</a>
@@ -74,10 +95,13 @@ const TemplateEditor = () => {
 					: null
 			}
 			<AceEditor
+				className="mt-8"
+				style={ { width: '700px' } }
 				value={ MARKUP_TEMPLATE_MODE === templateMode ? templateMarkup : templateCss }
 				mode={ MARKUP_TEMPLATE_MODE === templateMode ? 'html' : 'css' }
 				theme="textmate"
 				height="40rem"
+				showPrintMargin={ false }
 				onChange={ ( newEditorValue ) => {
 					const blockProperty = MARKUP_TEMPLATE_MODE === templateMode ? 'templateMarkup' : 'templateCss';
 					changeBlock( {

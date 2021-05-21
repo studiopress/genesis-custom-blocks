@@ -3,7 +3,7 @@
 Contributors: lukecarbis, ryankienstra, Stino11, rheinardkorf, studiopress, wpengine
 Tags: gutenberg, blocks, block editor, fields, template
 Requires at least: 5.4
-Tested up to: 5.6
+Tested up to: 5.7
 Requires PHP: 5.6
 Stable tag: 1.1.0
 License: GPLv2 or later
@@ -32,10 +32,10 @@ Work within the WordPress admin with an interface you already know.
 Add from a growing list of available fields to your custom blocks.
 
 ### Simple Templating ###
-Let the plugin do the heavy lifting so you can use familiar WordPress development practices to build block templates.
+Let the plugin do the heavy lifting so you can use the built-in editor, or familiar WordPress development practices to build block templates.
 
 ### Developer Friendly Functions ###
-Simple to use functions, ready to render and work with the data stored through your custom block fields.
+As an alternative to the built-in editor, there are simple functions, ready to render and work with the data stored through your custom block fields.
 
 ## Currently available block fields ##
 * Text Field
@@ -91,6 +91,9 @@ It can also be installed manually.
 ## Frequently Asked Questions ##
 **Q: Do I need to work with the Genesis Framework or any of the other Genesis plugins/themes to use this plugin?**
 A: No. You can use this plugin completely independently. All you need is to have the block editor enabled on your WordPress site.
+
+**Q: Do I need to change to the new built-in Template Editor in /wp-admin? **
+A: No. You can keep using your PHP block templates like block-example.php.
 
 ## Links ##
 * [WordPress.org](https://wordpress.org/plugins/genesis-custom-blocks)

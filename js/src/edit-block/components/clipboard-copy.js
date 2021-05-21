@@ -7,10 +7,14 @@ import * as React from 'react';
  * WordPress dependencies
  */
 import { speak } from '@wordpress/a11y';
-import { useCopyOnClick } from '@wordpress/compose';
-import { useEffect, useRef } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 import { Icon, check } from '@wordpress/icons';
 import { __, sprintf } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies
+ */
+import { useCopyToClipboard } from '../hooks';
 
 /**
  * @typedef {Object} ClipboardCopyProps The component props.
@@ -21,43 +25,44 @@ import { __, sprintf } from '@wordpress/i18n';
  * Copies text to the clipboard, and shows feedback on copying.
  *
  * Forked from the Gutenberg component ClipboardButton.
- * https://github.com/WordPress/gutenberg/blob/50eaa95881ddc2f0f93045721f541a96bae5cfa8/packages/components/src/clipboard-button/index.js
+ * https://github.com/WordPress/gutenberg/blob/1103f7ba9f20fada5af22cb6d86bd26e75defea6/packages/components/src/clipboard-button/index.js
  *
  * @param {ClipboardCopyProps} props The component props.
  * @return {React.ReactElement} Copies text to the clipboard.
  */
 const ClipboardCopy = ( { text } ) => {
-	const ref = useRef();
-	// Backwards compatibility for before useCopyOnClick() existed.
-	const hasCopied = useCopyOnClick ? useCopyOnClick( ref, text ) : false; /* eslint-disable-line react-hooks/rules-of-hooks */
-	const lastHasCopied = useRef( hasCopied );
+	const [ hasCopied, setHasCopied ] = useState( false );
+	let timer;
+
+	useEffect( () => {
+		return () => clearTimeout( timer );
+	}, [ timer ] );
+
+	const ref = useCopyToClipboard(
+		text,
+		() => {
+			speak( sprintf(
+				/* translators: %1$s: the text that was copied */
+				__( 'Copied the text %1$s', 'genesis-custom-blocks' ),
+				text
+			) );
+
+			setHasCopied( true );
+			clearTimeout( timer );
+			timer = setTimeout( () => {
+				setHasCopied( false );
+			}, 2000 );
+		}
+	);
+
 	const label = sprintf(
 		/* translators: %1$s: the field name */
 		__( 'Copy the field name of %1$s', 'genesis-custom-blocks' ),
 		text
 	);
 
-	useEffect( () => {
-		if ( lastHasCopied.current === hasCopied ) {
-			return;
-		}
-
-		lastHasCopied.current = hasCopied;
-	}, [ hasCopied ] );
-
 	return (
-		<button
-			aria-label={ label }
-			ref={ ref }
-			onCopy={ ( event ) => {
-				event.stopPropagation();
-				speak( sprintf(
-					/* translators: %1$s: the text that was copied */
-					__( 'Copied the text %1$s', 'genesis-custom-blocks' ),
-					text
-				) );
-			} }
-		>
+		<button aria-label={ label } ref={ ref }>
 			{ hasCopied
 				? <Icon size={ 20 } icon={ check } />
 				: <svg className="h-4 w-4 fill-current ml-1" fill="currentColor" viewBox="0 0 20 20">

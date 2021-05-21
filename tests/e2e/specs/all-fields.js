@@ -126,6 +126,9 @@ describe( 'AllFields', () => {
 		await ( await findByText( $editBlockDocument, /publish/i ) ).click();
 		await findAllByText( $editBlockDocument, /published/i );
 
+		// Ensure there's no console error in the 'Editor Preview' display.
+		await ( await findByText( $editBlockDocument, 'Editor Preview' ) ).click();
+
 		// Create a new post and add the new block.
 		await createNewPost();
 		await insertBlock( blockName );
