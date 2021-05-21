@@ -52,7 +52,7 @@ const TemplateEditor = () => {
 			},
 			identifierRegexps: [ /\{/ ],
 		} );
-	}, [] ); /* eslint-disable-line react-hooks/exhaustive-deps -- getFields() is called within a callback and does not need to trigger re-run */
+	}, [] ); /* eslint-disable-line react-hooks/exhaustive-deps -- getFields() is called within a callback and does not need to trigger a re-run */
 
 	return (
 		<>
