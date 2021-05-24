@@ -2,7 +2,6 @@
 /**
  * Queries for the blocks on the site.
  *
- * phpcs:ignoreFile
  * @package Genesis\CustomBlocks
  */
 
@@ -19,10 +18,16 @@ use Genesis\CustomBlocks\Blocks\Block;
  */
 function get_fields() {
 	$field_histogram = [];
-	$block_query     = new WP_Query( [ 'post_type' =>'genesis_custom_block' ] );
-	foreach( $block_query->posts as $post ) {
+	$block_query     = new WP_Query(
+		[
+			'post_type'      => 'genesis_custom_block',
+			'post_status'    => 'publish',
+			'posts_per_page' => 100,
+		]
+	);
+	foreach ( $block_query->posts as $post ) {
 		$block = new Block( $post->ID );
-		foreach( $block->fields as $field ) {
+		foreach ( $block->fields as $field ) {
 			$field_histogram[ $field->control ] = ! empty( $field_histogram[ $field->control ] ) && is_int( $field_histogram[ $field->control ] )
 				? $field_histogram[ $field->control ] + 1
 				: 1;
@@ -57,7 +62,7 @@ function query_blocks() {
 }
 
 if ( ! defined( 'WP_CLI' ) ) {
- 	echo "Please run this with WP-CLI: wp eval-file bin/query-blocks.php\n";
+	echo "Please run this with WP-CLI: wp eval-file bin/query-blocks.php\n";
 	exit( 1 );
 }
 
