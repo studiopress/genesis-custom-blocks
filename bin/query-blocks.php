@@ -17,14 +17,15 @@ use Genesis\CustomBlocks\Blocks\Block;
  * @return array[] An array of associative arrays, with keys of 'field' and 'count'.
  */
 function get_fields() {
-	$field_histogram = [];
-	$block_query     = new WP_Query(
+	$block_query = new WP_Query(
 		[
 			'post_type'      => 'genesis_custom_block',
 			'post_status'    => 'publish',
 			'posts_per_page' => 100,
 		]
 	);
+
+	$field_histogram = [];
 	foreach ( $block_query->posts as $post ) {
 		$block = new Block( $post->ID );
 		foreach ( $block->fields as $field ) {
