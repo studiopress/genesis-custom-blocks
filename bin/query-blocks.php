@@ -21,7 +21,7 @@ function get_fields() {
 		[
 			'post_type'      => 'genesis_custom_block',
 			'post_status'    => 'publish',
-			'posts_per_page' => 100,
+			'posts_per_page' => 99,
 		]
 	);
 
