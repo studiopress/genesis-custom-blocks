@@ -9,7 +9,6 @@ namespace Genesis\CustomBlocks\Cli;
 
 use WP_CLI;
 use WP_Query;
-use Genesis\CustomBlocks\Blocks\Block;
 
 /**
  * Gets the field types (controls) and their counts.
@@ -27,10 +26,14 @@ function get_fields() {
 
 	$field_histogram = [];
 	foreach ( $block_query->posts as $post ) {
-		$block = new Block( $post->ID );
-		foreach ( $block->fields as $field ) {
-			$field_histogram[ $field->control ] = ! empty( $field_histogram[ $field->control ] ) && is_int( $field_histogram[ $field->control ] )
-				? $field_histogram[ $field->control ] + 1
+		$block_json = json_decode( $post->post_content, true );
+		if ( ! isset( $block_json[ 'genesis-custom-blocks/' . $post->post_name ]['fields'] ) ) {
+			break;
+		}
+
+		foreach ( $block_json[ 'genesis-custom-blocks/' . $post->post_name ]['fields'] as $field_name => $field ) {
+			$field_histogram[ $field['control'] ] = ! empty( $field_histogram[ $field['control'] ] ) && is_int( $field_histogram[ $field['control'] ] )
+				? $field_histogram[ $field['control'] ] + 1
 				: 1;
 		}
 	}
