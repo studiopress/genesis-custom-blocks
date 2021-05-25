@@ -48,6 +48,11 @@ function get_fields() {
  */
 function query_blocks() {
 	$post_count = wp_count_posts( 'genesis_custom_block' );
+	if ( empty( $post_count->publish ) ) {
+		WP_CLI::log( 'There is no GCB block' );
+		return;
+	}
+
 	WP_CLI::log( sprintf( 'There are %1$d GCB blocks', $post_count->publish ) );
 	WP_CLI::log( "\n" );
 
