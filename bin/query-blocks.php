@@ -66,6 +66,7 @@ function query_blocks() {
 		'format' => 'table',
 	];
 
+	WP_CLI::log( 'Total counts of each field type (control):' );
 	$formatter = new WP_CLI\Formatter( $assoc_args, $table_fields );
 	$formatter->display_items( $table_values );
 }
@@ -73,6 +74,13 @@ function query_blocks() {
 if ( ! defined( 'WP_CLI' ) ) {
 	echo "Please run this with WP-CLI: wp eval-file bin/query-blocks.php\n";
 	exit( 1 );
+}
+
+if (
+	! is_plugin_active( 'genesis-custom-blocks/genesis-custom-blocks.php' )
+	&& ! is_plugin_active( 'genesis-custom-blocks-pro/genesis-custom-blocks-pro.php' )
+) {
+	echo "Genesis Custom Blocks is not active\n";
 }
 
 query_blocks();
