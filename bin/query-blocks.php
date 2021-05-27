@@ -13,7 +13,12 @@ use WP_Query;
 /**
  * Gets the field types (controls) and their counts.
  *
- * @return array[] An array of associative arrays, with keys of 'field' and 'count'.
+ * @return array[] $fields {
+ *     The fields in all of the blocks.
+
+ *     @type string $field The type (control) of the field, like 'text'.
+ *     @type int    $count The count of that type in all of the blocks.
+ * }
  */
 function get_fields() {
 	$block_query = new WP_Query(
