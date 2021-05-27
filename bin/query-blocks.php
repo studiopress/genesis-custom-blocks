@@ -66,10 +66,7 @@ function query_blocks() {
 
 	$table_values = get_fields();
 	$table_fields = [ 'field', 'count' ];
-	$assoc_args   = [
-		'fields' => implode( ',', $table_fields ),
-		'format' => 'table',
-	];
+	$assoc_args   = [ 'fields' => implode( ',', $table_fields ) ];
 
 	WP_CLI::log( 'Total counts of each field type (control):' );
 	$formatter = new WP_CLI\Formatter( $assoc_args, $table_fields );
