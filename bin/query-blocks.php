@@ -78,11 +78,4 @@ if ( ! defined( 'WP_CLI' ) ) {
 	exit( 1 );
 }
 
-if (
-	! is_plugin_active( 'genesis-custom-blocks/genesis-custom-blocks.php' )
-	&& ! is_plugin_active( 'genesis-custom-blocks-pro/genesis-custom-blocks-pro.php' )
-) {
-	echo "Genesis Custom Blocks is not active\n";
-}
-
 query_blocks();
