@@ -32,11 +32,12 @@ function get_fields() {
 	$field_histogram = [];
 	foreach ( $block_query->posts as $post ) {
 		$block_json = json_decode( $post->post_content, true );
-		if ( ! isset( $block_json[ 'genesis-custom-blocks/' . $post->post_name ]['fields'] ) ) {
+		$fields     = $block_json[ 'genesis-custom-blocks/' . $post->post_name ]['fields'];
+		if ( empty( $fields ) ) {
 			break;
 		}
 
-		foreach ( $block_json[ 'genesis-custom-blocks/' . $post->post_name ]['fields'] as $field_name => $field ) {
+		foreach ( $fields as $field_name => $field ) {
 			$field_histogram[ $field['control'] ] = ! empty( $field_histogram[ $field['control'] ] ) && is_int( $field_histogram[ $field['control'] ] )
 				? $field_histogram[ $field['control'] ] + 1
 				: 1;
@@ -64,13 +65,12 @@ function query_blocks() {
 	WP_CLI::log( sprintf( 'There are %1$d GCB blocks', $post_count->publish ) );
 	WP_CLI::log( "\n" );
 
-	$table_values = get_fields();
 	$table_fields = [ 'field', 'count' ];
-	$assoc_args   = [ 'fields' => implode( ',', $table_fields ) ];
+	$assoc_args   = [ 'fields' => 'field,count' ];
 
 	WP_CLI::log( 'Total counts of each field type (control):' );
 	$formatter = new WP_CLI\Formatter( $assoc_args, $table_fields );
-	$formatter->display_items( $table_values );
+	$formatter->display_items( get_fields() );
 }
 
 if ( ! defined( 'WP_CLI' ) ) {
