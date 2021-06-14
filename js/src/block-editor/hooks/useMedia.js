@@ -28,7 +28,7 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 
 /**
- * @typedef {Object} UseImageReturn The return value of the hook.
+ * @typedef {Object} UseMediaReturn The return value of the hook.
  * @property {string} imageAlt The alt attribute of the <img>.
  * @property {string} imageSrc The src attribute of the <img>.
  * @property {boolean} isUploading Whether the image is uploading.
@@ -44,9 +44,9 @@ import { __, sprintf } from '@wordpress/i18n';
  * @param {number|string} fieldValue The current field value.
  * @param {(imageId: number) => void} onChange Handles changing the field value.
  * @param {string[]} allowedTypes The allowed media types.
- * @return {UseImageReturn} The return value of this hook.
+ * @return {UseMediaReturn} The return value of this hook.
  */
-const useImage = ( fieldValue, onChange, allowedTypes ) => {
+const useMedia = ( fieldValue, onChange, allowedTypes ) => {
 	const defaultImageSrc = '';
 	const [ imageSrc, setImageSrc ] = useState( defaultImageSrc );
 	const [ isUploading, setIsUploading ] = useState( false );
@@ -129,4 +129,4 @@ const useImage = ( fieldValue, onChange, allowedTypes ) => {
 	};
 };
 
-export default useImage;
+export default useMedia;

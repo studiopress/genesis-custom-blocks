@@ -21,7 +21,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useImage } from '../hooks';
+import { useMedia } from '../hooks';
 
 const allowedTypes = [ 'image' ];
 const defaultImgId = 0;
@@ -37,7 +37,7 @@ const GcbImageControl = ( props ) => {
 		removeImage,
 		setIsUploading,
 		uploadFiles,
-	} = useImage( fieldValue, onChange, allowedTypes );
+	} = useMedia( fieldValue, onChange, allowedTypes );
 
 	return (
 		<BaseControl className="genesis-custom-blocks-media-controls" label={ field.label } id={ `gcb-image-${ instanceId }` }>
