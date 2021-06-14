@@ -42,7 +42,7 @@ function genesis_custom_blocks() {
 }
 
 /**
- * Setup the plugin instance.
+ * Set up the plugin instance.
  */
 genesis_custom_blocks()
 	->set_basename( plugin_basename( __FILE__ ) )
