@@ -29,11 +29,11 @@ import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * @typedef {Object} UseMediaReturn The return value of the hook.
- * @property {string} imageAlt The alt attribute of the <img>.
- * @property {string} imageSrc The src attribute of the <img>.
- * @property {boolean} isUploading Whether the image is uploading.
+ * @property {string} mediaAlt The alt attribute of the <img>.
+ * @property {string} mediaSrc The src attribute of the media.
+ * @property {boolean} isUploading Whether the media is uploading.
  * @property {OnSelect} onSelect Handler for selecting.
- * @property {RemoveImage} removeImage Removes the image src.
+ * @property {RemoveImage} removeMedia Removes the media src.
  * @property {SetIsUploading} setIsUploading Sets whether the image is uploading.
  * @property {UploadFiles} uploadFiles Uploads the files.
  */
@@ -48,9 +48,9 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 const useMedia = ( fieldValue, onChange, allowedTypes ) => {
 	const defaultImageSrc = '';
-	const [ imageSrc, setImageSrc ] = useState( defaultImageSrc );
+	const [ mediaSrc, setMediaSrc ] = useState( defaultImageSrc );
 	const [ isUploading, setIsUploading ] = useState( false );
-	const [ imageAlt, setImageAlt ] = useState( '' );
+	const [ mediaAlt, setImageAlt ] = useState( '' );
 
 	// @ts-ignore: type definition file is missing getMedia().
 	const { getMedia } = useSelect( ( select ) => {
@@ -61,10 +61,10 @@ const useMedia = ( fieldValue, onChange, allowedTypes ) => {
 		const newImage = getMedia( fieldValue );
 
 		if ( newImage?.source_url ) { // eslint-disable-line camelcase
-			setImageSrc( newImage.source_url );
+			setMediaSrc( newImage.source_url );
 		} else if ( 'string' === typeof newImage ) {
 			// Backwards-compatibility: the fieldValue used to be the URL, not the ID.
-			setImageSrc( newImage );
+			setMediaSrc( newImage );
 		}
 
 		if ( newImage?.alt ) {
@@ -83,7 +83,7 @@ const useMedia = ( fieldValue, onChange, allowedTypes ) => {
 	const updateImageSrc = ( image ) => {
 		if ( image?.id ) {
 			onChange( parseInt( image.id ) );
-			setImageSrc( image?.url );
+			setMediaSrc( image?.url );
 		}
 	};
 
@@ -102,7 +102,7 @@ const useMedia = ( fieldValue, onChange, allowedTypes ) => {
 
 	/** @type {RemoveImage} */
 	const removeImage = () => {
-		setImageSrc( defaultImageSrc );
+		setMediaSrc( defaultImageSrc );
 	};
 
 	/** @type {UploadFiles} */
@@ -119,11 +119,11 @@ const useMedia = ( fieldValue, onChange, allowedTypes ) => {
 	};
 
 	return {
-		imageAlt,
-		imageSrc,
+		mediaAlt,
+		mediaSrc,
 		isUploading,
 		onSelect,
-		removeImage,
+		removeMedia: removeImage,
 		setIsUploading,
 		uploadFiles,
 	};

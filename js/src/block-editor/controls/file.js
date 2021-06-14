@@ -30,10 +30,10 @@ const GcbFileControl = ( props ) => {
 	const { field, getValue, instanceId, onChange } = props;
 	const fieldValue = getValue( props );
 	const {
-		imageSrc,
+		mediaSrc,
 		isUploading,
 		onSelect,
-		removeImage,
+		removeMedia,
 		setIsUploading,
 		uploadFiles,
 	} = useMedia( fieldValue, onChange, allowedTypes );
@@ -44,14 +44,14 @@ const GcbFileControl = ( props ) => {
 				? <p className="components-base-control__help">{ field.help }</p>
 				: null
 			}
-			{ !! imageSrc
+			{ !! mediaSrc
 				? (
 					<Button
 						disabled={ !! isUploading }
 						className="gcb-image__remove"
 						onClick={ () => {
 							onChange( defaultImgId );
-							removeImage();
+							removeMedia();
 						} }
 					>
 						{ __( 'Remove', 'genesis-custom-blocks' ) }

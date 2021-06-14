@@ -30,11 +30,11 @@ const GcbImageControl = ( props ) => {
 	const { field, getValue, instanceId, onChange } = props;
 	const fieldValue = getValue( props );
 	const {
-		imageAlt,
-		imageSrc,
+		mediaAlt,
+		mediaSrc,
 		isUploading,
 		onSelect,
-		removeImage,
+		removeMedia: removeImage,
 		setIsUploading,
 		uploadFiles,
 	} = useMedia( fieldValue, onChange, allowedTypes );
@@ -45,10 +45,10 @@ const GcbImageControl = ( props ) => {
 				? <p className="components-base-control__help">{ field.help }</p>
 				: null
 			}
-			{ !! imageSrc
+			{ !! mediaSrc
 				? (
 					<>
-						<img className="gcb-image__img" src={ imageSrc } alt={ imageAlt } />
+						<img className="gcb-image__img" src={ mediaSrc } alt={ mediaAlt } />
 						<Button
 							disabled={ !! isUploading }
 							className="gcb-image__remove"
