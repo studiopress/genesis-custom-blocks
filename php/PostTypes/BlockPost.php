@@ -72,6 +72,7 @@ class BlockPost extends ComponentAbstract {
 			'textarea',
 			'url',
 			'email',
+			'file',
 			'number',
 			'color',
 			'image',
