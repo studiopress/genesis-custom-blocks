@@ -37,6 +37,7 @@ const GcbFileControl = ( props ) => {
 		setIsUploading,
 		uploadFiles,
 	} = useMedia( fieldValue, onChange, allowedTypes );
+	const fileRegex = /[^\/]+\.[^\/]+$/;
 
 	return (
 		<BaseControl className="genesis-custom-blocks-media-controls" label={ field.label } id={ `gcb-file-${ instanceId }` }>
@@ -46,16 +47,22 @@ const GcbFileControl = ( props ) => {
 			}
 			{ !! mediaSrc
 				? (
-					<Button
-						disabled={ !! isUploading }
-						className="gcb-image__remove"
-						onClick={ () => {
-							onChange( defaultImgId );
-							removeMedia();
-						} }
-					>
-						{ __( 'Remove', 'genesis-custom-blocks' ) }
-					</Button>
+					<>
+						{ mediaSrc.match( fileRegex )
+							? mediaSrc.match( fileRegex )[ 0 ]
+							: null
+						}
+						<Button
+							disabled={ !! isUploading }
+							className="gcb-image__remove"
+							onClick={ () => {
+								onChange( defaultImgId );
+								removeMedia();
+							} }
+						>
+							{ __( 'Remove', 'genesis-custom-blocks' ) }
+						</Button>
+					</>
 				) : (
 					<Placeholder className="gcb-image__placeholder" icon="format-image" label={ __( 'Image', 'genesis-custom-blocks' ) } instructions={ __( 'Drag an image, upload a new one or select a file from your library.', 'genesis-custom-blocks' ) }>
 						<DropZoneProvider>
