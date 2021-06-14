@@ -17,6 +17,7 @@ test( 'addControls', () => {
 			checkbox: expect.anything(),
 			color: expect.anything(),
 			email: expect.anything(),
+			file: expect.anything(),
 			image: expect.anything(),
 			multiselect: expect.anything(),
 			number: expect.anything(),
