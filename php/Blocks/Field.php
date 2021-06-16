@@ -99,23 +99,11 @@ class Field {
 	 * @param array $config An array containing field parameters.
 	 */
 	public function from_array( $config ) {
-		if ( isset( $config['name'] ) ) {
-			$this->name = $config['name'];
-		}
-		if ( isset( $config['label'] ) ) {
-			$this->label = $config['label'];
-		}
-		if ( isset( $config['control'] ) ) {
-			$this->control = $config['control'];
-		}
-		if ( isset( $config['type'] ) ) {
-			$this->type = $config['type'];
-		}
-		if ( isset( $config['order'] ) ) {
-			$this->order = $config['order'];
-		}
-		if ( isset( $config['settings'] ) ) {
-			$this->settings = $config['settings'];
+		$properties = [ 'name', 'label', 'control', 'type', 'order', 'settings' ];
+		foreach ( $properties as $property ) {
+			if ( isset( $config[ $property ] ) ) {
+				$this->$property = $config[ $property ];
+			}
 		}
 
 		if ( ! isset( $config['type'] ) && isset( $config['control'] ) ) {
@@ -126,8 +114,7 @@ class Field {
 		}
 
 		// Add any other non-default keys to the settings array.
-		$field_defaults = [ 'name', 'label', 'control', 'type', 'order', 'settings' ];
-		$field_settings = array_diff( array_keys( $config ), $field_defaults );
+		$field_settings = array_diff( array_keys( $config ), $properties );
 
 		foreach ( $field_settings as $settings_key ) {
 			$this->settings[ $settings_key ] = $config[ $settings_key ];
