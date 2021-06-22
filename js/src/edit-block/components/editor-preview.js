@@ -32,7 +32,7 @@ const EditorPreview = ( { setEditorMode } ) => {
 	const { block, changeBlock } = useBlock();
 	const { getFields } = useField();
 	const { previewAttributes = {} } = block;
-	const fields = getFields();
+	const fields = getFields().filter( ( field ) => 'inner_blocks' !== field.control );
 
 	/** @param {Object} newAttributes Attribute (field) names and values. */
 	const setAttributes = ( newAttributes ) => {
