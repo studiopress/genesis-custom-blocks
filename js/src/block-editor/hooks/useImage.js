@@ -13,6 +13,11 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 
 /**
+ * @callback RemoveImage Removes the image src.
+ * @return {void}
+ */
+
+/**
  * @callback SetIsUploading Sets whether the image is uploading.
  * @param {boolean} isUploading The new state for whether this is uploading.
  */
@@ -28,6 +33,7 @@ import { __, sprintf } from '@wordpress/i18n';
  * @property {string} imageSrc The src attribute of the <img>.
  * @property {boolean} isUploading Whether the image is uploading.
  * @property {OnSelect} onSelect Handler for selecting.
+ * @property {RemoveImage} removeImage Removes the image src.
  * @property {SetIsUploading} setIsUploading Sets whether the image is uploading.
  * @property {UploadFiles} uploadFiles Uploads the files.
  */
@@ -41,8 +47,9 @@ import { __, sprintf } from '@wordpress/i18n';
  * @return {UseImageReturn} The return value of this hook.
  */
 const useImage = ( fieldValue, onChange, allowedTypes ) => {
+	const defaultImageSrc = '';
+	const [ imageSrc, setImageSrc ] = useState( defaultImageSrc );
 	const [ isUploading, setIsUploading ] = useState( false );
-	const [ imageSrc, setImageSrc ] = useState( '' );
 	const [ imageAlt, setImageAlt ] = useState( '' );
 
 	// @ts-ignore: type definition file is missing getMedia().
@@ -93,6 +100,11 @@ const useImage = ( fieldValue, onChange, allowedTypes ) => {
 		setIsUploading( false );
 	};
 
+	/** @type {RemoveImage} */
+	const removeImage = () => {
+		setImageSrc( defaultImageSrc );
+	};
+
 	/** @type {UploadFiles} */
 	const uploadFiles = ( files ) => {
 		mediaUpload( {
@@ -111,6 +123,7 @@ const useImage = ( fieldValue, onChange, allowedTypes ) => {
 		imageSrc,
 		isUploading,
 		onSelect,
+		removeImage,
 		setIsUploading,
 		uploadFiles,
 	};

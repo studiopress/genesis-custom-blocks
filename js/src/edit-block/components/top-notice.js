@@ -12,14 +12,16 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { QuestionIcon, TemplateFile } from './';
+import { Notice, QuestionIcon, TemplateFile } from './';
 import { TEMPLATE_EDITOR_EDITING_MODE } from '../constants';
-import { useBlock, useTemplate } from '../hooks';
+import { hasRepeaterField } from '../helpers';
+import { useBlock, useField, useTemplate } from '../hooks';
 
 /**
  * @typedef {Object} TopNoticeProps The component props.
  * @property {import('./editor').EditorMode} editorMode The current editor mode.
  * @property {boolean} isOnboarding Whether the onboarding should display now.
+ * @property {import('./editor').SetEditorMode} setEditorMode Sets the current editor mode.
  */
 
 /**
@@ -28,12 +30,13 @@ import { useBlock, useTemplate } from '../hooks';
  * @param {TopNoticeProps} props
  * @return {React.ReactElement} The top notice.
  */
-const TopNotice = ( { editorMode, isOnboarding } ) => {
+const TopNotice = ( { editorMode, isOnboarding, setEditorMode } ) => {
 	const urlBlockTemplates = 'https://developer.wpengine.com/genesis-custom-blocks/get-started/add-a-custom-block-to-your-website-content/';
 	const urlGetStarted = 'https://developer.wpengine.com/genesis-custom-blocks/get-started/';
 	const urlTemplateFunctions = 'https://developer.wpengine.com/genesis-custom-blocks/functions/';
 	const isNewPost = useSelect( ( select ) => select( 'core/editor' ).isEditedPostNew() );
 	const { block } = useBlock();
+	const { getFields } = useField();
 	const { template } = useTemplate();
 
 	return (
@@ -81,11 +84,20 @@ const TopNotice = ( { editorMode, isOnboarding } ) => {
 					<div className="flex items-center">
 						<QuestionIcon />
 						<h4 className="text-lg font-semibold text-blue-900 ml-2">
-							{ __( 'Next step: Create your block template.', 'genesis-custom-blocks' ) }
+							{ __( 'Next step: Edit your block template.', 'genesis-custom-blocks' ) }
 						</h4>
 					</div>
 					<p className="text-sm mt-2 ml-2">
-						{ __( 'To display this block, you can use the Template Editor here or add this template file to your theme:', 'genesis-custom-blocks' ) }
+						{ __( 'Edit the template in the', 'genesis-custom-blocks' ) }
+						&nbsp;
+						<button
+							className="underline"
+							onClick={ () => setEditorMode( TEMPLATE_EDITOR_EDITING_MODE ) }
+						>
+							{ __( 'Template Editor', 'genesis-custom-blocks' ) }
+						</button>
+						&nbsp;
+						{ __( 'or add this template file to your theme:', 'genesis-custom-blocks' ) }
 					</p>
 					<p className="flex items-center w-auto text-xs font-mono mt-2 ml-2 px-2 py-1 bg-blue-200 rounded-sm">
 						<TemplateFile color="blue" templatePath={ template.templatePath } />
@@ -112,6 +124,24 @@ const TopNotice = ( { editorMode, isOnboarding } ) => {
 					</div>
 				</div>
 				: null
+			}
+			{
+				TEMPLATE_EDITOR_EDITING_MODE === editorMode && hasRepeaterField( getFields() )
+					? (
+						<Notice>
+							{ __( 'There is a repeater field, which will only display with', 'genesis-custom-blocks' ) }
+							&nbsp;
+							<a
+								className="underline"
+								href={ urlBlockTemplates }
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								{ __( 'PHP block templates', 'genesis-custom-blocks' ) }
+							</a>
+						</Notice>
+					)
+					: null
 			}
 		</>
 	);

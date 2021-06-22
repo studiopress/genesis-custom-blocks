@@ -335,9 +335,7 @@ class BlockPost extends ComponentAbstract {
 			$locations = genesis_custom_blocks()->get_template_locations( $block->name, 'block' );
 			$template  = genesis_custom_blocks()->locate_template( $locations, '', true );
 
-			if ( ! $template ) {
-				esc_html_e( 'No template found.', 'genesis-custom-blocks' );
-			} else {
+			if ( $template ) {
 				// Formatting to make the template path easier to understand.
 				$template_short  = str_replace( WP_CONTENT_DIR . '/themes/', '', $template );
 				$template_parts  = explode( '/', $template_short );
@@ -349,8 +347,13 @@ class BlockPost extends ComponentAbstract {
 						'wbr'  => [],
 					]
 				);
+			} elseif ( ! empty( $block->template_markup ) ) {
+				esc_html_e( 'Template Editor markup found', 'genesis-custom-blocks' );
+			} else {
+				esc_html_e( 'No Template Editor markup or template found', 'genesis-custom-blocks' );
 			}
 		}
+
 		if ( 'keywords' === $column ) {
 			$block = new Block( $post_id );
 			echo esc_html( implode( ', ', $block->keywords ) );

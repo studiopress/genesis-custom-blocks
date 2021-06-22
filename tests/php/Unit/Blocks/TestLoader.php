@@ -375,7 +375,7 @@ class TestLoader extends AbstractTemplate {
 		// There is still no template, but the user has the correct permissions, so this should output a warning.
 		$this->assertContains( '<div class="notice notice-warning">', $output );
 		$this->assertContains( $this->mock_block_name, $output );
-		$this->assertContains( 'not found', $output );
+		$this->assertContains( 'No Template Editor markup or template file was found:', $output );
 
 		/*
 		 * Test that the templates are used in the proper priority.
