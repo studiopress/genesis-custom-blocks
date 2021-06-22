@@ -48,6 +48,7 @@ const FieldPanel = ( {
 		deleteField,
 		duplicateField,
 		getField,
+		getFields,
 	} = useField();
 	const ref = useRef();
 	const didAutoSlug = useRef( false );
@@ -65,6 +66,17 @@ const FieldPanel = ( {
 	}, [ didAutoSlug, isNewField ] );
 
 	/**
+	 * Whether the block has at least one field with the control of 'inner_blocks'
+	 *
+	 * @return {boolean} Whether the block has an 'inner_blocks' field.
+	 */
+	const hasInnerBlocks = () => {
+		return getFields().some( ( field ) => 'inner_blocks' === field.control );
+	};
+
+	const field = getField( selectedField );
+
+	/**
 	 * Gets the control values, possibly excluding based on the selected field or the location.
 	 *
 	 * @return {Object[]} The control values.
@@ -75,12 +87,13 @@ const FieldPanel = ( {
 				return 'repeater' !== control.name; // Don't allow repeaters inside repeaters.
 			}
 
+			if ( control.name === 'inner_blocks' && field.control !== 'inner_blocks' && hasInnerBlocks() ) {
+				return false;
+			}
+
 			return ! currentLocation || control.locations.hasOwnProperty( currentLocation );
 		} );
 	};
-
-	const controlValues = getControlValues();
-	const field = getField( selectedField );
 
 	return (
 		<div className="p-4">
@@ -164,7 +177,7 @@ const FieldPanel = ( {
 								}
 							} }
 						>
-							{ controlValues.map( ( control, index ) => {
+							{ getControlValues().map( ( control, index ) => {
 								return <option value={ control.name } key={ `control-option-${ index }` }>{ control.label }</option>;
 							} ) }
 						</select>
