@@ -16,6 +16,7 @@ import { BUILDER_EDITING_MODE } from '../constants';
 import { useBlock, useField } from '../hooks';
 import { Fields } from '../../block-editor/components';
 import { getFieldsAsArray } from '../../common/helpers';
+import { EDIT_BLOCK_CONTEXT } from '../../common/constants';
 
 /**
  * @typedef {Object} EditorPreviewProps The component props.
@@ -32,7 +33,7 @@ const EditorPreview = ( { setEditorMode } ) => {
 	const { block, changeBlock } = useBlock();
 	const { getFields } = useField();
 	const { previewAttributes = {} } = block;
-	const fields = getFields().filter( ( field ) => 'inner_blocks' !== field.control );
+	const fields = getFields();
 
 	/** @param {Object} newAttributes Attribute (field) names and values. */
 	const setAttributes = ( newAttributes ) => {
@@ -67,6 +68,7 @@ const EditorPreview = ( { setEditorMode } ) => {
 					attributes: previewAttributes,
 				} }
 				parentBlock={ {} }
+				context={ EDIT_BLOCK_CONTEXT }
 			/>
 		</div>
 	);
