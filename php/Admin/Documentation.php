@@ -66,7 +66,6 @@ class Documentation extends ComponentAbstract {
 	 * @return string[] The filtered allowed hosts.
 	 */
 	public function add_redirect_host( $allowed_hosts ) {
-		array_push( $allowed_hosts, 'developer.wpengine.com' );
-		return $allowed_hosts;
+		return array_merge( $allowed_hosts, [ 'developer.wpengine.com' ] );
 	}
 }
