@@ -2,7 +2,14 @@
 
 ### 1.2.0 - 2021-06-28 ###
 
-Template Editor UI, allowing faster templates and previews
+New Template Editor, Editor Preview, and Front-end Preview
+
+* Template Editor UI, though the PHP templates still work just like before. [PR 65](https://github.com/studiopress/genesis-custom-blocks/pull/65), [PR 69](https://github.com/studiopress/genesis-custom-blocks/pull/69), [PR 72](https://github.com/studiopress/genesis-custom-blocks/pull/72)
+* Add Editor Preview and Front-end Preview. [PR 63](https://github.com/studiopress/genesis-custom-blocks/pull/63)
+* Don't display the editor form if there's no editor field. [PR 64](https://github.com/studiopress/genesis-custom-blocks/pull/64)
+* Fix an issue with the default value of 'Checkbox' and 'Toggle' fields. [PR 60](https://github.com/studiopress/genesis-custom-blocks/pull/60)
+* Display the help text in the TextareaArray setting. [PR 62](https://github.com/studiopress/genesis-custom-blocks/pull/62)
+* Improved abstraction by removing duplicated copy. [PR 78](https://github.com/studiopress/genesis-custom-blocks/pull/78)
 
 ### 1.1.0 - 2021-01-27 ###
 
