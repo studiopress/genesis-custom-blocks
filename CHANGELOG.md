@@ -1,5 +1,9 @@
 ## Changelog ##
 
+### 1.2.0 - 2021-06-28 ###
+
+Template Editor UI, allowing faster templates and previews
+
 ### 1.1.0 - 2021-01-27 ###
 
 New, more effortless editor, with undo/redo and separate editor/inspector
