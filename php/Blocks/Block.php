@@ -149,7 +149,7 @@ class Block {
 		}
 
 		if ( isset( $config['templateCss'] ) ) {
-			$this->template_markup = $config['templateCss'];
+			$this->template_css = $config['templateCss'];
 		}
 
 		if ( isset( $config['templateMarkup'] ) ) {
