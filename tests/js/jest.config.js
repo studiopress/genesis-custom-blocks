@@ -2,7 +2,7 @@ module.exports = {
 	rootDir: '../../',
 	...require( '@wordpress/scripts/config/jest-unit.config' ),
 	transform: {
-		'^.+\\.[jt]sx?$': '<rootDir>/node_modules/@wordpress/scripts/config/babel-transform',
+		'^.+\\.[jt]sx?$': 'ts-jest',
 	},
 	testPathIgnorePatterns: [
 		'<rootDir>/.git',
