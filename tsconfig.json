@@ -1,15 +1,14 @@
 {
 	"compilerOptions": {
 		"noImplicitAny": false,
-		"module": "ESNext",
-		"target": "ESNext",
+		"module": "ES6",
+		"target": "ES6",
 		"moduleResolution": "Node",
 		"esModuleInterop": true,
-		"jsx": "react",
+		"jsx": "react-jsx",
 		"allowJs": true,
 		"checkJs": true,
-		"sourceMap": true,
-		"noEmit": true
+		"sourceMap": true
 	},
 	"include": [
 		"js/src/**/*"

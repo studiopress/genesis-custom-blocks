@@ -4,6 +4,7 @@ module.exports = {
 	transform: {
 		'^.+\\.[jt]sx?$': 'ts-jest',
 	},
+	testEnvironment: 'jsdom',
 	testPathIgnorePatterns: [
 		'<rootDir>/.git',
 		'<rootDir>/node_modules',
