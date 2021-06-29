@@ -28,7 +28,8 @@ class InnerBlocks extends ControlAbstract {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->label = __( 'Inner Blocks', 'genesis-custom-blocks' );
+		$this->label     = __( 'Inner Blocks', 'genesis-custom-blocks' );
+		$this->locations = [ 'editor' => __( 'Editor', 'genesis-custom-blocks' ) ];
 	}
 
 	/**
