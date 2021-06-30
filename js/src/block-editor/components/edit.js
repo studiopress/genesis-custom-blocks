@@ -33,19 +33,27 @@ const Edit = ( { blockProps, block } ) => {
 		return ! field.location || EDITOR_LOCATION === field.location;
 	} );
 
+	/**
+	 * Gets the passed block has a selected InnerBlock.
+	 *
+	 * @param {Object} blockCandidate The block to examine for InnerBlocks.
+	 * @param {Object} selectedBlock The block that's selected in the editor.
+	 * @return {boolean} Whether the passed block has a selected InnerBlock.
+	 */
+	const hasSelectedInnerBlock = ( blockCandidate, selectedBlock ) => {
+		return blockCandidate?.innerBlocks?.length &&
+			blockCandidate.innerBlocks.some( ( innerBlock ) =>
+				innerBlock.clientId === selectedBlock.clientId || hasSelectedInnerBlock( innerBlock, selectedBlock )
+			);
+	};
+
 	/** @type {boolean} Whether this block has an inner block that's selected. */
 	const isInnerBlockSelected = useSelect(
 		( select ) => {
 			const store = select( blockEditorStore );
-			// @ts-ignore Type definition is outdated.
-			const ownBlock = store.getBlock( clientId );
-			// @ts-ignore Type definition is outdated.
-			const selectedBlock = store.getSelectedBlock();
 
-			return ownBlock?.innerBlocks?.length &&
-				ownBlock.innerBlocks.some( ( innerBlock ) =>
-					innerBlock.clientId === selectedBlock.clientId
-				);
+			// @ts-ignore Type definition is outdated.
+			return hasSelectedInnerBlock( store.getBlock( clientId ), store.getSelectedBlock() );
 		},
 		[ clientId, isSelected ]
 	);
