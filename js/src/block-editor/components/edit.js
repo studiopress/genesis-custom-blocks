@@ -7,9 +7,9 @@ import * as React from 'react';
  * WordPress dependencies
  */
 import { store as blockEditorStore } from '@wordpress/block-editor';
-import { Icon } from '@wordpress/components';
+import { Icon, Notice } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import ServerSideRender from '@wordpress/server-side-render';
 
 /**
@@ -32,6 +32,15 @@ const Edit = ( { blockProps, block } ) => {
 	const hasEditorField = getFieldsAsArray( block.fields ).some( ( field ) => {
 		return ! field.location || EDITOR_LOCATION === field.location;
 	} );
+
+	const innerBlockFields = getFieldsAsArray( block.fields ).filter( ( field ) => {
+		return 'inner_blocks' === field.control;
+	} );
+
+	const hasInnerBlocksField = Boolean( innerBlockFields.length );
+	const innerBlocksFieldLabel = hasInnerBlocksField
+		? innerBlockFields[ 0 ].label
+		: '';
 
 	/**
 	 * Gets whether the passed block has a selected InnerBlock.
@@ -80,12 +89,26 @@ const Edit = ( { blockProps, block } ) => {
 						/>
 					</div>
 				) : (
-					<ServerSideRender
-						block={ `genesis-custom-blocks/${ block.name }` }
-						attributes={ attributes }
-						className="genesis-custom-blocks-editor__ssr"
-						httpMethod="POST"
-					/>
+					<>
+						{
+							hasInnerBlocksField
+								? (
+									<Notice status="info" isDismissible={ false }>
+										{ sprintf(
+											/* translators: %1$s: the field name */
+											__( 'The field %1$s will not display in this preview, but will display on the front-end', 'genesis-custom-blocks' ),
+											innerBlocksFieldLabel
+										) }
+									</Notice>
+								) : null
+						}
+						<ServerSideRender
+							block={ `genesis-custom-blocks/${ block.name }` }
+							attributes={ attributes }
+							className="genesis-custom-blocks-editor__ssr"
+							urlQueryArgs={ { innerContent: '<span>Here is something</span>' } }
+						/>
+					</>
 				) }
 			</div>
 		</>
