@@ -8,7 +8,7 @@
 use Genesis\CustomBlocks\Blocks\Controls\InnerBlocks;
 
 /**
- * Tests for class Text.
+ * Tests for class InnerBlocks.
  */
 class TestInnerBlocks extends \WP_UnitTestCase {
 
