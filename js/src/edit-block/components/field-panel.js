@@ -177,9 +177,9 @@ const FieldPanel = ( {
 								}
 							} }
 						>
-							{ getControlValues().map( ( control, index ) => {
-								return <option value={ control.name } key={ `control-option-${ index }` }>{ control.label }</option>;
-							} ) }
+							{ getControlValues().map( ( control, index ) => (
+								<option value={ control.name } key={ `control-option-${ index }` }>{ control.label }</option>
+							) ) }
 						</select>
 					</div>
 					<FieldSettings
