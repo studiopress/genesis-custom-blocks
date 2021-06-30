@@ -14,13 +14,19 @@ import { __ } from '@wordpress/i18n';
  */
 import { InnerBlocks } from '@wordpress/block-editor';
 import { EDIT_BLOCK_CONTEXT } from '../../common/constants';
+import { Notice } from '../../common/components';
 
 const GcbInnerBlocksControl = ( { field, context } ) => (
 	<BaseControl label={ field.label } help={ field.help } id={ `gcb-inner-blocks-${ field.name }` }>
 		{
 			EDIT_BLOCK_CONTEXT === context
-				? __( 'This field only works in the block editor.', 'genesis-custom-blocks' )
-				: <InnerBlocks />
+				? (
+					<Notice>
+						<span className="text-sm">
+							{ __( 'This field only works in the block editor.', 'genesis-custom-blocks' ) }
+						</span>
+					</Notice>
+				) : <InnerBlocks />
 		}
 	</BaseControl>
 );

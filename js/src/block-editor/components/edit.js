@@ -34,7 +34,7 @@ const Edit = ( { blockProps, block } ) => {
 	} );
 
 	/**
-	 * Gets the passed block has a selected InnerBlock.
+	 * Gets whether the passed block has a selected InnerBlock.
 	 *
 	 * @param {Object} blockCandidate The block to examine for InnerBlocks.
 	 * @param {Object} selectedBlock The block that's selected in the editor.
@@ -43,7 +43,8 @@ const Edit = ( { blockProps, block } ) => {
 	const hasSelectedInnerBlock = ( blockCandidate, selectedBlock ) => {
 		return blockCandidate?.innerBlocks?.length &&
 			blockCandidate.innerBlocks.some( ( innerBlock ) =>
-				innerBlock.clientId === selectedBlock.clientId || hasSelectedInnerBlock( innerBlock, selectedBlock )
+				( Boolean( selectedBlock?.clientId ) && innerBlock?.clientId === selectedBlock?.clientId ) ||
+				hasSelectedInnerBlock( innerBlock, selectedBlock )
 			);
 	};
 
