@@ -70,9 +70,7 @@ const FieldPanel = ( {
 	 *
 	 * @return {boolean} Whether the block has an 'inner_blocks' field.
 	 */
-	const hasInnerBlocks = () => {
-		return getFields().some( ( field ) => 'inner_blocks' === field.control );
-	};
+	const hasInnerBlocks = () => getFields().some( ( field ) => 'inner_blocks' === field.control );
 
 	const field = getField( selectedField );
 
