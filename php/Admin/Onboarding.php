@@ -350,7 +350,7 @@ class Onboarding extends ComponentAbstract {
 		$blocks = get_posts(
 			[
 				'post_type'   => genesis_custom_blocks()->get_post_type_slug(),
-				'numberposts' => '1',
+				'numberposts' => 1,
 				'post_status' => 'any',
 				'fields'      => 'ids',
 			]

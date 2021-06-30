@@ -31,7 +31,7 @@ const TemplateEditor = () => {
 	const { getFields } = useField();
 	const { templateCss = '', templateMarkup = '' } = block;
 	const exampleFieldName = getFields()?.shift()?.name ?? 'foo-baz';
-	const urlTemplateDocumentation = 'https://developer.wpengine.com/genesis-custom-blocks/get-started/add-a-custom-block-to-your-website-content/';
+	const urlTemplateDocumentation = 'https://developer.wpengine.com/genesis-custom-blocks/get-started/create-your-first-custom-block/';
 
 	useEffect( () => {
 		addCompleter( {
