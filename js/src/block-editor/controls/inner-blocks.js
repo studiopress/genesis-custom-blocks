@@ -17,24 +17,20 @@ import { EDIT_BLOCK_CONTEXT } from '../../common/constants';
 import { Notice } from '../../common/components';
 
 const GcbInnerBlocksControl = ( { field, context } ) => (
-	<BaseControl
-		label={ EDIT_BLOCK_CONTEXT === context ? undefined : field.label }
-		help={ field.help }
-		id={ `gcb-inner-blocks-${ field.name }` }
-	>
-		{
-			EDIT_BLOCK_CONTEXT === context
-				? (
-					<>
-						<BaseControl.VisualLabel>{ field.label }</BaseControl.VisualLabel>
+	<BaseControl help={ field.help } id={ `gcb-inner-blocks-${ field.name }` }>
+		<>
+			<BaseControl.VisualLabel>{ field.label }</BaseControl.VisualLabel>
+			{
+				EDIT_BLOCK_CONTEXT === context
+					? (
 						<Notice>
 							<span className="text-sm">
 								{ __( 'This field only works in the block editor.', 'genesis-custom-blocks' ) }
 							</span>
 						</Notice>
-					</>
-				) : <InnerBlocks />
-		}
+					) : <InnerBlocks />
+			}
+		</>
 	</BaseControl>
 );
 
