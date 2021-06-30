@@ -27,5 +27,5 @@ test( 'inner-blocks control', () => {
 	render( <GcbInnerBlocksControl { ...props } /> );
 	screen.getByText( props.field.help );
 	screen.getByText( props.field.label );
-	screen.getByText( 'This field only works in the block editor.' );
+	expect( screen.getByText( 'This field only works in the block editor.' ) ).toBeInTheDocument();
 } );
