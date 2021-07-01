@@ -118,7 +118,7 @@
 	padding: 4rem 2.5rem;
 	color: #fff;
 	background-size: cover;
-	background-image: url('../assets/images/gcb_gen_pro_hero_bg_img.png');
+	background-image: url('../assets/images/gcb-gen-pro-hero-bg-img.png');
 }
 
 .genesis-custom-blocks-pro .gcb-hero__actions {
@@ -244,7 +244,7 @@
 	border-radius: 6px;
 	padding: 20px;
 	/* background-color: var(--color-light-gray); */
-	background-image: url('../assets/images/gcb_gen_free_plan_bg.png');
+	background-image: url('../assets/images/gcb-gen-free-plan-bg.png');
 	background-size: cover;
 	color: var(--color-gray);
 	margin-top: 40px;
@@ -254,7 +254,7 @@
 
 .genesis-custom-blocks-pro .gen-feature-table--col:last-of-type {
 	/* background-color: var(--color-brand); */
-	background-image: url('../assets/images/gcb_gen_pro_plan_bg.png');
+	background-image: url('../assets/images/gcb-gen-pro-plan-bg.png');
 	background-size: cover;
 	color: var(--color-white);
 	margin-top: 0;
