@@ -7,6 +7,7 @@ import * as React from 'react';
  * WordPress dependencies
  */
 import { registerBlockType } from '@wordpress/blocks';
+import { InnerBlocks } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies
@@ -50,7 +51,7 @@ const registerBlocks = ( genesisCustomBlocks, gcbBlocks, EditComponent ) => {
 				return <EditComponent blockProps={ props } block={ block } />;
 			},
 			save() {
-				return null;
+				return <InnerBlocks.Content />;
 			},
 		} );
 	}

@@ -12,10 +12,11 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Notice, QuestionIcon, TemplateFile } from './';
+import { QuestionIcon, TemplateFile } from './';
 import { TEMPLATE_EDITOR_EDITING_MODE } from '../constants';
 import { hasRepeaterField } from '../helpers';
 import { useBlock, useField, useTemplate } from '../hooks';
+import { Notice } from '../../common/components';
 
 /**
  * @typedef {Object} TopNoticeProps The component props.

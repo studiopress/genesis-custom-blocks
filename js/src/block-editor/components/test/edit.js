@@ -18,6 +18,10 @@ jest.mock( '@wordpress/api-fetch', () => {
 	} );
 } );
 
+jest.mock( '@wordpress/data/build/components/use-select', () =>
+	jest.fn( () => false )
+);
+
 const getRangeField = ( location = 'editor' ) => ( {
 	location,
 	width: 100,

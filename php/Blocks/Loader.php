@@ -206,8 +206,8 @@ class Loader extends ComponentAbstract {
 			[
 				'attributes'      => $attributes,
 				// @see https://github.com/WordPress/gutenberg/issues/4671
-				'render_callback' => function ( $attributes ) use ( $block ) {
-					return $this->render_block_template( $block, $attributes );
+				'render_callback' => function ( $attributes, $content ) use ( $block ) {
+					return $this->render_block_template( $block, $attributes, $content );
 				},
 			]
 		);
@@ -307,12 +307,12 @@ class Loader extends ComponentAbstract {
 	/**
 	 * Renders the block provided a template is provided.
 	 *
-	 * @param Block $block The block to render.
-	 * @param array $attributes Attributes to render.
-	 *
+	 * @param Block  $block The block to render.
+	 * @param array  $attributes Attributes to render.
+	 * @param string $content The block InnerContent, if any.
 	 * @return mixed
 	 */
-	protected function render_block_template( $block, $attributes ) {
+	protected function render_block_template( $block, $attributes, $content ) {
 		$type = 'block';
 
 		// This is hacky, but the editor doesn't send the original request along.
@@ -347,6 +347,7 @@ class Loader extends ComponentAbstract {
 		 */
 		$this->data['attributes'] = apply_filters( 'genesis_custom_blocks_template_attributes', $attributes, $block->fields );
 		$this->data['config']     = $block;
+		$this->data['content']    = $content;
 
 		if ( ! is_admin() && ( ! defined( 'REST_REQUEST' ) || ! REST_REQUEST ) && ! wp_doing_ajax() ) {
 

@@ -5,6 +5,7 @@ import { __ } from '@wordpress/i18n';
 
 export const EDITOR_LOCATION = 'editor';
 export const INSPECTOR_LOCATION = 'inspector';
+export const EDIT_BLOCK_CONTEXT = 'edit-block';
 
 export const DEFAULT_LOCATION = EDITOR_LOCATION;
 export const LOCATIONS = [ EDITOR_LOCATION, INSPECTOR_LOCATION ];

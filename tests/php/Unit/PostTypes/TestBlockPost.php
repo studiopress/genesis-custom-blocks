@@ -107,6 +107,7 @@ class TestBlockPost extends \WP_UnitTestCase {
 				'number',
 				'color',
 				'image',
+				'inner_blocks',
 				'select',
 				'multiselect',
 				'toggle',
