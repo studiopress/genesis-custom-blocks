@@ -23,7 +23,6 @@ import { __ } from '@wordpress/i18n';
  */
 import { useMedia } from '../hooks';
 
-const allowedTypes = [ 'application' ];
 const defaultImgId = 0;
 
 const GcbFileControl = ( props ) => {
@@ -36,7 +35,7 @@ const GcbFileControl = ( props ) => {
 		removeMedia,
 		setIsUploading,
 		uploadFiles,
-	} = useMedia( fieldValue, onChange, allowedTypes );
+	} = useMedia( fieldValue, onChange );
 	const fileRegex = /[^\/]+\.[^\/]+$/;
 
 	return (
@@ -64,7 +63,7 @@ const GcbFileControl = ( props ) => {
 						</Button>
 					</>
 				) : (
-					<Placeholder className="gcb-image__placeholder" icon="format-image" label={ __( 'Image', 'genesis-custom-blocks' ) } instructions={ __( 'Drag an image, upload a new one or select a file from your library.', 'genesis-custom-blocks' ) }>
+					<Placeholder className="gcb-image__placeholder" icon="format-image" label={ __( 'File', 'genesis-custom-blocks' ) } instructions={ __( 'Drag a file, upload a new one or select a file from your library.', 'genesis-custom-blocks' ) }>
 						<DropZoneProvider>
 							<DropZone
 								onFilesDrop={ ( files ) => {
@@ -85,7 +84,7 @@ const GcbFileControl = ( props ) => {
 											setIsUploading( true );
 											uploadFiles( event.target.files );
 										} }
-										accept="application/*"
+										accept="*"
 										multiple={ false }
 									>
 										{ __( 'Upload', 'genesis-custom-blocks' ) }
@@ -94,7 +93,6 @@ const GcbFileControl = ( props ) => {
 										gallery={ false }
 										multiple={ false }
 										onSelect={ onSelect }
-										allowedTypes={ allowedTypes }
 										value={ getValue( props ) }
 										render={ ( { open } ) => (
 											<div className="components-media-library-button">

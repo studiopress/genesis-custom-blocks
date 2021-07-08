@@ -43,7 +43,7 @@ import { __, sprintf } from '@wordpress/i18n';
  *
  * @param {number|string} fieldValue The current field value.
  * @param {(imageId: number) => void} onChange Handles changing the field value.
- * @param {string[]} allowedTypes The allowed media types.
+ * @param {string[]} [allowedTypes] The allowed media types.
  * @return {UseMediaReturn} The return value of this hook.
  */
 const useMedia = ( fieldValue, onChange, allowedTypes ) => {
