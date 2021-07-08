@@ -40,11 +40,11 @@ const GcbFileControl = ( props ) => {
 
 	return (
 		<BaseControl className="genesis-custom-blocks-media-controls" label={ field.label } id={ `gcb-file-${ instanceId }` }>
-			{ !! field.help
+			{ Boolean( field.help )
 				? <p className="components-base-control__help">{ field.help }</p>
 				: null
 			}
-			{ !! mediaSrc
+			{ Boolean( mediaSrc )
 				? (
 					<>
 						{ mediaSrc.match( fileRegex )
@@ -63,7 +63,12 @@ const GcbFileControl = ( props ) => {
 						</Button>
 					</>
 				) : (
-					<Placeholder className="gcb-image__placeholder" icon="format-image" label={ __( 'File', 'genesis-custom-blocks' ) } instructions={ __( 'Drag a file, upload a new one or select a file from your library.', 'genesis-custom-blocks' ) }>
+					<Placeholder
+						className="gcb-image__placeholder"
+						icon="media-default"
+						label={ __( 'File', 'genesis-custom-blocks' ) }
+						instructions={ __( 'Drag a file, upload a new one or select a file from your library.', 'genesis-custom-blocks' ) }
+					>
 						<DropZoneProvider>
 							<DropZone
 								onFilesDrop={ ( files ) => {
