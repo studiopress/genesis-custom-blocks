@@ -101,7 +101,7 @@ class TestLoader extends AbstractTemplate {
 		$this->instance->register_hooks();
 
 		$this->assertEquals( 10, has_action( 'enqueue_block_editor_assets', [ $this->instance, 'editor_assets' ] ) );
-		$this->assertEquals( 10, has_filter( 'block_categories', [ $this->instance, 'register_categories' ] ) );
+		$this->assertEquals( 10, has_filter( 'block_categories_all', [ $this->instance, 'register_categories' ] ) );
 		$this->assertEquals( 10, has_action( 'init', [ $this->instance, 'retrieve_blocks' ] ) );
 		$this->assertEquals( 10, has_action( 'init', [ $this->instance, 'dynamic_block_loader' ] ) );
 		$this->assertEquals( 10, has_filter( 'rest_endpoints', [ $this->instance, 'add_rest_method' ] ) );

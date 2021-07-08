@@ -76,4 +76,27 @@ class TestFile extends \WP_UnitTestCase {
 
 		$this->assert_correct_settings( $expected_settings, $this->instance->settings );
 	}
+
+	/**
+	 * Test validate.
+	 *
+	 * @covers \Genesis\CustomBlocks\Blocks\Controls\File::validate()
+	 */
+	public function test_validate() {
+		$pdf_file      = 'example.pdf';
+		$attachment_id = $this->factory()->attachment->create_object(
+			[ 'file' => $pdf_file ],
+			0,
+			[
+				'post_mime_type' => 'application/pdf',
+			]
+		);
+
+		// This is needed because attachments seem to usually have this kind of metadata.
+		wp_update_attachment_metadata( $attachment_id, [ 'file' => $pdf_file ] );
+		$attachment_url = wp_get_attachment_url( $attachment_id );
+
+		$this->assertEquals( $attachment_url, $this->instance->validate( $attachment_id, true ) );
+		$this->assertEquals( $attachment_id, $this->instance->validate( $attachment_id, false ) );
+	}
 }

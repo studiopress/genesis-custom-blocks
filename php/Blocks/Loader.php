@@ -72,7 +72,7 @@ class Loader extends ComponentAbstract {
 	 */
 	public function register_hooks() {
 		add_action( 'enqueue_block_editor_assets', [ $this, 'editor_assets' ] );
-		add_filter( 'block_categories', [ $this, 'register_categories' ] );
+		add_filter( 'block_categories_all', [ $this, 'register_categories' ] );
 		add_action( 'init', [ $this, 'retrieve_blocks' ] );
 		add_action( 'init', [ $this, 'dynamic_block_loader' ] );
 		add_filter( 'rest_endpoints', [ $this, 'add_rest_method' ] );
