@@ -16,6 +16,26 @@ import {
 	visitAdminPage,
 } from '@wordpress/e2e-test-utils';
 
+const uploadMediaFile = async ( $context, fileName ) => {
+	await ( await queries.findAllByRole( $context, 'button', { name: /media library/i } ) )[ 0 ].click();
+	const inputSelector = '.media-modal input[type=file]';
+	await page.waitForSelector( inputSelector );
+	const $input = await page.$( inputSelector );
+
+	const testImagePath = path.join( __dirname, '..', 'assets', fileName );
+	const newFileName = uuid();
+	const fileExtension = fileName.match( /.[^\.]+$/ )[ 0 ];
+	const tmpFilePath = path.join( os.tmpdir(), `${ newFileName }${ fileExtension }` );
+	fs.copyFileSync( testImagePath, tmpFilePath );
+
+	await $input.uploadFile( tmpFilePath );
+	const buttonSelector = '.media-button-select:not([disabled])';
+	await page.waitForSelector( buttonSelector );
+	await page.click( buttonSelector );
+
+	return newFileName;
+};
+
 describe( 'AllFields', () => {
 	it( 'creates the block and makes the fields available in the block editor', async () => {
 		const { findAllByLabelText, findAllByText, findByLabelText, findByRole, findByText } = queries;
@@ -54,6 +74,10 @@ describe( 'AllFields', () => {
 			image: {
 				label: 'Testing Image',
 				name: 'testing-image',
+			},
+			file: {
+				label: 'Testing File',
+				name: 'testing-file',
 			},
 			select: {
 				label: 'Testing Select',
@@ -113,6 +137,7 @@ describe( 'AllFields', () => {
 		await addNewField( 'number' );
 		await addNewField( 'color' );
 		await addNewField( 'image' );
+		await addNewField( 'file' );
 		await addNewField( 'select' );
 		await ( await findByLabelText( $editBlockDocument, /choices/i ) ).type( fields.select.choices );
 		await addNewField( 'multiselect' );
@@ -146,20 +171,8 @@ describe( 'AllFields', () => {
 		await typeIntoField( 'number' );
 		await typeIntoField( 'color' );
 
-		await ( await findByRole( $blockEditorDocument, 'button', { name: /media library/i } ) ).click();
-		const inputSelector = '.media-modal input[type=file]';
-		await page.waitForSelector( inputSelector );
-		const $input = await page.$( inputSelector );
-
-		const testImagePath = path.join( __dirname, '..', 'assets', 'trombone.jpg' );
-		const imageFileName = uuid();
-		const tmpFileName = path.join( os.tmpdir(), imageFileName + '.jpg' );
-		fs.copyFileSync( testImagePath, tmpFileName );
-
-		await $input.uploadFile( tmpFileName );
-		const buttonSelector = '.media-button-select:not([disabled])';
-		await page.waitForSelector( buttonSelector );
-		await page.click( buttonSelector );
+		const imageFileName = await uploadMediaFile( $blockEditorDocument, 'trombone.jpg' );
+		const fileUploadName = await uploadMediaFile( $blockEditorDocument, 'example.pdf' );
 
 		await ( await findByLabelText( $blockEditorDocument, fields.select.label ) ).select( fields.select.value );
 		await page.click( `[value=${ fields.multiselect.value }` );
@@ -191,6 +204,7 @@ describe( 'AllFields', () => {
 		await findByText( $blockEditorDocument, getExpectedText( 'block_field', 'color' ), options );
 
 		await findByText( $blockEditorDocument, imageFileName, options );
+		await findByText( $blockEditorDocument, fileUploadName, options );
 
 		await findByText( $blockEditorDocument, getExpectedText( 'block_value', 'select' ), options );
 		await findByText( $blockEditorDocument, getExpectedText( 'block_field', 'select' ), options );

@@ -23,7 +23,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { useMedia } from '../hooks';
 
-const defaultImgId = 0;
+const defaultFileId = 0;
 
 const GcbFileControl = ( props ) => {
 	const { field, getValue, instanceId, onChange } = props;
@@ -40,11 +40,11 @@ const GcbFileControl = ( props ) => {
 
 	return (
 		<BaseControl className="genesis-custom-blocks-media-controls" label={ field.label } id={ `gcb-file-${ instanceId }` }>
-			{ Boolean( field.help )
+			{ !! field.help
 				? <p className="components-base-control__help">{ field.help }</p>
 				: null
 			}
-			{ Boolean( mediaSrc )
+			{ !! mediaSrc
 				? (
 					<>
 						{ mediaSrc.match( fileRegex )
@@ -55,7 +55,7 @@ const GcbFileControl = ( props ) => {
 							disabled={ !! isUploading }
 							className="gcb-image__remove"
 							onClick={ () => {
-								onChange( defaultImgId );
+								onChange( defaultFileId );
 								removeMedia();
 							} }
 						>
