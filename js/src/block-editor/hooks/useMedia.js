@@ -52,14 +52,13 @@ const useMedia = ( fieldValue, onChange, allowedTypes ) => {
 	const [ isUploading, setIsUploading ] = useState( false );
 	const [ mediaAlt, setImageAlt ] = useState( '' );
 
-	// @ts-ignore: type definition file is missing getMedia().
-	const { getMedia } = useSelect( ( select ) => {
-		return select( 'core' );
+	// @ts-ignore: type definition file does not have getMedia().
+	const newImage = useSelect( ( select ) => {
+		// @ts-ignore The function isn't in the declaration file.
+		return select( 'core' ).getMedia( fieldValue );
 	} );
 
 	useEffect( () => {
-		const newImage = getMedia( fieldValue );
-
 		if ( newImage?.source_url ) { // eslint-disable-line camelcase
 			setMediaSrc( newImage.source_url );
 		} else if ( 'string' === typeof newImage ) {
@@ -77,7 +76,7 @@ const useMedia = ( fieldValue, onChange, allowedTypes ) => {
 		} else {
 			setImageAlt( __( 'This image has no alt attribute', 'genesis-custom-blocks' ) );
 		}
-	}, [ fieldValue, getMedia ] );
+	}, [ newImage ] );
 
 	/** @param {Object} image The image to update. */
 	const updateImageSrc = ( image ) => {

@@ -48,7 +48,7 @@ const GcbFileControl = ( props ) => {
 				? (
 					<>
 						{ mediaSrc.match( fileRegex )
-							? mediaSrc.match( fileRegex )[ 0 ]
+							? <pre>{ mediaSrc.match( fileRegex )[ 0 ] }</pre>
 							: null
 						}
 						<Button
