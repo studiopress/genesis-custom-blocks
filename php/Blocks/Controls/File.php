@@ -57,12 +57,6 @@ class File extends ControlAbstract {
 	 * @return string|int|false The value to be made available or echoed on the front-end template, false if none found.
 	 */
 	public function validate( $value, $echo ) {
-		$image_id = intval( $value );
-
-		if ( $echo ) {
-			return wp_get_attachment_url( $image_id );
-		} else {
-			return $image_id;
-		}
+		return $echo ? wp_get_attachment_url( intval( $value ) ) : intval( $value );
 	}
 }
