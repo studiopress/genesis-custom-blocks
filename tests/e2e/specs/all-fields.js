@@ -79,6 +79,10 @@ describe( 'AllFields', () => {
 				label: 'Testing File',
 				name: 'testing-file',
 			},
+			inner_blocks: {
+				label: 'Testing Inner Blocks',
+				name: 'testing-inner-blocks',
+			},
 			select: {
 				label: 'Testing Select',
 				name: 'testing-select',
@@ -138,6 +142,7 @@ describe( 'AllFields', () => {
 		await addNewField( 'color' );
 		await addNewField( 'image' );
 		await addNewField( 'file' );
+		await addNewField( 'inner_blocks' );
 		await addNewField( 'select' );
 		await ( await findByLabelText( $editBlockDocument, /choices/i ) ).type( fields.select.choices );
 		await addNewField( 'multiselect' );

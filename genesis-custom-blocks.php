@@ -8,7 +8,7 @@
  *
  * Plugin Name: Genesis Custom Blocks
  * Description: The easy way to build custom blocks for Gutenberg.
- * Version: 1.1.0
+ * Version: 1.2.0
  * Author: Genesis Custom Blocks
  * Author URI: https://studiopress.com
  * License: GPL2
@@ -42,7 +42,7 @@ function genesis_custom_blocks() {
 }
 
 /**
- * Setup the plugin instance.
+ * Set up the plugin instance.
  */
 genesis_custom_blocks()
 	->set_basename( plugin_basename( __FILE__ ) )

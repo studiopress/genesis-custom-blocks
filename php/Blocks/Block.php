@@ -130,20 +130,11 @@ class Block {
 	 * @return void
 	 */
 	public function from_array( $config ) {
-		if ( isset( $config['name'] ) ) {
-			$this->name = $config['name'];
-		}
-
-		if ( isset( $config['title'] ) ) {
-			$this->title = $config['title'];
-		}
-
-		if ( isset( $config['excluded'] ) ) {
-			$this->excluded = $config['excluded'];
-		}
-
-		if ( isset( $config['icon'] ) ) {
-			$this->icon = $config['icon'];
+		$properties = [ 'name', 'title', 'excluded', 'icon' ];
+		foreach ( $properties as $property ) {
+			if ( isset( $config[ $property ] ) ) {
+				$this->$property = $config [ $property ];
+			}
 		}
 
 		if ( isset( $config['category'] ) ) {
@@ -158,7 +149,7 @@ class Block {
 		}
 
 		if ( isset( $config['templateCss'] ) ) {
-			$this->template_markup = $config['templateCss'];
+			$this->template_css = $config['templateCss'];
 		}
 
 		if ( isset( $config['templateMarkup'] ) ) {

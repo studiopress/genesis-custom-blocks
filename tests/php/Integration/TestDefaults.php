@@ -144,7 +144,7 @@ class TestDefaults extends AbstractAttribute {
 		$block->from_array( $this->get_block_config() );
 		genesis_custom_blocks()->loader->set_plugin( new Plugin() );
 		genesis_custom_blocks()->loader->init();
-		$rendered_template = $this->invoke_protected_method( genesis_custom_blocks()->loader, 'render_block_template', [ $block, $this->attributes ] );
+		$rendered_template = $this->invoke_protected_method( genesis_custom_blocks()->loader, 'render_block_template', [ $block, $this->attributes, '' ] );
 		$actual_template   = str_replace( [ "\t", "\n" ], '', $rendered_template );
 
 		// The 'className' should be present.

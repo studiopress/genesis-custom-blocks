@@ -11,7 +11,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Notice } from './';
+import { Notice } from '../../common/components';
 
 /**
  * @typedef {Object} PreviewNoticeProps The component props.

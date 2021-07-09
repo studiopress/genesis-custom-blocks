@@ -76,6 +76,7 @@ class BlockPost extends ComponentAbstract {
 			'number',
 			'color',
 			'image',
+			'inner_blocks',
 			'select',
 			'multiselect',
 			'toggle',

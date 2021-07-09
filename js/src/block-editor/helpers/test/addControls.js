@@ -19,6 +19,7 @@ test( 'addControls', () => {
 			email: expect.anything(),
 			file: expect.anything(),
 			image: expect.anything(),
+			inner_blocks: expect.anything(),
 			multiselect: expect.anything(),
 			number: expect.anything(),
 			radio: expect.anything(),

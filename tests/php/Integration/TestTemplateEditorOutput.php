@@ -151,7 +151,7 @@ class TestTemplateEditorOutput extends AbstractAttribute {
 		);
 
 		genesis_custom_blocks()->loader->retrieve_blocks();
-		$rendered_template = $this->invoke_protected_method( genesis_custom_blocks()->loader, 'render_block_template', [ $block, $this->attributes ] );
+		$rendered_template = $this->invoke_protected_method( genesis_custom_blocks()->loader, 'render_block_template', [ $block, $this->attributes, '' ] );
 		$actual_template   = str_replace( [ "\t", "\n" ], '', $rendered_template );
 
 		foreach ( $this->string_fields as $field ) {

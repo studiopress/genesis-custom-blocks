@@ -27,13 +27,9 @@ const getControl = ( field ) => {
  * @return {string} The class name.
  */
 const getClassName = ( field ) => {
-	let className = 'genesis-custom-blocks-control';
-
-	if ( field.width ) {
-		className += ' width-' + field.width;
-	}
-
-	return className;
+	return field.width
+		? `genesis-custom-blocks-control width-${ field.width }`
+		: 'genesis-custom-blocks-control';
 };
 
 /**
@@ -42,6 +38,7 @@ const getClassName = ( field ) => {
  * @property {Object} parentBlock The block where the fields are.
  * @property {Object} parentBlockProps The props to pass to the control function.
  * @property {number} [rowIndex] The index of the repeater row, if this field is in one (optional).
+ * @property {string} [context] Where this will render, either in the GCB editor (edit-block) or the block editor.
  */
 
 /**
@@ -50,7 +47,7 @@ const getClassName = ( field ) => {
  * @param {FieldsProps} props The component props.
  * @return {React.ReactElement} The fields.
  */
-const Fields = ( { fields, parentBlock, parentBlockProps, rowIndex } ) => (
+const Fields = ( { fields, parentBlock, parentBlockProps, rowIndex, context } ) => (
 	<>
 		{
 			fields.map( ( field ) => {
@@ -130,6 +127,7 @@ const Fields = ( { fields, parentBlock, parentBlockProps, rowIndex } ) => (
 							parentBlock={ parentBlock }
 							rowIndex={ rowIndex }
 							parentBlockProps={ parentBlockProps }
+							context={ context }
 						/>
 					</div>
 					: null;
