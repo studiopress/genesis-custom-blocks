@@ -76,6 +76,7 @@ class Loader extends ComponentAbstract {
 		add_action( 'init', [ $this, 'dynamic_block_loader' ] );
 		add_filter( 'rest_endpoints', [ $this, 'add_rest_method' ] );
 
+		// TODO: once 'Requires at least' is bumped to 5.8, delete these conditionals and just use 'block_categories_all'.
 		if ( is_wp_version_compatible( '5.8' ) ) {
 			add_filter( 'block_categories_all', [ $this, 'register_categories' ] );
 		} else {
