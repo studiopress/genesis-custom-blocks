@@ -1,5 +1,9 @@
 ## Changelog ##
 
+### 1.3.0 - 2021-07-20 ###
+
+InnerBlocks and File field
+
 ### 1.2.0 - 2021-06-28 ###
 
 New Template Editor, Editor Preview, and Front-end Preview
