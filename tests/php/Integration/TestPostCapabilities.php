@@ -47,7 +47,6 @@ class TestPostCapabilities extends \WP_UnitTestCase {
 		$this->block_post = new BlockPost();
 		$this->block_post->set_plugin( genesis_custom_blocks() );
 		$this->block_post->register_post_type();
-		$this->block_post->add_caps();
 		$this->post_id = $this->factory()->post->create( [ 'post_type' => $this->post_type_slug ] );
 	}
 
@@ -121,6 +120,7 @@ class TestPostCapabilities extends \WP_UnitTestCase {
 	public function test_user_capability( $user_role, $capability, $expected ) {
 		set_current_screen( 'edit-post' );
 		wp_set_current_user( $this->factory()->user->create( [ 'role' => $user_role ] ) );
+		$this->block_post->add_caps();
 
 		$this->assertEquals( $expected, current_user_can( $capability, $this->post_id ) );
 	}
