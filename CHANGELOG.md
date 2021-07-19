@@ -1,5 +1,13 @@
 ## Changelog ##
 
+### 1.3.0 - 2021-07-20 ###
+
+InnerBlocks, File field, WP 5.8 compatibility
+
+* Add InnerBlocks, allowing any block inside a GCB block. [PR 68](https://github.com/studiopress/genesis-custom-blocks/pull/68)
+* Add a file field, like for .pdf or .zip files. [PR 74](https://github.com/studiopress/genesis-custom-blocks/pull/74)
+* In WP 5.8, prevent a PHP notice by using the new filter 'block_categories_all'. [PR 85](https://github.com/studiopress/genesis-custom-blocks/pull/85) 
+
 ### 1.2.0 - 2021-06-28 ###
 
 New Template Editor, Editor Preview, and Front-end Preview
