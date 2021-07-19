@@ -28,12 +28,12 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 
 /**
- * @typedef {Object} UseImageReturn The return value of the hook.
- * @property {string} imageAlt The alt attribute of the <img>.
- * @property {string} imageSrc The src attribute of the <img>.
- * @property {boolean} isUploading Whether the image is uploading.
+ * @typedef {Object} UseMediaReturn The return value of the hook.
+ * @property {string} mediaAlt The alt attribute of the <img>.
+ * @property {string} mediaSrc The src attribute of the media.
+ * @property {boolean} isUploading Whether the media is uploading.
  * @property {OnSelect} onSelect Handler for selecting.
- * @property {RemoveImage} removeImage Removes the image src.
+ * @property {RemoveImage} removeMedia Removes the media src.
  * @property {SetIsUploading} setIsUploading Sets whether the image is uploading.
  * @property {UploadFiles} uploadFiles Uploads the files.
  */
@@ -43,67 +43,64 @@ import { __, sprintf } from '@wordpress/i18n';
  *
  * @param {number|string} fieldValue The current field value.
  * @param {(imageId: number) => void} onChange Handles changing the field value.
- * @param {string[]} allowedTypes The allowed media types.
- * @return {UseImageReturn} The return value of this hook.
+ * @param {string[]} [allowedTypes] The allowed media types.
+ * @return {UseMediaReturn} The return value of this hook.
  */
-const useImage = ( fieldValue, onChange, allowedTypes ) => {
+const useMedia = ( fieldValue, onChange, allowedTypes ) => {
 	const defaultImageSrc = '';
-	const [ imageSrc, setImageSrc ] = useState( defaultImageSrc );
+	const [ mediaSrc, setMediaSrc ] = useState( defaultImageSrc );
 	const [ isUploading, setIsUploading ] = useState( false );
-	const [ imageAlt, setImageAlt ] = useState( '' );
+	const [ mediaAlt, setImageAlt ] = useState( '' );
 
-	// @ts-ignore: type definition file is missing getMedia().
-	const { getMedia } = useSelect( ( select ) => {
-		return select( 'core' );
+	/* @type {Object|undefined} */
+	const media = useSelect( ( select ) => {
+		// @ts-ignore The function isn't in the declaration file.
+		return select( 'core' ).getMedia( fieldValue );
 	} );
 
 	useEffect( () => {
-		const newImage = getMedia( fieldValue );
-
-		if ( newImage?.source_url ) { // eslint-disable-line camelcase
-			setImageSrc( newImage.source_url );
-		} else if ( 'string' === typeof newImage ) {
+		if ( media?.source_url ) {
+			setMediaSrc( media.source_url );
+		} else if ( 'string' === typeof media ) {
 			// Backwards-compatibility: the fieldValue used to be the URL, not the ID.
-			setImageSrc( newImage );
+			setMediaSrc( media );
 		}
 
-		if ( newImage?.alt ) {
-			setImageAlt( newImage.alt );
-		} else if ( newImage?.source_url ) { // eslint-disable-line camelcase
+		if ( media?.alt ) {
+			setImageAlt( media.alt );
+		} else if ( media?.source_url ) { // eslint-disable-line camelcase
 			setImageAlt(
 				/* translators: %1$s: the image src */
-				sprintf( __( 'This image has no alt attribute, but its src is %1$s', 'genesis-custom-blocks' ), newImage.source_url )
+				sprintf( __( 'This has no alt attribute, but its src is %1$s', 'genesis-custom-blocks' ), media.source_url )
 			);
 		} else {
-			setImageAlt( __( 'This image has no alt attribute', 'genesis-custom-blocks' ) );
+			setImageAlt( __( 'This has no alt attribute', 'genesis-custom-blocks' ) );
 		}
-	}, [ fieldValue, getMedia ] );
+	}, [ media ] );
 
-	/** @param {Object} image The image to update. */
-	const updateImageSrc = ( image ) => {
-		if ( image?.id ) {
-			onChange( parseInt( image.id ) );
-			setImageSrc( image?.url );
+	/** @param {Object} ownMedia The media to update. */
+	const updateSrc = ( ownMedia ) => {
+		if ( ownMedia?.id ) {
+			onChange( parseInt( ownMedia.id ) );
+			setMediaSrc( ownMedia?.url );
 		}
 	};
 
 	/** @type {OnSelect} */
-	const onSelect = ( image ) => {
-		if ( ! image.hasOwnProperty( 'url' ) || ! image.hasOwnProperty( 'id' ) ) {
+	const onSelect = ( ownMedia ) => {
+		if ( ! ownMedia.hasOwnProperty( 'url' ) || ! ownMedia.hasOwnProperty( 'id' ) ) {
 			return;
 		}
-		if ( 'blob' === image.url.substr( 0, 4 ) ) {
+		if ( 'blob' === ownMedia.url.substr( 0, 4 ) ) {
 			return; // Still uploading…
 		}
 
-		updateImageSrc( image );
+		updateSrc( ownMedia );
 		setIsUploading( false );
 	};
 
 	/** @type {RemoveImage} */
-	const removeImage = () => {
-		setImageSrc( defaultImageSrc );
-	};
+	const removeImage = () => setMediaSrc( defaultImageSrc );
 
 	/** @type {UploadFiles} */
 	const uploadFiles = ( files ) => {
@@ -119,14 +116,14 @@ const useImage = ( fieldValue, onChange, allowedTypes ) => {
 	};
 
 	return {
-		imageAlt,
-		imageSrc,
+		mediaAlt,
+		mediaSrc,
 		isUploading,
 		onSelect,
-		removeImage,
+		removeMedia: removeImage,
 		setIsUploading,
 		uploadFiles,
 	};
 };
 
-export default useImage;
+export default useMedia;

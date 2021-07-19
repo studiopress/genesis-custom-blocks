@@ -104,6 +104,7 @@ class TestBlockPost extends \WP_UnitTestCase {
 				'textarea',
 				'url',
 				'email',
+				'file',
 				'number',
 				'color',
 				'image',
