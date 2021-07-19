@@ -6,7 +6,10 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
-import { MediaUpload } from '@wordpress/block-editor';
+import {
+	MediaUpload,
+	MediaUploadCheck,
+} from '@wordpress/block-editor';
 import {
 	BaseControl,
 	Button,
@@ -87,24 +90,26 @@ const GcbImageControl = ( props ) => {
 									>
 										{ __( 'Upload', 'genesis-custom-blocks' ) }
 									</FormFileUpload>
-									<MediaUpload
-										gallery={ false }
-										multiple={ false }
-										onSelect={ onSelect }
-										allowedTypes={ allowedTypes }
-										value={ getValue( props ) }
-										render={ ( { open } ) => (
-											<div className="components-media-library-button">
-												<Button
-													disabled={ !! isUploading }
-													className="editor-media-placeholder__button"
-													onClick={ open }
-												>
-													{ __( 'Media Library', 'genesis-custom-blocks' ) }
-												</Button>
-											</div>
-										) }
-									/>
+									<MediaUploadCheck>
+										<MediaUpload
+											gallery={ false }
+											multiple={ false }
+											onSelect={ onSelect }
+											allowedTypes={ allowedTypes }
+											value={ getValue( props ) }
+											render={ ( { open } ) => (
+												<div className="components-media-library-button">
+													<Button
+														disabled={ !! isUploading }
+														className="editor-media-placeholder__button"
+														onClick={ open }
+													>
+														{ __( 'Media Library', 'genesis-custom-blocks' ) }
+													</Button>
+												</div>
+											) }
+										/>
+									</MediaUploadCheck>
 								</>
 							)
 						}
