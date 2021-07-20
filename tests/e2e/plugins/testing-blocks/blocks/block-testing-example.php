@@ -15,6 +15,7 @@ $field_names = [
 	'testing-number',
 	'testing-color',
 	'testing-image',
+	'testing-file',
 	'testing-select',
 	'testing-multiselect',
 	'testing-toggle',

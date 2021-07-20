@@ -5,6 +5,7 @@ import GcbTextControl from './text';
 import GcbTextareaControl from './textarea';
 import GcbURLControl from './url';
 import GcbEmailControl from './email';
+import GcbFileControl from './file';
 import GcbNumberControl from './number';
 import GcbColorControl from './color';
 import GcbImageControl from './image';
@@ -21,6 +22,7 @@ export default {
 	textarea: GcbTextareaControl,
 	url: GcbURLControl,
 	email: GcbEmailControl,
+	file: GcbFileControl,
 	number: GcbNumberControl,
 	color: GcbColorControl,
 	image: GcbImageControl,
