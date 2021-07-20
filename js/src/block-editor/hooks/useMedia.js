@@ -1,8 +1,9 @@
 /**
  * WordPress dependencies
  */
+import { store as blockEditorStore } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
-import { mediaUpload } from '@wordpress/editor';
+import { mediaUpload as legacyMediaUpload } from '@wordpress/editor';
 import { useEffect, useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 
@@ -56,6 +57,13 @@ const useMedia = ( fieldValue, onChange, allowedTypes ) => {
 	const media = useSelect( ( select ) => {
 		// @ts-ignore The function isn't in the declaration file.
 		return select( 'core' ).getMedia( fieldValue );
+	} );
+
+	/* @type {function|undefined} */
+	const mediaUpload = useSelect( ( select ) => {
+		// @ts-ignore The function isn't in the declaration file.
+		const { getSettings } = select( blockEditorStore );
+		return getSettings()?.mediaUpload || legacyMediaUpload;
 	} );
 
 	useEffect( () => {

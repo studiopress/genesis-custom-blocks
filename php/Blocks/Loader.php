@@ -126,7 +126,7 @@ class Loader extends ComponentAbstract {
 		wp_enqueue_script(
 			$js_handle,
 			$this->assets['url']['entry'],
-			$js_config['dependencies'],
+			[],
 			$js_config['version'],
 			true
 		);
