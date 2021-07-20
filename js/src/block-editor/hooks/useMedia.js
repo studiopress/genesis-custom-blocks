@@ -63,7 +63,7 @@ const useMedia = ( fieldValue, onChange, allowedTypes ) => {
 	const mediaUpload = useSelect( ( select ) => {
 		// @ts-ignore The function isn't in the declaration file.
 		const { getSettings } = select( blockEditorStore );
-		return getSettings().mediaUpload || legacyMediaUpload;
+		return getSettings()?.mediaUpload || legacyMediaUpload;
 	} );
 
 	useEffect( () => {
