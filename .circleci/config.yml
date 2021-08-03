@@ -109,6 +109,12 @@ jobs:
       - nodegit-workaround
       - set-up-packages
       - run: npm run wp-env start && npm run test:e2e
+      - run:
+          command: |
+            if [ -d artifacts ]; then cp -r artifacts /tmp/; fi;
+          when: on_fail
+      - store_artifacts:
+          path: /tmp/artifacts/
 
   svn-deploy:
     executor:
