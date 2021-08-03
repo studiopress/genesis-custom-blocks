@@ -16,7 +16,7 @@ const customPostType = 'genesis_custom_block';
 
 describe( 'NoField', () => {
 	it( 'creates a block with no field, and makes it available in the editor', async () => {
-		const { findAllByText, findByText, findByLabelText } = queries;
+		const { findByText, findByLabelText } = queries;
 
 		// Create a new block and publish it right away.
 		await visitAdminPage( 'post-new.php', `?post_type=${ customPostType }` );
