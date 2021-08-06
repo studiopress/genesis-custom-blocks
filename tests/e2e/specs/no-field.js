@@ -23,7 +23,7 @@ describe( 'NoField', () => {
 		const $editBlockDocument = await getDocument( page );
 		await ( await findByLabelText( $editBlockDocument, /category/i ) ).select( 'media' );
 		( await findByText( $editBlockDocument, /publish/i ) ).click();
-		await findByText( $editBlockDocument, /update/i );
+		await findAllByText( $editBlockDocument, /published/i );
 
 		// Create a new post and add the new block.
 		await createNewPost();
