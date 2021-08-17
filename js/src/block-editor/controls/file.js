@@ -29,7 +29,7 @@ import { useMedia } from '../hooks';
 const defaultFileId = 0;
 
 const GcbFileControl = ( props ) => {
-	const { field, getValue, instanceId, onChange } = props;
+	const { field, getValue, clientId, onChange } = props;
 	const fieldValue = getValue( props );
 	const {
 		mediaSrc,
@@ -40,9 +40,10 @@ const GcbFileControl = ( props ) => {
 		uploadFiles,
 	} = useMedia( fieldValue, onChange );
 	const fileRegex = /[^\/]+\.[^\/]+$/;
+	const id = `gcb-file-${ clientId }`;
 
 	return (
-		<BaseControl className="genesis-custom-blocks-media-controls" label={ field.label } id={ `gcb-file-${ instanceId }` }>
+		<BaseControl className="genesis-custom-blocks-media-controls" label={ field.label } id={ id }>
 			{ !! field.help
 				? <p className="components-base-control__help">{ field.help }</p>
 				: null
@@ -55,6 +56,7 @@ const GcbFileControl = ( props ) => {
 							: null
 						}
 						<Button
+							id={ id }
 							disabled={ !! isUploading }
 							className="gcb-image__remove"
 							onClick={ () => {
@@ -106,6 +108,7 @@ const GcbFileControl = ( props ) => {
 											render={ ( { open } ) => (
 												<div className="components-media-library-button">
 													<Button
+														id={ id }
 														disabled={ !! isUploading }
 														className="editor-media-placeholder__button"
 														onClick={ open }

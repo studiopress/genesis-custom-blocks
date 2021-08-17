@@ -30,7 +30,7 @@ const allowedTypes = [ 'image' ];
 const defaultImgId = 0;
 
 const GcbImageControl = ( props ) => {
-	const { field, getValue, instanceId, onChange } = props;
+	const { field, getValue, clientId, onChange } = props;
 	const fieldValue = getValue( props );
 	const {
 		mediaAlt,
@@ -41,9 +41,10 @@ const GcbImageControl = ( props ) => {
 		setIsUploading,
 		uploadFiles,
 	} = useMedia( fieldValue, onChange, allowedTypes );
+	const id = `gcb-image-${ clientId }`;
 
 	return (
-		<BaseControl className="genesis-custom-blocks-media-controls" label={ field.label } id={ `gcb-image-${ instanceId }` }>
+		<BaseControl className="genesis-custom-blocks-media-controls" label={ field.label } id={ id }>
 			{ !! field.help
 				? <p className="components-base-control__help">{ field.help }</p>
 				: null
@@ -53,6 +54,7 @@ const GcbImageControl = ( props ) => {
 					<>
 						<img className="gcb-image__img" src={ mediaSrc } alt={ mediaAlt } />
 						<Button
+							id={ id }
 							disabled={ !! isUploading }
 							className="gcb-image__remove"
 							onClick={ () => {
@@ -64,7 +66,11 @@ const GcbImageControl = ( props ) => {
 						</Button>
 					</>
 				) : (
-					<Placeholder className="gcb-image__placeholder" icon="format-image" label={ __( 'Image', 'genesis-custom-blocks' ) } instructions={ __( 'Drag an image, upload a new one or select a file from your library.', 'genesis-custom-blocks' ) }>
+					<Placeholder
+						className="gcb-image__placeholder"
+						icon="format-image"
+						instructions={ __( 'Drag an image, upload a new one or select a file from your library.', 'genesis-custom-blocks' ) }
+					>
 						<DropZoneProvider>
 							<DropZone
 								onFilesDrop={ ( files ) => {
@@ -100,6 +106,7 @@ const GcbImageControl = ( props ) => {
 											render={ ( { open } ) => (
 												<div className="components-media-library-button">
 													<Button
+														id={ id }
 														disabled={ !! isUploading }
 														className="editor-media-placeholder__button"
 														onClick={ open }
