@@ -23,45 +23,41 @@ import { getFieldsAsArray } from '../../common/helpers';
  * @param {Object} props.block The block.
  * @return {React.ReactElement} The inspector controls.
  */
-const GcbInspector = ( { blockProps, block } ) => {
-	const fields = getFieldsAsArray( block.fields ).map( ( field ) => {
-		// If it's not meant for the inspector, continue (return null).
-		if ( ! field.location || ! field.location.includes( 'inspector' ) ) {
-			return null;
-		}
+const GcbInspector = ( { blockProps, block } ) => (
+	<InspectorControls key={ `inspector-controls${ block.name }` }>
+		{ getFieldsAsArray( block.fields ).map( ( field ) => {
+			// If it's not meant for the inspector, continue (return null).
+			if ( ! field.location || ! field.location.includes( 'inspector' ) ) {
+				return null;
+			}
 
-		const loadedControls = applyFilters( 'genesisCustomBlocks.controls', {} );
-		const Control = loadedControls[ field.control ];
-		if ( ! Control ) {
-			return null;
-		}
+			const loadedControls = applyFilters( 'genesisCustomBlocks.controls', {} );
+			const Control = loadedControls[ field.control ];
+			if ( ! Control ) {
+				return null;
+			}
 
-		const { attributes, setAttributes } = blockProps;
-		const attr = { ...attributes };
+			const { attributes, setAttributes } = blockProps;
+			const attr = { ...attributes };
 
-		return (
-			<PanelBody key={ `inspector-controls-panel-${ field.name }` }>
-				<Control
-					field={ field }
-					getValue={ () => {
-						return attr[ field.name ];
-					} }
-					onChange={ ( newValue ) => {
-						attr[ field.name ] = newValue;
-						setAttributes( attr );
-					} }
-					parentBlock={ block }
-					parentBlockProps={ blockProps }
-				/>
-			</PanelBody>
-		);
-	} );
-
-	return (
-		<InspectorControls key={ `inspector-controls${ block.name }` }>
-			{ fields }
-		</InspectorControls>
-	);
-};
+			return (
+				<PanelBody key={ `inspector-controls-panel-${ field.name }` }>
+					<Control
+						field={ field }
+						getValue={ () => {
+							return attr[ field.name ];
+						} }
+						onChange={ ( newValue ) => {
+							attr[ field.name ] = newValue;
+							setAttributes( attr );
+						} }
+						parentBlock={ block }
+						parentBlockProps={ blockProps }
+					/>
+				</PanelBody>
+			);
+		} ) }
+	</InspectorControls>
+);
 
 export default GcbInspector;
