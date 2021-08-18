@@ -29,7 +29,7 @@ const allowedTypes = [ 'image' ];
 const defaultImgId = 0;
 
 const GcbImageControl = ( props ) => {
-	const { field, getValue, clientId, onChange } = props;
+	const { field, getValue, onChange, parentBlockProps } = props;
 	const fieldValue = getValue( props );
 	const {
 		mediaAlt,
@@ -40,7 +40,7 @@ const GcbImageControl = ( props ) => {
 		setIsUploading,
 		uploadFiles,
 	} = useMedia( fieldValue, onChange, allowedTypes );
-	const id = `gcb-image-${ clientId }`;
+	const id = `gcb-image-${ parentBlockProps?.clientId }`;
 
 	return (
 		<BaseControl className="genesis-custom-blocks-media-controls" label={ field.label } id={ id }>

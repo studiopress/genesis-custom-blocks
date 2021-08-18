@@ -28,7 +28,7 @@ import { useMedia } from '../hooks';
 const defaultFileId = 0;
 
 const GcbFileControl = ( props ) => {
-	const { field, getValue, clientId, onChange } = props;
+	const { field, getValue, onChange, parentBlockProps } = props;
 	const fieldValue = getValue( props );
 	const {
 		mediaSrc,
@@ -39,7 +39,7 @@ const GcbFileControl = ( props ) => {
 		uploadFiles,
 	} = useMedia( fieldValue, onChange );
 	const fileRegex = /[^\/]+\.[^\/]+$/;
-	const id = `gcb-file-${ clientId }`;
+	const id = `gcb-file-${ parentBlockProps?.clientId }`;
 
 	return (
 		<BaseControl className="genesis-custom-blocks-media-controls" label={ field.label } id={ id }>
