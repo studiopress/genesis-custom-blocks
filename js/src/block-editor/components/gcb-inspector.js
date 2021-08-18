@@ -24,7 +24,7 @@ import { getFieldsAsArray } from '../../common/helpers';
  * @return {React.ReactElement} The inspector controls.
  */
 const GcbInspector = ( { blockProps, block } ) => (
-	<InspectorControls key={ `inspector-controls${ block.name }` }>
+	<InspectorControls>
 		{ getFieldsAsArray( block.fields ).map( ( field ) => {
 			// If it's not meant for the inspector, continue (return null).
 			if ( ! field.location || ! field.location.includes( 'inspector' ) ) {
