@@ -85,7 +85,7 @@ jobs:
           command: |
             composer remove --dev phpunit/phpunit && composer install
             npm ci && npm run build
-            composer require --dev phpunit/phpunit 5.7.21
+            composer require --dev phpunit/phpunit 5.7.21 && composer update
             WP_TESTS_DIR=~/project/wordpress-develop/tests/phpunit ./vendor/bin/phpunit
 
   js-tests:
