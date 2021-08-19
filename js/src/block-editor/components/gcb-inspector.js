@@ -6,8 +6,8 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
-import { PanelBody } from '@wordpress/components';
 import { InspectorControls } from '@wordpress/block-editor';
+import { PanelBody } from '@wordpress/components';
 import { applyFilters } from '@wordpress/hooks';
 
 /**
@@ -37,19 +37,15 @@ const GcbInspector = ( { blockProps, block } ) => (
 				return null;
 			}
 
-			const { attributes, setAttributes } = blockProps;
-			const attr = { ...attributes };
-
 			return (
 				<PanelBody key={ `inspector-controls-panel-${ field.name }` }>
 					<Control
 						field={ field }
-						getValue={ () => {
-							return attr[ field.name ];
-						} }
+						getValue={ () => blockProps.attributes[ field.name ] }
 						onChange={ ( newValue ) => {
-							attr[ field.name ] = newValue;
-							setAttributes( attr );
+							blockProps.setAttributes( {
+								[ field.name ]: newValue,
+							} );
 						} }
 						parentBlock={ block }
 						parentBlockProps={ blockProps }
