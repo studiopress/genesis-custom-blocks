@@ -102,11 +102,12 @@ class EditBlock extends ComponentAbstract {
 			return;
 		}
 
+		$js_config = require $this->plugin->get_path( 'js/dist/edit-block.asset.php' );
 		wp_enqueue_script(
 			self::SCRIPT_SLUG,
 			$this->plugin->get_url( 'js/dist/edit-block.js' ),
-			[],
-			filemtime( $this->plugin->get_path( 'js/dist/edit-block.js' ) ),
+			$js_config['dependencies'],
+			$js_config['version'],
 			true
 		);
 
@@ -135,20 +136,21 @@ class EditBlock extends ComponentAbstract {
 			'before'
 		);
 
-		$edit_block_style_path = 'css/dist/edit-block.css';
+		$edit_block_style_path   = 'css/dist/edit-block.css';
+		$edit_block_style_config = require $this->plugin->get_path( 'css/dist/edit-block.asset.php' );
 		wp_enqueue_style(
 			self::STYLE_SLUG,
 			$this->plugin->get_url( $edit_block_style_path ),
 			[ 'wp-components' ],
-			filemtime( $this->plugin->get_path( $edit_block_style_path ) )
+			$edit_block_style_config['version']
 		);
 
-		$block_editor_style_path = 'css/dist/blocks.editor.css';
+		$editor_style_config = require $this->plugin->get_path( 'css/dist/blocks.editor.asset.php' );
 		wp_enqueue_style(
 			'genesis-custom-blocks-editor-css',
-			$this->plugin->get_url( $block_editor_style_path ),
-			[],
-			filemtime( $this->plugin->get_path( $block_editor_style_path ) )
+			$this->plugin->get_url( 'css/dist/blocks.editor.css' ),
+			$editor_style_config['dependencies'],
+			$editor_style_config['version']
 		);
 
 	}
