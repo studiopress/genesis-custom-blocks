@@ -8,8 +8,6 @@ const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 /**
  * WordPress dependencies
  */
-const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extraction-webpack-plugin' );
-const { defaultRequestToExternal, defaultRequestToHandle } = require( '@wordpress/dependency-extraction-webpack-plugin/lib/util' );
 const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -58,33 +56,6 @@ module.exports = {
 		} ),
 		new MiniCssExtractPlugin( {
 			filename: '[name].css',
-		} ),
-		new DependencyExtractionWebpackPlugin( {
-			useDefaults: false,
-			requestToHandle: ( request ) => {
-				switch ( request ) {
-					case '@wordpress/dom-ready':
-					case '@wordpress/i18n':
-					case '@wordpress/server-side-render':
-					case '@wordpress/url':
-						return undefined;
-
-					default:
-						return defaultRequestToHandle( request );
-				}
-			},
-			requestToExternal: ( request ) => {
-				switch ( request ) {
-					case '@wordpress/dom-ready':
-					case '@wordpress/i18n':
-					case '@wordpress/server-side-render':
-					case '@wordpress/url':
-						return undefined;
-
-					default:
-						return defaultRequestToExternal( request );
-				}
-			},
 		} ),
 	],
 };

@@ -120,14 +120,11 @@ class Loader extends ComponentAbstract {
 		$js_handle  = 'genesis-custom-blocks-blocks';
 		$css_handle = 'genesis-custom-blocks-editor-css';
 
-		$js_config  = require $this->plugin->get_path( 'js/dist/block-editor.asset.php' );
-		$css_config = require $this->plugin->get_path( 'css/dist/blocks.editor.asset.php' );
-
 		wp_enqueue_script(
 			$js_handle,
 			$this->assets['url']['entry'],
 			[],
-			$js_config['version'],
+			filemtime( $this->plugin->get_path( 'js/dist/edit-block.js' ) ),
 			true
 		);
 
@@ -162,8 +159,8 @@ class Loader extends ComponentAbstract {
 		wp_enqueue_style(
 			$css_handle,
 			$this->assets['url']['editor_style'],
-			$css_config['dependencies'],
-			$css_config['version']
+			[],
+			filemtime( $this->assets['path']['editor_style'] )
 		);
 
 		$block_names = wp_list_pluck( $this->blocks, 'name' );
