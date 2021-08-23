@@ -48,7 +48,11 @@ const registerBlocks = ( genesisCustomBlocks, gcbBlocks, EditComponent ) => {
 			keywords: block.keywords,
 			attributes: getGcbBlockAttributes( block.fields ),
 			edit( props ) {
-				return <EditComponent blockProps={ props } block={ block } />;
+				return <EditComponent
+					blockProps={ props }
+					block={ block }
+					isSelected={ props.isSelected }
+				/>;
 			},
 			save() {
 				return <InnerBlocks.Content />;
