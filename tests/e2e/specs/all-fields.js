@@ -16,8 +16,8 @@ import {
 	visitAdminPage,
 } from '@wordpress/e2e-test-utils';
 
-const uploadMediaFile = async ( $context, fileName ) => {
-	await ( await queries.findAllByRole( $context, 'button', { name: /media library/i } ) )[ 0 ].click();
+const uploadMediaFile = async ( $context, fieldLabel, fileName ) => {
+	await ( await queries.findByLabelText( $context, fieldLabel ) ).click();
 	const inputSelector = '.media-modal input[type=file]';
 	await page.waitForSelector( inputSelector );
 	const $input = await page.$( inputSelector );
@@ -154,7 +154,7 @@ describe( 'AllFields', () => {
 		await ( await findByLabelText( $editBlockDocument, /choices/i ) ).type( fields.radio.choices );
 
 		await ( await findByText( $editBlockDocument, /publish/i ) ).click();
-		await findAllByText( $editBlockDocument, /published/i );
+		await findByText( $editBlockDocument, /update/i );
 
 		// Ensure there's no console error in the 'Editor Preview' display.
 		await ( await findByText( $editBlockDocument, 'Editor Preview' ) ).click();
@@ -176,8 +176,8 @@ describe( 'AllFields', () => {
 		await typeIntoField( 'number' );
 		await typeIntoField( 'color' );
 
-		const imageFileName = await uploadMediaFile( $blockEditorDocument, 'trombone.jpg' );
-		const fileUploadName = await uploadMediaFile( $blockEditorDocument, 'example.pdf' );
+		const imageFileName = await uploadMediaFile( $blockEditorDocument, fields.image.label, 'trombone.jpg' );
+		const fileUploadName = await uploadMediaFile( $blockEditorDocument, fields.file.label, 'example.pdf' );
 
 		await ( await findByLabelText( $blockEditorDocument, fields.select.label ) ).select( fields.select.value );
 		await page.click( `[value=${ fields.multiselect.value }` );
