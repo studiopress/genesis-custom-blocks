@@ -15,7 +15,6 @@ import {
 	Button,
 	Placeholder,
 	DropZone,
-	DropZoneProvider,
 	FormFileUpload,
 	Spinner,
 } from '@wordpress/components';
@@ -29,7 +28,7 @@ import { useMedia } from '../hooks';
 const defaultFileId = 0;
 
 const GcbFileControl = ( props ) => {
-	const { field, getValue, instanceId, onChange } = props;
+	const { field, getValue, onChange, parentBlockProps } = props;
 	const fieldValue = getValue( props );
 	const {
 		mediaSrc,
@@ -40,9 +39,10 @@ const GcbFileControl = ( props ) => {
 		uploadFiles,
 	} = useMedia( fieldValue, onChange );
 	const fileRegex = /[^\/]+\.[^\/]+$/;
+	const id = `gcb-file-${ parentBlockProps?.clientId }`;
 
 	return (
-		<BaseControl className="genesis-custom-blocks-media-controls" label={ field.label } id={ `gcb-file-${ instanceId }` }>
+		<BaseControl className="genesis-custom-blocks-media-controls" label={ field.label } id={ id }>
 			{ !! field.help
 				? <p className="components-base-control__help">{ field.help }</p>
 				: null
@@ -55,6 +55,7 @@ const GcbFileControl = ( props ) => {
 							: null
 						}
 						<Button
+							id={ id }
 							disabled={ !! isUploading }
 							className="gcb-image__remove"
 							onClick={ () => {
@@ -72,16 +73,14 @@ const GcbFileControl = ( props ) => {
 						label={ __( 'File', 'genesis-custom-blocks' ) }
 						instructions={ __( 'Drag a file, upload a new one or select a file from your library.', 'genesis-custom-blocks' ) }
 					>
-						<DropZoneProvider>
-							<DropZone
-								onFilesDrop={ ( files ) => {
-									if ( files.length ) {
-										setIsUploading( true );
-										uploadFiles( files );
-									}
-								} }
-							/>
-						</DropZoneProvider>
+						<DropZone
+							onFilesDrop={ ( files ) => {
+								if ( files.length ) {
+									setIsUploading( true );
+									uploadFiles( files );
+								}
+							} }
+						/>
 						{ isUploading
 							? <Spinner />
 							: (
@@ -106,6 +105,7 @@ const GcbFileControl = ( props ) => {
 											render={ ( { open } ) => (
 												<div className="components-media-library-button">
 													<Button
+														id={ id }
 														disabled={ !! isUploading }
 														className="editor-media-placeholder__button"
 														onClick={ open }
