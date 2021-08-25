@@ -154,7 +154,7 @@ describe( 'AllFields', () => {
 		await ( await findByLabelText( $editBlockDocument, /choices/i ) ).type( fields.radio.choices );
 
 		await ( await findByText( $editBlockDocument, /publish/i ) ).click();
-		await findAllByText( $editBlockDocument, /published/i );
+		await findByText( $editBlockDocument, /update/i );
 
 		// Ensure there's no console error in the 'Editor Preview' display.
 		await ( await findByText( $editBlockDocument, 'Editor Preview' ) ).click();
