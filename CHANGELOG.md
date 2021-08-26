@@ -1,5 +1,12 @@
 ## Changelog ##
 
+### 1.3.1 - 2021-08-26 ###
+
+Fix for fields with long strings
+
+* Fix a regression that caused editor errors for fields with long strings. [PR 89](https://github.com/studiopress/genesis-custom-blocks/pull/89)
+* Update e2e tests for WP 5.8. [PR 87](https://github.com/studiopress/genesis-custom-blocks/pull/87)
+
 ### 1.3.0 - 2021-07-20 ###
 
 InnerBlocks, File field, WP 5.8 compatibility
