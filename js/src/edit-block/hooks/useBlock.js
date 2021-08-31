@@ -30,6 +30,7 @@ import {
  * @property {Object} fields Key/value pairs of Field objects.
  * @property {string} icon The block icon, like 'genesis_custom_block'.
  * @property {string[]} keywords The keywords, max 3.
+ * @property {boolean} [displayModal] Whether to display the editor fields in the modal.
  * @property {string[]} [excluded] The excluded post tpes, if any.
  * @property {Object} [previewAttributes] The block attributes to show in the GCB 'Editor Preview'.
  * @property {string} [templateCss] The template editor CSS.

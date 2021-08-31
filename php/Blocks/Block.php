@@ -68,6 +68,13 @@ class Block {
 	public $fields = [];
 
 	/**
+	 * Whether to display the fields in a modal.
+	 *
+	 * @var bool
+	 */
+	public $display_modal = false;
+
+	/**
 	 * Template editor CSS.
 	 *
 	 * @var string
@@ -148,6 +155,10 @@ class Block {
 			$this->keywords = $config['keywords'];
 		}
 
+		if ( isset( $config['displayModal'] ) ) {
+			$this->display_modal = $config['displayModal'];
+		}
+
 		if ( isset( $config['templateCss'] ) ) {
 			$this->template_css = $config['templateCss'];
 		}
@@ -175,6 +186,7 @@ class Block {
 		$config['icon']           = $this->icon;
 		$config['category']       = $this->category;
 		$config['keywords']       = $this->keywords;
+		$config['displayModal']   = $this->display_modal;
 		$config['templateCss']    = $this->template_css;
 		$config['templateMarkup'] = $this->template_markup;
 

@@ -69,17 +69,15 @@ const PostTypesSection = () => {
 				Array.isArray( postTypes ) && postTypes.length
 					? postTypes.map( ( postType ) => {
 						const id = `post-type-${ postType.slug }`;
-						const key = `post-type-enabled-${ postType.slug }`;
-						const checked = isEnabled( postType.slug );
 
 						return (
-							<div className="mt-2" key={ key }>
+							<div className="mt-2" key={ `post-type-enabled-${ postType.slug }` }>
 								<input
 									type="checkbox"
 									id={ id }
 									className="mr-2"
 									value="1"
-									checked={ checked }
+									checked={ isEnabled( postType.slug ) }
 									onChange={ ( event ) => {
 										handleChangePostTypes( event, postType.slug );
 									} }

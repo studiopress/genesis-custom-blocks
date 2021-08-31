@@ -12,6 +12,7 @@ import { Modal, Notice } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
+import { ENTER } from '@wordpress/keycodes';
 import ServerSideRender from '@wordpress/server-side-render';
 
 /**
@@ -75,7 +76,7 @@ const Edit = ( { block, blockProps } ) => {
 		<>
 			<GcbInspector blockProps={ blockProps } block={ block } />
 			<div className={ blockProps.className } key={ `form-controls-${ block.name }` }>
-				{ ( blockProps.isSelected || isInnerBlockSelected ) && hasEditorField && ! block.editorModal
+				{ ( blockProps.isSelected || isInnerBlockSelected ) && hasEditorField && ! block.displayModal
 					? <EditorForm block={ block } blockProps={ blockProps } />
 					: (
 						<>
@@ -99,8 +100,10 @@ const Edit = ( { block, blockProps } ) => {
 									setIsModalDisplaying( true );
 								} }
 								onKeyDown={ ( event ) => {
-									event.stopPropagation();
-									setIsModalDisplaying( true );
+									if ( ENTER === event.keyCode ) {
+										event.stopPropagation();
+										setIsModalDisplaying( true );
+									}
 								} }
 							>
 								{ isModalDisplaying
