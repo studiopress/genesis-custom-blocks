@@ -18,23 +18,8 @@ import { useBlock } from '../hooks';
  *
  * @return {React.ReactElement} The section to edit the block category.
  */
-const ModalDisplaySection = () => {
+const DisplayModalSection = () => {
 	const { block: { displayModal = false }, changeBlock } = useBlock();
-
-	/**
-	 * Handles changing whether a post type is enabled.
-	 *
-	 * @param {React.ChangeEvent} event The event on changing the post type.
-	 */
-	const handleChange = ( event ) => {
-		if ( ! event.target ) {
-			return;
-		}
-
-		// @ts-ignore
-		changeBlock( { displayModal: Boolean( event.target.checked ) } );
-	};
-
 	const id = 'display-in-modal';
 
 	return (
@@ -47,7 +32,10 @@ const ModalDisplaySection = () => {
 					value="1"
 					checked={ displayModal }
 					onChange={ ( event ) => {
-						handleChange( event );
+						if ( event.target ) {
+							// @ts-ignore
+							changeBlock( { displayModal: Boolean( event.target.checked ) } );
+						}
 					} }
 				/>
 				<label className="text-sm" htmlFor={ id }>
@@ -58,4 +46,4 @@ const ModalDisplaySection = () => {
 	);
 };
 
-export default ModalDisplaySection;
+export default DisplayModalSection;

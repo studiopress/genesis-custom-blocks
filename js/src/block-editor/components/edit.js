@@ -80,17 +80,16 @@ const Edit = ( { block, blockProps } ) => {
 					? <EditorForm block={ block } blockProps={ blockProps } />
 					: (
 						<>
-							{
-								hasInnerBlocksField
-									? (
-										<Notice status="info" isDismissible={ false }>
-											{ sprintf(
-												/* translators: %1$s: the field name */
-												__( 'The field %1$s will not display in this preview, but will display on the front-end', 'genesis-custom-blocks' ),
-												innerBlocksFieldLabel
-											) }
-										</Notice>
-									) : null
+							{ hasInnerBlocksField
+								? (
+									<Notice status="info" isDismissible={ false }>
+										{ sprintf(
+											/* translators: %1$s: the field name */
+											__( 'The field %1$s will not display in this preview, but will display on the front-end', 'genesis-custom-blocks' ),
+											innerBlocksFieldLabel
+										) }
+									</Notice>
+								) : null
 							}
 							<div
 								role="button"
