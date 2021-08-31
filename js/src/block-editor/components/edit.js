@@ -31,13 +31,13 @@ import { EDITOR_LOCATION } from '../../common/constants';
  */
 const Edit = ( { block, blockProps } ) => {
 	const [ isModalDisplaying, setIsModalDisplaying ] = useState( false );
-	const hasEditorField = getFieldsAsArray( block.fields ).some( ( field ) => {
-		return ! field.location || EDITOR_LOCATION === field.location;
-	} );
+	const hasEditorField = getFieldsAsArray( block.fields ).some(
+		( field ) => ! field.location || EDITOR_LOCATION === field.location
+	);
 
-	const innerBlockFields = getFieldsAsArray( block.fields ).filter( ( field ) => {
-		return 'inner_blocks' === field.control;
-	} );
+	const innerBlockFields = getFieldsAsArray( block.fields ).filter(
+		( field ) => 'inner_blocks' === field.control
+	);
 
 	const hasInnerBlocksField = Boolean( innerBlockFields.length );
 	const innerBlocksFieldLabel = hasInnerBlocksField
@@ -51,13 +51,12 @@ const Edit = ( { block, blockProps } ) => {
 	 * @param {Object} selectedBlock The block that's selected in the editor.
 	 * @return {boolean} Whether the passed block has a selected InnerBlock.
 	 */
-	const hasSelectedInnerBlock = ( blockCandidate, selectedBlock ) => {
-		return blockCandidate?.innerBlocks?.length &&
+	const hasSelectedInnerBlock = ( blockCandidate, selectedBlock ) =>
+		blockCandidate?.innerBlocks?.length &&
 			blockCandidate.innerBlocks.some( ( innerBlock ) =>
 				( Boolean( selectedBlock?.clientId ) && innerBlock?.clientId === selectedBlock?.clientId ) ||
 				hasSelectedInnerBlock( innerBlock, selectedBlock )
 			);
-	};
 
 	/** @type {boolean} Whether this block has an inner block that's selected. */
 	const isInnerBlockSelected = useSelect(
