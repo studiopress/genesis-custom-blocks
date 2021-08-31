@@ -54,7 +54,9 @@ const Edit = ( { block, blockProps } ) => {
 	const hasSelectedInnerBlock = ( blockCandidate, selectedBlock ) =>
 		blockCandidate?.innerBlocks?.length &&
 			blockCandidate.innerBlocks.some( ( innerBlock ) =>
-				( Boolean( selectedBlock?.clientId ) && innerBlock?.clientId === selectedBlock?.clientId ) ||
+				( Boolean( selectedBlock?.clientId ) &&
+					innerBlock?.clientId === selectedBlock?.clientId
+				) ||
 				hasSelectedInnerBlock( innerBlock, selectedBlock )
 			);
 
@@ -74,12 +76,8 @@ const Edit = ( { block, blockProps } ) => {
 			<GcbInspector blockProps={ blockProps } block={ block } />
 			<div className={ blockProps.className } key={ `form-controls-${ block.name }` }>
 				{ ( blockProps.isSelected || isInnerBlockSelected ) && hasEditorField && ! block.editorModal
-					? (
-						<EditorForm
-							block={ block }
-							blockProps={ blockProps }
-						/>
-					) : (
+					? <EditorForm block={ block } blockProps={ blockProps } />
+					: (
 						<>
 							{
 								hasInnerBlocksField
