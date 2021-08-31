@@ -27,10 +27,9 @@ import { EDITOR_LOCATION } from '../../common/constants';
  * @param {Object} props The props of this component.
  * @param {Object} props.block The block.
  * @param {Object} props.blockProps The block's props.
- * @param {boolean} props.isSelected Whether the block is
  * @return {React.ReactElement} The editor display.
  */
-const Edit = ( { block, blockProps, isSelected } ) => {
+const Edit = ( { block, blockProps } ) => {
 	const [ isModalDisplaying, setIsModalDisplaying ] = useState( false );
 	const hasEditorField = getFieldsAsArray( block.fields ).some( ( field ) => {
 		return ! field.location || EDITOR_LOCATION === field.location;
@@ -68,70 +67,72 @@ const Edit = ( { block, blockProps, isSelected } ) => {
 			// @ts-ignore Type definition is outdated.
 			return hasSelectedInnerBlock( store.getBlock( blockProps.clientId ), store.getSelectedBlock() );
 		},
-		[ blockProps.clientId, isSelected ]
+		[ blockProps.clientId, blockProps.isSelected ]
 	);
 
 	return (
 		<>
 			<GcbInspector blockProps={ blockProps } block={ block } />
 			<div className={ blockProps.className } key={ `form-controls-${ block.name }` }>
-				{ ( isSelected || isInnerBlockSelected ) && hasEditorField && false /* ! block?.editorModal */ ? (
-					<EditorForm
-						block={ block }
-						blockProps={ blockProps }
-					/>
-				) : (
-					<>
-						{
-							hasInnerBlocksField
-								? (
-									<Notice status="info" isDismissible={ false }>
-										{ sprintf(
-											/* translators: %1$s: the field name */
-											__( 'The field %1$s will not display in this preview, but will display on the front-end', 'genesis-custom-blocks' ),
-											innerBlocksFieldLabel
-										) }
-									</Notice>
-								) : null
-						}
-						<div
-							role="button"
-							tabIndex={ 0 }
-							onClick={ ( event ) => {
-								event.stopPropagation();
-								setIsModalDisplaying( true );
-							} }
-							onKeyDown={ ( event ) => {
-								event.stopPropagation();
-								setIsModalDisplaying( true );
-							} }
-						>
-							{ isModalDisplaying
-								? (
-									<Modal
-										title={ block.label }
-										// @ts-ignore The declaration file is outdated.
-										onRequestClose={ ( event ) => {
-											event.stopPropagation();
-											setIsModalDisplaying( false );
-										} }
-									>
-										<EditorForm
-											block={ block }
-											blockProps={ blockProps }
-										/>
-									</Modal>
-								) : null
+				{ ( blockProps.isSelected || isInnerBlockSelected ) && hasEditorField && ! block.editorModal
+					? (
+						<EditorForm
+							block={ block }
+							blockProps={ blockProps }
+						/>
+					) : (
+						<>
+							{
+								hasInnerBlocksField
+									? (
+										<Notice status="info" isDismissible={ false }>
+											{ sprintf(
+												/* translators: %1$s: the field name */
+												__( 'The field %1$s will not display in this preview, but will display on the front-end', 'genesis-custom-blocks' ),
+												innerBlocksFieldLabel
+											) }
+										</Notice>
+									) : null
 							}
-							<ServerSideRender
-								block={ `genesis-custom-blocks/${ block.name }` }
-								attributes={ blockProps.attributes }
-								className="genesis-custom-blocks-editor__ssr"
-								httpMethod="POST"
-							/>
-						</div>
-					</>
-				) }
+							<div
+								role="button"
+								tabIndex={ 0 }
+								onClick={ ( event ) => {
+									event.stopPropagation();
+									setIsModalDisplaying( true );
+								} }
+								onKeyDown={ ( event ) => {
+									event.stopPropagation();
+									setIsModalDisplaying( true );
+								} }
+							>
+								{ isModalDisplaying
+									? (
+										<Modal
+											title={ block.label }
+											// @ts-ignore The declaration file is outdated.
+											onRequestClose={ ( event ) => {
+												event.stopPropagation();
+												setIsModalDisplaying( false );
+											} }
+										>
+											<EditorForm
+												block={ block }
+												blockProps={ blockProps }
+											/>
+										</Modal>
+									) : null
+								}
+								<ServerSideRender
+									block={ `genesis-custom-blocks/${ block.name }` }
+									attributes={ blockProps.attributes }
+									className="genesis-custom-blocks-editor__ssr"
+									httpMethod="POST"
+								/>
+							</div>
+						</>
+					)
+				}
 			</div>
 		</>
 	);
