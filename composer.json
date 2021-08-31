@@ -26,7 +26,7 @@
         "lint": [
             "phpcs"
         ],
-          "lint-fix": [
+        "lint-fix": [
             "phpcbf"
         ],
         "test": [
