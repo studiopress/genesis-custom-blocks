@@ -6,6 +6,7 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
+// @ts-ignore Declaration file is outdated.
 import { store as blockEditorStore } from '@wordpress/block-editor';
 import { Modal, Notice } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
@@ -126,7 +127,7 @@ const Edit = ( { block, blockProps, isSelected } ) => {
 								block={ `genesis-custom-blocks/${ block.name }` }
 								attributes={ blockProps.attributes }
 								className="genesis-custom-blocks-editor__ssr"
-								urlQueryArgs={ { innerContent: '<span>Here is something</span>' } }
+								httpMethod="POST"
 							/>
 						</div>
 					</>

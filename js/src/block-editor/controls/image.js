@@ -15,7 +15,6 @@ import {
 	Button,
 	Placeholder,
 	DropZone,
-	DropZoneProvider,
 	FormFileUpload,
 	Spinner,
 } from '@wordpress/components';
@@ -30,7 +29,7 @@ const allowedTypes = [ 'image' ];
 const defaultImgId = 0;
 
 const GcbImageControl = ( props ) => {
-	const { field, getValue, instanceId, onChange } = props;
+	const { field, getValue, onChange, parentBlockProps } = props;
 	const fieldValue = getValue( props );
 	const {
 		mediaAlt,
@@ -41,9 +40,10 @@ const GcbImageControl = ( props ) => {
 		setIsUploading,
 		uploadFiles,
 	} = useMedia( fieldValue, onChange, allowedTypes );
+	const id = `gcb-image-${ parentBlockProps?.clientId }`;
 
 	return (
-		<BaseControl className="genesis-custom-blocks-media-controls" label={ field.label } id={ `gcb-image-${ instanceId }` }>
+		<BaseControl className="genesis-custom-blocks-media-controls" label={ field.label } id={ id }>
 			{ !! field.help
 				? <p className="components-base-control__help">{ field.help }</p>
 				: null
@@ -53,6 +53,7 @@ const GcbImageControl = ( props ) => {
 					<>
 						<img className="gcb-image__img" src={ mediaSrc } alt={ mediaAlt } />
 						<Button
+							id={ id }
 							disabled={ !! isUploading }
 							className="gcb-image__remove"
 							onClick={ () => {
@@ -64,17 +65,19 @@ const GcbImageControl = ( props ) => {
 						</Button>
 					</>
 				) : (
-					<Placeholder className="gcb-image__placeholder" icon="format-image" label={ __( 'Image', 'genesis-custom-blocks' ) } instructions={ __( 'Drag an image, upload a new one or select a file from your library.', 'genesis-custom-blocks' ) }>
-						<DropZoneProvider>
-							<DropZone
-								onFilesDrop={ ( files ) => {
-									if ( files.length ) {
-										setIsUploading( true );
-										uploadFiles( files );
-									}
-								} }
-							/>
-						</DropZoneProvider>
+					<Placeholder
+						className="gcb-image__placeholder"
+						icon="format-image"
+						instructions={ __( 'Drag an image, upload a new one or select a file from your library.', 'genesis-custom-blocks' ) }
+					>
+						<DropZone
+							onFilesDrop={ ( files ) => {
+								if ( files.length ) {
+									setIsUploading( true );
+									uploadFiles( files );
+								}
+							} }
+						/>
 						{ isUploading
 							? <Spinner />
 							: (
@@ -100,6 +103,7 @@ const GcbImageControl = ( props ) => {
 											render={ ( { open } ) => (
 												<div className="components-media-library-button">
 													<Button
+														id={ id }
 														disabled={ !! isUploading }
 														className="editor-media-placeholder__button"
 														onClick={ open }

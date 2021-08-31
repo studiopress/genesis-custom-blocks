@@ -20,12 +20,6 @@ jest.mock( '@wordpress/data/build/components/use-select', () =>
 	jest.fn( () => false )
 );
 
-// @todo: remove this when the console warning no longer appears.
-// Expected mock function not to be called but it was called with:
-// ["wp.components.DropZoneProvider is deprecated. Note: wp.component.DropZone no longer needs a provider. wp.components.DropZoneProvider is safe to remove from your code."]
-// Core still has an older components file, so removing the provider now crashes the editor.
-console.warn = jest.fn(); /* eslint-disable-line no-console */
-
 /**
  * Gets the props for the tested component.
  *
