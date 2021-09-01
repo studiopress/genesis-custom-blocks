@@ -94,6 +94,7 @@ const Edit = ( { block, blockProps } ) => {
 							<div
 								role="button"
 								tabIndex={ 0 }
+								aria-label={ __( 'Edit the block', 'genesis-custom-blocks' ) }
 								onClick={ ( event ) => {
 									event.stopPropagation();
 									setIsModalDisplaying( true );

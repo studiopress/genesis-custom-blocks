@@ -4,6 +4,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
+import user from '@testing-library/user-event';
 
 /**
  * Internal dependencies
@@ -38,7 +39,6 @@ const getRangeField = ( location = 'editor' ) => ( {
 } );
 
 const getBlock = ( location = 'editor' ) => ( {
-	location,
 	name: 'test-range',
 	title: 'Test Range',
 	excluded: [],
@@ -52,6 +52,7 @@ const getBlock = ( location = 'editor' ) => ( {
 	fields: {
 		range: getRangeField( location ),
 	},
+	displayModal: false,
 } );
 
 describe( 'Edit', () => {
@@ -74,6 +75,32 @@ describe( 'Edit', () => {
 				blockProps={ { isSelected: true } }
 			/>
 		);
+
+		expect( screen.queryByLabelText( /gcb block form/i ) ).not.toBeInTheDocument();
+		expect( screen.queryByText( getBlock().title ) ).not.toBeInTheDocument();
+	} );
+
+	it( 'does not display the block form when set to display in the modal', () => {
+		render(
+			<Edit
+				block={ {
+					...getBlock(),
+					displayModal: true,
+				} }
+				blockProps={ { isSelected: true } }
+			/>
+		);
+
+		expect( screen.queryByLabelText( /gcb block form/i ) ).not.toBeInTheDocument();
+		expect( screen.queryByText( getBlock().title ) ).not.toBeInTheDocument();
+
+		// Open the modal.
+		user.click( screen.getByLabelText( /edit the block/i ) );
+
+		expect( screen.getByLabelText( /gcb block form/i ) ).toBeInTheDocument();
+		expect( screen.getByText( getBlock().title ) ).toBeInTheDocument();
+
+		user.click( screen.getByLabelText( /close dialog/i ) );
 
 		expect( screen.queryByLabelText( /gcb block form/i ) ).not.toBeInTheDocument();
 		expect( screen.queryByText( getBlock().title ) ).not.toBeInTheDocument();
