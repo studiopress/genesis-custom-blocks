@@ -89,14 +89,11 @@ const GcbImageControl = ( props ) => {
 											uploadFiles( event.target.files );
 										} }
 										accept="image/*"
-										multiple={ false }
 									>
 										{ __( 'Upload', 'genesis-custom-blocks' ) }
 									</FormFileUpload>
 									<MediaUploadCheck>
 										<MediaUpload
-											gallery={ false }
-											multiple={ false }
 											onSelect={ onSelect }
 											allowedTypes={ allowedTypes }
 											value={ getValue( props ) }
