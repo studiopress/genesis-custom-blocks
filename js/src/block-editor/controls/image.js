@@ -103,7 +103,10 @@ const GcbImageControl = ( props ) => {
 														id={ id }
 														disabled={ !! isUploading }
 														className="editor-media-placeholder__button"
-														onClick={ open }
+														onClick={ () => {
+															document.dispatchEvent( new KeyboardEvent( 'keyup', { key: 'Escape' } ) ); // eslint-disable-line no-undef
+															open();
+														} }
 													>
 														{ __( 'Media Library', 'genesis-custom-blocks' ) }
 													</Button>
