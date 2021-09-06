@@ -19,6 +19,7 @@ import ServerSideRender from '@wordpress/server-side-render';
  * Internal dependencies
  */
 import { EditorForm, GcbInspector } from './';
+import { MEDIA_LIBRARY_BUTTON_CLASS } from '../constants';
 import { getFieldsAsArray } from '../../common/helpers';
 import { EDITOR_LOCATION } from '../../common/constants';
 
@@ -113,7 +114,13 @@ const Edit = ( { block, blockProps } ) => {
 											// @ts-ignore The declaration file is outdated.
 											onRequestClose={ ( event ) => {
 												event.stopPropagation();
-												setIsModalDisplaying( false );
+
+												// Mainly from https://github.com/WordPress/gutenberg/issues/12830#issuecomment-607644893
+												// If the close request is coming from clicking the 'Media Library' button,
+												// Don't close this modal.
+												if ( ! event.target.classList.contains( MEDIA_LIBRARY_BUTTON_CLASS ) ) {
+													setIsModalDisplaying( false );
+												}
 											} }
 										>
 											<EditorForm
