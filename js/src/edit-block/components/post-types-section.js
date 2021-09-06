@@ -14,7 +14,7 @@ import { __ } from '@wordpress/i18n';
 import { useBlock, usePostTypes } from '../hooks';
 
 /**
- * The category editor section.
+ * The post types section.
  *
  * @return {React.ReactElement} The section to edit the block category.
  */

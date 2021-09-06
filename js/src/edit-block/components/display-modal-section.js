@@ -14,7 +14,7 @@ import { __ } from '@wordpress/i18n';
 import { useBlock } from '../hooks';
 
 /**
- * The category editor section.
+ * The display modal section.
  *
  * @return {React.ReactElement} The section to edit the block category.
  */
