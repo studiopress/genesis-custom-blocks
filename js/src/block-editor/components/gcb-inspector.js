@@ -38,7 +38,10 @@ const GcbInspector = ( { blockProps, block } ) => (
 			}
 
 			return (
-				<PanelBody key={ `inspector-controls-panel-${ field.name }` }>
+				<PanelBody
+					className="gcb-inspector-form"
+					key={ `inspector-controls-panel-${ field.name }` }
+				>
 					<Control
 						field={ field }
 						getValue={ () => blockProps.attributes[ field.name ] }

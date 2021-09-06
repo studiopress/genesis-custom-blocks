@@ -21,12 +21,11 @@ import { getFieldsAsArray, getIconComponent } from '../../common/helpers';
  * @param {Object} props The props of this component.
  * @param {Object} props.block The block.
  * @param {Object} props.blockProps The block's props.
- *
  * @return {React.ReactElement} The editor display.
  */
 const EditorForm = ( { block, blockProps } ) => (
 	<div
-		className="block-form"
+		className="gcb-editor-form"
 		aria-label={ __( 'GCB block form', 'genesis-custom-blocks' ) }
 	>
 		<h3>

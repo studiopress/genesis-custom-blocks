@@ -18,8 +18,8 @@ $font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans
 	box-shadow: none;
 }
 
-/* Block form in editor & sidebar */
-.block-form {
+.gcb-editor-form,
+.gcb-inspector-form {
 
 	:required:invalid {
 		border-color: #c00000;
@@ -116,7 +116,7 @@ div[class^="wp-block-genesis-custom-blocks-"],
 	margin: 0;
 }
 
-.block-form {
+.gcb-editor-form {
 	border-left: none;
 	background: $dark-opacity-light-200;
 	padding: 22px 0 22px 22px;
