@@ -1,6 +1,7 @@
 /**
  * WordPress dependencies
  */
+// @ts-ignore Declaration is outdated.
 import { store as blockEditorStore } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
 import { mediaUpload as legacyMediaUpload } from '@wordpress/editor';

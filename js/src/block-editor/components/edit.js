@@ -27,7 +27,7 @@ import { EDITOR_LOCATION } from '../../common/constants';
  * The editor component for the block.
  *
  * @param {Object} props The props of this component.
- * @param {Object} props.block The block.
+ * @param {import('../../edit-block/hooks/useBlock').Block} props.block The block.
  * @param {Object} props.blockProps The block's props.
  * @return {React.ReactElement} The editor display.
  */
@@ -110,7 +110,7 @@ const Edit = ( { block, blockProps } ) => {
 								{ isModalDisplaying
 									? (
 										<Modal
-											title={ block.label }
+											title={ block.title }
 											// @ts-ignore The declaration file is outdated.
 											onRequestClose={ ( event ) => {
 												event.stopPropagation();
