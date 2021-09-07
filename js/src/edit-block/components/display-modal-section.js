@@ -39,7 +39,7 @@ const DisplayModalSection = () => {
 					} }
 				/>
 				<label className="text-sm" htmlFor={ id }>
-					{ __( 'Display In Modal', 'genesis-custom-blocks' ) }
+					{ __( 'Open block fields in a modal instead of rendering in place', 'genesis-custom-blocks' ) }
 				</label>
 			</div>
 		</div>
