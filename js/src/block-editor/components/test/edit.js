@@ -98,7 +98,7 @@ describe( 'Edit', () => {
 		user.click( screen.getByLabelText( /edit the block/i ) );
 
 		expect( screen.getByLabelText( /gcb block form/i ) ).toBeInTheDocument();
-		expect( screen.getAllByText( getBlock().title ) ).toBeInTheDocument();
+		screen.getAllByText( getBlock().title );
 
 		user.click( screen.getByLabelText( /close dialog/i ) );
 
