@@ -31,7 +31,7 @@ const SlugSection = () => {
 				value={ block.name }
 				onChange={ ( event ) => {
 					if ( event.target ) {
-						changeBlock( { name: event.target.value } );
+						changeBlock( { name: event.target.value.toLowerCase() } );
 					}
 				} }
 			/>
