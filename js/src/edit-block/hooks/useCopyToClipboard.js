@@ -29,7 +29,7 @@ function useUpdatedRef( value ) {
  * @return {import('react').RefObject} A ref to assign to the target element.
  */
 export default function useCopyToClipboard( text, onSuccess ) {
-	// Store the dependencies as refs and continuesly update them so they're
+	// Store the dependencies as refs and continuously updates them so they're
 	// fresh when the callback is called.
 	const textRef = useUpdatedRef( text );
 	const onSuccesRef = useUpdatedRef( onSuccess );

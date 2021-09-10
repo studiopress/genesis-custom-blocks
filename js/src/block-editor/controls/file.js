@@ -23,6 +23,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { MEDIA_LIBRARY_BUTTON_CLASS } from '../constants';
 import { useMedia } from '../hooks';
 
 const defaultFileId = 0;
@@ -107,7 +108,7 @@ const GcbFileControl = ( props ) => {
 													<Button
 														id={ id }
 														disabled={ !! isUploading }
-														className="editor-media-placeholder__button"
+														className={ MEDIA_LIBRARY_BUTTON_CLASS }
 														onClick={ open }
 													>
 														{ __( 'Media Library', 'genesis-custom-blocks' ) }

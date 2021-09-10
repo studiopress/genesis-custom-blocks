@@ -23,6 +23,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { MEDIA_LIBRARY_BUTTON_CLASS } from '../constants';
 import { useMedia } from '../hooks';
 
 const allowedTypes = [ 'image' ];
@@ -89,14 +90,11 @@ const GcbImageControl = ( props ) => {
 											uploadFiles( event.target.files );
 										} }
 										accept="image/*"
-										multiple={ false }
 									>
 										{ __( 'Upload', 'genesis-custom-blocks' ) }
 									</FormFileUpload>
 									<MediaUploadCheck>
 										<MediaUpload
-											gallery={ false }
-											multiple={ false }
 											onSelect={ onSelect }
 											allowedTypes={ allowedTypes }
 											value={ getValue( props ) }
@@ -105,7 +103,7 @@ const GcbImageControl = ( props ) => {
 													<Button
 														id={ id }
 														disabled={ !! isUploading }
-														className="editor-media-placeholder__button"
+														className={ MEDIA_LIBRARY_BUTTON_CLASS }
 														onClick={ open }
 													>
 														{ __( 'Media Library', 'genesis-custom-blocks' ) }

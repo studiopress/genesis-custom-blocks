@@ -14,6 +14,7 @@ import { __ } from '@wordpress/i18n';
  */
 import {
 	CategorySection,
+	DisplayModalSection,
 	IconSection,
 	KeywordsSection,
 	PostTypesSection,
@@ -34,6 +35,7 @@ const BlockPanel = () => (
 		<IconSection />
 		<CategorySection />
 		<KeywordsSection />
+		<DisplayModalSection />
 		<PostTypesSection />
 		<div className="mt-4">
 			<PostTrash />

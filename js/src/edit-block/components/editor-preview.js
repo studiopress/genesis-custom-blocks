@@ -59,7 +59,7 @@ const EditorPreview = ( { setEditorMode } ) => {
 	}
 
 	return (
-		<div className="block-form">
+		<div className="gcb-editor-form">
 			<Fields
 				key="example-fields"
 				fields={ fields }

@@ -3,6 +3,7 @@ export { default as BlockPanel } from './block-panel';
 export { default as BrowserURL } from './browser-url';
 export { default as CategorySection } from './category-section';
 export { default as ClipboardCopy } from './clipboard-copy';
+export { default as DisplayModalSection } from './display-modal-section';
 export { default as Editor } from './editor';
 export { default as EditorPreview } from './editor-preview';
 export { default as EditorProvider } from './editor-provider';

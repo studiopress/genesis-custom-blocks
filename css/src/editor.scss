@@ -18,10 +18,8 @@ $font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans
 	box-shadow: none;
 }
 
-/* Block form in editor & sidebar */
-div[class^="wp-block-genesis-custom-blocks-"],
-.edit-post-settings-sidebar__panel-block .components-panel__body,
-.gcb-editor {
+.gcb-editor-form,
+.gcb-inspector-form {
 
 	:required:invalid {
 		border-color: #c00000;
@@ -116,84 +114,83 @@ div[class^="wp-block-genesis-custom-blocks-"],
 div[class^="wp-block-genesis-custom-blocks-"],
 .gcb-editor {
 	margin: 0;
+}
 
-	.block-form {
-		border-left: none;
-		background: $dark-opacity-light-200;
-		padding: 22px 0 22px 22px;
-		font-size: 0.8125rem;
-		display: flex;
-		flex-wrap: wrap;
+.gcb-editor-form {
+	border-left: none;
+	background: $dark-opacity-light-200;
+	padding: 22px 0 22px 22px;
+	font-size: 0.8125rem;
+	display: flex;
+	flex-wrap: wrap;
 
-		h3 {
-			color: #111;
-			font-size: 1rem;
-			margin: 0;
-			flex: 1 1 100%;
+	h3 {
+		color: #111;
+		font-size: 1rem;
+		margin: 0;
+		flex: 1 1 100%;
 
-			svg {
-				position: relative;
-				top: 6px;
-				margin-right: 4px;
-			}
+		svg {
+			position: relative;
+			top: 6px;
+			margin-right: 4px;
 		}
+	}
 
-		p {
-			font-size: 1rem;
-			font-family: $font-family;
+	p {
+		font-size: 1rem;
+		font-family: $font-family;
+	}
+
+	.genesis-custom-blocks-control {
+		flex-basis: 100%;
+		padding-right: 22px;
+
+		&.width-25 {
+			flex-basis: 25%;
 		}
+		&.width-50 {
+			flex-basis: 50%;
+		}
+		&.width-75 {
+			flex-basis: 75%;
+		}
+	}
 
-		.genesis-custom-blocks-control {
+	@media screen and (max-width: 782px) {
+		.genesis-custom-blocks-control.width-25,
+		.genesis-custom-blocks-control.width-50,
+		.genesis-custom-blocks-control.width-75 {
 			flex-basis: 100%;
-			padding-right: 22px;
-
-			&.width-25 {
-				flex-basis: 25%;
-			}
-			&.width-50 {
-				flex-basis: 50%;
-			}
-			&.width-75 {
-				flex-basis: 75%;
-			}
 		}
+	}
 
-		@media screen and (max-width: 782px) {
-			.genesis-custom-blocks-control.width-25,
-			.genesis-custom-blocks-control.width-50,
-			.genesis-custom-blocks-control.width-75 {
-				flex-basis: 100%;
-			}
+	.components-base-control {
+		font-family: $font-family;
+	}
+
+	.components-base-control__field {
+		margin: 1em 0 0;
+
+		.components-base-control__label {
+			display: block;
+			font-weight: 600;
 		}
+	}
 
-		.components-base-control {
-			font-family: $font-family;
-		}
+	.components-base-control__help {
+		margin: 0 0 1em 0.5em;
+		font-size: 1em;
+		color: rgba(0, 0, 0, 0.8);
+	}
 
-		.components-base-control__field {
-			margin: 1em 0 0;
-
-			.components-base-control__label {
-				display: block;
-				font-weight: 600;
-			}
-		}
-
-		.components-base-control__help {
-			margin: 0 0 1em 0.5em;
-			font-size: 1em;
-			color: rgba(0, 0, 0, 0.8);
-		}
-
-		/* Override a max-width: 25rem style rule in Core that can prevent displaying at the selected with, like 75% */
-		.components-select-control__input {
-			max-width: unset;
-		}
+	/* Override a max-width: 25rem style rule in Core that can prevent displaying at the selected with, like 75% */
+	.components-select-control__input {
+		max-width: unset;
 	}
 }
 
-/* Block form in sidebar */
-.edit-post-settings-sidebar__panel-block .components-panel__body {
+.gcb-inspector-form {
 	/* Media Upload Component */
 	.genesis-custom-blocks-media-controls {
 		.components-spinner {

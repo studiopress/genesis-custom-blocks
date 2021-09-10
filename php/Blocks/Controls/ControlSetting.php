@@ -90,10 +90,8 @@ class ControlSetting {
 	 * @return mixed
 	 */
 	public function get_value() {
-		if ( null === $this->value ) {
-			return $this->default;
-		}
-
-		return $this->value;
+		return null === $this->value
+			? $this->default
+			: $this->value;
 	}
 }
