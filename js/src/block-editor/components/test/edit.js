@@ -20,7 +20,8 @@ jest.mock( '@wordpress/api-fetch', () => {
 } );
 
 jest.mock( '@wordpress/block-editor', () => ( {
-	useBlockProps: () => {},
+	...jest.requireActual( '@wordpress/block-editor' ),
+	useBlockProps: () => ( {} ),
 } ) );
 
 jest.mock( '@wordpress/data/build/components/use-select', () =>
