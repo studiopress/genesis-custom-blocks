@@ -6,7 +6,6 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
-import { useBlockProps } from '@wordpress/block-editor';
 import { Icon } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
@@ -26,7 +25,6 @@ import { getFieldsAsArray, getIconComponent } from '../../common/helpers';
  */
 const EditorForm = ( { block, blockProps } ) => (
 	<div
-		{ ...useBlockProps() }
 		className="gcb-editor-form"
 		aria-label={ __( 'GCB block form', 'genesis-custom-blocks' ) }
 	>
