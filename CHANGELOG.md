@@ -1,6 +1,6 @@
 ## Changelog ##
 
-### 1.40 - 2021-9-30 ###
+### 1.4.0 - 2021-9-30 ###
 
 Add a modal option to make longer blocks easier, fix for widgets.php
 

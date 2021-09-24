@@ -38,7 +38,7 @@ Let the plugin do the heavy lifting so you can use the built-in editor, or famil
 As an alternative to the built-in editor, there are simple functions, ready to render and work with the data stored through your custom block fields.
 
 ## Currently available block fields ##
-* Inner Blocks field
+* Inner Blocks Field
 * File Field
 * Text Field
 * Image Field
