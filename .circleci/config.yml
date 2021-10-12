@@ -75,6 +75,7 @@ jobs:
             git clone git://develop.git.wordpress.org/ wordpress-develop
             cp wordpress-develop/wp-tests-config-sample.php wordpress-develop/wp-tests-config.php
             sed -i 's/localhost/127.0.0.1/g' wordpress-develop/wp-tests-config.php
+            composer update --working-dir=wordpress-develop
             sed -i 's/yourpasswordhere/<insert password here>/g' wordpress-develop/wp-tests-config.php
       - run: mkdir -p *PLUGIN_PATH
       - checkout:
@@ -83,10 +84,10 @@ jobs:
           name: Running PHPUnit
           working_directory: *PLUGIN_PATH
           command: |
-            composer remove --dev phpunit/phpunit && composer install
+            composer remove --dev phpunit/phpunit
             npm ci && npm run build
-            composer require --dev phpunit/phpunit 5.7.9
-            WP_TESTS_DIR=~/project/wordpress-develop/tests/phpunit ./vendor/bin/phpunit
+            composer require --dev phpunit/phpunit 5.7.21 && composer i
+            WP_TESTS_DIR=~/project/wordpress-develop/tests/phpunit composer test
 
   js-tests:
     executor: php
@@ -109,6 +110,12 @@ jobs:
       - nodegit-workaround
       - set-up-packages
       - run: npm run wp-env start && npm run test:e2e
+      - run:
+          command: |
+            if [ -d artifacts ]; then cp -r artifacts /tmp/; fi;
+          when: on_fail
+      - store_artifacts:
+          path: /tmp/artifacts/
 
   svn-deploy:
     executor:
