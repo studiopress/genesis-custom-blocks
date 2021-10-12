@@ -5,6 +5,7 @@
  * @package Genesis\CustomBlocks
  */
 
+use Genesis\CustomBlocks\Plugin;
 use Genesis\CustomBlocks\Blocks\Loader;
 
 /**
@@ -48,6 +49,10 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 	public function setUp() {
 		parent::setUp();
 		$this->instance = new Loader();
+		$plugin         = new Plugin();
+		$plugin->init();
+		$this->instance->set_plugin( $plugin );
+		$this->instance->init();
 		$this->invoke_protected_method( 'set_plugin', [ genesis_custom_blocks() ] );
 
 		$this->theme_directory    = get_template_directory();

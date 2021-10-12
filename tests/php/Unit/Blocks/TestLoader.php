@@ -101,7 +101,7 @@ class TestLoader extends AbstractTemplate {
 		$this->instance->register_hooks();
 
 		$this->assertEquals( 10, has_action( 'enqueue_block_editor_assets', [ $this->instance, 'editor_assets' ] ) );
-		$this->assertEquals( 10, has_filter( 'block_categories', [ $this->instance, 'register_categories' ] ) );
+		$this->assertEquals( 10, has_filter( 'block_categories_all', [ $this->instance, 'register_categories' ] ) );
 		$this->assertEquals( 10, has_action( 'init', [ $this->instance, 'retrieve_blocks' ] ) );
 		$this->assertEquals( 10, has_action( 'init', [ $this->instance, 'dynamic_block_loader' ] ) );
 		$this->assertEquals( 10, has_filter( 'rest_endpoints', [ $this->instance, 'add_rest_method' ] ) );
@@ -203,7 +203,7 @@ class TestLoader extends AbstractTemplate {
 			}
 		);
 
-		$this->invoke_protected_method( 'render_block_template', [ $block, [] ] );
+		$this->invoke_protected_method( 'render_block_template', [ $block, [], '' ] );
 		$scripts = wp_scripts();
 		$script  = $scripts->registered[ $slug ];
 
@@ -222,7 +222,7 @@ class TestLoader extends AbstractTemplate {
 			}
 		);
 
-		$this->invoke_protected_method( 'render_block_template', [ $block, [] ] );
+		$this->invoke_protected_method( 'render_block_template', [ $block, [], '' ] );
 		$scripts = wp_scripts();
 		$script  = $scripts->registered[ $slug ];
 
@@ -245,7 +245,8 @@ class TestLoader extends AbstractTemplate {
 			$this->file_put_contents( $file, '' );
 			$file_url = str_replace( untrailingslashit( ABSPATH ), '', $file );
 
-			$this->invoke_protected_method( 'enqueue_block_styles', [ $this->mock_block_name, [ 'preview', 'block' ] ] );
+			$result = $this->invoke_protected_method( 'enqueue_block_styles', [ $this->mock_block_name, [ 'preview', 'block' ] ] );
+			$this->assertTrue( $result );
 			$this->assertContains( $block_handle, $wp_styles->queue );
 			$this->assertArrayHasKey( $block_handle, $wp_styles->registered );
 			$this->assertSame( $wp_styles->registered[ $block_handle ]->src, $file_url, "Trying to enqueue file #{$key} ({$file_url})." );
@@ -255,7 +256,8 @@ class TestLoader extends AbstractTemplate {
 		}
 
 		// Check that nothing is enqueued if the file doesn't exist.
-		$this->invoke_protected_method( 'enqueue_block_styles', [ 'does-not-exist', 'block' ] );
+		$result_no_style = $this->invoke_protected_method( 'enqueue_block_styles', [ 'does-not-exist', 'block' ] );
+		$this->assertFalse( $result_no_style );
 		$this->assertNotContains( $block_handle, $wp_styles->queue );
 		$this->assertArrayNotHasKey( $block_handle, $wp_styles->registered );
 	}
@@ -373,7 +375,7 @@ class TestLoader extends AbstractTemplate {
 		// There is still no template, but the user has the correct permissions, so this should output a warning.
 		$this->assertContains( '<div class="notice notice-warning">', $output );
 		$this->assertContains( $this->mock_block_name, $output );
-		$this->assertContains( 'not found', $output );
+		$this->assertContains( 'No Template Editor markup or template file was found:', $output );
 
 		/*
 		 * Test that the templates are used in the proper priority.

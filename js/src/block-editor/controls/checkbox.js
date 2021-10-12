@@ -1,21 +1,23 @@
 /**
+ * External dependencies
+ */
+import * as React from 'react';
+
+/**
  * WordPress dependencies
  */
 import { CheckboxControl } from '@wordpress/components';
 
 const GcbCheckboxControl = ( props ) => {
 	const { field, getValue, onChange } = props;
-	let value = getValue( props );
-	if ( 'undefined' === typeof value ) {
-		value = field.default || false;
-	}
+	const initialValue = getValue( props );
+	const value = 'undefined' !== typeof initialValue ? initialValue : field.default;
 
 	return (
 		<CheckboxControl
 			label={ field.label }
 			help={ field.help }
 			checked={ value }
-			options={ field.options }
 			onChange={ onChange }
 		/>
 	);

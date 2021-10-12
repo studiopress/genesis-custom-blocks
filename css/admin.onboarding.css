@@ -69,7 +69,7 @@
 }
 .genesis-custom-blocks-welcome {
 	background-color: #0066CC;
-	background-image: url('https://wpengine.com/wp-content/uploads/2020/07/gcb_gen_pro_hero_bg_img.png');
+	background-image: url('../assets/images/gcb-gen-pro-hero-bg-img.jpg');
 	background-size: cover;
 	background-position: center;
 	color: #fff;

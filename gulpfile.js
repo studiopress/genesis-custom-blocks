@@ -68,6 +68,7 @@ gulp.task( 'wporg:trunk', function() {
 gulp.task( 'clean:bundle', function() {
 	return del( [
 		'package/trunk/package',
+		'package/trunk/artifacts',
 		'package/trunk/assets/wporg',
 		'package/trunk/coverage',
 		'package/trunk/js/src',

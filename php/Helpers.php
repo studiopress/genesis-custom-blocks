@@ -19,12 +19,7 @@ use Genesis\CustomBlocks\Blocks\Field;
  */
 function block_field( $name, $echo = true ) {
 	$attributes = genesis_custom_blocks()->loader->get_data( 'attributes' );
-
-	if ( ! $attributes ) {
-		return null;
-	}
-
-	$config = genesis_custom_blocks()->loader->get_data( 'config' );
+	$config     = genesis_custom_blocks()->loader->get_data( 'config' );
 
 	if ( ! $config ) {
 		return null;

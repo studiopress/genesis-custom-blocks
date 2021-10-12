@@ -1,16 +1,6 @@
 # IDEA Ignores #
 ################
-*.iml
-*.ipr
-*.iws
 .idea/
-out/
-local.properties
-
-# Sublime Text #
-##############
-*.sublime-project
-*.sublime-workspace
 
 # Packages #
 ############
@@ -92,20 +82,11 @@ node_modules
 #######
 *.sass-cache
 
-# Vagrant #
-##########
-.vagrant
-
-# Ansible
-*.retry
-
-# ack
-.ackrc
-
 # Composer
 vendor
 
 # Tests
+artifacts/
 tests/data/
 tests/includes/
 coverage/

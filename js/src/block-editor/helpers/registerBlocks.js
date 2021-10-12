@@ -7,6 +7,7 @@ import * as React from 'react';
  * WordPress dependencies
  */
 import { registerBlockType } from '@wordpress/blocks';
+import { InnerBlocks } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies
@@ -23,7 +24,6 @@ import { getIconComponent } from '../../common/helpers';
  */
 const registerBlocks = ( genesisCustomBlocks, gcbBlocks, EditComponent ) => {
 	for ( const blockName in gcbBlocks ) {
-		// Avoid weird inheritance issues. Which should not happen because the backend is safe.
 		if ( ! gcbBlocks.hasOwnProperty( blockName ) ) {
 			continue;
 		}
@@ -39,7 +39,6 @@ const registerBlocks = ( genesisCustomBlocks, gcbBlocks, EditComponent ) => {
 			}
 		}
 
-		// Register the block.
 		registerBlockType( blockName, {
 			title: block.title,
 			category: 'object' === typeof block.category ? block.category.slug : block.category,
@@ -50,7 +49,7 @@ const registerBlocks = ( genesisCustomBlocks, gcbBlocks, EditComponent ) => {
 				return <EditComponent blockProps={ props } block={ block } />;
 			},
 			save() {
-				return null;
+				return <InnerBlocks.Content />;
 			},
 		} );
 	}

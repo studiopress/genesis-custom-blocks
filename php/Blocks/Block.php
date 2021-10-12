@@ -68,6 +68,27 @@ class Block {
 	public $fields = [];
 
 	/**
+	 * Whether to display the fields in a modal.
+	 *
+	 * @var bool
+	 */
+	public $display_modal = false;
+
+	/**
+	 * Template editor CSS.
+	 *
+	 * @var string
+	 */
+	public $template_css = '';
+
+	/**
+	 * Template editor markup.
+	 *
+	 * @var string
+	 */
+	public $template_markup = '';
+
+	/**
 	 * Block constructor.
 	 *
 	 * @param int|bool $post_id Post ID.
@@ -116,20 +137,11 @@ class Block {
 	 * @return void
 	 */
 	public function from_array( $config ) {
-		if ( isset( $config['name'] ) ) {
-			$this->name = $config['name'];
-		}
-
-		if ( isset( $config['title'] ) ) {
-			$this->title = $config['title'];
-		}
-
-		if ( isset( $config['excluded'] ) ) {
-			$this->excluded = $config['excluded'];
-		}
-
-		if ( isset( $config['icon'] ) ) {
-			$this->icon = $config['icon'];
+		$properties = [ 'name', 'title', 'excluded', 'icon' ];
+		foreach ( $properties as $property ) {
+			if ( isset( $config[ $property ] ) ) {
+				$this->$property = $config [ $property ];
+			}
 		}
 
 		if ( isset( $config['category'] ) ) {
@@ -141,6 +153,18 @@ class Block {
 
 		if ( isset( $config['keywords'] ) ) {
 			$this->keywords = $config['keywords'];
+		}
+
+		if ( isset( $config['displayModal'] ) ) {
+			$this->display_modal = $config['displayModal'];
+		}
+
+		if ( isset( $config['templateCss'] ) ) {
+			$this->template_css = $config['templateCss'];
+		}
+
+		if ( isset( $config['templateMarkup'] ) ) {
+			$this->template_markup = $config['templateMarkup'];
 		}
 
 		if ( isset( $config['fields'] ) ) {
@@ -156,12 +180,15 @@ class Block {
 	 * @return string
 	 */
 	public function to_json() {
-		$config['name']     = $this->name;
-		$config['title']    = $this->title;
-		$config['excluded'] = $this->excluded;
-		$config['icon']     = $this->icon;
-		$config['category'] = $this->category;
-		$config['keywords'] = $this->keywords;
+		$config['name']           = $this->name;
+		$config['title']          = $this->title;
+		$config['excluded']       = $this->excluded;
+		$config['icon']           = $this->icon;
+		$config['category']       = $this->category;
+		$config['keywords']       = $this->keywords;
+		$config['displayModal']   = $this->display_modal;
+		$config['templateCss']    = $this->template_css;
+		$config['templateMarkup'] = $this->template_markup;
 
 		$config['fields'] = [];
 		foreach ( $this->fields as $key => $field ) {

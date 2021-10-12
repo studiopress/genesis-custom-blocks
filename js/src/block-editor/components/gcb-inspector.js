@@ -6,8 +6,8 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
-import { PanelBody } from '@wordpress/components';
 import { InspectorControls } from '@wordpress/block-editor';
+import { PanelBody } from '@wordpress/components';
 import { applyFilters } from '@wordpress/hooks';
 
 /**
@@ -23,45 +23,40 @@ import { getFieldsAsArray } from '../../common/helpers';
  * @param {Object} props.block The block.
  * @return {React.ReactElement} The inspector controls.
  */
-const GcbInspector = ( { blockProps, block } ) => {
-	const fields = getFieldsAsArray( block.fields ).map( ( field ) => {
-		// If it's not meant for the inspector, continue (return null).
-		if ( ! field.location || ! field.location.includes( 'inspector' ) ) {
-			return null;
-		}
+const GcbInspector = ( { blockProps, block } ) => (
+	<InspectorControls>
+		{ getFieldsAsArray( block.fields ).map( ( field ) => {
+			// If it's not meant for the inspector, continue (return null).
+			if ( ! field.location || ! field.location.includes( 'inspector' ) ) {
+				return null;
+			}
 
-		const loadedControls = applyFilters( 'genesisCustomBlocks.controls', {} );
-		const Control = loadedControls[ field.control ];
-		if ( ! Control ) {
-			return null;
-		}
+			const loadedControls = applyFilters( 'genesisCustomBlocks.controls', {} );
+			const Control = loadedControls[ field.control ];
+			if ( ! Control ) {
+				return null;
+			}
 
-		const { attributes, setAttributes } = blockProps;
-		const attr = { ...attributes };
-
-		return (
-			<PanelBody key={ `inspector-controls-panel-${ field.name }` }>
-				<Control
-					field={ field }
-					getValue={ () => {
-						return attr[ field.name ];
-					} }
-					onChange={ ( newValue ) => {
-						attr[ field.name ] = newValue;
-						setAttributes( attr );
-					} }
-					parentBlock={ block }
-					parentBlockProps={ blockProps }
-				/>
-			</PanelBody>
-		);
-	} );
-
-	return (
-		<InspectorControls key={ `inspector-controls${ block.name }` }>
-			{ fields }
-		</InspectorControls>
-	);
-};
+			return (
+				<PanelBody
+					className="gcb-inspector-form"
+					key={ `inspector-controls-panel-${ field.name }` }
+				>
+					<Control
+						field={ field }
+						getValue={ () => blockProps.attributes[ field.name ] }
+						onChange={ ( newValue ) => {
+							blockProps.setAttributes( {
+								[ field.name ]: newValue,
+							} );
+						} }
+						parentBlock={ block }
+						parentBlockProps={ blockProps }
+					/>
+				</PanelBody>
+			);
+		} ) }
+	</InspectorControls>
+);
 
 export default GcbInspector;

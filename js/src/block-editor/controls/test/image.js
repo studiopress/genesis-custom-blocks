@@ -8,6 +8,18 @@ import { render } from '@testing-library/react';
  */
 import GcbImageControl from '../image';
 
+jest.mock( '@wordpress/api-fetch', () => {
+	return jest.fn( () => {
+		return Promise.resolve( {
+			json: () => Promise.resolve( {} ),
+		} );
+	} );
+} );
+
+jest.mock( '@wordpress/data/build/components/use-select', () =>
+	jest.fn( () => false )
+);
+
 /**
  * Gets the props for the tested component.
  *

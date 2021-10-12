@@ -40,12 +40,20 @@ class Loader extends ComponentAbstract {
 	protected $data = [];
 
 	/**
+	 * The template editor.
+	 *
+	 * @var TemplateEditor
+	 */
+	protected $template_editor;
+
+	/**
 	 * Load the Loader.
 	 *
 	 * @return $this
 	 */
 	public function init() {
-		$this->assets = [
+		$this->template_editor = new TemplateEditor();
+		$this->assets          = [
 			'path' => [
 				'entry'        => $this->plugin->get_path( 'js/dist/block-editor.js' ),
 				'editor_style' => $this->plugin->get_path( 'css/dist/blocks.editor.css' ),
@@ -64,10 +72,16 @@ class Loader extends ComponentAbstract {
 	 */
 	public function register_hooks() {
 		add_action( 'enqueue_block_editor_assets', [ $this, 'editor_assets' ] );
-		add_filter( 'block_categories', [ $this, 'register_categories' ] );
 		add_action( 'init', [ $this, 'retrieve_blocks' ] );
 		add_action( 'init', [ $this, 'dynamic_block_loader' ] );
 		add_filter( 'rest_endpoints', [ $this, 'add_rest_method' ] );
+
+		// TODO: once 'Requires at least' is bumped to 5.8, delete these conditionals and just use 'block_categories_all'.
+		if ( is_wp_version_compatible( '5.8' ) ) {
+			add_filter( 'block_categories_all', [ $this, 'register_categories' ] );
+		} else {
+			add_filter( 'block_categories', [ $this, 'register_categories' ] );
+		}
 	}
 
 	/**
@@ -112,7 +126,7 @@ class Loader extends ComponentAbstract {
 		wp_enqueue_script(
 			$js_handle,
 			$this->assets['url']['entry'],
-			$js_config['dependencies'],
+			[],
 			$js_config['version'],
 			true
 		);
@@ -198,8 +212,8 @@ class Loader extends ComponentAbstract {
 			[
 				'attributes'      => $attributes,
 				// @see https://github.com/WordPress/gutenberg/issues/4671
-				'render_callback' => function ( $attributes ) use ( $block ) {
-					return $this->render_block_template( $block, $attributes );
+				'render_callback' => function ( $attributes, $content ) use ( $block ) {
+					return $this->render_block_template( $block, $attributes, $content );
 				},
 			]
 		);
@@ -299,12 +313,12 @@ class Loader extends ComponentAbstract {
 	/**
 	 * Renders the block provided a template is provided.
 	 *
-	 * @param Block $block The block to render.
-	 * @param array $attributes Attributes to render.
-	 *
+	 * @param Block  $block The block to render.
+	 * @param array  $attributes Attributes to render.
+	 * @param string $content The block InnerContent, if any.
 	 * @return mixed
 	 */
-	protected function render_block_template( $block, $attributes ) {
+	protected function render_block_template( $block, $attributes, $content ) {
 		$type = 'block';
 
 		// This is hacky, but the editor doesn't send the original request along.
@@ -315,10 +329,8 @@ class Loader extends ComponentAbstract {
 		}
 
 		if ( ! is_admin() ) {
-			/**
-			 * The block has been added, but its values weren't saved (not even the defaults). This is a phenomenon
-			 * unique to frontend output, as the editor fetches its attributes from the form fields themselves.
-			 */
+			// The block has been added, but its values weren't saved (not even the defaults).
+			// This is unique to frontend output, as the editor fetches its attributes from the form fields themselves.
 			$missing_schema_attributes = array_diff_key( $block->fields, $attributes );
 			foreach ( $missing_schema_attributes as $attribute_name => $schema ) {
 				if ( isset( $schema->settings['default'] ) ) {
@@ -326,12 +338,10 @@ class Loader extends ComponentAbstract {
 				}
 			}
 
-			$this->enqueue_block_styles( $block->name, 'block' );
+			$did_enqueue_styles = $this->enqueue_block_styles( $block->name, 'block' );
 
-			/**
-			 * The wp_enqueue_style function handles duplicates, so we don't need to worry about multiple blocks
-			 * loading the global styles more than once.
-			 */
+			// The wp_enqueue_style function handles duplicates, so we don't need to worry about multiple blocks
+			// loading the global styles more than once.
 			$this->enqueue_global_styles();
 		}
 
@@ -343,6 +353,7 @@ class Loader extends ComponentAbstract {
 		 */
 		$this->data['attributes'] = apply_filters( 'genesis_custom_blocks_template_attributes', $attributes, $block->fields );
 		$this->data['config']     = $block;
+		$this->data['content']    = $content;
 
 		if ( ! is_admin() && ( ! defined( 'REST_REQUEST' ) || ! REST_REQUEST ) && ! wp_doing_ajax() ) {
 
@@ -372,9 +383,17 @@ class Loader extends ComponentAbstract {
 
 		ob_start();
 		$this->block_template( $block->name, $type );
-		$output = ob_get_clean();
 
-		return $output;
+		if ( empty( $did_enqueue_styles ) ) {
+			$this->template_editor->render_css(
+				isset( $this->blocks[ "genesis-custom-blocks/{$block->name}" ]['templateCss'] )
+					? $this->blocks[ "genesis-custom-blocks/{$block->name}" ]['templateCss']
+					: '',
+				$block->name
+			);
+		}
+
+		return ob_get_clean();
 	}
 
 	/**
@@ -382,6 +401,7 @@ class Loader extends ComponentAbstract {
 	 *
 	 * @param string       $name The name of the block (slug as defined in UI).
 	 * @param string|array $type The type of template to load.
+	 * @return bool Whether this found styles and enqueued them.
 	 */
 	protected function enqueue_block_styles( $name, $type = 'block' ) {
 		$locations = [];
@@ -397,10 +417,6 @@ class Loader extends ComponentAbstract {
 		$stylesheet_path = genesis_custom_blocks()->locate_template( $locations );
 		$stylesheet_url  = genesis_custom_blocks()->get_url_from_path( $stylesheet_path );
 
-		/**
-		 * Enqueue the stylesheet, if it exists. The wp_enqueue_style function handles duplicates, so we don't need
-		 * to worry about the same block loading its stylesheets more than once.
-		 */
 		if ( ! empty( $stylesheet_url ) ) {
 			wp_enqueue_style(
 				"genesis-custom-blocks__block-{$name}",
@@ -408,7 +424,11 @@ class Loader extends ComponentAbstract {
 				[],
 				wp_get_theme()->get( 'Version' )
 			);
+
+			return true;
 		}
+
+		return false;
 	}
 
 	/**
@@ -473,19 +493,25 @@ class Loader extends ComponentAbstract {
 
 			// This is not a load once template, so require_once is false.
 			load_template( $theme_template, false );
-		} else {
-			if ( ! current_user_can( 'edit_posts' ) || ! isset( $templates[0] ) ) {
-				return;
-			}
-			// Hide the template not found notice on the frontend, unless WP_DEBUG is enabled.
-			if ( ! is_admin() && ! ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ) {
-				return;
-			}
+			return;
+		}
+
+		if ( ! empty( $this->blocks[ "genesis-custom-blocks/{$name}" ]['templateMarkup'] ) ) {
+			$this->template_editor->render_markup( $this->blocks[ "genesis-custom-blocks/{$name}" ]['templateMarkup'] );
+			return;
+		}
+
+		if ( ! current_user_can( 'edit_posts' ) || ! isset( $templates[0] ) ) {
+			return;
+		}
+
+		// Only show the template not found notice on the frontend if WP_DEBUG is enabled.
+		if ( is_admin() || ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ) {
 			printf(
 				'<div class="notice notice-warning">%s</div>',
 				wp_kses_post(
-					// Translators: Placeholder is a file path.
-					sprintf( __( 'Template file %s not found.', 'genesis-custom-blocks' ), '<code>' . esc_html( $templates[0] ) . '</code>' )
+					/* translators: %1$s: file path */
+					sprintf( __( 'No Template Editor markup or template file was found: %1$s', 'genesis-custom-blocks' ), '<code>' . esc_html( $templates[0] ) . '</code>' )
 				)
 			);
 		}
@@ -495,11 +521,8 @@ class Loader extends ComponentAbstract {
 	 * Load all the published blocks and blocks/block.json files.
 	 */
 	public function retrieve_blocks() {
-		/**
-		 * Retrieve blocks from blocks.json.
-		 * Reverse to preserve order of preference when using array_merge.
-		 */
-		$blocks_files = array_reverse( (array) genesis_custom_blocks()->locate_template( 'blocks/blocks.json', '', false ) );
+		// Reverse to preserve order of preference when using array_merge.
+		$blocks_files = array_reverse( genesis_custom_blocks()->locate_template( 'blocks/blocks.json', '', false ) );
 		foreach ( $blocks_files as $blocks_file ) {
 			// This is expected to be on the local filesystem, so file_get_contents() is ok to use here.
 			$json       = file_get_contents( $blocks_file ); // @codingStandardsIgnoreLine
@@ -511,18 +534,16 @@ class Loader extends ComponentAbstract {
 			}
 		}
 
-		/**
-		 * Retrieve blocks stored as posts in the WordPress database.
-		 */
-		$block_posts = new WP_Query(
+		$is_edit_context = 'edit' === filter_input( INPUT_GET, 'context', FILTER_SANITIZE_STRING );
+		$block_posts     = new WP_Query(
 			[
 				'post_type'      => genesis_custom_blocks()->get_post_type_slug(),
-				'post_status'    => 'publish',
-				'posts_per_page' => 100, // This has to have a limit for this plugin to be scalable.
+				'post_status'    => $is_edit_context ? 'any' : 'publish',
+				'posts_per_page' => 100,
 			]
 		);
 
-		if ( 0 < $block_posts->post_count ) {
+		if ( $block_posts->post_count > 0 ) {
 			foreach ( $block_posts->posts as $post ) {
 				$block_data = json_decode( $post->post_content, true );
 

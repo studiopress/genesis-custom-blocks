@@ -24,6 +24,13 @@
   ],
   "rules": {
     "@wordpress/dependency-group": "error",
+    "@wordpress/i18n-text-domain": [
+      "error",
+      {
+        "allowedTextDomain": "genesis-custom-blocks"
+      }
+    ],
+    "@wordpress/no-unused-vars-before-return": "off",
     "@wordpress/react-no-unsafe-timeout": "error",
     "comma-dangle": [
       "error",

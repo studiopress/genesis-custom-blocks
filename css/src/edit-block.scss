@@ -81,6 +81,10 @@ body {
 	word-wrap: normal !important;
 }
 
+.gcb-editor .components-toolbar {
+	flex-wrap: unset;
+}
+
 /* Forked from @material-ui */
 .MuiSvgIcon-root {
 	fill: currentColor;

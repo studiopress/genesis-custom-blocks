@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import * as React from 'react';
+
+/**
  * WordPress dependencies
  */
 import { RadioControl } from '@wordpress/components';

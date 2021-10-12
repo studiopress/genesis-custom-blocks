@@ -23,6 +23,18 @@ class TestTemplateOutput extends AbstractAttribute {
 	public $special_case_fields;
 
 	/**
+	 * Sets up before each test.
+	 *
+	 * @inheritdoc
+	 */
+	public function setUp() {
+		parent::setUp();
+
+		$this->set_properties();
+		$this->create_block_template();
+	}
+
+	/**
 	 * Sets class properties.
 	 */
 	public function set_properties() {
@@ -132,7 +144,7 @@ class TestTemplateOutput extends AbstractAttribute {
 	public function test_block_template() {
 		$block = new Block();
 		$block->from_array( $this->get_block_config() );
-		$rendered_template = $this->invoke_protected_method( genesis_custom_blocks()->loader, 'render_block_template', [ $block, $this->attributes ] );
+		$rendered_template = $this->invoke_protected_method( genesis_custom_blocks()->loader, 'render_block_template', [ $block, $this->attributes, '' ] );
 		$actual_template   = str_replace( [ "\t", "\n" ], '', $rendered_template );
 
 		// The 'className' should be present.

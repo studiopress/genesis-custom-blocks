@@ -11,5 +11,6 @@ export { default as getSettingsComponent } from './getSettingsComponent';
 export { default as getSettingsDefaults } from './getSettingsDefaults';
 export { default as getTemplateParts } from './getTemplateParts';
 export { default as getWidthClass } from './getWidthClass';
+export { default as hasRepeaterField } from './hasRepeaterField';
 export { default as initializeEditor } from './initializeEditor';
 export { default as setCorrectOrderForFields } from './setCorrectOrderForFields';

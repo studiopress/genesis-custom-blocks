@@ -19,7 +19,7 @@ import {
 } from '../helpers';
 import { getFieldsAsArray, getFieldsAsObject } from '../../common/helpers';
 import { useBlock } from '../hooks';
-import { DEFAULT_LOCATION } from '../constants';
+import { DEFAULT_LOCATION } from '../../common/constants';
 
 /**
  * @typedef {Object} UseFieldReturn The return value of useField.
@@ -30,6 +30,7 @@ import { DEFAULT_LOCATION } from '../constants';
  * @property {function(SelectedField,string):void} changeControl Changes the control of the field.
  * @property {function(SelectedField,Object):string} changeFieldSettings Changes field settings.
  * @property {function(SelectedField):Object} getField Gets the selected field.
+ * @property {function():import('../components/editor').Field[]|null} getFields Gets all of the fields.
  * @property {function(string,string|null):import('../components/editor').Field[]|null} getFieldsForLocation Gets all of the fields for a given location.
  * @property {function(number,number,string,string|null):void} reorderFields Reorders the fields for a given location.
  */
@@ -157,6 +158,9 @@ const useField = () => {
 			newBlock.fields[ fieldToChange.parent ].sub_fields[ fieldToChange.name ] = newField;
 		} else {
 			newBlock.fields[ fieldToChange.name ] = newField;
+			if ( newBlock.hasOwnProperty( 'previewAttributes' ) ) {
+				delete newBlock.previewAttributes[ fieldToChange.name ];
+			}
 		}
 
 		editBlock( newBlock );
@@ -176,6 +180,8 @@ const useField = () => {
 	 */
 	const changeFieldName = ( fields, previousName, newName ) => {
 		const newFields = { ...fields };
+		const newBlock = { ...block };
+
 		// If this is a repeater, change the parent property of its sub_fields.
 		if ( newFields[ previousName ] && newFields[ previousName ].hasOwnProperty( 'sub_fields' ) ) {
 			newFields[ previousName ].sub_fields = getFieldsAsObject(
@@ -191,8 +197,24 @@ const useField = () => {
 		newFields[ newName ] = { ...newFields[ previousName ], name: newName };
 		delete newFields[ previousName ];
 
+		if ( newBlock?.previewAttributes?.hasOwnProperty( previousName ) ) {
+			newBlock.previewAttributes[ newName ] = newBlock.previewAttributes[ previousName ];
+			delete newBlock?.previewAttributes[ previousName ];
+		}
+
+		editBlock( newBlock );
+
 		return newFields;
 	};
+
+	/**
+	 * Gets all of the fields.
+	 *
+	 * @return {import('../components/editor').Field[]|[]} The fields with the given location.
+	 */
+	const getFields = () => getFieldsAsArray(
+		block && block.fields ? block.fields : {}
+	);
 
 	/**
 	 * Gets the fields for either the editor or inspector.
@@ -310,6 +332,7 @@ const useField = () => {
 	 */
 	const deleteField = ( selectedField ) => {
 		const newBlock = { ...block };
+
 		if (
 			selectedField.hasOwnProperty( 'parent' ) &&
 			newBlock.fields[ selectedField.parent ] &&
@@ -318,6 +341,9 @@ const useField = () => {
 			delete newBlock.fields[ selectedField.parent ].sub_fields[ selectedField.name ];
 		} else {
 			delete newBlock.fields[ selectedField.name ];
+			if ( newBlock?.previewAttributes?.hasOwnProperty( selectedField.name ) ) {
+				delete newBlock?.previewAttributes[ selectedField.name ];
+			}
 		}
 
 		editBlock( newBlock );
@@ -413,6 +439,7 @@ const useField = () => {
 		deleteField,
 		duplicateField,
 		getField,
+		getFields,
 		getFieldsForLocation,
 		reorderFields,
 	};

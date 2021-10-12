@@ -23,6 +23,12 @@
         }
     },
     "scripts": {
+        "lint": [
+            "phpcs"
+        ],
+        "lint-fix": [
+            "phpcbf"
+        ],
         "test": [
             "phpunit"
         ]

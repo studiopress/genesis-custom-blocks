@@ -1,17 +1,17 @@
 /**
  * External dependencies
  */
-import React from 'react';
+import * as React from 'react';
 
 /**
  * Internal dependencies
  */
 import { Select } from '../';
-import { LOCATIONS_WITH_LABEL, LOCATIONS } from '../../constants';
+import { LOCATIONS_WITH_LABEL, LOCATIONS } from '../../../common/constants';
 
 /**
  * @typedef {Object} LocationProps The component props.
- * @property {Object} setting This setting.
+ * @property {import('../editor').Setting} setting This setting.
  * @property {string|undefined} value The setting value.
  * @property {Function} handleOnChange Handles a change to this setting.
  * @property {Function} setCurrentLocation Sets the selected location, like 'editor'.

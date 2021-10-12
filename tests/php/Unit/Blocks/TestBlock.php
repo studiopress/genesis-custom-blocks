@@ -143,6 +143,7 @@ class TestBlock extends \WP_UnitTestCase {
 		$this->assertArrayHasKey( 'category', $block );
 		$this->assertArrayHasKey( 'keywords', $block );
 		$this->assertArrayHasKey( 'fields', $block );
+		$this->assertFalse( $block['displayModal'] );
 
 		// Check that we've got 2 fields.
 		$this->assertCount( 2, $block['fields'] );

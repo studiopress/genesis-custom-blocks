@@ -1,6 +1,32 @@
 ## Changelog ##
 
-### 1.1.0 - 2020-01-27 ###
+### 1.3.1 - 2021-08-26 ###
+
+Fix for fields with long strings
+
+* Fix a regression that caused editor errors for fields with long strings. [PR 89](https://github.com/studiopress/genesis-custom-blocks/pull/89)
+* Update e2e tests for WP 5.8. [PR 87](https://github.com/studiopress/genesis-custom-blocks/pull/87)
+
+### 1.3.0 - 2021-07-20 ###
+
+InnerBlocks, File field, WP 5.8 compatibility
+
+* Add InnerBlocks, allowing any block inside a GCB block. [PR 68](https://github.com/studiopress/genesis-custom-blocks/pull/68)
+* Add a file field, like for .pdf or .zip files. [PR 74](https://github.com/studiopress/genesis-custom-blocks/pull/74)
+* In WP 5.8, prevent a PHP notice by using the new filter 'block_categories_all'. [PR 85](https://github.com/studiopress/genesis-custom-blocks/pull/85) 
+
+### 1.2.0 - 2021-06-28 ###
+
+New Template Editor, Editor Preview, and Front-end Preview
+
+* Template Editor UI, though the PHP templates still work just like before. [PR 65](https://github.com/studiopress/genesis-custom-blocks/pull/65), [PR 69](https://github.com/studiopress/genesis-custom-blocks/pull/69), [PR 72](https://github.com/studiopress/genesis-custom-blocks/pull/72)
+* Add Editor Preview and Front-end Preview. [PR 63](https://github.com/studiopress/genesis-custom-blocks/pull/63)
+* Don't display the editor form if there's no editor field. [PR 64](https://github.com/studiopress/genesis-custom-blocks/pull/64)
+* Fix an issue with the default value of 'Checkbox' and 'Toggle' fields. [PR 60](https://github.com/studiopress/genesis-custom-blocks/pull/60)
+* Display the help text in the TextareaArray setting. [PR 62](https://github.com/studiopress/genesis-custom-blocks/pull/62)
+* Improved abstraction by removing duplicated copy. [PR 78](https://github.com/studiopress/genesis-custom-blocks/pull/78)
+
+### 1.1.0 - 2021-01-27 ###
 
 New, more effortless editor, with undo/redo and separate editor/inspector
 

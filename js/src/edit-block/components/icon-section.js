@@ -2,7 +2,7 @@
  * External dependencies
  */
 import * as React from 'react';
-import className from 'classnames';
+import classNames from 'classnames';
 
 /**
  * WordPress dependencies
@@ -55,12 +55,9 @@ const IconSection = () => {
 							return (
 								<button
 									key={ `block-icon-item-${ index }` }
-									className={ className(
+									className={ classNames(
 										'flex items-center justify-center h-8 w-8 hover:border-black',
-										{
-											'border-transparent': ! isSelected,
-											'border-blue-700': isSelected,
-										}
+										isSelected ? 'border-blue-700' : 'border-transparent'
 									) }
 									type="button"
 									role="option"

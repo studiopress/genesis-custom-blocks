@@ -49,11 +49,10 @@ class Checkbox extends ControlAbstract {
 		$this->settings[] = new ControlSetting( $this->settings_config['help'] );
 		$this->settings[] = new ControlSetting(
 			[
-				'name'     => 'default',
-				'label'    => __( 'Default Value', 'genesis-custom-blocks' ),
-				'type'     => 'checkbox',
-				'default'  => '0',
-				'sanitize' => [ $this, 'sanitize_checkbox' ],
+				'name'    => 'default',
+				'label'   => __( 'Default Value', 'genesis-custom-blocks' ),
+				'type'    => 'checkbox',
+				'default' => false,
 			]
 		);
 	}

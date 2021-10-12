@@ -23,26 +23,29 @@ import {
  */
 
 /**
- * @callback ChangeBlockName Changes the name of a block.
- * @param {string} newName The new bock name (slug).
- * @param {Object} [defaultValues] The new block values, if any.
- */
-
-/**
  * @typedef {Object} Block A block configuration.
  * @property {string} name The name (slug).
  * @property {string} title Often a pretty-printed version of the slug.
  * @property {Category} category The block category, including slug and title properties.
- * @property {import('../components/editor').Field[]} fields The fields, including their settings.
+ * @property {Object} fields Key/value pairs of Field objects.
  * @property {string} icon The block icon, like 'genesis_custom_block'.
  * @property {string[]} keywords The keywords, max 3.
+ * @property {boolean} [displayModal] Whether to display the editor fields in the modal.
  * @property {string[]} [excluded] The excluded post tpes, if any.
+ * @property {Object} [previewAttributes] The block attributes to show in the GCB 'Editor Preview'.
+ * @property {string} [templateCss] The template editor CSS.
+ * @property {string} [templateMarkup] The template editor markup.
+ */
+
+/**
+ * @callback ChangeBlock Changes only the values is newValue, not the entire block.
+ * @param {Object} newValues The new value(s) to set.
  */
 
 /**
  * @typedef {Object} UseBlockReturn The return value of useBlock.
  * @property {Block} block The block, parsed into an object.
- * @property {function(Object):void} changeBlock Changes the block configuration.
+ * @property {ChangeBlock} changeBlock Changes the block configuration.
  */
 
 /**
@@ -63,14 +66,7 @@ const useBlock = () => {
 	const blockNameWithNameSpace = getBlockNameWithNameSpace( fullBlock );
 	const block = fullBlock[ blockNameWithNameSpace ] || {};
 
-	/**
-	 * Changes a block's values.
-	 *
-	 * Does not overwrite the whole block, only the values
-	 * passed in newValues.
-	 *
-	 * @param {Object} newValues The new value(s) to set.
-	 */
+	/** @type {ChangeBlock} */
 	const changeBlock = ( newValues ) => {
 		const newBlock = {
 			...getDefaultBlock( postId ),

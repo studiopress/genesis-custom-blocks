@@ -50,20 +50,6 @@ class ControlSetting {
 	public $help = '';
 
 	/**
-	 * Sanitizing function.
-	 *
-	 * @var mixed
-	 */
-	public $sanitize = '';
-
-	/**
-	 * Validating function.
-	 *
-	 * @var mixed
-	 */
-	public $validate = '';
-
-	/**
 	 * Current value. Null for unset.
 	 *
 	 * @var mixed
@@ -93,12 +79,6 @@ class ControlSetting {
 		if ( isset( $args['help'] ) ) {
 			$this->help = $args['help'];
 		}
-		if ( isset( $args['sanitize'] ) ) {
-			$this->sanitize = $args['sanitize'];
-		}
-		if ( isset( $args['validate'] ) ) {
-			$this->validate = $args['validate'];
-		}
 		if ( isset( $args['value'] ) ) {
 			$this->value = $args['value'];
 		}
@@ -110,10 +90,8 @@ class ControlSetting {
 	 * @return mixed
 	 */
 	public function get_value() {
-		if ( null === $this->value ) {
-			return $this->default;
-		}
-
-		return $this->value;
+		return null === $this->value
+			? $this->default
+			: $this->value;
 	}
 }
