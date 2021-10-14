@@ -1,5 +1,9 @@
 ## Changelog ##
 
+### 1.4.0 - 2021-10-14 ###
+
+* Optional modal for editor fields. [PR 93](https://github.com/studiopress/genesis-custom-blocks/pull/93)
+
 ### 1.3.1 - 2021-08-26 ###
 
 Fix for fields with long strings

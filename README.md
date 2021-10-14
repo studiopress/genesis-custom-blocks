@@ -2,10 +2,10 @@
 
 Contributors: lukecarbis, ryankienstra, Stino11, rheinardkorf, studiopress, wpengine
 Tags: gutenberg, blocks, block editor, fields, template
-Requires at least: 5.4
+Requires at least: 5.7
 Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 1.3.1
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -38,7 +38,7 @@ Let the plugin do the heavy lifting so you can use the built-in editor, or famil
 As an alternative to the built-in editor, there are simple functions, ready to render and work with the data stored through your custom block fields.
 
 ## Currently available block fields ##
-* Inner Blocks field
+* Inner Blocks Field
 * File Field
 * Text Field
 * Image Field
