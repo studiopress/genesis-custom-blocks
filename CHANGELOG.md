@@ -2,8 +2,6 @@
 
 ### 1.4.0 - 2021-10-14 ###
 
-Add a modal option to make longer blocks easier, fix for widgets.php
-
 * Optional modal for editor fields. [PR 93](https://github.com/studiopress/genesis-custom-blocks/pull/93)
 * Fix ServerSideRender in /wp-admin/widgets.php. [PR 94](https://github.com/studiopress/genesis-custom-blocks/pull/94)
 
