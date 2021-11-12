@@ -65,7 +65,19 @@ describe( 'GcbInspector', () => {
 	beforeEach( () => {
 		addFilter( 'genesisCustomBlocks.controls', 'genesisCustomBlocks/addControls', addControls );
 	} );
-	it( 'displays the block in the inspector', () => {
+
+	it( 'does not display a non-inspector field', () => {
+		render(
+			<GcbInspector
+				block={ getBlock() }
+				blockProps={ getBlockProps() }
+			/>
+		);
+
+		expect( screen.queryByText( getRangeField().label ) ).not.toBeInTheDocument();
+	} );
+
+	it( 'displays an inspector field', () => {
 		render(
 			<GcbInspector
 				block={ getBlock( 'inspector' ) }
@@ -74,5 +86,6 @@ describe( 'GcbInspector', () => {
 		);
 
 		expect( screen.getByText( getRangeField().label ) ).toBeInTheDocument();
+		expect( screen.getByText( getRangeField().help ) ).toBeInTheDocument();
 	} );
 } );
