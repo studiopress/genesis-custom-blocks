@@ -84,11 +84,7 @@ const Edit = ( { block, blockProps } ) => {
 							{ hasInnerBlocksField
 								? (
 									<Notice status="info" isDismissible={ false }>
-										{ sprintf(
-											/* translators: %1$s: the field name */
-											__( 'The field %1$s will not display in this preview, but will display on the front-end', 'genesis-custom-blocks' ),
-											innerBlocksFieldLabel
-										) }
+										"Hereis"
 									</Notice>
 								) : null
 							}

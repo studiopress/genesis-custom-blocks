@@ -38,6 +38,17 @@ const getRangeField = ( location = 'editor' ) => ( {
 	type: 'integer',
 } );
 
+const getInnerBlocksField = ( location = 'editor' ) => ( {
+	location,
+	width: 100,
+	help: 'Here is some help text',
+	name: 'inner',
+	label: 'Inner Blocks',
+	order: 1,
+	control: 'innner_blocks',
+	type: 'string',
+} );
+
 const getBlock = ( location = 'editor' ) => ( {
 	name: 'test-range',
 	title: 'Test Range',
@@ -104,5 +115,23 @@ describe( 'Edit', () => {
 
 		expect( screen.queryByLabelText( /gcb block form/i ) ).not.toBeInTheDocument();
 		expect( screen.queryByText( getBlock().title ) ).not.toBeInTheDocument();
+	} );
+
+	it( 'displays a notice for inner blocks', () => {
+		const block = getBlock();
+		render(
+			<Edit
+				block={ {
+					block,
+					fields: {
+						...block.fields,
+						inner: getInnerBlocksField(),
+					},
+				} }
+				blockProps={ { isSelected: false } }
+			/>
+		);
+
+		expect( screen.getByText( `Hereis` ) ).toBeInTheDocument();
 	} );
 } );
