@@ -2,7 +2,7 @@
 /**
  * Tests for class Settings.
  *
- * @package Genesis\CustomBlocksPro
+ * @package Genesis\CustomBlocks
  */
 
 use function Brain\Monkey\setUp;
