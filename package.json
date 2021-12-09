@@ -18,6 +18,9 @@
   "bugs": {
     "url": "https://github.com/studiopress/genesis-custom-blocks/issues"
   },
+  "engines": {
+    "node": "14"
+  },
   "devDependencies": {
     "@material-ui/core": "4.11.2",
     "@material-ui/icons": "4.11.2",
