@@ -17,6 +17,13 @@ use Genesis\CustomBlocks\ComponentAbstract;
 class Admin extends ComponentAbstract {
 
 	/**
+	 * Plugin settings.
+	 *
+	 * @var Settings
+	 */
+	public $settings;
+
+	/**
 	 * Plugin documentation.
 	 *
 	 * @var Documentation
@@ -55,6 +62,9 @@ class Admin extends ComponentAbstract {
 	 * Initialise the Admin component.
 	 */
 	public function init() {
+		$this->settings = new Settings();
+		genesis_custom_blocks()->register_component( $this->settings );
+
 		$this->documentation = new Documentation();
 		genesis_custom_blocks()->register_component( $this->documentation );
 
@@ -62,9 +72,6 @@ class Admin extends ComponentAbstract {
 		genesis_custom_blocks()->register_component( $this->edit_block );
 
 		$this->onboarding = new Onboarding();
-		genesis_custom_blocks()->register_component( $this->onboarding );
-
-		$this->onboarding = new Settings();
 		genesis_custom_blocks()->register_component( $this->onboarding );
 
 		$this->upgrade = new Upgrade();
