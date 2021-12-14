@@ -24,11 +24,18 @@ class Settings extends ComponentAbstract {
 	const NOTICES_OPTION_NAME = 'genesis_custom_blocks_notices';
 
 	/**
-	 * Settings name to opt in to analytics.
+	 * Settings group to opt into analytics.
 	 *
 	 * @var string
 	 */
-	const ANALYTICS_OPT_IN = 'genesis_custom_blocks_analytics_opt_in';
+	const SETTINGS_GROUP = 'genesis-custom-blocks-settings-page';
+
+	/**
+	 * Option name to opt into analytics.
+	 *
+	 * @var string
+	 */
+	const ANALYTICS_OPTION_NAME = 'genesis_custom_blocks_analytics_opt_in';
 
 	/**
 	 * Page slug.
@@ -42,6 +49,7 @@ class Settings extends ComponentAbstract {
 	 */
 	public function register_hooks() {
 		add_action( 'admin_menu', [ $this, 'add_submenu_pages' ] );
+		add_action( 'admin_init', [ $this, 'register_settings' ] );
 	}
 
 	/**
@@ -62,15 +70,13 @@ class Settings extends ComponentAbstract {
 	 * Renders the Settings page.
 	 */
 	public function render_page() {
-		?>
-		<div class="wrap genesis-custom-blocks-settings">
-			<?php
-			/**
-			 * Runs when rendering the page /wp-admin > Custom Blocks > Settings.
-			 */
-			do_action( 'genesis_custom_blocks_render_settings_page' );
-			?>
-		</div>
-		<?php
+		include genesis_custom_blocks()->get_path() . 'php/Views/Settings.php';
+	}
+
+	/**
+	 * Register Genesis Custom Blocks settings.
+	 */
+	public function register_settings() {
+		register_setting( self::SETTINGS_GROUP, self::ANALYTICS_OPTION_NAME );
 	}
 }
