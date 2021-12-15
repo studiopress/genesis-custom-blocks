@@ -22,7 +22,7 @@ class Loader extends ComponentAbstract {
 	 *
 	 * @var string
 	 */
-	const ANALYTICS_SCRIPT_SLUG = 'genesis-custom-blocks-analytics';
+	const ANALYTICS_SCRIPT_SLUG = 'genesis-custom-blocks-analytics#async';
 
 	/**
 	 * Asset paths and urls for blocks.
@@ -168,7 +168,7 @@ class Loader extends ComponentAbstract {
 
 		if ( Settings::ANALYTICS_OPTED_IN_VALUE === get_option( Settings::ANALYTICS_OPTION_NAME ) ) {
 			wp_enqueue_script(
-				'genesis-analytics#async',
+				self::ANALYTICS_SCRIPT_SLUG,
 				'https://www.googletagmanager.com/gtag/js?id=UA-17364082-14',
 				[],
 				genesis_custom_blocks()->get_version(),
