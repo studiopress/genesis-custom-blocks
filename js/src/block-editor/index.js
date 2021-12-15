@@ -3,9 +3,9 @@
 /**
  * WordPress dependencies
  */
-import { setLocaleData } from '@wordpress/i18n';
-import { addFilter } from '@wordpress/hooks';
 import domReady from '@wordpress/dom-ready';
+import { addFilter } from '@wordpress/hooks';
+import { setLocaleData } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -24,7 +24,6 @@ domReady( () => {
 	// @ts-ignore
 	window.dataLayer = window.dataLayer || [];
 
-	// Assigns an instantiated class (Singleton pattern) to the Window global object.
 	// @ts-ignore
 	window.GcbAnalytics = {
 		GAClient: new GAClient(),

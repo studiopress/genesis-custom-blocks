@@ -26,7 +26,6 @@ domReady( () => {
 	// @ts-ignore
 	window.dataLayer = window.dataLayer || [];
 
-	// Assigns an instantiated class (Singleton pattern) to the Window global object.
 	// @ts-ignore
 	window.GcbAnalytics = {
 		GAClient: new GAClient(),

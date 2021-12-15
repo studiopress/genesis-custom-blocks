@@ -1,6 +1,7 @@
 /**
- * Ensures that the provided function isn't called
- * multiple times in succession.
+ * Ensures that the provided function isn't called multiple times in succession.
+ *
+ * Forked from BMO's work in Genesis Blocks.
  *
  * @param {() => any} func
  * @param {number} wait
