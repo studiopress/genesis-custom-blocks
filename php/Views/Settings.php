@@ -9,8 +9,6 @@
 
 use Genesis\CustomBlocks\Admin\Settings;
 
-$checked_value = '1';
-
 ?>
 <div class="wrap genesis-custom-blocks-settings">
 	<h1><?php esc_html_e( 'Genesis Custom Blocks Settings', 'genesis-custom-blocks' ); ?></h1>
@@ -25,7 +23,7 @@ $checked_value = '1';
 					<label for="<?php echo esc_attr( SETTINGS::ANALYTICS_OPTION_NAME ); ?>"><?php esc_html_e( 'Enable analytics', 'genesis-custom-blocks' ); ?></label>
 				</th>
 				<td>
-					<input type="checkbox" value="<?php echo esc_attr( $checked_value ); ?>" <?php echo checked( get_option( SETTINGS::ANALYTICS_OPTION_NAME ), $checked_value ); ?> name="<?php echo esc_attr( Settings::ANALYTICS_OPTION_NAME ); ?>" id="<?php echo esc_attr( Settings::ANALYTICS_OPTION_NAME ); ?>" class="regular-text" />
+					<input type="checkbox" value="<?php echo esc_attr( Settings::ANALYTICS_OPTED_IN_VALUE ); ?>" <?php echo checked( get_option( SETTINGS::ANALYTICS_OPTION_NAME ), Settings::ANALYTICS_OPTED_IN_VALUE ); ?> name="<?php echo esc_attr( Settings::ANALYTICS_OPTION_NAME ); ?>" id="<?php echo esc_attr( Settings::ANALYTICS_OPTION_NAME ); ?>" class="regular-text" />
 				</td>
 			</tr>
 		</table>

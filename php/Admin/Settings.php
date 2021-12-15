@@ -38,6 +38,13 @@ class Settings extends ComponentAbstract {
 	const ANALYTICS_OPTION_NAME = 'genesis_custom_blocks_analytics_opt_in';
 
 	/**
+	 * The value when a user has opted into analytics.
+	 *
+	 * @var string
+	 */
+	const ANALYTICS_OPTED_IN_VALUE = 'genesis_custom_blocks_analytics_opt_in';
+
+	/**
 	 * Page slug.
 	 *
 	 * @var string

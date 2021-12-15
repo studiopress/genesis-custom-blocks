@@ -177,6 +177,7 @@ class TestLoader extends AbstractTemplate {
 			wp_scripts()->registered[ $script_handle ]->extra['before'][1]
 		);
 
+		$this->assertFalse( wp_script_is( Loader::ANALYTICS_SCRIPT_SLUG ) );
 		$this->assertTrue( wp_style_is( $style_handle ) );
 	}
 
