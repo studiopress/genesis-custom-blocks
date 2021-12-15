@@ -25,7 +25,7 @@ window.dataLayer = window.dataLayer || [];
 
 // Assigns an instantiated class (Singleton pattern) to the Window global object.
 // @ts-ignore
-window.GenesisAnalytics = {
+window.GcbAnalytics = {
 	debounce,
 	GAClient: new GAClient(),
 };
