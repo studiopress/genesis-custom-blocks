@@ -29,9 +29,11 @@ export default class GAClient {
 	/**
 	 * Google Analytics Measurment ID
 	 *
+	 * Todo: update this for GCB.
+	 *
 	 * @type {string}
 	 */
-	GA_ID = 'UA-17364082-14';
+	GA_ID = 'UA-12345';
 
 	/**
 	 * Class constructor
@@ -51,21 +53,21 @@ export default class GAClient {
 	}
 
 	/**
-	 * Enables Google Analytics
+	 * Enables Google Analytics.
 	 * Setting this value allows the GA Client to respect any opt out configuration
 	 *
 	 * https://developers.google.com/analytics/devguides/collection/gtagjs/user-opt-out
 	 *
-	 * @param {boolean | number | string} enable The value to be set
+	 * @param {boolean | number | string} enable The value to be set.
 	 */
 	enableAnalytics( enable ) {
 		enable = !! +enable;
 
 		if ( enable ) {
-			// Remove ga-disable-GA_MEASUREMENT_ID property to enable GA
+			// Remove ga-disable-GA_MEASUREMENT_ID property to enable GA.
 			delete window[ `ga-disable-${ this.GA_ID }` ];
 		} else {
-			// Set ga-disable-GA_MEASUREMENT_ID property to disable GA
+			// Set ga-disable-GA_MEASUREMENT_ID property to disable GA.
 			window[ `ga-disable-${ this.GA_ID }` ] = '1';
 		}
 		this.enabled = enable;

@@ -169,7 +169,7 @@ class Loader extends ComponentAbstract {
 		if ( Settings::ANALYTICS_OPTED_IN_VALUE === get_option( Settings::ANALYTICS_OPTION_NAME ) ) {
 			wp_enqueue_script(
 				self::ANALYTICS_SCRIPT_SLUG,
-				'https://www.googletagmanager.com/gtag/js?id=UA-17364082-14',
+				'https://www.googletagmanager.com/gtag/js?id=UA-12345', // Todo: update this for GCB.
 				[],
 				genesis_custom_blocks()->get_version(),
 				true
