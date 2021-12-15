@@ -1,6 +1,6 @@
 <?php
 /**
- * Genesis Custom Blocks Pro Subscription page.
+ * Genesis Custom Blocks Pro Settings page.
  *
  * @package   Genesis\CustomBlocksPro
  * @copyright Copyright(c) 2021, Genesis Custom Blocks Pro
