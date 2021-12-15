@@ -11,7 +11,6 @@ import { addFilter } from '@wordpress/hooks';
  */
 import { initializeEditor } from './helpers';
 import { addControls } from '../block-editor/helpers';
-import { debounce } from '../common/helpers';
 import { GAClient } from '../common/classes';
 
 // Renders the app in the container.
@@ -23,16 +22,15 @@ domReady( () => {
 
 	// @ts-ignore
 	initializeEditor( gcbEditor, container );
+
+	// @ts-ignore
+	window.dataLayer = window.dataLayer || [];
+
+	// Assigns an instantiated class (Singleton pattern) to the Window global object.
+	// @ts-ignore
+	window.GcbAnalytics = {
+		GAClient: new GAClient(),
+	};
 } );
 
 addFilter( 'genesisCustomBlocks.controls', 'genesisCustomBlocks/addControls', addControls );
-
-// @ts-ignore
-window.dataLayer = window.dataLayer || [];
-
-// Assigns an instantiated class (Singleton pattern) to the Window global object.
-// @ts-ignore
-window.GcbAnalytics = {
-	debounce,
-	GAClient: new GAClient(),
-};
