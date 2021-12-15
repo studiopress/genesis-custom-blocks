@@ -174,6 +174,12 @@ class Loader extends ComponentAbstract {
 				genesis_custom_blocks()->get_version(),
 				true
 			);
+
+			wp_localize_script(
+				self::ANALYTICS_SCRIPT_SLUG,
+				'gcbAnalyticsConfig',
+				[ 'ga_opt_in' => 1 ]
+			);
 		}
 
 		// Enqueue optional editor only styles.
