@@ -27,7 +27,7 @@ export default class GAClient {
 	client;
 
 	/**
-	 * Google Analytics Measurment ID
+	 * Google Analytics Measurment ID.
 	 *
 	 * Todo: update this for GCB.
 	 *
@@ -36,7 +36,7 @@ export default class GAClient {
 	GA_ID = 'UA-12345';
 
 	/**
-	 * Class constructor
+	 * Class constructor.
 	 */
 	constructor() {
 		this.client = function() {
@@ -54,7 +54,7 @@ export default class GAClient {
 
 	/**
 	 * Enables Google Analytics.
-	 * Setting this value allows the GA Client to respect any opt out configuration
+	 * Setting this value allows the GA Client to respect any opt out configuration.
 	 *
 	 * https://developers.google.com/analytics/devguides/collection/gtagjs/user-opt-out
 	 *
@@ -82,7 +82,7 @@ export default class GAClient {
 	}
 
 	/**
-	 * Sends an event to Google Analytics
+	 * Sends an event to Google Analytics.
 	 *
 	 * @param {string} action
 	 * @param {{event_category: string; event_label?: string;}} params
