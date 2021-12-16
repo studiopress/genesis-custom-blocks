@@ -20,9 +20,6 @@ addFilter( 'genesisCustomBlocks.controls', 'genesisCustomBlocks/addControls', ad
 registerBlocks( genesisCustomBlocks, gcbBlocks, Edit );
 
 // @ts-ignore
-window.dataLayer = window.dataLayer || [];
-
-// @ts-ignore
 window.GcbAnalytics = {
 	GAClient: new GAClient(),
 };

@@ -3,6 +3,9 @@
  */
 import { debounce } from '../helpers';
 
+// @ts-ignore
+window.dataLayer = window.dataLayer || [];
+
 /**
  * Genesis Analytics Client
  *

@@ -27,9 +27,6 @@ domReady( () => {
 } );
 
 // @ts-ignore
-window.dataLayer = window.dataLayer || [];
-
-// @ts-ignore
 window.GcbAnalytics = {
 	GAClient: new GAClient(),
 };
