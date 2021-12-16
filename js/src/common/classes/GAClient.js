@@ -6,7 +6,7 @@ import { debounce } from '../helpers';
 /**
  * Genesis Analytics Client
  *
- * Forked from Genesis Blocks.
+ * Forked from BMO's work in Genesis Blocks.
  *
  * Follows the singleton pattern to prevent multiple instances of the GA Client from being used.
  * https://developers.google.com/analytics/devguides/collection/gtagjs
