@@ -13,6 +13,8 @@ import { initializeEditor } from './helpers';
 import { addControls } from '../block-editor/helpers';
 import { GAClient } from '../common/classes';
 
+addFilter( 'genesisCustomBlocks.controls', 'genesisCustomBlocks/addControls', addControls );
+
 // Renders the app in the container.
 domReady( () => {
 	let container = document.querySelector( 'body > div:first-child' );
@@ -22,14 +24,12 @@ domReady( () => {
 
 	// @ts-ignore
 	initializeEditor( gcbEditor, container );
-
-	// @ts-ignore
-	window.dataLayer = window.dataLayer || [];
-
-	// @ts-ignore
-	window.GcbAnalytics = {
-		GAClient: new GAClient(),
-	};
 } );
 
-addFilter( 'genesisCustomBlocks.controls', 'genesisCustomBlocks/addControls', addControls );
+// @ts-ignore
+window.dataLayer = window.dataLayer || [];
+
+// @ts-ignore
+window.GcbAnalytics = {
+	GAClient: new GAClient(),
+};

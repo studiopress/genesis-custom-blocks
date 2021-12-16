@@ -3,7 +3,6 @@
 /**
  * WordPress dependencies
  */
-import domReady from '@wordpress/dom-ready';
 import { addFilter } from '@wordpress/hooks';
 import { setLocaleData } from '@wordpress/i18n';
 
@@ -20,12 +19,10 @@ addFilter( 'genesisCustomBlocks.controls', 'genesisCustomBlocks/addControls', ad
 // @ts-ignore
 registerBlocks( genesisCustomBlocks, gcbBlocks, Edit );
 
-domReady( () => {
-	// @ts-ignore
-	window.dataLayer = window.dataLayer || [];
+// @ts-ignore
+window.dataLayer = window.dataLayer || [];
 
-	// @ts-ignore
-	window.GcbAnalytics = {
-		GAClient: new GAClient(),
-	};
-} );
+// @ts-ignore
+window.GcbAnalytics = {
+	GAClient: new GAClient(),
+};
