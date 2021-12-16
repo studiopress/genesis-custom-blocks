@@ -45,7 +45,7 @@ export default class GAClient {
 		};
 
 		// @ts-ignore
-		this.config = window.genesisAnalyticsConfig || {};
+		this.config = window.gcbAnalyticsConfig || {};
 		if ( this.config.ga_opt_in ) {
 			this.enableAnalytics( this.config.ga_opt_in );
 			this.initClient();
