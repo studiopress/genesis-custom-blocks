@@ -10,11 +10,19 @@ namespace Genesis\CustomBlocks\Blocks;
 use WP_REST_Server;
 use WP_Query;
 use Genesis\CustomBlocks\ComponentAbstract;
+use Genesis\CustomBlocks\Admin\Settings;
 
 /**
  * Class Loader
  */
 class Loader extends ComponentAbstract {
+
+	/**
+	 * The script slug for analytics.
+	 *
+	 * @var string
+	 */
+	const ANALYTICS_SCRIPT_SLUG = 'genesis-custom-blocks-analytics#async';
 
 	/**
 	 * Asset paths and urls for blocks.
@@ -157,6 +165,22 @@ class Loader extends ComponentAbstract {
 				'postType'     => get_post_type(), // To conditionally exclude blocks from certain post types.
 			]
 		);
+
+		if ( Settings::ANALYTICS_OPTED_IN_VALUE === get_option( Settings::ANALYTICS_OPTION_NAME ) ) {
+			wp_enqueue_script(
+				self::ANALYTICS_SCRIPT_SLUG,
+				'https://www.googletagmanager.com/gtag/js?id=UA-12345', // Todo: update this for GCB.
+				[],
+				genesis_custom_blocks()->get_version(),
+				true
+			);
+
+			wp_localize_script(
+				self::ANALYTICS_SCRIPT_SLUG,
+				'gcbAnalyticsConfig',
+				[ 'ga_opt_in' => 1 ]
+			);
+		}
 
 		// Enqueue optional editor only styles.
 		wp_enqueue_style(

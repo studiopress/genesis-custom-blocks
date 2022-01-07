@@ -8,6 +8,7 @@
 use Genesis\CustomBlocks\Blocks\Block;
 use Genesis\CustomBlocks\Blocks\Field;
 use Genesis\CustomBlocks\Blocks\Loader;
+use Genesis\CustomBlocks\Admin\Settings;
 
 /**
  * Tests for class Loader.
@@ -177,7 +178,25 @@ class TestLoader extends AbstractTemplate {
 			wp_scripts()->registered[ $script_handle ]->extra['before'][1]
 		);
 
+		$this->assertFalse( wp_script_is( Loader::ANALYTICS_SCRIPT_SLUG ) );
 		$this->assertTrue( wp_style_is( $style_handle ) );
+	}
+
+	/**
+	 * Test editor_assets when opted into analytics.
+	 *
+	 * @covers \Genesis\CustomBlocks\Blocks\Loader::editor_assets()
+	 */
+	public function test_editor_assets_analytics_opted_in() {
+		update_option( Settings::ANALYTICS_OPTION_NAME, Settings::ANALYTICS_OPTED_IN_VALUE );
+		$this->instance->init();
+		$this->instance->editor_assets();
+
+		$this->assertTrue( wp_script_is( Loader::ANALYTICS_SCRIPT_SLUG ) );
+		$this->assertContains(
+			'gcbAnalyticsConfig',
+			wp_scripts()->registered[ Loader::ANALYTICS_SCRIPT_SLUG ]->extra['data']
+		);
 	}
 
 	/**
