@@ -10,7 +10,7 @@ references:
 executors:
   php:
     docker:
-      - image: circleci/php:7.4.5-cli-node
+      - image: cimg/php:7.4.5-node
 
 commands:
   set-up-packages:
@@ -39,7 +39,7 @@ jobs:
     steps:
       - checkout
       - node/install:
-          node-version: '14.18.1'
+          node-version: '14.15.0'
       - nodegit-workaround
       - set-up-packages
       - run: npm run lint
@@ -49,7 +49,7 @@ jobs:
       php-version:
         type: string
     docker:
-      - image: circleci/php:<< parameters.php-version >>-cli-node
+      - image: cimg/php:<< parameters.php-version >>-node
         environment:
           WP_TESTS_DIR: ~/project/wordpress-develop/tests/phpunit
       - image: mysql:5.7
@@ -61,13 +61,8 @@ jobs:
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
       - checkout
-      - run:
-          name: Installing PHP extensions
-          command: |
-            sudo apt-get update && sudo apt-get install libpng-dev
-            sudo docker-php-ext-install mysqli gd
       - node/install:
-          node-version: '14.18.1'
+          node-version: '14.15.0'
       - nodegit-workaround
       - run:
           name: Installing WordPress and setting up tests
@@ -94,7 +89,7 @@ jobs:
     steps:
       - checkout
       - node/install:
-          node-version: '14.18.1'
+          node-version: '14.15.0'
       - nodegit-workaround
       - run: HUSKY_SKIP_INSTALL=1 npm ci && npm run test:js -- --maxWorkers=2
 
@@ -106,7 +101,7 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install php php-xml
       - install-composer
       - node/install:
-          node-version: '14.18.1'
+          node-version: '14.15.0'
       - nodegit-workaround
       - set-up-packages
       - run: npm run wp-env start && npm run test:e2e
