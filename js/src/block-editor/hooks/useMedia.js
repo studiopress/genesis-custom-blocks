@@ -56,7 +56,7 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 const useMedia = ( fieldValue, onChange, allowedTypes ) => {
 	const defaultImageSrc = '';
-	const [ media, setMedia ] = useState( {} );
+	const [ media, setMedia ] = useState( { alt: undefined, source_url: undefined } );
 	const [ mediaSrc, setMediaSrc ] = useState( defaultImageSrc );
 	const [ isUploading, setIsUploading ] = useState( false );
 	const [ mediaAlt, setImageAlt ] = useState( '' );
