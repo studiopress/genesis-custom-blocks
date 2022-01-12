@@ -41,6 +41,12 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 
 /**
+ * @typedef {Object} GetImageReturn The return value of the hook.
+ * @property {string} source_url The url of the image.
+ * @property {string} alt The alt attribute of the image.
+ */
+
+/**
  * Gets the image context and functions to change it.
  *
  * @param {number|string} fieldValue The current field value.
@@ -50,14 +56,21 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 const useMedia = ( fieldValue, onChange, allowedTypes ) => {
 	const defaultImageSrc = '';
+	const [ media, setMedia ] = useState( {} );
 	const [ mediaSrc, setMediaSrc ] = useState( defaultImageSrc );
 	const [ isUploading, setIsUploading ] = useState( false );
 	const [ mediaAlt, setImageAlt ] = useState( '' );
 
-	/* @type {Object|undefined} */
-	const media = useSelect( ( select ) => {
-		// @ts-ignore The function isn't in the declaration file.
-		return select( 'core' ).getMedia( fieldValue );
+	const getImage = useSelect( ( select ) => {
+		/**
+		 * Gets the image.
+		 *
+		 * @param {number | string} imageId The id of the image.
+		 * @return {GetImageReturn | undefined} The image, if any.
+		 */
+		return ( imageId ) =>
+			// @ts-ignore This function is wrong in the declaration file.
+			select( 'core' ).getEntityRecord( 'postType', 'attachment', imageId, { context: 'embed' } );
 	} );
 
 	/* @type {function|undefined} */
@@ -66,6 +79,25 @@ const useMedia = ( fieldValue, onChange, allowedTypes ) => {
 		const { getSettings } = select( blockEditorStore );
 		return getSettings()?.mediaUpload || legacyMediaUpload;
 	} );
+
+	useEffect( () => {
+		let timeout;
+		if ( ! media?.source_url ) {
+			const image = getImage( fieldValue );
+			if ( image ) {
+				setMedia( image );
+			} else {
+				timeout = setTimeout(
+					() => {
+						setMedia( getImage( fieldValue ) );
+					},
+					1000
+				);
+			}
+		}
+
+		return () => clearTimeout( timeout );
+	}, [ media, fieldValue, getImage, setMedia ] );
 
 	useEffect( () => {
 		if ( media?.source_url ) {
