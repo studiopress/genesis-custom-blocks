@@ -109,6 +109,8 @@ jobs:
           command: |
             npm run wp-env start
             npm run wp-env run cli wp core upgrade --version=5.9-RC3
+            echo "The version is:"
+            npm run wp-env run cli wp core upgrade --version=5.9-RC3
             npm run test:e2e
       - run:
           command: |
