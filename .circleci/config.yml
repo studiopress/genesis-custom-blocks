@@ -106,7 +106,7 @@ jobs:
       - set-up-packages
       - run:
           name: Start environment
-          command |
+          command: |
             npm run wp-env start
             wp-env run cli wp core upgrade --version=5.9-RC3
             npm run test:e2e
