@@ -104,14 +104,7 @@ jobs:
           node-version: '14.18.1'
       - nodegit-workaround
       - set-up-packages
-      - run:
-          name: Start environment
-          command: |
-            npm run wp-env start
-            npm run wp-env run cli wp core upgrade --version=5.9-RC3
-            echo "The version is:"
-            npm run wp-env run cli wp core upgrade --version=5.9-RC3
-            npm run test:e2e
+      - run: npm run wp-env start && npm run test:e2e
       - run:
           command: |
             if [ -d artifacts ]; then cp -r artifacts /tmp/; fi;
