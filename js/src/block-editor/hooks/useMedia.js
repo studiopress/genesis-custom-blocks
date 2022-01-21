@@ -88,7 +88,7 @@ const useMedia = ( fieldValue, onChange, allowedTypes ) => {
 					() => {
 						setMedia( getImage( fieldValue ) );
 					},
-					1000
+					500
 				);
 			}
 		}
