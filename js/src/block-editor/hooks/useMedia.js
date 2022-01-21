@@ -55,7 +55,7 @@ const useMedia = ( fieldValue, onChange, allowedTypes ) => {
 	const [ isUploading, setIsUploading ] = useState( false );
 	const [ mediaAlt, setImageAlt ] = useState( '' );
 
-	const getImage = useSelect( ( select ) => {
+	const getMedia = useSelect( ( select ) => {
 		/**
 		 * Gets the image.
 		 *
@@ -80,13 +80,13 @@ const useMedia = ( fieldValue, onChange, allowedTypes ) => {
 	useEffect( () => {
 		let timeout;
 		if ( ! media?.source_url ) {
-			const image = getImage( fieldValue );
+			const image = getMedia( fieldValue );
 			if ( image ) {
 				setMedia( image );
 			} else {
 				timeout = setTimeout(
 					() => {
-						setMedia( getImage( fieldValue ) );
+						setMedia( getMedia( fieldValue ) );
 					},
 					500
 				);
@@ -94,7 +94,7 @@ const useMedia = ( fieldValue, onChange, allowedTypes ) => {
 		}
 
 		return () => clearTimeout( timeout );
-	}, [ media, fieldValue, getImage, setMedia ] );
+	}, [ media, fieldValue, getMedia, setMedia ] );
 
 	useEffect( () => {
 		if ( media?.source_url ) {
