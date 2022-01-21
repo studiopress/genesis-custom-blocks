@@ -57,17 +57,17 @@ const useMedia = ( fieldValue, onChange, allowedTypes ) => {
 
 	const getMediaFile = useSelect( ( select ) => {
 		/**
-		 * Gets the image.
+		 * Gets the media file.
 		 *
-		 * @param {number | string} imageId The id of the image.
+		 * @param {number | string} mediaId The id of the media.
 		 * @return {{
 		 *   source_url: string,
 		 *   alt: string,
 		 * } | undefined} The image, if any.
 		 */
-		return ( imageId ) =>
+		return ( mediaId ) =>
 			// @ts-ignore This function is wrong in the declaration file.
-			select( 'core' ).getEntityRecord( 'postType', 'attachment', imageId, { context: 'embed' } );
+			select( 'core' ).getEntityRecord( 'postType', 'attachment', mediaId, { context: 'embed' } );
 	} );
 
 	/* @type {function|undefined} */
