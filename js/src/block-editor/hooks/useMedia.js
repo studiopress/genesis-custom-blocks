@@ -41,12 +41,6 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 
 /**
- * @typedef {Object} GetImageReturn The return value of the hook.
- * @property {string} source_url The url of the image.
- * @property {string} alt The alt attribute of the image.
- */
-
-/**
  * Gets the image context and functions to change it.
  *
  * @param {number|string} fieldValue The current field value.
@@ -66,7 +60,10 @@ const useMedia = ( fieldValue, onChange, allowedTypes ) => {
 		 * Gets the image.
 		 *
 		 * @param {number | string} imageId The id of the image.
-		 * @return {GetImageReturn | undefined} The image, if any.
+		 * @return {{
+		 *   source_url: string,
+		 *   alt: string,
+		 * } | undefined} The image, if any.
 		 */
 		return ( imageId ) =>
 			// @ts-ignore This function is wrong in the declaration file.
