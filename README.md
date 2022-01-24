@@ -46,7 +46,7 @@ As an alternative to the built-in editor, there are simple functions, ready to r
 * Toggle Field
 * Textarea Field
 * Select Field
-* Range Rield
+* Range Field
 * Radio Field
 * Number Field
 * Multi-select Field
