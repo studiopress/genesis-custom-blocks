@@ -121,7 +121,7 @@ describe( 'AllFields', () => {
 		// Create the custom block (a 'genesis_custom_block' post).
 		const customPostType = 'genesis_custom_block';
 		await visitAdminPage( 'post-new.php', `?post_type=${ customPostType }` );
-		await findByLabelText( await getDocument( page ), 'Block title' );
+		await ( await findByLabelText( await getDocument( page ), 'Block title' ) ).click();
 		await page.keyboard.type( blockName );
 
 		const $editBlockDocument = await getDocument( page );
@@ -187,7 +187,7 @@ describe( 'AllFields', () => {
 		await page.click( `[value=${ fields.radio.value }` );
 
 		// Click away from the block so the <ServerSideRender> displays.
-		await ( await findByRole( $blockEditorDocument, 'button', { name: 'Document' } ) ).click();
+		await ( await findByRole( $blockEditorDocument, 'textbox', { name: /add title/i } ) ).click();
 
 		const getExpectedText = ( templateFunction, fieldName ) => {
 			return `Here is the result of calling ${ templateFunction } for ${ fields[ fieldName ].name }: ${ fields[ fieldName ].value }`;
