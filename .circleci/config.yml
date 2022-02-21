@@ -89,7 +89,6 @@ jobs:
       - checkout
       - run: sudo apt-get update && sudo apt-get install php php-xml
       - php/install-composer
-      - run: nvm use
       - nodegit-workaround
       - set-up-packages
       - run: npm run wp-env start && npm run test:e2e
