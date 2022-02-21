@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@3.0.0
+  node: circleci/node@5.0.0
 
 references:
   PLUGIN_PATH: &PLUGIN_PATH
@@ -38,8 +38,7 @@ jobs:
       name: php
     steps:
       - checkout
-      - node/install:
-          node-version: '14.18.1'
+      - node/install
       - nodegit-workaround
       - set-up-packages
       - run: npm run lint
@@ -61,8 +60,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
       - checkout
-      - node/install:
-          node-version: '14.18.1'
+      - node/install
       - nodegit-workaround
       - run:
           name: Installing WordPress and setting up tests
@@ -88,8 +86,7 @@ jobs:
     executor: php
     steps:
       - checkout
-      - node/install:
-          node-version: '14.18.1'
+      - node/install
       - nodegit-workaround
       - run: HUSKY_SKIP_INSTALL=1 npm ci && npm run test:js -- --maxWorkers=2
 
@@ -100,8 +97,7 @@ jobs:
       - checkout
       - run: sudo apt-get update && sudo apt-get install php php-xml
       - install-composer
-      - node/install:
-          node-version: '14.18.1'
+      - node/install
       - nodegit-workaround
       - set-up-packages
       - run: npm run wp-env start && npm run test:e2e
