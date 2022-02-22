@@ -27,7 +27,7 @@ describe( 'number control', () => {
 	it( 'displays the default value if no value is entered', () => {
 		const props = getProps();
 		const { control } = setupControl( GcbNumberControl, props );
-		expect( control ).toHaveAttribute( 'value', props.field.default );
+		expect( control ).toHaveValue( props.field.default );
 	} );
 
 	it( 'has the placeholder', async () => {

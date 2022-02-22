@@ -50,15 +50,15 @@ import { useBlock, useTemplate } from '../hooks';
 
 /**
  * @typedef {Object} EditorProps The component props.
- * @property {onErrorType} onError Handler for errors.
- * @property {number} postId The current post ID.
- * @property {string} postType The current post type.
- * @property {Object} settings The editor settings.
+ * @property {onErrorType} onError  Handler for errors.
+ * @property {number}      postId   The current post ID.
+ * @property {string}      postType The current post type.
+ * @property {Object}      settings The editor settings.
  */
 
 /**
  * @typedef {Object} SelectedField A field to change.
- * @property {string} name The name of the field.
+ * @property {string} name     The name of the field.
  * @property {string} [parent] The name of the field's parent, if any.
  */
 
@@ -74,25 +74,25 @@ import { useBlock, useTemplate } from '../hooks';
 
 /**
  * @typedef {Object} Field A block field, can have more properties depending on its settings.
- * @property {string} name The name of the field.
- * @property {string} label The label of the field.
- * @property {string} control The control type, like 'text' or 'textarea'.
- * @property {string} location The location, like 'editor'.
- * @property {string} type The data type for its value, like string.
- * @property {number} order Its order relative to other fields in its location, like 0, 1, 2...
- * @property {string} [parent] The name of its parent field, like a Repeater control.
+ * @property {string} name         The name of the field.
+ * @property {string} label        The label of the field.
+ * @property {string} control      The control type, like 'text' or 'textarea'.
+ * @property {string} location     The location, like 'editor'.
+ * @property {string} type         The data type for its value, like string.
+ * @property {number} order        Its order relative to other fields in its location, like 0, 1, 2...
+ * @property {string} [parent]     The name of its parent field, like a Repeater control.
  * @property {Object} [sub_fields] Fields that this field has, like for the Repeater control.
- * @property {string} [width] The width, like '25'.
+ * @property {string} [width]      The width, like '25'.
  */
 
 /**
  * @typedef {Object} Setting A field setting.
  * @see PHP class Genesis\CustomBlocks\Blocks\Controls\ControlSetting
- * @property {string} name The name of the setting.
- * @property {string} label The label of the setting to display in the GCB editor.
- * @property {string} help A help value that display in the GCB editor.
- * @property {string} type The setting type, like 'width' or 'text', not a data type like boolean.
- * @property {*} default The default value.
+ * @property {string} name    The name of the setting.
+ * @property {string} label   The label of the setting to display in the GCB editor.
+ * @property {string} help    A help value that display in the GCB editor.
+ * @property {string} type    The setting type, like 'width' or 'text', not a data type like boolean.
+ * @property {*}      default The default value.
  */
 
 /**

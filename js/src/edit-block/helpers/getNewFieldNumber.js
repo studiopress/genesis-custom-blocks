@@ -5,7 +5,7 @@
  * the name 'new-field', they have a number after.
  * Like 'new-field', 'new-field-1', 'new-field-2', etc...
  *
- * @param {Object} fields The existing fields.
+ * @param {Object} fields    The existing fields.
  * @param {string} fieldName The field name.
  * @return {number|null} The new field number as a string, or null.
  */

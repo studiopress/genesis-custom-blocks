@@ -92,7 +92,7 @@ describe( 'Edit', () => {
 		expect( screen.getByLabelText( /gcb block form/i ) ).toBeInTheDocument();
 		screen.getAllByText( getBlock().title );
 
-		act( () => { // eslint-disable-line no-undef
+		act( () => {
 			user.click( screen.getByLabelText( /close dialog/i ) );
 		} );
 

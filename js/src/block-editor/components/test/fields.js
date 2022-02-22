@@ -31,7 +31,7 @@ describe( 'Fields', () => {
 			/>
 		);
 
-		expect( screen.queryByText( helpText ) ).toBeNull();
+		expect( screen.queryByText( helpText ) ).not.toBeInTheDocument();
 	} );
 
 	it( 'displays a control that is supposed to be in the editor', () => {

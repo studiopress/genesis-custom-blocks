@@ -27,7 +27,7 @@ describe( 'text control', () => {
 		const props = getProps();
 		const { control } = setupControl( GcbTextControl, props );
 
-		expect( control ).toHaveAttribute( 'value', props.field.default );
+		expect( control ).toHaveValue( props.field.default );
 	} );
 
 	it.each( [

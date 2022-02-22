@@ -16,8 +16,8 @@ import { BUILDER_EDITING_MODE } from '../constants';
 import { EDITOR_LOCATION, INSPECTOR_LOCATION } from '../../common/constants';
 /**
  * @typedef {Object} LocationButtonProps The component props.
- * @property {import('./editor').CurrentLocation} currentLocation The currently selected location.
- * @property {import('./editor').EditorMode} editorMode The current editor mode.
+ * @property {import('./editor').CurrentLocation}    currentLocation    The currently selected location.
+ * @property {import('./editor').EditorMode}         editorMode         The current editor mode.
  * @property {import('./editor').SetCurrentLocation} setCurrentLocation Sets the current location.
  */
 

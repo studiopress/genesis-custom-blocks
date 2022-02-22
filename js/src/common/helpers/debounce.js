@@ -4,7 +4,7 @@
  * Forked from BMO's work in Genesis Blocks.
  *
  * @param {() => any} func
- * @param {number} wait
+ * @param {number}    wait
  *
  * @return {() => void} A debounced function.
  */

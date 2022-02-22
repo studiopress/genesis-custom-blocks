@@ -5,11 +5,11 @@ import * as React from 'react';
 
 /**
  * @typedef {Object} InputProps The component props.
- * @property {Function} handleOnChange Handles a change in this setting.
- * @property {import('./editor').Setting} setting This setting.
- * @property {string} type The type of <input>, like 'text'.
- * @property {string|undefined} value The setting value.
- * @property {number} [min] The min attribute of an input[type="number"].
+ * @property {Function}                   handleOnChange Handles a change in this setting.
+ * @property {import('./editor').Setting} setting        This setting.
+ * @property {string}                     type           The type of <input>, like 'text'.
+ * @property {string|undefined}           value          The setting value.
+ * @property {number}                     [min]          The min attribute of an input[type="number"].
  */
 
 /**

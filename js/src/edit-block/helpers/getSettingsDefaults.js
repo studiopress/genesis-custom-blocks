@@ -7,7 +7,7 @@
  * a <NumberNonNegative> component.
  *
  * @param {string} controlName The name of the control, like 'text'.
- * @param {Object} controls The controls.
+ * @param {Object} controls    The controls.
  * @return {Object} The settings defaults, or {} if there is no control for the passed name.
  */
 const getSettingsDefaults = ( controlName, controls ) => {
@@ -17,8 +17,8 @@ const getSettingsDefaults = ( controlName, controls ) => {
 
 	return controls[ controlName ].settings.reduce(
 		/**
-		 * @param {Object} accumulator The reducer's accumulator.
-		 * @param {import('../components/editor').Setting} setting The field setting.
+		 * @param {Object}                                 accumulator The reducer's accumulator.
+		 * @param {import('../components/editor').Setting} setting     The field setting.
 		 * @return {Object} Key/value pairs of a setting name to its default value.
 		 */
 		( accumulator, setting ) => ( {

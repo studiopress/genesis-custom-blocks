@@ -17,8 +17,8 @@ import { BottomNotice, PostTitle, TopNotice } from './';
 
 /**
  * @typedef {Object} MainProps The component props.
- * @property {React.ReactElement[]} children THe component children.
- * @property {import('./editor').EditorMode} editorMode The current editor mode.
+ * @property {React.ReactElement[]}             children      THe component children.
+ * @property {import('./editor').EditorMode}    editorMode    The current editor mode.
  * @property {import('./editor').SetEditorMode} setEditorMode Sets the current editor mode.
  */
 

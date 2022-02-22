@@ -26,9 +26,9 @@ import { EDITOR_LOCATION } from '../../common/constants';
 /**
  * The editor component for the block.
  *
- * @param {Object} props The props of this component.
- * @param {import('../../edit-block/hooks/useBlock').Block} props.block The block.
- * @param {Object} props.blockProps The block's props.
+ * @param {Object}                                          props            The props of this component.
+ * @param {import('../../edit-block/hooks/useBlock').Block} props.block      The block.
+ * @param {Object}                                          props.blockProps The block's props.
  * @return {React.ReactElement} The editor display.
  */
 const Edit = ( { block, blockProps } ) => {
@@ -50,7 +50,7 @@ const Edit = ( { block, blockProps } ) => {
 	 * Gets whether the passed block has a selected InnerBlock.
 	 *
 	 * @param {Object} blockCandidate The block to examine for InnerBlocks.
-	 * @param {Object} selectedBlock The block that's selected in the editor.
+	 * @param {Object} selectedBlock  The block that's selected in the editor.
 	 * @return {boolean} Whether the passed block has a selected InnerBlock.
 	 */
 	const hasSelectedInnerBlock = ( blockCandidate, selectedBlock ) =>

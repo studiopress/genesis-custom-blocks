@@ -25,7 +25,7 @@ test( 'color control', async () => {
 	);
 	const input = getByRole( 'textbox' );
 
-	expect( input.value ).toBe( field.default );
+	expect( input ).toHaveValue( field.default );
 	await findByText( field.help );
 	await findByText( field.label );
 

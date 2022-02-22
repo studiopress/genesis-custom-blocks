@@ -33,7 +33,7 @@ const CategorySection = () => {
 	/**
 	 * Handles changing the category.
 	 *
-	 * @param {{ target: { value: React.SetStateAction<string>; }; }} event The event on changing the category.
+	 * @param {{ target: { value: React.SetStateAction<string> } }} event The event on changing the category.
 	 */
 	const handleChangeCategory = ( event ) => {
 		if ( ! event.target ) {

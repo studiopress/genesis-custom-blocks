@@ -21,13 +21,13 @@ import { Editor } from '../components';
  * Forked from Gutenberg.
  * https://github.com/WordPress/gutenberg/blob/e61483bda071f69f3dddf4e34345d1278b6cdc6e/packages/edit-post/src/index.js
  *
- * @param {Object}  postType     Post type of the post to edit.
- * @param {Object}  postId       ID of the post to edit.
- * @param {Element} target       DOM node in which editor is rendered.
- * @param {?Object} settings     Editor settings object.
- * @param {Object|null}  initialEdits Programmatic edits to apply initially, to be
- *                               considered as non-user-initiated (bypass for
- *                               unsaved changes prompt).
+ * @param {Object}      postType     Post type of the post to edit.
+ * @param {Object}      postId       ID of the post to edit.
+ * @param {Element}     target       DOM node in which editor is rendered.
+ * @param {?Object}     settings     Editor settings object.
+ * @param {Object|null} initialEdits Programmatic edits to apply initially, to be
+ *                                   considered as non-user-initiated (bypass for
+ *                                   unsaved changes prompt).
  */
 export function reinitializeEditor(
 	postType,
@@ -101,7 +101,6 @@ const initializeEditor = (
 	// But Mobile Safari forces the `html` element to scroll upwards, hiding the toolbar.
 	const isIphone = window.navigator.userAgent.indexOf( 'iPhone' ) !== -1;
 	if ( isIphone ) {
-		// eslint-disable-next-line @wordpress/no-global-event-listener
 		window.addEventListener( 'scroll', ( event ) => {
 			const editorScrollContainer = document.getElementsByClassName(
 				'interface-interface-skeleton__body'

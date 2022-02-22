@@ -20,8 +20,8 @@ import { Notice } from '../../common/components';
 
 /**
  * @typedef {Object} TopNoticeProps The component props.
- * @property {import('./editor').EditorMode} editorMode The current editor mode.
- * @property {boolean} isOnboarding Whether the onboarding should display now.
+ * @property {import('./editor').EditorMode}    editorMode    The current editor mode.
+ * @property {boolean}                          isOnboarding  Whether the onboarding should display now.
  * @property {import('./editor').SetEditorMode} setEditorMode Sets the current editor mode.
  */
 

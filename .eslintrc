@@ -5,7 +5,6 @@
     "plugin:import/recommended",
     "plugin:eslint-comments/recommended",
     "plugin:jsx-a11y/recommended",
-    "plugin:testing-library/recommended",
     "plugin:jest-dom/recommended",
     "plugin:react-hooks/recommended"
   ],
@@ -61,7 +60,7 @@
       ],
       "rules": {
         "jest/expect-expect": "off",
-        "jest/lowercase-name": [
+        "jest/prefer-lowercase-title": [
           "error",
           {
             "ignore": [
