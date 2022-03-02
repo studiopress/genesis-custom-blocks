@@ -17,24 +17,24 @@ import {
 
 /**
  * @typedef {Object} Category A block category.
- * @property {string} slug The slug.
- * @property {string} title Like a pretty-printed slug.
+ * @property {string}      slug   The slug.
+ * @property {string}      title  Like a pretty-printed slug.
  * @property {string|null} [icon] The icon for the category, not used anymore.
  */
 
 /**
  * @typedef {Object} Block A block configuration.
- * @property {string} name The name (slug).
- * @property {string} title Often a pretty-printed version of the slug.
- * @property {Category} category The block category, including slug and title properties.
- * @property {Object} fields Key/value pairs of Field objects.
- * @property {string} icon The block icon, like 'genesis_custom_block'.
- * @property {string[]} keywords The keywords, max 3.
- * @property {boolean} [displayModal] Whether to display the editor fields in the modal.
- * @property {string[]} [excluded] The excluded post tpes, if any.
- * @property {Object} [previewAttributes] The block attributes to show in the GCB 'Editor Preview'.
- * @property {string} [templateCss] The template editor CSS.
- * @property {string} [templateMarkup] The template editor markup.
+ * @property {string}   name                The name (slug).
+ * @property {string}   title               Often a pretty-printed version of the slug.
+ * @property {Category} category            The block category, including slug and title properties.
+ * @property {Object}   fields              Key/value pairs of Field objects.
+ * @property {string}   icon                The block icon, like 'genesis_custom_block'.
+ * @property {string[]} keywords            The keywords, max 3.
+ * @property {boolean}  [displayModal]      Whether to display the editor fields in the modal.
+ * @property {string[]} [excluded]          The excluded post tpes, if any.
+ * @property {Object}   [previewAttributes] The block attributes to show in the GCB 'Editor Preview'.
+ * @property {string}   [templateCss]       The template editor CSS.
+ * @property {string}   [templateMarkup]    The template editor markup.
  */
 
 /**
@@ -44,7 +44,7 @@ import {
 
 /**
  * @typedef {Object} UseBlockReturn The return value of useBlock.
- * @property {Block} block The block, parsed into an object.
+ * @property {Block}       block       The block, parsed into an object.
  * @property {ChangeBlock} changeBlock Changes the block configuration.
  */
 

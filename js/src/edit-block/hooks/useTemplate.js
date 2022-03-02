@@ -19,9 +19,9 @@ import { useBlock } from './';
 
 /**
  * @typedef {Object} Template A template as returned from the request.
- * @property {string} templatePath The path to the template.
+ * @property {string}  templatePath   The path to the template.
  * @property {boolean} templateExists Whether there is a template at that path.
- * @property {string} cssUrl The URL to the CSS file for the template, if one exists.
+ * @property {string}  cssUrl         The URL to the CSS file for the template, if one exists.
  */
 
 /**
@@ -53,10 +53,10 @@ const useTemplate = () => {
 					/**
 					 * Sets the template data, so there can be a notice about it.
 					 *
-					 * @param {Object} response The response from the REST request.
-					 * @param {string} response.templatePath The path of the template, if any.
+					 * @param {Object}  response                The response from the REST request.
+					 * @param {string}  response.templatePath   The path of the template, if any.
 					 * @param {boolean} response.templateExists Whether the template exists.
-					 * @param {string} response.cssUrl The URL of the CSS file, if any.
+					 * @param {string}  response.cssUrl         The URL of the CSS file, if any.
 					 */
 					( response ) => {
 						if ( response && response.hasOwnProperty( 'templatePath' ) ) {

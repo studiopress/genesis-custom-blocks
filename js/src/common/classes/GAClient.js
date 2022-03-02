@@ -87,8 +87,8 @@ export default class GAClient {
 	/**
 	 * Sends an event to Google Analytics.
 	 *
-	 * @param {string} action
-	 * @param {{event_category: string; event_label?: string;}} params
+	 * @param {string}                                          action
+	 * @param {{event_category: string, event_label: [string]}} params
 	 */
 	send( action, params ) {
 		if ( this.enabled ) {

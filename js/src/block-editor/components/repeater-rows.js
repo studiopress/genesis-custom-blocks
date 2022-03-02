@@ -19,10 +19,10 @@ import { Fields } from './';
 /**
  * Gets the repeater rows.
  *
- * @param {Array} rows The repeater rows to render.
- * @param {Array} fields The fields to render.
+ * @param {Array}  rows             The repeater rows to render.
+ * @param {Array}  fields           The fields to render.
  * @param {Object} parentBlockProps The props to pass to the control function.
- * @param {Object} parentBlock The block where the fields are.
+ * @param {Object} parentBlock      The block where the fields are.
  * @return {Array} fields The rendered fields.
  */
 class RepeaterRows extends Component {

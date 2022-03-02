@@ -17,7 +17,7 @@ import { setupControl } from './helpers';
 const getProps = () => ( {
 	field: {
 		label: 'This is a label for the number field',
-		default: '52344',
+		default: 52344,
 		placeholder: 'This is a placeholder for the number',
 	},
 	onChange: jest.fn(),
@@ -27,7 +27,7 @@ describe( 'number control', () => {
 	it( 'displays the default value if no value is entered', () => {
 		const props = getProps();
 		const { control } = setupControl( GcbNumberControl, props );
-		expect( control ).toHaveAttribute( 'value', props.field.default );
+		expect( control ).toHaveValue( props.field.default );
 	} );
 
 	it( 'has the placeholder', async () => {

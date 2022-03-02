@@ -23,16 +23,16 @@ import { DEFAULT_LOCATION } from '../../common/constants';
 
 /**
  * @typedef {Object} UseFieldReturn The return value of useField.
- * @property {function(string,string|null):string} addNewField Adds a new field.
- * @property {Object} controls All of the controls available.
- * @property {function(SelectedField):void} deleteField Deletes this field.
- * @property {function(SelectedField):void} duplicateField Duplicates this field.
- * @property {function(SelectedField,string):void} changeControl Changes the control of the field.
- * @property {function(SelectedField,Object):string} changeFieldSettings Changes field settings.
- * @property {function(SelectedField):Object} getField Gets the selected field.
- * @property {function():import('../components/editor').Field[]|null} getFields Gets all of the fields.
+ * @property {function(string,string|null):string}                                      addNewField          Adds a new field.
+ * @property {Object}                                                                   controls             All of the controls available.
+ * @property {function(SelectedField):void}                                             deleteField          Deletes this field.
+ * @property {function(SelectedField):void}                                             duplicateField       Duplicates this field.
+ * @property {function(SelectedField,string):void}                                      changeControl        Changes the control of the field.
+ * @property {function(SelectedField,Object):string}                                    changeFieldSettings  Changes field settings.
+ * @property {function(SelectedField):Object}                                           getField             Gets the selected field.
+ * @property {function():import('../components/editor').Field[]|null}                   getFields            Gets all of the fields.
  * @property {function(string,string|null):import('../components/editor').Field[]|null} getFieldsForLocation Gets all of the fields for a given location.
- * @property {function(number,number,string,string|null):void} reorderFields Reorders the fields for a given location.
+ * @property {function(number,number,string,string|null):void}                          reorderFields        Reorders the fields for a given location.
  */
 
 /** @typedef {import('../components/editor').SelectedField|import('../constants').NoFieldSelected} SelectedField The current field */
@@ -65,7 +65,7 @@ const useField = () => {
 	/**
 	 * Adds a new field to the end of the existing fields.
 	 *
-	 * @param {string} location The location to add the field to.
+	 * @param {string}      location    The location to add the field to.
 	 * @param {string|null} parentField The parent field to add it to, if any.
 	 * @return {string} The name of the new field.
 	 */
@@ -128,8 +128,8 @@ const useField = () => {
 	/**
 	 * Changes the control of a field.
 	 *
-	 * @param {SelectedField} fieldToChange The field to change.
-	 * @param {string} newControlName The name of the control to change to.
+	 * @param {SelectedField} fieldToChange  The field to change.
+	 * @param {string}        newControlName The name of the control to change to.
 	 */
 	const changeControl = ( fieldToChange, newControlName ) => {
 		const newControl = controls[ newControlName ];
@@ -173,9 +173,9 @@ const useField = () => {
 	 * So renaming a field involves changing that key
 	 * and the field's name property.
 	 *
-	 * @param {Object} fields The fields from which to rename a field.
+	 * @param {Object} fields       The fields from which to rename a field.
 	 * @param {string} previousName The previous field name (slug).
-	 * @param {string} newName The new field name (slug).
+	 * @param {string} newName      The new field name (slug).
 	 * @return {Object} The fields with the field renamed.
 	 */
 	const changeFieldName = ( fields, previousName, newName ) => {
@@ -219,7 +219,7 @@ const useField = () => {
 	/**
 	 * Gets the fields for either the editor or inspector.
 	 *
-	 * @param {string} location The location, like 'editor', or 'inspector'.
+	 * @param {string}      location    The location, like 'editor', or 'inspector'.
 	 * @param {string|null} parentField The parent field, if any.
 	 * @return {import('../components/editor').Field[]|null} The fields with the given location.
 	 */
@@ -241,9 +241,9 @@ const useField = () => {
 	/**
 	 * Moves a field to another location, and sets the correct order properties.
 	 *
-	 * @param {import('../components/editor').Field[]} fields The index of the field to move.
-	 * @param {SelectedField} selectedField The field should be moved.
-	 * @param {string} newLocation The location to move it to, like 'editor'.
+	 * @param {import('../components/editor').Field[]} fields        The index of the field to move.
+	 * @param {SelectedField}                          selectedField The field should be moved.
+	 * @param {string}                                 newLocation   The location to move it to, like 'editor'.
 	 */
 	const changeFieldLocation = ( fields, selectedField, newLocation ) => {
 		const fieldToMove = fields[ selectedField.name ];
@@ -267,7 +267,7 @@ const useField = () => {
 	 * Changes a field setting.
 	 *
 	 * @param {SelectedField} fieldToChange The field to change.
-	 * @param {Object} newSettings The new settings of the field.
+	 * @param {Object}        newSettings   The new settings of the field.
 	 * @return {string} The name of the field that was changed.
 	 */
 	const changeFieldSettings = ( fieldToChange, newSettings ) => {
@@ -402,10 +402,10 @@ const useField = () => {
 	/**
 	 * Reorders fields, moving a single field to another position.
 	 *
-	 * @param {number} moveFrom The index of the field to move.
-	 * @param {number} moveTo The index that the field should be moved to.
-	 * @param {string} currentLocation The current field's location, like 'editor'.
-	 * @param {string|null} parentField The field's parent field, if any.
+	 * @param {number}      moveFrom        The index of the field to move.
+	 * @param {number}      moveTo          The index that the field should be moved to.
+	 * @param {string}      currentLocation The current field's location, like 'editor'.
+	 * @param {string|null} parentField     The field's parent field, if any.
 	 */
 	const reorderFields = ( moveFrom, moveTo, currentLocation, parentField = null ) => {
 		const fieldsToReorder = getFieldsForLocation( currentLocation, parentField );

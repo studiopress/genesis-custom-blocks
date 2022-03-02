@@ -3,21 +3,13 @@
  */
 import '@testing-library/jest-dom/extend-expect';
 import * as React from 'react';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
 
 /**
  * Internal dependencies
  */
 import { Edit } from '../';
-
-jest.mock( '@wordpress/api-fetch', () => {
-	return jest.fn( () => {
-		return Promise.resolve( {
-			json: () => Promise.resolve( {} ),
-		} );
-	} );
-} );
 
 jest.mock( '@wordpress/data/build/components/use-select', () =>
 	jest.fn( () => false )
@@ -100,7 +92,9 @@ describe( 'Edit', () => {
 		expect( screen.getByLabelText( /gcb block form/i ) ).toBeInTheDocument();
 		screen.getAllByText( getBlock().title );
 
-		user.click( screen.getByLabelText( /close dialog/i ) );
+		act( () => {
+			user.click( screen.getByLabelText( /close dialog/i ) );
+		} );
 
 		expect( screen.queryByLabelText( /gcb block form/i ) ).not.toBeInTheDocument();
 		expect( screen.queryByText( getBlock().title ) ).not.toBeInTheDocument();

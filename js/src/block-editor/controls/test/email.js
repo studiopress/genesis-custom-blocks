@@ -28,7 +28,7 @@ describe( 'email control', () => {
 	it( 'displays the default value if no value is entered', () => {
 		const props = getProps();
 		const { control } = setupControl( GcbEmailControl, props );
-		expect( control ).toHaveAttribute( 'value', props.field.default );
+		expect( control ).toHaveValue( props.field.default );
 	} );
 
 	it.each( [

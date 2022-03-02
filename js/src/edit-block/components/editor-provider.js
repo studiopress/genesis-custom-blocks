@@ -21,8 +21,8 @@ import { useEditor } from '../hooks';
 
 /**
  * @typedef {Object} EditorProviderProps The props of the component.
- * @property {Object} post The post for the editor.
- * @property {Object} settings The editor settings.
+ * @property {Object}             post     The post for the editor.
+ * @property {Object}             settings The editor settings.
  * @property {React.ReactElement} children The component's children.
  */
 

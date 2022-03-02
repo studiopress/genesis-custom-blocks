@@ -16,10 +16,10 @@ import { snakeCaseToPascalCase } from '../../common/helpers';
 
 /**
  * @typedef {Object} SettingsComponentProps The component props.
- * @property {Function} handleOnChange Handles a change in this setting.
- * @property {import('../editor').Setting} setting This setting.
- * @property {boolean|undefined} value The setting value.
- * @property {Function} setCurrentLocation Sets the current location, like 'editor'.
+ * @property {Function}                    handleOnChange     Handles a change in this setting.
+ * @property {import('../editor').Setting} setting            This setting.
+ * @property {boolean|undefined}           value              The setting value.
+ * @property {Function}                    setCurrentLocation Sets the current location, like 'editor'.
  */
 
 /**

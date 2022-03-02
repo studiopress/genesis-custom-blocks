@@ -18,9 +18,9 @@ import { getFieldsAsArray } from '../../common/helpers';
 /**
  * Gets the rendered controls for the Inspector Controls, based on the field values.
  *
- * @param {Object} props This component's props.
+ * @param {Object} props            This component's props.
  * @param {Object} props.blockProps The block's props.
- * @param {Object} props.block The block.
+ * @param {Object} props.block      The block.
  * @return {React.ReactElement} The inspector controls.
  */
 const GcbInspector = ( { blockProps, block } ) => (

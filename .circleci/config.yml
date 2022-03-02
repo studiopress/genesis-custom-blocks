@@ -1,7 +1,8 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@3.0.0
+  node: circleci/node@5.0.0
+  php: circleci/php@1.1.0
 
 references:
   PLUGIN_PATH: &PLUGIN_PATH
@@ -18,15 +19,6 @@ commands:
     steps:
       - run: composer remove --dev phpunit/phpunit && composer install && npm ci && npm run build
 
-  install-composer:
-    description: "Installing Composer"
-    steps:
-      - run:
-          command: |
-            php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-            EXPECTED_SIGNATURE=$(curl -s https://composer.github.io/installer.sig)
-            ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');")
-            [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && sudo php composer-setup.php --install-dir=/bin --filename=composer || exit 1
   nodegit-workaround:
     description: "Ensure nodegit runs without error"
     steps:
@@ -38,8 +30,7 @@ jobs:
       name: php
     steps:
       - checkout
-      - node/install:
-          node-version: '14.18.1'
+      - node/install
       - nodegit-workaround
       - set-up-packages
       - run: npm run lint
@@ -61,8 +52,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
       - checkout
-      - node/install:
-          node-version: '14.18.1'
+      - node/install
       - nodegit-workaround
       - run:
           name: Installing WordPress and setting up tests
@@ -88,8 +78,7 @@ jobs:
     executor: php
     steps:
       - checkout
-      - node/install:
-          node-version: '14.18.1'
+      - node/install
       - nodegit-workaround
       - run: HUSKY_SKIP_INSTALL=1 npm ci && npm run test:js -- --maxWorkers=2
 
@@ -99,16 +88,10 @@ jobs:
     steps:
       - checkout
       - run: sudo apt-get update && sudo apt-get install php php-xml
-      - install-composer
-      - node/install:
-          node-version: '14.18.1'
+      - php/install-composer
       - nodegit-workaround
       - set-up-packages
       - run: npm run wp-env start && npm run test:e2e
-      - run:
-          command: |
-            if [ -d artifacts ]; then cp -r artifacts /tmp/; fi;
-          when: on_fail
       - store_artifacts:
           path: /tmp/artifacts/
 

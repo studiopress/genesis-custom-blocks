@@ -31,21 +31,21 @@ import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * @typedef {Object} UseMediaReturn The return value of the hook.
- * @property {string} mediaAlt The alt attribute of the <img>.
- * @property {string} mediaSrc The src attribute of the media.
- * @property {boolean} isUploading Whether the media is uploading.
- * @property {OnSelect} onSelect Handler for selecting.
- * @property {RemoveImage} removeMedia Removes the media src.
+ * @property {string}         mediaAlt       The alt attribute of the <img>.
+ * @property {string}         mediaSrc       The src attribute of the media.
+ * @property {boolean}        isUploading    Whether the media is uploading.
+ * @property {OnSelect}       onSelect       Handler for selecting.
+ * @property {RemoveImage}    removeMedia    Removes the media src.
  * @property {SetIsUploading} setIsUploading Sets whether the image is uploading.
- * @property {UploadFiles} uploadFiles Uploads the files.
+ * @property {UploadFiles}    uploadFiles    Uploads the files.
  */
 
 /**
  * Gets the image context and functions to change it.
  *
- * @param {number|string} fieldValue The current field value.
- * @param {(imageId: number) => void} onChange Handles changing the field value.
- * @param {string[]} [allowedTypes] The allowed media types.
+ * @param {number|string}             fieldValue     The current field value.
+ * @param {(imageId: number) => void} onChange       Handles changing the field value.
+ * @param {string[]}                  [allowedTypes] The allowed media types.
  * @return {UseMediaReturn} The return value of this hook.
  */
 const useMedia = ( fieldValue, onChange, allowedTypes ) => {

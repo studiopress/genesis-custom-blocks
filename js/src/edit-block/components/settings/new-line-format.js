@@ -15,9 +15,9 @@ import { Select } from '../';
 
 /**
  * @typedef {Object} NewLineFormatProps The component props.
- * @property {import('../editor').Setting} setting This setting.
- * @property {string|undefined} value The setting value.
- * @property {Function} handleOnChange Handles a change to this setting.
+ * @property {import('../editor').Setting} setting        This setting.
+ * @property {string|undefined}            value          The setting value.
+ * @property {Function}                    handleOnChange Handles a change to this setting.
  */
 
 /**
