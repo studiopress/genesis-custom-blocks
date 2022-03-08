@@ -9,10 +9,10 @@ import * as React from 'react';
 import { serialize } from '@wordpress/blocks';
 // @ts-ignore Declaration file is outdated.
 import { store as blockEditorStore } from '@wordpress/block-editor';
-import { Modal, Notice } from '@wordpress/components';
+import { Modal } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { ENTER } from '@wordpress/keycodes';
 import ServerSideRender from '@wordpress/server-side-render';
 
@@ -37,15 +37,6 @@ const Edit = ( { block, blockProps } ) => {
 	const hasEditorField = getFieldsAsArray( block.fields ).some(
 		( field ) => ! field.location || EDITOR_LOCATION === field.location
 	);
-
-	const innerBlockFields = getFieldsAsArray( block.fields ).filter(
-		( field ) => 'inner_blocks' === field.control
-	);
-
-	const hasInnerBlocksField = Boolean( innerBlockFields.length );
-	const innerBlocksFieldLabel = hasInnerBlocksField
-		? innerBlockFields[ 0 ].label
-		: '';
 
 	/**
 	 * Gets whether the passed block has a selected InnerBlock.
@@ -92,17 +83,6 @@ const Edit = ( { block, blockProps } ) => {
 					? <EditorForm block={ block } blockProps={ blockProps } />
 					: (
 						<>
-							{ hasInnerBlocksField
-								? (
-									<Notice status="info" isDismissible={ false }>
-										{ sprintf(
-											/* translators: %1$s: the field name */
-											__( 'The field %1$s will not display in this preview, but will display on the front-end', 'genesis-custom-blocks' ),
-											innerBlocksFieldLabel
-										) }
-									</Notice>
-								) : null
-							}
 							<div
 								role="button"
 								tabIndex={ 0 }
