@@ -6,6 +6,7 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
+import { serialize } from '@wordpress/blocks';
 // @ts-ignore Declaration file is outdated.
 import { store as blockEditorStore } from '@wordpress/block-editor';
 import { Modal, Notice } from '@wordpress/components';
@@ -73,6 +74,16 @@ const Edit = ( { block, blockProps } ) => {
 		[ blockProps.clientId, blockProps.isSelected ]
 	);
 
+	const innerBlocks = useSelect(
+		( select ) => {
+			const store = select( blockEditorStore.name );
+
+			// @ts-ignore Type definition is outdated.
+			return store.getBlock( blockProps.clientId )?.innerBlocks;
+		},
+		[ blockProps.clientId ]
+	);
+
 	return (
 		<>
 			<GcbInspector blockProps={ blockProps } block={ block } />
@@ -135,6 +146,7 @@ const Edit = ( { block, blockProps } ) => {
 									attributes={ blockProps.attributes }
 									className="genesis-custom-blocks-editor__ssr"
 									httpMethod="POST"
+									urlQueryArgs={ { inner_blocks: serialize( innerBlocks ) } }
 								/>
 							</div>
 						</>

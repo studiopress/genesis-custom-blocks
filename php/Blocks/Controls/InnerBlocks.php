@@ -50,6 +50,10 @@ class InnerBlocks extends ControlAbstract {
 	 */
 	public function validate( $value, $echo ) {
 		unset( $value, $echo );
-		return genesis_custom_blocks()->loader->get_data( 'content' );
+		$content = genesis_custom_blocks()->loader->get_data( 'content' );
+
+		return empty( $content )
+			? filter_input( INPUT_GET, 'inner_blocks', FILTER_SANITIZE_STRING )
+			: $content;
 	}
 }
