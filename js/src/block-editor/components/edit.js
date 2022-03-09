@@ -41,10 +41,8 @@ const Edit = ( { block, blockProps } ) => {
 	/** @type {Object[] | undefined} */
 	const innerBlocks = useSelect(
 		( select ) => {
-			const store = select( blockEditorStore.name );
-
 			// @ts-ignore Type definition is outdated.
-			return store.getBlock( blockProps.clientId )?.innerBlocks;
+			return select( blockEditorStore.name ).getBlock( blockProps.clientId )?.innerBlocks;
 		},
 		[ blockProps.clientId ]
 	);
