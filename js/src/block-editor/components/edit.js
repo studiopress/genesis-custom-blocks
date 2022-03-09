@@ -38,6 +38,17 @@ const Edit = ( { block, blockProps } ) => {
 		( field ) => ! field.location || EDITOR_LOCATION === field.location
 	);
 
+	/** @type {Object[] | undefined} */
+	const innerBlocks = useSelect(
+		( select ) => {
+			const store = select( blockEditorStore.name );
+
+			// @ts-ignore Type definition is outdated.
+			return store.getBlock( blockProps.clientId )?.innerBlocks;
+		},
+		[ blockProps.clientId ]
+	);
+
 	/**
 	 * Gets whether the passed block has a selected InnerBlock.
 	 *
@@ -63,16 +74,6 @@ const Edit = ( { block, blockProps } ) => {
 			return hasSelectedInnerBlock( store.getBlock( blockProps.clientId ), store.getSelectedBlock() );
 		},
 		[ blockProps.clientId, blockProps.isSelected ]
-	);
-
-	const innerBlocks = useSelect(
-		( select ) => {
-			const store = select( blockEditorStore.name );
-
-			// @ts-ignore Type definition is outdated.
-			return store.getBlock( blockProps.clientId )?.innerBlocks;
-		},
-		[ blockProps.clientId ]
 	);
 
 	return (
@@ -126,7 +127,10 @@ const Edit = ( { block, blockProps } ) => {
 									attributes={ blockProps.attributes }
 									className="genesis-custom-blocks-editor__ssr"
 									httpMethod="POST"
-									urlQueryArgs={ { inner_blocks: serialize( innerBlocks ) } }
+									urlQueryArgs={ { inner_blocks: innerBlocks
+										? encodeURIComponent( serialize( innerBlocks ) )
+										: '',
+									} }
 								/>
 							</div>
 						</>
