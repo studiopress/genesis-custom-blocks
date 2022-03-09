@@ -5,9 +5,9 @@
  * @package Genesis\CustomBlocks
  */
 
+use function Brain\Monkey\Functions\expect;
 use function Brain\Monkey\setUp;
 use function Brain\Monkey\tearDown;
-use function Brain\Monkey\Functions\expect;
 use Genesis\CustomBlocks\Blocks\Controls\InnerBlocks;
 
 /**
@@ -25,7 +25,7 @@ class TestInnerBlocks extends \WP_UnitTestCase {
 	public $instance;
 
 	/**
-	 * Set up before each test.
+	 * Set up.
 	 *
 	 * @inheritdoc
 	 */
@@ -99,7 +99,7 @@ class TestInnerBlocks extends \WP_UnitTestCase {
 	 *
 	 * @covers \Genesis\CustomBlocks\Blocks\Controls\InnerBlocks::validate()
 	 */
-	public function test_validate_inner_blocks_ignores_query_arg_when_content_present() {
+	public function test_validate_inner_blocks_returns_content_when_non_empty() {
 		$content = 'Here is some example inner blocks content';
 		add_filter(
 			'genesis_custom_blocks_data_content',
