@@ -5,7 +5,7 @@ import { useSelect } from '@wordpress/data';
 
 /**
  * @typedef {Object} PostType The return value of useBlock.
- * @property {string} slug The slug of the post type.
+ * @property {string} slug  The slug of the post type.
  * @property {string} label The label of the post type.
  */
 

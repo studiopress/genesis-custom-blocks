@@ -11,6 +11,9 @@ import { addFilter } from '@wordpress/hooks';
  */
 import { initializeEditor } from './helpers';
 import { addControls } from '../block-editor/helpers';
+import { GAClient } from '../common/classes';
+
+addFilter( 'genesisCustomBlocks.controls', 'genesisCustomBlocks/addControls', addControls );
 
 // Renders the app in the container.
 domReady( () => {
@@ -23,4 +26,7 @@ domReady( () => {
 	initializeEditor( gcbEditor, container );
 } );
 
-addFilter( 'genesisCustomBlocks.controls', 'genesisCustomBlocks/addControls', addControls );
+// @ts-ignore
+window.GcbAnalytics = {
+	GAClient: new GAClient(),
+};

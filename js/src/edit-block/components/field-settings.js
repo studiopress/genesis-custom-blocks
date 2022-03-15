@@ -22,13 +22,13 @@ import { NO_FIELD_SELECTED } from '../constants';
 
 /**
  * @typedef {Object} FieldSettingsProps The component props.
- * @property {Object} controls All of the possible controls.
- * @property {onClickDelete} deleteField Deletes this field.
- * @property {onClickDuplicate} duplicateField Duplicates this field.
- * @property {Object} field The current field.
- * @property {Function} changeFieldSettings Edits a given field's value.
- * @property {Function} setCurrentLocation Sets the current location, like 'editor'.
- * @property {Function} setSelectedField Sets the current location, like 'editor'.
+ * @property {Object}           controls            All of the possible controls.
+ * @property {onClickDelete}    deleteField         Deletes this field.
+ * @property {onClickDuplicate} duplicateField      Duplicates this field.
+ * @property {Object}           field               The current field.
+ * @property {Function}         changeFieldSettings Edits a given field's value.
+ * @property {Function}         setCurrentLocation  Sets the current location, like 'editor'.
+ * @property {Function}         setSelectedField    Sets the current location, like 'editor'.
  */
 
 /**

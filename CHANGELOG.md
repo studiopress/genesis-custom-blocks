@@ -1,5 +1,11 @@
 ## Changelog ##
 
+### 1.5.0 - Unreleased ###
+
+* Allow previewing InnerBlocks in the block editor. [PR 114](https://github.com/studiopress/genesis-custom-blocks/pull/114)
+* Allow opting in to analytics. [PR 101](https://github.com/studiopress/genesis-custom-blocks/pull/101)
+* Remove some of the Settings page logic, as it's moved to the free plugin. [PR 42](https://github.com/studiopress/genesis-custom-blocks-pro/pull/42)
+
 ### 1.4.0 - 2021-10-14 ###
 
 * Optional modal for editor fields. [PR 93](https://github.com/studiopress/genesis-custom-blocks/pull/93)

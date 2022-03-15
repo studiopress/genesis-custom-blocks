@@ -13,7 +13,7 @@ import { getTemplateParts } from '../helpers';
 /**
  * @typedef {Object} TemplateFileProps The component props.
  * @property {string} templatePath The path of the template.
- * @property {string} [color] The color, 'gray' or 'blue'.
+ * @property {string} [color]      The color, 'gray' or 'blue'.
  */
 
 /**

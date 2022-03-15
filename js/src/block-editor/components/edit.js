@@ -6,12 +6,13 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
+import { serialize } from '@wordpress/blocks';
 // @ts-ignore Declaration file is outdated.
 import { store as blockEditorStore } from '@wordpress/block-editor';
-import { Modal, Notice } from '@wordpress/components';
+import { Modal } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { ENTER } from '@wordpress/keycodes';
 import ServerSideRender from '@wordpress/server-side-render';
 
@@ -26,9 +27,9 @@ import { EDITOR_LOCATION } from '../../common/constants';
 /**
  * The editor component for the block.
  *
- * @param {Object} props The props of this component.
- * @param {import('../../edit-block/hooks/useBlock').Block} props.block The block.
- * @param {Object} props.blockProps The block's props.
+ * @param {Object}                                          props            The props of this component.
+ * @param {import('../../edit-block/hooks/useBlock').Block} props.block      The block.
+ * @param {Object}                                          props.blockProps The block's props.
  * @return {React.ReactElement} The editor display.
  */
 const Edit = ( { block, blockProps } ) => {
@@ -37,20 +38,20 @@ const Edit = ( { block, blockProps } ) => {
 		( field ) => ! field.location || EDITOR_LOCATION === field.location
 	);
 
-	const innerBlockFields = getFieldsAsArray( block.fields ).filter(
-		( field ) => 'inner_blocks' === field.control
+	/** @type {Object[] | undefined} */
+	const innerBlocks = useSelect(
+		( select ) => {
+			// @ts-ignore Type definition is outdated.
+			return select( blockEditorStore.name ).getBlock( blockProps.clientId )?.innerBlocks;
+		},
+		[ blockProps.clientId ]
 	);
-
-	const hasInnerBlocksField = Boolean( innerBlockFields.length );
-	const innerBlocksFieldLabel = hasInnerBlocksField
-		? innerBlockFields[ 0 ].label
-		: '';
 
 	/**
 	 * Gets whether the passed block has a selected InnerBlock.
 	 *
 	 * @param {Object} blockCandidate The block to examine for InnerBlocks.
-	 * @param {Object} selectedBlock The block that's selected in the editor.
+	 * @param {Object} selectedBlock  The block that's selected in the editor.
 	 * @return {boolean} Whether the passed block has a selected InnerBlock.
 	 */
 	const hasSelectedInnerBlock = ( blockCandidate, selectedBlock ) =>
@@ -81,13 +82,6 @@ const Edit = ( { block, blockProps } ) => {
 					? <EditorForm block={ block } blockProps={ blockProps } />
 					: (
 						<>
-							{ hasInnerBlocksField
-								? (
-									<Notice status="info" isDismissible={ false }>
-										"Hereis"
-									</Notice>
-								) : null
-							}
 							<div
 								role="button"
 								tabIndex={ 0 }
@@ -131,6 +125,10 @@ const Edit = ( { block, blockProps } ) => {
 									attributes={ blockProps.attributes }
 									className="genesis-custom-blocks-editor__ssr"
 									httpMethod="POST"
+									urlQueryArgs={ { inner_blocks: innerBlocks
+										? encodeURIComponent( serialize( innerBlocks ) )
+										: '',
+									} }
 								/>
 							</div>
 						</>

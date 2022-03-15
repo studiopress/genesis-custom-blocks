@@ -16,7 +16,7 @@ import { CSS_TEMPLATE_MODE, MARKUP_TEMPLATE_MODE } from '../constants';
 
 /**
  * @typedef {Object} TemplateButtonsProps The component props.
- * @property {string} templateMode The currently selected template editing mode.
+ * @property {string}                templateMode    The currently selected template editing mode.
  * @property {function(string):void} setTemplateMode Sets the current template editing mode.
  */
 

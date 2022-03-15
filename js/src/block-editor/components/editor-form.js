@@ -18,8 +18,8 @@ import { getFieldsAsArray, getIconComponent } from '../../common/helpers';
 /**
  * The editor component for the block.
  *
- * @param {Object} props The props of this component.
- * @param {Object} props.block The block.
+ * @param {Object} props            The props of this component.
+ * @param {Object} props.block      The block.
  * @param {Object} props.blockProps The block's props.
  * @return {React.ReactElement} The editor display.
  */

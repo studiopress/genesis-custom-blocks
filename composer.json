@@ -17,6 +17,11 @@
         "wp-coding-standards/wpcs": "2.2.0",
         "phpunit/phpunit": "7.5.2"
     },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
     "autoload": {
         "psr-4": {
           "Genesis\\CustomBlocks\\": "php/"

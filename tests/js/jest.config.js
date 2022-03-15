@@ -11,6 +11,9 @@ module.exports = {
 	coveragePathIgnorePatterns: [
 		'<rootDir>/node_modules',
 	],
+	moduleNameMapper: {
+		'^react($|/.+)': '<rootDir>/node_modules/react$1',
+	},
 	coverageReporters: [ 'lcov' ],
 	coverageDirectory: '<rootDir>/coverage',
 	reporters: [ [ 'jest-silent-reporter', { useDots: true } ] ],

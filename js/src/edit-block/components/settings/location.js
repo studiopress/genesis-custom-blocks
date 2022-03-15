@@ -11,10 +11,10 @@ import { LOCATIONS_WITH_LABEL, LOCATIONS } from '../../../common/constants';
 
 /**
  * @typedef {Object} LocationProps The component props.
- * @property {import('../editor').Setting} setting This setting.
- * @property {string|undefined} value The setting value.
- * @property {Function} handleOnChange Handles a change to this setting.
- * @property {Function} setCurrentLocation Sets the selected location, like 'editor'.
+ * @property {import('../editor').Setting} setting            This setting.
+ * @property {string|undefined}            value              The setting value.
+ * @property {Function}                    handleOnChange     Handles a change to this setting.
+ * @property {Function}                    setCurrentLocation Sets the selected location, like 'editor'.
  */
 
 /**

@@ -31,7 +31,7 @@ test( 'range control', () => {
 	getByText( field.help );
 
 	// This should have the default value as its value.
-	expect( control ).toHaveAttribute( 'value', field.default.toString() );
+	expect( control ).toHaveValue( field.default.toString() );
 
 	// Changing the value should call the onChange handler.
 	const newValue = 58;

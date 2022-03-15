@@ -15,9 +15,9 @@ import { convertSettingsStringToArray, convertSettingsArrayToString } from '../.
 
 /**
  * @typedef {Object} TextareaArrayProps The component props.
- * @property {Function} handleOnChange Handles a change in this setting.
- * @property {import('../editor').Setting} setting This setting.
- * @property {Array|undefined} value The setting value.
+ * @property {Function}                    handleOnChange Handles a change in this setting.
+ * @property {import('../editor').Setting} setting        This setting.
+ * @property {Array|undefined}             value          The setting value.
  */
 
 /**

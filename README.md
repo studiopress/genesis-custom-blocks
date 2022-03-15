@@ -3,9 +3,9 @@
 Contributors: lukecarbis, ryankienstra, Stino11, rheinardkorf, studiopress, wpengine
 Tags: gutenberg, blocks, block editor, fields, template
 Requires at least: 5.7
-Tested up to: 5.8
+Tested up to: 5.9
 Requires PHP: 5.6
-Stable tag: 1.4.0
+Stable tag: 1.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -46,7 +46,7 @@ As an alternative to the built-in editor, there are simple functions, ready to r
 * Toggle Field
 * Textarea Field
 * Select Field
-* Range Rield
+* Range Field
 * Radio Field
 * Number Field
 * Multi-select Field

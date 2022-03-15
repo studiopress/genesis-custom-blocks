@@ -22,7 +22,7 @@ function useUpdatedRef( value ) {
  *
  * @see https://github.com/WordPress/gutenberg/blob/1103f7ba9f20fada5af22cb6d86bd26e75defea6/packages/compose/src/hooks/use-copy-to-clipboard/index.js
  *
- * @param {string} text        The text to copy. Use a function if not
+ * @param {string}   text      The text to copy. Use a function if not
  *                             already available and expensive to compute.
  * @param {Function} onSuccess Called when to text is copied.
  *

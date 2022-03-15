@@ -39,8 +39,8 @@ const PostTypesSection = () => {
 	/**
 	 * Handles changing whether a post type is enabled.
 	 *
-	 * @param {React.ChangeEvent} event The event on changing the post type.
-	 * @param {string} postType The post type to change.
+	 * @param {React.ChangeEvent} event    The event on changing the post type.
+	 * @param {string}            postType The post type to change.
 	 */
 	const handleChangePostTypes = ( event, postType ) => {
 		if ( ! event.target ) {
