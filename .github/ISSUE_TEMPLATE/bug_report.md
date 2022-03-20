@@ -26,7 +26,6 @@ about: Report a problem
 ## Additional information
 
 ## Suspected cause (optional)
-<!-- If you think you know what caused this bug --> 
 
 ## Versions
 
