@@ -23,7 +23,7 @@ import { useField } from '../hooks';
  * @property {import('./editor').Field}                                                field                    The field to render.
  * @property {number}                                                                  index                    The index in relation to other fields, starting with 0.
  * @property {boolean}                                                                 isDownButtonDisabled     Whether the down button is disabled.
- * @property {import('./editor').SelectedField|import('../constants').NoFieldSelected} selectedField            The currenetly selected field.
+ * @property {import('./editor').SelectedField|import('../constants').NoFieldSelected} selectedField            The currently selected field.
  * @property {boolean}                                                                 shouldDisplayMoveButtons Whether this should display the move buttons.
  * @property {import('./editor').SetIsNewField}                                        setIsNewField            Sets if there is a new field.
  * @property {import('./editor').SetPanelDisplaying}                                   setPanelDisplaying       Sets the current panel displaying.
