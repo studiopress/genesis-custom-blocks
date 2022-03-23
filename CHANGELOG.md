@@ -1,6 +1,6 @@
 ## Changelog ##
 
-### 1.5.0 - Unreleased ###
+### 1.5.0 - 2022-03-23 ###
 
 * Allow previewing InnerBlocks in the block editor. [PR 114](https://github.com/studiopress/genesis-custom-blocks/pull/114)
 * Allow opting in to analytics. [PR 101](https://github.com/studiopress/genesis-custom-blocks/pull/101)
