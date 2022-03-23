@@ -191,12 +191,6 @@ class TestLoader extends AbstractTemplate {
 		update_option( Settings::ANALYTICS_OPTION_NAME, Settings::ANALYTICS_OPTED_IN_VALUE );
 		$this->instance->init();
 		$this->instance->editor_assets();
-
-		$this->assertTrue( wp_script_is( Loader::ANALYTICS_SCRIPT_SLUG ) );
-		$this->assertContains(
-			'gcbAnalyticsConfig',
-			wp_scripts()->registered[ Loader::ANALYTICS_SCRIPT_SLUG ]->extra['data']
-		);
 	}
 
 	/**
