@@ -1,0 +1,169 @@
+.gcb-editor-form :required:invalid,.gcb-inspector-form :required:invalid{
+  border-color:#c00000
+}
+
+.gcb-editor-form .text-control__error input,.gcb-inspector-form .text-control__error input{
+  border-color:#d94f4f;
+  box-shadow:0 0 0 1px #d94f4f
+}
+
+.gcb-editor-form .genesis-custom-blocks-color-control .components-base-control,.gcb-inspector-form .genesis-custom-blocks-color-control .components-base-control{
+  display:inline-block;
+  margin-bottom:0 !important
+}
+
+.gcb-editor-form .genesis-custom-blocks-color-control .components-base-control .components-base-control__field,.gcb-inspector-form .genesis-custom-blocks-color-control .components-base-control .components-base-control__field{
+  margin:0 !important;
+  width:100%;
+  height:100%
+}
+
+.gcb-editor-form .genesis-custom-blocks-color-control .components-base-control.genesis-custom-blocks-color-popover,.gcb-inspector-form .genesis-custom-blocks-color-control .components-base-control.genesis-custom-blocks-color-popover{
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  margin:1px 1em !important;
+  background-image:linear-gradient(45deg, #ddd 25%, transparent 25%),linear-gradient(-45deg, #ddd 25%, transparent 25%),linear-gradient(45deg, transparent 75%, #ddd 75%),linear-gradient(-45deg, transparent 75%, #ddd 75%);
+  background-size:10px 10px;
+  background-position:0 0,0 5px,5px -5px,-5px 0;
+  display:inline-block;
+  vertical-align:top;
+  border:none;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.2);
+  transition:100ms transform ease;
+  cursor:pointer
+}
+
+.gcb-editor-form .genesis-custom-blocks-color-control .components-base-control.genesis-custom-blocks-color-popover:hover,.gcb-inspector-form .genesis-custom-blocks-color-control .components-base-control.genesis-custom-blocks-color-popover:hover{
+  transform:scale(1.2)
+}
+
+.gcb-editor-form .genesis-custom-blocks-color-control .components-base-control.genesis-custom-blocks-color-popover .component-color-indicator,.gcb-inspector-form .genesis-custom-blocks-color-control .components-base-control.genesis-custom-blocks-color-popover .component-color-indicator{
+  width:100%;
+  height:100%;
+  margin:0;
+  border:none;
+  border-radius:50%
+}
+
+.gcb-editor-form .genesis-custom-blocks-media-controls .gcb-image__img,.gcb-inspector-form .genesis-custom-blocks-media-controls .gcb-image__img{
+  max-height:200px;
+  display:block;
+  margin-bottom:8px
+}
+
+.gcb-editor-form .genesis-custom-blocks-media-controls .components-placeholder,.gcb-inspector-form .genesis-custom-blocks-media-controls .components-placeholder{
+  position:relative
+}
+
+.gcb-editor-form .genesis-custom-blocks-media-controls .gcb-image__placeholder .components-button.is-button,.gcb-inspector-form .genesis-custom-blocks-media-controls .gcb-image__placeholder .components-button.is-button{
+  white-space:normal
+}
+
+.gcb-editor-form .genesis-custom-blocks-media-controls .components-form-file-upload,.gcb-editor-form .genesis-custom-blocks-media-controls .components-media-library-button,.gcb-editor-form .genesis-custom-blocks-media-controls .gcb-image__remove,.gcb-inspector-form .genesis-custom-blocks-media-controls .components-form-file-upload,.gcb-inspector-form .genesis-custom-blocks-media-controls .components-media-library-button,.gcb-inspector-form .genesis-custom-blocks-media-controls .gcb-image__remove{
+  margin:0 4px 4px 0;
+  display:inline-block;
+  vertical-align:top
+}
+
+.gcb-editor-form .genesis-custom-blocks-media-controls .components-base-control__field .components-base-control__help,.gcb-inspector-form .genesis-custom-blocks-media-controls .components-base-control__field .components-base-control__help{
+  margin-bottom:4px;
+  margin-top:0
+}
+
+.gcb-editor-form .genesis-custom-blocks-media-controls pre,.gcb-inspector-form .genesis-custom-blocks-media-controls pre{
+  margin-left:.5em
+}
+
+div[class^=wp-block-genesis-custom-blocks-],.gcb-editor{
+  margin:0
+}
+
+.gcb-editor-form{
+  border-left:none;
+  background:rgba(139,139,150,.1);
+  padding:22px 0 22px 22px;
+  font-size:.8125rem;
+  display:flex;
+  flex-wrap:wrap
+}
+
+.gcb-editor-form h3{
+  color:#111;
+  font-size:1rem;
+  margin:0;
+  flex:1 1 100%
+}
+
+.gcb-editor-form h3 svg{
+  position:relative;
+  top:6px;
+  margin-right:4px
+}
+
+.gcb-editor-form p{
+  font-size:1rem;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif
+}
+
+.gcb-editor-form .genesis-custom-blocks-control{
+  flex-basis:100%;
+  padding-right:22px
+}
+
+.gcb-editor-form .genesis-custom-blocks-control.width-25{
+  flex-basis:25%
+}
+
+.gcb-editor-form .genesis-custom-blocks-control.width-50{
+  flex-basis:50%
+}
+
+.gcb-editor-form .genesis-custom-blocks-control.width-75{
+  flex-basis:75%
+}
+
+@media screen and (max-width: 782px){
+  .gcb-editor-form .genesis-custom-blocks-control.width-25,.gcb-editor-form .genesis-custom-blocks-control.width-50,.gcb-editor-form .genesis-custom-blocks-control.width-75{
+    flex-basis:100%
+  }
+}
+
+.gcb-editor-form .components-base-control{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif
+}
+
+.gcb-editor-form .components-base-control__field{
+  margin:1em 0 0
+}
+
+.gcb-editor-form .components-base-control__field .components-base-control__label{
+  display:block;
+  font-weight:600
+}
+
+.gcb-editor-form .components-base-control__help{
+  margin:0 0 1em .5em;
+  font-size:1em;
+  color:rgba(0,0,0,.8)
+}
+
+.gcb-editor-form .components-select-control__input{
+  max-width:unset
+}
+
+.gcb-inspector-form .genesis-custom-blocks-media-controls .components-spinner{
+  float:none
+}
+
+.gcb-inspector-form .genesis-custom-blocks-color-control .components-base-control__label{
+  display:block
+}
+
+.edit-post-layout .components-popover:not(.is-mobile):not(.gcb-fetch__popover) .components-popover__content .components-color-picker{
+  min-width:340px
+}
+
+.editor-styles-wrapper .genesis-custom-blocks-editor__ssr ul,.editor-styles-wrapper .genesis-custom-blocks-editor__ssr ol{
+  margin-left:1rem
+}
