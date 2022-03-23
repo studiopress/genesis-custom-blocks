@@ -3,7 +3,7 @@
  * Genesis Custom Blocks Pro Settings page.
  *
  * @package   Genesis\CustomBlocksPro
- * @copyright Copyright(c) 2021, Genesis Custom Blocks Pro
+ * @copyright Copyright(c) 2022, Genesis Custom Blocks Pro
  * @license   http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
  */
 

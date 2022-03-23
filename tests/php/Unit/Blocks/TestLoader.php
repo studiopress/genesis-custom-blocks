@@ -183,23 +183,6 @@ class TestLoader extends AbstractTemplate {
 	}
 
 	/**
-	 * Test editor_assets when opted into analytics.
-	 *
-	 * @covers \Genesis\CustomBlocks\Blocks\Loader::editor_assets()
-	 */
-	public function test_editor_assets_analytics_opted_in() {
-		update_option( Settings::ANALYTICS_OPTION_NAME, Settings::ANALYTICS_OPTED_IN_VALUE );
-		$this->instance->init();
-		$this->instance->editor_assets();
-
-		$this->assertTrue( wp_script_is( Loader::ANALYTICS_SCRIPT_SLUG ) );
-		$this->assertContains(
-			'gcbAnalyticsConfig',
-			wp_scripts()->registered[ Loader::ANALYTICS_SCRIPT_SLUG ]->extra['data']
-		);
-	}
-
-	/**
 	 * Test render_block_template.
 	 *
 	 * @covers \Genesis\CustomBlocks\Blocks\Loader::render_block_template()
