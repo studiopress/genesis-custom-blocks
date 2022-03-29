@@ -3,15 +3,21 @@
 
 set -e
 
+npm ci
 npm run gulp
-tag=update/analytics-and-copyright
+tag=$(grep 'Version:' package/trunk/genesis-custom-blocks.php | sed 's/.*: //' | sed 's/-[0-9]\{8\}T[0-9]\{6\}Z-[a-f0-9]*$//')
 if [[ -z "$tag" ]]; then
 	echo "Error: Unable to determine tag."
 	exit 1
 fi
 
-built_tag="1.5.0-built"
+built_tag="$tag-built"
+if git rev-parse "$built_tag" >/dev/null 2>&1; then
+	echo "Error: Built tag already exists: $built_tag"
+	exit 2
+fi
 
+git fetch origin --tags
 git checkout "$tag"
 mkdir built
 git clone . built/
