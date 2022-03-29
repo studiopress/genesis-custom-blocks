@@ -32,6 +32,7 @@ jobs:
       - checkout
       - node/install
       - nodegit-workaround
+      - node/install
       - set-up-packages
       - run: npm run lint
 
