@@ -17,7 +17,9 @@ commands:
   set-up-packages:
     description: "Installing packages and building"
     steps:
-      - run: composer remove --dev phpunit/phpunit && composer install && npm ci && npm run build
+      - run: composer remove --dev phpunit/phpunit && composer install
+      - node/install-packages
+      - run: npm run build
 
   nodegit-workaround:
     description: "Ensure nodegit runs without error"
