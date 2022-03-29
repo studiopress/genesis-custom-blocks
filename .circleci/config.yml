@@ -32,7 +32,6 @@ jobs:
       name: php
     steps:
       - checkout
-      - node/install
       - nodegit-workaround
       - node/install
       - set-up-packages
@@ -93,6 +92,7 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install php php-xml
       - php/install-composer
       - nodegit-workaround
+      - node/install
       - set-up-packages
       - run: npm run wp-env start && npm run test:e2e
       - store_artifacts:
