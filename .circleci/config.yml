@@ -98,6 +98,8 @@ jobs:
             echo "The PHP version is:"
             npm run wp-env run cli "wp eval 'echo phpversion();'"
             npm run test:e2e
+            echo "Here are the PHP logs:"
+            npm run wp-env logs
       - store_artifacts:
           path: /tmp/artifacts/
 
