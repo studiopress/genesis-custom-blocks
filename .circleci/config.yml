@@ -91,7 +91,11 @@ jobs:
       - php/install-composer
       - nodegit-workaround
       - set-up-packages
-      - run: npm run wp-env start && npm run test:e2e
+      - run:
+          command: |
+            echo "The PHP version is:"
+            npm run wp-env run "php --version"
+            npm run wp-env start && npm run test:e2e
       - store_artifacts:
           path: /tmp/artifacts/
 
