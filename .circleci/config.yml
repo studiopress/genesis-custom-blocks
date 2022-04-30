@@ -19,11 +19,6 @@ commands:
     steps:
       - run: composer update && composer install && npm ci && npm run build
 
-  nodegit-workaround:
-    description: "Ensure nodegit runs without error"
-    steps:
-      - run: sudo apt-get update && sudo apt-get install libkrb5-dev
-
 jobs:
   lint:
     executor:
@@ -31,7 +26,6 @@ jobs:
     steps:
       - checkout
       - node/install
-      - nodegit-workaround
       - set-up-packages
       - run: npm run lint
 
@@ -53,7 +47,6 @@ jobs:
     steps:
       - checkout
       - node/install
-      - nodegit-workaround
       - run:
           name: Installing WordPress and setting up tests
           command: |
@@ -80,7 +73,6 @@ jobs:
     steps:
       - checkout
       - node/install
-      - nodegit-workaround
       - node/install-packages
       - run: npm run test:js -- --maxWorkers=2
 
@@ -91,7 +83,6 @@ jobs:
       - checkout
       - run: sudo apt-get update && sudo apt-get install php php-xml
       - php/install-composer
-      - nodegit-workaround
       - set-up-packages
       - run: npm run wp-env start && npm run test:e2e
       - store_artifacts:

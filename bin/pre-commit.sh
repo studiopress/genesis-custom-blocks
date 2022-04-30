@@ -28,4 +28,6 @@ if [ -n "$scss_files" ]; then
 fi
 
 # Lint package.json
-npm run lint:pkg-json
+if [ -n $( git diff --diff-filter=d --staged --name-only | grep -E 'package.json' ) ]; then
+	npm run lint:pkg-json
+fi
