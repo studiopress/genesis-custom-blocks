@@ -59,7 +59,7 @@ class TestControlAbstract extends \WP_UnitTestCase {
 	 */
 	public function test_create_settings_config() {
 		$this->assertEmpty(
-			array_diff(
+			array_diff_assoc(
 				[
 					'location'    => [
 						'name'    => 'location',
