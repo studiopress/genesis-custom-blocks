@@ -58,8 +58,7 @@ class TestControlAbstract extends \WP_UnitTestCase {
 	 * @covers \Genesis\CustomBlocks\Blocks\Controls\ControlAbstract::create_settings_config()
 	 */
 	public function test_create_settings_config() {
-		$this->assertContains(
-			$this->instance->settings_config,
+		$this->assertContainsEquals(
 			[
 				'location'    => [
 					'name'    => 'location',
@@ -91,15 +90,16 @@ class TestControlAbstract extends \WP_UnitTestCase {
 					'type'    => 'text',
 					'default' => '',
 				],
-			]
+			],
+			$this->instance->settings_config
 		);
 
-		$this->assertContains(
-			$this->instance->locations,
+		$this->assertContainsEquals(
 			[
 				'editor'    => __( 'Editor', 'genesis-custom-blocks' ),
 				'inspector' => __( 'Inspector', 'genesis-custom-blocks' ),
-			]
+			],
+			$this->instance->locations
 		);
 	}
 }
