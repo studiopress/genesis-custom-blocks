@@ -31,7 +31,7 @@ class TestAdmin extends \WP_UnitTestCase {
 	/**
 	 * Setup.
 	 *
-	 * @return void
+	 * @inheritdoc
 	 */
 	public function set_up() {
 		parent::set_up();

@@ -5,7 +5,8 @@ php_files=$( git diff --diff-filter=d --staged --name-only | grep -E '/*\.php$' 
 if [ ! -z "$php_files" ]
 	then
 	npm run lint:php $php_files
-	if [ $? != 0 ]; then
+	if [ $? != 0 ]
+		then
 		exit 1
 	fi
 fi
@@ -15,7 +16,8 @@ js_files=$( git diff --diff-filter=d --staged --name-only | grep -E '^js\/\S*\.j
 if [ ! -z "$js_files" ]
 	then
 	npm run lint:js:files $js_files
-	if [ $? != 0 ]; then
+	if [ $? != 0 ]
+		then
 		exit 1
 	fi
 fi
@@ -25,7 +27,8 @@ scss_files=$( git diff --diff-filter=d --staged --name-only | grep -E '/*\.scss$
 if [ -n "$scss_files" ]
 	then
 	npm run lint:css:files $scss_files
-	if [ $? != 0 ]; then
+	if [ $? != 0 ]
+		then
 		exit 1
 	fi
 fi
