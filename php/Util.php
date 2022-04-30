@@ -205,10 +205,12 @@ class Util extends ComponentAbstract {
 	 * Get a relative URL from a path.
 	 *
 	 * @param string $path The absolute path to a file.
-	 *
 	 * @return string
 	 */
 	public function get_url_from_path( $path ) {
+		if ( empty( $path ) ) {
+			return $path;
+		}
 		$abspath = ABSPATH;
 
 		// Workaround for weird hosting situations.
@@ -216,8 +218,6 @@ class Util extends ComponentAbstract {
 			$abspath = sanitize_text_field( wp_unslash( $_SERVER['DOCUMENT_ROOT'] ) );
 		}
 
-		$stylesheet_url = str_replace( untrailingslashit( $abspath ), '', $path );
-
-		return $stylesheet_url;
+		return str_replace( untrailingslashit( $abspath ), '', $path );
 	}
 }
