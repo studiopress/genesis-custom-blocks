@@ -17,7 +17,9 @@ commands:
   set-up-packages:
     description: "Installing packages and building"
     steps:
-      - run: composer update && composer install && npm ci && npm run build
+      - run: composer update && composer install
+      - node/install-packages
+      - run: npm run build
 
 jobs:
   lint:
