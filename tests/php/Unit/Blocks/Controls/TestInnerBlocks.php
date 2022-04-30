@@ -112,8 +112,7 @@ class TestInnerBlocks extends \WP_UnitTestCase {
 			->never()
 			->with(
 				INPUT_GET,
-				'inner_blocks',
-				FILTER_SANITIZE_STRING
+				'inner_blocks'
 			);
 
 		$this->assertEquals( $content, $this->instance->validate( '', false ) );
@@ -130,8 +129,7 @@ class TestInnerBlocks extends \WP_UnitTestCase {
 			->once()
 			->with(
 				INPUT_GET,
-				'inner_blocks',
-				FILTER_SANITIZE_STRING
+				'inner_blocks'
 			)
 			->andReturn( $inner_blocks );
 
@@ -149,8 +147,7 @@ class TestInnerBlocks extends \WP_UnitTestCase {
 			->once()
 			->with(
 				INPUT_GET,
-				'inner_blocks',
-				FILTER_SANITIZE_STRING
+				'inner_blocks'
 			)
 			->andReturn( $inner_blocks );
 

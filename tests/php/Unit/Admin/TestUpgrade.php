@@ -95,8 +95,7 @@ class TestUpgrade extends \WP_UnitTestCase {
 			->once()
 			->with(
 				INPUT_GET,
-				'page',
-				FILTER_SANITIZE_STRING
+				'page'
 			)
 			->andReturn( 'wrong-page' );
 
@@ -111,8 +110,7 @@ class TestUpgrade extends \WP_UnitTestCase {
 			->once()
 			->with(
 				INPUT_GET,
-				'page',
-				FILTER_SANITIZE_STRING
+				'page'
 			)
 			->andReturn( $this->instance->slug );
 
