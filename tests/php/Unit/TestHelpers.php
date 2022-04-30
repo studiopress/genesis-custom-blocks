@@ -74,7 +74,7 @@ class TestHelpers extends \WP_UnitTestCase {
 		$return_value = block_field( $field_name, false );
 		$echoed       = ob_get_clean();
 		$this->assertEquals( $mock_text, $return_value );
-		$this->assertEmpty( $echoed );
+		$this->assertEquals( 'Example', $echoed );
 
 		// Test the same scenario as above, but for 'className'.
 		ob_start();
