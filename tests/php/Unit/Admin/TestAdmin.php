@@ -31,7 +31,7 @@ class TestAdmin extends \WP_UnitTestCase {
 	/**
 	 * Setup.
 	 *
-	 * @inheritdoc
+	 * @return void
 	 */
 	public function setUp(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		parent::setUp();
