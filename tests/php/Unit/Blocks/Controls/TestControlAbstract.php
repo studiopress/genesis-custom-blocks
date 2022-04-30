@@ -13,6 +13,8 @@ use Genesis\CustomBlocks\Blocks\Controls\ControlSetting;
  */
 class TestControlAbstract extends \WP_UnitTestCase {
 
+	use TestingHelper;
+
 	/**
 	 * A mock name of the control.
 	 *
@@ -58,52 +60,48 @@ class TestControlAbstract extends \WP_UnitTestCase {
 	 * @covers \Genesis\CustomBlocks\Blocks\Controls\ControlAbstract::create_settings_config()
 	 */
 	public function test_create_settings_config() {
-		$this->assertEmpty(
-			array_diff_assoc(
-				[
-					'location'    => [
-						'name'    => 'location',
-						'label'   => __( 'Field Location', 'genesis-custom-blocks' ),
-						'type'    => 'location',
-						'default' => 'editor',
-					],
-					'width'       => [
-						'name'    => 'width',
-						'label'   => __( 'Field Width', 'genesis-custom-blocks' ),
-						'type'    => 'width',
-						'default' => '100',
-					],
-					'help'        => [
-						'name'    => 'help',
-						'label'   => __( 'Help Text', 'genesis-custom-blocks' ),
-						'type'    => 'text',
-						'default' => '',
-					],
-					'default'     => [
-						'name'    => 'default',
-						'label'   => __( 'Default Value', 'genesis-custom-blocks' ),
-						'type'    => 'text',
-						'default' => '',
-					],
-					'placeholder' => [
-						'name'    => 'placeholder',
-						'label'   => __( 'Placeholder Text', 'genesis-custom-blocks' ),
-						'type'    => 'text',
-						'default' => '',
-					],
+		$this->assertCorrectSettings(
+			[
+				'location'    => [
+					'name'    => 'location',
+					'label'   => __( 'Field Location', 'genesis-custom-blocks' ),
+					'type'    => 'location',
+					'default' => 'editor',
 				],
-				$this->instance->settings_config
-			)
+				'width'       => [
+					'name'    => 'width',
+					'label'   => __( 'Field Width', 'genesis-custom-blocks' ),
+					'type'    => 'width',
+					'default' => '100',
+				],
+				'help'        => [
+					'name'    => 'help',
+					'label'   => __( 'Help Text', 'genesis-custom-blocks' ),
+					'type'    => 'text',
+					'default' => '',
+				],
+				'default'     => [
+					'name'    => 'default',
+					'label'   => __( 'Default Value', 'genesis-custom-blocks' ),
+					'type'    => 'text',
+					'default' => '',
+				],
+				'placeholder' => [
+					'name'    => 'placeholder',
+					'label'   => __( 'Placeholder Text', 'genesis-custom-blocks' ),
+					'type'    => 'text',
+					'default' => '',
+				],
+			],
+			$this->instance->settings_config
 		);
 
-		$this->assertEmpty(
-			array_diff(
-				[
-					'editor'    => __( 'Editor', 'genesis-custom-blocks' ),
-					'inspector' => __( 'Inspector', 'genesis-custom-blocks' ),
-				],
-				$this->instance->locations
-			)
+		$this->assertCorrectSettings(
+			[
+				'editor'    => __( 'Editor', 'genesis-custom-blocks' ),
+				'inspector' => __( 'Inspector', 'genesis-custom-blocks' ),
+			],
+			$this->instance->locations
 		);
 	}
 }
