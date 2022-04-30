@@ -39,7 +39,7 @@ class TestImport extends AbstractTemplate {
 	 *
 	 * @inheritdoc
 	 */
-	public function setUp() {
+	public function setUp(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		parent::setUp();
 		Monkey\setUp();
 		$this->instance                 = new Import();
@@ -53,7 +53,7 @@ class TestImport extends AbstractTemplate {
 	 *
 	 * @inheritdoc
 	 */
-	public function tearDown() {
+	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		Monkey\tearDown();
 		parent::tearDown();
 	}
