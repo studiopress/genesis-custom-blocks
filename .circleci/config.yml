@@ -46,6 +46,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
       - checkout
+      - run: sudo apt-get update && sudo apt-get install php-mbstring
       - node/install
       - run:
           name: Installing WordPress and setting up tests
