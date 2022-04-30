@@ -134,6 +134,7 @@ abstract class ControlAbstract implements JsonSerializable {
 	 *
 	 * @return mixed The JSON-serialized object.
 	 */
+	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
 		$object = clone( $this );
 		unset( $object->settings_config );
