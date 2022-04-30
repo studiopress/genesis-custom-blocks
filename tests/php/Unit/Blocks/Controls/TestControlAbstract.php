@@ -59,6 +59,7 @@ class TestControlAbstract extends \WP_UnitTestCase {
 	 */
 	public function test_create_settings_config() {
 		$this->assertContains(
+			$this->instance->settings_config,
 			[
 				'location'    => [
 					'name'    => 'location',
@@ -90,16 +91,15 @@ class TestControlAbstract extends \WP_UnitTestCase {
 					'type'    => 'text',
 					'default' => '',
 				],
-			],
-			$this->instance->settings_config
+			]
 		);
 
 		$this->assertContains(
+			$this->instance->locations,
 			[
 				'editor'    => __( 'Editor', 'genesis-custom-blocks' ),
 				'inspector' => __( 'Inspector', 'genesis-custom-blocks' ),
-			],
-			$this->instance->locations
+			]
 		);
 	}
 }
