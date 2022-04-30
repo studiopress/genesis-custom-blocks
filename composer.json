@@ -5,8 +5,7 @@
     "homepage": "https://github.com/studiopress/genesis-custom-blocks",
     "license": "GPL-2.0",
     "require": {
-        "php": "^5.6 || ^7 || ^8",
-        "ext-mbstring": "*"
+        "php": "^5.6 || ^7 || ^8"
     },
     "require-dev": {
         "brain/monkey": "^2.6.1",
