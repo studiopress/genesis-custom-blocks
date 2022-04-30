@@ -39,8 +39,8 @@ class TestImport extends AbstractTemplate {
 	 *
 	 * @inheritdoc
 	 */
-	public function setUp(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		Monkey\setUp();
 		$this->instance                 = new Import();
 		$this->import_file_valid_json   = dirname( __DIR__ ) . '/Fixtures/MockImportValidFormat.txt';

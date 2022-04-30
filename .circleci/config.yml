@@ -17,7 +17,8 @@ commands:
   set-up-packages:
     description: "Installing packages and building"
     steps:
-      - run: composer update && composer install
+      - run: composer update
+      - php/install-packages
       - node/install-packages
       - run: npm run build
 

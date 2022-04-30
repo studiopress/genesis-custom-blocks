@@ -24,8 +24,8 @@ class TestOnboarding extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function setUp(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		$this->instance = new Onboarding();
 		$this->instance->set_plugin( genesis_custom_blocks() );
 	}

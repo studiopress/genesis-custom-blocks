@@ -34,8 +34,8 @@ class TestSettings extends WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function setUp(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		setUp();
 		$this->instance = new Settings();
 		$this->instance->set_plugin( genesis_custom_blocks() );

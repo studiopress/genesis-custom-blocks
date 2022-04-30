@@ -32,8 +32,8 @@ class TestUpgrade extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function setUp(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		Monkey\setUp();
 		$this->instance = new Upgrade();
 		$this->instance->set_plugin( genesis_custom_blocks() );

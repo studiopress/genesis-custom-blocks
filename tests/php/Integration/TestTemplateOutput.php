@@ -27,8 +27,8 @@ class TestTemplateOutput extends AbstractAttribute {
 	 *
 	 * @inheritdoc
 	 */
-	public function setUp(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		$this->set_properties();
 		$this->create_block_template();
