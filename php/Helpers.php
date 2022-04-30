@@ -49,7 +49,7 @@ function block_field( $name, $echo = true ) {
 	$value   = false; // This is a good default, it allows us to pick up on unchecked checkboxes.
 	$control = null;
 
-	if ( array_key_exists( $name, $attributes ) ) {
+	if ( is_array( $attributes ) && array_key_exists( $name, $attributes ) ) {
 		$value = $attributes[ $name ];
 	}
 
