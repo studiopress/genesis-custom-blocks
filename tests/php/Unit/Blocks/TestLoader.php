@@ -73,7 +73,7 @@ class TestLoader extends AbstractTemplate {
 	 *
 	 * @inheritdoc
 	 */
-	public function tearDown() {
+	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		remove_all_filters( 'genesis_custom_blocks_data' );
 		parent::tearDown();
 	}

@@ -68,7 +68,7 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function tearDown() {
+	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		// Delete testing templates and CSS files.
 		array_map(
 			function( $file ) {

@@ -29,6 +29,7 @@ jobs:
       name: php
     steps:
       - checkout
+      - install-extension
       - node/install
       - set-up-packages
       - run: npm run lint

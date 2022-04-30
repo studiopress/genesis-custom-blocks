@@ -28,7 +28,7 @@ class TestUtil extends AbstractTemplate {
 	 *
 	 * @inheritdoc
 	 */
-	public function setUp() {
+	public function setUp(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		parent::setUp();
 
 		$this->instance = new Util();
@@ -40,7 +40,7 @@ class TestUtil extends AbstractTemplate {
 	 *
 	 * @inheritdoc
 	 */
-	public function tearDown() {
+	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		remove_all_filters( 'genesis_custom_blocks_template_path' );
 		remove_all_filters( 'genesis_custom_blocks_icons' );
 		remove_all_filters( 'genesis_custom_blocks_allowed_svg_tags' );

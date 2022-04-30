@@ -23,7 +23,7 @@ class TestBlockApi extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function tearDown() {
+	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		genesis_custom_blocks()->loader = new Loader();
 		remove_all_filters( 'genesis_custom_blocks_default_fields' );
 		remove_all_filters( 'genesis_custom_blocks_data_attributes' );

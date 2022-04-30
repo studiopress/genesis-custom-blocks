@@ -32,7 +32,7 @@ class TestUpgrade extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function setUp() {
+	public function setUp(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		parent::setUp();
 		Monkey\setUp();
 		$this->instance = new Upgrade();
@@ -45,7 +45,7 @@ class TestUpgrade extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function tearDown() {
+	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		global $submenu;
 
 		unset( $submenu[ self::SUBMENU_PARENT_SLUG ] );

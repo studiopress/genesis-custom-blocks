@@ -26,7 +26,7 @@ class TestImage extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function setUp() {
+	public function setUp(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		parent::setUp();
 		$this->instance = new Image();
 	}

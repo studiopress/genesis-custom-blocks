@@ -29,7 +29,7 @@ class TestInnerBlocks extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function setUp() {
+	public function setUp(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		parent::setUp();
 		setUp();
 		$this->instance = new InnerBlocks();
@@ -40,7 +40,7 @@ class TestInnerBlocks extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function tearDown() {
+	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		remove_all_filters( 'genesis_custom_blocks_data_content' );
 		tearDown();
 		parent::tearDown();
