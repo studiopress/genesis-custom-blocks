@@ -46,7 +46,7 @@ class TestControlAbstract extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function setUp(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function setUp() {
 		parent::setUp();
 		$this->instance = new Number();
 		$this->setting  = new ControlSetting();
@@ -58,7 +58,7 @@ class TestControlAbstract extends \WP_UnitTestCase {
 	 * @covers \Genesis\CustomBlocks\Blocks\Controls\ControlAbstract::create_settings_config()
 	 */
 	public function test_create_settings_config() {
-		$this->assertArraySubset(
+		$this->assertContains(
 			[
 				'location'    => [
 					'name'    => 'location',
@@ -94,7 +94,7 @@ class TestControlAbstract extends \WP_UnitTestCase {
 			$this->instance->settings_config
 		);
 
-		$this->assertArraySubset(
+		$this->assertContains(
 			[
 				'editor'    => __( 'Editor', 'genesis-custom-blocks' ),
 				'inspector' => __( 'Inspector', 'genesis-custom-blocks' ),

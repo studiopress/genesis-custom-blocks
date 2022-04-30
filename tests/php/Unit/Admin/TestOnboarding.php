@@ -79,7 +79,7 @@ class TestOnboarding extends \WP_UnitTestCase {
 	 */
 	public function test_plugin_activation() {
 		$this->instance->plugin_activation();
-		$this->assertInternalType( 'integer', get_option( 'genesis_custom_blocks_example_post_id' ) );
+		$this->assertTrue( is_int( get_option( 'genesis_custom_blocks_example_post_id' ) ) );
 		$this->assertEquals( 'true', get_transient( 'genesis_custom_blocks_show_welcome' ) );
 	}
 }

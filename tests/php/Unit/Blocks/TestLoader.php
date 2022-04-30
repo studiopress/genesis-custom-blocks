@@ -260,7 +260,7 @@ class TestLoader extends AbstractTemplate {
 		// Check that nothing is enqueued if the file doesn't exist.
 		$result_no_style = $this->invoke_protected_method( 'enqueue_block_styles', [ 'does-not-exist', 'block' ] );
 		$this->assertFalse( $result_no_style );
-		$this->assertNotContains( $block_handle, $wp_styles->queue );
+		$this->assertStringNotContainsString( $block_handle, $wp_styles->queue );
 		$this->assertArrayNotHasKey( $block_handle, $wp_styles->registered );
 	}
 

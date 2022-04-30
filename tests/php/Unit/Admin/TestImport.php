@@ -39,7 +39,7 @@ class TestImport extends AbstractTemplate {
 	 *
 	 * @inheritdoc
 	 */
-	public function setUp(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function setUp() {
 		parent::setUp();
 		Monkey\setUp();
 		$this->instance                 = new Import();
@@ -53,7 +53,7 @@ class TestImport extends AbstractTemplate {
 	 *
 	 * @inheritdoc
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function tearDown() {
 		Monkey\tearDown();
 		parent::tearDown();
 	}
@@ -111,8 +111,8 @@ class TestImport extends AbstractTemplate {
 		$output = ob_get_clean();
 
 		// If filter_input() returns 0, it this should output the page header and welcome text.
-		$this->assertStringContainsString( $page_header_text, $output );
-		$this->assertStringContainsString( $welcome_text, $output );
+		$this->assertContains( $page_header_text, $output );
+		$this->assertContains( $welcome_text, $output );
 
 		Monkey\Functions\expect( 'filter_input' )
 			->once()
@@ -128,8 +128,8 @@ class TestImport extends AbstractTemplate {
 		$output = ob_get_clean();
 
 		// If filter_input() returns null, it should also output the page header and welcome text.
-		$this->assertStringContainsString( $page_header_text, $output );
-		$this->assertStringContainsString( $welcome_text, $output );
+		$this->assertContains( $page_header_text, $output );
+		$this->assertContains( $welcome_text, $output );
 
 		Monkey\Functions\expect( 'filter_input' )
 			->once()
@@ -147,9 +147,9 @@ class TestImport extends AbstractTemplate {
 		$output = ob_get_clean();
 
 		// If filter_input() returns 1, it should not have welcome text, but there should be an 'error uploading' message.
-		$this->assertStringContainsString( $page_header_text, $output );
-		$this->assertNotContains( $welcome_text, $output );
-		$this->assertStringContainsString( $error_uploading_file, $output );
+		$this->assertContains( $page_header_text, $output );
+		$this->assertStringNotContainsString( $welcome_text, $output );
+		$this->assertContains( $error_uploading_file, $output );
 
 		$file             = [ 'file' => 'nonexistent-file.xml' ];
 		$tmp_name         = $this->import_file_invalid_json;
@@ -207,9 +207,9 @@ class TestImport extends AbstractTemplate {
 		$output = ob_get_clean();
 
 		// If filter_input() returns 1 and the file does not exist, it should not have welcome text, but there should be an 'error uploading' message.
-		$this->assertStringContainsString( $error_uploading_file, $output );
-		$this->assertStringContainsString( $page_header_text, $output );
-		$this->assertNotContains( $welcome_text, $output );
+		$this->assertContains( $error_uploading_file, $output );
+		$this->assertContains( $page_header_text, $output );
+		$this->assertStringNotContainsString( $welcome_text, $output );
 
 		// The file is now a real file.
 		$file             = [ 'file' => $this->import_file_valid_json ];
@@ -256,9 +256,9 @@ class TestImport extends AbstractTemplate {
 		$output = ob_get_clean();
 
 		// Now that this has a real file, it should not output the 'error uploading' message.
-		$this->assertNotContains( $error_uploading_file, $output );
-		$this->assertStringContainsString( $page_header_text, $output );
-		$this->assertNotContains( $welcome_text, $output );
+		$this->assertStringNotContainsString( $error_uploading_file, $output );
+		$this->assertContains( $page_header_text, $output );
+		$this->assertStringNotContainsString( $welcome_text, $output );
 	}
 
 	/**
@@ -270,7 +270,7 @@ class TestImport extends AbstractTemplate {
 		ob_start();
 		$this->instance->render_page_header();
 
-		$this->assertStringContainsString( '<h2>Import Genesis Custom Blocks</h2>', ob_get_clean() );
+		$this->assertContains( '<h2>Import Genesis Custom Blocks</h2>', ob_get_clean() );
 	}
 
 	/**
@@ -283,9 +283,9 @@ class TestImport extends AbstractTemplate {
 		$this->instance->render_welcome();
 		$output = ob_get_clean();
 
-		$this->assertStringContainsString( '<p>Welcome! This importer processes Genesis Custom Blocks JSON files, adding custom blocks to this site.</p>', $output );
-		$this->assertStringContainsString( '<label for="upload">Choose a file from your computer:</label>', $output );
-		$this->assertStringContainsString( 'This JSON file should come from the export link or bulk action in the', $output );
+		$this->assertContains( '<p>Welcome! This importer processes Genesis Custom Blocks JSON files, adding custom blocks to this site.</p>', $output );
+		$this->assertContains( '<label for="upload">Choose a file from your computer:</label>', $output );
+		$this->assertContains( 'This JSON file should come from the export link or bulk action in the', $output );
 	}
 
 	/**
@@ -299,8 +299,8 @@ class TestImport extends AbstractTemplate {
 		$this->instance->render_import_success( $title );
 		$output = ob_get_clean();
 
-		$this->assertStringContainsString( '<p>Successfully imported <strong>', $output );
-		$this->assertStringContainsString( $title, $output );
+		$this->assertContains( '<p>Successfully imported <strong>', $output );
+		$this->assertContains( $title, $output );
 	}
 
 	/**
@@ -315,15 +315,15 @@ class TestImport extends AbstractTemplate {
 		$this->instance->render_import_error( $title, $error );
 		$output = ob_get_clean();
 
-		$this->assertStringContainsString( $title, $output );
-		$this->assertStringContainsString( $error, $output );
+		$this->assertContains( $title, $output );
+		$this->assertContains( $error, $output );
 
 		$disallowed = '<script type="text/javascript;">do_evil();</script>';
 		ob_start();
 		$this->instance->render_import_error( $title, $disallowed );
 		$output = ob_get_clean();
 
-		$this->assertNotContains( $disallowed, $output );
+		$this->assertStringNotContainsString( $disallowed, $output );
 	}
 
 	/**
@@ -336,7 +336,7 @@ class TestImport extends AbstractTemplate {
 		$this->instance->render_done();
 		$output = ob_get_clean();
 
-		$this->assertStringContainsString( '<p>All done!</p>', $output );
+		$this->assertContains( '<p>All done!</p>', $output );
 	}
 
 	/**
@@ -357,10 +357,10 @@ class TestImport extends AbstractTemplate {
 		$this->instance->render_choose_blocks( $blocks );
 		$output = ob_get_clean();
 
-		$this->assertStringContainsString( '<p>Please select the blocks to import:</p>', $output );
-		$this->assertStringContainsString( 'name="genesis-custom-blocks/' . $name . '"', $output );
-		$this->assertStringContainsString( 'id="genesis-custom-blocks/' . $name . '"', $output );
-		$this->assertStringContainsString( '<strong>' . $title . '</strong>', $output );
+		$this->assertContains( '<p>Please select the blocks to import:</p>', $output );
+		$this->assertContains( 'name="genesis-custom-blocks/' . $name . '"', $output );
+		$this->assertContains( 'id="genesis-custom-blocks/' . $name . '"', $output );
+		$this->assertContains( '<strong>' . $title . '</strong>', $output );
 	}
 
 	/**
@@ -377,8 +377,8 @@ class TestImport extends AbstractTemplate {
 		$output = ob_get_clean();
 
 		// If there's an 'error' value in the argument, this should output it.
-		$this->assertStringContainsString( $error, $output );
-		$this->assertStringContainsString( 'Sorry, there was an error uploading the file.', $output );
+		$this->assertContains( $error, $output );
+		$this->assertContains( 'Sorry, there was an error uploading the file.', $output );
 
 		$nonexistent_file = 'does-not-exist.xml';
 
@@ -387,15 +387,15 @@ class TestImport extends AbstractTemplate {
 		$output = ob_get_clean();
 
 		// If the file doesn't exist, this should have a message that reflects that.
-		$this->assertStringContainsString( $nonexistent_file, $output );
-		$this->assertStringContainsString( '<p><strong>Sorry, there was an error uploading the file.</strong>', $output );
+		$this->assertContains( $nonexistent_file, $output );
+		$this->assertContains( '<p><strong>Sorry, there was an error uploading the file.</strong>', $output );
 
 		ob_start();
 		$this->assertFalse( $this->instance->validate_upload( [ 'file' => $this->import_file_invalid_json ] ) );
 		$output = ob_get_clean();
 
 		// If the file has invalid JSON, the message should reflect that.
-		$this->assertStringContainsString( '<p><strong>Sorry, there was an error processing the file.</strong></p><p>Invalid JSON.</p>', $output );
+		$this->assertContains( '<p><strong>Sorry, there was an error processing the file.</strong></p><p>Invalid JSON.</p>', $output );
 
 		ob_start();
 		$this->assertTrue( $this->instance->validate_upload( [ 'file' => $this->import_file_valid_json ] ) );
@@ -427,8 +427,8 @@ class TestImport extends AbstractTemplate {
 
 		// When the 'name' isn't passed to the method, it shouldn't import any block, but should still have the 'All Done!' message.
 		$this->assertEmpty( $block_query->found_posts );
-		$this->assertStringContainsString( 'All done!', $output );
-		$this->assertNotContains( $success_message, $output );
+		$this->assertContains( 'All done!', $output );
+		$this->assertStringNotContainsString( $success_message, $output );
 
 		$blocks_to_import = [
 			"genesis-custom-blocks/$name" => [
@@ -442,8 +442,8 @@ class TestImport extends AbstractTemplate {
 		$output = ob_get_clean();
 
 		// When the 'name' and 'title are passed to the method, it should import the block and have the 'success' message.
-		$this->assertStringContainsString( $success_message, $output );
-		$this->assertStringContainsString( $title, $output );
+		$this->assertContains( $success_message, $output );
+		$this->assertContains( $title, $output );
 
 		$block_query     = new WP_Query( [ 'post_type' => 'genesis_custom_block' ] );
 		$block           = reset( $block_query->posts );

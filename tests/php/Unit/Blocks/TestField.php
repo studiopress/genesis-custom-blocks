@@ -73,7 +73,6 @@ class TestField extends \WP_UnitTestCase {
 		$this->assertEquals( 'number', $this->instance->control );
 		$this->assertEquals( 'integer', $this->instance->type );
 		$this->assertEquals( 1, $this->instance->order );
-		$this->assertAttributeNotEmpty( 'settings', $this->instance );
 		$this->assertArrayHasKey( 'custom', $this->instance->settings );
 		$this->assertEquals( 'Custom Setting', $this->instance->settings['custom'] );
 	}
