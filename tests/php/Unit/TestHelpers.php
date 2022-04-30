@@ -45,6 +45,10 @@ class TestHelpers extends \WP_UnitTestCase {
 		add_filter(
 			'genesis_custom_blocks_data_attributes',
 			function( $data ) use ( $field_name, $class_key, $mock_text, $expected_class ) {
+				if ( ! is_array( $data ) ) {
+					return $data;
+				}
+
 				$data[ $field_name ] = $mock_text;
 				$data[ $class_key ]  = $expected_class;
 				return $data;
@@ -74,7 +78,7 @@ class TestHelpers extends \WP_UnitTestCase {
 		$return_value = block_field( $field_name, false );
 		$echoed       = ob_get_clean();
 		$this->assertEquals( $mock_text, $return_value );
-		$this->assertEquals( 'Example', $echoed );
+		$this->assertEmpty( $echoed );
 
 		// Test the same scenario as above, but for 'className'.
 		ob_start();
