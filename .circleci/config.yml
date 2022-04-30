@@ -64,7 +64,8 @@ jobs:
       - run: mkdir -p *PLUGIN_PATH
       - checkout:
           path: *PLUGIN_PATH
-      - node/install-packages
+      - node/install-packages:
+          app-dir: *PLUGIN_PATH
       - run:
           name: Running PHPUnit
           working_directory: *PLUGIN_PATH
@@ -80,7 +81,8 @@ jobs:
       - checkout
       - node/install
       - nodegit-workaround
-      - run: HUSKY_SKIP_INSTALL=1 npm ci && npm run test:js -- --maxWorkers=2
+      - node/install-packages
+      - run: npm run test:js -- --maxWorkers=2
 
   e2e-tests:
     machine:
