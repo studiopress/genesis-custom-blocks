@@ -35,9 +35,9 @@ class TestEditBlock extends AbstractTemplate {
 	 *
 	 * @inheritDoc
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function tear_down() {
 		unset( $GLOBALS['current_screen'] );
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**

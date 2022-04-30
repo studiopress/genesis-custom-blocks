@@ -40,11 +40,11 @@ class TestUtil extends AbstractTemplate {
 	 *
 	 * @inheritdoc
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function tear_down() {
 		remove_all_filters( 'genesis_custom_blocks_template_path' );
 		remove_all_filters( 'genesis_custom_blocks_icons' );
 		remove_all_filters( 'genesis_custom_blocks_allowed_svg_tags' );
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**

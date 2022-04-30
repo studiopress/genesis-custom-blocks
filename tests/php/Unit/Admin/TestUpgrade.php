@@ -45,12 +45,12 @@ class TestUpgrade extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function tear_down() {
 		global $submenu;
 
 		unset( $submenu[ self::SUBMENU_PARENT_SLUG ] );
 		Monkey\tearDown();
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**

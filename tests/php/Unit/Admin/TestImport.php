@@ -53,9 +53,9 @@ class TestImport extends AbstractTemplate {
 	 *
 	 * @inheritdoc
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function tear_down() {
 		Monkey\tearDown();
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**
