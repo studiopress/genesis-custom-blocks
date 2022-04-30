@@ -84,7 +84,6 @@ jobs:
     steps:
       - checkout
       - run: sudo apt-get update && sudo apt-get install php php-xml php-mbstring
-      - install-extension
       - php/install-composer
       - set-up-packages
       - run: npm run wp-env start && npm run test:e2e
