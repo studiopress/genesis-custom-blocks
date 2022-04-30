@@ -155,7 +155,7 @@ class TestTemplateEditorOutput extends AbstractAttribute {
 		$actual_template   = str_replace( [ "\t", "\n" ], '', $rendered_template );
 
 		foreach ( $this->string_fields as $field ) {
-			$this->assertContains(
+			$this->assertStringContainsString(
 				sprintf(
 					'Here is the result for %1$s: %2$s',
 					$field,
@@ -166,7 +166,7 @@ class TestTemplateEditorOutput extends AbstractAttribute {
 		}
 
 		foreach ( $this->special_case_fields as $field_name => $expected ) {
-			$this->assertContains(
+			$this->assertStringContainsString(
 				sprintf(
 					'Here is the result for %1$s: %2$s',
 					$field_name,
@@ -176,7 +176,7 @@ class TestTemplateEditorOutput extends AbstractAttribute {
 			);
 		}
 
-		$this->assertContains(
+		$this->assertStringContainsString(
 			'Here are escaped brackets: {{example}}',
 			$actual_template
 		);

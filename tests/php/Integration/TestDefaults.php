@@ -148,14 +148,14 @@ class TestDefaults extends AbstractAttribute {
 		$actual_template   = str_replace( [ "\t", "\n" ], '', $rendered_template );
 
 		// The 'className' should be present.
-		$this->assertContains(
+		$this->assertStringContainsString(
 			sprintf( '<p class="%s">', $this->class_name ),
 			$actual_template
 		);
 
 		// Test the fields that return a string for block_value().
 		foreach ( $this->string_fields as $field_name ) {
-			$this->assertContains(
+			$this->assertStringContainsString(
 				sprintf(
 					'Here is the result of calling block_value() for %s: %s',
 					$field_name,
@@ -164,7 +164,7 @@ class TestDefaults extends AbstractAttribute {
 				$actual_template
 			);
 
-			$this->assertContains(
+			$this->assertStringContainsString(
 				sprintf(
 					'Here is the result of block_field() for %s: %s',
 					$field_name,
@@ -176,7 +176,7 @@ class TestDefaults extends AbstractAttribute {
 
 		// Test the fields that don't have simple string results for block_field() and block_value().
 		foreach ( $this->special_case_fields as $field_name => $expected_values ) {
-			$this->assertContains(
+			$this->assertStringContainsString(
 				sprintf(
 					'Here is the result of block_field() for %s: %s',
 					$field_name,
@@ -186,7 +186,7 @@ class TestDefaults extends AbstractAttribute {
 			);
 
 			if ( isset( $expected_values['block_value'] ) ) {
-				$this->assertContains(
+				$this->assertStringContainsString(
 					sprintf(
 						'Here is the result of calling block_value() for %s: %s',
 						$field_name,

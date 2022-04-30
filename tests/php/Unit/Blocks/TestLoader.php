@@ -87,10 +87,10 @@ class TestLoader extends AbstractTemplate {
 		$this->instance->init();
 		$assets = $this->get_protected_property( 'assets' );
 		$this->assertEquals( 'Genesis\\CustomBlocks\\Blocks\\Loader', get_class( $this->instance->init() ) );
-		$this->assertContains( 'js/dist/block-editor.js', $assets['path']['entry'] );
-		$this->assertContains( 'css/dist/blocks.editor.css', $assets['path']['editor_style'] );
-		$this->assertContains( 'js/dist/block-editor.js', $assets['url']['entry'] );
-		$this->assertContains( 'css/dist/blocks.editor.css', $assets['url']['editor_style'] );
+		$this->assertStringContainsString( 'js/dist/block-editor.js', $assets['path']['entry'] );
+		$this->assertStringContainsString( 'css/dist/blocks.editor.css', $assets['path']['editor_style'] );
+		$this->assertStringContainsString( 'js/dist/block-editor.js', $assets['url']['entry'] );
+		$this->assertStringContainsString( 'css/dist/blocks.editor.css', $assets['url']['editor_style'] );
 	}
 
 	/**
@@ -169,11 +169,11 @@ class TestLoader extends AbstractTemplate {
 		$this->instance->editor_assets();
 
 		$this->assertTrue( wp_script_is( $script_handle ) );
-		$this->assertContains(
+		$this->assertStringContainsString(
 			'var genesisCustomBlocks = {"authorBlocks"',
 			wp_scripts()->registered[ $script_handle ]->extra['data']
 		);
-		$this->assertContains(
+		$this->assertStringContainsString(
 			'const gcbBlocks =',
 			wp_scripts()->registered[ $script_handle ]->extra['before'][1]
 		);
@@ -249,7 +249,7 @@ class TestLoader extends AbstractTemplate {
 
 			$result = $this->invoke_protected_method( 'enqueue_block_styles', [ $this->mock_block_name, [ 'preview', 'block' ] ] );
 			$this->assertTrue( $result );
-			$this->assertContains( $block_handle, $wp_styles->queue );
+			$this->assertStringContainsString( $block_handle, $wp_styles->queue );
 			$this->assertArrayHasKey( $block_handle, $wp_styles->registered );
 			$this->assertSame( $wp_styles->registered[ $block_handle ]->src, $file_url, "Trying to enqueue file #{$key} ({$file_url})." );
 
@@ -347,7 +347,7 @@ class TestLoader extends AbstractTemplate {
 
 			$this->invoke_protected_method( 'enqueue_global_styles' );
 
-			$this->assertContains( $enqueue_handle, $wp_styles->queue );
+			$this->assertStringContainsString( $enqueue_handle, $wp_styles->queue );
 			$this->assertArrayHasKey( $enqueue_handle, $wp_styles->registered );
 			$this->assertSame( $wp_styles->registered[ $enqueue_handle ]->src, $file_url, "Trying to enqueue file #{$key} ({$file_url})." );
 
@@ -375,9 +375,9 @@ class TestLoader extends AbstractTemplate {
 		$output = ob_get_clean();
 
 		// There is still no template, but the user has the correct permissions, so this should output a warning.
-		$this->assertContains( '<div class="notice notice-warning">', $output );
-		$this->assertContains( $this->mock_block_name, $output );
-		$this->assertContains( 'No Template Editor markup or template file was found:', $output );
+		$this->assertStringContainsString( '<div class="notice notice-warning">', $output );
+		$this->assertStringContainsString( $this->mock_block_name, $output );
+		$this->assertStringContainsString( 'No Template Editor markup or template file was found:', $output );
 
 		/*
 		 * Test that the templates are used in the proper priority.
@@ -393,7 +393,7 @@ class TestLoader extends AbstractTemplate {
 
 			ob_start();
 			$this->invoke_protected_method( 'block_template', [ $this->mock_block_name ] );
-			$this->assertContains( $expected_template_contents, ob_get_clean() );
+			$this->assertStringContainsString( $expected_template_contents, ob_get_clean() );
 		}
 
 		$overridden_theme_template_path       = "{$this->theme_directory}/example-overridden-template.php";
@@ -411,7 +411,7 @@ class TestLoader extends AbstractTemplate {
 
 		ob_start();
 		$this->invoke_protected_method( 'block_template', [ $this->mock_block_name ] );
-		$this->assertContains( $expected_overriden_template_contents, ob_get_clean() );
+		$this->assertStringContainsString( $expected_overriden_template_contents, ob_get_clean() );
 	}
 
 	/**

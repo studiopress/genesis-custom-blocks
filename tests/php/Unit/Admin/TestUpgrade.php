@@ -123,7 +123,7 @@ class TestUpgrade extends \WP_UnitTestCase {
 		// Now that filter_input() returns the correct page, the conditional should be true, and this should enqueue the script.
 		$this->assertTrue( in_array( $this->instance->slug, $styles->queue, true ) );
 		$this->assertEquals( $this->instance->slug, $style->handle );
-		$this->assertContains( 'css/admin.upgrade.css', $style->src );
+		$this->assertStringContainsString( 'css/admin.upgrade.css', $style->src );
 		$this->assertEquals( [], $style->deps );
 		$this->assertEquals( [], $style->extra );
 	}
@@ -166,7 +166,7 @@ class TestUpgrade extends \WP_UnitTestCase {
 		$this->instance->render_page();
 		$output = ob_get_clean();
 
-		$this->assertContains( '<div class="wrap genesis-custom-blocks-pro">', $output );
-		$this->assertContains( '<h2 class="screen-reader-text">', $output );
+		$this->assertStringContainsString( '<div class="wrap genesis-custom-blocks-pro">', $output );
+		$this->assertStringContainsString( '<h2 class="screen-reader-text">', $output );
 	}
 }

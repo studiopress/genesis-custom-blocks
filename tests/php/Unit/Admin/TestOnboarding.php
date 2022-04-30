@@ -66,7 +66,7 @@ class TestOnboarding extends \WP_UnitTestCase {
 		ob_start();
 		$this->instance->show_welcome_notice();
 
-		$this->assertContains(
+		$this->assertStringContainsString(
 			'<div class="genesis-custom-blocks-welcome genesis-custom-blocks-notice notice is-dismissible">',
 			ob_get_clean()
 		);
