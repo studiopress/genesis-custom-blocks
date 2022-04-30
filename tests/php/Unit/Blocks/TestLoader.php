@@ -249,7 +249,7 @@ class TestLoader extends AbstractTemplate {
 
 			$result = $this->invoke_protected_method( 'enqueue_block_styles', [ $this->mock_block_name, [ 'preview', 'block' ] ] );
 			$this->assertTrue( $result );
-			$this->assertStringContainsString( $block_handle, $wp_styles->queue );
+			$this->assertContains( $block_handle, $wp_styles->queue );
 			$this->assertArrayHasKey( $block_handle, $wp_styles->registered );
 			$this->assertSame( $wp_styles->registered[ $block_handle ]->src, $file_url, "Trying to enqueue file #{$key} ({$file_url})." );
 
@@ -347,7 +347,7 @@ class TestLoader extends AbstractTemplate {
 
 			$this->invoke_protected_method( 'enqueue_global_styles' );
 
-			$this->assertStringContainsString( $enqueue_handle, $wp_styles->queue );
+			$this->assertContains( $enqueue_handle, $wp_styles->queue );
 			$this->assertArrayHasKey( $enqueue_handle, $wp_styles->registered );
 			$this->assertSame( $wp_styles->registered[ $enqueue_handle ]->src, $file_url, "Trying to enqueue file #{$key} ({$file_url})." );
 
