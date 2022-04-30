@@ -29,11 +29,10 @@ function genesis_custom_blocks_deprecated_function( $function, $version, $replac
 				// translators: A function name.
 				__( 'Genesis Custom Blocks\'s %1$s', 'genesis-custom-blocks' ),
 				$function
-			),
-			FILTER_SANITIZE_STRING
+			)
 		),
 		esc_html( $version ),
-		filter_var( $replacement, FILTER_SANITIZE_STRING )
+		filter_var( $replacement )
 	);
 }
 

@@ -52,7 +52,7 @@ class Upgrade extends ComponentAbstract {
 			return;
 		}
 
-		$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
+		$page = filter_input( INPUT_GET, 'page' );
 
 		// Enqueue scripts and styles on the edit screen of the Block post type.
 		if ( $this->slug === $page ) {

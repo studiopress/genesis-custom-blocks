@@ -53,7 +53,7 @@ class InnerBlocks extends ControlAbstract {
 		$content = genesis_custom_blocks()->loader->get_data( 'content' );
 
 		return empty( $content )
-			? urldecode( filter_input( INPUT_GET, 'inner_blocks', FILTER_SANITIZE_STRING ) )
+			? urldecode( filter_input( INPUT_GET, 'inner_blocks' ) )
 			: $content;
 	}
 }

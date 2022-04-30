@@ -97,7 +97,7 @@ class Import extends ComponentAbstract {
 
 					$import_blocks = [];
 					foreach ( $blocks as $block_namespace => $block ) {
-						if ( 'on' === filter_input( INPUT_GET, $block_namespace, FILTER_SANITIZE_STRING ) ) {
+						if ( 'on' === filter_input( INPUT_GET, $block_namespace ) ) {
 							$import_blocks[ $block_namespace ] = $block;
 						}
 					}
