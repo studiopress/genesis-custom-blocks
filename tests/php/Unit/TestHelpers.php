@@ -46,7 +46,7 @@ class TestHelpers extends \WP_UnitTestCase {
 			'genesis_custom_blocks_data_attributes',
 			function( $data ) use ( $field_name, $class_key, $mock_text, $expected_class ) {
 				if ( ! is_array( $data ) ) {
-					return $data;
+					$data = [];
 				}
 
 				$data[ $field_name ] = $mock_text;
