@@ -89,7 +89,7 @@ jobs:
       - checkout
       - run: sudo apt-get update && sudo apt-get install php php-xml
       - php/install-composer
-      - nodegit-workaround
+      - node/install
       - set-up-packages
       - run:
           name: Runnning e2e tests
