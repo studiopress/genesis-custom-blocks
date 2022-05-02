@@ -95,8 +95,6 @@ jobs:
           name: Runnning e2e tests
           command: |
             npm run wp-env start
-            echo "The PHP version is:"
-            npm run wp-env run cli "wp eval 'echo phpversion();'"
             npm run test:e2e
       - store_artifacts:
           path: /tmp/artifacts/
