@@ -52,10 +52,8 @@ class Upgrade extends ComponentAbstract {
 			return;
 		}
 
-		$page = filter_input( INPUT_GET, 'page' );
-
 		// Enqueue scripts and styles on the edit screen of the Block post type.
-		if ( $this->slug === $page ) {
+		if ( filter_input( INPUT_GET, 'page' ) === $this->slug ) {
 			wp_enqueue_style(
 				$this->slug,
 				$this->plugin->get_url( 'css/admin.upgrade.css' ),
