@@ -23,13 +23,13 @@ class TestBlockApi extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function tearDown() {
+	public function tear_down() {
 		genesis_custom_blocks()->loader = new Loader();
 		remove_all_filters( 'genesis_custom_blocks_default_fields' );
 		remove_all_filters( 'genesis_custom_blocks_data_attributes' );
 		remove_all_filters( 'genesis_custom_blocks_data_config' );
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**

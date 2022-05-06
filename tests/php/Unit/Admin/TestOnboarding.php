@@ -24,8 +24,8 @@ class TestOnboarding extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		$this->instance = new Onboarding();
 		$this->instance->set_plugin( genesis_custom_blocks() );
 	}
@@ -66,7 +66,7 @@ class TestOnboarding extends \WP_UnitTestCase {
 		ob_start();
 		$this->instance->show_welcome_notice();
 
-		$this->assertContains(
+		$this->assertStringContainsString(
 			'<div class="genesis-custom-blocks-welcome genesis-custom-blocks-notice notice is-dismissible">',
 			ob_get_clean()
 		);
@@ -79,7 +79,7 @@ class TestOnboarding extends \WP_UnitTestCase {
 	 */
 	public function test_plugin_activation() {
 		$this->instance->plugin_activation();
-		$this->assertInternalType( 'integer', get_option( 'genesis_custom_blocks_example_post_id' ) );
+		$this->assertTrue( is_int( get_option( 'genesis_custom_blocks_example_post_id' ) ) );
 		$this->assertEquals( 'true', get_transient( 'genesis_custom_blocks_show_welcome' ) );
 	}
 }

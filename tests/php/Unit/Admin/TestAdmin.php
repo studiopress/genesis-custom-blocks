@@ -33,8 +33,8 @@ class TestAdmin extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		$this->instance = new Admin();
 	}
 
@@ -82,7 +82,7 @@ class TestAdmin extends \WP_UnitTestCase {
 		$stylesheet = $styles->registered[ $handle ];
 
 		$this->assertEquals( $handle, $stylesheet->handle );
-		$this->assertContains( 'css/admin.css', $stylesheet->src );
+		$this->assertStringContainsString( 'css/admin.css', $stylesheet->src );
 		$this->assertEquals( [], $stylesheet->deps );
 		$this->assertEquals( [], $stylesheet->extra );
 		$this->assertTrue( in_array( $handle, $styles->queue, true ) );

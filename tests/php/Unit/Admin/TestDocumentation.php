@@ -34,8 +34,8 @@ class TestDocumentation extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		setUp();
 		$this->instance = new Documentation();
 		$this->instance->set_plugin( genesis_custom_blocks() );
@@ -47,12 +47,12 @@ class TestDocumentation extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function tearDown() {
+	public function tear_down() {
 		global $submenu;
 
 		unset( $submenu[ self::SUBMENU_PARENT_SLUG ] );
 		tearDown();
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**

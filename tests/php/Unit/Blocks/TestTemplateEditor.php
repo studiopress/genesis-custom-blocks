@@ -24,8 +24,8 @@ class TestTemplateEditor extends WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		$this->instance = new TemplateEditor();
 	}
 
@@ -53,7 +53,7 @@ class TestTemplateEditor extends WP_UnitTestCase {
 		ob_start();
 		$this->instance->render_css( $css, $block_name );
 
-		$this->assertContains( "<style>{$css}</style>", ob_get_clean() );
+		$this->assertStringContainsString( "<style>{$css}</style>", ob_get_clean() );
 
 		ob_start();
 		$this->instance->render_css( $css, $block_name );
@@ -76,11 +76,11 @@ class TestTemplateEditor extends WP_UnitTestCase {
 		ob_start();
 		$this->instance->render_css( $first_css, $first_block_name );
 
-		$this->assertContains( "<style>{$first_css}</style>", ob_get_clean() );
+		$this->assertStringContainsString( "<style>{$first_css}</style>", ob_get_clean() );
 
 		ob_start();
 		$this->instance->render_css( $second_css, $second_block_name );
 
-		$this->assertContains( "<style>{$second_css}</style>", ob_get_clean() );
+		$this->assertStringContainsString( "<style>{$second_css}</style>", ob_get_clean() );
 	}
 }

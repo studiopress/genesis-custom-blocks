@@ -34,8 +34,8 @@ class TestBlockPost extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		$this->instance = new BlockPost();
 		$this->instance->register_controls();
 		$this->instance->controls['textarea'] = new Textarea();
@@ -73,7 +73,7 @@ class TestBlockPost extends \WP_UnitTestCase {
 	public function test_register_controls() {
 		$this->instance->register_controls();
 		foreach ( $this->instance->controls as $control_type => $instance ) {
-			$this->assertContains( 'Genesis\CustomBlocks\Blocks\Controls\\', get_class( $instance ) );
+			$this->assertStringContainsString( 'Genesis\CustomBlocks\Blocks\Controls\\', get_class( $instance ) );
 		}
 	}
 
@@ -139,7 +139,7 @@ class TestBlockPost extends \WP_UnitTestCase {
 		// The 'image' control.
 		$this->assertEquals( false, $this->instance->get_field_value( $invalid_value, $control, false ) );
 		$this->assertEquals( $image_id, $this->instance->get_field_value( $image_id, $control, false ) );
-		$this->assertContains( $image_file_name, $this->instance->get_field_value( $image_id, $control, true ) );
+		$this->assertStringContainsString( $image_file_name, $this->instance->get_field_value( $image_id, $control, true ) );
 
 		// Any value for the 2nd argument other than 'image' should return the passed $value unchanged.
 		$this->assertEquals( $invalid_value, $this->instance->get_field_value( $invalid_value, 'different-control', false ) );

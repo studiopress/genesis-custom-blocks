@@ -27,8 +27,8 @@ class TestPlugin extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		$this->instance = new Plugin();
 		$this->instance->init();
 		$this->instance->plugin_loaded();

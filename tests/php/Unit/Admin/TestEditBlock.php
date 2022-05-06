@@ -24,8 +24,8 @@ class TestEditBlock extends AbstractTemplate {
 	 *
 	 * @inheritdoc
 	 */
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		$this->instance = new EditBlock();
 		$this->instance->set_plugin( genesis_custom_blocks() );
 	}
@@ -35,9 +35,9 @@ class TestEditBlock extends AbstractTemplate {
 	 *
 	 * @inheritDoc
 	 */
-	public function tearDown() {
+	public function tear_down() {
 		unset( $GLOBALS['current_screen'] );
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**

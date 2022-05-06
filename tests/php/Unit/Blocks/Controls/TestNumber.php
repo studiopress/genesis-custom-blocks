@@ -34,8 +34,8 @@ class TestNumber extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		$this->instance = new Number();
 		$this->setting  = new ControlSetting();
 	}

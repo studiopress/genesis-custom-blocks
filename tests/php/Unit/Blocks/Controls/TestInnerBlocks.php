@@ -29,8 +29,8 @@ class TestInnerBlocks extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		setUp();
 		$this->instance = new InnerBlocks();
 	}
@@ -40,10 +40,10 @@ class TestInnerBlocks extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function tearDown() {
+	public function tear_down() {
 		remove_all_filters( 'genesis_custom_blocks_data_content' );
 		tearDown();
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**
@@ -112,8 +112,7 @@ class TestInnerBlocks extends \WP_UnitTestCase {
 			->never()
 			->with(
 				INPUT_GET,
-				'inner_blocks',
-				FILTER_SANITIZE_STRING
+				'inner_blocks'
 			);
 
 		$this->assertEquals( $content, $this->instance->validate( '', false ) );
@@ -130,8 +129,7 @@ class TestInnerBlocks extends \WP_UnitTestCase {
 			->once()
 			->with(
 				INPUT_GET,
-				'inner_blocks',
-				FILTER_SANITIZE_STRING
+				'inner_blocks'
 			)
 			->andReturn( $inner_blocks );
 
@@ -149,8 +147,7 @@ class TestInnerBlocks extends \WP_UnitTestCase {
 			->once()
 			->with(
 				INPUT_GET,
-				'inner_blocks',
-				FILTER_SANITIZE_STRING
+				'inner_blocks'
 			)
 			->andReturn( $inner_blocks );
 

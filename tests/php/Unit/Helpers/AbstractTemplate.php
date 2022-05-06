@@ -46,8 +46,8 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		$this->instance = new Loader();
 		$plugin         = new Plugin();
 		$plugin->init();
@@ -68,7 +68,7 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function tearDown() {
+	public function tear_down() {
 		// Delete testing templates and CSS files.
 		array_map(
 			function( $file ) {
@@ -89,7 +89,7 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 			array_reverse( $this->directories_created )
 		);
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**

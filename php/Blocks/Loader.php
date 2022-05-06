@@ -330,7 +330,7 @@ class Loader extends ComponentAbstract {
 		$type = 'block';
 
 		// This is hacky, but the editor doesn't send the original request along.
-		$context = filter_input( INPUT_GET, 'context', FILTER_SANITIZE_STRING );
+		$context = filter_input( INPUT_GET, 'context' );
 
 		if ( 'edit' === $context ) {
 			$type = [ 'preview', 'block' ];
@@ -542,7 +542,7 @@ class Loader extends ComponentAbstract {
 			}
 		}
 
-		$is_edit_context = 'edit' === filter_input( INPUT_GET, 'context', FILTER_SANITIZE_STRING );
+		$is_edit_context = 'edit' === filter_input( INPUT_GET, 'context' );
 		$block_posts     = new WP_Query(
 			[
 				'post_type'      => genesis_custom_blocks()->get_post_type_slug(),

@@ -42,8 +42,8 @@ class TestPostCapabilities extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		$this->block_post = new BlockPost();
 		$this->block_post->set_plugin( genesis_custom_blocks() );
 		$this->block_post->register_post_type();

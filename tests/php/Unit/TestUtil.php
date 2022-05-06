@@ -28,8 +28,8 @@ class TestUtil extends AbstractTemplate {
 	 *
 	 * @inheritdoc
 	 */
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		$this->instance = new Util();
 		$this->instance->set_plugin( genesis_custom_blocks() );
@@ -40,11 +40,11 @@ class TestUtil extends AbstractTemplate {
 	 *
 	 * @inheritdoc
 	 */
-	public function tearDown() {
+	public function tear_down() {
 		remove_all_filters( 'genesis_custom_blocks_template_path' );
 		remove_all_filters( 'genesis_custom_blocks_icons' );
 		remove_all_filters( 'genesis_custom_blocks_allowed_svg_tags' );
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**
@@ -229,6 +229,6 @@ class TestUtil extends AbstractTemplate {
 	public function test_get_url_from_path() {
 		$subdirectory_path = 'wp-content/theme/blocks/test-block-here.css';
 		$path              = ABSPATH . $subdirectory_path;
-		$this->assertContains( '/' . $subdirectory_path, $this->instance->get_url_from_path( $path ) );
+		$this->assertStringContainsString( '/' . $subdirectory_path, $this->instance->get_url_from_path( $path ) );
 	}
 }

@@ -11,18 +11,16 @@ references:
 executors:
   php:
     docker:
-      - image: cimg/php:7.4.5-node
+      - image: cimg/php:7.4-node
 
 commands:
   set-up-packages:
     description: "Installing packages and building"
     steps:
-      - run: composer remove --dev phpunit/phpunit && composer install && npm ci && npm run build
-
-  nodegit-workaround:
-    description: "Ensure nodegit runs without error"
-    steps:
-      - run: sudo apt-get update && sudo apt-get install libkrb5-dev
+      - run: composer update
+      - php/install-packages
+      - node/install-packages
+      - run: npm run build
 
 jobs:
   lint:
@@ -30,8 +28,8 @@ jobs:
       name: php
     steps:
       - checkout
+      - run: sudo apt-get update && sudo apt-get install php-mbstring
       - node/install
-      - nodegit-workaround
       - set-up-packages
       - run: npm run lint
 
@@ -52,26 +50,27 @@ jobs:
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
       - checkout
+      - run: sudo apt-get update && sudo apt-get install php-mbstring
       - node/install
-      - nodegit-workaround
       - run:
           name: Installing WordPress and setting up tests
           command: |
             git clone git://develop.git.wordpress.org/ wordpress-develop
             cp wordpress-develop/wp-tests-config-sample.php wordpress-develop/wp-tests-config.php
             sed -i 's/localhost/127.0.0.1/g' wordpress-develop/wp-tests-config.php
-            composer update --working-dir=wordpress-develop
             sed -i 's/yourpasswordhere/<insert password here>/g' wordpress-develop/wp-tests-config.php
       - run: mkdir -p *PLUGIN_PATH
       - checkout:
           path: *PLUGIN_PATH
+      - node/install-packages:
+          app-dir: *PLUGIN_PATH
       - run:
           name: Running PHPUnit
           working_directory: *PLUGIN_PATH
           command: |
-            composer remove --dev phpunit/phpunit
-            npm ci && npm run build
-            composer require --dev phpunit/phpunit 5.7.21 && composer i
+            npm run build
+            composer update
+            composer install
             WP_TESTS_DIR=~/project/wordpress-develop/tests/phpunit composer test
 
   js-tests:
@@ -79,15 +78,15 @@ jobs:
     steps:
       - checkout
       - node/install
-      - nodegit-workaround
-      - run: HUSKY_SKIP_INSTALL=1 npm ci && npm run test:js -- --maxWorkers=2
+      - node/install-packages
+      - run: npm run test:js -- --maxWorkers=2
 
   e2e-tests:
     machine:
       image: ubuntu-2004:202111-02
     steps:
       - checkout
-      - run: sudo apt-get update && sudo apt-get install php php-xml
+      - run: sudo apt-get update && sudo apt-get install php php-xml php-mbstring
       - php/install-composer
       - node/install
       - set-up-packages
@@ -131,7 +130,7 @@ workflows:
               only: /.*/
           matrix:
             parameters:
-              php-version: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
+              php-version: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1' ]
       - js-tests:
           filters:
             tags:

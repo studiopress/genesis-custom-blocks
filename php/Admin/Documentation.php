@@ -51,7 +51,7 @@ class Documentation extends ComponentAbstract {
 	 * Add submenu pages to the Genesis Custom Blocks menu.
 	 */
 	public function maybe_redirect() {
-		$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
+		$page = filter_input( INPUT_GET, 'page' );
 
 		if ( $this->slug === $page ) {
 			wp_safe_redirect( 'https://developer.wpengine.com/genesis-custom-blocks/' );

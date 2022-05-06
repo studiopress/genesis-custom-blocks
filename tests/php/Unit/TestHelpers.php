@@ -22,13 +22,13 @@ class TestHelpers extends \WP_UnitTestCase {
 	 *
 	 * @inheritdoc
 	 */
-	public function tearDown() {
+	public function tear_down() {
 		genesis_custom_blocks()->loader = new Loader();
 		remove_all_filters( 'genesis_custom_blocks_default_fields' );
 		remove_all_filters( 'genesis_custom_blocks_data_attributes' );
 		remove_all_filters( 'genesis_custom_blocks_data_config' );
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**
@@ -45,6 +45,10 @@ class TestHelpers extends \WP_UnitTestCase {
 		add_filter(
 			'genesis_custom_blocks_data_attributes',
 			function( $data ) use ( $field_name, $class_key, $mock_text, $expected_class ) {
+				if ( ! is_array( $data ) ) {
+					$data = [];
+				}
+
 				$data[ $field_name ] = $mock_text;
 				$data[ $class_key ]  = $expected_class;
 				return $data;
