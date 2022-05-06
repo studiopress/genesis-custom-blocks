@@ -330,9 +330,7 @@ class Loader extends ComponentAbstract {
 		$type = 'block';
 
 		// This is hacky, but the editor doesn't send the original request along.
-		$context = filter_input( INPUT_GET, 'context' );
-
-		if ( 'edit' === $context ) {
+		if ( 'edit' === filter_input( INPUT_GET, 'context' ) ) {
 			$type = [ 'preview', 'block' ];
 		}
 
