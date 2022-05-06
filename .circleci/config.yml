@@ -84,14 +84,18 @@ jobs:
 
   e2e-tests:
     machine:
-      image: ubuntu-1604:202004-01
+      image: ubuntu-2004:202111-02
     steps:
       - checkout
       - run: sudo apt-get update && sudo apt-get install php php-xml
       - php/install-composer
-      - nodegit-workaround
+      - node/install
       - set-up-packages
-      - run: npm run wp-env start && npm run test:e2e
+      - run:
+          name: Runnning e2e tests
+          command: |
+            npm run wp-env start
+            npm run test:e2e
       - store_artifacts:
           path: /tmp/artifacts/
 
