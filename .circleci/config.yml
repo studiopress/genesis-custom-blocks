@@ -90,7 +90,11 @@ jobs:
       - php/install-composer
       - node/install
       - set-up-packages
-      - run: npm run wp-env start && npm run test:e2e
+      - run:
+          name: Runnning e2e tests
+          command: |
+            npm run wp-env start
+            npm run test:e2e
       - store_artifacts:
           path: /tmp/artifacts/
 
