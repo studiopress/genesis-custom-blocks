@@ -96,8 +96,6 @@ jobs:
           name: Runnning e2e tests
           command: |
             npm run wp-env start
-            npm run wp-env run cli 'wp core update --version=6.0-RC4'
-            npm run wp-env run cli 'wp core version'
             npm run test:e2e
       - store_artifacts:
           path: /tmp/artifacts/
