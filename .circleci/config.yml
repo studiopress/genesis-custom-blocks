@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.0
   php: circleci/php@1.1.0
+  wp-svn: studiopress/wp-svn@0.1
 
 references:
   PLUGIN_PATH: &PLUGIN_PATH
@@ -149,9 +150,27 @@ workflows:
           context: genesis-svn
           requires:
             - php-tests
+            - js-tests
+            - e2e-tests
             - lint
           filters:
             tags:
               only: /^\d+\.\d+\.\d+$/
             branches:
               ignore: /.*/
+      - approval-for-deploy-tested-up-to-bump:
+          type: approval
+          requires:
+            - php-tests
+            - js-tests
+            - e2e-tests
+            - lint
+          filters:
+            tags:
+              ignore: /.*/
+            branches:
+              only: /^bump-tested-up-to.*/
+      - wp-svn/deploy-tested-up-to-bump:
+          context: genesis-svn
+          requires:
+            - approval-for-deploy-tested-up-to-bump
