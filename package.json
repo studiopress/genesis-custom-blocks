@@ -93,7 +93,7 @@
     "pptr-testing-library": "0.6.5",
     "prettier": "2.5.1",
     "raw-loader": "4.0.1",
-    "re-resizable": "6.9.1",
+    "re-resizable": "6.9.9",
     "react": "^17.0.1",
     "react-ace": "9.4.0",
     "react-autosize-textarea": "7.1.0",
