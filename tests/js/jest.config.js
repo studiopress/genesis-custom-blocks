@@ -1,6 +1,11 @@
 module.exports = {
 	rootDir: '../../',
 	...require( '@wordpress/scripts/config/jest-unit.config' ),
+	globals: {
+		window: {
+			ResizeObserver: () => {},
+		}
+	},
 	transform: {
 		'^.+\\.[jt]sx?$': '<rootDir>/node_modules/@wordpress/scripts/config/babel-transform',
 	},
