@@ -14,7 +14,7 @@ import { useDispatch } from '@wordpress/data';
  * @return {UseEditorReturn} The field context and functions to change it.
  */
 const useEditor = () => {
-	const { setupEditorState, resetPost } = useDispatch( 'core/editor' );
+	const { setupEditorState } = useDispatch( 'core/editor' );
 
 	/**
 	 * Initializes the editor with the specified post object and editor settings.
@@ -29,7 +29,6 @@ const useEditor = () => {
 	 * @param {Object} post Post object.
 	 */
 	const setupEditor = ( post ) => {
-		resetPost( post );
 		setupEditorState( post );
 	};
 
