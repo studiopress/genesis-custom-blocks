@@ -1,8 +1,8 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@5.0.0
-  php: circleci/php@1.1.0
+  node: circleci/node@5.0
+  php: circleci/php@1.1
   wp-svn: studiopress/wp-svn@0.1
 
 references:
@@ -29,7 +29,6 @@ jobs:
       name: php
     steps:
       - checkout
-      - run: sudo apt-get update && sudo apt-get install php-mbstring
       - node/install
       - set-up-packages
       - run: npm run lint
@@ -51,7 +50,6 @@ jobs:
           MYSQL_ROOT_PASSWORD: wordpress
     steps:
       - checkout
-      - run: sudo apt-get update && sudo apt-get install php-mbstring
       - node/install
       - run:
           name: Installing WordPress and setting up tests
