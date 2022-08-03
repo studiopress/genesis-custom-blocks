@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### 1.5.1 - 2022-08-09 ###
+* PHP 8.1 compatibility fixes. [PR 119](https://github.com/studiopress/genesis-custom-blocks/pull/119)
+
 ### 1.5.0 - 2022-03-24 ###
 
 * Allow previewing InnerBlocks in the block editor. [PR 114](https://github.com/studiopress/genesis-custom-blocks/pull/114)
