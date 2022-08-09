@@ -105,6 +105,7 @@ jobs:
       - attach_workspace:
           at: ~/project
       - checkout
+      - node/install
       - run:
           command: |
             BUILD_VERSION=$(grep 'Version:' genesis-custom-blocks.php | cut -f4 -d' ')
