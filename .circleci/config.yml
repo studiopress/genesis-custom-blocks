@@ -124,8 +124,6 @@ jobs:
 workflows:
   test-deploy:
     jobs:
-      - wp-svn/check-versions:
-          changelog-file: CHANGELOG.md
       - php-tests:
           filters:
             tags:
@@ -145,6 +143,8 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - wp-svn/check-versions:
+          changelog-file: CHANGELOG.md
       - svn-deploy:
           context: genesis-svn
           requires:
@@ -152,6 +152,7 @@ workflows:
             - js-tests
             - e2e-tests
             - lint
+            - wp-svn/check-versions
           filters:
             tags:
               only: /^\d+\.\d+\.\d+$/
