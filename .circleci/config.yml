@@ -148,6 +148,8 @@ workflows:
           filters:
             tags:
               only: /^\d+\.\d+\.\d+$/
+          branches:
+            ignore: /.*/
       - svn-deploy:
           context: genesis-svn
           requires:
