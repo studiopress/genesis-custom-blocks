@@ -145,6 +145,9 @@ workflows:
               only: /.*/
       - wp-svn/check-versions:
           changelog-file: CHANGELOG.md
+          filters:
+            tags:
+              only: /^\d+\.\d+\.\d+$/
       - svn-deploy:
           context: genesis-svn
           requires:
