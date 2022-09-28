@@ -124,7 +124,7 @@ jobs:
 workflows:
   test-deploy:
     jobs:
-      - wp-svn/version-check:
+      - wp-svn/check-versions:
           changelog-file: CHANGELOG.md
       - php-tests:
           filters:
