@@ -143,6 +143,13 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - wp-svn/check-versions:
+          changelog-file: CHANGELOG.md
+          filters:
+            tags:
+              only: /^\d+\.\d+\.\d+$/
+            branches:
+              ignore: /.*/
       - svn-deploy:
           context: genesis-svn
           requires:
@@ -150,6 +157,7 @@ workflows:
             - js-tests
             - e2e-tests
             - lint
+            - wp-svn/check-versions
           filters:
             tags:
               only: /^\d+\.\d+\.\d+$/
