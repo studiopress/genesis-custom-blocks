@@ -497,8 +497,9 @@ class Loader extends ComponentAbstract {
 			 */
 			$theme_template = apply_filters( 'genesis_custom_blocks_override_theme_template', $located );
 
-			// This is not a load once template, so require_once is false.
-			load_template( $theme_template, false );
+			// Populate variables into our custom theme template markup.
+			$markup = file_get_contents( $theme_template );
+			$this->template_editor->render_markup( $markup );
 			return;
 		}
 
