@@ -497,8 +497,11 @@ class Loader extends ComponentAbstract {
 			 */
 			$theme_template = apply_filters( 'genesis_custom_blocks_override_theme_template', $located );
 
-			// Populate variables into our custom theme template markup.
-			$markup = file_get_contents( $theme_template );
+			ob_start();
+			include $theme_template;
+			$markup = ob_get_clean();
+			
+			// Populate variables into custom theme template markup.
 			$this->template_editor->render_markup( $markup );
 			return;
 		}
