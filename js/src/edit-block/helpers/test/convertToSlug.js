@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import convertToSlug from '../convertToSlug';
+import { convertToSlug } from '../';
 
 describe( 'convertToSlug', () => {
 	it.each( [

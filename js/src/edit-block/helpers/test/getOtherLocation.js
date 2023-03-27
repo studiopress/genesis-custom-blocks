@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import getOtherLocation from '../getOtherLocation';
+import { getOtherLocation } from '../';
 
 describe( 'getOtherLocation', () => {
 	it.each( [

@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import getNewFieldNumber from '../getNewFieldNumber';
+import { getNewFieldNumber } from '../';
 
 describe( 'getNewFieldNumber', () => {
 	it.each( [

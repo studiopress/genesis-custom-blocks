@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import getBlock from '../getBlock';
+import { getBlock } from '../';
 
 describe( 'getBlock', () => {
 	it.each( [

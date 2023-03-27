@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import getTemplateParts from '../getTemplateParts';
+import { getTemplateParts } from '../';
 
 describe( 'getTemplateParts', () => {
 	it.each( [

@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import getDefaultBlock from '../getDefaultBlock';
+import { getDefaultBlock } from '../';
 
 describe( 'getDefaultBlock', () => {
 	it( 'should get the default block without the post ID', () => {

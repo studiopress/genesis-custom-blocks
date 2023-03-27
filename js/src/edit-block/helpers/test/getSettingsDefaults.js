@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import getSettingsDefaults from '../getSettingsDefaults';
+import { getSettingsDefaults } from '../';
 
 const getControls = () => ( {
 	textarea: {

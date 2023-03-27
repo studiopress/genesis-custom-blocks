@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import getSettingsComponent from '../getSettingsComponent';
+import { getSettingsComponent } from '../';
 
 global.gcbEditor = { controls: {} };
 

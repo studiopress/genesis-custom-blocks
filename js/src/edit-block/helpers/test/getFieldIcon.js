@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import getFieldIcon from '../getFieldIcon';
+import { getFieldIcon } from '../';
 
 describe( 'getFieldIcon', () => {
 	it.each( [

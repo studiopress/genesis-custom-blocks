@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import hasRepeaterField from '../hasRepeaterField';
+import { hasRepeaterField } from '../';
 
 describe( 'hasRepeaterField', () => {
 	it( 'should handle an argument of an empty object', () => {
