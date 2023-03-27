@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { setCorrectOrderForFields } from '../';
+import setCorrectOrderForFields from '../setCorrectOrderForFields';
 
 describe( 'setCorrectOrderForFields', () => {
 	it( 'should handle an empty array argument', () => {

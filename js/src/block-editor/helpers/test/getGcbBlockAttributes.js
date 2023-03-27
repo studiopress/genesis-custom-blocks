@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { getGcbBlockAttributes } from '../';
+import getGcbBlockAttributes from '../getGcbBlockAttributes';
 
 describe( 'getBlockFromContent', () => {
 	const fieldsWithOnlyType = {

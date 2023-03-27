@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { registerBlocks } from '../';
+import registerBlocks from '../registerBlocks';
 
 const mockRegisterBlockType = jest.fn();
 jest.mock( '@wordpress/blocks', () => {

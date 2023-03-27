@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { addControls } from '../';
+import addControls from '../addControls';
 
 test( 'addControls', () => {
 	const mockControl = jest.fn();
