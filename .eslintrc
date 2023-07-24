@@ -17,8 +17,6 @@
     }
   },
   "plugins": [
-    "jsx-a11y",
-    "testing-library",
     "jest-dom"
   ],
   "rules": {
