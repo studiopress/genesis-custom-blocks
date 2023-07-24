@@ -24,7 +24,6 @@
   "devDependencies": {
     "@material-ui/core": "4.11.2",
     "@material-ui/icons": "4.11.2",
-    "@types/classnames": "2.2.11",
     "@wordpress/a11y": "3.38.0",
     "@wordpress/api-fetch": "6.35.0",
     "@wordpress/babel-preset-default": "7.22.0",
@@ -91,13 +90,11 @@
     "react-ace": "9.4.0",
     "react-autosize-textarea": "7.1.0",
     "react-dom": "^17.0.1",
-    "resize-observer-polyfill": "1.5.1",
     "sass": "1.49.8",
     "sass-loader": "9.0.3",
     "style-loader": "1.2.1",
     "tailwindcss": "2.0.2",
     "typescript": "4.5.5",
-    "uuid": "8.3.2",
     "webpack": "5.69.1",
     "webpack-cli": "4.9.2"
   },
