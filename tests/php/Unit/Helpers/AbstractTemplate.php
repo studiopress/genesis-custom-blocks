@@ -49,6 +49,7 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 	 */
 	public function set_up() {
 		parent::set_up();
+		WP_Filesystem();
 		$this->instance = new Loader();
 		$plugin         = new Plugin();
 		$plugin->init();
@@ -70,7 +71,7 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 	 * @inheritdoc
 	 */
 	public function tear_down() {
-		$wp_filesystem = Mockery::mock( 'WP_Filesystem_Base' );
+		global $wp_filesystem;
 
 		// Delete testing templates and CSS files.
 		array_map(
@@ -173,7 +174,7 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 	 * @param string $directory The directory to create.
 	 */
 	public function mkdir( $directory ) {
-		$wp_filesystem = Mockery::mock( 'WP_Filesystem_Base' );
+		global $wp_filesystem;
 
 		if ( ! is_dir( $directory ) ) {
 			$wp_filesystem->mkdir( $directory );
@@ -188,7 +189,7 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 	 * @param string $contents The contents of the file.
 	 */
 	public function file_put_contents( $file, $contents ) {
-		$wp_filesystem = Mockery::mock( 'WP_Filesystem_Base' );
+		global $wp_filesystem;
 		$wp_filesystem->put_contents( $file, $contents );
 		array_push( $this->files_created, $file );
 	}
