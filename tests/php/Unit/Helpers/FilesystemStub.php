@@ -9,6 +9,7 @@
  * Stub for filesystem.
  */
 class FilesystemStub {
+
 	/**
 	 * Gets contents.
 	 *

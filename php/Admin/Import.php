@@ -62,7 +62,6 @@ class Import extends ComponentAbstract {
 	 * Render the import page. Manages the three separate stages of the JSON import process.
 	 */
 	public function render_page() {
-		global $wp_filesystem;
 		$step = filter_input( INPUT_GET, 'step', FILTER_SANITIZE_NUMBER_INT );
 
 		ob_start();
