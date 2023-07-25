@@ -5,6 +5,7 @@
  * @package Genesis\CustomBlocks
  */
 
+use Mockery;
 use Genesis\CustomBlocks\Plugin;
 use Genesis\CustomBlocks\Blocks\Loader;
 
@@ -69,7 +70,7 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 	 * @inheritdoc
 	 */
 	public function tear_down() {
-		global $wp_filesystem;
+		$wp_filesystem = Mockery::mock( 'WP_Filesystem_Base' );
 
 		// Delete testing templates and CSS files.
 		array_map(
@@ -172,7 +173,7 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 	 * @param string $directory The directory to create.
 	 */
 	public function mkdir( $directory ) {
-		global $wp_filesystem;
+		$wp_filesystem = Mockery::mock( 'WP_Filesystem_Base' );
 
 		if ( ! is_dir( $directory ) ) {
 			$wp_filesystem->mkdir( $directory );
@@ -187,7 +188,7 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 	 * @param string $contents The contents of the file.
 	 */
 	public function file_put_contents( $file, $contents ) {
-		global $wp_filesystem;
+		$wp_filesystem = Mockery::mock( 'WP_Filesystem_Base' );
 		$wp_filesystem->put_contents( $file, $contents );
 		array_push( $this->files_created, $file );
 	}
