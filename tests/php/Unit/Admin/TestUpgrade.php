@@ -37,7 +37,6 @@ class TestUpgrade extends \WP_UnitTestCase {
 		Monkey\setUp();
 		$this->instance = new Upgrade();
 		$this->instance->set_plugin( genesis_custom_blocks() );
-
 	}
 
 	/**

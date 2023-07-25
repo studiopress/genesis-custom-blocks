@@ -235,7 +235,7 @@ abstract class PluginAbstract implements PluginInterface {
 
 		if ( isset( $file_data['Version'] ) ) {
 			$this->version = $file_data['Version'];
-		};
+		}
 
 		return $this;
 	}

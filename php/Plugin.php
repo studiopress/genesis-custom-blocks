@@ -100,6 +100,5 @@ class Plugin extends PluginAbstract {
 		}
 
 		require_once __DIR__ . '/Helpers.php';
-
 	}
 }
