@@ -8,7 +8,6 @@ built
 node_modules
 tests
 trunk
-gulpfile.js
 Makefile
 package.json
 package-lock.json
@@ -22,5 +21,14 @@ tsconfig.json
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 webpack.config.js
-.github
 SHASUMS
+.git
+.github
+.circleci
+.distignore
+.eslintignore
+.eslintrc
+.npmrc
+.nvmrc
+.stylelintrc.json
+.wp-env.json
