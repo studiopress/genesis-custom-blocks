@@ -137,10 +137,10 @@ function block_row_index( $name = '' ) {
  * Return the value of a sub-field.
  *
  * @param string $name The name of the sub-field.
- * @param bool   $do_echo Whether to echo and return the field, or just return the field.
+ * @param bool   $is_echo Whether to echo and return the field, or just return the field.
  */
-function block_sub_field( $name, $do_echo = true ) {
-	unset( $name, $do_echo );
+function block_sub_field( $name, $is_echo = true ) {
+	unset( $name, $is_echo );
 	_deprecated_function( 'block_sub_field', '1.0.0' );
 }
 

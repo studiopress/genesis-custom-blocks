@@ -152,12 +152,12 @@ class BlockPost extends ComponentAbstract {
 	 *
 	 * @param mixed  $value The field value.
 	 * @param string $control The type of the control, like 'user'.
-	 * @param bool   $do_echo Whether or not this value will be echoed.
+	 * @param bool   $is_echo Whether or not this value will be echoed.
 	 * @return mixed $value The filtered field value.
 	 */
-	public function get_field_value( $value, $control, $do_echo ) {
+	public function get_field_value( $value, $control, $is_echo ) {
 		if ( isset( $this->controls[ $control ] ) && method_exists( $this->controls[ $control ], 'validate' ) ) {
-			return call_user_func( [ $this->controls[ $control ], 'validate' ], $value, $do_echo );
+			return call_user_func( [ $this->controls[ $control ], 'validate' ], $value, $is_echo );
 		}
 
 		return $value;

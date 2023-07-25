@@ -13,11 +13,11 @@ use Genesis\CustomBlocks\Blocks\Field;
  * Return the value of a block field.
  *
  * @param string $name The name of the field.
- * @param bool   $do_echo Whether to echo and return the field, or just return the field.
+ * @param bool   $is_echo Whether to echo and return the field, or just return the field.
  *
  * @return mixed
  */
-function block_field( $name, $do_echo = true ) {
+function block_field( $name, $is_echo = true ) {
 	$attributes = genesis_custom_blocks()->loader->get_data( 'attributes' );
 	$config     = genesis_custom_blocks()->loader->get_data( 'config' );
 
@@ -69,11 +69,11 @@ function block_field( $name, $do_echo = true ) {
 	 *
 	 * @param mixed       $value   The value.
 	 * @param string|null $control The type of the control, like 'user', or null if this is the 'className', which has no control.
-	 * @param bool        $do_echo    Whether or not this value will be echoed.
+	 * @param bool        $is_echo    Whether or not this value will be echoed.
 	 */
-	$value = apply_filters( 'genesis_custom_blocks_field_value', $value, $control, $do_echo );
+	$value = apply_filters( 'genesis_custom_blocks_field_value', $value, $control, $is_echo );
 
-	if ( $do_echo ) {
+	if ( $is_echo ) {
 		if ( $field ) {
 			$value = $field->cast_value_to_string( $value );
 		}
