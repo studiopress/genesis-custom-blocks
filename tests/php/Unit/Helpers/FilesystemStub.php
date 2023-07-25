@@ -15,7 +15,6 @@ class FilesystemStub {
 	 * @param string $file File name.
 	 */
 	public function get_contents( $file ) {
-		unset( $file );
 		return file_get_contents( $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 	}
 
