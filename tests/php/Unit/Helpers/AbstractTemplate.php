@@ -5,7 +5,6 @@
  * @package Genesis\CustomBlocks
  */
 
-use Mockery;
 use Genesis\CustomBlocks\Plugin;
 use Genesis\CustomBlocks\Blocks\Loader;
 
@@ -49,7 +48,6 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 	 */
 	public function set_up() {
 		parent::set_up();
-		WP_Filesystem();
 		$this->instance = new Loader();
 		$plugin         = new Plugin();
 		$plugin->init();
@@ -71,13 +69,11 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 	 * @inheritdoc
 	 */
 	public function tear_down() {
-		global $wp_filesystem;
-
 		// Delete testing templates and CSS files.
 		array_map(
 			function( $file ) {
 				if ( file_exists( $file ) ) {
-					$wp_filesystem->delete( $file );
+					wp_delete_file( $file );
 				}
 			},
 			$this->files_created
@@ -85,9 +81,9 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 
 		// Remove testing directories that were created, in reverse order.
 		array_map(
-			function( $directory ) use ( $wp_filesystem ) {
+			function( $directory ) {
 				if ( is_dir( $directory ) ) {
-					$wp_filesystem->rmdir( $directory );
+					rmdir( $directory ); //phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_rmdir
 				}
 			},
 			array_reverse( $this->directories_created )
@@ -174,10 +170,8 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 	 * @param string $directory The directory to create.
 	 */
 	public function mkdir( $directory ) {
-		global $wp_filesystem;
-
 		if ( ! is_dir( $directory ) ) {
-			$wp_filesystem->mkdir( $directory );
+			mkdir( $directory ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_mkdir
 			array_push( $this->directories_created, $directory );
 		}
 	}
@@ -189,8 +183,7 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 	 * @param string $contents The contents of the file.
 	 */
 	public function file_put_contents( $file, $contents ) {
-		global $wp_filesystem;
-		$wp_filesystem->put_contents( $file, $contents );
+		file_put_contents( $file, $contents ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
 		array_push( $this->files_created, $file );
 	}
 }
