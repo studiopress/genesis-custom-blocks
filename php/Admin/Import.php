@@ -17,6 +17,13 @@ use Genesis\CustomBlocks\ComponentAbstract;
 class Import extends ComponentAbstract {
 
 	/**
+	 * Importer slug.
+	 *
+	 * @var string
+	 */
+	public $slug = 'genesis-custom-blocks';
+
+	/**
 	 * The filesystem.
 	 *
 	 * @var WP_Filesystem_Base
@@ -31,13 +38,6 @@ class Import extends ComponentAbstract {
 	public function __construct( $filesystem ) {
 		$this->filesystem = $filesystem;
 	}
-
-	/**
-	 * Importer slug.
-	 *
-	 * @var string
-	 */
-	public $slug = 'genesis-custom-blocks';
 
 	/**
 	 * Register any hooks that this component needs.
@@ -91,7 +91,7 @@ class Import extends ComponentAbstract {
 
 				if ( $this->validate_upload( $file ) ) {
 					if ( ! file_exists( $cache_dir ) ) {
-						$this->filesystem->mkdir( $cache_dir, '0777', true );
+						$this->filesystem->mkdir( $cache_dir, 0777 );
 					}
 
 					$this->filesystem->put_contents( $cache_dir . '/import.json', $this->filesystem->get_contents( $file['file'] ) );
