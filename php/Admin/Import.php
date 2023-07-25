@@ -78,7 +78,6 @@ class Import extends ComponentAbstract {
 						$wp_filesystem->mkdir( $cache_dir, 0777, true );
 					}
 
-					// This is on the local filesystem, so file_get_contents() is ok to use here.
 					$wp_filesystem->put_contents( $cache_dir . '/import.json', $wp_filesystem->get_contents( $file['file'] ) );
 
 					$json   = file_get_contents( $file['file'] ); // phpcs:ignore WordPress.WP.AlternativeFunctions
