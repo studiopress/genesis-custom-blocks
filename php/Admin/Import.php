@@ -75,7 +75,7 @@ class Import extends ComponentAbstract {
 
 				if ( $this->validate_upload( $file ) ) {
 					if ( ! file_exists( $cache_dir ) ) {
-						$wp_filesystem->mkdir( $cache_dir, 0777, true );
+						$wp_filesystem->mkdir( $cache_dir, '0777', true );
 					}
 
 					$wp_filesystem->put_contents( $cache_dir . '/import.json', $wp_filesystem->get_contents( $file['file'] ) );

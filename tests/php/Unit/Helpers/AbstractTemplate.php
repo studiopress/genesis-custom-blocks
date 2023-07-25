@@ -85,7 +85,7 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 
 		// Remove testing directories that were created, in reverse order.
 		array_map(
-			function( $directory ) {
+			function( $directory ) use ( $wp_filesystem ) {
 				if ( is_dir( $directory ) ) {
 					$wp_filesystem->rmdir( $directory );
 				}
