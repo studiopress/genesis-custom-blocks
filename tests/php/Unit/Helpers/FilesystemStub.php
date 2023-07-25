@@ -16,7 +16,7 @@ class FilesystemStub {
 	 */
 	public function get_contents( $file ) {
 		unset( $file );
-		return require dirname( __DIR__ ) . '/Fixtures/MockImportValidFormat.txt';
+		return file_get_contents( $this->import_file_valid_json ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 	}
 
 	/**
