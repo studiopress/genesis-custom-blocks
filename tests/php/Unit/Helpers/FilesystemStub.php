@@ -16,7 +16,7 @@ class FilesystemStub {
 	 */
 	public function get_contents( $file ) {
 		unset( $file );
-		return file_get_contents( $this->import_file_valid_json ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		return file_get_contents( $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 	}
 
 	/**
