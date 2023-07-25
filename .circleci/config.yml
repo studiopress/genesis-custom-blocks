@@ -135,12 +135,7 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - wp-svn/check-versions:
-          filters:
-            tags:
-              only: /^\d+\.\d+\.\d+$/
-            branches:
-              ignore: /.*/
+      - wp-svn/check-versions
       - svn-deploy
       - approval-for-deploy-tested-up-to-bump:
           type: approval

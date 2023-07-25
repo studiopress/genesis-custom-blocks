@@ -6,6 +6,7 @@ css/src
 bin
 built
 node_modules
+vendor
 tests
 trunk
 gulpfile.js
