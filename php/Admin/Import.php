@@ -46,6 +46,7 @@ class Import extends ComponentAbstract {
 	 * Render the import page. Manages the three separate stages of the JSON import process.
 	 */
 	public function render_page() {
+		global $wp_filesystem;
 		$step = filter_input( INPUT_GET, 'step', FILTER_SANITIZE_NUMBER_INT );
 
 		ob_start();
@@ -74,11 +75,11 @@ class Import extends ComponentAbstract {
 
 				if ( $this->validate_upload( $file ) ) {
 					if ( ! file_exists( $cache_dir ) ) {
-						mkdir( $cache_dir, 0777, true );
+						$wp_filesystem->mkdir( $cache_dir, 0777, true );
 					}
 
 					// This is on the local filesystem, so file_get_contents() is ok to use here.
-					file_put_contents( $cache_dir . '/import.json', file_get_contents( $file['file'] ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+					$wp_filesystem->put_contents( $cache_dir . '/import.json', $wp_filesystem->get_contents( $file['file'] ) );
 
 					$json   = file_get_contents( $file['file'] ); // phpcs:ignore WordPress.WP.AlternativeFunctions
 					$blocks = json_decode( $json, true );
