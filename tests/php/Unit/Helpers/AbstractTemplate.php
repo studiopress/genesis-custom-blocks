@@ -73,7 +73,7 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 		array_map(
 			function( $file ) {
 				if ( file_exists( $file ) ) {
-					unlink( $file );
+					wp_delete_file( $file );
 				}
 			},
 			$this->files_created

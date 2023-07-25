@@ -17,18 +17,18 @@ use function Genesis\CustomBlocks\add_field;
 /**
  * Show a PHP error to warn developers using deprecated functions.
  *
- * @param string $function    The function that was called.
+ * @param string $func        The function that was called.
  * @param string $version     The version of Genesis Custom Blocks that deprecated the function.
  * @param string $replacement The function that should have been called.
  */
-function genesis_custom_blocks_deprecated_function( $function, $version, $replacement ) {
+function genesis_custom_blocks_deprecated_function( $func, $version, $replacement ) {
 	_deprecated_function(
 		// filter_var is used for sanitization here as it allows arrow functions ("->").
 		filter_var(
 			sprintf(
 				// translators: A function name.
 				__( 'Genesis Custom Blocks\'s %1$s', 'genesis-custom-blocks' ),
-				$function
+				$func
 			)
 		),
 		esc_html( $version ),
@@ -137,10 +137,10 @@ function block_row_index( $name = '' ) {
  * Return the value of a sub-field.
  *
  * @param string $name The name of the sub-field.
- * @param bool   $echo Whether to echo and return the field, or just return the field.
+ * @param bool   $do_echo Whether to echo and return the field, or just return the field.
  */
-function block_sub_field( $name, $echo = true ) {
-	unset( $name, $echo );
+function block_sub_field( $name, $do_echo = true ) {
+	unset( $name, $do_echo );
 	_deprecated_function( 'block_sub_field', '1.0.0' );
 }
 

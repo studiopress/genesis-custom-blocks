@@ -53,10 +53,10 @@ class File extends ControlAbstract {
 	 * Validates the value to be made available to the front-end template.
 	 *
 	 * @param string $value The value to either make available as a variable or echoed on the front-end template.
-	 * @param bool   $echo Whether this value will be echoed.
+	 * @param bool   $is_echo Whether this value will be echoed.
 	 * @return string|int|false The value to be made available or echoed on the front-end template, false if none found.
 	 */
-	public function validate( $value, $echo ) {
-		return $echo ? wp_get_attachment_url( intval( $value ) ) : intval( $value );
+	public function validate( $value, $is_echo ) {
+		return $is_echo ? wp_get_attachment_url( intval( $value ) ) : intval( $value );
 	}
 }
