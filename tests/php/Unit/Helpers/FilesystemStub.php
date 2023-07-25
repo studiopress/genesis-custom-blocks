@@ -19,11 +19,10 @@ class FilesystemStub {
 	/**
 	 * Creates a directory.
 	 *
-	 * @param string           $path  The path.
-	 * @param int|false        $chmod The permissions.
-	 * @param string|int|false $chown Name or number.
+	 * @param string    $path  The path.
+	 * @param int|false $chmod The permissions.
 	 */
-	public function mkdir( $path, $chmod, $chown ) {}
+	public function mkdir( $path, $chmod ) {}
 
 	/**
 	 * Puts the contents.

@@ -43,7 +43,7 @@
     "jsx-a11y/alt-text": "warn"
   },
   "overrides": [
-     {
+    {
       "files": [
         "tests/e2e/**/*.js"
       ],
