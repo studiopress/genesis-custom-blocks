@@ -148,11 +148,6 @@ workflows:
             - e2e-tests
             - lint
             - wp-svn/check-versions
-          filters:
-            tags:
-              only: /^\d+\.\d+\.\d+$/
-            branches:
-              ignore: /.*/
       - approval-for-deploy-tested-up-to-bump:
           type: approval
           requires:
