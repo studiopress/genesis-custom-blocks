@@ -5,6 +5,7 @@
  * @package PluginTest
  */
 
+define( 'WP_RUN_CORE_TESTS', true );
 $_tests_dir = getenv( 'WP_TESTS_DIR' );
 
 // Travis CI & Vagrant SSH tests directory, this logic taken from wp-dev-lib.
