@@ -14,7 +14,10 @@ class FilesystemStub {
 	 *
 	 * @param string $file File name.
 	 */
-	public function get_contents( $file ) {}
+	public function get_contents( $file ) {
+		unset( $file );
+		return require dirname( __DIR__ ) . '/Fixtures/MockImportValidFormat.txt';
+	}
 
 	/**
 	 * Creates a directory.
