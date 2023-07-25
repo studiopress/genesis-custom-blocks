@@ -51,7 +51,7 @@
     "@wordpress/notices": "4.6.0",
     "@wordpress/postcss-plugins-preset": "4.22.0",
     "@wordpress/scripts": "26.9.0",
-    "@wordpress/server-side-render": "1.19.5",
+    "@wordpress/server-side-render": "4.15.0",
     "@wordpress/url": "3.39.0",
     "ace-builds": "1.4.12",
     "ajv": "8.10.0",
