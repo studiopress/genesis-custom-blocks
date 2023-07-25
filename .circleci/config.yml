@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   node: circleci/node@5.0
   php: circleci/php@1.1
-  wp-svn: studiopress/wp-svn@0.1
+  wp-svn: studiopress/wp-svn@0.2
 
 references:
   PLUGIN_PATH: &PLUGIN_PATH
@@ -102,24 +102,16 @@ jobs:
       name: php
     working_directory: ~/project/svn_deploy
     steps:
-      - attach_workspace:
-          at: ~/project
       - checkout
       - node/install
       - run:
+          name: Building
           command: |
-            BUILD_VERSION=$(grep 'Version:' genesis-custom-blocks.php | cut -f4 -d' ')
-            sudo apt-get update && sudo apt-get install subversion
-            svn co https://plugins.svn.wordpress.org/genesis-custom-blocks package
-            npm ci && npm run gulp
-            cd package
-            SVN_DIRECTORIES="trunk tags assets"
-            svn stat $SVN_DIRECTORIES | { grep -E '^\?' || true; } | awk '{print $2}' | xargs -r svn add
-            svn stat $SVN_DIRECTORIES | { grep -E '^\!' || true; } | awk '{print $2}' | xargs -r svn rm
-            svn up $SVN_DIRECTORIES
-            echo "Here is the svn stat about to be checked in:"
-            svn stat
-            svn ci -m "Tagging ${BUILD_VERSION} from GitHub" --no-auth-cache --non-interactive --username "${SVN_USERNAME}" --password "${SVN_PASSWORD}"
+            npm ci
+            composer install -o --no-dev
+            npm run build
+      - wp-svn/deploy-plugin:
+          dry-run: true
 
 workflows:
   test-deploy:
@@ -150,7 +142,6 @@ workflows:
             branches:
               ignore: /.*/
       - svn-deploy:
-          context: genesis-svn
           requires:
             - php-tests
             - js-tests
@@ -175,6 +166,5 @@ workflows:
             branches:
               only: /^bump-tested-up-to.*/
       - wp-svn/deploy-tested-up-to-bump:
-          context: genesis-svn
           requires:
             - approval-for-deploy-tested-up-to-bump
