@@ -96,7 +96,7 @@ class Import extends ComponentAbstract {
 
 					$this->filesystem->put_contents( $cache_dir . '/import.json', $this->filesystem->get_contents( $file['file'] ) );
 
-					$json   = file_get_contents( $file['file'] ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+					$json   = $this->filesystem->get_contents( $file['file'] );
 					$blocks = json_decode( $json, true );
 
 					$this->render_choose_blocks( $blocks );
@@ -107,8 +107,7 @@ class Import extends ComponentAbstract {
 				$file      = [ 'file' => $cache_dir . '/import.json' ];
 
 				if ( $this->validate_upload( $file ) ) {
-					// This is on the local filesystem, so file_get_contents() is ok to use here.
-					$json   = file_get_contents( $file['file'] ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+					$json   = $this->filesystem->get_contents( $file['file'] );
 					$blocks = json_decode( $json, true );
 
 					$import_blocks = [];
