@@ -5,8 +5,9 @@
  * @package Genesis\CustomBlocks
  */
 
-use Genesis\CustomBlocks\Admin\Import;
+use Mockery;
 use Brain\Monkey;
+use Genesis\CustomBlocks\Admin\Import;
 
 /**
  * Tests for class Import.
@@ -42,7 +43,7 @@ class TestImport extends AbstractTemplate {
 	public function set_up() {
 		parent::set_up();
 		Monkey\setUp();
-		$this->instance                 = new Import();
+		$this->instance                 = new Import( Mockery::mock( 'WP_Filesystem_Base' ) );
 		$this->import_file_valid_json   = dirname( __DIR__ ) . '/Fixtures/MockImportValidFormat.txt';
 		$this->import_file_invalid_json = dirname( __DIR__ ) . '/Fixtures/MockImportInvalidFormat.txt';
 		$this->instance->set_plugin( genesis_custom_blocks() );

@@ -62,6 +62,8 @@ class Admin extends ComponentAbstract {
 	 * Initialise the Admin component.
 	 */
 	public function init() {
+		global $wp_filesystem;
+
 		$this->settings = new Settings();
 		genesis_custom_blocks()->register_component( $this->settings );
 
@@ -78,7 +80,7 @@ class Admin extends ComponentAbstract {
 		genesis_custom_blocks()->register_component( $this->upgrade );
 
 		if ( defined( 'WP_LOAD_IMPORTERS' ) && WP_LOAD_IMPORTERS ) {
-			$this->import = new Import();
+			$this->import = new Import( $wp_filesystem );
 			genesis_custom_blocks()->register_component( $this->import );
 		}
 	}
