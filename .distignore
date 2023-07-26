@@ -1,6 +1,5 @@
 artifacts
 assets/wporg
-coverage
 js/src
 css/src
 bin
