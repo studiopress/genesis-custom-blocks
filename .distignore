@@ -15,7 +15,6 @@ composer.json
 composer.lock
 phpunit.xml
 phpcs.xml
-CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 webpack.config.js
 SHASUMS
