@@ -33,6 +33,23 @@ jobs:
       - set-up-packages
       - run: npm run lint
 
+  zip:
+    executor:
+      name: php
+    steps:
+      - checkout
+      - node/install
+      - run:
+          name: Zipping
+          command: |
+            composer install -o --no-dev
+            npm ci
+            npm run build
+            plugin_slug=$CIRCLE_PROJECT_REPONAME
+            build_version=`grep 'Version:' $plugin_slug.php | cut -f4 -d' '`
+            zip_file_name="$plugin_slug.$build_version.zip"
+            sed "s/^[^*]/*&/g" .distignore | sed "s/[^*]$/&*/g" | xargs zip -r "$zip_file_name" "$plugin_slug" -x
+
   php-tests:
     parameters:
       php-version:
@@ -132,6 +149,10 @@ workflows:
             tags:
               only: /.*/
       - lint:
+          filters:
+            tags:
+              only: /.*/
+      - zip:
           filters:
             tags:
               only: /.*/
