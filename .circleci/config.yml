@@ -56,6 +56,7 @@ jobs:
             plugin_slug=$CIRCLE_PROJECT_REPONAME
             build_version=`grep 'Version:' $plugin_slug.php | cut -f4 -d' '`
             zip_file_name="$plugin_slug.$build_version.zip"
+            # In .distignore, begin and end every line with *
             sed "s/^[^*]/*&/g" .distignore | sed "s/[^*]$/&*/g" | xargs zip -r "$zip_file_name" . -x
             mkdir /tmp/artifacts
             mv "$zip_file_name" /tmp/artifacts
@@ -107,7 +108,7 @@ jobs:
       - checkout
       - node/install
       - node/install-packages
-      - run: npm run test:js -- --maxWorkers=2
+      - run: npm run test:js
 
   e2e-tests:
     machine:
