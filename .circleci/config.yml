@@ -15,8 +15,8 @@ executors:
       - image: cimg/php:7.4-node
 
 commands:
-  set-up-packages:
-    description: "Installing packages and building"
+  build-development:
+    description: "Building for development"
     steps:
       - run: composer update
       - php/install-packages
@@ -40,7 +40,7 @@ jobs:
     steps:
       - checkout
       - node/install
-      - set-up-packages
+      - build-development
       - run: npm run lint
 
   zip:
@@ -118,7 +118,7 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install php php-xml php-mbstring
       - php/install-composer
       - node/install
-      - set-up-packages
+      - build-development
       - run:
           name: Runnning e2e tests
           command: |
