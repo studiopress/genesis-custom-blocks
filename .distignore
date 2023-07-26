@@ -3,7 +3,6 @@ assets/wporg
 js/src
 css/src
 bin
-built
 node_modules
 tests
 trunk
