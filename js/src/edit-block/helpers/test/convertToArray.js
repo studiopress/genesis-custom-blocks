@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { convertSettingsStringToArray } from '../';
+import convertSettingsStringToArray from '../convertSettingsStringToArray';
 
 describe( 'convertSettingsStringToArray', () => {
 	it.each( [
