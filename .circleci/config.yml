@@ -29,8 +29,8 @@ commands:
       - run:
           name: "Building"
           command: |
-            npm ci
             composer install -o --no-dev
+            npm ci
             npm run build
 
 jobs:

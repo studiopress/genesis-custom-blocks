@@ -9,7 +9,6 @@ trunk
 Makefile
 package.json
 package-lock.json
-composer.json
 composer.lock
 phpunit.xml
 phpcs.xml
