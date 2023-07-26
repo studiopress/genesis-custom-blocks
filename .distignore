@@ -28,7 +28,6 @@ tsconfig.json
 .github
 .circleci
 .distignore
-.eslintignore
 .eslintrc
 .npmrc
 .nvmrc
