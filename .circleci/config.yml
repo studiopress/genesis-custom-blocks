@@ -55,12 +55,12 @@ jobs:
           working_directory: *PLUGIN_SLUG
           command: |
             build_version=`grep 'Version:' genesis-custom-blocks.php | cut -f4 -d' '`
-            zip_file_name="*PLUGIN_SLUG.$build_version.zip"
+            zip_file_name="genesis-custom-blocks.$build_version.zip"
             cd ..
             # In .distignore, begin and end every line with *
-            sed "s/^[^*]/*&/g" "*PLUGIN_SLUG/.distignore" | sed "s/[^*]$/&*/g" | xargs zip -r "$zip_file_name" "*PLUGIN_SLUG" -x
+            sed "s/^[^*]/*&/g" genesis-custom-blocks/.distignore | sed "s/[^*]$/&*/g" | xargs zip -r "$zip_file_name" genesis-custom-blocks -x
             mkdir /tmp/artifacts
-            mv "*PLUGIN_SLUG/$zip_file_name" /tmp/artifacts
+            mv "genesis-custom-blocks/$zip_file_name" /tmp/artifacts
       - store_artifacts:
           path: /tmp/artifacts
 
