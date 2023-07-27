@@ -12,7 +12,6 @@ package-lock.json
 composer.lock
 phpunit.xml
 phpcs.xml
-CONTRIBUTING.md
 webpack.config.js
 SHASUMS
 babel.config.js

@@ -104,6 +104,13 @@ No. You can keep using your PHP block templates like block-example.php.
 * [GitHub](https://github.com/studiopress/genesis-custom-blocks)
 * [Documentation](https://developer.wpengine.com/genesis-custom-blocks)
 
+## Screenshots
+1. See all of your blocks from Genesis Custom Blocks.
+2. Create your block like you create any other content.
+3. Create the markup for your block in wp-admin, if you'd like.
+4. Your custom block in the block editor.
+5. Create the markup for your block in a PHP template in your editor, if you'd like.
+
 ## Changelog
 ### 1.5.1 - 2022-08-09
 * PHP 8.1 compatibility fixes. [PR 119](https://github.com/studiopress/genesis-custom-blocks/pull/119)
