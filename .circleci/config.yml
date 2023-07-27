@@ -134,8 +134,7 @@ jobs:
       - checkout
       - node/install
       - build-production
-      - wp-svn/deploy-plugin:
-          dry-run: true
+      - wp-svn/deploy-plugin
 
 workflows:
   test-deploy:
@@ -168,7 +167,7 @@ workflows:
             tags:
               only: /^\d+\.\d+\.\d+$/
             branches:
-              only: /^release*/
+              only: /^release/
       - svn-deploy:
           context: genesis-svn
           requires:
