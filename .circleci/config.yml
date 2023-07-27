@@ -53,14 +53,13 @@ jobs:
           name: Zipping
           working_directory: *PLUGIN_SLUG
           command: |
-            plugin_slug=$CIRCLE_PROJECT_REPONAME
-            build_version=`grep 'Version:' $plugin_slug.php | cut -f4 -d' '`
-            zip_file_name="$plugin_slug.$build_version.zip"
+            build_version=`grep 'Version:' *PLUGIN_SLUG.php | cut -f4 -d' '`
+            zip_file_name="*PLUGIN_SLUG.$build_version.zip"
             cd ..
             # In .distignore, begin and end every line with *
-            sed "s/^[^*]/*&/g" "$plugin_slug/.distignore" | sed "s/[^*]$/&*/g" | xargs zip -r "$zip_file_name" "$plugin_slug" -x
+            sed "s/^[^*]/*&/g" "*PLUGIN_SLUG/.distignore" | sed "s/[^*]$/&*/g" | xargs zip -r "$zip_file_name" "*PLUGIN_SLUG" -x
             mkdir /tmp/artifacts
-            mv "$plugin_slug/$zip_file_name" /tmp/artifacts
+            mv "*PLUGIN_SLUG/$zip_file_name" /tmp/artifacts
       - store_artifacts:
           path: /tmp/artifacts
 
@@ -133,7 +132,8 @@ jobs:
       name: php
     steps:
       - checkout
-      - node/install
+      - node/install:
+          node-version: '14'
       - run:
           name: "Building"
           command: |
