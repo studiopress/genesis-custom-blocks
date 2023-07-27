@@ -8,7 +8,6 @@
  * WordPress dependencies
  */
 import {
-	activatePlugin,
 	enablePageDialogAccept,
 	isOfflineMode,
 	setBrowserViewport,
@@ -33,9 +32,6 @@ const OBSERVED_CONSOLE_MESSAGE_TYPES = {
 	warning: 'warn',
 	error: 'error',
 };
-
-const PLUGIN = 'genesis-custom-blocks';
-const TESTING_PLUGIN = 'testing-blocks';
 
 /**
  * Array of page event tuples of [ eventName, handler ].
