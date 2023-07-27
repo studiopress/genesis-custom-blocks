@@ -54,7 +54,7 @@ jobs:
           name: Zipping
           working_directory: *PLUGIN_SLUG
           command: |
-            plugin_slug=*PLUGIN_SLUG
+            plugin_slug=genesis-custom-blocks
             build_version=`grep 'Version:' $plugin_slug.php | cut -f4 -d' '`
             zip_file_name="$plugin_slug.$build_version.zip"
             cd ..
@@ -90,7 +90,6 @@ jobs:
             cp wordpress-develop/wp-tests-config-sample.php wordpress-develop/wp-tests-config.php
             sed -i 's/localhost/127.0.0.1/g' wordpress-develop/wp-tests-config.php
             sed -i 's/yourpasswordhere/<insert password here>/g' wordpress-develop/wp-tests-config.php
-      - run: mkdir -p *PLUGIN_PATH
       - checkout:
           path: *PLUGIN_PATH
       - node/install-packages:
