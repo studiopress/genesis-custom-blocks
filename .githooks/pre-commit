@@ -1,21 +1,23 @@
 #!/bin/bash
 
 staged_php_files=$( git diff --diff-filter=d --staged --name-only | grep -E '/*\.php$' )
-if [ ! -z "$staged_php_files" ]
+if [ -n "$staged_php_files" ]
 	then
-	npm run lint:php $staged_php_files
-	if [ $? != 0 ]
+	linting="$(npm run lint:php "$staged_php_files")"
+	if [ "$linting" ]
 		then
+		echo "$linting"
 		exit 1
 	fi
 fi
 
 staged_js_files=$( git diff --diff-filter=d --staged --name-only | grep -E '^js\/\S*\.js$' )
-if [ ! -z "$staged_js_files" ]
+if [ -n "$staged_js_files" ]
 	then
-	npm run lint:js:files $staged_js_files
-	if [ $? != 0 ]
+	linting="$(npm run lint:js:files "$staged_js_files")"
+	if [ "$linting" ]
 		then
+		echo "$linting"
 		exit 1
 	fi
 fi
@@ -23,14 +25,18 @@ fi
 staged_scss_files=$( git diff --diff-filter=d --staged --name-only | grep -E '/*\.scss$' )
 if [ -n "$staged_scss_files" ]
 	then
-	npm run lint:css:files $staged_scss_files
-	if [ $? != 0 ]
+	linting="$(npm run lint:css:files "$staged_scss_files")"
+	if [ "$linting" ]
 		then
+		echo "$linting"
 		exit 1
 	fi
 fi
 
-if [ -n "$( git diff --diff-filter=d --staged --name-only | grep -E 'package.json' )" ]
+if grep -q "$( git diff --diff-filter=d --staged --name-only | grep -E 'package.json' )"
 	then
-	npm run lint:pkg-json
+		if [ "$(npm run lint:pkg-json)" ]
+			then
+			exit 1
+	fi
 fi
