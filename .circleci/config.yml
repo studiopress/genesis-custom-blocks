@@ -8,6 +8,8 @@ orbs:
 references:
   PLUGIN_PATH: &PLUGIN_PATH
     ~/project/wordpress-develop/src/wp-content/plugins/genesis-custom-blocks
+  PLUGIN_SLUG: &PLUGIN_SLUG
+    genesis-custom-blocks
 
 executors:
   php:
@@ -23,16 +25,6 @@ commands:
       - node/install-packages
       - run: npm run build
 
-  build-production:
-    description: "Building for production"
-    steps:
-      - run:
-          name: "Building"
-          command: |
-            composer install -o --no-dev
-            npm ci
-            npm run build
-
 jobs:
   lint:
     executor:
@@ -47,11 +39,19 @@ jobs:
     executor:
       name: php
     steps:
-      - checkout
+      - checkout:
+          path: *PLUGIN_SLUG
       - node/install
-      - build-production
+      - run:
+          name: Building
+          working_directory: *PLUGIN_SLUG
+          command: |
+            composer install -o --no-dev
+            npm ci
+            npm run build
       - run:
           name: Zipping
+          working_directory: *PLUGIN_SLUG
           command: |
             plugin_slug=$CIRCLE_PROJECT_REPONAME
             build_version=`grep 'Version:' $plugin_slug.php | cut -f4 -d' '`
@@ -134,7 +134,12 @@ jobs:
     steps:
       - checkout
       - node/install
-      - build-production
+      - run:
+          name: "Building"
+          command: |
+            composer install -o --no-dev
+            npm ci
+            npm run build
       - wp-svn/deploy-plugin
 
 workflows:
