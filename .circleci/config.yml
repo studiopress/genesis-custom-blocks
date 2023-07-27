@@ -135,8 +135,7 @@ jobs:
       - checkout
       - node/install
       - build-production
-      - wp-svn/deploy-plugin:
-          dry-run: true
+      - wp-svn/deploy-plugin
 
 workflows:
   test-deploy:
