@@ -58,7 +58,7 @@ jobs:
             zip_file_name="$plugin_slug.$build_version.zip"
             cd ..
             # In .distignore, begin and end every line with *
-            sed "s/^[^*]/*&/g" .distignore | sed "s/[^*]$/&*/g" | xargs zip -r "$zip_file_name" "$plugin_slug" -x
+            sed "s/^[^*]/*&/g" "$plugin_slug/.distignore" | sed "s/[^*]$/&*/g" | xargs zip -r "$zip_file_name" "$plugin_slug" -x
             mkdir /tmp/artifacts
             mv "$plugin_slug/$zip_file_name" /tmp/artifacts
       - store_artifacts:
