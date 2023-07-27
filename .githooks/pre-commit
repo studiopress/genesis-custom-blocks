@@ -33,10 +33,7 @@ if [ -n "$staged_scss_files" ]
 	fi
 fi
 
-if grep -q "$( git diff --diff-filter=d --staged --name-only | grep -E 'package.json' )"
+if git diff --diff-filter=d --staged --name-only | grep -E 'package.json'
 	then
-		if [ "$(npm run lint:pkg-json)" ]
-			then
-			exit 1
-	fi
+	npm run lint:pkg-json
 fi
