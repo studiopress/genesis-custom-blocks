@@ -108,7 +108,7 @@ jobs:
       - checkout
       - node/install
       - node/install-packages
-      - run: npm run test:js
+      - run: npm run test:js -- --maxWorkers=2
 
   e2e-tests:
     machine:
