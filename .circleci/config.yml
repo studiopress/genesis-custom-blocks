@@ -54,7 +54,7 @@ jobs:
           name: Zipping
           working_directory: *PLUGIN_SLUG
           command: |
-            build_version=`grep 'Version:' *PLUGIN_SLUG.php | cut -f4 -d' '`
+            build_version=`grep 'Version:' genesis-custom-blocks.php | cut -f4 -d' '`
             zip_file_name="*PLUGIN_SLUG.$build_version.zip"
             cd ..
             # In .distignore, begin and end every line with *
@@ -200,5 +200,6 @@ workflows:
             branches:
               only: /^bump-tested-up-to.*/
       - wp-svn/deploy-tested-up-to-bump:
+          context: genesis-svn
           requires:
             - approval-for-deploy-tested-up-to-bump
