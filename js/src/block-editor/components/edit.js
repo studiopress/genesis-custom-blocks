@@ -48,7 +48,7 @@ const Edit = ( { block, blockProps } ) => {
 	);
 
 	/**
-	 * Gets whether the passed block has a selected InnerBlock.
+	 * Gets whether here the passed block has a selected InnerBlock.
 	 *
 	 * @param {Object} blockCandidate The block to examine for InnerBlocks.
 	 * @param {Object} selectedBlock  The block that's selected in the editor.
