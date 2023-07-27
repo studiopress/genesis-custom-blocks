@@ -80,6 +80,9 @@ class Admin extends ComponentAbstract {
 		genesis_custom_blocks()->register_component( $this->upgrade );
 
 		if ( defined( 'WP_LOAD_IMPORTERS' ) && WP_LOAD_IMPORTERS ) {
+			// Ensure WP_Filesystem() is defined.
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+			WP_Filesystem();
 			$this->import = new Import( $wp_filesystem );
 			genesis_custom_blocks()->register_component( $this->import );
 		}

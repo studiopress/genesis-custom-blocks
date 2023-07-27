@@ -1,5 +1,5 @@
 {
 	"core": null,
 	"plugins": [ ".", "./tests/e2e/plugins/testing-blocks" ],
-	"phpVersion": "8.1"
+	"phpVersion": "8.2"
 }

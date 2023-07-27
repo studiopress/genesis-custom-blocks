@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { getWidthClass } from '../';
+import getWidthClass from '../getWidthClass';
 
 describe( 'getWidthClass', () => {
 	it.each( [
