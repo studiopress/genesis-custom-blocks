@@ -169,18 +169,7 @@ workflows:
               only: /^\d+\.\d+\.\d+$/
             branches:
               only: /^release*/
-      - svn-deploy:
-          requires:
-            - php-tests
-            - js-tests
-            - e2e-tests
-            - lint
-            - wp-svn/check-versions
-          filters:
-            tags:
-              only: /^\d+\.\d+\.\d+$/
-            branches:
-              ignore: /.*/
+      - svn-deploy
       - approval-for-deploy-tested-up-to-bump:
           type: approval
           requires:
