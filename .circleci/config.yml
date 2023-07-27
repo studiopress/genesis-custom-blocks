@@ -3,11 +3,13 @@ version: 2.1
 orbs:
   node: circleci/node@5.0
   php: circleci/php@1.1
-  wp-svn: studiopress/wp-svn@0.1
+  wp-svn: studiopress/wp-svn@0.2
 
 references:
   PLUGIN_PATH: &PLUGIN_PATH
     ~/project/wordpress-develop/src/wp-content/plugins/genesis-custom-blocks
+  PLUGIN_SLUG: &PLUGIN_SLUG
+    genesis-custom-blocks
 
 executors:
   php:
@@ -15,8 +17,8 @@ executors:
       - image: cimg/php:7.4-node
 
 commands:
-  set-up-packages:
-    description: "Installing packages and building"
+  build-development:
+    description: "Building for development"
     steps:
       - run: composer update
       - php/install-packages
@@ -30,8 +32,38 @@ jobs:
     steps:
       - checkout
       - node/install
-      - set-up-packages
+      - build-development
       - run: npm run lint
+
+  zip:
+    executor:
+      name: php
+    steps:
+      - checkout:
+          path: *PLUGIN_SLUG
+      - node/install:
+          node-version: '14'
+      - run:
+          name: Building
+          working_directory: *PLUGIN_SLUG
+          command: |
+            composer install -o --no-dev
+            npm ci
+            npm run build
+      - run:
+          name: Zipping
+          working_directory: *PLUGIN_SLUG
+          command: |
+            plugin_slug=genesis-custom-blocks
+            build_version=`grep 'Version:' $plugin_slug.php | cut -f4 -d' '`
+            zip_file_name="$plugin_slug.$build_version.zip"
+            cd ..
+            # In .distignore, begin and end every line with *
+            sed "s/^[^*]/*&/g" "$plugin_slug/.distignore" | sed "s/[^*]$/&*/g" | xargs zip -r "$zip_file_name" $plugin_slug -x
+            mkdir /tmp/artifacts
+            mv $zip_file_name /tmp/artifacts
+      - store_artifacts:
+          path: /tmp/artifacts
 
   php-tests:
     parameters:
@@ -58,7 +90,6 @@ jobs:
             cp wordpress-develop/wp-tests-config-sample.php wordpress-develop/wp-tests-config.php
             sed -i 's/localhost/127.0.0.1/g' wordpress-develop/wp-tests-config.php
             sed -i 's/yourpasswordhere/<insert password here>/g' wordpress-develop/wp-tests-config.php
-      - run: mkdir -p *PLUGIN_PATH
       - checkout:
           path: *PLUGIN_PATH
       - node/install-packages:
@@ -88,7 +119,7 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install php php-xml php-mbstring
       - php/install-composer
       - node/install
-      - set-up-packages
+      - build-development
       - run:
           name: Runnning e2e tests
           command: |
@@ -100,26 +131,16 @@ jobs:
   svn-deploy:
     executor:
       name: php
-    working_directory: ~/project/svn_deploy
     steps:
-      - attach_workspace:
-          at: ~/project
       - checkout
       - node/install
       - run:
+          name: "Building"
           command: |
-            BUILD_VERSION=$(grep 'Version:' genesis-custom-blocks.php | cut -f4 -d' ')
-            sudo apt-get update && sudo apt-get install subversion
-            svn co https://plugins.svn.wordpress.org/genesis-custom-blocks package
-            npm ci && npm run gulp
-            cd package
-            SVN_DIRECTORIES="trunk tags assets"
-            svn stat $SVN_DIRECTORIES | { grep -E '^\?' || true; } | awk '{print $2}' | xargs -r svn add
-            svn stat $SVN_DIRECTORIES | { grep -E '^\!' || true; } | awk '{print $2}' | xargs -r svn rm
-            svn up $SVN_DIRECTORIES
-            echo "Here is the svn stat about to be checked in:"
-            svn stat
-            svn ci -m "Tagging ${BUILD_VERSION} from GitHub" --no-auth-cache --non-interactive --username "${SVN_USERNAME}" --password "${SVN_PASSWORD}"
+            composer install -o --no-dev
+            npm ci
+            npm run build
+      - wp-svn/deploy-plugin
 
 workflows:
   test-deploy:
@@ -130,7 +151,7 @@ workflows:
               only: /.*/
           matrix:
             parameters:
-              php-version: [ '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1' ]
+              php-version: [ '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2' ]
       - js-tests:
           filters:
             tags:
@@ -143,13 +164,16 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - zip:
+          filters:
+            tags:
+              only: /.*/
       - wp-svn/check-versions:
-          changelog-file: CHANGELOG.md
           filters:
             tags:
               only: /^\d+\.\d+\.\d+$/
             branches:
-              ignore: /.*/
+              only: /^release/
       - svn-deploy:
           context: genesis-svn
           requires:

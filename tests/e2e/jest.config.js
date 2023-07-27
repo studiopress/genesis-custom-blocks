@@ -5,7 +5,7 @@ module.exports = {
 		'@wordpress/jest-console',
 		'expect-puppeteer',
 	],
-	testPathIgnorePatterns: [
-		'/node_modules/',
-	],
+	transform: {
+		'\\.[jt]sx?$': '<rootDir>/../../node_modules/@wordpress/scripts/config/babel-transform',
+	},
 };

@@ -353,7 +353,7 @@ class TestLoader extends AbstractTemplate {
 
 			wp_deregister_style( $enqueue_handle );
 			wp_dequeue_style( $enqueue_handle );
-			unlink( $file );
+			wp_delete_file( $file );
 		}
 	}
 

@@ -73,7 +73,7 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 		array_map(
 			function( $file ) {
 				if ( file_exists( $file ) ) {
-					unlink( $file );
+					wp_delete_file( $file );
 				}
 			},
 			$this->files_created
@@ -83,7 +83,7 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 		array_map(
 			function( $directory ) {
 				if ( is_dir( $directory ) ) {
-					rmdir( $directory );
+					rmdir( $directory ); //phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_rmdir
 				}
 			},
 			array_reverse( $this->directories_created )
@@ -171,7 +171,7 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 	 */
 	public function mkdir( $directory ) {
 		if ( ! is_dir( $directory ) ) {
-			mkdir( $directory );
+			mkdir( $directory ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_mkdir
 			array_push( $this->directories_created, $directory );
 		}
 	}
@@ -183,7 +183,7 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 	 * @param string $contents The contents of the file.
 	 */
 	public function file_put_contents( $file, $contents ) {
-		file_put_contents( $file, $contents ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_file_put_contents
+		file_put_contents( $file, $contents ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
 		array_push( $this->files_created, $file );
 	}
 }

@@ -152,7 +152,6 @@ class EditBlock extends ComponentAbstract {
 			$editor_style_config['dependencies'],
 			$editor_style_config['version']
 		);
-
 	}
 
 	/**

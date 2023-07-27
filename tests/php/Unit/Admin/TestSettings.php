@@ -5,10 +5,10 @@
  * @package Genesis\CustomBlocks
  */
 
+use Genesis\CustomBlocks\Admin\Settings;
 use function Brain\Monkey\setUp;
 use function Brain\Monkey\tearDown;
 use function Brain\Monkey\Functions\expect;
-use Genesis\CustomBlocks\Admin\Settings;
 
 /**
  * Tests for class Settings.
@@ -39,7 +39,6 @@ class TestSettings extends WP_UnitTestCase {
 		setUp();
 		$this->instance = new Settings();
 		$this->instance->set_plugin( genesis_custom_blocks() );
-
 	}
 
 	/**

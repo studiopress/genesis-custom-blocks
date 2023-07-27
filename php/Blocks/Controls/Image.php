@@ -53,10 +53,10 @@ class Image extends ControlAbstract {
 	 * Validates the value to be made available to the front-end template.
 	 *
 	 * @param string $value The value to either make available as a variable or echoed on the front-end template.
-	 * @param bool   $echo Whether this value will be echoed.
+	 * @param bool   $is_echo Whether this value will be echoed.
 	 * @return string|int $value The value to be made available or echoed on the front-end template, possibly 0 if none found.
 	 */
-	public function validate( $value, $echo ) {
+	public function validate( $value, $is_echo ) {
 		$image_id = intval( $value );
 
 		// Backwards compatibility, as the value used to be the image's URL instead of its post ID.
@@ -65,7 +65,7 @@ class Image extends ControlAbstract {
 			$legacy_id  = attachment_url_to_postid( $value );
 		}
 
-		if ( $echo ) {
+		if ( $is_echo ) {
 			if ( isset( $legacy_src ) ) {
 				return $legacy_src;
 			}

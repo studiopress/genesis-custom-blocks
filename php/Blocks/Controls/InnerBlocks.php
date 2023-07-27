@@ -45,11 +45,11 @@ class InnerBlocks extends ControlAbstract {
 	 * Validates the value to be made available to the front-end template.
 	 *
 	 * @param string $value The value to either make available as a variable or echoed on the front-end template.
-	 * @param bool   $echo Whether this value will be echoed.
+	 * @param bool   $is_echo Whether this value will be echoed.
 	 * @return string The InnerBlocks.
 	 */
-	public function validate( $value, $echo ) {
-		unset( $value, $echo );
+	public function validate( $value, $is_echo ) {
+		unset( $value, $is_echo );
 		$content = genesis_custom_blocks()->loader->get_data( 'content' );
 
 		return empty( $content )

@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { getBlockNameWithNameSpace } from '../';
+import getBlockNameWithNameSpace from '../getBlockNameWithNameSpace';
 
 describe( 'getBlockNameWithNameSpace', () => {
 	it.each( [

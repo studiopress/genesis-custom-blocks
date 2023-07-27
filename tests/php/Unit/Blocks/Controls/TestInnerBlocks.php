@@ -5,10 +5,10 @@
  * @package Genesis\CustomBlocks
  */
 
+use Genesis\CustomBlocks\Blocks\Controls\InnerBlocks;
 use function Brain\Monkey\Functions\expect;
 use function Brain\Monkey\setUp;
 use function Brain\Monkey\tearDown;
-use Genesis\CustomBlocks\Blocks\Controls\InnerBlocks;
 
 /**
  * Tests for class InnerBlocks.

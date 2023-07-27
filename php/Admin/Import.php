@@ -24,6 +24,22 @@ class Import extends ComponentAbstract {
 	public $slug = 'genesis-custom-blocks';
 
 	/**
+	 * The filesystem.
+	 *
+	 * @var WP_Filesystem_Base
+	 */
+	private $filesystem;
+
+	/**
+	 * Construct the class.
+	 *
+	 * @param WP_Filesystem_Base $filesystem The filesystem.
+	 */
+	public function __construct( $filesystem ) {
+		$this->filesystem = $filesystem;
+	}
+
+	/**
 	 * Register any hooks that this component needs.
 	 */
 	public function register_hooks() {
@@ -74,13 +90,12 @@ class Import extends ComponentAbstract {
 
 				if ( $this->validate_upload( $file ) ) {
 					if ( ! file_exists( $cache_dir ) ) {
-						mkdir( $cache_dir, 0777, true );
+						$this->filesystem->mkdir( $cache_dir, 0777 );
 					}
 
-					// This is on the local filesystem, so file_get_contents() is ok to use here.
-					file_put_contents( $cache_dir . '/import.json', file_get_contents( $file['file'] ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+					$this->filesystem->put_contents( $cache_dir . '/import.json', $this->filesystem->get_contents( $file['file'] ) );
 
-					$json   = file_get_contents( $file['file'] ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+					$json   = $this->filesystem->get_contents( $file['file'] );
 					$blocks = json_decode( $json, true );
 
 					$this->render_choose_blocks( $blocks );
@@ -91,8 +106,7 @@ class Import extends ComponentAbstract {
 				$file      = [ 'file' => $cache_dir . '/import.json' ];
 
 				if ( $this->validate_upload( $file ) ) {
-					// This is on the local filesystem, so file_get_contents() is ok to use here.
-					$json   = file_get_contents( $file['file'] ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+					$json   = $this->filesystem->get_contents( $file['file'] );
 					$blocks = json_decode( $json, true );
 
 					$import_blocks = [];
@@ -335,11 +349,6 @@ class Import extends ComponentAbstract {
 	 * @return bool
 	 */
 	private function block_exists( $block_namespace ) {
-		$registered_blocks = get_dynamic_block_names();
-		if ( in_array( $block_namespace, $registered_blocks, true ) ) {
-			return true;
-		}
-
-		return false;
+		return in_array( $block_namespace, get_dynamic_block_names(), true );
 	}
 }

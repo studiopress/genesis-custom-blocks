@@ -71,7 +71,7 @@ const Edit = ( { block, blockProps } ) => {
 			// @ts-ignore Type definition is outdated.
 			return hasSelectedInnerBlock( store.getBlock( blockProps.clientId ), store.getSelectedBlock() );
 		},
-		[ blockProps.clientId, blockProps.isSelected ]
+		[ blockProps.clientId, blockProps.isSelected ] // eslint-disable-line react-hooks/exhaustive-deps
 	);
 
 	return (

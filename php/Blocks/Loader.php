@@ -535,7 +535,7 @@ class Loader extends ComponentAbstract {
 			$block_data = json_decode( $json, true );
 
 			// Merge if no json_decode error occurred.
-			if ( json_last_error() == JSON_ERROR_NONE ) { // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
+			if ( json_last_error() == JSON_ERROR_NONE ) { // phpcs:ignore Universal.Operators.StrictComparisons.LooseEqual
 				$this->blocks = array_merge( $this->blocks, $block_data );
 			}
 		}
@@ -553,7 +553,7 @@ class Loader extends ComponentAbstract {
 			foreach ( $block_posts->posts as $post ) {
 				$block_data = json_decode( $post->post_content, true );
 
-				if ( json_last_error() == JSON_ERROR_NONE ) { // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
+				if ( json_last_error() == JSON_ERROR_NONE ) { // phpcs:ignore Universal.Operators.StrictComparisons.LooseEqual
 					$this->blocks = array_merge( $this->blocks, $block_data );
 				}
 			}

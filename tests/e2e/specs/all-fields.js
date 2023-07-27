@@ -4,7 +4,6 @@
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import { v4 as uuid } from 'uuid';
 import { getDocument, queries } from 'pptr-testing-library';
 
 /**
@@ -23,7 +22,7 @@ const uploadMediaFile = async ( $context, fieldLabel, fileName ) => {
 	const $input = await page.$( inputSelector );
 
 	const testImagePath = path.join( __dirname, '..', 'assets', fileName );
-	const newFileName = uuid();
+	const newFileName = Math.floor( Math.random( 100000 ) * 100000 );
 	const fileExtension = fileName.match( /.[^\.]+$/ )[ 0 ];
 	const tmpFilePath = path.join( os.tmpdir(), `${ newFileName }${ fileExtension }` );
 	fs.copyFileSync( testImagePath, tmpFilePath );

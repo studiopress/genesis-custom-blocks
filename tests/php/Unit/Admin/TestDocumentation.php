@@ -39,7 +39,6 @@ class TestDocumentation extends \WP_UnitTestCase {
 		setUp();
 		$this->instance = new Documentation();
 		$this->instance->set_plugin( genesis_custom_blocks() );
-
 	}
 
 	/**
