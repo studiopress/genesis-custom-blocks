@@ -349,11 +349,6 @@ class Import extends ComponentAbstract {
 	 * @return bool
 	 */
 	private function block_exists( $block_namespace ) {
-		$registered_blocks = get_dynamic_block_names();
-		if ( in_array( $block_namespace, $registered_blocks, true ) ) {
-			return true;
-		}
-
-		return false;
+		return in_array( $block_namespace, get_dynamic_block_names(), true );
 	}
 }
