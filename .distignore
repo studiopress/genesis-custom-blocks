@@ -2,7 +2,6 @@ artifacts
 assets/wporg
 js/src
 css/src
-bin
 node_modules
 tests
 trunk
