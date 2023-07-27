@@ -41,7 +41,8 @@ jobs:
     steps:
       - checkout:
           path: *PLUGIN_SLUG
-      - node/install
+      - node/install:
+          node-version: '14'
       - run:
           name: Building
           working_directory: *PLUGIN_SLUG
@@ -132,8 +133,7 @@ jobs:
       name: php
     steps:
       - checkout
-      - node/install:
-          node-version: '14'
+      - node/install
       - run:
           name: "Building"
           command: |
