@@ -3,7 +3,7 @@
 Contributors: lukecarbis, ryankienstra, Stino11, rheinardkorf, studiopress, wpengine
 Tags: gutenberg, blocks, block editor, fields, template
 Requires at least: 5.7
-Tested up to: 6.2
+Tested up to: 6.3
 Requires PHP: 7.0
 Stable tag: 1.5.1
 License: GPLv2 or later
