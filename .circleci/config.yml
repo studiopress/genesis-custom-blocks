@@ -130,12 +130,12 @@ jobs:
   svn-deploy:
     executor:
       name: php
-    working_directory: ~/project/svn_deploy
     steps:
       - checkout
       - node/install
       - build-production
-      - wp-svn/deploy-plugin
+      - wp-svn/deploy-plugin:
+          dry-run: true
 
 workflows:
   test-deploy:
@@ -170,7 +170,6 @@ workflows:
             branches:
               only: /^release*/
       - svn-deploy:
-          context: genesis-svn
           requires:
             - php-tests
             - js-tests
