@@ -3,34 +3,35 @@
 staged_php_files=$(git diff --diff-filter=d --staged --name-only | grep -E '/*\.php$')
 if [ -n "$staged_php_files" ]
 	then
-	linting="$(npm run lint:php "$staged_php_files")"
-	if [ "$linting" ]
+	echo "$staged_php_files" | xargs composer lint-fix
+	if ! echo "$staged_php_files" | xargs composer lint
 		then
-		echo "$linting"
 		exit 1
 	fi
+
+	git add "$staged_php_files"
 fi
 
 staged_js_files=$(git diff --diff-filter=d --staged --name-only | grep -E '^js\/\S*\.js$')
 if [ -n "$staged_js_files" ]
 	then
-	linting="$(npm run lint:js:files "$staged_js_files")"
-	if [ "$linting" ]
+	if ! npm run lint:js:fix
 		then
-		echo "$linting"
 		exit 1
 	fi
+
+	git add "$staged_js_files"
 fi
 
 staged_scss_files=$(git diff --diff-filter=d --staged --name-only | grep -E '/*\.scss$')
 if [ -n "$staged_scss_files" ]
 	then
-	linting="$(npm run lint:css:files "$staged_scss_files")"
-	if [ "$linting" ]
+	if ! npm run lint:css:fix
 		then
-		echo "$linting"
 		exit 1
 	fi
+
+	git add "$staged_scss_files"
 fi
 
 if git diff --diff-filter=d --staged --name-only | grep -E 'package.json'
