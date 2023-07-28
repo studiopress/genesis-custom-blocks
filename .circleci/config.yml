@@ -27,8 +27,8 @@ commands:
 
 jobs:
   lint:
-    executor:
-      name: cimg/php:8.2-node
+    docker:
+      - image: cimg/php:8.2-node
     steps:
       - checkout
       - node/install
