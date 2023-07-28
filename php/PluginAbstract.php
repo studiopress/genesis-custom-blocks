@@ -88,7 +88,7 @@ abstract class PluginAbstract implements PluginInterface {
 
 		if ( ! method_exists( $this, $name ) ) {
 			$class = get_class( $this );
-			throw new \Exception( "Call to undefined method {$class}::{$name}()" );
+			throw new \Exception( stripslashes( "Call to undefined method {$class}::{$name}()" ) );
 		}
 	}
 

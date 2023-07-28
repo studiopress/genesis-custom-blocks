@@ -53,7 +53,7 @@ abstract class ComponentAbstract implements ComponentInterface {
 		}
 
 		// Intentionally untranslated, to match PHP's error message.
-		throw new \Error( "Call to undefined method $class::$name()" );
+		throw new \Error( stripslashes( "Call to undefined method $class::$name()" ) );
 	}
 
 	/**
