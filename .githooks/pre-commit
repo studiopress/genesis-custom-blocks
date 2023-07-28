@@ -4,7 +4,7 @@ staged_php_files=$(git diff --diff-filter=d --staged --name-only | grep -E '/*\.
 if [ -n "$staged_php_files" ]
 	then
 	echo "$staged_php_files" | xargs composer lint-fix
-	if ! echo "$staged_php_files" | xargs composer lint
+	if ! composer lint
 		then
 		exit 1
 	fi
