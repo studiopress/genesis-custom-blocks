@@ -457,7 +457,7 @@ class Loader extends ComponentAbstract {
 				'genesis-custom-blocks__global-styles',
 				$stylesheet_url,
 				[],
-				wp_get_theme()->get( 'Version' )
+				filemtime( $stylesheet_path )
 			);
 		}
 	}
