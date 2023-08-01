@@ -2,7 +2,6 @@ artifacts
 assets/wporg
 js/src
 css/src
-bin
 node_modules
 tests
 trunk
@@ -19,6 +18,7 @@ postcss.config.js
 tailwind.config.js
 tsconfig.json
 .git
+.githooks
 .gitignore
 .github
 .circleci

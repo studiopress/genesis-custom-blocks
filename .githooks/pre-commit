@@ -1,0 +1,40 @@
+#!/bin/bash
+
+staged_php_files=$(git diff --diff-filter=d --staged --name-only | grep -E '/*\.php$')
+if [ -n "$staged_php_files" ]
+	then
+	echo "$staged_php_files" | xargs composer lint-fix
+	if ! composer lint
+		then
+		exit 1
+	fi
+
+	git add "$staged_php_files"
+fi
+
+staged_js_files=$(git diff --diff-filter=d --staged --name-only | grep -E '^js\/\S*\.js$')
+if [ -n "$staged_js_files" ]
+	then
+	if ! npm run lint:js:fix
+		then
+		exit 1
+	fi
+
+	git add "$staged_js_files"
+fi
+
+staged_scss_files=$(git diff --diff-filter=d --staged --name-only | grep -E '/*\.scss$')
+if [ -n "$staged_scss_files" ]
+	then
+	if ! npm run lint:css:fix
+		then
+		exit 1
+	fi
+
+	git add "$staged_scss_files"
+fi
+
+if git diff --diff-filter=d --staged --name-only | grep -E 'package.json'
+	then
+	npm run lint:pkg-json
+fi
