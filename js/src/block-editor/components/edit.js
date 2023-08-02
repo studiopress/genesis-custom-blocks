@@ -77,10 +77,6 @@ const Edit = ( { block, blockProps } ) => {
 	const blockRenderAttributes = {};
 	blockRenderAttributes.attributes = blockProps.attributes;
 	blockRenderAttributes.inner_blocks = innerBlocks ? serialize( innerBlocks ) : '';
-	/*
-		attributes: ,
-		inner_blocks: innerBlocks ? serialize(innerBlocks) : ''
-	}; */
 	return (
 		<>
 			<GcbInspector blockProps={ blockProps } block={ block } />
