@@ -74,6 +74,13 @@ const Edit = ( { block, blockProps } ) => {
 		[ blockProps.clientId, blockProps.isSelected ] // eslint-disable-line react-hooks/exhaustive-deps
 	);
 
+	const blockRenderAttributes = {};
+	blockRenderAttributes.attributes = blockProps.attributes;
+	blockRenderAttributes.inner_blocks = innerBlocks ? serialize( innerBlocks ) : '';
+	/*
+		attributes: ,
+		inner_blocks: innerBlocks ? serialize(innerBlocks) : ''
+	}; */
 	return (
 		<>
 			<GcbInspector blockProps={ blockProps } block={ block } />
@@ -122,13 +129,9 @@ const Edit = ( { block, blockProps } ) => {
 								}
 								<ServerSideRender
 									block={ `genesis-custom-blocks/${ block.name }` }
-									attributes={ blockProps.attributes }
+									attributes={ blockRenderAttributes }
 									className="genesis-custom-blocks-editor__ssr"
 									httpMethod="POST"
-									urlQueryArgs={ { inner_blocks: innerBlocks
-										? encodeURIComponent( serialize( innerBlocks ) )
-										: '',
-									} }
 								/>
 							</div>
 						</>

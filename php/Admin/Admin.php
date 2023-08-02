@@ -93,6 +93,8 @@ class Admin extends ComponentAbstract {
 	 */
 	public function register_hooks() {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+		add_filter( 'rest_pre_dispatch', [ $this, 'modify_render_request' ], 0, 3 );
+		add_filter( 'render_block_data', [ $this, 'modify_render_block_data_defaults' ] );
 	}
 
 	/**
@@ -107,5 +109,51 @@ class Admin extends ComponentAbstract {
 			[],
 			$this->plugin->get_version()
 		);
+	}
+
+	/**
+	 * Modifies the block-renderer request as additional post params are not allowed
+	 *
+	 * @param mixed           $result Response to replace the requested version with. Can be anything a normal endpoint can return, or null to not hijack the request.
+	 * @param WP_REST_Server  $server Server instance.
+	 * @param WP_REST_Request $request Request used to generate the response.
+	 */
+	public function modify_render_request( $result, $server, $request ) {
+		if ( 'POST' !== $request->get_method()
+			|| ! str_starts_with( $request->get_route(), '/wp/v2/block-renderer/genesis-custom-blocks' ) ) {
+
+			return $result;
+		}
+
+		global $inner_block_request;
+		$json                = json_decode( $request->get_body(), true );
+		$inner_block_request = $json['attributes']['inner_blocks'];
+		$attributes          = [ 'attributes' => $json['attributes']['attributes'] ];
+		$request->set_body( wp_json_encode( $attributes ) );
+	}
+
+	/**
+	 * Includes the inner blocks in the render response from the block_renderer
+	 *
+	 * @param array $parsed_block The parsed block.
+	 */
+	public function modify_render_block_data_defaults( $parsed_block ) {
+		global $inner_block_request;
+		// the innerBlocks param should only be set within ajax preview requests.
+		if ( empty( $inner_block_request ) ) {
+			return $parsed_block;
+		}
+
+		$block_name = $parsed_block['blockName'];
+		$attributes = $parsed_block['attrs'];
+
+		$complete_block = '<!-- wp:' . $block_name;
+		if ( is_array( $attributes ) && ! empty( $attributes ) ) {
+			$complete_block .= ' ' . wp_json_encode( $attributes );
+		}
+		$complete_block .= ' -->';
+		$complete_block .= $inner_block_request . '<!-- /wp:' . $block_name . ' -->';
+
+		return parse_blocks( $complete_block )[0];
 	}
 }
