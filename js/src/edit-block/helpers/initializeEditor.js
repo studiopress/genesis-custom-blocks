@@ -6,7 +6,7 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
-import { render, unmountComponentAtNode } from '@wordpress/element';
+import { createRoot, unmountComponentAtNode } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -46,14 +46,13 @@ export function reinitializeEditor(
 		initialEdits
 	);
 
-	render(
+	createRoot( target ).render(
 		<Editor
 			settings={ settings }
 			onError={ reboot }
 			postId={ postId }
 			postType={ postType }
-		/>,
-		target
+		/>
 	);
 }
 
@@ -122,14 +121,13 @@ const initializeEditor = (
 		} );
 	}
 
-	render(
+	createRoot( container ).render(
 		<Editor
 			settings={ settings }
 			onError={ reboot }
 			postId={ postId }
 			postType={ postType }
-		/>,
-		container
+		/>
 	);
 };
 
