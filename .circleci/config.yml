@@ -173,7 +173,7 @@ workflows:
             tags:
               only: /^\d+\.\d+\.\d+$/
             branches:
-              only: /^release/
+              only: /^release.*/
       - svn-deploy:
           context: genesis-svn
           requires:
