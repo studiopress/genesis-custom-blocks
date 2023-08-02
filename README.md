@@ -113,7 +113,7 @@ No. You can keep using your PHP block templates like block-example.php.
 
 ## Changelog
 ### 1.5.2 - 2023-08-02
-* Bump minimum PHP version to 5.6. [PR 141](https://github.com/studiopress/genesis-custom-blocks/pull/141)
+* Bump minimum PHP version to 7.0. [PR 141](https://github.com/studiopress/genesis-custom-blocks/pull/141)
 
 ### 1.5.1 - 2022-08-09
 * PHP 8.1 compatibility fixes. [PR 119](https://github.com/studiopress/genesis-custom-blocks/pull/119)
