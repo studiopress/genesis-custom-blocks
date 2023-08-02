@@ -5,7 +5,7 @@ Tags: gutenberg, blocks, block editor, fields, template
 Requires at least: 5.7
 Tested up to: 6.3
 Requires PHP: 7.0
-Stable tag: 1.5.1
+Stable tag: 1.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -112,6 +112,9 @@ No. You can keep using your PHP block templates like block-example.php.
 5. Create the markup for your block in a PHP template in your editor, if you'd like.
 
 ## Changelog
+### 1.5.2 - 2023-08-02
+* Bump minimum PHP version to 7.0. [PR 141](https://github.com/studiopress/genesis-custom-blocks/pull/141)
+
 ### 1.5.1 - 2022-08-09
 * PHP 8.1 compatibility fixes. [PR 119](https://github.com/studiopress/genesis-custom-blocks/pull/119)
 
