@@ -4,6 +4,8 @@ about: Report a problem
 
 ---
 
+<!-- We'll respond to big bugs, but probably not smaller ones. -->
+
 ## Bug summary
 
 <!-- In 1-2 sentences, what is the bug? -->
