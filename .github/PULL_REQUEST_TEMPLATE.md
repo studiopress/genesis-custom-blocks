@@ -1,4 +1,4 @@
-<!--- Please summarize this PR in the title above -->
+- [ ] I have signed the [Contributor License Agreement](https://wpeng.in/cla/) with WP Engine.
 
 ## Changes
 *
