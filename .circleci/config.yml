@@ -169,6 +169,7 @@ workflows:
             tags:
               only: /.*/
       - wp-svn/check-versions:
+          skip-changelog: true
           filters:
             tags:
               only: /^\d+\.\d+\.\d+$/
