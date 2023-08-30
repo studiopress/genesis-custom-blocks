@@ -71,7 +71,7 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 	public function tear_down() {
 		// Delete testing templates and CSS files.
 		array_map(
-			function( $file ) {
+			function ( $file ) {
 				if ( file_exists( $file ) ) {
 					wp_delete_file( $file );
 				}
@@ -81,7 +81,7 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 
 		// Remove testing directories that were created, in reverse order.
 		array_map(
-			function( $directory ) {
+			function ( $directory ) {
 				if ( is_dir( $directory ) ) {
 					rmdir( $directory ); //phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_rmdir
 				}
@@ -139,7 +139,7 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 	 */
 	public function create_block_template_directories() {
 		array_map(
-			function( $directory ) {
+			function ( $directory ) {
 				$this->mkdir( $directory );
 			},
 			[
@@ -157,7 +157,7 @@ abstract class AbstractTemplate extends \WP_UnitTestCase {
 	 */
 	public function get_template_paths_in_theme() {
 		return array_map(
-			function( $template_location ) {
+			function ( $template_location ) {
 				return "{$this->theme_directory}/{$template_location}";
 			},
 			$this->template_locations

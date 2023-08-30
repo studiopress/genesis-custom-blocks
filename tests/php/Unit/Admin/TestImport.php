@@ -164,7 +164,7 @@ class TestImport extends AbstractTemplate {
 		$_FILES['import'] = $files_import;
 		add_filter(
 			'wp_handle_upload',
-			function( $upload ) use ( $file ) {
+			function ( $upload ) use ( $file ) {
 				unset( $upload );
 				return array_merge(
 					$file,
@@ -227,7 +227,7 @@ class TestImport extends AbstractTemplate {
 		remove_all_filters( 'wp_handle_upload' );
 		add_filter(
 			'wp_handle_upload',
-			function() use ( $file ) {
+			function () use ( $file ) {
 				return array_merge(
 					$file,
 					[
@@ -468,7 +468,7 @@ class TestImport extends AbstractTemplate {
 		register_block_type(
 			$block_namespace,
 			[
-				'render_callback' => function() {},
+				'render_callback' => function () {},
 			]
 		);
 

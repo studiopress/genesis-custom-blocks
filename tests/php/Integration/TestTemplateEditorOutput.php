@@ -142,7 +142,7 @@ class TestTemplateEditorOutput extends AbstractAttribute {
 
 		add_filter(
 			'genesis_custom_blocks_available_blocks',
-			static function( $blocks ) use ( $block, $block_config ) {
+			static function ( $blocks ) use ( $block, $block_config ) {
 				return array_merge(
 					$blocks,
 					[ "genesis-custom-blocks/{$block->name}" => $block_config ]
