@@ -103,7 +103,7 @@ class Onboarding extends ComponentAbstract {
 
 			add_action(
 				'add_meta_boxes',
-				function() use ( $slug ) {
+				function () use ( $slug ) {
 					remove_meta_box( 'block_template', $slug, 'normal' );
 				},
 				20

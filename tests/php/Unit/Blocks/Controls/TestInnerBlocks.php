@@ -86,7 +86,7 @@ class TestInnerBlocks extends \WP_UnitTestCase {
 		$content = '<p>Here is example inner blocks content</p>';
 		add_filter(
 			'genesis_custom_blocks_data_content',
-			function() use ( $content ) {
+			function () use ( $content ) {
 				return $content;
 			}
 		);
@@ -103,7 +103,7 @@ class TestInnerBlocks extends \WP_UnitTestCase {
 		$content = 'Here is some example inner blocks content';
 		add_filter(
 			'genesis_custom_blocks_data_content',
-			function() use ( $content ) {
+			function () use ( $content ) {
 				return $content;
 			}
 		);

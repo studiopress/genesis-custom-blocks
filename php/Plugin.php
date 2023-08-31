@@ -61,7 +61,7 @@ class Plugin extends PluginAbstract {
 
 		register_activation_hook(
 			$this->get_file(),
-			function() {
+			function () {
 				$onboarding = new Onboarding();
 				$onboarding->plugin_activation();
 			}

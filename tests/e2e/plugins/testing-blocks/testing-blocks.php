@@ -14,7 +14,7 @@ use function Genesis\CustomBlocks\add_field;
 
 add_filter(
 	'genesis_custom_blocks_template_path',
-	static function( $path ) {
+	static function ( $path ) {
 		unset( $path );
 		return __DIR__;
 	}
@@ -22,7 +22,7 @@ add_filter(
 
 add_action(
 	'genesis_custom_blocks_add_blocks',
-	static function() {
+	static function () {
 		$url_block_slug  = 'test-url';
 		$text_block_slug = 'test-text';
 

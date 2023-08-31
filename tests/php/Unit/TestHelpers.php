@@ -44,7 +44,7 @@ class TestHelpers extends \WP_UnitTestCase {
 
 		add_filter(
 			'genesis_custom_blocks_data_attributes',
-			function( $data ) use ( $field_name, $class_key, $mock_text, $expected_class ) {
+			function ( $data ) use ( $field_name, $class_key, $mock_text, $expected_class ) {
 				if ( ! is_array( $data ) ) {
 					$data = [];
 				}
@@ -57,7 +57,7 @@ class TestHelpers extends \WP_UnitTestCase {
 
 		add_filter(
 			'genesis_custom_blocks_data_config',
-			function( $data ) use ( $field_name ) {
+			function ( $data ) use ( $field_name ) {
 				unset( $data );
 				$field_config = [ 'control' => 'text' ];
 				$block_config = [
@@ -110,7 +110,7 @@ class TestHelpers extends \WP_UnitTestCase {
 
 		add_filter(
 			'genesis_custom_blocks_data_attributes',
-			function() use ( $additional_field_name, $additional_field_value ) {
+			function () use ( $additional_field_name, $additional_field_value ) {
 				return [ $additional_field_name => $additional_field_value ];
 			}
 		);
@@ -128,7 +128,7 @@ class TestHelpers extends \WP_UnitTestCase {
 		// Don't return anything from the filter callback, to test the behavior.
 		add_filter(
 			$default_fields_filter,
-			function( $default_fields ) use ( $additional_field_name ) {
+			function ( $default_fields ) use ( $additional_field_name ) {
 				$default_fields[] = $additional_field_name;
 			}
 		);
@@ -144,7 +144,7 @@ class TestHelpers extends \WP_UnitTestCase {
 
 		add_filter(
 			$default_fields_filter,
-			function( $default_fields ) use ( $additional_field_name ) {
+			function ( $default_fields ) use ( $additional_field_name ) {
 				$default_fields[ $additional_field_name ] = 'string';
 				return $default_fields;
 			}

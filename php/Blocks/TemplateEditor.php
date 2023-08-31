@@ -29,7 +29,7 @@ class TemplateEditor {
 	public function render_markup( $markup ) {
 		$rendered = preg_replace_callback(
 			'#{{(\S+?)}}#',
-			static function( $matches ) {
+			static function ( $matches ) {
 				ob_start();
 				block_field( $matches[1] );
 				return ob_get_clean();

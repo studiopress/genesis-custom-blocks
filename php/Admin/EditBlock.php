@@ -206,7 +206,7 @@ class EditBlock extends ComponentAbstract {
 			'template-file',
 			[
 				'callback'            => [ $this, 'get_template_file_response' ],
-				'permission_callback' => function() {
+				'permission_callback' => function () {
 					return current_user_can( self::CABAPILITY );
 				},
 				'args'                => [

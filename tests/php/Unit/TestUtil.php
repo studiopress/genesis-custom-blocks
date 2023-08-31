@@ -149,7 +149,7 @@ class TestUtil extends AbstractTemplate {
 
 		add_filter(
 			'genesis_custom_blocks_template_path',
-			function( $path ) use ( $base_alternate_block_directory ) {
+			function ( $path ) use ( $base_alternate_block_directory ) {
 				unset( $path );
 				return $base_alternate_block_directory;
 			}
@@ -198,7 +198,7 @@ class TestUtil extends AbstractTemplate {
 
 		add_filter(
 			'genesis_custom_blocks_allowed_svg_tags',
-			function( $allowed_tags ) use ( $additional_tag_name, $additional_tag_attributes ) {
+			function ( $allowed_tags ) use ( $additional_tag_name, $additional_tag_attributes ) {
 				$allowed_tags[ $additional_tag_name ] = $additional_tag_attributes;
 				return $allowed_tags;
 			}

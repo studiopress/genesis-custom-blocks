@@ -115,7 +115,7 @@ abstract class AbstractAttribute extends \WP_UnitTestCase {
 		// Ensure that get_stylesheet_directory() returns the theme in the mock filesystem.
 		add_filter(
 			'stylesheet_directory',
-			function() use ( $mock_theme_directory ) {
+			function () use ( $mock_theme_directory ) {
 				return $mock_theme_directory;
 			}
 		);

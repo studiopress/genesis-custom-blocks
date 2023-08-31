@@ -131,7 +131,7 @@ class TestLoader extends AbstractTemplate {
 		$this->assertFalse( $this->instance->get_data( $attributes_key ) );
 
 		$attributes    = [ 'bar' => 'baz' ];
-		$data_callback = static function( $data, $key ) use ( $attributes_key, $attributes ) {
+		$data_callback = static function ( $data, $key ) use ( $attributes_key, $attributes ) {
 			if ( $attributes_key === $key ) {
 				return $attributes;
 			}
@@ -144,7 +144,7 @@ class TestLoader extends AbstractTemplate {
 		$this->assertEquals( $attributes, $this->instance->get_data( $attributes_key ) );
 		remove_all_filters( 'genesis_custom_blocks_data' );
 
-		$data_callback_for_key = static function( $data ) use ( $attributes ) {
+		$data_callback_for_key = static function ( $data ) use ( $attributes ) {
 			unset( $data );
 			return $attributes;
 		};
@@ -198,7 +198,7 @@ class TestLoader extends AbstractTemplate {
 		// Test that the do_action() call with this action runs, and that it allows enqueuing a script.
 		add_action(
 			'genesis_custom_blocks_render_template',
-			function( $block ) use ( $block_name, $slug, $script_url ) {
+			function ( $block ) use ( $block_name, $slug, $script_url ) {
 				if ( $block_name === $block->name ) {
 					wp_enqueue_script( $slug, $script_url, [], '0.1', true );
 				}
@@ -219,7 +219,7 @@ class TestLoader extends AbstractTemplate {
 
 		add_action(
 			"genesis_custom_blocks_render_template_{$block_name}",
-			function() use ( $block_name, $slug, $script_url ) {
+			function () use ( $block_name, $slug, $script_url ) {
 				wp_enqueue_script( $slug, $script_url, [], '0.1', true );
 			}
 		);
@@ -403,7 +403,7 @@ class TestLoader extends AbstractTemplate {
 		// Test that this filter changes the template used.
 		add_filter(
 			'genesis_custom_blocks_override_theme_template',
-			function( $directory ) use ( $overridden_theme_template_path ) {
+			function ( $directory ) use ( $overridden_theme_template_path ) {
 				unset( $directory );
 				return $overridden_theme_template_path;
 			}
