@@ -1,6 +1,6 @@
 # Genesis Custom Blocks
 
-Contributors: lukecarbis, ryankienstra, Stino11, rheinardkorf, studiopress, wpengine
+Contributors: lukecarbis, pesonn, ryankienstra, Stino11, rheinardkorf, studiopress, wpengine
 Tags: gutenberg, blocks, block editor, fields, template
 Requires at least: 5.7
 Tested up to: 6.3
