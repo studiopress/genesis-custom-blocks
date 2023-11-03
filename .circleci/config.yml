@@ -151,7 +151,7 @@ workflows:
               only: /.*/
           matrix:
             parameters:
-              php-version: [ '8.1', '8.2', '8.3' ]
+              php-version: [ '8.1', '8.2' ]
       - js-tests:
           filters:
             tags:
