@@ -14,7 +14,7 @@ references:
 executors:
   php:
     docker:
-      - image: cimg/php:7.4-node
+      - image: cimg/php:8.1-node
 
 commands:
   build-development:
@@ -151,7 +151,7 @@ workflows:
               only: /.*/
           matrix:
             parameters:
-              php-version: [ '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2' ]
+              php-version: [ '8.1', '8.2', '8.3' ]
       - js-tests:
           filters:
             tags:

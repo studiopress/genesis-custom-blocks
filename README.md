@@ -4,7 +4,7 @@ Contributors: lukecarbis, ryankienstra, Stino11, rheinardkorf, studiopress, wpen
 Tags: gutenberg, blocks, block editor, fields, template
 Requires at least: 5.7
 Tested up to: 6.3
-Requires PHP: 7.0
+Requires PHP: 8.1
 Stable tag: 1.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl
