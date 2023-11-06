@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d304d7a72133a69112860e4c0d1b4a3e",
+    "content-hash": "7aece0dc9266707c83d6b790bea1ef80",
     "packages": [],
     "packages-dev": [
         {
@@ -2491,20 +2491,23 @@
         },
         {
             "name": "wp-coding-standards/wpcs",
-            "version": "dev-develop",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WordPress/WordPress-Coding-Standards.git",
-                "reference": "ca2da6747f98d4e39efce12cfb2c714f213a08ef"
+                "reference": "b4caf9689f1a0e4a4c632679a44e638c1c67aff1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/ca2da6747f98d4e39efce12cfb2c714f213a08ef",
-                "reference": "ca2da6747f98d4e39efce12cfb2c714f213a08ef",
+                "url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/b4caf9689f1a0e4a4c632679a44e638c1c67aff1",
+                "reference": "b4caf9689f1a0e4a4c632679a44e638c1c67aff1",
                 "shasum": ""
             },
             "require": {
                 "ext-filter": "*",
+                "ext-libxml": "*",
+                "ext-tokenizer": "*",
+                "ext-xmlreader": "*",
                 "php": ">=5.4",
                 "phpcsstandards/phpcsextra": "^1.1.0",
                 "phpcsstandards/phpcsutils": "^1.0.8",
@@ -2518,9 +2521,9 @@
                 "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
             },
             "suggest": {
+                "ext-iconv": "For improved results",
                 "ext-mbstring": "For improved results"
             },
-            "default-branch": true,
             "type": "phpcodesniffer-standard",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2544,7 +2547,13 @@
                 "source": "https://github.com/WordPress/WordPress-Coding-Standards",
                 "wiki": "https://github.com/WordPress/WordPress-Coding-Standards/wiki"
             },
-            "time": "2023-07-26T19:06:25+00:00"
+            "funding": [
+                {
+                    "url": "https://opencollective.com/thewpcc/contribute/wp-php-63406",
+                    "type": "custom"
+                }
+            ],
+            "time": "2023-09-14T07:06:09+00:00"
         },
         {
             "name": "yoast/phpunit-polyfills",
@@ -2609,9 +2618,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "wp-coding-standards/wpcs": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
