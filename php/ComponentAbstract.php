@@ -46,7 +46,7 @@ abstract class ComponentAbstract implements ComponentInterface {
 	public function __call( $name, $arguments ) {
 		$class         = get_class( $this );
 		$class_name    = strtolower( str_replace( '\\', '__', $class ) );
-		$function_name = sprintf( '%1$s__%2$s', $class_name, $name );
+		$function_name = "{$class_name}__${name}";
 
 		if ( function_exists( $function_name ) ) {
 			return call_user_func_array( $function_name, $arguments );
