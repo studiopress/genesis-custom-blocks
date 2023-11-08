@@ -1,4 +1,4 @@
-- [ ] I have signed the [Contributor License Agreement](https://wpeng.in/cla/) with WP Engine.
+- [ ] I am a WP Engine employee (sorry, we're not accepting community PRs anymore).
 
 ## Changes
 *
