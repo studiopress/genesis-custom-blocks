@@ -20,6 +20,7 @@ commands:
   build-development:
     description: "Building for development"
     steps:
+      - run: composer update
       - php/install-packages
       - node/install-packages
       - run: npm run build
@@ -98,6 +99,7 @@ jobs:
           working_directory: *PLUGIN_PATH
           command: |
             npm run build
+            composer update
             composer install
             WP_TESTS_DIR=~/project/wordpress-develop/tests/phpunit composer test
 
