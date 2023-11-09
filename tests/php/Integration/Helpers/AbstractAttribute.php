@@ -5,8 +5,6 @@
  * @package Genesis\CustomBlocks
  */
 
-use org\bovigo\vfs\vfsStream;
-
 /**
  * Class AbstractAttribute
  *
@@ -92,34 +90,7 @@ abstract class AbstractAttribute extends \WP_UnitTestCase {
 	 * Instead of copying the fixture entirely into the theme directory,
 	 * this puts an include statement in it, pointing to the fixture.
 	 */
-	public function create_block_template() {
-		$mock_theme                = 'example-theme';
-		$blocks_directory          = 'blocks';
-		$template_path_in_fixtures = dirname( __DIR__ ) . "/Fixtures/{$this->block_name}.php";
-		$block_file_name           = "block-{$this->block_name}.php";
-
-		// Create a template file in the virtual filesystem.
-		$virtual_file_root    = vfsStream::setup(
-			'root',
-			null,
-			[
-				$mock_theme => [
-					$blocks_directory => [
-						$block_file_name => sprintf( '<?php require "%s";', $template_path_in_fixtures ),
-					],
-				],
-			]
-		);
-		$mock_theme_directory = $virtual_file_root->getChild( $mock_theme )->url();
-
-		// Ensure that get_stylesheet_directory() returns the theme in the mock filesystem.
-		add_filter(
-			'stylesheet_directory',
-			function () use ( $mock_theme_directory ) {
-				return $mock_theme_directory;
-			}
-		);
-	}
+	public function create_block_template() {}
 
 	/**
 	 * Gets the image attribute.
