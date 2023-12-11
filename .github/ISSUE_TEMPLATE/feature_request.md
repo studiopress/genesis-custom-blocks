@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Thanks, but we're not adding new features
+about: We're currently not adding new features or enhancements, but appreciate your interest. 
 
 ---
 
