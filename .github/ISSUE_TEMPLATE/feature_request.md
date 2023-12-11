@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Request an enhancement, not a bug fix
+about: We're currently not adding new features or enhancements, but appreciate your interest. 
 
 ---
 
