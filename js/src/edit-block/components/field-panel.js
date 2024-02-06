@@ -6,7 +6,7 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
-import { useEffect, useRef } from '@wordpress/element';
+import { useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -20,10 +20,10 @@ import { useField } from '../hooks';
 /**
  * @typedef {Object} FieldPanelProps The component props.
  * @property {import('./editor').CurrentLocation}                                      currentLocation    The currently selected location.
- * @property {import('./editor').IsNewField}                                           isNewField         Whether there is a new field.
+ * @property {import('./editor').AutoSlug}                                             autoSlug           Whether there is a new field.
  * @property {import('./editor').SelectedField|import('../constants').NoFieldSelected} selectedField      The name of the selected field, if any.
  * @property {import('./editor').SetCurrentLocation}                                   setCurrentLocation Sets the current location, like 'editor'.
- * @property {import('./editor').SetIsNewField}                                        setIsNewField      Sets whether there is a new field.
+ * @property {import('./editor').SetAutoSlug}                                          setAutoSlug        Sets whether there is a new field.
  * @property {import('./editor').SetSelectedField}                                     setSelectedField   Sets the currently selected field name.
  */
 
@@ -35,10 +35,10 @@ import { useField } from '../hooks';
  */
 const FieldPanel = ( {
 	currentLocation,
-	isNewField,
+	autoSlug,
 	selectedField,
 	setCurrentLocation,
-	setIsNewField,
+	setAutoSlug,
 	setSelectedField,
 } ) => {
 	const {
@@ -51,19 +51,6 @@ const FieldPanel = ( {
 		getFields,
 	} = useField();
 	const ref = useRef();
-	const didAutoSlug = useRef( false );
-
-	useEffect( () => {
-		if ( isNewField && ref.current ) {
-			const { ownerDocument: { activeElement } } = ref.current;
-			if ( ! activeElement || ref.current !== activeElement ) {
-				// @ts-ignore
-				ref.current.select();
-			}
-
-			didAutoSlug.current = false;
-		}
-	}, [ didAutoSlug, isNewField ] );
 
 	/**
 	 * Whether the block has at least one field with the control of 'inner_blocks'
@@ -120,8 +107,7 @@ const FieldPanel = ( {
 									fieldToChange.parent = field.parent;
 								}
 
-								if ( isNewField ) {
-									didAutoSlug.current = true;
+								if ( autoSlug ) {
 									const newName = convertToSlug( event.target.value );
 									const newDeDuplicatedName = changeFieldSettings( fieldToChange, { ...changedField, name: newName } );
 
@@ -134,9 +120,7 @@ const FieldPanel = ( {
 								}
 							} }
 							onBlur={ () => {
-								if ( didAutoSlug.current ) {
-									setIsNewField( false );
-								}
+								setAutoSlug( false );
 							} }
 						/>
 						<span className="block italic text-xs mt-1">{ __( 'A label or a title for this field.', 'genesis-custom-blocks' ) }</span>

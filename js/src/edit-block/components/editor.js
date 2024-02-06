@@ -63,10 +63,10 @@ import { useBlock, useTemplate } from '../hooks';
  */
 
 /** @typedef {string} CurrentLocation The currently selected location. */
-/** @typedef {boolean} IsNewField Whether there is a new field. */
+/** @typedef {boolean} AutoSlug Whether this should auto-slug the name. */
 /** @typedef {string} PanelDisplaying The panel currently displaying in the side, like 'block'. */
 /** @typedef {function(string):void} SetCurrentLocation Sets the currently selected location */
-/** @typedef {function(boolean):void} SetIsNewField Sets whether there is a new field. */
+/** @typedef {function(boolean):void} SetAutoSlug Sets whether there is a new field. */
 /** @typedef {function(string):void} SetPanelDisplaying Sets the current panel displaying. */
 /** @typedef {function(SelectedField|import('../constants').NoFieldSelected):void} SetSelectedField Sets the selected field. */
 /** @typedef {string} EditorMode The current editing mode. */
@@ -110,7 +110,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 	);
 	const [ currentLocation, setCurrentLocation ] = useState( DEFAULT_LOCATION );
 	const [ editorMode, setEditorMode ] = useState( BUILDER_EDITING_MODE );
-	const [ isNewField, setIsNewField ] = useState( false );
+	const [ autoSlug, setAutoSlug ] = useState( false );
 	const [ panelDisplaying, setPanelDisplaying ] = useState( BLOCK_PANEL );
 	const [ selectedField, setSelectedField ] = useState( NO_FIELD_SELECTED );
 
@@ -152,7 +152,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 											<FieldsGrid
 												currentLocation={ currentLocation }
 												selectedField={ selectedField }
-												setIsNewField={ setIsNewField }
+												setAutoSlug={ setAutoSlug }
 												setPanelDisplaying={ setPanelDisplaying }
 												setSelectedField={ setSelectedField }
 											/>
@@ -181,10 +181,10 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 											? (
 												<FieldPanel
 													currentLocation={ currentLocation }
-													isNewField={ isNewField }
+													autoSlug={ autoSlug }
 													selectedField={ selectedField }
 													setCurrentLocation={ setCurrentLocation }
-													setIsNewField={ setIsNewField }
+													setAutoSlug={ setAutoSlug }
 													setSelectedField={ setSelectedField }
 												/>
 											) : null

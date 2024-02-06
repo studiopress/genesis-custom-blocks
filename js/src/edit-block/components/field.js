@@ -25,7 +25,7 @@ import { useField } from '../hooks';
  * @property {boolean}                                                                 isDownButtonDisabled     Whether the down button is disabled.
  * @property {import('./editor').SelectedField|import('../constants').NoFieldSelected} selectedField            The currently selected field.
  * @property {boolean}                                                                 shouldDisplayMoveButtons Whether this should display the move buttons.
- * @property {import('./editor').SetIsNewField}                                        setIsNewField            Sets if there is a new field.
+ * @property {import('./editor').SetAutoSlug}                                          setAutoSlug              Sets this to auto-slug (set the name to the slugified title).
  * @property {import('./editor').SetPanelDisplaying}                                   setPanelDisplaying       Sets the current panel displaying.
  * @property {import('./editor').SetSelectedField}                                     setSelectedField         Sets the name of the selected field.
  * @property {string|null}                                                             [parentField]            The name of the parent field, if any.
@@ -44,7 +44,7 @@ const Field = ( {
 	isDownButtonDisabled,
 	selectedField,
 	shouldDisplayMoveButtons,
-	setIsNewField,
+	setAutoSlug,
 	setPanelDisplaying,
 	setSelectedField,
 	parentField = null,
@@ -128,7 +128,7 @@ const Field = ( {
 							currentLocation={ currentLocation }
 							parentField={ field.name }
 							selectedField={ selectedField }
-							setIsNewField={ setIsNewField }
+							setAutoSlug={ setAutoSlug }
 							setPanelDisplaying={ setPanelDisplaying }
 							setSelectedField={ setSelectedField }
 						/>
