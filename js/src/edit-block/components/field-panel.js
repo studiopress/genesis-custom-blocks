@@ -6,7 +6,7 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
-import { useRef } from '@wordpress/element';
+import { forwardRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -23,14 +23,15 @@ import { useField } from '../hooks';
  * @property {import('./editor').AutoSlug}                                             autoSlug           Whether there is a new field.
  * @property {import('./editor').SelectedField|import('../constants').NoFieldSelected} selectedField      The name of the selected field, if any.
  * @property {import('./editor').SetCurrentLocation}                                   setCurrentLocation Sets the current location, like 'editor'.
- * @property {import('./editor').SetAutoSlug}                                          setAutoSlug        Sets whether there is a new field.
+ * @property {function(): void}                                                        onBlurTitle        Runs on blurring the title.
  * @property {import('./editor').SetSelectedField}                                     setSelectedField   Sets the currently selected field name.
  */
 
 /**
  * The field panel.
  *
- * @param {FieldPanelProps} props
+ * @param {FieldPanelProps}             props
+ * @param {React.Ref<HTMLInputElement>} ref
  * @return {React.ReactElement} The field panel.
  */
 const FieldPanel = ( {
@@ -38,9 +39,9 @@ const FieldPanel = ( {
 	autoSlug,
 	selectedField,
 	setCurrentLocation,
-	setAutoSlug,
+	onBlurTitle,
 	setSelectedField,
-} ) => {
+}, ref ) => {
 	const {
 		changeControl,
 		changeFieldSettings,
@@ -50,7 +51,6 @@ const FieldPanel = ( {
 		getField,
 		getFields,
 	} = useField();
-	const ref = useRef();
 
 	/**
 	 * Whether the block has at least one field with the control of 'inner_blocks'
@@ -119,9 +119,7 @@ const FieldPanel = ( {
 									changeFieldSettings( fieldToChange, changedField );
 								}
 							} }
-							onBlur={ () => {
-								setAutoSlug( false );
-							} }
+							onBlur={ onBlurTitle }
 						/>
 						<span className="block italic text-xs mt-1">{ __( 'A label or a title for this field.', 'genesis-custom-blocks' ) }</span>
 					</div>
@@ -179,4 +177,4 @@ const FieldPanel = ( {
 	);
 };
 
-export default FieldPanel;
+export default forwardRef( FieldPanel );

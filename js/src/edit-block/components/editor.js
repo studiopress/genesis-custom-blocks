@@ -13,7 +13,7 @@ import {
 	ErrorBoundary,
 	UnsavedChangesWarning,
 } from '@wordpress/editor';
-import { StrictMode, useState } from '@wordpress/element';
+import { StrictMode, useRef, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -108,11 +108,17 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
 		[ postId, postType ]
 	);
+	const inputRef = useRef( null );
 	const [ currentLocation, setCurrentLocation ] = useState( DEFAULT_LOCATION );
 	const [ editorMode, setEditorMode ] = useState( BUILDER_EDITING_MODE );
 	const [ autoSlug, setAutoSlug ] = useState( false );
 	const [ panelDisplaying, setPanelDisplaying ] = useState( BLOCK_PANEL );
 	const [ selectedField, setSelectedField ] = useState( NO_FIELD_SELECTED );
+
+	function createNewField() {
+		setAutoSlug( true );
+		inputRef.current.focus();
+	}
 
 	if ( ! post ) {
 		return null;
@@ -152,7 +158,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 											<FieldsGrid
 												currentLocation={ currentLocation }
 												selectedField={ selectedField }
-												setAutoSlug={ setAutoSlug }
+												createNewField={ createNewField }
 												setPanelDisplaying={ setPanelDisplaying }
 												setSelectedField={ setSelectedField }
 											/>
@@ -182,9 +188,13 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 												<FieldPanel
 													currentLocation={ currentLocation }
 													autoSlug={ autoSlug }
+													ref={ inputRef }
 													selectedField={ selectedField }
 													setCurrentLocation={ setCurrentLocation }
-													setAutoSlug={ setAutoSlug }
+													createNewField={ createNewField }
+													onBlurTitle={ () => {
+														setAutoSlug( false );
+													} }
 													setSelectedField={ setSelectedField }
 												/>
 											) : null
