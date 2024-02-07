@@ -53,7 +53,7 @@ const FieldPanel = ( {
 	const ref = useRef();
 	useEffect( () => {
 		if ( isNew ) {
-			ref.current.focus();
+			ref.current.select();
 		}
 	}, [ isNew ] );
 
