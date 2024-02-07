@@ -102,8 +102,8 @@ import { useBlock, useTemplate } from '../hooks';
  * @return {React.ReactElement} The editor.
  */
 const Editor = ( { onError, postId, postType, settings } ) => {
-	const { block } = useBlock();
-	const { template } = useTemplate();
+	const { template, fetchTemplate } = useTemplate();
+	const { block } = useBlock( fetchTemplate );
 	const post = useSelect(
 		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
 		[ postId, postType ]
@@ -134,7 +134,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 						settings={ settings }
 					>
 						<ErrorBoundary onError={ onError }>
-							<Header editorMode={ editorMode } setEditorMode={ setEditorMode } />
+							<Header editorMode={ editorMode } setEditorMode={ setEditorMode } template={ template } />
 							<EditorNotices />
 							<div className="gcb-editor flex w-full h-0 flex-grow">
 								<Main editorMode={ editorMode } setEditorMode={ setEditorMode }>

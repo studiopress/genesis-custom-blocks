@@ -26,7 +26,8 @@ import { useBlock } from './';
 
 /**
  * @typedef {Object} UseTemplateReturn The return value of useBlock.
- * @property {Template} template The template for the block.
+ * @property {Template}               template      The template for the block.
+ * @property {function(string): void} fetchTemplate Fetches the template.
  */
 
 /**
@@ -96,7 +97,10 @@ const useTemplate = () => {
 		}
 	}, [ block.name, fetchTemplate ] );
 
-	return { template };
+	return {
+		template,
+		fetchTemplate,
+	};
 };
 
 export default useTemplate;

@@ -26,7 +26,6 @@ import {
 	FRONT_END_PREVIEW_EDITING_MODE,
 	TEMPLATE_EDITOR_EDITING_MODE,
 } from '../constants';
-import { useTemplate } from '../hooks';
 
 /**
  * @typedef {Object} HeaderProps The header component props.
@@ -40,8 +39,7 @@ import { useTemplate } from '../hooks';
  * @param {HeaderProps} props
  * @return {React.ReactElement} The header.
  */
-const Header = ( { editorMode, setEditorMode } ) => {
-	const { template } = useTemplate();
+const Header = ( { editorMode, setEditorMode, template } ) => {
 	const buttonClasses = 'flex items-center h-12 px-4 text-sm';
 	const backURL = addQueryArgs( 'edit.php', {
 		post_type: 'genesis_custom_block',

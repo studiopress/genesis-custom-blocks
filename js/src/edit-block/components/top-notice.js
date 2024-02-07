@@ -15,7 +15,7 @@ import { __ } from '@wordpress/i18n';
 import { QuestionIcon, TemplateFile } from './';
 import { TEMPLATE_EDITOR_EDITING_MODE } from '../constants';
 import { hasRepeaterField } from '../helpers';
-import { useBlock, useField, useTemplate } from '../hooks';
+import { useBlock, useField } from '../hooks';
 import { Notice } from '../../common/components';
 
 /**
@@ -31,14 +31,13 @@ import { Notice } from '../../common/components';
  * @param {TopNoticeProps} props
  * @return {React.ReactElement} The top notice.
  */
-const TopNotice = ( { editorMode, isOnboarding, setEditorMode } ) => {
+const TopNotice = ( { editorMode, isOnboarding, setEditorMode, template } ) => {
 	const urlBlockTemplates = 'https://developer.wpengine.com/genesis-custom-blocks/get-started/add-a-custom-block-to-your-website-content/';
 	const urlGetStarted = 'https://developer.wpengine.com/genesis-custom-blocks/get-started/';
 	const urlTemplateFunctions = 'https://developer.wpengine.com/genesis-custom-blocks/functions/';
 	const isNewPost = useSelect( ( select ) => select( 'core/editor' ).isEditedPostNew() );
 	const { block } = useBlock();
 	const { getFields } = useField();
-	const { template } = useTemplate();
 
 	return (
 		<>

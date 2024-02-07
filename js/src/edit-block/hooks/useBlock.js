@@ -51,9 +51,10 @@ import {
 /**
  * Gets the block context.
  *
+ * @param {function(string):void} onNameChange Runs on changing the name, accepts new name as a parameter.
  * @return {UseBlockReturn} The block and a function to change it.
  */
-const useBlock = () => {
+const useBlock = ( onNameChange ) => {
 	// @ts-ignore
 	const { postId } = gcbEditor;
 	const editedPostContent = useSelect(
@@ -81,6 +82,10 @@ const useBlock = () => {
 			slug: newBlock.name,
 			title: newBlock.title,
 		} );
+
+		if ( newBlock.name !== block.name ) {
+			onNameChange( newBlock.name );
+		}
 	};
 
 	return {
