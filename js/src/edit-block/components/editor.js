@@ -137,7 +137,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 							<Header editorMode={ editorMode } setEditorMode={ setEditorMode } template={ template } />
 							<EditorNotices />
 							<div className="gcb-editor flex w-full h-0 flex-grow">
-								<Main editorMode={ editorMode } setEditorMode={ setEditorMode }>
+								<Main editorMode={ editorMode } setEditorMode={ setEditorMode } template={ template }>
 									<LocationButtons
 										currentLocation={ currentLocation }
 										editorMode={ editorMode }

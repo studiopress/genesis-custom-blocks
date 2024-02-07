@@ -7,15 +7,10 @@ import debounceFn from 'debounce-fn';
  * WordPress dependencies
  */
 import { useDispatch } from '@wordpress/data';
-import { useEffect, useMemo, useState } from '@wordpress/element';
+import { useMemo, useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { __, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
-
-/**
- * Internal dependencies
- */
-import { useBlock } from './';
 
 /**
  * @typedef {Object} Template A template as returned from the request.
@@ -39,7 +34,6 @@ const useTemplate = () => {
 	// @ts-ignore
 	const { template: initialTemplate } = gcbEditor; // eslint-disable-line no-undef
 	const [ template, setTemplate ] = useState( initialTemplate );
-	const { block } = useBlock();
 	const { createErrorNotice } = useDispatch( 'core/notices' );
 
 	const fetchTemplate = useMemo(
@@ -90,12 +84,6 @@ const useTemplate = () => {
 		),
 		[ createErrorNotice, setTemplate ]
 	);
-
-	useEffect( () => {
-		if ( Boolean( block.name ) ) {
-			fetchTemplate( block.name );
-		}
-	}, [ block.name, fetchTemplate ] );
 
 	return {
 		template,
