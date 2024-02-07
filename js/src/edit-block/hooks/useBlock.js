@@ -51,7 +51,7 @@ import {
 /**
  * Gets the block context.
  *
- * @param {function(string):void} onNameChange Runs on changing the name, accepts new name as a parameter.
+ * @param {function(string):void} [onNameChange] Runs on changing the name, accepts new name as a parameter.
  * @return {UseBlockReturn} The block and a function to change it.
  */
 const useBlock = ( onNameChange ) => {
@@ -84,7 +84,7 @@ const useBlock = ( onNameChange ) => {
 		} );
 
 		if ( newBlock.name !== block.name ) {
-			onNameChange( newBlock.name );
+			onNameChange?.( newBlock.name );
 		}
 	};
 
