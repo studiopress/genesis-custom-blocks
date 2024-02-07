@@ -13,7 +13,7 @@ import {
 	ErrorBoundary,
 	UnsavedChangesWarning,
 } from '@wordpress/editor';
-import { StrictMode, useRef, useState } from '@wordpress/element';
+import { StrictMode, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -63,7 +63,7 @@ import { useBlock, useTemplate } from '../hooks';
  */
 
 /** @typedef {string} CurrentLocation The currently selected location. */
-/** @typedef {boolean} AutoSlug Whether this should auto-slug the name. */
+/** @typedef {boolean} IsNew Whether the field is new. */
 /** @typedef {string} PanelDisplaying The panel currently displaying in the side, like 'block'. */
 /** @typedef {function(string):void} SetCurrentLocation Sets the currently selected location */
 /** @typedef {function(boolean):void} SetAutoSlug Sets whether there is a new field. */
@@ -108,17 +108,11 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 		( select ) => select( 'core' ).getEntityRecord( 'postType', postType, postId ),
 		[ postId, postType ]
 	);
-	const inputRef = useRef( null );
 	const [ currentLocation, setCurrentLocation ] = useState( DEFAULT_LOCATION );
 	const [ editorMode, setEditorMode ] = useState( BUILDER_EDITING_MODE );
-	const [ autoSlug, setAutoSlug ] = useState( false );
+	const [ isNew, setIsNew ] = useState( false );
 	const [ panelDisplaying, setPanelDisplaying ] = useState( BLOCK_PANEL );
 	const [ selectedField, setSelectedField ] = useState( NO_FIELD_SELECTED );
-
-	function createNewField() {
-		setAutoSlug( true );
-		inputRef.current.focus();
-	}
 
 	if ( ! post ) {
 		return null;
@@ -158,7 +152,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 											<FieldsGrid
 												currentLocation={ currentLocation }
 												selectedField={ selectedField }
-												createNewField={ createNewField }
+												createNewField={ () => setIsNew( true ) }
 												setPanelDisplaying={ setPanelDisplaying }
 												setSelectedField={ setSelectedField }
 											/>
@@ -187,13 +181,12 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 											? (
 												<FieldPanel
 													currentLocation={ currentLocation }
-													autoSlug={ autoSlug }
-													ref={ inputRef }
+													isNew={ isNew }
 													selectedField={ selectedField }
 													setCurrentLocation={ setCurrentLocation }
-													createNewField={ createNewField }
+													createNewField={ () => setIsNew( true ) }
 													onBlurTitle={ () => {
-														setAutoSlug( false );
+														setIsNew( false );
 													} }
 													setSelectedField={ setSelectedField }
 												/>

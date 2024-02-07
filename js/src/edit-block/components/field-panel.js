@@ -6,7 +6,7 @@ import * as React from 'react';
 /**
  * WordPress dependencies
  */
-import { forwardRef } from '@wordpress/element';
+import { useEffect, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -20,7 +20,7 @@ import { useField } from '../hooks';
 /**
  * @typedef {Object} FieldPanelProps The component props.
  * @property {import('./editor').CurrentLocation}                                      currentLocation    The currently selected location.
- * @property {import('./editor').AutoSlug}                                             autoSlug           Whether there is a new field.
+ * @property {import('./editor').IsNew}                                                isNew              Whether the field is new.
  * @property {import('./editor').SelectedField|import('../constants').NoFieldSelected} selectedField      The name of the selected field, if any.
  * @property {import('./editor').SetCurrentLocation}                                   setCurrentLocation Sets the current location, like 'editor'.
  * @property {function(): void}                                                        onBlurTitle        Runs on blurring the title.
@@ -30,18 +30,17 @@ import { useField } from '../hooks';
 /**
  * The field panel.
  *
- * @param {FieldPanelProps}             props
- * @param {React.Ref<HTMLInputElement>} ref
+ * @param {FieldPanelProps} props
  * @return {React.ReactElement} The field panel.
  */
 const FieldPanel = ( {
 	currentLocation,
-	autoSlug,
+	isNew,
 	selectedField,
 	setCurrentLocation,
 	onBlurTitle,
 	setSelectedField,
-}, ref ) => {
+} ) => {
 	const {
 		changeControl,
 		changeFieldSettings,
@@ -51,6 +50,12 @@ const FieldPanel = ( {
 		getField,
 		getFields,
 	} = useField();
+	const ref = useRef();
+	useEffect( () => {
+		if ( isNew ) {
+			ref.current.focus();
+		}
+	}, [ isNew ] );
 
 	/**
 	 * Whether the block has at least one field with the control of 'inner_blocks'
@@ -107,7 +112,7 @@ const FieldPanel = ( {
 									fieldToChange.parent = field.parent;
 								}
 
-								if ( autoSlug ) {
+								if ( isNew ) {
 									const newName = convertToSlug( event.target.value );
 									const newDeDuplicatedName = changeFieldSettings( fieldToChange, { ...changedField, name: newName } );
 
@@ -177,4 +182,4 @@ const FieldPanel = ( {
 	);
 };
 
-export default forwardRef( FieldPanel );
+export default FieldPanel;
