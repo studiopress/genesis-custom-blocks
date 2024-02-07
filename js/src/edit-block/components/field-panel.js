@@ -23,7 +23,7 @@ import { useField } from '../hooks';
  * @property {import('./editor').IsNew}                                                isNew              Whether the field is new.
  * @property {import('./editor').SelectedField|import('../constants').NoFieldSelected} selectedField      The name of the selected field, if any.
  * @property {import('./editor').SetCurrentLocation}                                   setCurrentLocation Sets the current location, like 'editor'.
- * @property {function(): void}                                                        onBlurTitle        Runs on blurring the title.
+ * @property {function(): void}                                                        onBlurLabel        Runs on blurring the title.
  * @property {import('./editor').SetSelectedField}                                     setSelectedField   Sets the currently selected field name.
  */
 
@@ -38,7 +38,7 @@ const FieldPanel = ( {
 	isNew,
 	selectedField,
 	setCurrentLocation,
-	onBlurTitle,
+	onBlurLabel,
 	setSelectedField,
 } ) => {
 	const {
@@ -124,7 +124,7 @@ const FieldPanel = ( {
 									changeFieldSettings( fieldToChange, changedField );
 								}
 							} }
-							onBlur={ onBlurTitle }
+							onBlur={ onBlurLabel }
 						/>
 						<span className="block italic text-xs mt-1">{ __( 'A label or a title for this field.', 'genesis-custom-blocks' ) }</span>
 					</div>

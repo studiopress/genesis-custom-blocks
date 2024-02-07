@@ -66,7 +66,7 @@ import { useBlock, useTemplate } from '../hooks';
 /** @typedef {boolean} IsNew Whether the field is new. */
 /** @typedef {string} PanelDisplaying The panel currently displaying in the side, like 'block'. */
 /** @typedef {function(string):void} SetCurrentLocation Sets the currently selected location */
-/** @typedef {function(boolean):void} SetAutoSlug Sets whether there is a new field. */
+/** @typedef {function(boolean):void} SetIsNew Sets whether there is a new field. */
 /** @typedef {function(string):void} SetPanelDisplaying Sets the current panel displaying. */
 /** @typedef {function(SelectedField|import('../constants').NoFieldSelected):void} SetSelectedField Sets the selected field. */
 /** @typedef {string} EditorMode The current editing mode. */
@@ -185,7 +185,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 													selectedField={ selectedField }
 													setCurrentLocation={ setCurrentLocation }
 													createNewField={ () => setIsNew( true ) }
-													onBlurTitle={ () => {
+													onBlurLabel={ () => {
 														setIsNew( false );
 													} }
 													setSelectedField={ setSelectedField }
