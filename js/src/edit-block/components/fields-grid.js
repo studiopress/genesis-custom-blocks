@@ -64,12 +64,12 @@ const FieldsGrid = ( {
 						return (
 							<Field
 								key={ `grid-field-${ index }` }
-								onNewField={ onNewField }
 								currentLocation={ currentLocation }
 								field={ field }
 								index={ index }
 								isDownButtonDisabled={ isDownButtonDisabled }
 								selectedField={ selectedField }
+								onNewField={ onNewField }
 								setPanelDisplaying={ setPanelDisplaying }
 								setSelectedField={ setSelectedField }
 								shouldDisplayMoveButtons={ shouldDisplayMoveButtons }
