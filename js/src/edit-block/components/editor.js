@@ -152,7 +152,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 											<FieldsGrid
 												currentLocation={ currentLocation }
 												selectedField={ selectedField }
-												createNewField={ () => setIsNew( true ) }
+												onNewField={ () => setIsNew( true ) }
 												setPanelDisplaying={ setPanelDisplaying }
 												setSelectedField={ setSelectedField }
 											/>
@@ -184,7 +184,7 @@ const Editor = ( { onError, postId, postType, settings } ) => {
 													isNew={ isNew }
 													selectedField={ selectedField }
 													setCurrentLocation={ setCurrentLocation }
-													createNewField={ () => setIsNew( true ) }
+													onNewField={ () => setIsNew( true ) }
 													onBlurLabel={ () => {
 														setIsNew( false );
 													} }

@@ -21,7 +21,7 @@ import { useField } from '../hooks';
  * @typedef {Object} FieldsGridProps The component props.
  * @property {import('./editor').CurrentLocation}                                      currentLocation    The currently selected location.
  * @property {import('./editor').SelectedField|import('../constants').NoFieldSelected} selectedField      The currenetly selected field.
- * @property {function(): void}                                                        createNewField     Sets if there is a new field.
+ * @property {function(): void}                                                        onNewField         Runs when creating a new field.
  * @property {import('./editor').SetPanelDisplaying}                                   setPanelDisplaying Sets the current panel displaying.
  * @property {import('./editor').SetSelectedField}                                     setSelectedField   Sets the name of the selected field.
  * @property {string|null}                                                             [parentField]      The name of the parent field, if any.
@@ -36,7 +36,7 @@ import { useField } from '../hooks';
 const FieldsGrid = ( {
 	currentLocation,
 	selectedField,
-	createNewField,
+	onNewField,
 	setPanelDisplaying,
 	setSelectedField,
 	parentField = null,
@@ -64,7 +64,7 @@ const FieldsGrid = ( {
 						return (
 							<Field
 								key={ `grid-field-${ index }` }
-								createNewField={ createNewField }
+								onNewField={ onNewField }
 								currentLocation={ currentLocation }
 								field={ field }
 								index={ index }
@@ -92,8 +92,8 @@ const FieldsGrid = ( {
 					}
 
 					setSelectedField( newSelectedField );
+					onNewField();
 					setPanelDisplaying( FIELD_PANEL );
-					createNewField();
 				} }
 			>
 				<svg

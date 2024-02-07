@@ -19,14 +19,13 @@ import { useField } from '../hooks';
 
 /**
  * @typedef {Object} FieldsGridProps The component props.
- * @property {function(): void}                                                        createNewField           Creates a new field.
  * @property {import('./editor').CurrentLocation}                                      currentLocation          The currently selected location.
  * @property {import('./editor').Field}                                                field                    The field to render.
+ * @property {function(): void}                                                        onNewField               Runs on creating a new field.
  * @property {number}                                                                  index                    The index in relation to other fields, starting with 0.
  * @property {boolean}                                                                 isDownButtonDisabled     Whether the down button is disabled.
  * @property {import('./editor').SelectedField|import('../constants').NoFieldSelected} selectedField            The currently selected field.
  * @property {boolean}                                                                 shouldDisplayMoveButtons Whether this should display the move buttons.
- * @property {function(): void}                                                        createnewField           Sets this to auto-slug (set the name to the slugified title).
  * @property {import('./editor').SetPanelDisplaying}                                   setPanelDisplaying       Sets the current panel displaying.
  * @property {import('./editor').SetSelectedField}                                     setSelectedField         Sets the name of the selected field.
  * @property {string|null}                                                             [parentField]            The name of the parent field, if any.
@@ -39,9 +38,9 @@ import { useField } from '../hooks';
  * @return {React.ReactElement} The fields displayed in a grid.
  */
 const Field = ( {
-	createNewField,
 	currentLocation,
 	field,
+	onNewField,
 	index,
 	isDownButtonDisabled,
 	selectedField,
@@ -129,7 +128,7 @@ const Field = ( {
 							currentLocation={ currentLocation }
 							parentField={ field.name }
 							selectedField={ selectedField }
-							createNewField={ createNewField }
+							onNewField={ onNewField }
 							setPanelDisplaying={ setPanelDisplaying }
 							setSelectedField={ setSelectedField }
 						/>
