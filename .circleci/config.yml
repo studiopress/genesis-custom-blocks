@@ -121,7 +121,7 @@ jobs:
       - node/install
       - build-development
       - run:
-          name: Runnning e2e tests
+          name: Runnning the e2e tests
           command: |
             npm run wp-env start
             npm run test:e2e
