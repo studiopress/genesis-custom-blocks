@@ -10,7 +10,6 @@
 import {
 	enablePageDialogAccept,
 	isOfflineMode,
-	loginUser,
 	setBrowserViewport,
 } from '@wordpress/e2e-test-utils';
 
@@ -158,7 +157,6 @@ beforeAll( async () => {
 	enablePageDialogAccept();
 	observeConsoleLogging();
 	await setupBrowser();
-	await loginUser();
 } );
 
 afterEach( async () => {

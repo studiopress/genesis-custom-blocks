@@ -37,7 +37,7 @@ const uploadMediaFile = async ( $context, fieldLabel, fileName ) => {
 const insertBlock = async ( $context, blockName ) => {
 	await ( await queries.findByLabelText( $context, /toggle block inserter/i ) ).click();
 	await ( await queries.findByPlaceholderText( $context, /search/i ) ).type( blockName );
-	await ( await queries.findByRole( $context, 'option' ) ).click();
+	await ( await queries.findByRole( $context, 'option', { name: blockName } ) ).click();
 };
 
 describe( 'AllFields', () => {
@@ -165,10 +165,9 @@ describe( 'AllFields', () => {
 
 		// Create a new post and add the new block.
 		await createNewPost();
-		const $postDocument = await getDocument( page );
-		await insertBlock( $postDocument, blockName );
 
 		const $blockEditorDocument = await getDocument( page );
+		await insertBlock( $blockEditorDocument, blockName );
 		const typeIntoField = async ( fieldType ) => {
 			const $field = await findByLabelText( $blockEditorDocument, fields[ fieldType ].label );
 			await $field.type( fields[ fieldType ].value );
