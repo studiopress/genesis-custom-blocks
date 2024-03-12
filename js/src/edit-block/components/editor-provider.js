@@ -38,6 +38,7 @@ const EditorProvider = ( {
 } ) => {
 	const {
 		setEditedPost,
+		setupEditorState,
 		updatePostLock,
 		updateEditorSettings,
 	} = useDispatch( 'core/editor' );
@@ -47,7 +48,13 @@ const EditorProvider = ( {
 	// Ideally this should be synced on each change and not just something you do once.
 	useLayoutEffect( () => {
 		updatePostLock( settings.postLock );
-		setEditedPost( post.type, post.id );
+
+		if ( setEditedPost ) {
+			setEditedPost( post.type, post.id );
+		} else {
+			setupEditorState( post );
+		}
+
 		if ( settings.autosave ) {
 			createWarningNotice(
 				__( 'There is an autosave of this post that is more recent than the version below.', 'genesis-custom-blocks' ),
