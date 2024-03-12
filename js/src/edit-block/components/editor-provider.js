@@ -53,7 +53,7 @@ const EditorProvider = ( {
 	// Ideally this should be synced on each change and not just something you do once.
 	useLayoutEffect( () => {
 		updatePostLock( settings.postLock );
-		setupEditor( post );
+		setupEditor( post.id );
 		if ( settings.autosave ) {
 			createWarningNotice(
 				__( 'There is an autosave of this post that is more recent than the version below.', 'genesis-custom-blocks' ),

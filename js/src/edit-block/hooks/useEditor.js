@@ -26,10 +26,10 @@ const useEditor = () => {
 	 *
 	 * @see https://github.com/WordPress/gutenberg/blob/8d5fd89f573e00601b189b1a2f87d5bc7b862349/packages/editor/src/store/actions.js#L38
 	 *
-	 * @param {Object} post Post object.
+	 * @param {number} postId Post ID.
 	 */
-	const setupEditor = ( post ) => {
-		setEditedPost( post );
+	const setupEditor = ( postId ) => {
+		setEditedPost( 'genesis_custom_block', postId );
 	};
 
 	return { setupEditor };
