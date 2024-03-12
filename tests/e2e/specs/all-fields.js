@@ -11,7 +11,6 @@ import { getDocument, queries } from 'pptr-testing-library';
  */
 import {
 	createNewPost,
-	insertBlock,
 	visitAdminPage,
 } from '@wordpress/e2e-test-utils';
 
@@ -33,6 +32,12 @@ const uploadMediaFile = async ( $context, fieldLabel, fileName ) => {
 	await page.click( buttonSelector );
 
 	return newFileName;
+};
+
+const insertBlock = async ( $context, blockName ) => {
+	await ( await queries.findByLabelText( $context, /toggle block inserter/i ) ).click();
+	await ( await queries.findByPlaceholderText( $context, /search/i ) ).type( blockName );
+	await ( await queries.findByRole( $context, 'option' ) ).click();
 };
 
 describe( 'AllFields', () => {
@@ -160,7 +165,8 @@ describe( 'AllFields', () => {
 
 		// Create a new post and add the new block.
 		await createNewPost();
-		await insertBlock( blockName );
+		const $postDocument = await getDocument( page );
+		await insertBlock( $postDocument, blockName );
 
 		const $blockEditorDocument = await getDocument( page );
 		const typeIntoField = async ( fieldType ) => {
