@@ -41,7 +41,7 @@
     "@wordpress/edit-post": "7.15.0",
     "@wordpress/editor": "13.15.0",
     "@wordpress/element": "5.15.0",
-    "@wordpress/env": "9.5.0",
+    "@wordpress/env": "8.4.0",
     "@wordpress/eslint-plugin": "14.11.0",
     "@wordpress/hooks": "3.38.0",
     "@wordpress/html-entities": "3.38.0",
