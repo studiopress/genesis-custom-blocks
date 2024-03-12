@@ -36,7 +36,7 @@
     "@wordpress/dependency-extraction-webpack-plugin": "4.21.0",
     "@wordpress/dom": "3.38.0",
     "@wordpress/dom-ready": "3.38.0",
-    "@wordpress/e2e-test-utils": "10.9.0",
+    "@wordpress/e2e-test-utils": "10.24.0",
     "@wordpress/e2e-tests": "7.9.0",
     "@wordpress/edit-post": "7.15.0",
     "@wordpress/editor": "13.15.0",
