@@ -5,7 +5,7 @@ import { useDispatch } from '@wordpress/data';
 
 /**
  * @typedef {Object} UseEditorReturn The return value of useEditor.
- * @property {function(Object):void} setupEditor Sets up the editor.
+ * @property {function(string, number):void} setupEditor Sets up the editor.
  */
 
 /**
@@ -26,10 +26,11 @@ const useEditor = () => {
 	 *
 	 * @see https://github.com/WordPress/gutenberg/blob/8d5fd89f573e00601b189b1a2f87d5bc7b862349/packages/editor/src/store/actions.js#L38
 	 *
-	 * @param {number} postId Post ID.
+	 * @param {string} postType Post type.
+	 * @param {number} postId   Post ID.
 	 */
-	const setupEditor = ( postId ) => {
-		setEditedPost( 'genesis_custom_block', postId );
+	const setupEditor = ( postType, postId ) => {
+		setEditedPost( postType, postId );
 	};
 
 	return { setupEditor };

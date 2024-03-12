@@ -49,11 +49,10 @@ const EditorProvider = ( {
 	// @ts-ignore type declaration not available
 	const { createWarningNotice } = useDispatch( noticesStore );
 
-	// Iniitialize the editor.
 	// Ideally this should be synced on each change and not just something you do once.
 	useLayoutEffect( () => {
 		updatePostLock( settings.postLock );
-		setupEditor( post.id );
+		setupEditor( post.type, post.id );
 		if ( settings.autosave ) {
 			createWarningNotice(
 				__( 'There is an autosave of this post that is more recent than the version below.', 'genesis-custom-blocks' ),
