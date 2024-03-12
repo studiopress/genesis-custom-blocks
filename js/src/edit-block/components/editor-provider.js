@@ -15,11 +15,6 @@ import { EntityProvider } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 
 /**
- * Internal dependencies
- */
-import { useEditor } from '../hooks';
-
-/**
  * @typedef {Object} EditorProviderProps The props of the component.
  * @property {Object}             post     The post for the editor.
  * @property {Object}             settings The editor settings.
@@ -41,8 +36,8 @@ const EditorProvider = ( {
 	settings,
 	children,
 } ) => {
-	const { setupEditor } = useEditor();
 	const {
+		setEditedPost,
 		updatePostLock,
 		updateEditorSettings,
 	} = useDispatch( 'core/editor' );
@@ -52,7 +47,7 @@ const EditorProvider = ( {
 	// Ideally this should be synced on each change and not just something you do once.
 	useLayoutEffect( () => {
 		updatePostLock( settings.postLock );
-		setupEditor( post.type, post.id );
+		setEditedPost( post.type, post.id );
 		if ( settings.autosave ) {
 			createWarningNotice(
 				__( 'There is an autosave of this post that is more recent than the version below.', 'genesis-custom-blocks' ),
