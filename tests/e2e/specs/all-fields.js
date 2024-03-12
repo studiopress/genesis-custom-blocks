@@ -11,6 +11,7 @@ import { getDocument, queries } from 'pptr-testing-library';
  */
 import {
 	createNewPost,
+	insertBlock,
 	visitAdminPage,
 } from '@wordpress/e2e-test-utils';
 
@@ -32,12 +33,6 @@ const uploadMediaFile = async ( $context, fieldLabel, fileName ) => {
 	await page.click( buttonSelector );
 
 	return newFileName;
-};
-
-const insertBlock = async ( $context, blockName ) => {
-	await ( await queries.findByLabelText( $context, /toggle block inserter/i ) ).click();
-	await ( await queries.findByPlaceholderText( $context, /search/i ) ).type( blockName );
-	await ( await queries.findByRole( $context, 'option', { name: blockName } ) ).click();
 };
 
 describe( 'AllFields', () => {
@@ -130,7 +125,7 @@ describe( 'AllFields', () => {
 
 		const $editBlockDocument = await getDocument( page );
 		const addNewField = async ( fieldType ) => {
-			await ( await findByRole( $editBlockDocument, 'button', { name: /add a new field/i } ) ).click();
+			await ( await findByLabelText( $editBlockDocument, 'Add a new field' ) ).click();
 			await findByLabelText( $editBlockDocument, 'Field Label' );
 			await page.keyboard.type( fields[ fieldType ].label );
 			await page.select( '#field-control', fieldType );
@@ -165,9 +160,9 @@ describe( 'AllFields', () => {
 
 		// Create a new post and add the new block.
 		await createNewPost();
+		await insertBlock( blockName );
 
 		const $blockEditorDocument = await getDocument( page );
-		await insertBlock( $blockEditorDocument, blockName );
 		const typeIntoField = async ( fieldType ) => {
 			const $field = await findByLabelText( $blockEditorDocument, fields[ fieldType ].label );
 			await $field.type( fields[ fieldType ].value );
