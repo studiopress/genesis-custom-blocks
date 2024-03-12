@@ -127,7 +127,7 @@ jobs:
             npm run wp-env run cli wp core version
             npm run test:e2e
       - store_artifacts:
-          path: /tmp/artifacts/
+          path: artifacts/
 
   svn-deploy:
     executor:
