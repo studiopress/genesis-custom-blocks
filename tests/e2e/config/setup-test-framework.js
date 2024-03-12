@@ -10,6 +10,7 @@
 import {
 	enablePageDialogAccept,
 	isOfflineMode,
+	loginUser,
 	setBrowserViewport,
 } from '@wordpress/e2e-test-utils';
 
@@ -149,9 +150,6 @@ function observeConsoleLogging() {
 		// which, unless the test explicitly anticipates the logging via
 		// @wordpress/jest-console matchers, will cause the intended test
 		// failure.
-
-		// eslint-disable-next-line no-console
-		console[ logFunction ]( text );
 	} );
 }
 
@@ -160,6 +158,7 @@ beforeAll( async () => {
 	enablePageDialogAccept();
 	observeConsoleLogging();
 	await setupBrowser();
+	await loginUser();
 } );
 
 afterEach( async () => {
