@@ -149,6 +149,9 @@ function observeConsoleLogging() {
 		// which, unless the test explicitly anticipates the logging via
 		// @wordpress/jest-console matchers, will cause the intended test
 		// failure.
+
+		// eslint-disable-next-line no-console
+		console[ logFunction ]( text );
 	} );
 }
 

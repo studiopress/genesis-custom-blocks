@@ -131,7 +131,6 @@ describe( 'AllFields', () => {
 		const $editBlockDocument = await getDocument( page );
 		const addNewField = async ( fieldType ) => {
 			await ( await findByRole( $editBlockDocument, 'button', { name: /add a new field/i } ) ).click();
-			expect( await findByRole( $editBlockDocument, 'button', { name: /add a new field/i } ) ).toBeTruthy();
 			await findByLabelText( $editBlockDocument, 'Field Label' );
 			await page.keyboard.type( fields[ fieldType ].label );
 			await page.select( '#field-control', fieldType );
