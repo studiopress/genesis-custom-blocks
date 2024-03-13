@@ -162,10 +162,6 @@ beforeAll( async () => {
 	await setupBrowser();
 } );
 
-afterEach( async () => {
-	await setupBrowser();
-} );
+afterEach( setupBrowser );
 
-afterAll( async () => {
-	removePageEvents();
-} );
+afterAll( removePageEvents );
