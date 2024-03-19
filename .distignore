@@ -6,6 +6,7 @@ node_modules
 tests
 trunk
 Makefile
+package.json
 package-lock.json
 composer.lock
 phpunit.xml
