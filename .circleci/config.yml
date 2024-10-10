@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   node: circleci/node@5.0
   php: circleci/php@1.1
-  wp-svn: studiopress/wp-svn@0.2
+  # wp-svn: studiopress/wp-svn@0.2
 
 references:
   PLUGIN_PATH: &PLUGIN_PATH
@@ -90,6 +90,12 @@ jobs:
             cp wordpress-develop/wp-tests-config-sample.php wordpress-develop/wp-tests-config.php
             sed -i 's/localhost/127.0.0.1/g' wordpress-develop/wp-tests-config.php
             sed -i 's/yourpasswordhere/<insert password here>/g' wordpress-develop/wp-tests-config.php
+      - run: 
+          name: Install wordpress-importer
+          command: |
+            cd ~/project/wordpress-develop
+            cd tests/phpunit/data/plugins/
+            git clone https://github.com/WordPress/wordpress-importer wordpress-importer
       - checkout:
           path: *PLUGIN_PATH
       - node/install-packages:
@@ -128,19 +134,19 @@ jobs:
       - store_artifacts:
           path: artifacts/
 
-  svn-deploy:
-    executor:
-      name: php
-    steps:
-      - checkout
-      - node/install
-      - run:
-          name: "Building"
-          command: |
-            composer install -o --no-dev
-            npm ci
-            npm run build
-      - wp-svn/deploy-plugin
+  # svn-deploy:
+  #   executor:
+  #     name: php
+  #   steps:
+  #     - checkout
+  #     - node/install
+  #     - run:
+  #         name: "Building"
+  #         command: |
+  #           composer install -o --no-dev
+  #           npm ci
+  #           npm run build
+  #     - wp-svn/deploy-plugin
 
 workflows:
   test-deploy:
@@ -151,7 +157,7 @@ workflows:
               only: /.*/
           matrix:
             parameters:
-              php-version: [ '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3' ]
+              php-version: [ '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3' ]
       - js-tests:
           filters:
             tags:
@@ -168,39 +174,39 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - wp-svn/check-versions:
-          skip-changelog: true
-          filters:
-            tags:
-              only: /^\d+\.\d+\.\d+$/
-            branches:
-              only: /^release.*/
-      - svn-deploy:
-          context: genesis-svn
-          requires:
-            - php-tests
-            - js-tests
-            - e2e-tests
-            - lint
-            - wp-svn/check-versions
-          filters:
-            tags:
-              only: /^\d+\.\d+\.\d+$/
-            branches:
-              ignore: /.*/
-      - approval-for-deploy-tested-up-to-bump:
-          type: approval
-          requires:
-            - php-tests
-            - js-tests
-            - e2e-tests
-            - lint
-          filters:
-            tags:
-              ignore: /.*/
-            branches:
-              only: /^bump-tested-up-to.*/
-      - wp-svn/deploy-tested-up-to-bump:
-          context: genesis-svn
-          requires:
-            - approval-for-deploy-tested-up-to-bump
+      # - wp-svn/check-versions:
+      #     skip-changelog: true
+      #     filters:
+      #       tags:
+      #         only: /^\d+\.\d+\.\d+$/
+      #       branches:
+      #         only: /^release.*/
+      # - svn-deploy:
+      #     context: genesis-svn
+      #     requires:
+      #       - php-tests
+      #       - js-tests
+      #       - e2e-tests
+      #       - lint
+      #       - wp-svn/check-versions
+      #     filters:
+      #       tags:
+      #         only: /^\d+\.\d+\.\d+$/
+      #       branches:
+      #         ignore: /.*/
+      # - approval-for-deploy-tested-up-to-bump:
+      #     type: approval
+      #     requires:
+      #       - php-tests
+      #       - js-tests
+      #       - e2e-tests
+      #       - lint
+      #     filters:
+      #       tags:
+      #         ignore: /.*/
+      #       branches:
+      #         only: /^bump-tested-up-to.*/
+      # - wp-svn/deploy-tested-up-to-bump:
+      #     context: genesis-svn
+      #     requires:
+      #       - approval-for-deploy-tested-up-to-bump
