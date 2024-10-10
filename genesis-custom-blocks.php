@@ -55,3 +55,17 @@ genesis_custom_blocks()
 
 add_action( 'plugins_loaded', [ genesis_custom_blocks(), 'plugin_loaded' ] );
 add_action( 'plugins_loaded', [ genesis_custom_blocks(), 'require_deprecated' ], 11 );
+
+/**
+ * Initialize checking of plugin updates from WP Engine.
+ */
+function genesis_custom_blocks_check_for_upgrades() {
+	$properties = [
+		'plugin_slug'     => 'genesis-custom-blocks',
+		'plugin_basename' => plugin_basename( __FILE__ ),
+	];
+
+	require_once __DIR__ . '/php/PluginUpdater.php';
+	new \Genesis\CustomBlocks\PluginUpdater( $properties );
+}
+add_action( 'admin_init', 'genesis_custom_blocks_check_for_upgrades' );
