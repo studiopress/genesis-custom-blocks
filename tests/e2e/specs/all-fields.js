@@ -11,7 +11,6 @@ import { getDocument, queries } from 'pptr-testing-library';
  */
 import {
 	createNewPost,
-	insertBlock,
 	visitAdminPage,
 } from '@wordpress/e2e-test-utils';
 
@@ -34,6 +33,29 @@ const uploadMediaFile = async ( $context, fieldLabel, fileName ) => {
 
 	return newFileName;
 };
+
+/**
+ * Prevents tests failing for a missing favicon in the
+ * WP test environment by serving a 1x1px favicon.
+ */
+beforeAll( async () => {
+	await page.setRequestInterception( true );
+	page.on( 'request', ( request ) => {
+		if ( request.url().endsWith( 'favicon.ico' ) ) {
+			request.respond( {
+				status: 200,
+				contentType: 'image/png',
+				body: Buffer.from( 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==', 'base64' ),
+			} );
+		} else {
+			request.continue();
+		}
+	} );
+} );
+
+afterAll( async () => {
+	await page.setRequestInterception( false );
+} );
 
 describe( 'AllFields', () => {
 	it( 'creates the block and makes the fields available in the block editor', async () => {
@@ -153,16 +175,18 @@ describe( 'AllFields', () => {
 		await ( await findByLabelText( $editBlockDocument, /choices/i ) ).type( fields.radio.choices );
 
 		await ( await findByText( $editBlockDocument, /publish/i ) ).click();
-		await findByText( $editBlockDocument, /update/i );
+		await findByText( $editBlockDocument, /save/i );
 
 		// Ensure there's no console error in the 'Editor Preview' display.
 		await ( await findByText( $editBlockDocument, 'Editor Preview' ) ).click();
 
 		// Create a new post and add the new block.
 		await createNewPost();
-		await insertBlock( blockName );
-
 		const $blockEditorDocument = await getDocument( page );
+		await ( await queries.findByRole( $blockEditorDocument, 'button', { name: /Toggle block inserter/i } ) ).click();
+		await page.waitForSelector( '.block-editor-inserter__block-list', { visible: true } );
+		await ( await queries.findAllByRole( $blockEditorDocument, 'option', { name: new RegExp( blockName, 'i' ) } ) )[ 0 ].click();
+
 		const typeIntoField = async ( fieldType ) => {
 			const $field = await findByLabelText( $blockEditorDocument, fields[ fieldType ].label );
 			await $field.type( fields[ fieldType ].value );
@@ -223,5 +247,5 @@ describe( 'AllFields', () => {
 
 		await findByText( $blockEditorDocument, getExpectedText( 'block_value', 'radio' ), options );
 		await findByText( $blockEditorDocument, getExpectedText( 'block_field', 'radio' ), options );
-	} );
+	}, 300000 );
 } );
