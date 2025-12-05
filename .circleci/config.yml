@@ -134,19 +134,19 @@ jobs:
       - store_artifacts:
           path: artifacts/
 
-  svn-deploy:
-    executor:
-      name: php
-    steps:
-      - checkout
-      - node/install
-      - run:
-          name: "Building"
-          command: |
-            composer install -o --no-dev
-            npm ci
-            npm run build
-      - wp-svn/deploy-plugin
+  # svn-deploy:
+  #   executor:
+  #     name: php
+  #   steps:
+  #     - checkout
+  #     - node/install
+  #     - run:
+  #         name: "Building"
+  #         command: |
+  #           composer install -o --no-dev
+  #           npm ci
+  #           npm run build
+  #     - wp-svn/deploy-plugin
 
 workflows:
   test-deploy:
@@ -174,26 +174,26 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - wp-svn/check-versions:
-          skip-changelog: true
-          filters:
-            tags:
-              only: /^\d+\.\d+\.\d+$/
-            branches:
-              only: /^release.*/
-      - svn-deploy:
-          context: genesis-svn
-          requires:
-            - php-tests
-            - js-tests
-            - e2e-tests
-            - lint
-            - wp-svn/check-versions
-          filters:
-            tags:
-              only: /^\d+\.\d+\.\d+$/
-            branches:
-              ignore: /.*/
+      # - wp-svn/check-versions:
+      #     skip-changelog: true
+      #     filters:
+      #       tags:
+      #         only: /^\d+\.\d+\.\d+$/
+      #       branches:
+      #         only: /^release.*/
+      # - svn-deploy:
+      #     context: genesis-svn
+      #     requires:
+      #       - php-tests
+      #       - js-tests
+      #       - e2e-tests
+      #       - lint
+      #       - wp-svn/check-versions
+      #     filters:
+      #       tags:
+      #         only: /^\d+\.\d+\.\d+$/
+      #       branches:
+      #         ignore: /.*/
       - approval-for-deploy-tested-up-to-bump:
           type: approval
           requires:
