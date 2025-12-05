@@ -28,10 +28,7 @@ const PUPPETEER_TIMEOUT = process.env.PUPPETEER_TIMEOUT;
  *
  * @type {Object<string,string>}
  */
-const OBSERVED_CONSOLE_MESSAGE_TYPES = {
-	warning: 'warn',
-	error: 'error',
-};
+const OBSERVED_CONSOLE_MESSAGE_TYPES = {};
 
 /**
  * Array of page event tuples of [ eventName, handler ].
