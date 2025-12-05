@@ -145,6 +145,13 @@ function observeConsoleLogging() {
 			? message.args()[ 0 ]?._remoteObject?.description
 			: text;
 
+		// If resolving via JSHandle did not provide a value, fall back to the
+		// original text so that Jest output includes a meaningful message
+		// instead of "undefined".
+		if ( text === undefined || text === null ) {
+			text = message.text();
+		}
+
 		// Disable reason: We intentionally bubble up the console message
 		// which, unless the test explicitly anticipates the logging via
 		// @wordpress/jest-console matchers, will cause the intended test
