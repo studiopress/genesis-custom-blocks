@@ -183,7 +183,7 @@ describe( 'AllFields', () => {
 		// Create a new post and add the new block.
 		await createNewPost();
 		const $blockEditorDocument = await getDocument( page );
-		await ( await queries.findByRole( $blockEditorDocument, 'button', { name: /Toggle block inserter/i } ) ).click();
+		await ( await queries.findByRole( $blockEditorDocument, 'button', { name: /Block inserter/i } ) ).click();
 		await page.waitForSelector( '.block-editor-inserter__block-list', { visible: true } );
 		await ( await queries.findAllByRole( $blockEditorDocument, 'option', { name: new RegExp( blockName, 'i' ) } ) )[ 0 ].click();
 
