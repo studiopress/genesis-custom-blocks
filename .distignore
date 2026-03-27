@@ -7,6 +7,7 @@ css/src
 node_modules
 tests
 trunk
+CONTRIBUTING.md
 Makefile
 package.json
 package-lock.json
