@@ -26,7 +26,7 @@ $field_names = [
 
 foreach ( $field_names as $field_name ) :
 	printf(
-		'Here is the result of calling block_value for %1$s: %2$s',
+		'<p>calling block_value for %1$s: %2$s</p>',
 		$field_name,
 		block_value( $field_name )
 	);
@@ -36,7 +36,7 @@ foreach ( $field_names as $field_name ) :
 	$block_field = ob_get_clean();
 
 	printf(
-		'Here is the result of calling block_field for %1$s: %2$s',
+		'<p>calling block_field for %1$s: %2$s</p>',
 		$field_name,
 		$block_field
 	);
