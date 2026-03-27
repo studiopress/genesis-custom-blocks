@@ -1,4 +1,6 @@
 artifacts
+playwright-report
+test-results
 assets/wporg
 js/src
 css/src

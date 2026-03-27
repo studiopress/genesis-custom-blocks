@@ -7,6 +7,7 @@ module.exports = {
 	testPathIgnorePatterns: [
 		'<rootDir>/.git',
 		'<rootDir>/node_modules',
+		'<rootDir>/tests/e2e',
 	],
 	coveragePathIgnorePatterns: [
 		'<rootDir>/node_modules',

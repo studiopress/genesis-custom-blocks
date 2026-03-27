@@ -88,8 +88,11 @@ vendor
 # Tests
 artifacts/
 tests/data/
+tests/e2e/storage-states/admin.json
 tests/includes/
 coverage/
+playwright-report/
+test-results/
 
 # Builds
 js/dist/

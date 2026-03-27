@@ -20,6 +20,8 @@ const getNewFieldNumber = ( fields, fieldName = 'new-field' ) => {
 			return i;
 		}
 	}
+
+	return null;
 };
 
 export default getNewFieldNumber;
