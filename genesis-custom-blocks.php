@@ -60,6 +60,10 @@ add_action( 'plugins_loaded', [ genesis_custom_blocks(), 'require_deprecated' ],
  * Initialize checking of plugin updates from WP Engine.
  */
 function genesis_custom_blocks_check_for_upgrades() {
+	if ( ! file_exists( __DIR__ . '/php/PluginUpdater.php' ) ) {
+		return;
+	}
+
 	$properties = [
 		'plugin_slug'     => 'genesis-custom-blocks',
 		'plugin_basename' => plugin_basename( __FILE__ ),

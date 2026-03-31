@@ -57,11 +57,13 @@ jobs:
             plugin_slug=genesis-custom-blocks
             build_version=`grep 'Version:' $plugin_slug.php | cut -f4 -d' '`
             zip_file_name="$plugin_slug.$build_version.zip"
+            mkdir -p /tmp/artifacts/wp.org /tmp/artifacts/wpe
             cd ..
             # In .distignore, begin and end every line with *
-            sed "s/^[^*]/*&/g" "$plugin_slug/.distignore" | sed "s/[^*]$/&*/g" | xargs zip -r "$zip_file_name" $plugin_slug -x
-            mkdir /tmp/artifacts
-            mv $zip_file_name /tmp/artifacts
+            sed "s/^[^*]/*&/g" "$plugin_slug/.distignore" | sed "s/[^*]$/&*/g" | xargs zip -r "/tmp/artifacts/wp.org/$zip_file_name" $plugin_slug -x
+            cp "$plugin_slug/scripts/PluginUpdater.php" "$plugin_slug/php/PluginUpdater.php"
+            sed "s/^[^*]/*&/g" "$plugin_slug/.distignore" | sed "s/[^*]$/&*/g" | xargs zip -r "/tmp/artifacts/wpe/$zip_file_name" $plugin_slug -x
+            rm -f "$plugin_slug/php/PluginUpdater.php"
       - store_artifacts:
           path: /tmp/artifacts
 
