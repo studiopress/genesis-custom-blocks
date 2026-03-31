@@ -1,0 +1,257 @@
+{
+	"type": "object",
+	"properties": {
+		"name": {
+			"type": "string"
+		},
+		"slug": {
+			"type": "string"
+		},
+		"version": {
+			"type": "string"
+		},
+		"author": {
+			"type": "string"
+		},
+		"author_profile": {
+			"type": "string"
+		},
+		"contributors": {
+			"type": "object",
+			"patternProperties": {
+				".*": {
+					"type": "object",
+					"properties": {
+						"profile": {
+							"type": "string"
+						},
+						"avatar": {
+							"type": "string"
+						},
+						"display_name": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"profile",
+						"avatar",
+						"display_name"
+					],
+					"additionalProperties": false
+				}
+			}
+		},
+		"requires": {
+			"type": "string"
+		},
+		"tested": {
+			"type": "string"
+		},
+		"requires_php": {
+			"type": "string"
+		},
+		"requires_plugins": {
+			"type": "array",
+			"items": {}
+		},
+		"rating": {
+			"type": "integer"
+		},
+		"ratings": {
+			"type": "object",
+			"properties": {
+				"5": {
+					"type": "integer"
+				},
+				"4": {
+					"type": "integer"
+				},
+				"3": {
+					"type": "integer"
+				},
+				"2": {
+					"type": "integer"
+				},
+				"1": {
+					"type": "integer"
+				}
+			},
+			"required": [
+				"5",
+				"4",
+				"3",
+				"2",
+				"1"
+			]
+		},
+		"num_ratings": {
+			"type": "integer"
+		},
+		"support_url": {
+			"type": "string"
+		},
+		"support_threads": {
+			"type": "integer"
+		},
+		"support_threads_resolved": {
+			"type": "integer"
+		},
+		"active_installs": {
+			"type": "integer"
+		},
+		"last_updated": {
+			"type": "string"
+		},
+		"added": {
+			"type": "string"
+		},
+		"homepage": {
+			"type": "string"
+		},
+		"sections": {
+			"type": "object",
+			"properties": {
+				"description": {
+					"type": "string"
+				},
+				"installation": {
+					"type": "string"
+				},
+				"faq": {
+					"type": "string"
+				},
+				"changelog": {
+					"type": "string"
+				},
+				"screenshots": {
+					"type": "string"
+				},
+				"reviews": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"description",
+				"installation",
+				"faq",
+				"changelog",
+				"screenshots",
+				"reviews"
+			]
+		},
+		"download_link": {
+			"type": "string"
+		},
+		"upgrade_notice": {
+			"type": "array",
+			"items": {}
+		},
+		"screenshots": {
+			"type": "object",
+			"patternProperties": {
+				".*": {
+					"type": "object",
+					"properties": {
+						"src": {
+							"type": "string"
+						},
+						"caption": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"src",
+						"caption"
+					],
+					"additionalProperties": false
+				}
+			}
+		},
+		"tags": {
+			"type": "object",
+			"patternProperties": {
+				".*": {
+					"type": "string"
+				}
+			}
+		},
+		"versions": {
+			"type": "object",
+			"properties": {
+				"trunk": {
+					"type": "string"
+				}
+			},
+			"patternProperties": {
+				"^\\d+\\.\\d+\\.\\d+$": {
+					"type": "string"
+				}
+			},
+			"additionalProperties": false
+		},
+		"business_model": {
+			"type": "boolean"
+		},
+		"repository_url": {
+			"type": "string"
+		},
+		"commercial_support_url": {
+			"type": "string"
+		},
+		"donate_link": {
+			"type": "string"
+		},
+		"banners": {
+			"type": "object",
+			"properties": {
+				"low": {
+					"type": "string"
+				},
+				"high": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"low",
+				"high"
+			]
+		},
+		"preview_link": {
+			"type": "string"
+		}
+	},
+	"required": [
+		"name",
+		"slug",
+		"version",
+		"author",
+		"author_profile",
+		"contributors",
+		"requires",
+		"tested",
+		"requires_php",
+		"requires_plugins",
+		"rating",
+		"ratings",
+		"num_ratings",
+		"support_url",
+		"support_threads",
+		"support_threads_resolved",
+		"active_installs",
+		"last_updated",
+		"added",
+		"homepage",
+		"sections",
+		"download_link",
+		"upgrade_notice",
+		"screenshots",
+		"tags",
+		"versions",
+		"business_model",
+		"repository_url",
+		"commercial_support_url",
+		"donate_link",
+		"banners",
+		"preview_link"
+	]
+}

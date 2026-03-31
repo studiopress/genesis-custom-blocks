@@ -64,6 +64,10 @@ jobs:
             cp "$plugin_slug/scripts/PluginUpdater.php" "$plugin_slug/php/PluginUpdater.php"
             sed "s/^[^*]/*&/g" "$plugin_slug/.distignore" | sed "s/[^*]$/&*/g" | xargs zip -r "/tmp/artifacts/wpe/$zip_file_name" $plugin_slug -x
             rm -f "$plugin_slug/php/PluginUpdater.php"
+      - run:
+          name: Creating info.json
+          working_directory: *PLUGIN_SLUG
+          command: node scripts/create-info.js
       - store_artifacts:
           path: /tmp/artifacts
 
