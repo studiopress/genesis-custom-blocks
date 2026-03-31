@@ -15,7 +15,7 @@ const {
 /**
  * Internal dependencies
  */
-const { uploadMediaFile } = require( '../helpers' );
+const { getEditorCanvas, uploadMediaFile } = require( '../helpers' );
 
 const blockName = 'Testing Example';
 const fields = {
@@ -102,10 +102,7 @@ test.describe( 'AllFields', () => {
 	// Create the custom block once before any tests run. Playwright does not
 	// re-run beforeAll on retries, so failed test retries skip straight to
 	// inserting and interacting with the already-created block.
-	test.beforeAll( async ( { browser } ) => {
-		test.setTimeout( 300000 );
-
-		const baseURL = process.env.WP_BASE_URL || 'http://localhost:8888';
+	test.beforeAll( async ( { browser, baseURL } ) => {
 		const context = await browser.newContext( {
 			baseURL,
 			storageState: 'tests/e2e/storage-states/admin.json',
@@ -165,12 +162,10 @@ test.describe( 'AllFields', () => {
 	} );
 
 	test( 'makes the fields available in the block editor', async ( { page } ) => {
-		test.setTimeout( 300000 );
-
 		await admin.visitAdminPage( 'post-new.php' );
 		await editor.setPreferences( 'core/edit-post', { welcomeGuide: false } );
 
-		const frame = page.frameLocator( 'iframe[name="editor-canvas"]' );
+		const frame = await getEditorCanvas( page );
 
 		// Insert the block.
 		await page.getByRole( 'button', { name: 'Block Inserter' } ).click();

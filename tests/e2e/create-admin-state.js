@@ -15,7 +15,7 @@ const { chromium } = require( '@playwright/test' );
  * be referenced from playwright.config.js via `use.storageState`.
  */
 ( async () => {
-	const baseURL = process.env.WP_BASE_URL || 'http://localhost:8888';
+	const { use: { baseURL } } = require( '../../playwright.config.js' );
 	const username = process.env.WP_USERNAME || 'admin';
 	const password = process.env.WP_PASSWORD || 'password';
 
