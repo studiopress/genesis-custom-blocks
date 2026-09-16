@@ -4,7 +4,6 @@ metadata:
   name: genesis-custom-blocks
 spec:
   type: repository
-  owner: team-gen
   engineeringExcellence:
     exemptedChecks:
       dependabotAutomationPresent:
