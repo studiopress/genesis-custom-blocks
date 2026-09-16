@@ -33,3 +33,4 @@ tsconfig.json
 .nvmrc
 .stylelintrc.json
 .wp-env.json
+repo-info.yaml
