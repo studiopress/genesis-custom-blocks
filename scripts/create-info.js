@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 const Ajv = require('ajv');
-const { execSync } = require('child_process');
+const { execFileSync } = require('child_process');
 
 const ajv = new Ajv({ strict: false });
 
@@ -51,7 +51,7 @@ function showDiff(originalInfo, outputPath) {
     const tempPath = outputPath + '.old';
     fs.writeFileSync(tempPath, JSON.stringify(originalInfo, null, 2));
     try {
-        const diff = execSync(`git diff --no-index "${tempPath}" "${outputPath}"`).toString();
+        const diff = execFileSync('git', ['diff', '--no-index', tempPath, outputPath]).toString();
         if (diff) {
             console.log('\nChanges made to info.json:');
             console.log(diff);
