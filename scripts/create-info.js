@@ -8,11 +8,19 @@ const ajv = new Ajv({ strict: false });
 
 const packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'package.json'), 'utf8'));
 const currentVersion = packageJson.version;
+const readme = fs.readFileSync(path.join(__dirname, '..', 'README.md'), 'utf8');
+const testedUpToMatch = readme.match(/^Tested up to:\s*(\S+)$/m);
 
 if (!/^\d+\.\d+\.\d+$/.test(currentVersion)) {
     console.error('Error: Version must be in the format x.x.x');
     process.exit(1);
 }
+if (!testedUpToMatch) {
+    console.error('Error: README.md must include a "Tested up to" value');
+    process.exit(1);
+}
+
+const testedUpTo = testedUpToMatch[1];
 
 const schema = JSON.parse(fs.readFileSync(path.join(__dirname, 'info-json-schema.json'), 'utf8'));
 const validate = ajv.compile(schema);
@@ -102,6 +110,7 @@ async function createInfoJson() {
         }
 
         info.version = currentVersion;
+        info.tested = testedUpTo;
         info.download_link = info.download_link.replace(
             /genesis-custom-blocks\.\d+\.\d+\.\d+\.zip/,
             `genesis-custom-blocks.${currentVersion}.zip`
