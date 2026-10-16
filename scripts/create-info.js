@@ -77,6 +77,23 @@ async function createInfoJson() {
         const originalInfo = JSON.parse(JSON.stringify(info));
         console.log('Successfully fetched current info.json');
 
+        if (typeof info.author === 'object' && info.author !== null) {
+            info.author_profile = info.author.profile;
+            info.author = info.author.display_name;
+        }
+        if (Array.isArray(info.contributors)) {
+            info.contributors = Object.fromEntries(
+                info.contributors.map((contributor) => [
+                    contributor.name,
+                    {
+                        profile: contributor.profile,
+                        avatar: contributor.avatar,
+                        display_name: contributor.display_name,
+                    },
+                ])
+            );
+        }
+
         if (!info.sections) {
             info.sections = {};
         }
