@@ -175,7 +175,7 @@ class TestLoader extends AbstractTemplate {
 		);
 		$this->assertStringContainsString(
 			'const gcbBlocks =',
-			wp_scripts()->registered[ $script_handle ]->extra['before'][1]
+			implode( "\n", wp_scripts()->registered[ $script_handle ]->extra['before'] )
 		);
 
 		$this->assertFalse( wp_script_is( Loader::ANALYTICS_SCRIPT_SLUG ) );
