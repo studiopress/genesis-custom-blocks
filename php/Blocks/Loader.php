@@ -170,7 +170,10 @@ class Loader extends ComponentAbstract {
 		wp_enqueue_style(
 			$css_handle,
 			$this->assets['url']['editor_style'],
-			$css_config['dependencies'],
+			array_merge(
+				$css_config['dependencies'],
+				[ 'dashicons' ]
+			),
 			$css_config['version']
 		);
 

@@ -180,6 +180,10 @@ class TestLoader extends AbstractTemplate {
 
 		$this->assertFalse( wp_script_is( Loader::ANALYTICS_SCRIPT_SLUG ) );
 		$this->assertTrue( wp_style_is( $style_handle ) );
+		$this->assertContains(
+			'dashicons',
+			wp_styles()->registered[ $style_handle ]->deps
+		);
 	}
 
 	/**
