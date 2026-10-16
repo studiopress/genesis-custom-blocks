@@ -216,6 +216,16 @@ test.describe( 'AllFields', () => {
 
 		await frame.getByLabel( fields.select.label, { exact: true } ).selectOption( fields.select.value );
 		await frame.getByLabel( /Multiselect/ ).selectOption( fields.multiselect.value );
+		await expect.poll(
+			() => page.evaluate(
+				( fieldName ) => {
+					const blocks = window.wp.data.select( 'core/block-editor' ).getBlocks();
+					const block = blocks.find( ( { attributes } ) => fieldName in attributes );
+					return block?.attributes[ fieldName ];
+				},
+				fields.multiselect.name
+			)
+		).toEqual( [ fields.multiselect.value ] );
 		await frame.getByRole( 'checkbox', { name: fields.toggle.label, exact: true } ).check();
 		await frame.getByLabel( fields.range.label, { exact: true } ).nth( 1 ).fill( fields.range.value );
 		await frame.getByRole( 'checkbox', { name: fields.checkbox.label, exact: true } ).check();
