@@ -105,6 +105,10 @@ class TestEditBlock extends AbstractTemplate {
 		$this->assertTrue( wp_script_is( EditBlock::SCRIPT_SLUG ) );
 		$this->assertTrue( wp_style_is( EditBlock::STYLE_SLUG ) );
 		$this->assertTrue( wp_style_is( 'genesis-custom-blocks-editor-css' ) );
+		$this->assertContains(
+			'dashicons',
+			wp_styles()->registered['genesis-custom-blocks-editor-css']->deps
+		);
 	}
 
 	/**

@@ -149,7 +149,10 @@ class EditBlock extends ComponentAbstract {
 		wp_enqueue_style(
 			'genesis-custom-blocks-editor-css',
 			$this->plugin->get_url( 'css/dist/blocks.editor.css' ),
-			$editor_style_config['dependencies'],
+			array_merge(
+				$editor_style_config['dependencies'],
+				[ 'dashicons' ]
+			),
 			$editor_style_config['version']
 		);
 	}
