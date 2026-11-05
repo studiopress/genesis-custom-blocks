@@ -184,7 +184,7 @@ class Onboarding extends ComponentAbstract {
 		}
 		?>
 		<div class="genesis-custom-blocks-edit-block genesis-custom-blocks-notice notice">
-			<h2><span role="image" aria-label="<?php esc_attr_e( 'Scientist emoji', 'genesis-custom-blocks' ); ?>">👩</span> <span role="image" aria-label="<?php esc_attr_e( 'Stethescope emoji', 'genesis-custom-blocks' ); ?>">🔬</span> <?php echo esc_html_e( 'Ready to begin?', 'genesis-custom-blocks' ); ?></h2>
+			<h2><span role="image" aria-label="<?php esc_attr_e( 'Scientist emoji', 'genesis-custom-blocks' ); ?>">👩</span> <span role="image" aria-label="<?php esc_attr_e( 'Stethescope emoji', 'genesis-custom-blocks' ); ?>">🔬</span> <?php esc_html_e( 'Ready to begin?', 'genesis-custom-blocks' ); ?></h2>
 			<p class="intro">
 				<?php
 				echo wp_kses_post(
